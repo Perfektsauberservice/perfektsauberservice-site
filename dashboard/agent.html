@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PSS Auto Agent</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .app{display:grid !important;}
+    .agent-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.agent-card{background:#fff;border:1px solid #e5e7eb;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+    .code{background:#0f172a;color:#e2e8f0;border-radius:18px;padding:16px;font:13px/1.6 ui-monospace,SFMono-Regular,monospace;overflow:auto}
+    .city-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}.city-tile{border-radius:20px;min-height:150px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.18);background:#0f172a}.city-tile img{width:100%;height:100%;object-fit:cover;display:block}.city-tile span{position:absolute;left:12px;bottom:12px;color:#fff;font-weight:900;background:rgba(15,23,42,.62);padding:8px 12px;border-radius:999px}
+    .stack{display:grid;gap:14px}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#e0f2fe;color:#0c4a6e;padding:7px 12px;font-weight:700;font-size:13px}.list{display:grid;gap:10px;margin-top:16px}.list div{padding:14px;border:1px solid #e5e7eb;border-radius:16px;background:#f8fafc}
+    @media(max-width:960px){.agent-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="shell app">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="logo-badge" style="width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,#17304f,#2f6bff);color:#fff;">A</div>
+        <div>
+          <div style="font-weight:900">PSS Auto Agent</div>
+          <div class="note">Content automation</div>
+        </div>
+      </div>
+      <div class="menu">
+        <a href="index.html">⬅ Dashboard</a>
+        <a class="active" href="#overview">🤖 Agent overview</a>
+        <a href="#cities">🖼️ Orașe & imagini</a>
+        <a href="#files">📂 Fișiere</a>
+        <a href="#deploy">🚀 Deploy logic</a>
+      </div>
+      <div class="sidebar-card">
+        <div class="kicker">Status</div>
+        <div style="font-weight:900;margin-top:6px">Pregătit pentru full-auto</div>
+        <div class="note" style="margin-top:8px">După ce adaugi cheile în Netlify, funcția poate fi extinsă să genereze și să împingă articolele automat.</div>
+        <div style="height:10px"></div>
+        <a class="btn btn-soft" href="../preisrechner.html" style="width:100%">Deschide Preisrechner</a>
+      </div>
+    </aside>
+    <main class="main">
+      <section class="hero" id="overview">
+        <div class="hero-main">
+          <div class="kicker" style="color:#dbeafe">Automatizare completă</div>
+          <div style="font-size:2.15rem;font-weight:900;line-height:1.08;margin-top:10px;max-width:760px;">Agentul găsește topicuri, folosește poza corectă pe oraș și pregătește articole noi pentru site.</div>
+          <div style="margin-top:14px;max-width:760px;line-height:1.75;opacity:.95;">Baza de lucru este deja pusă în arhivă: fișiere de configurare pentru orașe și servicii, promptul editorului, generator de articole draft și funcție Netlify pentru modul full-auto.</div>
+          <div style="height:18px"></div>
+          <div class="actions">
+            <a class="btn btn-primary" href="#files">Vezi fișierele agentului</a>
+            <a class="btn btn-green" href="../preisrechner.html">Preisrechner live</a>
+          </div>
+        </div>
+        <div class="hero-side stack">
+          <div class="mini-card"><div class="kicker">Orașe active</div><div style="font-size:1.5rem;font-weight:900;margin-top:8px">4</div><div class="note" style="margin-top:6px">Rastatt, Baden-Baden, Gaggenau, Karlsruhe</div></div>
+          <div class="mini-card"><div class="kicker">Servicii active</div><div style="font-size:1.5rem;font-weight:900;margin-top:8px">4</div><div class="note" style="margin-top:6px">Entrümpelung, Wohnungsauflösung, Endreinigung, Fensterreinigung</div></div>
+        </div>
+      </section>
+      <section class="agent-grid" id="cities" style="margin-top:24px;">
+        <div class="agent-card">
+          <div class="pill">Oraș + background corect</div>
+          <div class="city-grid">
+            <div class="city-tile"><img src="../images/city/rastatt-bg.png" alt="Rastatt"><span>Rastatt</span></div>
+            <div class="city-tile"><img src="../images/city/baden-baden-bg.png" alt="Baden-Baden"><span>Baden-Baden</span></div>
+            <div class="city-tile"><img src="../images/city/gaggenau-bg.png" alt="Gaggenau"><span>Gaggenau</span></div>
+            <div class="city-tile"><img src="../images/city/karlsruhe-bg.png" alt="Karlsruhe"><span>Karlsruhe</span></div>
+          </div>
+        </div>
+        <div class="agent-card" id="files">
+          <div class="pill">Fișiere adăugate</div>
+          <div class="list">
+            <div><strong>agent/config/cities.json</strong><br><span class="note">Mapare oraș → pagină → imagine background</span></div>
+            <div><strong>agent/config/services.json</strong><br><span class="note">Servicii și șabloane de topicuri</span></div>
+            <div><strong>agent/prompts/content-agent.md</strong><br><span class="note">Reguli editoriale pentru articole</span></div>
+            <div><strong>agent/scripts/generate-articles.mjs</strong><br><span class="note">Generează drafturi locale în content/auto</span></div>
+            <div><strong>netlify/functions/pss-auto-content.mjs</strong><br><span class="note">Skeleton endpoint pentru modul complet automat</span></div>
+            <div><strong>netlify.toml</strong><br><span class="note">Leagă funcțiile Netlify și ruta API</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="agent-grid" id="deploy" style="margin-top:24px;">
+        <div class="agent-card">
+          <h3>Fluxul full-auto</h3>
+          <div class="list">
+            <div>1. Agentul citește orașele și serviciile din fișierele JSON.</div>
+            <div>2. Generează automat topicuri locale noi.</div>
+            <div>3. Creează drafturi în <strong>content/auto</strong> și folosește imaginea corectă pe oraș.</div>
+            <div>4. Funcția Netlify poate fi extinsă să trimită cererea către OpenAI și apoi spre repo/deploy.</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <h3>Variabile necesare pentru live</h3>
+          <div class="code">OPENAI_API_KEY=
+GITHUB_OWNER=
+GITHUB_REPO=
+GITHUB_TOKEN=
+NETLIFY_SITE_URL=</div>
+          <p class="note" style="margin-top:12px;">Fără acestea, arhiva este pregătită structural, dar nu poate publica singură live.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+</body>
+</html>
