@@ -6,7 +6,6 @@
   <title>PSS Auto Agent</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .app{display:grid !important;}
     .agent-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.agent-card{background:#fff;border:1px solid #e5e7eb;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
     .code{background:#0f172a;color:#e2e8f0;border-radius:18px;padding:16px;font:13px/1.6 ui-monospace,SFMono-Regular,monospace;overflow:auto}
     .city-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}.city-tile{border-radius:20px;min-height:150px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.18);background:#0f172a}.city-tile img{width:100%;height:100%;object-fit:cover;display:block}.city-tile span{position:absolute;left:12px;bottom:12px;color:#fff;font-weight:900;background:rgba(15,23,42,.62);padding:8px 12px;border-radius:999px}
@@ -74,7 +73,7 @@
             <div><strong>agent/config/services.json</strong><br><span class="note">Servicii și șabloane de topicuri</span></div>
             <div><strong>agent/prompts/content-agent.md</strong><br><span class="note">Reguli editoriale pentru articole</span></div>
             <div><strong>agent/scripts/generate-articles.mjs</strong><br><span class="note">Generează drafturi locale în content/auto</span></div>
-            <div><strong>netlify/functions/pss-auto-content.mjs</strong><br><span class="note">Skeleton endpoint pentru modul complet automat</span></div>
+            <div><strong>netlify/functions/pss-auto-content.mjs</strong><br><span class="note">Endpoint Netlify pregătit pentru generare + commit în GitHub</span></div>
             <div><strong>netlify.toml</strong><br><span class="note">Leagă funcțiile Netlify și ruta API</span></div>
           </div>
         </div>
@@ -86,7 +85,7 @@
             <div>1. Agentul citește orașele și serviciile din fișierele JSON.</div>
             <div>2. Generează automat topicuri locale noi.</div>
             <div>3. Creează drafturi în <strong>content/auto</strong> și folosește imaginea corectă pe oraș.</div>
-            <div>4. Funcția Netlify poate fi extinsă să trimită cererea către OpenAI și apoi spre repo/deploy.</div>
+            <div>4. Funcția Netlify poate genera articolul cu OpenAI, scrie fișierele în repo și lansa deploy automat prin GitHub + Netlify.</div>
           </div>
         </div>
         <div class="agent-card">
@@ -96,7 +95,7 @@ GITHUB_OWNER=
 GITHUB_REPO=
 GITHUB_TOKEN=
 NETLIFY_SITE_URL=</div>
-          <p class="note" style="margin-top:12px;">Fără acestea, arhiva este pregătită structural, dar nu poate publica singură live.</p>
+          <p class="note" style="margin-top:12px;">Cu aceste chei setate, agentul poate publica pagini noi în repo și Netlify le livrează live după deploy.</p>
         </div>
       </section>
     </main>

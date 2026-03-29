@@ -12,3 +12,7 @@ Pași rapizi:
 2. Verifică drafturile din content/auto
 3. Adaugă variabilele OPENAI / GITHUB / NETLIFY în panoul de deploy
 4. Extinde netlify/functions/pss-auto-content.mjs pentru push live
+
+
+POST test example:
+fetch('/.netlify/functions/pss-auto-content',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({city:'rastatt',service:'entruempelung'})})
