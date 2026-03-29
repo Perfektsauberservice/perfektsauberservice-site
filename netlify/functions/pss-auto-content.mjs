@@ -82,15 +82,20 @@ Return valid JSON with this schema only:
     throw new Error(`OpenAI error ${res.status}: ${detail}`);
   }
 
-const raw = await res.text();
-console.log("OPENAI RAW RESPONSE:", raw);
+const data = await res.json();
+const text = (data.output_text || '').trim();
 
-const data = JSON.parse(raw);
-const text = data.output_text || '';
+if (!text) {
+  throw new Error(`OpenAI returned empty output_text: ${JSON.stringify(data)}`);
+}
 
-console.log("OPENAI OUTPUT_TEXT:", text);
+const cleaned = text
+  .replace(/^```json\s*/i, '')
+  .replace(/^```\s*/i, '')
+  .replace(/\s*```$/i, '')
+  .trim();
 
-const article = extractJson(text);
+const article = extractJson(cleaned);
 article.slug = slugify(article.slug || `${service.slug}-${city.slug}-${topic}`);
 return article;
 }
