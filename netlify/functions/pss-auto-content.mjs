@@ -82,11 +82,17 @@ Return valid JSON with this schema only:
     throw new Error(`OpenAI error ${res.status}: ${detail}`);
   }
 
-  const data = await res.json();
-  const text = data.output_text || '';
-  const article = extractJson(text);
-  article.slug = slugify(article.slug || `${service.slug}-${city.slug}-${topic}`);
-  return article;
+const raw = await res.text();
+console.log("OPENAI RAW RESPONSE:", raw);
+
+const data = JSON.parse(raw);
+const text = data.output_text || '';
+
+console.log("OPENAI OUTPUT_TEXT:", text);
+
+const article = extractJson(text);
+article.slug = slugify(article.slug || `${service.slug}-${city.slug}-${topic}`);
+return article;
 }
 
 function articleHtml({ article, city, service }) {
