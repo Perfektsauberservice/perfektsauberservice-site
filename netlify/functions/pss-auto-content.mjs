@@ -1,3 +1,10 @@
+return {
+  statusCode: 200,
+  body: JSON.stringify({
+    ok: true,
+    source: "fisier 1"
+  })
+};
 const json = (data, status = 200) => new Response(JSON.stringify(data, null, 2), {
   status,
   headers: { 'content-type': 'application/json; charset=utf-8' }
