@@ -29,7 +29,7 @@ function escapeHtml(str = '') {
 }
 
 function extractJson(text) {
-  const trimmed = text.trim();
+  const trimmed = String(text || '').trim();
   try { return JSON.parse(trimmed); } catch {}
   const start = trimmed.indexOf('{');
   const end = trimmed.lastIndexOf('}');
@@ -38,7 +38,8 @@ function extractJson(text) {
 }
 
 async function openAIArticle({ city, service, topic, promptRules }) {
-  const model = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
+  const model = process.env.OPENAI_MODEL || 'gpt-5.4-mini';
+
   const userPrompt = `Create one German local service article as strict JSON.
 
 City: ${city.name}
@@ -59,7 +60,9 @@ Return valid JSON with this schema only:
   "faq": [{"question": string, "answer": string}],
   "cta": string,
   "needs_review": boolean
-}`;
+}
+
+Return ONLY valid JSON. No markdown fences. No explanation.`;
 
   const res = await fetch('https://api.openai.com/v1/responses', {
     method: 'POST',
@@ -82,28 +85,39 @@ Return valid JSON with this schema only:
     throw new Error(`OpenAI error ${res.status}: ${detail}`);
   }
 
-const data = await res.json();
-const text = (data.output_text || '').trim();
+  const data = await res.json();
 
-if (!text) {
-  throw new Error(`OpenAI returned empty output_text: ${JSON.stringify(data)}`);
-}
+  const text =
+    (typeof data.output_text === 'string' ? data.output_text.trim() : '') ||
+    (Array.isArray(data.output)
+      ? data.output
+          .flatMap(item => Array.isArray(item.content) ? item.content : [])
+          .filter(part => part.type === 'output_text')
+          .map(part => part.text || '')
+          .join('\n')
+          .trim()
+      : '');
 
-const cleaned = text
-  .replace(/^```json\s*/i, '')
-  .replace(/^```\s*/i, '')
-  .replace(/\s*```$/i, '')
-  .trim();
+  if (!text) {
+    throw new Error(`OpenAI returned no text output: ${JSON.stringify(data)}`);
+  }
 
-const article = extractJson(cleaned);
-article.slug = slugify(article.slug || `${service.slug}-${city.slug}-${topic}`);
-return article;
+  const cleaned = text
+    .replace(/^```json\s*/i, '')
+    .replace(/^```\s*/i, '')
+    .replace(/\s*```$/i, '')
+    .trim();
+
+  const article = extractJson(cleaned);
+  article.slug = slugify(article.slug || `${service.slug}-${city.slug}-${topic}`);
+  return article;
 }
 
 function articleHtml({ article, city, service }) {
   const faqHtml = (article.faq || [])
     .map(item => `<div class="faq-item"><h3>${escapeHtml(item.question)}</h3><p>${escapeHtml(item.answer)}</p></div>`)
     .join('');
+
   const sectionsHtml = (article.sections || [])
     .map(sec => `<section class="content-section"><h2>${escapeHtml(sec.heading)}</h2><div class="content-copy">${sec.html}</div></section>`)
     .join('');
@@ -131,6 +145,7 @@ function markdownArticle({ article, city, service }) {
   const sections = (article.sections || [])
     .map(sec => `## ${sec.heading}\n\n${String(sec.html || '').replace(/<[^>]+>/g, ' ')}`)
     .join('\n\n');
+
   const faq = (article.faq || [])
     .map(item => `### ${item.question}\n\n${item.answer}`)
     .join('\n\n');
@@ -185,6 +200,7 @@ async function githubPut(pathname, content, message) {
     branch: 'main'
   };
   if (existing?.sha) body.sha = existing.sha;
+
   const url = `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/contents/${pathname}`;
   const res = await fetch(url, {
     method: 'PUT',
@@ -196,6 +212,7 @@ async function githubPut(pathname, content, message) {
     },
     body: JSON.stringify(body)
   });
+
   if (!res.ok) throw new Error(`GitHub put failed ${res.status}: ${await res.text()}`);
   return res.json();
 }
@@ -204,9 +221,12 @@ async function updateSitemap(slug) {
   const pathname = 'sitemap.xml';
   const existing = await githubGet(pathname);
   if (!existing?.content) return null;
+
   const xml = Buffer.from(existing.content, 'base64').toString('utf8');
   const url = `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/auto/${slug}.html`;
+
   if (xml.includes(url)) return { skipped: true };
+
   const now = new Date().toISOString();
   const insert = `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n  </url>\n`;
   const updated = xml.replace('</urlset>', `${insert}</urlset>`);
@@ -242,6 +262,7 @@ export default async (req) => {
 
     const htmlCommit = await githubPut(htmlPath, html, `feat(auto): publish ${article.slug}`);
     const mdCommit = await githubPut(mdPath, markdown, `feat(auto): draft ${article.slug}`);
+
     await updateSitemap(article.slug).catch(() => null);
 
     return json({
