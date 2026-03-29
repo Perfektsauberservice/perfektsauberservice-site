@@ -1,5 +1,3 @@
-import { readFile } from 'node:fs/promises';
-
 const json = (data, status = 200) => new Response(JSON.stringify(data, null, 2), {
   status,
   headers: { 'content-type': 'application/json; charset=utf-8' }
@@ -16,8 +14,10 @@ const slugify = (value) => String(value || '')
   .replace(/^-+|-+$/g, '')
   .replace(/-{2,}/g, '-');
 
-async function loadLocalFile(relPath) {
-  return readFile(new URL(relPath, import.meta.url), 'utf8');
+async function githubReadText(pathname) {
+  const existing = await githubGet(pathname);
+  if (!existing?.content) throw new Error(`Missing repo file: ${pathname}`);
+  return Buffer.from(existing.content, 'base64').toString('utf8');
 }
 
 function escapeHtml(str = '') {
@@ -214,9 +214,9 @@ export default async (req) => {
 
   try {
     const body = await req.json().catch(() => ({}));
-    const cities = JSON.parse(await loadLocalFile('../../agent/config/cities.json')).cities;
-    const services = JSON.parse(await loadLocalFile('../../agent/config/services.json')).services;
-    const promptRules = await loadLocalFile('../../agent/prompts/content-agent.md');
+    const cities = JSON.parse(await githubReadText('agent/config/cities.json')).cities;
+    const services = JSON.parse(await githubReadText('agent/config/services.json')).services;
+    const promptRules = await githubReadText('agent/prompts/content-agent.md');
 
     const city = cities.find((item) => item.slug === body.city || item.name.toLowerCase() === String(body.city || '').toLowerCase()) || cities[0];
     const service = services.find((item) => item.slug === body.service || item.name.toLowerCase() === String(body.service || '').toLowerCase()) || services[0];
