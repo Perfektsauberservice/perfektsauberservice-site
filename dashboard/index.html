@@ -338,150 +338,227 @@
   <div class="modal-actions" id="actionModalActions"></div>
 </div>
 
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js">
-
-function openActionModal(title, body, actionsHtml = '') {
-  const modal = document.getElementById('actionModal');
-  const backdrop = document.getElementById('actionBackdrop');
-  document.getElementById('actionModalTitle').textContent = title;
-  document.getElementById('actionModalBody').innerHTML = body;
-  document.getElementById('actionModalActions').innerHTML = actionsHtml;
-  modal.classList.add('open');
-  backdrop.classList.add('open');
-  document.body.classList.add('body-locked');
-}
-function closeActionModal() {
-  document.getElementById('actionModal')?.classList.remove('open');
-  document.getElementById('actionBackdrop')?.classList.remove('open');
-  document.body.classList.remove('body-locked');
-}
-document.getElementById('actionModalClose')?.addEventListener('click', closeActionModal);
-document.getElementById('actionBackdrop')?.addEventListener('click', closeActionModal);
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeActionModal(); });
-
-document.querySelectorAll('button, a.btn').forEach((el) => {
-  const text = (el.textContent || '').trim();
-  if (!text) return;
-  if (text === 'Vezi site live' || text === 'Vezi homepage') {
-    el.setAttribute('href','../index.html');
-  }
-  if (text === '+ Adaugă lucrare' || text === 'Adaugă lucrare nouă') {
-    el.addEventListener('click', (e) => { e.preventDefault(); openActionModal('Adaugă lucrare', 'Aici intră formularul real pentru proiecte noi. În această versiune, butonul este pregătit și te poate duce în secțiunea <strong>Projekte / Archiv</strong>.', '<a class="btn btn-primary" href="#projects" onclick="closeActionModal()">Mergi la proiecte</a>'); });
-  }
-  if (text === '+ Invită admin' || text === 'Trimite invitație') {
-    el.addEventListener('click', (e) => { e.preventDefault(); openActionModal('Invită admin', 'Fluxul de invitații este pregătit pentru Netlify Identity. După activare, de aici trimiți invitația reală către un nou admin.', '<a class="btn btn-primary" href="#users" onclick="closeActionModal()">Deschide utilizatori</a>'); });
-  }
-  if (text === 'Edit' || text === 'Editează' || text === 'Manage' || text === 'Archive' || text === 'Deschide' || text === 'Marchează' || text === 'Setează cover' || text === 'Adaugă la proiect' || text === 'Upload poze' || text === 'Salvează draft' || text === 'Setup auth') {
-    el.addEventListener('click', (e) => {
-      if (el.id === 'logoutBtn' || el.id === 'inviteIdentityBtn' || el.id === 'openIdentityBtn') return;
-      if (el.getAttribute('href') && !el.getAttribute('href').startsWith('#') && !el.getAttribute('href').endsWith('README-dashboard.txt')) return;
-      e.preventDefault();
-      openActionModal(text, 'Această acțiune este conectată ca demo vizual. În următorul pas se poate lega la date reale sau la Identity / backend, fără să mai pară un buton mort.');
-    });
-  }
-});
-
-</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-const demoOk = localStorage.getItem('pss_dashboard_demo_login') === 'ok';
+(() => {
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => Array.from(root.querySelectorAll(s));
+  const stateKey = 'pss_dashboard_state_v2';
+  const defaultState = {
+    company: {
+      phone: '+49 163 9087197',
+      email: 'kontakt@perfektsauberservice.com',
+      address: 'Reutstr. 9, 76597 Loffenau'
+    },
+    leads: ['Nou', 'Contactat', 'Așteaptă răspuns'],
+    archived: [false, true, false],
+    homeBlocks: {
+      hero: 'Titlu principal, buton WhatsApp, poză cover',
+      servicii: 'Entrümpelung, Haushaltsauflösung, Reinigung',
+      proiecte: 'Rastatt, Karlsruhe, Baden-Baden',
+      contact: 'Telefon, email, formular, WhatsApp'
+    },
+    selectedCover: -1
+  };
+  const state = JSON.parse(localStorage.getItem(stateKey) || 'null') || structuredClone(defaultState);
+  const saveState = () => localStorage.setItem(stateKey, JSON.stringify(state));
 
-function showApp() {
-  document.getElementById('app').style.display = 'grid';
-}
+  function openActionModal(title, body, actionsHtml = '') {
+    $('#actionModalTitle').textContent = title;
+    $('#actionModalBody').innerHTML = body;
+    $('#actionModalActions').innerHTML = actionsHtml;
+    $('#actionModal').classList.add('open');
+    $('#actionBackdrop').classList.add('open');
+    document.body.classList.add('body-locked');
+  }
+  function closeActionModal() {
+    $('#actionModal').classList.remove('open');
+    $('#actionBackdrop').classList.remove('open');
+    document.body.classList.remove('body-locked');
+  }
+  $('#actionModalClose').addEventListener('click', closeActionModal);
+  $('#actionBackdrop').addEventListener('click', closeActionModal);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeActionModal(); });
+  window.closeActionModal = closeActionModal;
 
-function goLogin() {
-  window.location.href = './login.html';
-}
-
-if (window.netlifyIdentity) {
-  window.netlifyIdentity.on('init', function(user) {
-    if (!demoOk && !user) {
-      goLogin();
-    } else {
-      showApp();
-    }
-  });
-
-  window.netlifyIdentity.on('login', function() {
-    showApp();
-  });
-
-  window.netlifyIdentity.on('logout', function() {
-    localStorage.removeItem('pss_dashboard_demo_login');
-    goLogin();
-  });
-
-  window.netlifyIdentity.init();
-} else {
-  if (demoOk) {
+  function showApp() {
+    $('#app').style.display = 'grid';
+  }
+  const demoOk = localStorage.getItem('pss_dashboard_demo_login') === 'ok';
+  if (window.netlifyIdentity) {
+    try {
+      window.netlifyIdentity.on('init', user => { if (!demoOk && !user) location.href='./login.html'; else showApp(); });
+      window.netlifyIdentity.on('login', showApp);
+      window.netlifyIdentity.on('logout', () => { localStorage.removeItem('pss_dashboard_demo_login'); location.href='./login.html'; });
+      window.netlifyIdentity.init();
+    } catch (e) { showApp(); }
+  } else if (demoOk) {
     showApp();
   } else {
-    goLogin();
+    location.href='./login.html';
   }
-}
 
-document.getElementById('logoutBtn').addEventListener('click', function(e) {
-  e.preventDefault();
-  localStorage.removeItem('pss_dashboard_demo_login');
-  try {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.logout();
-    }
-  } catch(e) {}
-  goLogin();
-});
+  // Core links
+  $$('a.btn, .actions .btn-soft, .sidebar-card .btn-soft').forEach(el => {
+    const t = el.textContent.trim();
+    if (t === 'Vezi site live' || t === 'Vezi homepage') el.setAttribute('href', '../index.html');
+    if (t === 'Deschide agentul') el.setAttribute('href', './agent.html');
+  });
 
-function showIdentityNote(id) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.textContent = 'Pentru invitații și roluri reale folosește Identity din Netlify. Interfața este gata, dar logica de admin complet va fi legată separat.';
+  // Company card updates
+  function renderCompany() {
+    const rows = $$('#company .row-card');
+    if (rows[0]) rows[0].querySelector('.note').textContent = state.company.phone;
+    if (rows[1]) rows[1].querySelector('.note').textContent = state.company.email;
+    if (rows[2]) rows[2].querySelector('.note').textContent = state.company.address;
   }
-}
-document.getElementById('inviteIdentityBtn')?.addEventListener('click', function(){ showIdentityNote('inviteMsg'); });
-document.getElementById('openIdentityBtn')?.addEventListener('click', function(){ showIdentityNote('inviteMsg'); });
+  renderCompany();
 
+  // Homepage block labels
+  function renderHomeBlocks() {
+    const rows = $$('#homepage .row-card');
+    if (rows[0]) rows[0].querySelector('.note').textContent = state.homeBlocks.hero;
+    if (rows[1]) rows[1].querySelector('.note').textContent = state.homeBlocks.servicii;
+    if (rows[2]) rows[2].querySelector('.note').textContent = state.homeBlocks.proiecte;
+    if (rows[3]) rows[3].querySelector('.note').textContent = state.homeBlocks.contact;
+  }
+  renderHomeBlocks();
 
-function openActionModal(title, body, actionsHtml = '') {
-  const modal = document.getElementById('actionModal');
-  const backdrop = document.getElementById('actionBackdrop');
-  document.getElementById('actionModalTitle').textContent = title;
-  document.getElementById('actionModalBody').innerHTML = body;
-  document.getElementById('actionModalActions').innerHTML = actionsHtml;
-  modal.classList.add('open');
-  backdrop.classList.add('open');
-  document.body.classList.add('body-locked');
-}
-function closeActionModal() {
-  document.getElementById('actionModal')?.classList.remove('open');
-  document.getElementById('actionBackdrop')?.classList.remove('open');
-  document.body.classList.remove('body-locked');
-}
-document.getElementById('actionModalClose')?.addEventListener('click', closeActionModal);
-document.getElementById('actionBackdrop')?.addEventListener('click', closeActionModal);
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeActionModal(); });
-
-document.querySelectorAll('button, a.btn').forEach((el) => {
-  const text = (el.textContent || '').trim();
-  if (!text) return;
-  if (text === 'Vezi site live' || text === 'Vezi homepage') {
-    el.setAttribute('href','../index.html');
-  }
-  if (text === '+ Adaugă lucrare' || text === 'Adaugă lucrare nouă') {
-    el.addEventListener('click', (e) => { e.preventDefault(); openActionModal('Adaugă lucrare', 'Aici intră formularul real pentru proiecte noi. În această versiune, butonul este pregătit și te poate duce în secțiunea <strong>Projekte / Archiv</strong>.', '<a class="btn btn-primary" href="#projects" onclick="closeActionModal()">Mergi la proiecte</a>'); });
-  }
-  if (text === '+ Invită admin' || text === 'Trimite invitație') {
-    el.addEventListener('click', (e) => { e.preventDefault(); openActionModal('Invită admin', 'Fluxul de invitații este pregătit pentru Netlify Identity. După activare, de aici trimiți invitația reală către un nou admin.', '<a class="btn btn-primary" href="#users" onclick="closeActionModal()">Deschide utilizatori</a>'); });
-  }
-  if (text === 'Edit' || text === 'Editează' || text === 'Manage' || text === 'Archive' || text === 'Deschide' || text === 'Marchează' || text === 'Setează cover' || text === 'Adaugă la proiect' || text === 'Upload poze' || text === 'Salvează draft' || text === 'Setup auth') {
-    el.addEventListener('click', (e) => {
-      if (el.id === 'logoutBtn' || el.id === 'inviteIdentityBtn' || el.id === 'openIdentityBtn') return;
-      if (el.getAttribute('href') && !el.getAttribute('href').startsWith('#') && !el.getAttribute('href').endsWith('README-dashboard.txt')) return;
-      e.preventDefault();
-      openActionModal(text, 'Această acțiune este conectată ca demo vizual. În următorul pas se poate lega la date reale sau la Identity / backend, fără să mai pară un buton mort.');
+  // Lead statuses
+  function renderLeads() {
+    const cards = $$('#leads .row-card');
+    cards.forEach((card, idx) => {
+      const badge = $('.badge', card);
+      const val = state.leads[idx] || 'Nou';
+      badge.textContent = val;
+      badge.className = 'badge ' + (val === 'Nou' ? 'amber' : val === 'Contactat' ? 'blue' : 'pink');
     });
   }
-});
+  renderLeads();
 
+  // Project archive states
+  function renderProjects() {
+    const rows = $$('#projects tbody tr');
+    rows.forEach((row, idx) => {
+      const badge = $('.badge', row);
+      if (idx===0) return;
+      const archived = state.archived[idx];
+      badge.textContent = archived ? 'Arhivat' : 'Draft';
+      badge.className = 'badge ' + (archived ? 'blue' : 'amber');
+    });
+  }
+  renderProjects();
+
+  // Photo cover selection
+  function renderPhotos() {
+    const cards = $$('#photos .photo-card');
+    cards.forEach((card, idx) => {
+      card.style.boxShadow = idx === state.selectedCover ? '0 0 0 3px rgba(47,107,255,.35)' : 'none';
+      const btn = $$('.btn', card)[0];
+      if (btn) btn.textContent = idx === state.selectedCover ? 'Cover activ' : 'Setează cover';
+    });
+  }
+  renderPhotos();
+
+  // Button wiring
+  $('#logoutBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('pss_dashboard_demo_login');
+    try { window.netlifyIdentity && window.netlifyIdentity.logout(); } catch (e) {}
+    location.href = './login.html';
+  });
+  $('#inviteIdentityBtn')?.addEventListener('click', () => {
+    openActionModal('Invită admin', 'Invitațiile reale intră în Netlify Identity. În patch-ul actual, butonul confirmă fluxul și rămâne pregătit pentru legarea la backend.', '<button class="btn btn-primary" onclick="closeActionModal()">Am înțeles</button>');
+  });
+  $('#openIdentityBtn')?.addEventListener('click', () => {
+    openActionModal('Setup auth', 'Activează Netlify Identity din panoul Netlify, apoi leagă invitațiile și rolurile reale. Interfața din dashboard este deja pregătită.', '<a class="btn btn-primary" href="./README-dashboard.txt">Deschide ghidul</a>');
+  });
+
+  const heroButtons = $$('.hero .actions .btn, .quick-card');
+  heroButtons.forEach(el => {
+    const t = el.textContent.trim();
+    if (t.includes('Adaugă lucrare')) {
+      el.addEventListener('click', () => openActionModal('Adaugă lucrare nouă', 'Aici legăm formularul real pentru proiecte noi. În această versiune poți merge direct în secțiunea proiecte.', '<a class="btn btn-primary" href="#projects" onclick="closeActionModal()">Mergi la proiecte</a>'));
+    } else if (t.includes('Invită admin')) {
+      el.addEventListener('click', () => openActionModal('Invită admin', 'Acțiunea este pregătită pentru Netlify Identity. După activare, aici trimiți invitația reală.', '<a class="btn btn-primary" href="#users" onclick="closeActionModal()">Deschide utilizatori</a>'));
+    } else if (t.includes('Mută lucrare')) {
+      el.addEventListener('click', () => { state.archived[2] = !state.archived[2]; saveState(); renderProjects(); openActionModal('Arhivare proiect', 'Ultimul proiect a fost comutat vizual între Draft și Arhivat. Următorul pas este persistarea în backend.', '<button class="btn btn-primary" onclick="closeActionModal()">OK</button>'); });
+    } else if (t.includes('Schimbă poze')) {
+      el.addEventListener('click', () => location.hash = '#photos');
+    } else if (t.includes('Actualizează date')) {
+      el.addEventListener('click', () => location.hash = '#company');
+    }
+  });
+
+  // Homepage section buttons
+  $$('#homepage .row-card').forEach((row, idx) => {
+    const btn = $('.btn', row);
+    btn.addEventListener('click', () => {
+      const name = $('strong', row).textContent;
+      const current = $('.note', row).textContent;
+      const next = prompt('Editează blocul: ' + name, current);
+      if (next !== null && next.trim()) {
+        const map = ['hero','servicii','proiecte','contact'];
+        state.homeBlocks[map[idx]] = next.trim();
+        saveState(); renderHomeBlocks();
+      }
+    });
+  });
+
+  // Project table buttons
+  $$('#projects tbody tr').forEach((row, idx) => {
+    const buttons = $$('.btn', row);
+    const projectName = $('strong', row)?.textContent || 'Proiect';
+    buttons[0]?.addEventListener('click', () => openActionModal('Edit proiect', 'Deschizi editorul pentru <strong>' + projectName + '</strong>. În patch-ul curent, asta este o acțiune funcțională de tip preview.', '<button class="btn btn-primary" onclick="closeActionModal()">Închide</button>'));
+    buttons[1]?.addEventListener('click', () => {
+      if (idx === 0) return openActionModal('Arhivare blocată', 'Proiectul publicat de pe prima linie este setat să rămână pe HOME în demo. Celelalte pot fi mutate vizual.');
+      state.archived[idx] = !state.archived[idx]; saveState(); renderProjects();
+    });
+  });
+
+  // Leads buttons
+  $$('#leads .row-card').forEach((card, idx) => {
+    const [openBtn, markBtn] = $$('.btn', card);
+    const name = $('strong', card).textContent;
+    openBtn?.addEventListener('click', () => openActionModal('Lead: ' + name, 'Detaliu lead deschis. În pasul următor îl putem lega la date reale sau la formularul de contact salvat.', '<button class="btn btn-primary" onclick="closeActionModal()">OK</button>'));
+    markBtn?.addEventListener('click', () => {
+      const vals = ['Nou', 'Contactat', 'Așteaptă răspuns'];
+      const current = vals.indexOf(state.leads[idx]);
+      state.leads[idx] = vals[(current + 1) % vals.length];
+      saveState(); renderLeads();
+    });
+  });
+
+  // Users buttons
+  $$('#users .user-card').forEach(card => {
+    $$('.btn', card).forEach(btn => btn.addEventListener('click', () => openActionModal(btn.textContent.trim(), 'Această acțiune este pregătită și răspunde corect în UI. Persistența multi-user reală vine în pasul cu backend / Identity.')));
+  });
+
+  // Photos
+  $$('#photos .photo-card').forEach((card, idx) => {
+    const [coverBtn, addBtn] = $$('.btn', card);
+    coverBtn?.addEventListener('click', () => { state.selectedCover = idx; saveState(); renderPhotos(); });
+    addBtn?.addEventListener('click', () => openActionModal('Adaugă la proiect', 'Alege proiectul în care vrei să pui poza. În patch-ul actual, selectorul este pregătit vizual.', '<a class="btn btn-primary" href="#projects" onclick="closeActionModal()">Deschide proiecte</a>'));
+  });
+  $$('#photos > div .btn-soft').forEach(btn => {
+    if (btn.textContent.trim() === 'Upload poze') btn.addEventListener('click', () => openActionModal('Upload poze', 'Uploadul real se leagă la backend sau storage. În interfața curentă butonul este activ și clar, nu mort.'));
+  });
+
+  // Company edit buttons
+  $$('#company .row-card').forEach((row, idx) => {
+    $('.btn', row)?.addEventListener('click', () => {
+      const keys = ['phone','email','address'];
+      const labels = ['Telefon','Email','Adresă'];
+      const next = prompt('Editează ' + labels[idx], state.company[keys[idx]]);
+      if (next !== null && next.trim()) {
+        state.company[keys[idx]] = next.trim(); saveState(); renderCompany();
+      }
+    });
+  });
+
+  // Generic visible app for users coming from login
+  showApp();
+})();
 </script>
 </body>
 </html>

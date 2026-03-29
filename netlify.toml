@@ -6,3 +6,13 @@
   from = "/api/pss-auto-content"
   to = "/.netlify/functions/pss-auto-content"
   status = 200
+
+[[redirects]]
+  from = "/dashboard/agent"
+  to = "/dashboard/agent.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard/index.html"
+  status = 200
