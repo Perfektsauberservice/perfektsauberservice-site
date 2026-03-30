@@ -1,7 +1,15 @@
 {
   "date": "2026-03-30",
-  "count": 2,
+  "count": 3,
   "items": [
+    {
+      "slug": "was-kostet-eine-entruempelung-in-rastatt",
+      "title": "Was kostet eine Entrümpelung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "topic": "Was kostet eine Entrümpelung in Rastatt?",
+      "publishedAt": "2026-03-30T07:51:35.052Z"
+    },
     {
       "slug": "wie-laeuft-eine-entruempelung-in-baden-baden-ab",
       "title": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
