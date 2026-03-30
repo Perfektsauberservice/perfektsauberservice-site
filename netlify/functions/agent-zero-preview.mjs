@@ -1,151 +1,119 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
+const json = (obj, status = 200) => new Response(JSON.stringify(obj, null, 2), {
+  status,
+  headers: { 'content-type': 'application/json; charset=utf-8' }
+});
 
-const ROOT = process.cwd();
-
-async function readJson(relPath, fallback) {
-  try {
-    const full = path.join(ROOT, relPath);
-    const raw = await readFile(full, 'utf8');
-    return JSON.parse(raw);
-  } catch {
-    return fallback;
-  }
-}
-
-function slugify(text = '') {
-  return String(text)
+function norm(value = '') {
+  return String(value)
+    .trim()
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
-    .replace(/ß/g, 'ss')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+    .replace(/ß/g, 'ss');
 }
 
-function titleCase(s='') {
-  return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
-}
-
-function pickTopicTemplates(serviceKey, cityName) {
-  const serviceLabel = serviceKey === 'entruempelung' ? 'Entrümpelung' : titleCase(serviceKey);
-  return [
-    `Was kostet eine ${serviceLabel} in ${cityName}?`,
-    `Wie läuft eine ${serviceLabel} in ${cityName} ab?`,
-    `Wie schnell bekommt man einen Termin für eine ${serviceLabel} in ${cityName}?`
-  ];
-}
-
-function buildCandidate(topic, citySlug, cityName, serviceKey) {
-  const lowerService = serviceKey === 'entruempelung' ? 'entruempelung' : slugify(serviceKey);
-  const primary = `${lowerService} ${citySlug} ${topic.toLowerCase().includes('kostet') ? 'kosten' : topic.toLowerCase().includes('termin') ? 'termin' : 'ablauf'}`;
-  const secondary = [
-    `${lowerService} ${citySlug}`,
-    `${citySlug} ${lowerService}`,
-    `${lowerService} ${cityName.toLowerCase()}`
-  ];
-  const format = topic.toLowerCase().includes('kostet') || topic.toLowerCase().includes('termin') || topic.toLowerCase().includes('läuft')
-    ? 'artikel'
-    : 'faq';
-  const intent = topic.toLowerCase().includes('kostet') || topic.toLowerCase().includes('termin')
-    ? 'commercial/informational'
-    : 'informational';
-  return {
-    topic,
-    slug: slugify(topic),
-    primaryKeyword: primary,
-    secondaryKeywords: secondary,
-    searchIntent: intent,
-    priority: 8,
-    recommendedFormat: format,
-    supportsPage: `${titleCase(serviceKey)} ${cityName}`
-  };
-}
-
-export default async (request, context) => {
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ ok: false, error: 'POST only' }), {
-      status: 405,
-      headers: { 'content-type': 'application/json' }
-    });
-  }
-
-  try {
-    const body = await request.json().catch(() => ({}));
-    const cityInput = String(body.city || '').trim().toLowerCase();
-    const serviceInput = String(body.service || '').trim().toLowerCase();
-
-    const cities = await readJson('agent/config/cities.json', []);
-    const services = await readJson('agent/config/services.json', []);
-    const goals = await readJson('agent/config/goals.json', { businessGoals: ['lead generation', 'local seo', 'geo'] });
-    const contentIndex = await readJson('agent/state/content-index.json', { items: [] });
-    const publicationState = await readJson('agent/state/publication-state.json', { items: [] });
-
-    const city = Array.isArray(cities)
-      ? cities.find(c => slugify(c.slug || c.name || c.city) === cityInput || slugify(c.name || c.city) === cityInput)
-      : null;
-    const service = Array.isArray(services)
-      ? services.find(s => slugify(s.slug || s.key || s.name) === serviceInput || slugify(s.name) === serviceInput)
-      : null;
-
-    if (!city || !service) {
-      return new Response(JSON.stringify({ ok: false, error: 'Unknown city or service', city: cityInput, service: serviceInput }), {
-        status: 400,
-        headers: { 'content-type': 'application/json' }
-      });
+async function ghJson(path) {
+  const owner = process.env.GITHUB_OWNER;
+  const repo = process.env.GITHUB_REPO;
+  const token = process.env.GITHUB_TOKEN;
+  if (!owner || !repo || !token) throw new Error('Missing GitHub env vars');
+  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'pss-agent-zero-preview'
     }
+  });
+  if (!res.ok) throw new Error(`GitHub fetch failed for ${path}: ${res.status}`);
+  const data = await res.json();
+  const content = Buffer.from(data.content, 'base64').toString('utf8');
+  return JSON.parse(content);
+}
 
-    const cityName = city.name || city.city || titleCase(cityInput);
-    const citySlug = slugify(city.slug || city.name || city.city);
-    const serviceKey = slugify(service.slug || service.key || service.name);
-    const topics = pickTopicTemplates(serviceKey, cityName).map(t => buildCandidate(t, citySlug, cityName, serviceKey));
+export default async function handler(request) {
+  try {
+    if (request.method !== 'POST') return json({ ok: false, error: 'POST only' }, 405);
 
-    const existingSlugs = new Set([
-      ...(Array.isArray(contentIndex.items) ? contentIndex.items.map(i => i.slug).filter(Boolean) : []),
-      ...(Array.isArray(publicationState.items) ? publicationState.items.map(i => i.slug).filter(Boolean) : [])
+    const body = await request.json().catch(() => ({}));
+    const cityInput = body.city ?? '';
+    const serviceInput = body.service ?? '';
+
+    const [citiesDoc, servicesDoc, goalsDoc, contentIndexDoc, publicationStateDoc] = await Promise.all([
+      ghJson('agent/config/cities.json'),
+      ghJson('agent/config/services.json'),
+      ghJson('agent/config/goals.json').catch(() => ({ goals: [] })),
+      ghJson('agent/state/content-index.json').catch(() => ({ items: [] })),
+      ghJson('agent/state/publication-state.json').catch(() => ({ items: [] }))
     ]);
 
-    const evaluated = topics.map(candidate => {
-      const exact = existingSlugs.has(candidate.slug);
-      const partial = Array.from(existingSlugs).some(s => s && (s.includes(citySlug) && s.includes(serviceKey) && (s.includes('kostet') === candidate.slug.includes('kostet') || s.includes('termin') === candidate.slug.includes('termin') || s.includes('ablauf') === candidate.slug.includes('ablauf'))));
-      let status = 'create new';
-      let risk = 'low';
-      let reason = 'No competing slug found.';
-      if (exact) {
-        status = 'update existing';
-        risk = 'high';
-        reason = 'Exact slug already exists.';
-      } else if (partial) {
-        status = 'merge with existing';
-        risk = 'medium';
-        reason = 'A closely related slug already exists for same city/service intent.';
-      }
-      return { ...candidate, duplicateDecision: { status, cannibalizationRisk: risk, reason } };
+    const cities = Array.isArray(citiesDoc.cities) ? citiesDoc.cities : [];
+    const services = Array.isArray(servicesDoc.services) ? servicesDoc.services : [];
+
+    const city = cities.find(c => norm(c.slug) === norm(cityInput) || norm(c.name) === norm(cityInput));
+    const service = services.find(s => norm(s.slug) === norm(serviceInput) || norm(s.name) === norm(serviceInput));
+
+    if (!city || !service) {
+      return json({
+        ok: false,
+        error: 'Unknown city or service',
+        city: cityInput,
+        service: serviceInput,
+        expectedCityExamples: cities.slice(0, 4).map(c => ({ slug: c.slug, name: c.name })),
+        expectedServiceExamples: services.slice(0, 4).map(s => ({ slug: s.slug, name: s.name }))
+      }, 400);
+    }
+
+    const existingItems = [
+      ...(Array.isArray(contentIndexDoc.items) ? contentIndexDoc.items : []),
+      ...(Array.isArray(publicationStateDoc.items) ? publicationStateDoc.items : [])
+    ];
+
+    const existingText = existingItems.map(i => `${i.slug || ''} ${i.title || ''} ${i.topic || ''}`.toLowerCase());
+
+    const goals = Array.isArray(goalsDoc.goals) ? goalsDoc.goals : goalsDoc;
+    const templates = Array.isArray(service.questionTemplates) ? service.questionTemplates : [];
+
+    const candidates = templates.map((tpl, index) => {
+      const topic = tpl.replaceAll('{city}', city.name);
+      const slugBase = norm(topic)
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      const primaryKeyword = `${service.name} ${city.name}`;
+      const secondaryKeywords = [
+        `${service.name} ${city.name} Kosten`,
+        `${service.name} ${city.name} Ablauf`,
+        city.servicePage
+      ];
+      const hay = `${slugBase} ${topic}`.toLowerCase();
+      const duplicate = existingText.find(t => t.includes(slugBase) || hay.includes(t));
+      const decision = duplicate ? 'update existing' : 'create new';
+      const risk = duplicate ? 'high' : 'low';
+      const intent = /kosten|preis/i.test(topic) ? 'commercial/informational' : 'informational/commercial';
+      const format = /kosten|preis|ablauf|wie /i.test(topic) ? 'articol GEO + SEO' : 'FAQ';
+      return {
+        priority: 10 - index,
+        topic,
+        primaryKeyword,
+        secondaryKeywords,
+        searchIntent: intent,
+        format,
+        supportsPage: city.servicePage,
+        duplicateDecision: decision,
+        cannibalizationRisk: risk,
+        matchedExisting: duplicate || null
+      };
     });
 
-    const best = evaluated.find(e => e.duplicateDecision.status === 'create new') || evaluated[0];
-
-    return new Response(JSON.stringify({
+    return json({
       ok: true,
-      agent: 'agent-zero-preview',
-      input: { city: cityName, service: service.name || serviceKey },
-      goals: goals.businessGoals || goals.goals || goals,
-      candidates: evaluated,
-      recommended: best,
-      summary: {
-        totalCandidates: evaluated.length,
-        createNew: evaluated.filter(e => e.duplicateDecision.status === 'create new').length,
-        updates: evaluated.filter(e => e.duplicateDecision.status === 'update existing').length,
-        merges: evaluated.filter(e => e.duplicateDecision.status === 'merge with existing').length
-      }
-    }, null, 2), {
-      status: 200,
-      headers: { 'content-type': 'application/json' }
+      city: { slug: city.slug, name: city.name, servicePage: city.servicePage },
+      service: { slug: service.slug, name: service.name, cta: service.cta },
+      goals,
+      candidates,
+      recommended: candidates[0] || null
     });
   } catch (error) {
-    return new Response(JSON.stringify({ ok: false, error: error?.message || String(error) }), {
-      status: 500,
-      headers: { 'content-type': 'application/json' }
-    });
+    return json({ ok: false, error: error.message || String(error) }, 500);
   }
-};
+}
