@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "sources": {
+    "articles": "content/auto/blog-index.json",
+    "publishedState": "agent/state/publication-state.json"
+  },
+  "notes": [
+    "Dieser Index dient Agent Zero und dem Duplicate Checker als schnelle Referenz.",
+    "Hier können später Slugs, Primary Keywords und Zielseiten verdichtet zusammengeführt werden."
+  ]
+}
