@@ -1,333 +1,307 @@
-
-import fs from "fs";
-
-function jsonResponse(data, status = 200) {
-  return new Response(JSON.stringify(data, null, 2), {
+const json = (obj, status = 200) =>
+  new Response(JSON.stringify(obj, null, 2), {
     status,
-    headers: { "content-type": "application/json; charset=utf-8" }
+    headers: { 'content-type': 'application/json; charset=utf-8' }
   });
-}
 
-function safeReadJson(relPath) {
-  try {
-    const url = new URL(relPath, import.meta.url);
-    const raw = fs.readFileSync(url, "utf8");
-    return JSON.parse(raw);
-  } catch (err) {
-    return null;
-  }
-}
+const DEFAULT_GOALS = {
+  primaryGoal: "lead generation",
+  secondaryGoals: ["local SEO", "GEO"],
+  preferredFormats: ["FAQ", "Artikel", "Local landing support"]
+};
 
-function normalizeText(v) {
-  return String(v || "")
+const CITIES_FALLBACK = {
+  cities: [
+    { slug: "rastatt", name: "Rastatt", servicePage: "entruempelung-rastatt.html" },
+    { slug: "baden-baden", name: "Baden-Baden", servicePage: "entruempelung-baden-baden.html" },
+    { slug: "gaggenau", name: "Gaggenau", servicePage: "entruempelung-gaggenau.html" },
+    { slug: "karlsruhe", name: "Karlsruhe", servicePage: "entruempelung-karlsruhe.html" }
+  ]
+};
+
+const SERVICES_FALLBACK = {
+  services: [
+    {
+      slug: "entruempelung",
+      name: "Entrümpelung",
+      questionTemplates: [
+        "Was kostet eine Entrümpelung in {city}?",
+        "Wie läuft eine Entrümpelung in {city} ab?",
+        "Wie schnell bekommt man einen Termin für eine Entrümpelung in {city}?"
+      ],
+      cta: "Kostenlose Anfrage per WhatsApp oder Telefon"
+    },
+    {
+      slug: "wohnungsaufloesung",
+      name: "Wohnungsauflösung",
+      questionTemplates: [
+        "Wie läuft eine Wohnungsauflösung in {city} ab?",
+        "Was kostet eine Wohnungsauflösung in {city}?"
+      ],
+      cta: "Jetzt unverbindlich Bilder senden und Einschätzung erhalten"
+    },
+    {
+      slug: "endreinigung",
+      name: "Endreinigung",
+      questionTemplates: [
+        "Was ist bei einer Endreinigung vor der Wohnungsübergabe in {city} wichtig?",
+        "Was kostet eine Endreinigung in {city}?"
+      ],
+      cta: "Termin für Endreinigung jetzt anfragen"
+    },
+    {
+      slug: "fensterreinigung",
+      name: "Fensterreinigung",
+      questionTemplates: [
+        "Fensterreinigung in {city}: Preise, Dauer, Ablauf",
+        "Wie oft sollte man Fenster in {city} reinigen lassen?"
+      ],
+      cta: "Fensterreinigung schnell anfragen"
+    }
+  ]
+};
+
+const INDEX_FALLBACK = { items: [] };
+
+const normalize = (v = "") =>
+  String(v)
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .trim();
-}
 
-function slugify(v) {
-  return normalizeText(v)
+const slugify = (v = "") =>
+  normalize(v)
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+
+async function fetchRepoJson(path, fallback) {
+  const owner = process.env.GITHUB_OWNER;
+  const repo = process.env.GITHUB_REPO;
+  const token = process.env.GITHUB_TOKEN;
+  if (!owner || !repo || !token) return fallback;
+  const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "User-Agent": "PerfektSauberService-AgentFullPreview"
+    }
+  });
+  if (!res.ok) return fallback;
+  const data = await res.json();
+  if (!data.content) return fallback;
+  const decoded = Buffer.from(data.content, 'base64').toString('utf8');
+  try {
+    return JSON.parse(decoded);
+  } catch {
+    return fallback;
+  }
 }
 
-function uniq(arr) {
-  return [...new Set((arr || []).filter(Boolean))];
-}
-
-function loadConfig() {
-  const citiesDoc = safeReadJson("../../agent/config/cities.json") || { cities: [] };
-  const servicesDoc = safeReadJson("../../agent/config/services.json") || { services: [] };
-  const goalsDoc = safeReadJson("../../agent/config/goals.json") || {
-    goals: ["lead generation", "local seo", "geo"]
-  };
-  const contentIndex =
-    safeReadJson("../../agent/state/content-index.json") ||
-    safeReadJson("../../content/auto/blog-index.json") ||
-    { items: [] };
-  const publicationState =
-    safeReadJson("../../agent/state/publication-state.json") || { items: [] };
-
-  return {
-    cities: Array.isArray(citiesDoc.cities) ? citiesDoc.cities : [],
-    services: Array.isArray(servicesDoc.services) ? servicesDoc.services : [],
-    goals: Array.isArray(goalsDoc.goals) ? goalsDoc.goals : [],
-    contentIndexItems: Array.isArray(contentIndex.items) ? contentIndex.items : [],
-    publicationItems: Array.isArray(publicationState.items) ? publicationState.items : []
-  };
-}
-
-function findCity(cities, input) {
-  const n = normalizeText(input);
-  return (
-    cities.find(c => normalizeText(c.slug) === n) ||
-    cities.find(c => normalizeText(c.name) === n) ||
-    null
-  );
-}
-
-function findService(services, input) {
-  const n = normalizeText(input);
-  return (
-    services.find(s => normalizeText(s.slug) === n) ||
-    services.find(s => normalizeText(s.name) === n) ||
-    null
-  );
-}
-
-function buildCandidates(city, service) {
-  const templates = Array.isArray(service.questionTemplates) ? service.questionTemplates : [];
-  const primaryKeyword = `${service.name} ${city.name}`;
-  return templates.map((tpl, i) => {
-    const topic = String(tpl).replace(/\{city\}/g, city.name);
-    const slug = slugify(topic);
+function chooseTopic(city, service, items = []) {
+  const templates = service.questionTemplates || [];
+  const candidates = templates.map((tpl, index) => {
+    const topic = tpl.replaceAll('{city}', city.name);
+    const topicNorm = normalize(topic);
+    const existing = items.find((item) => normalize(item.topic || item.title || item.slug) === topicNorm);
+    const duplicateDecision = existing ? 'update existing' : 'create new';
+    const supportPage = city.servicePage || `entruempelung-${city.slug}.html`;
+    const format = /was kostet/i.test(topic) ? 'FAQ' : /wie schnell/i.test(topic) ? 'Artikel' : 'Artikel';
+    const primaryKeyword = `${service.name} ${city.name}`;
+    const secondaryKeywords = [
+      `${service.name} Kosten ${city.name}`,
+      `${service.name} Ablauf ${city.name}`,
+      `${service.name} Termin ${city.name}`
+    ];
+    const priority = /was kostet/i.test(topic) ? 10 : /wie schnell/i.test(topic) ? 9 : 8;
     return {
-      priority: Math.max(10 - i, 1),
+      priority,
       topic,
       primaryKeyword,
-      secondaryKeywords: uniq([
-        `${service.name} Kosten ${city.name}`,
-        `${service.name} Ablauf ${city.name}`,
-        `${service.name} Termin ${city.name}`
-      ]),
-      searchIntent: i === 0 ? "informational/commercial" : "commercial/informational",
-      format: /kostet|preise/i.test(topic) ? "FAQ" : "article",
-      supportsPage: city.servicePage || `${service.slug}-${city.slug}.html`,
-      duplicateDecision: "create new",
-      cannibalizationRisk: "low",
-      matchedExisting: null,
-      slug
+      secondaryKeywords,
+      searchIntent: 'informational/commercial',
+      format,
+      supportsPage: supportPage,
+      duplicateDecision,
+      cannibalizationRisk: existing ? 'medium' : 'low',
+      matchedExisting: existing ? (existing.slug || existing.title || null) : null,
+      templateIndex: index
     };
   });
+  candidates.sort((a, b) => b.priority - a.priority);
+  return { candidates, recommended: candidates[0] || null };
 }
 
-function detectDuplicate(candidate, items) {
-  const slug = candidate.slug;
-  const topicNorm = normalizeText(candidate.topic);
-  const list = Array.isArray(items) ? items : [];
-
-  const bySlug = list.find(item => normalizeText(item.slug || item.url || "") === slug);
-  if (bySlug) {
-    return {
-      status: "update existing",
-      reason: "Matching slug already exists.",
-      risk: "high",
-      affected: bySlug.slug || bySlug.url || null
-    };
-  }
-
-  const byTopic = list.find(item => normalizeText(item.title || item.topic || "") === topicNorm);
-  if (byTopic) {
-    return {
-      status: "merge with existing",
-      reason: "Matching topic already exists.",
-      risk: "medium",
-      affected: byTopic.slug || byTopic.url || null
-    };
-  }
-
+function buildDuplicatePreview(rec) {
   return {
-    status: "create new",
-    reason: "No matching slug found in preview mode.",
-    risk: "low",
-    affected: null
+    status: rec?.duplicateDecision || 'create new',
+    reason: rec?.matchedExisting
+      ? `Existing similar item found: ${rec.matchedExisting}`
+      : 'No matching slug found in lightweight preview mode.',
+    risk: rec?.cannibalizationRisk || 'low',
+    affected: rec?.matchedExisting || null
   };
 }
 
-function buildWriter(city, service, candidate) {
-  const title = candidate.topic;
-  const slug = candidate.slug;
-  const h1 = candidate.topic;
-  const format = candidate.format;
-  const supportPage = candidate.supportsPage;
-  const secondaryKeywords = candidate.secondaryKeywords || [];
-  const intro = `Wer eine ${service.name.toLowerCase()} in ${city.name} plant, will vor allem wissen, wie der Ablauf ist, welche Kosten entstehen und wie schnell ein Termin möglich ist. Perfekt Sauber Service beantwortet die wichtigsten Fragen klar, lokal und ohne unnötige Fülltexte.`;
-  const outline = [
-    { h2: `Was kostet eine ${service.name} in ${city.name}?`, h3: ["Welche Faktoren beeinflussen den Preis?", "Wann lohnt sich eine Vor-Ort-Einschätzung?"] },
-    { h2: `Wie läuft eine ${service.name} ab?`, h3: ["Besichtigung", "Sortieren und Räumen", "Besenreine Übergabe"] },
-    { h2: `Warum Kunden in ${city.name} anfragen`, h3: ["Schnelle Terminvergabe", "Klare Kommunikation", "Übergabe ohne Stress"] },
-    { h2: "Häufige Fragen", h3: ["Wie kurzfristig sind Termine möglich?", "Was muss vorher vorbereitet werden?"] }
-  ];
-  const faq = [
-    {
-      q: `Was kostet eine ${service.name} in ${city.name}?`,
-      a: `Die Kosten hängen in ${city.name} vor allem von Menge, Zugänglichkeit, Etage, Entsorgungsaufwand und gewünschter Zusatzleistung ab.`
-    },
-    {
-      q: `Wie schnell bekommt man einen Termin?`,
-      a: `Eine erste Einschätzung und Terminabstimmung ist meist kurzfristig per WhatsApp oder Telefon möglich.`
-    },
-    {
-      q: `Ist auch eine besenreine Übergabe möglich?`,
-      a: `Ja, auf Wunsch kann die Räumung mit besenreiner Übergabe und passenden Zusatzleistungen kombiniert werden.`
-    }
-  ];
-  const geoDirectAnswers = [
-    `${service.name} in ${city.name} lässt sich am besten nach Menge, Zugang und Entsorgungsaufwand einschätzen.`,
-    `Für ${city.name} ist eine erste Rückmeldung per WhatsApp oft am schnellsten.`,
-    `Die wichtigsten Preisfaktoren sind Volumen, Laufwege, Stockwerk und Zusatzleistungen.`
-  ];
-  const ctas = {
-    top: "Jetzt kostenlose Einschätzung per WhatsApp anfragen",
-    middle: "Preisorientierung in 1 Minute berechnen",
-    bottom: "Fotos senden und exaktes Angebot erhalten"
-  };
-
+function buildWriterPreview(city, service, rec) {
+  const slug = slugify(rec.topic);
+  const title = rec.topic;
+  const metaTitle = `${rec.topic} | Perfekt Sauber Service`;
+  const metaDescription = `Klarer Überblick zu ${normalize(rec.topic).startsWith('was kostet') ? 'was kostet' : 'wie läuft'} eine ${normalize(service.name)} in ${city.name} – mit Ablauf, Kosten, FAQ und schneller Anfrage für ${city.name}.`;
   return {
     title,
-    metaTitle: `${title} | Perfekt Sauber Service`,
-    metaDescription: `Klarer Überblick zu ${title.toLowerCase()} – mit Ablauf, Kosten, FAQ und schneller Anfrage für ${city.name}.`,
+    metaTitle,
+    metaDescription,
     slug,
-    h1,
-    format,
-    primaryKeyword: candidate.primaryKeyword,
-    secondaryKeywords,
-    supportsPage: supportPage,
-    intro,
-    outline,
-    faq,
-    geoDirectAnswers,
-    ctas
+    h1: title,
+    format: rec.format,
+    primaryKeyword: rec.primaryKeyword,
+    secondaryKeywords: rec.secondaryKeywords,
+    supportsPage: rec.supportsPage,
+    outline: [
+      { h2: `Was kostet eine ${service.name} in ${city.name}?`, h3: ['Wovon hängen die Kosten ab?', 'Wann lohnt sich eine Vor-Ort-Einschätzung?'] },
+      { h2: `Wie läuft eine ${service.name} in ${city.name} ab?`, h3: ['Anfrage und Einschätzung', 'Termin und Durchführung'] },
+      { h2: `Warum Kunden in ${city.name} anfragen`, h3: ['Kurze Wege', 'Klare Kommunikation', 'Besenreine Übergabe'] },
+      { h2: 'Häufige Fragen', h3: ['Wie schnell bekommt man einen Termin?', 'Kann ich Fotos per WhatsApp senden?'] }
+    ],
+    faq: [
+      { q: `Was kostet eine ${service.name} in ${city.name}?`, a: 'Die Kosten hängen vor allem von Umfang, Zugänglichkeit und Zusatzleistungen ab. Eine erste Einschätzung ist oft schon nach Fotos möglich.' },
+      { q: `Wie schnell bekomme ich einen Termin in ${city.name}?`, a: 'Freie Termine sind oft kurzfristig möglich. Für eine schnelle Einschätzung helfen Fotos per WhatsApp.' },
+      { q: 'Kann ich vorab Bilder senden?', a: 'Ja. Bilder per WhatsApp helfen, Aufwand und Preis schneller einzuschätzen.' },
+      { q: 'Welche Seite wird damit gestärkt?', a: `Dieser Inhalt stärkt die Zielseite ${rec.supportsPage}.` }
+    ],
+    geoDirectAnswers: [
+      `${service.name} in ${city.name} lässt sich oft kurzfristig planen, wenn Sie Fotos und Eckdaten direkt senden.`,
+      `Die Kosten für ${service.name} in ${city.name} hängen vor allem von Menge, Zugang und Zusatzleistungen ab.`,
+      `Für ${city.name} ist eine schnelle Ersteinschätzung per WhatsApp oft der direkteste Weg zum Angebot.`
+    ],
+    ctas: {
+      top: 'Jetzt kostenlose Einschätzung per WhatsApp anfragen',
+      middle: 'Preisorientierung in 1 Minute berechnen',
+      bottom: 'Fotos senden und exaktes Angebot erhalten'
+    }
   };
 }
 
-function buildGeo(city, service, writer) {
+function buildGeoPreview(city, service, writer) {
   return {
     directAnswer: `${service.name} in ${city.name} lässt sich meist nach Aufwand, Menge und Zugang kalkulieren. Eine erste Einschätzung ist schnell per WhatsApp möglich.`,
     missingSections: [],
-    quoteReadyLines: [
-      `In ${city.name} hängen die Kosten meist von Menge, Zugang und Entsorgungsaufwand ab.`,
-      `Eine schnelle Ersteinschätzung ist oft per WhatsApp mit Fotos möglich.`
-    ],
+    quoteReadyLines: writer.geoDirectAnswers.slice(0, 2),
     faqImprovements: [
-      `Was kostet eine ${service.name} in ${city.name}?`,
-      `Wie schnell ist ein Termin möglich?`,
-      `Welche Zusatzleistungen sind sinnvoll?`
+      `Füge eine FAQ zu Terminen in ${city.name} hinzu.`,
+      'Halte die Antwort auf Preisfragen in 2 bis 3 Sätzen direkt.',
+      'Setze die wichtigste Antwort in den ersten Abschnitt.'
     ],
-    semanticSuggestions: uniq([
+    semanticSuggestions: [
       `${service.name} ${city.name}`,
       `${service.name} Kosten ${city.name}`,
-      `${service.name} Termin ${city.name}`
-    ])
+      `${service.name} Ablauf ${city.name}`
+    ]
   };
 }
 
 function buildLocalAdaptation(city, service, writer) {
-  const nearbyMap = {
-    "rastatt": ["Baden-Baden", "Gaggenau", "Kuppenheim"],
-    "baden-baden": ["Rastatt", "Sinzheim", "Bühl"],
-    "gaggenau": ["Rastatt", "Gernsbach", "Kuppenheim"],
-    "karlsruhe": ["Rastatt", "Ettlingen", "Malsch"]
+  const nearby = {
+    rastatt: ['Baden-Baden', 'Gaggenau', 'Kuppenheim'],
+    'baden-baden': ['Rastatt', 'Sinzheim', 'Bühl'],
+    gaggenau: ['Rastatt', 'Gernsbach', 'Kuppenheim'],
+    karlsruhe: ['Rastatt', 'Ettlingen', 'Malsch']
   };
-  const nearby = nearbyMap[city.slug] || [];
   return {
-    localizedIntro: `${service.name} in ${city.name} und Umgebung bedeutet vor allem kurze Abstimmung, klare Preisfaktoren und eine saubere Übergabe. Auch Anfragen aus ${nearby.join(", ")} werden oft mitgedacht.`,
-    localElementsAdded: nearby,
-    ctaVariant: `Jetzt ${service.name} in ${city.name} per WhatsApp anfragen`,
-    faqAdjustments: [
-      `Ist ${service.name} auch in ${city.name} und Umgebung kurzfristig möglich?`,
-      `Welche Anfahrt ist für ${city.name} relevant?`
-    ]
+    localizedIntro: `${service.name} in ${city.name} und Umgebung wird oft dann angefragt, wenn es schnell, klar und ohne unnötigen Aufwand gehen soll.`,
+    localAreasMentioned: nearby[city.slug] || [],
+    localCta: `Jetzt ${service.name} in ${city.name} per WhatsApp anfragen`,
+    changedElements: ['intro', 'FAQ', 'CTA', 'nearby areas', 'supporting context']
   };
 }
 
-function buildInternalLinking(city, service, writer) {
+function buildLinking(city, service, rec, writer) {
   return {
     linksOut: [
-      { target: writer.supportsPage, anchor: `${service.name} ${city.name}` },
-      { target: "preisrechner.html", anchor: `${service.name} Kosten berechnen` },
-      { target: "blog.html", anchor: "Weitere lokale Ratgeber im Blog" }
+      rec.supportsPage,
+      'preisrechner.html',
+      city.servicePage
     ],
     linksIn: [
-      { sourceHint: "blog.html", anchor: `${service.name} ${city.name}` },
-      { sourceHint: writer.supportsPage, anchor: `Kosten einer ${service.name}` }
+      'blog.html',
+      city.servicePage
+    ],
+    anchorTexts: [
+      `${service.name} in ${city.name}`,
+      `Kosten einer ${service.name}`,
+      'Preisrechner'
     ]
   };
 }
 
-function buildLeadConversion(city, service) {
+function buildConversion(city, service) {
   return {
-    topCta: "Jetzt kostenlose Einschätzung per WhatsApp anfragen",
-    middleCta: "Preisorientierung in 1 Minute berechnen",
-    bottomCta: "Fotos senden und exaktes Angebot erhalten",
-    buttonTexts: {
-      whatsapp: `WhatsApp Anfrage ${city.name}`,
-      calculator: "Preisrechner starten",
-      phone: "Jetzt anrufen"
-    },
-    microConversions: [
-      "2–3 Fotos senden",
-      "Kurzmenge beschreiben",
-      "Schnelle Ersteinschätzung erhalten"
-    ]
+    ctaTop: `Jetzt kostenlose Einschätzung für ${service.name} in ${city.name} anfragen`,
+    ctaMiddle: 'Preisorientierung in 1 Minute berechnen',
+    ctaBottom: 'Fotos senden und exaktes Angebot erhalten',
+    microConversion: 'Fotos per WhatsApp senden und schneller Rückmeldung erhalten',
+    channels: ['WhatsApp', 'Preisrechner', 'Telefon']
   };
 }
 
 export default async (request) => {
+  if (request.method !== 'POST') return json({ ok: false, error: 'POST only' }, 405);
+
+  let body = {};
   try {
-    if (request.method !== "POST") {
-      return jsonResponse({ ok: false, error: "POST only" }, 405);
-    }
-
-    const body = await request.json().catch(() => ({}));
-    const { cities, services, goals, contentIndexItems, publicationItems } = loadConfig();
-
-    const city = findCity(cities, body.city);
-    const service = findService(services, body.service);
-
-    if (!city || !service) {
-      return jsonResponse({
-        ok: false,
-        error: "Unknown city or service",
-        city: body.city,
-        service: body.service,
-        acceptedCityExamples: cities.slice(0, 5).map(c => c.slug),
-        acceptedServiceExamples: services.slice(0, 5).map(s => s.slug)
-      }, 400);
-    }
-
-    const candidates = buildCandidates(city, service);
-    const combinedExisting = [...contentIndexItems, ...publicationItems];
-    const recommendedBase = candidates[0] || null;
-
-    if (!recommendedBase) {
-      return jsonResponse({ ok: false, error: "No candidates available" }, 500);
-    }
-
-    const duplicate = detectDuplicate(recommendedBase, combinedExisting);
-    const recommended = {
-      ...recommendedBase,
-      duplicateDecision: duplicate.status,
-      cannibalizationRisk: duplicate.risk,
-      matchedExisting: duplicate.affected
-    };
-    const writer = buildWriter(city, service, recommended);
-    const geo = buildGeo(city, service, writer);
-    const localAdaptation = buildLocalAdaptation(city, service, writer);
-    const internalLinking = buildInternalLinking(city, service, writer);
-    const leadConversion = buildLeadConversion(city, service);
-
-    return jsonResponse({
-      ok: true,
-      mode: "preview",
-      city,
-      service,
-      goals,
-      candidates,
-      recommended,
-      duplicate,
-      writer,
-      geo,
-      localAdaptation,
-      internalLinking,
-      leadConversion
-    });
-  } catch (err) {
-    return jsonResponse({
-      ok: false,
-      errorType: err?.name || "Error",
-      errorMessage: err?.message || String(err)
-    }, 500);
+    body = await request.json();
+  } catch {
+    return json({ ok: false, error: 'Invalid JSON body' }, 400);
   }
+
+  const rawCity = body.city || '';
+  const rawService = body.service || '';
+
+  const citiesData = await fetchRepoJson('agent/config/cities.json', CITIES_FALLBACK);
+  const servicesData = await fetchRepoJson('agent/config/services.json', SERVICES_FALLBACK);
+  const goals = await fetchRepoJson('agent/config/goals.json', DEFAULT_GOALS);
+  const contentIndex = await fetchRepoJson('agent/state/content-index.json', INDEX_FALLBACK);
+
+  const cities = Array.isArray(citiesData?.cities) ? citiesData.cities : CITIES_FALLBACK.cities;
+  const services = Array.isArray(servicesData?.services) ? servicesData.services : SERVICES_FALLBACK.services;
+
+  const city = cities.find(c => normalize(c.slug) === normalize(rawCity) || normalize(c.name) === normalize(rawCity));
+  const service = services.find(s => normalize(s.slug) === normalize(rawService) || normalize(s.name) === normalize(rawService));
+
+  if (!city || !service) {
+    return json({
+      ok: false,
+      error: 'Unknown city or service',
+      city: rawCity,
+      service: rawService,
+      acceptedCityExamples: cities.slice(0, 4).map(c => c.slug),
+      acceptedServiceExamples: services.slice(0, 4).map(s => s.slug)
+    }, 400);
+  }
+
+  const { candidates, recommended } = chooseTopic(city, service, contentIndex.items || []);
+  const duplicate = recommended ? buildDuplicatePreview(recommended) : null;
+  const writer = recommended ? buildWriterPreview(city, service, recommended) : null;
+  const geo = writer ? buildGeoPreview(city, service, writer) : null;
+  const localAdaptation = writer ? buildLocalAdaptation(city, service, writer) : null;
+  const internalLinking = writer && recommended ? buildLinking(city, service, recommended, writer) : null;
+  const leadConversion = writer ? buildConversion(city, service) : null;
+
+  return json({
+    ok: true,
+    mode: 'preview',
+    city,
+    service,
+    goals,
+    candidates,
+    recommended,
+    duplicate,
+    writer,
+    geo,
+    localAdaptation,
+    internalLinking,
+    leadConversion
+  });
 };
