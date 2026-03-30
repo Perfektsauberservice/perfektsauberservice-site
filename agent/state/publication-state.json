@@ -1,7 +1,15 @@
 {
   "date": "2026-03-30",
-  "count": 1,
+  "count": 2,
   "items": [
+    {
+      "slug": "wie-laeuft-eine-entruempelung-in-baden-baden-ab",
+      "title": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "topic": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
+      "publishedAt": "2026-03-30T07:47:01.114Z"
+    },
     {
       "slug": "wie-laeuft-eine-entruempelung-in-baden-baden-ab",
       "title": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
