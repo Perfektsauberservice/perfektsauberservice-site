@@ -1,11 +1,10 @@
-
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const repoRoot = path.resolve(__dirname, "..", "..");
+const currentFile = fileURLToPath(import.meta.url);
+const currentDir = path.dirname(currentFile);
+const repoRoot = path.resolve(currentDir, "..", "..");
 
 function jsonResponse(payload, status = 200) {
   return new Response(JSON.stringify(payload, null, 2), {
@@ -17,7 +16,7 @@ function jsonResponse(payload, status = 200) {
 function normalize(value = "") {
   return String(value)
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .trim();
 }
@@ -114,7 +113,7 @@ function buildWriter(recommended, city, service) {
   return {
     title,
     metaTitle: `${title} | Perfekt Sauber Service`,
-    metaDescription: `Klare Antwort zu ${normalize(service.name)} in ${city.name}: Ablauf, Kosten, FAQ und direkte Anfrage per WhatsApp.`,
+    metaDescription: `Klare Antwort zu ${service.name} in ${city.name}: Ablauf, Kosten, FAQ und direkte Anfrage per WhatsApp.`,
     slug,
     h1: title,
     format: recommended.format,
@@ -152,19 +151,9 @@ function buildGeo(writer, city, service) {
 
 function buildLinking(writer, city) {
   return {
-    linksOut: [
-      city.servicePage || writer.supportsPage,
-      "preisrechner.html",
-      "blog.html"
-    ],
-    linksIn: [
-      "blog.html"
-    ],
-    anchors: [
-      `${writer.primaryKeyword}`,
-      "Kosten einer Entrümpelung",
-      "Preisrechner"
-    ]
+    linksOut: [city.servicePage || writer.supportsPage, "preisrechner.html", "blog.html"],
+    linksIn: ["blog.html"],
+    anchors: [writer.primaryKeyword, "Kosten einer Entrümpelung", "Preisrechner"]
   };
 }
 
@@ -183,9 +172,7 @@ function buildConversion(city, service) {
 }
 
 export default async function handler(request) {
-  if (request.method !== "POST") {
-    return jsonResponse({ ok: false, error: "POST only" }, 405);
-  }
+  if (request.method !== "POST") return jsonResponse({ ok: false, error: "POST only" }, 405);
 
   let body = {};
   try {
