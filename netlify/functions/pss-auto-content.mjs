@@ -7,6 +7,7 @@ const REQUIRED_ENV = ['OPENAI_API_KEY', 'GITHUB_OWNER', 'GITHUB_REPO', 'GITHUB_T
 const DAILY_LIMIT = Number(process.env.AUTO_DAILY_LIMIT || 5);
 const DAILY_STATE_PATH = 'agent/state/publication-state.json';
 const BLOG_INDEX_PATH = 'content/auto/blog-index.json';
+const BLOG_PUBLIC_DIR = 'blog';
 
 const slugify = (value) => String(value || '')
   .toLowerCase()
@@ -143,7 +144,7 @@ function articleHtml({ article, city, service }) {
 <title>${escapeHtml(article.seoTitle || article.title)}</title>
 <meta name="description" content="${escapeHtml(article.metaDescription || '')}" />
 <meta name="robots" content="index,follow" />
-<link rel="canonical" href="${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/auto/${article.slug}.html" />
+<link rel="canonical" href="${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/blog/${article.slug}.html" />
 <style>
 :root{--bg:#f5f8fc;--text:#122033;--muted:#5d697a;--line:#dde5ee;--blue:#21466f;--green:#76c043}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:#fff;line-height:1.7}a{text-decoration:none;color:inherit}.container{max-width:980px;margin:0 auto;padding:0 22px}.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(15,23,42,.84),rgba(15,23,42,.56)),url('../${city.heroImage}') center/cover no-repeat;color:#fff;padding:88px 0 60px}.hero .container{position:relative;z-index:1}.badge{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);font-weight:800}.hero h1{font-size:clamp(2rem,5vw,4rem);line-height:1.02;margin:18px 0 0}.lead{font-size:1.15rem;max-width:820px;color:rgba(255,255,255,.94);margin-top:14px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:18px;font-weight:800}.btn-green{background:var(--green);color:#fff}.btn-blue{background:rgba(15,23,42,.38);border:1px solid rgba(255,255,255,.42);color:#fff;backdrop-filter:blur(4px)}.wrap{padding:38px 0 56px}.content-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:0 18px 40px rgba(15,23,42,.06)}.content-section + .content-section{margin-top:26px}.content-section h2{font-size:1.6rem;line-height:1.2;margin:0 0 10px}.content-copy p{margin:0 0 12px}.faq-grid{display:grid;gap:16px;margin-top:18px}.faq-item{border:1px solid var(--line);border-radius:18px;padding:18px;background:#f8fbff}.faq-item h3{margin:0 0 8px;font-size:1.05rem}.notice{margin-top:18px;padding:14px 16px;border-radius:16px;background:#fff7e8;border:1px solid #f6dca7;color:#8a5b00}.footer{padding:28px 0 42px;color:#66778f;font-size:14px}.footer a{font-weight:700;color:#21466f}@media(max-width:720px){.actions{flex-direction:column;align-items:stretch}.content-card{padding:20px}}</style>
@@ -281,7 +282,7 @@ async function updateSitemap(slug) {
   const existing = await githubGet(pathname);
   if (!existing?.content) return null;
   const xml = Buffer.from(existing.content, 'base64').toString('utf8');
-  const url = `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/auto/${slug}.html`;
+  const url = `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/blog/${slug}.html`;
   if (xml.includes(url)) return { skipped: true };
   const now = new Date().toISOString();
   const insert = `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n  </url>\n`;
@@ -369,11 +370,11 @@ export default async (req) => {
     const html = articleHtml({ article, city, service });
     const markdown = markdownArticle({ article, city, service });
 
-    const htmlPath = `auto/${article.slug}.html`;
+    const htmlPath = `${BLOG_PUBLIC_DIR}/${article.slug}.html`;
     const mdPath = `content/auto/${article.slug}.md`;
 
-    const htmlCommit = await githubPut(htmlPath, html, `feat(auto): publish ${article.slug}`);
-    const mdCommit = await githubPut(mdPath, markdown, `feat(auto): draft ${article.slug}`);
+    const htmlCommit = await githubPut(htmlPath, html, `feat(blog): publish ${article.slug}`);
+    const mdCommit = await githubPut(mdPath, markdown, `feat(blog): draft ${article.slug}`);
     await updateSitemap(article.slug).catch(() => null);
 
     const entry = {
@@ -389,7 +390,8 @@ export default async (req) => {
       topic,
       image: city.heroImage,
       publishedAt: new Date().toISOString(),
-      url: `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/auto/${article.slug}.html`
+      url: `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/blog/${article.slug}.html`,
+      htmlPath
     };
 
     dailyState.count += 1;
