@@ -7,6 +7,7 @@ const REQUIRED_ENV = ['OPENAI_API_KEY', 'GITHUB_OWNER', 'GITHUB_REPO', 'GITHUB_T
 const DAILY_LIMIT = Number(process.env.AUTO_DAILY_LIMIT || 5);
 const DAILY_STATE_PATH = 'agent/state/publication-state.json';
 const BLOG_INDEX_PATH = 'content/auto/blog-index.json';
+const BLOG_PUBLIC_DIR = 'blog';
 
 const slugify = (value) => String(value || '')
   .toLowerCase()
@@ -281,7 +282,7 @@ async function updateSitemap(slug) {
   const existing = await githubGet(pathname);
   if (!existing?.content) return null;
   const xml = Buffer.from(existing.content, 'base64').toString('utf8');
-  const url = `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/auto/${slug}.html`;
+  const url = `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/blog/${slug}.html`;
   if (xml.includes(url)) return { skipped: true };
   const now = new Date().toISOString();
   const insert = `  <url>\n    <loc>${url}</loc>\n    <lastmod>${now}</lastmod>\n  </url>\n`;
@@ -369,11 +370,11 @@ export default async (req) => {
     const html = articleHtml({ article, city, service });
     const markdown = markdownArticle({ article, city, service });
 
-    const htmlPath = `blog/${article.slug}.html`;
+    const htmlPath = `${BLOG_PUBLIC_DIR}/${article.slug}.html`;
     const mdPath = `content/auto/${article.slug}.md`;
 
     const htmlCommit = await githubPut(htmlPath, html, `feat(blog): publish ${article.slug}`);
-    const mdCommit = await githubPut(mdPath, markdown, `feat(auto): draft ${article.slug}`);
+    const mdCommit = await githubPut(mdPath, markdown, `feat(blog): draft ${article.slug}`);
     await updateSitemap(article.slug).catch(() => null);
 
     const entry = {
@@ -389,7 +390,8 @@ export default async (req) => {
       topic,
       image: city.heroImage,
       publishedAt: new Date().toISOString(),
-      url: `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/blog/${article.slug}.html`
+      url: `${process.env.NETLIFY_SITE_URL.replace(/\/$/, '')}/blog/${article.slug}.html`,
+      htmlPath
     };
 
     dailyState.count += 1;
