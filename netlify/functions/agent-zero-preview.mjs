@@ -1,187 +1,151 @@
-const GITHUB_OWNER = process.env.GITHUB_OWNER;
-const GITHUB_REPO = process.env.GITHUB_REPO;
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
-const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8' };
+const ROOT = process.cwd();
 
-function response(statusCode, body) {
-  return { statusCode, headers: JSON_HEADERS, body: JSON.stringify(body, null, 2) };
-}
-
-async function githubGet(path) {
-  if (!GITHUB_OWNER || !GITHUB_REPO || !GITHUB_TOKEN) {
-    throw new Error('Missing GitHub env vars');
-  }
-  const url = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${path}`;
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      Accept: 'application/vnd.github.raw'
-    }
-  });
-  if (!res.ok) {
-    throw new Error(`GitHub fetch failed for ${path}: ${res.status}`);
-  }
-  return res.text();
-}
-
-async function loadJson(path, fallback) {
+async function readJson(relPath, fallback) {
   try {
-    const raw = await githubGet(path);
+    const full = path.join(ROOT, relPath);
+    const raw = await readFile(full, 'utf8');
     return JSON.parse(raw);
-  } catch (err) {
-    if (fallback !== undefined) return fallback;
-    throw err;
+  } catch {
+    return fallback;
   }
 }
 
-function normalize(value) {
-  return String(value || '')
+function slugify(text = '') {
+  return String(text)
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
+    .replace(/ß/g, 'ss')
     .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .replace(/(^-|-$)/g, '');
 }
 
-function titleCase(s) {
-  return String(s || '')
-    .split(/[-\s]+/)
-    .filter(Boolean)
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+function titleCase(s='') {
+  return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 }
 
-function getServiceName(serviceKey, services) {
-  const svc = Array.isArray(services)
-    ? services.find(s => normalize(s.key || s.slug || s.name) === normalize(serviceKey))
-    : null;
-  return svc?.name || titleCase(serviceKey);
-}
-
-function getCityName(cityKey, cities) {
-  const city = Array.isArray(cities)
-    ? cities.find(c => normalize(c.key || c.slug || c.name) === normalize(cityKey))
-    : null;
-  return city?.name || titleCase(cityKey);
-}
-
-function buildCandidates(cityName, serviceName) {
+function pickTopicTemplates(serviceKey, cityName) {
+  const serviceLabel = serviceKey === 'entruempelung' ? 'Entrümpelung' : titleCase(serviceKey);
   return [
-    {
-      topic: `Was kostet eine ${serviceName} in ${cityName}?`,
-      primaryKeyword: `${serviceName.toLowerCase()} ${cityName.toLowerCase()} kosten`,
-      intent: 'commercial/informational',
-      priority: 9,
-      format: 'article',
-      supports: `${serviceName} ${cityName}`,
-    },
-    {
-      topic: `Wie läuft eine ${serviceName} in ${cityName} ab?`,
-      primaryKeyword: `${serviceName.toLowerCase()} ${cityName.toLowerCase()} ablauf`,
-      intent: 'commercial/informational',
-      priority: 8,
-      format: 'article',
-      supports: `${serviceName} ${cityName}`,
-    },
-    {
-      topic: `Wie schnell bekommt man einen Termin für eine ${serviceName} in ${cityName}?`,
-      primaryKeyword: `${serviceName.toLowerCase()} ${cityName.toLowerCase()} termin`,
-      intent: 'commercial',
-      priority: 8,
-      format: 'faq',
-      supports: `${serviceName} ${cityName}`,
-    }
+    `Was kostet eine ${serviceLabel} in ${cityName}?`,
+    `Wie läuft eine ${serviceLabel} in ${cityName} ab?`,
+    `Wie schnell bekommt man einen Termin für eine ${serviceLabel} in ${cityName}?`
   ];
 }
 
-function existingSlugsSet(contentIndex, publicationState) {
-  const set = new Set();
-  const add = s => { if (s) set.add(normalize(s)); };
-  if (Array.isArray(contentIndex?.items)) {
-    contentIndex.items.forEach(i => add(i.slug || i.url || i.title));
-  }
-  if (Array.isArray(publicationState?.items)) {
-    publicationState.items.forEach(i => add(i.slug || i.url || i.title));
-  }
-  return set;
-}
-
-function duplicateDecision(candidate, slugs) {
-  const slug = normalize(candidate.topic);
-  if (slugs.has(slug)) {
-    return {
-      status: 'update existing',
-      reason: 'Exact slug already exists',
-      cannibalizationRisk: 'high'
-    };
-  }
-  const partial = Array.from(slugs).some(existing => {
-    const a = existing.split('-');
-    const b = slug.split('-');
-    const overlap = a.filter(x => b.includes(x)).length;
-    return overlap >= Math.max(4, Math.min(a.length, b.length) - 2);
-  });
-  if (partial) {
-    return {
-      status: 'merge with existing',
-      reason: 'Very similar topic/intent found',
-      cannibalizationRisk: 'medium'
-    };
-  }
+function buildCandidate(topic, citySlug, cityName, serviceKey) {
+  const lowerService = serviceKey === 'entruempelung' ? 'entruempelung' : slugify(serviceKey);
+  const primary = `${lowerService} ${citySlug} ${topic.toLowerCase().includes('kostet') ? 'kosten' : topic.toLowerCase().includes('termin') ? 'termin' : 'ablauf'}`;
+  const secondary = [
+    `${lowerService} ${citySlug}`,
+    `${citySlug} ${lowerService}`,
+    `${lowerService} ${cityName.toLowerCase()}`
+  ];
+  const format = topic.toLowerCase().includes('kostet') || topic.toLowerCase().includes('termin') || topic.toLowerCase().includes('läuft')
+    ? 'artikel'
+    : 'faq';
+  const intent = topic.toLowerCase().includes('kostet') || topic.toLowerCase().includes('termin')
+    ? 'commercial/informational'
+    : 'informational';
   return {
-    status: 'create new',
-    reason: 'No close match found',
-    cannibalizationRisk: 'low'
+    topic,
+    slug: slugify(topic),
+    primaryKeyword: primary,
+    secondaryKeywords: secondary,
+    searchIntent: intent,
+    priority: 8,
+    recommendedFormat: format,
+    supportsPage: `${titleCase(serviceKey)} ${cityName}`
   };
 }
 
-export default async (request) => {
+export default async (request, context) => {
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ ok: false, error: 'POST only' }), {
+      status: 405,
+      headers: { 'content-type': 'application/json' }
+    });
+  }
+
   try {
-    if (request.httpMethod !== 'POST') {
-      return response(405, { ok: false, error: 'POST only' });
+    const body = await request.json().catch(() => ({}));
+    const cityInput = String(body.city || '').trim().toLowerCase();
+    const serviceInput = String(body.service || '').trim().toLowerCase();
+
+    const cities = await readJson('agent/config/cities.json', []);
+    const services = await readJson('agent/config/services.json', []);
+    const goals = await readJson('agent/config/goals.json', { businessGoals: ['lead generation', 'local seo', 'geo'] });
+    const contentIndex = await readJson('agent/state/content-index.json', { items: [] });
+    const publicationState = await readJson('agent/state/publication-state.json', { items: [] });
+
+    const city = Array.isArray(cities)
+      ? cities.find(c => slugify(c.slug || c.name || c.city) === cityInput || slugify(c.name || c.city) === cityInput)
+      : null;
+    const service = Array.isArray(services)
+      ? services.find(s => slugify(s.slug || s.key || s.name) === serviceInput || slugify(s.name) === serviceInput)
+      : null;
+
+    if (!city || !service) {
+      return new Response(JSON.stringify({ ok: false, error: 'Unknown city or service', city: cityInput, service: serviceInput }), {
+        status: 400,
+        headers: { 'content-type': 'application/json' }
+      });
     }
 
-    const body = JSON.parse(request.body || '{}');
-    const cities = await loadJson('agent/config/cities.json', []);
-    const services = await loadJson('agent/config/services.json', []);
-    const goals = await loadJson('agent/config/goals.json', {});
-    const contentIndex = await loadJson('agent/state/content-index.json', { items: [] });
-    const publicationState = await loadJson('agent/state/publication-state.json', { items: [] });
+    const cityName = city.name || city.city || titleCase(cityInput);
+    const citySlug = slugify(city.slug || city.name || city.city);
+    const serviceKey = slugify(service.slug || service.key || service.name);
+    const topics = pickTopicTemplates(serviceKey, cityName).map(t => buildCandidate(t, citySlug, cityName, serviceKey));
 
-    const cityName = getCityName(body.city || body.cityKey || 'rastatt', cities);
-    const serviceName = getServiceName(body.service || body.serviceKey || 'entruempelung', services);
-    const candidates = buildCandidates(cityName, serviceName);
-    const slugs = existingSlugsSet(contentIndex, publicationState);
+    const existingSlugs = new Set([
+      ...(Array.isArray(contentIndex.items) ? contentIndex.items.map(i => i.slug).filter(Boolean) : []),
+      ...(Array.isArray(publicationState.items) ? publicationState.items.map(i => i.slug).filter(Boolean) : [])
+    ]);
 
-    const enriched = candidates.map(candidate => ({
-      ...candidate,
-      secondaryKeywords: [
-        `${serviceName.toLowerCase()} ${cityName.toLowerCase()}`,
-        `${serviceName.toLowerCase()} ${cityName.toLowerCase()} preis`,
-      ],
-      duplicateCheck: duplicateDecision(candidate, slugs)
-    }));
-
-    const selected = enriched
-      .sort((a, b) => {
-        const rank = { 'create new': 3, 'merge with existing': 2, 'update existing': 1, reject: 0 };
-        return (rank[b.duplicateCheck.status] || 0) - (rank[a.duplicateCheck.status] || 0) || b.priority - a.priority;
-      })[0];
-
-    return response(200, {
-      ok: true,
-      mode: 'preview',
-      agentZero: {
-        city: cityName,
-        service: serviceName,
-        businessGoals: goals,
-        selected,
-        candidates: enriched
+    const evaluated = topics.map(candidate => {
+      const exact = existingSlugs.has(candidate.slug);
+      const partial = Array.from(existingSlugs).some(s => s && (s.includes(citySlug) && s.includes(serviceKey) && (s.includes('kostet') === candidate.slug.includes('kostet') || s.includes('termin') === candidate.slug.includes('termin') || s.includes('ablauf') === candidate.slug.includes('ablauf'))));
+      let status = 'create new';
+      let risk = 'low';
+      let reason = 'No competing slug found.';
+      if (exact) {
+        status = 'update existing';
+        risk = 'high';
+        reason = 'Exact slug already exists.';
+      } else if (partial) {
+        status = 'merge with existing';
+        risk = 'medium';
+        reason = 'A closely related slug already exists for same city/service intent.';
       }
+      return { ...candidate, duplicateDecision: { status, cannibalizationRisk: risk, reason } };
+    });
+
+    const best = evaluated.find(e => e.duplicateDecision.status === 'create new') || evaluated[0];
+
+    return new Response(JSON.stringify({
+      ok: true,
+      agent: 'agent-zero-preview',
+      input: { city: cityName, service: service.name || serviceKey },
+      goals: goals.businessGoals || goals.goals || goals,
+      candidates: evaluated,
+      recommended: best,
+      summary: {
+        totalCandidates: evaluated.length,
+        createNew: evaluated.filter(e => e.duplicateDecision.status === 'create new').length,
+        updates: evaluated.filter(e => e.duplicateDecision.status === 'update existing').length,
+        merges: evaluated.filter(e => e.duplicateDecision.status === 'merge with existing').length
+      }
+    }, null, 2), {
+      status: 200,
+      headers: { 'content-type': 'application/json' }
     });
   } catch (error) {
-    return response(500, { ok: false, error: String(error.message || error) });
+    return new Response(JSON.stringify({ ok: false, error: error?.message || String(error) }), {
+      status: 500,
+      headers: { 'content-type': 'application/json' }
+    });
   }
 };
