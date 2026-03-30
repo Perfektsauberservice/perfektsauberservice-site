@@ -7,10 +7,12 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     .agent-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.agent-card{background:#fff;border:1px solid #e5e7eb;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
-    .code{background:#0f172a;color:#e2e8f0;border-radius:18px;padding:16px;font:13px/1.6 ui-monospace,SFMono-Regular,monospace;overflow:auto}
+    .code{background:#0f172a;color:#e2e8f0;border-radius:18px;padding:16px;font:13px/1.6 ui-monospace,SFMono-Regular,monospace;overflow:auto;white-space:pre-wrap}
     .city-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}.city-tile{border-radius:20px;min-height:150px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.18);background:#0f172a}.city-tile img{width:100%;height:100%;object-fit:cover;display:block}.city-tile span{position:absolute;left:12px;bottom:12px;color:#fff;font-weight:900;background:rgba(15,23,42,.62);padding:8px 12px;border-radius:999px}
     .stack{display:grid;gap:14px}.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#e0f2fe;color:#0c4a6e;padding:7px 12px;font-weight:700;font-size:13px}.list{display:grid;gap:10px;margin-top:16px}.list div{padding:14px;border:1px solid #e5e7eb;border-radius:16px;background:#f8fafc}
-    @media(max-width:960px){.agent-grid{grid-template-columns:1fr}.city-grid{grid-template-columns:1fr}}
+    .agent-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.agent-box{padding:16px;border:1px solid #dbe2ea;border-radius:18px;background:#fff}.agent-box b{display:block;font-size:15px}.agent-box span{display:block;color:#64748b;font-size:13px;line-height:1.55;margin-top:6px}
+    .workflow{display:grid;gap:10px;counter-reset:step}.workflow div{counter-increment:step;padding:14px 16px;border:1px solid #e5e7eb;border-radius:16px;background:#f8fafc;position:relative;padding-left:54px}.workflow div:before{content:counter(step);position:absolute;left:16px;top:12px;width:26px;height:26px;border-radius:999px;background:#2563eb;color:#fff;display:grid;place-items:center;font-weight:900;font-size:13px}
+    @media(max-width:960px){.agent-grid{grid-template-columns:1fr}.city-grid,.agent-stack{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -28,32 +30,33 @@
         <a href="index.html">⬅ Dashboard</a>
         <a class="active" href="#overview">🤖 Agent overview</a>
         <a href="#cities">🖼️ Orașe & imagini</a>
+        <a href="#agents">🧠 Multi-agent stack</a>
         <a href="#files">📂 Fișiere</a>
         <a href="#deploy">🚀 Deploy logic</a>
       </div>
       <div class="sidebar-card">
         <div class="kicker">Status</div>
-        <div style="font-weight:900;margin-top:6px">Pregătit pentru full-auto</div>
-        <div class="note" style="margin-top:8px">După ce adaugi cheile în Netlify, funcția poate fi extinsă să genereze și să împingă articolele automat.</div>
+        <div style="font-weight:900;margin-top:6px">Publicare live activă</div>
+        <div class="note" style="margin-top:8px">Motorul publică acum în <strong>/blog/</strong>. Următorul pas este filtrarea prin Agent Zero, Topic Selector și Duplicate Checker.</div>
         <div style="height:10px"></div>
-        <a class="btn btn-soft" href="../preisrechner.html" style="width:100%">Deschide Preisrechner</a>
+        <a class="btn btn-soft" href="../blog" style="width:100%">Deschide blogul</a>
       </div>
     </aside>
     <main class="main">
       <section class="hero" id="overview">
         <div class="hero-main">
           <div class="kicker" style="color:#dbeafe">Automatizare completă</div>
-          <div style="font-size:2.15rem;font-weight:900;line-height:1.08;margin-top:10px;max-width:760px;">Agentul găsește topicuri, folosește poza corectă pe oraș și pregătește articole noi pentru site.</div>
-          <div style="margin-top:14px;max-width:760px;line-height:1.75;opacity:.95;">Baza de lucru este deja pusă în arhivă: fișiere de configurare pentru orașe și servicii, promptul editorului, generator de articole draft și funcție Netlify pentru modul full-auto.</div>
+          <div style="font-size:2.15rem;font-weight:900;line-height:1.08;margin-top:10px;max-width:760px;">Agentul publică acum live în blog și primește un strat nou de selecție, verificare și optimizare.</div>
+          <div style="margin-top:14px;max-width:760px;line-height:1.75;opacity:.95;">În patch-ul acesta intră baza pentru orchestratorul Agent Zero și cei 7 agenți auxiliari: Topic Selector, Duplicate Checker, Writer, Local Adaptation, GEO Optimization, Internal Linking și Lead Conversion.</div>
           <div style="height:18px"></div>
           <div class="actions">
-            <a class="btn btn-primary" href="#files">Vezi fișierele agentului</a>
-            <a class="btn btn-green" href="../preisrechner.html">Preisrechner live</a>
+            <a class="btn btn-primary" href="#agents">Vezi stack-ul de agenți</a>
+            <a class="btn btn-green" href="../blog">Blog live</a>
           </div>
         </div>
         <div class="hero-side stack">
           <div class="mini-card"><div class="kicker">Orașe active</div><div style="font-size:1.5rem;font-weight:900;margin-top:8px">4</div><div class="note" style="margin-top:6px">Rastatt, Baden-Baden, Gaggenau, Karlsruhe</div></div>
-          <div class="mini-card"><div class="kicker">Servicii active</div><div style="font-size:1.5rem;font-weight:900;margin-top:8px">4</div><div class="note" style="margin-top:6px">Entrümpelung, Wohnungsauflösung, Endreinigung, Fensterreinigung</div></div>
+          <div class="mini-card"><div class="kicker">Agenți planificați</div><div style="font-size:1.5rem;font-weight:900;margin-top:8px">8</div><div class="note" style="margin-top:6px">Agent Zero + 7 agenți specializați pentru SEO, GEO și lead-uri</div></div>
         </div>
       </section>
       <section class="agent-grid" id="cities" style="margin-top:24px;">
@@ -67,25 +70,39 @@
           </div>
         </div>
         <div class="agent-card" id="files">
-          <div class="pill">Fișiere adăugate</div>
+          <div class="pill">Fișiere cheie</div>
           <div class="list">
             <div><strong>agent/config/cities.json</strong><br><span class="note">Mapare oraș → pagină → imagine background</span></div>
             <div><strong>agent/config/services.json</strong><br><span class="note">Servicii și șabloane de topicuri</span></div>
-            <div><strong>agent/prompts/content-agent.md</strong><br><span class="note">Reguli editoriale pentru articole</span></div>
-            <div><strong>agent/scripts/generate-articles.mjs</strong><br><span class="note">Generează drafturi locale în content/auto</span></div>
+            <div><strong>agent/config/goals.json</strong><br><span class="note">Obiective business: lead-uri, local pages, SEO și GEO</span></div>
+            <div><strong>agent/prompts/*.md</strong><br><span class="note">Prompts separate pentru fiecare agent din stack</span></div>
+            <div><strong>agent/scripts/run-agent-zero.mjs</strong><br><span class="note">Orchestrator logic pentru topic → duplicate → writer → optimizare</span></div>
             <div><strong>netlify/functions/pss-auto-content.mjs</strong><br><span class="note">Endpoint Netlify pregătit pentru generare + commit în GitHub</span></div>
-            <div><strong>netlify.toml</strong><br><span class="note">Leagă funcțiile Netlify și ruta API</span></div>
           </div>
+        </div>
+      </section>
+      <section class="agent-card" id="agents" style="margin-top:24px;">
+        <div class="pill">Stack nou de agenți</div>
+        <div class="agent-stack">
+          <div class="agent-box"><b>Agent Zero / Orchestrator</b><span>Pornește fluxul, validează inputul, ține limita zilnică și decide dacă publică sau oprește.</span></div>
+          <div class="agent-box"><b>Topic Selector</b><span>Alege subiectele cu intenție comercială și le mapează spre pagina de serviciu sau pagina locală potrivită.</span></div>
+          <div class="agent-box"><b>Duplicate Checker</b><span>Blochează canibalizarea, decide create / update / merge / reject pe baza slugurilor și a intenției.</span></div>
+          <div class="agent-box"><b>SEO + GEO Writer</b><span>Scrie meta, slug, H1, structură H2/H3, costuri, proces, beneficii, FAQ și CTA.</span></div>
+          <div class="agent-box"><b>Local Adaptation</b><span>Transformă conținutul bun în variantă locală pentru Rastatt, Baden-Baden, Gaggenau sau Karlsruhe.</span></div>
+          <div class="agent-box"><b>GEO Optimization</b><span>Rescrie pasajele ca să fie citabile, directe și ușor de extras de AI search.</span></div>
+          <div class="agent-box"><b>Internal Linking</b><span>Decide links in / links out și anchor texturile care susțin pagina nouă.</span></div>
+          <div class="agent-box"><b>Lead Conversion</b><span>Pune CTA-ul bun sus, la mijloc și jos, plus intrarea către WhatsApp și Preisrechner.</span></div>
         </div>
       </section>
       <section class="agent-grid" id="deploy" style="margin-top:24px;">
         <div class="agent-card">
-          <h3>Fluxul full-auto</h3>
-          <div class="list">
-            <div>1. Agentul citește orașele și serviciile din fișierele JSON.</div>
-            <div>2. Generează automat topicuri locale noi.</div>
-            <div>3. Creează drafturi în <strong>content/auto</strong> și folosește imaginea corectă pe oraș.</div>
-            <div>4. Funcția Netlify poate genera articolul cu OpenAI, scrie fișierele în repo și lansa deploy automat prin GitHub + Netlify.</div>
+          <h3>Workflow nou</h3>
+          <div class="workflow">
+            <div>Agent Zero citește orașele, serviciile, obiectivele și indexul actual de conținut.</div>
+            <div>Topic Selector propune topicuri cu keyword principal, secundar, prioritate și format recomandat.</div>
+            <div>Duplicate Checker decide create new / update existing / merge with existing / reject.</div>
+            <div>Writer produce draftul principal, apoi Local Adaptation și GEO Optimization îl rafinează.</div>
+            <div>Internal Linking și Lead Conversion completează interlinking-ul și CTA-urile înainte de publish.</div>
           </div>
         </div>
         <div class="agent-card">
@@ -94,8 +111,9 @@
 GITHUB_OWNER=
 GITHUB_REPO=
 GITHUB_TOKEN=
-NETLIFY_SITE_URL=</div>
-          <p class="note" style="margin-top:12px;">Cu aceste chei setate, agentul poate publica pagini noi în repo și Netlify le livrează live după deploy.</p>
+NETLIFY_SITE_URL=
+AUTO_DAILY_LIMIT=10</div>
+          <p class="note" style="margin-top:12px;">Motorul publică acum în <strong>/blog/</strong>. Agenții noi sunt baza pentru filtrare și optimizare înainte de publish.</p>
         </div>
       </section>
     </main>
