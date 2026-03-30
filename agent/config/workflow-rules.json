@@ -1,0 +1,25 @@
+{
+  "maxNewArticlesPerRun": 1,
+  "maxUpdatedFilesPerRun": 3,
+  "maxNewLinksPerFile": 2,
+  "updateScopes": [
+    "blog",
+    "blog-index"
+  ],
+  "imageApprovalRequired": true,
+  "preferredImageTypes": [
+    "city-background",
+    "before-after",
+    "team",
+    "van",
+    "room"
+  ],
+  "rejectIfDuplicateStatusIn": [
+    "reject"
+  ],
+  "publishAllowedStatuses": [
+    "create new",
+    "update existing",
+    "merge with existing"
+  ]
+}
