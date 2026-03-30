@@ -1,5 +1,14 @@
 {
-  "date": "1970-01-01",
-  "count": 0,
-  "items": []
+  "date": "2026-03-30",
+  "count": 1,
+  "items": [
+    {
+      "slug": "wie-laeuft-eine-entruempelung-in-baden-baden-ab",
+      "title": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "topic": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
+      "publishedAt": "2026-03-30T07:44:01.033Z"
+    }
+  ]
 }
