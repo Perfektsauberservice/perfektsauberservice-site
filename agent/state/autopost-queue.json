@@ -2,5 +2,14 @@
   "dailyLimit": 10,
   "publishedToday": 0,
   "lastPublishedAt": "",
-  "items": []
+  "items": [
+    {
+      "id": "c32nclxw3fsmnf2pjub",
+      "title": "Entrümpelung Rastatt | Perfekt Sauber Service",
+      "path": "entruempelung-rastatt.html",
+      "stagedPath": "agent/staging/entruempelung-rastatt.html",
+      "status": "queued",
+      "queuedAt": "2026-03-31T20:33:34.204Z"
+    }
+  ]
 }
