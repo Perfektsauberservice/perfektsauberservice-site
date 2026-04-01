@@ -68,12 +68,7 @@ SERVICE_FRAGMENTS = [
 
 def slugify(text: str) -> str:
     text = text.lower().strip()
-    repl = {
-        "ä": "ae",
-        "ö": "oe",
-        "ü": "ue",
-        "ß": "ss",
-    }
+    repl = {"ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss"}
     for k, v in repl.items():
         text = text.replace(k, v)
     text = re.sub(r"[^a-z0-9]+", "-", text)
@@ -140,7 +135,6 @@ def build_item(path: Path) -> dict:
     title = extract(r"<title>(.*?)</title>", text) or slug.replace("-", " ").title()
     meta_desc = extract(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', text)
     canonical = extract(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\'](.*?)["\']', text)
-    og_image = extract(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\'](.*?)["\']', text)
     intro = intro_from_html(text)
     city = city_from_slug(slug)
     city_slug = slugify(city) if city else ""
@@ -158,7 +152,7 @@ def build_item(path: Path) -> dict:
         "service": service,
         "serviceSlug": service_slug,
         "topic": title.split("|")[0].strip(),
-        "image": og_image,
+        "image": "",
         "publishedAt": iso_from_mtime(path),
         "url": canonical or rel_url(path),
         "htmlPath": path.relative_to(ROOT).as_posix(),
@@ -178,7 +172,7 @@ def available_images_for_city(city_slug: str):
         if p.is_file() and p.suffix.lower() in exts and p.name.lower().startswith(city_slug.lower() + "-"):
             candidates.append(p)
     candidates.sort(key=sort_key_natural)
-    return [f"/images/locations/{p.name}" for p in candidates]
+    return [f"/public/images/locations/{p.name}" for p in candidates]
 
 def assign_rotating_images(items):
     grouped = {}
@@ -190,7 +184,6 @@ def assign_rotating_images(items):
         images = available_images_for_city(city_slug)
         if not images:
             continue
-        # oldest article gets image 1, then 2, etc.; wraps around
         city_items.sort(key=lambda x: x.get("publishedAt", ""))
         for idx, item in enumerate(city_items):
             item["image"] = images[idx % len(images)]
@@ -202,8 +195,8 @@ def main():
             items.append(build_item(path))
 
     assign_rotating_images(items)
-
     items.sort(key=lambda x: x["publishedAt"], reverse=True)
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "updatedAt": datetime.utcnow().isoformat() + "Z",
