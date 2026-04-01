@@ -25,3 +25,21 @@
   from = "/auto/*"
   to = "/auto/:splat"
   status = 200
+
+  [[redirects]]
+  from = "/service-page/fensterreinigung"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/book-online"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/410.html"
+  status = 410
+  force = true
