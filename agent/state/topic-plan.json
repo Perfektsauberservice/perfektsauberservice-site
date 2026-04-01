@@ -1,0 +1,51 @@
+{
+  "updatedAt": "2026-04-01T00:00:00Z",
+  "defaultDailyLimit": 1,
+  "items": [
+    {
+      "slug": "entruempelung-rastatt-kosten",
+      "title": "Entrümpelung Rastatt Kosten",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "status": "ready"
+    },
+    {
+      "slug": "haushaltsaufloesung-rastatt-ablauf",
+      "title": "Haushaltsauflösung Rastatt Ablauf",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "status": "ready"
+    },
+    {
+      "slug": "entruempelung-baden-baden-kosten",
+      "title": "Entrümpelung Baden-Baden Kosten",
+      "city": "Baden-Baden",
+      "citySlug": "baden-baden",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "status": "ready"
+    },
+    {
+      "slug": "entruempelung-gaggenau-kurzfristiger-termin",
+      "title": "Entrümpelung Gaggenau kurzfristiger Termin",
+      "city": "Gaggenau",
+      "citySlug": "gaggenau",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "status": "ready"
+    },
+    {
+      "slug": "entruempelung-karlsruhe-wohnung-raeumen",
+      "title": "Entrümpelung Karlsruhe Wohnung räumen",
+      "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "status": "ready"
+    }
+  ]
+}
