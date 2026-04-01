@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Perfekt Sauber Service | Entrümpelung & Haushaltsauflösung in Rastatt</title>
 <meta name="description" content="Entrümpelung und Haushaltsauflösung in Rastatt und Umgebung. Kostenlose Besichtigung, faire Festpreise, diskrete Abwicklung und besenreine Übergabe.">
-
 <style>
 body{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f8fb;color:#10213f;line-height:1.65}
 .wrap{max-width:1180px;margin:0 auto;padding:32px 18px 56px}
@@ -11,16 +13,15 @@ body{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f8fb;color:#10213
 .eyebrow,.badge{display:inline-block;background:#eef2ff;color:#17315c;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px}
 h1{font-size:56px;line-height:1.02;margin:0 0 16px}
 h2{font-size:34px;line-height:1.15;margin:0 0 12px}
-h3{font-size:28px;line-height:1.2;margin:0 0 10px}
 .sub{font-size:20px;color:#475569;margin:0 0 18px}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center}
-.hero-img{width:100%;height:100%;min-height:420px;object-fit:cover;border-radius:22px}
+.hero-img{width:100%;height:100%;min-height:420px;object-fit:cover;border-radius:22px;display:block}
 .btns{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
 .btn{display:inline-block;text-decoration:none;font-weight:800;padding:14px 20px;border-radius:16px}
 .btn-green{background:#77c043;color:#17315c}
 .btn-blue{background:#1f4f86;color:#fff}
 .btn-light{background:#fff;color:#10213f;border:1px solid #d1d5db}
-.benefit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.benefit-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:22px}
 .mini{background:#f8fbff;border:1px solid #dbe5f1;border-radius:18px;padding:18px;min-height:120px}
 .mini strong{display:block;font-size:24px;margin-bottom:8px}
 .mini p{margin:0;color:#475569;font-size:18px}
@@ -35,33 +36,40 @@ h3{font-size:28px;line-height:1.2;margin:0 0 10px}
 .list li{margin:6px 0}
 @media (max-width:980px){
   .hero-grid,.services-grid,.cities-grid,.reviews-grid{grid-template-columns:1fr}
+  .benefit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   h1{font-size:42px}
   h2{font-size:28px}
+}
+@media (max-width:640px){
   .benefit-grid{grid-template-columns:1fr}
 }
 </style>
-
-</head><body><div class="wrap">
+</head>
+<body>
+<div class="wrap">
 <section class="hero">
-<div class="hero-grid">
-  <div>
-    <div class="eyebrow">Schnell · Zuverlässig · Besenrein</div>
-    <h1>Entrümpelung &amp; Haushaltsauflösung in Rastatt und Umgebung</h1>
-    <p class="sub">Schnell, diskret und besenrein. Wir unterstützen Sie zuverlässig bei Wohnungsauflösungen, Entrümpelungen und Räumungen – mit kostenloser Besichtigung, fairen Festpreisen und persönlicher Betreuung.</p>
-    <div class="btns">
-      <a class="btn btn-green" href="/#kontakt">WhatsApp</a>
-      <a class="btn btn-blue" href="/#kontakt">Kostenlose Anfrage</a>
-      <a class="btn btn-light" href="/leistungen.html">Leistungen</a>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Schnell · Zuverlässig · Besenrein</div>
+      <h1>Entrümpelung &amp; Haushaltsauflösung in Rastatt und Umgebung</h1>
+      <p class="sub">Schnell, diskret und besenrein. Wir unterstützen Sie zuverlässig bei Wohnungsauflösungen, Entrümpelungen und Räumungen – mit kostenloser Besichtigung, fairen Festpreisen und persönlicher Betreuung.</p>
+      <div class="btns">
+        <a class="btn btn-green" href="/#kontakt">WhatsApp</a>
+        <a class="btn btn-blue" href="/#kontakt">Kostenlose Anfrage</a>
+        <a class="btn btn-light" href="/leistungen.html">Leistungen</a>
+      </div>
+    </div>
+    <div>
+      <img class="hero-img" src="/images/hero-team-van.png" alt="Perfekt Sauber Service Team">
     </div>
   </div>
-  <div><img class="hero-img" src="/images/hero-team-van.png" alt="Perfekt Sauber Service Team"></div>
-</div>
-<div class="benefit-grid">
-  <div class="mini"><strong>Kurzfristige Termine</strong><p>Schnelle Rückmeldung und flexible Planung.</p></div>
-  <div class="mini"><strong>Kostenlose Besichtigung</strong><p>Vor Ort, unverbindlich und transparent.</p></div>
-  <div class="mini"><strong>Faire Festpreise</strong><p>Klare Preise ohne versteckte Kosten.</p></div>
-  <div class="mini"><strong>Besenreine Übergabe</strong><p>Auf Wunsch gründlich und termingerecht.</p></div>
-</div>
+
+  <div class="benefit-grid">
+    <div class="mini"><strong>Kurzfristige Termine</strong><p>Schnelle Rückmeldung und flexible Planung.</p></div>
+    <div class="mini"><strong>Kostenlose Besichtigung</strong><p>Vor Ort, unverbindlich und transparent.</p></div>
+    <div class="mini"><strong>Faire Festpreise</strong><p>Klare Preise ohne versteckte Kosten.</p></div>
+    <div class="mini"><strong>Besenreine Übergabe</strong><p>Auf Wunsch gründlich und termingerecht.</p></div>
+  </div>
 </section>
 
 <section class="section">
@@ -123,4 +131,6 @@ h3{font-size:28px;line-height:1.2;margin:0 0 10px}
     <a class="btn btn-blue" href="/#kontakt">Kostenlose Besichtigung anfragen</a>
   </div>
 </section>
-</div></body></html>
+</div>
+</body>
+</html>
