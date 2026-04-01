@@ -1,4 +1,3 @@
-
 import json
 import re
 from pathlib import Path
@@ -7,6 +6,7 @@ from html import unescape
 
 ROOT = Path(".")
 OUT = ROOT / "content" / "auto" / "blog-index.json"
+LOCATION_IMAGES_DIR = ROOT / "public" / "images" / "locations"
 
 EXCLUDE_FILES = {
     "index.html",
@@ -25,6 +25,59 @@ EXCLUDE_DIR_PREFIXES = {
     "agent",
     "content",
 }
+
+CITY_FRAGMENTS = [
+    ("baden-baden", "Baden-Baden"),
+    ("bad-herrenalb", "Bad Herrenalb"),
+    ("bad-wildbad", "Bad Wildbad"),
+    ("gaggenau", "Gaggenau"),
+    ("karlsruhe", "Karlsruhe"),
+    ("rastatt", "Rastatt"),
+    ("kuppenheim", "Kuppenheim"),
+    ("durmersheim", "Durmersheim"),
+    ("muggensturm", "Muggensturm"),
+    ("oetigheim", "Ötigheim"),
+    ("bietigheim", "Bietigheim"),
+    ("malsch", "Malsch"),
+    ("sinzheim", "Sinzheim"),
+    ("buehl", "Bühl"),
+    ("achern", "Achern"),
+    ("ettlingen", "Ettlingen"),
+    ("gernsbach", "Gernsbach"),
+    ("loffenau", "Loffenau"),
+    ("iffezheim", "Iffezheim"),
+    ("huegelsheim", "Hügelsheim"),
+    ("rheinmuenster", "Rheinmünster"),
+    ("steinmauern", "Steinmauern"),
+    ("elchesheim-illingen", "Elchesheim-Illingen"),
+    ("au-am-rhein", "Au am Rhein"),
+    ("bischweier", "Bischweier"),
+    ("weisenbach", "Weisenbach"),
+    ("forbach", "Forbach"),
+    ("rheinstetten", "Rheinstetten"),
+    ("stutensee", "Stutensee"),
+    ("pforzheim", "Pforzheim"),
+]
+
+SERVICE_FRAGMENTS = [
+    ("entruempelung", "Entrümpelung"),
+    ("haushaltsaufloesung", "Haushaltsauflösung"),
+    ("wohnungsaufloesung", "Wohnungsauflösung"),
+    ("kellerentruempelung", "Kellerentrümpelung"),
+]
+
+def slugify(text: str) -> str:
+    text = text.lower().strip()
+    repl = {
+        "ä": "ae",
+        "ö": "oe",
+        "ü": "ue",
+        "ß": "ss",
+    }
+    for k, v in repl.items():
+        text = text.replace(k, v)
+    text = re.sub(r"[^a-z0-9]+", "-", text)
+    return text.strip("-")
 
 def read_text(path: Path) -> str:
     try:
@@ -49,67 +102,22 @@ def should_include(path: Path) -> bool:
     if any(p in EXCLUDE_DIR_PREFIXES for p in parts[:-1]):
         return False
     name = path.name
-    if name in EXCLUDE_FILES:
+    if name in EXCLUDE_FILES or name.startswith("_") or not name.endswith(".html"):
         return False
-    if name.startswith("_"):
-        return False
-    if not name.endswith(".html"):
-        return False
-    # include blog/, auto/, and root-level local/seo pages
     if parts[0] in {"blog", "auto"}:
         return True
-    if len(parts) == 1:
-        # root-level pages that are likely SEO/article pages
-        if re.match(r"^(entruempelung|haushaltsaufloesung|wohnungsaufloesung|kellerentruempelung|gewerbe|was-|wie-).+\.html$", name):
-            return True
+    if len(parts) == 1 and re.match(r"^(entruempelung|haushaltsaufloesung|wohnungsaufloesung|kellerentruempelung|gewerbe|was-|wie-).+\.html$", name):
+        return True
     return False
 
 def city_from_slug(slug: str) -> str:
-    known = [
-        ("baden-baden", "Baden-Baden"),
-        ("bad-herrenalb", "Bad Herrenalb"),
-        ("bad-wildbad", "Bad Wildbad"),
-        ("gaggenau", "Gaggenau"),
-        ("karlsruhe", "Karlsruhe"),
-        ("rastatt", "Rastatt"),
-        ("kuppenheim", "Kuppenheim"),
-        ("durmersheim", "Durmersheim"),
-        ("muggensturm", "Muggensturm"),
-        ("oetigheim", "Ötigheim"),
-        ("bietigheim", "Bietigheim"),
-        ("malsch", "Malsch"),
-        ("sinzheim", "Sinzheim"),
-        ("buehl", "Bühl"),
-        ("achern", "Achern"),
-        ("ettlingen", "Ettlingen"),
-        ("gernsbach", "Gernsbach"),
-        ("loffenau", "Loffenau"),
-        ("iffezheim", "Iffezheim"),
-        ("huegelsheim", "Hügelsheim"),
-        ("rheinmuenster", "Rheinmünster"),
-        ("steinmauern", "Steinmauern"),
-        ("elchesheim-illingen", "Elchesheim-Illingen"),
-        ("au-am-rhein", "Au am Rhein"),
-        ("bischweier", "Bischweier"),
-        ("weisenbach", "Weisenbach"),
-        ("forbach", "Forbach"),
-        ("rheinstetten", "Rheinstetten"),
-        ("stutensee", "Stutensee"),
-        ("pforzheim", "Pforzheim"),
-    ]
-    for frag, city in known:
+    for frag, city in CITY_FRAGMENTS:
         if frag in slug:
             return city
     return ""
 
 def service_from_slug(slug: str) -> str:
-    mapping = [
-        ("entruempelung", "Entrümpelung"),
-        ("haushaltsaufloesung", "Haushaltsauflösung"),
-        ("wohnungsaufloesung", "Wohnungsauflösung"),
-        ("kellerentruempelung", "Kellerentrümpelung"),
-    ]
-    for frag, service in mapping:
+    for frag, service in SERVICE_FRAGMENTS:
         if frag in slug:
             return service
     return ""
@@ -135,30 +143,66 @@ def build_item(path: Path) -> dict:
     og_image = extract(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\'](.*?)["\']', text)
     intro = intro_from_html(text)
     city = city_from_slug(slug)
+    city_slug = slugify(city) if city else ""
     service = service_from_slug(slug)
-    item = {
+    service_slug = slugify(service) if service else ""
+
+    return {
         "slug": slug,
         "title": title.split("|")[0].strip(),
         "seoTitle": title,
         "metaDescription": meta_desc,
         "intro": intro,
         "city": city,
-        "citySlug": slug if city and slug.endswith(city.lower().replace("ü","ue").replace("ö","oe").replace("ä","ae").replace("ß","ss")) else city.lower().replace(" ", "-") if city else "",
+        "citySlug": city_slug,
         "service": service,
-        "serviceSlug": service.lower().replace("ü","ue").replace("ö","oe").replace("ä","ae").replace("ß","ss") if service else "",
+        "serviceSlug": service_slug,
         "topic": title.split("|")[0].strip(),
         "image": og_image,
         "publishedAt": iso_from_mtime(path),
         "url": canonical or rel_url(path),
         "htmlPath": path.relative_to(ROOT).as_posix(),
     }
-    return item
+
+def sort_key_natural(path: Path):
+    name = path.stem
+    m = re.search(r"(\d+)$", name)
+    return int(m.group(1)) if m else 999999
+
+def available_images_for_city(city_slug: str):
+    if not city_slug or not LOCATION_IMAGES_DIR.exists():
+        return []
+    exts = {".jpg", ".jpeg", ".png", ".webp"}
+    candidates = []
+    for p in LOCATION_IMAGES_DIR.iterdir():
+        if p.is_file() and p.suffix.lower() in exts and p.name.lower().startswith(city_slug.lower() + "-"):
+            candidates.append(p)
+    candidates.sort(key=sort_key_natural)
+    return [f"/images/locations/{p.name}" for p in candidates]
+
+def assign_rotating_images(items):
+    grouped = {}
+    for item in items:
+        city_slug = item.get("citySlug") or ""
+        grouped.setdefault(city_slug, []).append(item)
+
+    for city_slug, city_items in grouped.items():
+        images = available_images_for_city(city_slug)
+        if not images:
+            continue
+        # oldest article gets image 1, then 2, etc.; wraps around
+        city_items.sort(key=lambda x: x.get("publishedAt", ""))
+        for idx, item in enumerate(city_items):
+            item["image"] = images[idx % len(images)]
 
 def main():
     items = []
     for path in ROOT.rglob("*.html"):
         if should_include(path):
             items.append(build_item(path))
+
+    assign_rotating_images(items)
+
     items.sort(key=lambda x: x["publishedAt"], reverse=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     payload = {
