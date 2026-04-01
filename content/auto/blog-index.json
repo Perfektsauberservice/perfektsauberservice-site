@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-01T14:55:54.267199Z",
+  "updatedAt": "2026-04-01T17:12:55.408977Z",
   "items": [
     {
       "slug": "entruempelung-rastatt",
@@ -12,8 +12,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt",
-      "image": "/images/locations/rastatt-1.jpg",
-      "publishedAt": "2026-04-01T14:55:54.178490Z",
+      "image": "/public/images/locations/rastatt-1.jpg",
+      "publishedAt": "2026-04-01T17:12:55.333638Z",
       "url": "https://perfektsauberservice.com/entruempelung-rastatt",
       "htmlPath": "entruempelung-rastatt.html"
     },
@@ -29,7 +29,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Kuppenheim",
       "image": "",
-      "publishedAt": "2026-04-01T14:55:53.708487Z",
+      "publishedAt": "2026-04-01T17:12:54.846640Z",
       "url": "https://perfektsauberservice.com/entruempelung-kuppenheim",
       "htmlPath": "entruempelung-kuppenheim.html"
     },
@@ -44,8 +44,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Karlsruhe",
-      "image": "/images/locations/karlsruhe-1.jpg",
-      "publishedAt": "2026-04-01T14:55:53.707487Z",
+      "image": "/public/images/locations/karlsruhe-1.jpg",
+      "publishedAt": "2026-04-01T17:12:54.845640Z",
       "url": "https://perfektsauberservice.com/entruempelung-karlsruhe",
       "htmlPath": "entruempelung-karlsruhe.html"
     },
@@ -60,8 +60,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Gaggenau",
-      "image": "/images/locations/gaggenau-1.jpg",
-      "publishedAt": "2026-04-01T14:55:53.706487Z",
+      "image": "/public/images/locations/gaggenau-1.jpg",
+      "publishedAt": "2026-04-01T17:12:54.844640Z",
       "url": "https://perfektsauberservice.com/entruempelung-gaggenau",
       "htmlPath": "entruempelung-gaggenau.html"
     },
@@ -76,8 +76,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Baden-Baden",
-      "image": "/images/locations/baden-baden-2.jpg",
-      "publishedAt": "2026-04-01T14:55:53.704487Z",
+      "image": "/public/images/locations/baden-baden-2.jpg",
+      "publishedAt": "2026-04-01T17:12:54.842640Z",
       "url": "https://perfektsauberservice.com/entruempelung-baden-baden",
       "htmlPath": "entruempelung-baden-baden.html"
     },
@@ -92,8 +92,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt: Wie schnell ist ein Termin möglich?",
-      "image": "/images/locations/rastatt-5.jpg",
-      "publishedAt": "2026-04-01T14:55:53.683917Z",
+      "image": "/public/images/locations/rastatt-5.jpg",
+      "publishedAt": "2026-04-01T17:12:54.827102Z",
       "url": "https://perfektsauberservice.com/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html"
     },
@@ -108,8 +108,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Was kostet eine Entrümpelung in Rastatt? Preise, Faktoren & Tipps",
-      "image": "/images/locations/rastatt-1.jpg",
-      "publishedAt": "2026-04-01T14:55:53.683140Z",
+      "image": "/public/images/locations/rastatt-1.jpg",
+      "publishedAt": "2026-04-01T17:12:54.826640Z",
       "url": "https://perfektsauberservice.com/blog/was-kostet-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/was-kostet-eine-entruempelung-in-rastatt.html"
     },
@@ -124,8 +124,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt: Wie schnell gibt es einen Termin?",
-      "image": "/images/locations/rastatt-2.jpg",
-      "publishedAt": "2026-04-01T14:55:53.683140Z",
+      "image": "/public/images/locations/rastatt-2.jpg",
+      "publishedAt": "2026-04-01T17:12:54.826640Z",
       "url": "https://perfektsauberservice.com/auto/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html",
       "htmlPath": "auto/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html"
     },
@@ -140,8 +140,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung in Baden-Baden: Ablauf, Vorbereitung und Tipps",
-      "image": "/images/locations/baden-baden-1.jpg",
-      "publishedAt": "2026-04-01T14:55:53.683140Z",
+      "image": "/public/images/locations/baden-baden-1.jpg",
+      "publishedAt": "2026-04-01T17:12:54.826640Z",
       "url": "https://perfektsauberservice.com/auto/wie-laeuft-eine-entruempelung-in-baden-baden-ab.html",
       "htmlPath": "auto/wie-laeuft-eine-entruempelung-in-baden-baden-ab.html"
     },
@@ -156,8 +156,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Was kostet eine Entrümpelung in Rastatt?",
-      "image": "/images/locations/rastatt-3.jpg",
-      "publishedAt": "2026-04-01T14:55:53.683140Z",
+      "image": "/public/images/locations/rastatt-3.jpg",
+      "publishedAt": "2026-04-01T17:12:54.826640Z",
       "url": "https://perfektsauberservice.com/auto/was-kostet-eine-entruempelung-in-rastatt.html",
       "htmlPath": "auto/was-kostet-eine-entruempelung-in-rastatt.html"
     },
@@ -172,8 +172,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt: Wie schnell ist ein Termin möglich?",
-      "image": "/images/locations/rastatt-4.jpg",
-      "publishedAt": "2026-04-01T14:55:53.683140Z",
+      "image": "/public/images/locations/rastatt-4.jpg",
+      "publishedAt": "2026-04-01T17:12:54.826640Z",
       "url": "https://perfektsauberservice.com/auto/wie-schnell-termin-entruempelung-rastatt.html",
       "htmlPath": "auto/wie-schnell-termin-entruempelung-rastatt.html"
     },
@@ -189,7 +189,7 @@
       "serviceSlug": "",
       "topic": "Entrümpelung in Rastatt – Kosten, Ablauf & schnelle Hilfe",
       "image": "",
-      "publishedAt": "2026-04-01T14:55:53.682618Z",
+      "publishedAt": "2026-04-01T17:12:54.826306Z",
       "url": "https://perfektsauberservice.com/auto/entrumpelung-muggensturm-kosten.html",
       "htmlPath": "auto/entrumpelung-muggensturm-kosten.html"
     }
