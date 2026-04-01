@@ -3,7 +3,7 @@ name: PSS Daily Generate
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 5 * * *'
+    - cron: '15 0,4,8,12,16,20 * * *'
 
 permissions:
   contents: write
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Generate daily article and queue it
+      - name: Generate daily articles and queue them
         run: python agent/scripts/daily_generate.py
 
       - name: Commit generated queue changes
@@ -28,5 +28,5 @@ jobs:
           git config user.name "Perfektsauberservice Bot"
           git config user.email "bot@users.noreply.github.com"
           git add agent/state/topic-plan.json agent/state/autopost-queue.json agent/staging/
-          git diff --cached --quiet || git commit -m "chore(auto): generate and queue daily article"
+          git diff --cached --quiet || git commit -m "chore(auto): generate and queue daily articles"
           git push
