@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-04-01T00:00:00Z",
+  "updatedAt": "2026-04-01T19:18:48.418181Z",
   "totalCities": 30,
   "servicesPerCity": 4,
   "totalPages": 120,
@@ -20,7 +20,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-rastatt.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.391422Z"
     },
     {
       "slug": "wohnungsaufloesung-rastatt",
@@ -29,7 +30,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-rastatt.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.391687Z"
     },
     {
       "slug": "gewerberaeumung-rastatt",
@@ -38,7 +40,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-rastatt.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.391957Z"
     },
     {
       "slug": "entruempelung-baden-baden",
@@ -56,7 +59,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-baden-baden.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.392202Z"
     },
     {
       "slug": "wohnungsaufloesung-baden-baden",
@@ -65,7 +69,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-baden-baden.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.392479Z"
     },
     {
       "slug": "gewerberaeumung-baden-baden",
@@ -74,7 +79,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-baden-baden.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.392716Z"
     },
     {
       "slug": "entruempelung-gaggenau",
@@ -92,7 +98,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-gaggenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.392958Z"
     },
     {
       "slug": "wohnungsaufloesung-gaggenau",
@@ -101,7 +108,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-gaggenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.393198Z"
     },
     {
       "slug": "gewerberaeumung-gaggenau",
@@ -110,7 +118,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-gaggenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.393484Z"
     },
     {
       "slug": "entruempelung-karlsruhe",
@@ -128,7 +137,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-karlsruhe.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.393726Z"
     },
     {
       "slug": "wohnungsaufloesung-karlsruhe",
@@ -137,7 +147,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-karlsruhe.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.393961Z"
     },
     {
       "slug": "gewerberaeumung-karlsruhe",
@@ -146,7 +157,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-karlsruhe.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.394196Z"
     },
     {
       "slug": "entruempelung-kuppenheim",
@@ -164,7 +176,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-kuppenheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.394453Z"
     },
     {
       "slug": "wohnungsaufloesung-kuppenheim",
@@ -173,7 +186,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-kuppenheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.394667Z"
     },
     {
       "slug": "gewerberaeumung-kuppenheim",
@@ -182,7 +196,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-kuppenheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.394878Z"
     },
     {
       "slug": "entruempelung-muggensturm",
@@ -191,7 +206,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-muggensturm.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.395090Z"
     },
     {
       "slug": "haushaltsaufloesung-muggensturm",
@@ -200,7 +216,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-muggensturm.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.395353Z"
     },
     {
       "slug": "wohnungsaufloesung-muggensturm",
@@ -209,7 +226,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-muggensturm.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.395570Z"
     },
     {
       "slug": "gewerberaeumung-muggensturm",
@@ -218,7 +236,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-muggensturm.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.395787Z"
     },
     {
       "slug": "entruempelung-durmersheim",
@@ -227,7 +246,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-durmersheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.395999Z"
     },
     {
       "slug": "haushaltsaufloesung-durmersheim",
@@ -236,7 +256,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-durmersheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.396211Z"
     },
     {
       "slug": "wohnungsaufloesung-durmersheim",
@@ -245,7 +266,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-durmersheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.396447Z"
     },
     {
       "slug": "gewerberaeumung-durmersheim",
@@ -254,7 +276,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-durmersheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.396659Z"
     },
     {
       "slug": "entruempelung-bietigheim",
@@ -263,7 +286,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-bietigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.396875Z"
     },
     {
       "slug": "haushaltsaufloesung-bietigheim",
@@ -272,7 +296,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-bietigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.397086Z"
     },
     {
       "slug": "wohnungsaufloesung-bietigheim",
@@ -281,7 +306,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-bietigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.397319Z"
     },
     {
       "slug": "gewerberaeumung-bietigheim",
@@ -290,7 +316,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-bietigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.397533Z"
     },
     {
       "slug": "entruempelung-oetigheim",
@@ -299,7 +326,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-oetigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.397744Z"
     },
     {
       "slug": "haushaltsaufloesung-oetigheim",
@@ -308,7 +336,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-oetigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.397958Z"
     },
     {
       "slug": "wohnungsaufloesung-oetigheim",
@@ -317,7 +346,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-oetigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.398171Z"
     },
     {
       "slug": "gewerberaeumung-oetigheim",
@@ -326,7 +356,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-oetigheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.398404Z"
     },
     {
       "slug": "entruempelung-malsch",
@@ -335,7 +366,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-malsch.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.398620Z"
     },
     {
       "slug": "haushaltsaufloesung-malsch",
@@ -344,7 +376,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-malsch.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.398835Z"
     },
     {
       "slug": "wohnungsaufloesung-malsch",
@@ -353,7 +386,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-malsch.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.399048Z"
     },
     {
       "slug": "gewerberaeumung-malsch",
@@ -362,7 +396,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-malsch.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.399285Z"
     },
     {
       "slug": "entruempelung-sinzheim",
@@ -371,7 +406,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-sinzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.399501Z"
     },
     {
       "slug": "haushaltsaufloesung-sinzheim",
@@ -380,7 +416,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-sinzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.399715Z"
     },
     {
       "slug": "wohnungsaufloesung-sinzheim",
@@ -389,7 +426,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-sinzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.399932Z"
     },
     {
       "slug": "gewerberaeumung-sinzheim",
@@ -398,7 +436,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-sinzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.400156Z"
     },
     {
       "slug": "entruempelung-buehl",
@@ -407,7 +446,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-buehl.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.400399Z"
     },
     {
       "slug": "haushaltsaufloesung-buehl",
@@ -416,7 +456,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-buehl.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.400613Z"
     },
     {
       "slug": "wohnungsaufloesung-buehl",
@@ -425,7 +466,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-buehl.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.400823Z"
     },
     {
       "slug": "gewerberaeumung-buehl",
@@ -434,7 +476,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-buehl.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.401041Z"
     },
     {
       "slug": "entruempelung-achern",
@@ -443,7 +486,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-achern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.401271Z"
     },
     {
       "slug": "haushaltsaufloesung-achern",
@@ -452,7 +496,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-achern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.401490Z"
     },
     {
       "slug": "wohnungsaufloesung-achern",
@@ -461,7 +506,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-achern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.401701Z"
     },
     {
       "slug": "gewerberaeumung-achern",
@@ -470,7 +516,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-achern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.401918Z"
     },
     {
       "slug": "entruempelung-ettlingen",
@@ -479,7 +526,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-ettlingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.402130Z"
     },
     {
       "slug": "haushaltsaufloesung-ettlingen",
@@ -488,7 +536,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-ettlingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.402368Z"
     },
     {
       "slug": "wohnungsaufloesung-ettlingen",
@@ -497,7 +546,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-ettlingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.402580Z"
     },
     {
       "slug": "gewerberaeumung-ettlingen",
@@ -506,7 +556,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-ettlingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.402792Z"
     },
     {
       "slug": "entruempelung-gernsbach",
@@ -515,7 +566,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-gernsbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.403002Z"
     },
     {
       "slug": "haushaltsaufloesung-gernsbach",
@@ -524,7 +576,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-gernsbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.403215Z"
     },
     {
       "slug": "wohnungsaufloesung-gernsbach",
@@ -533,7 +586,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-gernsbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.403450Z"
     },
     {
       "slug": "gewerberaeumung-gernsbach",
@@ -542,7 +596,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-gernsbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.403664Z"
     },
     {
       "slug": "entruempelung-loffenau",
@@ -551,7 +606,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-loffenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.403879Z"
     },
     {
       "slug": "haushaltsaufloesung-loffenau",
@@ -560,7 +616,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-loffenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.404092Z"
     },
     {
       "slug": "wohnungsaufloesung-loffenau",
@@ -569,7 +626,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-loffenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.404328Z"
     },
     {
       "slug": "gewerberaeumung-loffenau",
@@ -578,7 +636,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-loffenau.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.404541Z"
     },
     {
       "slug": "entruempelung-iffezheim",
@@ -587,7 +646,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-iffezheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.404758Z"
     },
     {
       "slug": "haushaltsaufloesung-iffezheim",
@@ -596,7 +656,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-iffezheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.404974Z"
     },
     {
       "slug": "wohnungsaufloesung-iffezheim",
@@ -605,7 +666,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-iffezheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.405185Z"
     },
     {
       "slug": "gewerberaeumung-iffezheim",
@@ -614,7 +676,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-iffezheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.405423Z"
     },
     {
       "slug": "entruempelung-huegelsheim",
@@ -623,7 +686,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-huegelsheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.405636Z"
     },
     {
       "slug": "haushaltsaufloesung-huegelsheim",
@@ -632,7 +696,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-huegelsheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.405853Z"
     },
     {
       "slug": "wohnungsaufloesung-huegelsheim",
@@ -641,7 +706,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-huegelsheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.406075Z"
     },
     {
       "slug": "gewerberaeumung-huegelsheim",
@@ -650,7 +716,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-huegelsheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.406335Z"
     },
     {
       "slug": "entruempelung-rheinmuenster",
@@ -659,7 +726,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-rheinmuenster.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.406551Z"
     },
     {
       "slug": "haushaltsaufloesung-rheinmuenster",
@@ -668,7 +736,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-rheinmuenster.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.406767Z"
     },
     {
       "slug": "wohnungsaufloesung-rheinmuenster",
@@ -677,7 +746,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-rheinmuenster.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.406981Z"
     },
     {
       "slug": "gewerberaeumung-rheinmuenster",
@@ -686,7 +756,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-rheinmuenster.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.407206Z"
     },
     {
       "slug": "entruempelung-steinmauern",
@@ -695,7 +766,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-steinmauern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.407452Z"
     },
     {
       "slug": "haushaltsaufloesung-steinmauern",
@@ -704,7 +776,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-steinmauern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.407674Z"
     },
     {
       "slug": "wohnungsaufloesung-steinmauern",
@@ -713,7 +786,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-steinmauern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.407890Z"
     },
     {
       "slug": "gewerberaeumung-steinmauern",
@@ -722,7 +796,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-steinmauern.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.408106Z"
     },
     {
       "slug": "entruempelung-elchesheim-illingen",
@@ -731,7 +806,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-elchesheim-illingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.408343Z"
     },
     {
       "slug": "haushaltsaufloesung-elchesheim-illingen",
@@ -740,7 +816,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-elchesheim-illingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.408559Z"
     },
     {
       "slug": "wohnungsaufloesung-elchesheim-illingen",
@@ -749,7 +826,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-elchesheim-illingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.408771Z"
     },
     {
       "slug": "gewerberaeumung-elchesheim-illingen",
@@ -758,7 +836,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-elchesheim-illingen.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.408984Z"
     },
     {
       "slug": "entruempelung-au-am-rhein",
@@ -767,7 +846,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-au-am-rhein.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.409202Z"
     },
     {
       "slug": "haushaltsaufloesung-au-am-rhein",
@@ -776,7 +856,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-au-am-rhein.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.409521Z"
     },
     {
       "slug": "wohnungsaufloesung-au-am-rhein",
@@ -785,7 +866,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-au-am-rhein.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.409739Z"
     },
     {
       "slug": "gewerberaeumung-au-am-rhein",
@@ -794,7 +876,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-au-am-rhein.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.409952Z"
     },
     {
       "slug": "entruempelung-bischweier",
@@ -803,7 +886,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-bischweier.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.410163Z"
     },
     {
       "slug": "haushaltsaufloesung-bischweier",
@@ -812,7 +896,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-bischweier.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.410398Z"
     },
     {
       "slug": "wohnungsaufloesung-bischweier",
@@ -821,7 +906,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-bischweier.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.410612Z"
     },
     {
       "slug": "gewerberaeumung-bischweier",
@@ -830,7 +916,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-bischweier.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.410830Z"
     },
     {
       "slug": "entruempelung-weisenbach",
@@ -839,7 +926,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-weisenbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.411054Z"
     },
     {
       "slug": "haushaltsaufloesung-weisenbach",
@@ -848,7 +936,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-weisenbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.411293Z"
     },
     {
       "slug": "wohnungsaufloesung-weisenbach",
@@ -857,7 +946,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-weisenbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.411511Z"
     },
     {
       "slug": "gewerberaeumung-weisenbach",
@@ -866,7 +956,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-weisenbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.411724Z"
     },
     {
       "slug": "entruempelung-forbach",
@@ -875,7 +966,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-forbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.411937Z"
     },
     {
       "slug": "haushaltsaufloesung-forbach",
@@ -884,7 +976,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-forbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.412151Z"
     },
     {
       "slug": "wohnungsaufloesung-forbach",
@@ -893,7 +986,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-forbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.412386Z"
     },
     {
       "slug": "gewerberaeumung-forbach",
@@ -902,7 +996,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-forbach.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.412697Z"
     },
     {
       "slug": "entruempelung-rheinstetten",
@@ -911,7 +1006,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-rheinstetten.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.413025Z"
     },
     {
       "slug": "haushaltsaufloesung-rheinstetten",
@@ -920,7 +1016,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-rheinstetten.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.413374Z"
     },
     {
       "slug": "wohnungsaufloesung-rheinstetten",
@@ -929,7 +1026,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-rheinstetten.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.413698Z"
     },
     {
       "slug": "gewerberaeumung-rheinstetten",
@@ -938,7 +1036,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-rheinstetten.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.414076Z"
     },
     {
       "slug": "entruempelung-stutensee",
@@ -947,7 +1046,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-stutensee.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.414462Z"
     },
     {
       "slug": "haushaltsaufloesung-stutensee",
@@ -956,7 +1056,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-stutensee.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.414816Z"
     },
     {
       "slug": "wohnungsaufloesung-stutensee",
@@ -965,7 +1066,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-stutensee.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.415182Z"
     },
     {
       "slug": "gewerberaeumung-stutensee",
@@ -974,7 +1076,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-stutensee.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.415509Z"
     },
     {
       "slug": "entruempelung-bad-herrenalb",
@@ -983,7 +1086,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-bad-herrenalb.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.415736Z"
     },
     {
       "slug": "haushaltsaufloesung-bad-herrenalb",
@@ -992,7 +1096,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-bad-herrenalb.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.415956Z"
     },
     {
       "slug": "wohnungsaufloesung-bad-herrenalb",
@@ -1001,7 +1106,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-bad-herrenalb.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.416171Z"
     },
     {
       "slug": "gewerberaeumung-bad-herrenalb",
@@ -1010,7 +1116,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-bad-herrenalb.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.416424Z"
     },
     {
       "slug": "entruempelung-bad-wildbad",
@@ -1019,7 +1126,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-bad-wildbad.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.416644Z"
     },
     {
       "slug": "haushaltsaufloesung-bad-wildbad",
@@ -1028,7 +1136,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-bad-wildbad.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.416863Z"
     },
     {
       "slug": "wohnungsaufloesung-bad-wildbad",
@@ -1037,7 +1146,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-bad-wildbad.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.417075Z"
     },
     {
       "slug": "gewerberaeumung-bad-wildbad",
@@ -1046,7 +1156,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-bad-wildbad.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.417323Z"
     },
     {
       "slug": "entruempelung-pforzheim",
@@ -1055,7 +1166,8 @@
       "service": "Entrümpelung",
       "serviceSlug": "entruempelung",
       "targetPath": "entruempelung-pforzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.417541Z"
     },
     {
       "slug": "haushaltsaufloesung-pforzheim",
@@ -1064,7 +1176,8 @@
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
       "targetPath": "haushaltsaufloesung-pforzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.417754Z"
     },
     {
       "slug": "wohnungsaufloesung-pforzheim",
@@ -1073,7 +1186,8 @@
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
       "targetPath": "wohnungsaufloesung-pforzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.417966Z"
     },
     {
       "slug": "gewerberaeumung-pforzheim",
@@ -1082,7 +1196,8 @@
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
       "targetPath": "gewerberaeumung-pforzheim.html",
-      "status": "planned"
+      "status": "created",
+      "createdAt": "2026-04-01T19:18:48.418177Z"
     }
   ]
 }
