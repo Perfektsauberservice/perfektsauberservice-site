@@ -23,6 +23,7 @@ FORBIDDEN_PATTERNS = [
 
 EXCLUDE_DIRS = {".git", ".github", "agent", "dashboard", "netlify", "content"}
 
+
 def should_scan(path: Path) -> bool:
     rel = path.as_posix()
     if not rel.endswith(".html"):
@@ -30,10 +31,12 @@ def should_scan(path: Path) -> bool:
     parts = set(path.parts)
     return not bool(parts & EXCLUDE_DIRS)
 
+
 def snippet(text: str, start: int, end: int, radius: int = 90) -> str:
     a = max(0, start - radius)
     b = min(len(text), end + radius)
     return re.sub(r"\s+", " ", text[a:b]).strip()
+
 
 def main():
     results = []
@@ -42,9 +45,11 @@ def main():
     for path in ROOT.rglob("*.html"):
         if not should_scan(path):
             continue
+
         files_scanned += 1
         text = path.read_text(encoding="utf-8", errors="ignore")
         hits = []
+
         for pattern in FORBIDDEN_PATTERNS:
             for m in re.finditer(pattern, text, flags=re.I):
                 hits.append({
@@ -52,6 +57,7 @@ def main():
                     "match": m.group(0),
                     "snippet": snippet(text, m.start(), m.end())
                 })
+
         if hits:
             results.append({
                 "file": path.as_posix(),
@@ -65,8 +71,11 @@ def main():
         "filesWithIssues": len(results),
         "results": results
     }
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Audit complete: scanned {files_scanned} files, found issues in {len(results)} files")
-    if __name__ == "__main__":
+
+
+if __name__ == "__main__":
     main()
