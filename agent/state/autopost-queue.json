@@ -10,6 +10,14 @@
       "stagedPath": "agent/staging/entruempelung-rastatt.html",
       "status": "queued",
       "queuedAt": "2026-03-31T20:33:34.204Z"
+    },
+    {
+      "id": "haushaltsaufloesung-rastatt-ablauf",
+      "title": "Haushaltsauflösung Rastatt | Perfekt Sauber Service",
+      "path": "haushaltsaufloesung-rastatt.html",
+      "stagedPath": "agent/staging/haushaltsaufloesung-rastatt-ablauf.html",
+      "status": "queued",
+      "queuedAt": "2026-04-01T17:42:07Z"
     }
   ]
 }
