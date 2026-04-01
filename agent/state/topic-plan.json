@@ -27,7 +27,9 @@
       "citySlug": "rastatt",
       "service": "Wohnungsauflösung",
       "serviceSlug": "wohnungsaufloesung",
-      "status": "ready"
+      "status": "queued",
+      "lastGeneratedAt": "2026-04-01T19:04:58Z",
+      "lastPath": "wohnungsaufloesung-rastatt.html"
     },
     {
       "slug": "gewerberaeumung-rastatt",
@@ -36,7 +38,9 @@
       "citySlug": "rastatt",
       "service": "Gewerberäumung",
       "serviceSlug": "gewerberaeumung",
-      "status": "ready"
+      "status": "queued",
+      "lastGeneratedAt": "2026-04-01T19:04:58Z",
+      "lastPath": "gewerberaeumung-rastatt.html"
     },
     {
       "slug": "entruempelung-baden-baden",
@@ -54,7 +58,9 @@
       "citySlug": "baden-baden",
       "service": "Haushaltsauflösung",
       "serviceSlug": "haushaltsaufloesung",
-      "status": "ready"
+      "status": "queued",
+      "lastGeneratedAt": "2026-04-01T19:04:58Z",
+      "lastPath": "haushaltsaufloesung-baden-baden.html"
     },
     {
       "slug": "wohnungsaufloesung-baden-baden",
