@@ -22,9 +22,13 @@ jobs:
         run: python agent/scripts/copy_audit.py
 
       - name: Commit audit report
-        run: |
-          git config user.name "Perfektsauberservice Bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add agent/state/copy-audit-report.json
-          git diff --cached --quiet || git commit -m "chore(audit): update copy audit report"
-          git push
+  run: |
+    git config user.name "Perfektsauberservice Bot"
+    git config user.email "bot@users.noreply.github.com"
+    if [ -f agent/state/copy-audit-report.json ]; then
+      git add agent/state/copy-audit-report.json
+      git diff --cached --quiet || git commit -m "chore(audit): update copy audit report"
+      git push
+    else
+      echo "copy-audit-report.json not found, skipping commit"
+    fi
