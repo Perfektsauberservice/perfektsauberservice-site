@@ -68,3 +68,5 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Audit complete: scanned {files_scanned} files, found issues in {len(results)} files")
+    if __name__ == "__main__":
+    main()
