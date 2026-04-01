@@ -1,0 +1,30 @@
+name: PSS Rewrite Copy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rewrite-copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run copy rewrite bot
+        run: python agent/scripts/rewrite_internal_copy.py
+
+      - name: Commit rewrite changes
+        run: |
+          git config user.name "Perfektsauberservice Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add *.html agent/state/copy-rewrite-report.json
+          git diff --cached --quiet || git commit -m "chore(copy): rewrite internal-sounding copy"
+          git push
