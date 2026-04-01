@@ -2,7 +2,6 @@ import json
 import re
 from pathlib import Path
 from datetime import datetime, timezone
-from html import escape
 
 ROOT = Path(".")
 TOPIC_PLAN_PATH = ROOT / "agent" / "state" / "topic-plan.json"
@@ -11,6 +10,7 @@ STAGING_DIR = ROOT / "agent" / "staging"
 LOCATION_IMAGES_DIR = ROOT / "public" / "images" / "locations"
 
 SITE = "https://perfektsauberservice.com"
+ARTICLES_PER_RUN = 3
 
 def now_iso() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -86,13 +86,13 @@ def build_html(item: dict) -> str:
     image = choose_image(item["citySlug"])
     canonical = f"{SITE}/{target_path(item)}"
 
-    hero_image = f'<img class="hero-img" src="{escape(image)}" alt="{escape(h1)}" />' if image else ""
+    hero_image = f'<img class="hero-img" src="{image}" alt="{h1}" />' if image else ""
 
     sections = [
         ("Wann ist eine professionelle Unterstützung sinnvoll?",
          f"Gerade bei umfangreichen Räumungen in {item['city']} spart eine professionelle {item['service'].lower()} viel Zeit, Kraft und Organisation. "
          "Auch enge Treppenhäuser, volle Keller, Dachböden oder kurzfristige Termine lassen sich so deutlich entspannter umsetzen."),
-        ("Wie läuft die Räumung ab?",
+        ("Wie läuft der Ablauf ab?",
          "In der Regel beginnt alles mit einer kurzen Anfrage und einer Einschätzung des Umfangs. Danach wird geplant, was geräumt, entsorgt oder getrennt werden soll. "
          "Am Einsatztag wird strukturiert gearbeitet, damit die Räume am Ende sauber und ordentlich übergeben werden können."),
         ("Worauf kommt es bei der Planung an?",
@@ -104,7 +104,7 @@ def build_html(item: dict) -> str:
     ]
 
     rendered_sections = "\n".join(
-        f"<section class='section'><h2>{escape(head)}</h2><p>{escape(body)}</p></section>"
+        f"<section class='section'><h2>{head}</h2><p>{body}</p></section>"
         for head, body in sections
     )
 
@@ -114,9 +114,9 @@ def build_html(item: dict) -> str:
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="robots" content="index,follow" />
-<title>{escape(page_title)}</title>
-<meta name="description" content="{escape(desc)}" />
-<link rel="canonical" href="{escape(canonical)}" />
+<title>{page_title}</title>
+<meta name="description" content="{desc}" />
+<link rel="canonical" href="{canonical}" />
 <style>
 body{{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f8fb;color:#10213f;line-height:1.7}}
 .wrap{{max-width:1100px;margin:0 auto;padding:32px 18px 56px}}
@@ -137,11 +137,11 @@ body{{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f8fb;color:#1021
 <div class="wrap">
   <article class="hero">
     <div class="badges">
-      <span class="badge">{escape(item['city'])}</span>
-      <span class="badge">{escape(item['service'])}</span>
+      <span class="badge">{item['city']}</span>
+      <span class="badge">{item['service']}</span>
     </div>
-    <h1>{escape(h1)}</h1>
-    <p>{escape(intro_text(item))}</p>
+    <h1>{h1}</h1>
+    <p>{intro_text(item)}</p>
     {hero_image}
     <a class="cta" href="#kontakt">Kostenloses Angebot anfragen</a>
   </article>
@@ -170,45 +170,51 @@ def already_published_or_queued(item: dict, queue: dict) -> bool:
 
 def main():
     plan = load_json(TOPIC_PLAN_PATH, {"items": []})
-    queue = load_json(QUEUE_PATH, {"dailyLimit": 10, "publishedToday": 0, "lastPublishedAt": "", "items": []})
+    queue = load_json(QUEUE_PATH, {"dailyLimit": 15, "publishedToday": 0, "lastPublishedAt": "", "items": []})
 
-    selected = None
+    generated = []
+
     for item in plan.get("items", []):
+        if len(generated) >= ARTICLES_PER_RUN:
+            break
         if item.get("status") not in {"ready", "queued"}:
             continue
         if already_published_or_queued(item, queue):
             continue
-        selected = item
-        break
 
-    if not selected:
-        print("No eligible topic found. Nothing generated.")
-        return
+        slug = item["slug"]
+        staged_name = f"{slug}.html"
+        staged_path = STAGING_DIR / staged_name
+        final_path = target_path(item)
 
-    slug = selected["slug"]
-    staged_name = f"{slug}.html"
-    staged_path = STAGING_DIR / staged_name
-    final_path = target_path(selected)
+        STAGING_DIR.mkdir(parents=True, exist_ok=True)
+        staged_path.write_text(build_html(item), encoding="utf-8")
 
-    STAGING_DIR.mkdir(parents=True, exist_ok=True)
-    staged_path.write_text(build_html(selected), encoding="utf-8")
+        queue.setdefault("items", []).append({
+            "id": slug,
+            "title": title_text(item),
+            "path": final_path,
+            "stagedPath": staged_path.as_posix(),
+            "status": "queued",
+            "queuedAt": now_iso()
+        })
 
-    queue.setdefault("items", []).append({
-        "id": slug,
-        "title": title_text(selected),
-        "path": final_path,
-        "stagedPath": staged_path.as_posix(),
-        "status": "queued",
-        "queuedAt": now_iso()
-    })
+        item["status"] = "queued"
+        item["lastGeneratedAt"] = now_iso()
+        item["lastPath"] = final_path
+        generated.append({"slug": slug, "path": final_path})
+
+    queue["dailyLimit"] = 15
     save_json(QUEUE_PATH, queue)
-
-    selected["status"] = "queued"
-    selected["lastGeneratedAt"] = now_iso()
-    selected["lastPath"] = final_path
     save_json(TOPIC_PLAN_PATH, plan)
 
-    print(f"Generated and queued: {slug} -> {final_path}")
+    if not generated:
+        print("No eligible topics found. Nothing generated.")
+        return
+
+    print(f"Generated and queued {len(generated)} articles:")
+    for g in generated:
+        print(f"- {g['slug']} -> {g['path']}")
 
 if __name__ == "__main__":
     main()
