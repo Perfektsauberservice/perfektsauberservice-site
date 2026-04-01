@@ -21,9 +21,12 @@
     .card p{margin:0 0 14px;color:#475569}
     .card a{display:inline-block;text-decoration:none;background:#77c043;color:#17315c;font-weight:800;padding:12px 18px;border-radius:14px}
     .list-box{padding:24px;margin-top:22px}
-    .list-box h2{margin:0 0 12px}
-    .services-list{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:0;margin:0;list-style:none}
-    .services-list li{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:12px 14px;font-weight:700}
+    .list-box h2{margin:0 0 16px}
+    .services-list{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:0;margin:0;list-style:none}
+    .mini-card{display:block;background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:16px;text-decoration:none;color:#10213f}
+    .mini-card strong{display:block;font-size:18px;margin-bottom:6px}
+    .mini-card span{display:block;color:#475569;font-size:15px;line-height:1.55}
+    .mini-card:hover{border-color:#cbd5e1;box-shadow:0 6px 18px rgba(15,23,42,.05)}
     .cta-box{padding:24px;margin-top:22px}
     .cta-box h2{margin:0 0 10px}
     .cta-box p{margin:0 0 14px;color:#475569}
@@ -75,14 +78,32 @@
 
     <section class="list-box">
       <h2>Weitere Leistungen</h2>
-      <ul class="services-list">
-        <li>Kellerentrümpelung</li>
-        <li>Dachbodenentrümpelung</li>
-        <li>Garagenentrümpelung</li>
-        <li>Büroauflösung</li>
-        <li>Messi-Wohnung</li>
-        <li>Nachlassauflösung</li>
-      </ul>
+      <div class="services-list">
+        <a class="mini-card" href="/entruempelung-rastatt.html">
+          <strong>Kellerentrümpelung</strong>
+          <span>Wir schaffen Ordnung in vollen oder lange ungenutzten Kellern – schnell, sauber und zuverlässig.</span>
+        </a>
+        <a class="mini-card" href="/entruempelung-rastatt.html">
+          <strong>Dachbodenentrümpelung</strong>
+          <span>Auch schwer zugängliche Dachböden räumen wir fachgerecht und mit sauberer Übergabe.</span>
+        </a>
+        <a class="mini-card" href="/entruempelung-rastatt.html">
+          <strong>Garagenentrümpelung</strong>
+          <span>Wir befreien Garagen von alten Möbeln, Kartons, Sperrmüll und ungenutzten Gegenständen.</span>
+        </a>
+        <a class="mini-card" href="/gewerberaeumung-rastatt.html">
+          <strong>Büroauflösung</strong>
+          <span>Bei Büroauflösungen sorgen wir für eine zügige, diskrete und strukturierte Räumung.</span>
+        </a>
+        <a class="mini-card" href="/haushaltsaufloesung-rastatt.html">
+          <strong>Messi-Wohnung</strong>
+          <span>Auch in schwierigen Fällen unterstützen wir ohne Vorurteile, diskret und lösungsorientiert.</span>
+        </a>
+        <a class="mini-card" href="/haushaltsaufloesung-rastatt.html">
+          <strong>Nachlassauflösung</strong>
+          <span>Wir begleiten Nachlassauflösungen mit Respekt, Ruhe und einer diskreten Vorgehensweise.</span>
+        </a>
+      </div>
     </section>
 
     <section class="cta-box" id="kontakt">
