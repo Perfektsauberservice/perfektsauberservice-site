@@ -30,6 +30,7 @@ EXCLUDE_DIRS = {
     ".idea",
     ".vscode",
     "agent",
+    "dashboard",
 }
 
 INCLUDE_DIRS = set()
@@ -153,11 +154,24 @@ TECHNICAL_LINE_PATTERNS = [
     r"class(Name)?\s*=",
     r"id\s*=",
     r"schema\.org",
+
+    # CSS
     r"^\s*\.[A-Za-z0-9_-]+\s*\{",
     r"^\s*#[A-Za-z0-9_-]+\s*\{",
     r"^\s*[A-Za-z0-9_.#:\-\[\]=\"'\s,>]+\{",
     r"^\s*[A-Za-z-]+\s*:\s*[^;]+;\s*$",
     r"^\s*\}\s*$",
+
+    # inline JS / DOM code
+    r"document\.getElementById\s*\(",
+    r"addEventListener\s*\(",
+    r"\.style\.[A-Za-z0-9_]+\s*=",
+    r"^\s*[A-Za-z0-9_.$]+\s*=\s*.*;$",
+    r"function\s*\(",
+    r"^\s*if\s*\(",
+    r"^\s*for\s*\(",
+    r"^\s*while\s*\(",
+    r"^\s*\}\s*\)\s*;?\s*$",
 ]
 
 def utc_now() -> str:
