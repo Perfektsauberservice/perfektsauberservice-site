@@ -10,19 +10,14 @@ ROOT = Path(".")
 AUDIT_PATH = ROOT / "agent" / "state" / "copy-audit-report.json"
 OUT = ROOT / "agent" / "state" / "copy-rewrite-report.json"
 
-# Modes:
-# - full-site   -> scan all relevant files
-# - audit-only  -> scan only files from copy-audit-report.json
-# - single-file -> scan one explicit file
 MODE = os.getenv("REWRITE_MODE", "full-site").strip().lower()
 DRY_RUN = os.getenv("DRY_RUN", "true").strip().lower() == "true"
 TARGET_FILE = os.getenv("TARGET_FILE", "").strip()
 
 ALLOWED_EXTENSIONS = {
-    ".html", ".astro", ".tsx", ".jsx", ".js", ".ts", ".md", ".mdx", ".vue"
+    ".html", ".astro", ".tsx", ".jsx", ".md", ".mdx", ".vue"
 }
 
-# Keep only technical folders excluded.
 EXCLUDE_DIRS = {
     ".git",
     ".github",
@@ -34,9 +29,13 @@ EXCLUDE_DIRS = {
     "__pycache__",
     ".idea",
     ".vscode",
+    "agent",
 }
 
-# Customer-facing exact replacements
+# Optional: if you know exactly where the public site content lives,
+# add those folders here. Leave empty to scan all non-excluded folders.
+INCLUDE_DIRS = set()
+
 REPLACEMENTS = [
     (
         r"Telefon\s*&\s*WhatsApp\s+gut\s+sichtbar",
@@ -76,7 +75,8 @@ REPLACEMENTS = [
     ),
 ]
 
-# Broader suspicious patterns for flagging lines that may still sound internal / SEO-planning-like.
+# Keep suspicious patterns focused on internal/project/planning copy,
+# not generic marketing/dev words that create noise.
 SUSPICIOUS_PATTERNS = [
     r"\b\d+\s+Städte\b",
     r"\b\d+\s+Kernleistungen\b",
@@ -87,15 +87,10 @@ SUSPICIOUS_PATTERNS = [
     r"\binterne Verlinkung\b",
     r"\bStartseite eingebunden\b",
     r"\bgut sichtbar\b",
-    r"\bSEO\b",
-    r"\bKeyword\b",
-    r"\bCTA\b",
-    r"\bContent-Strategie\b",
     r"\blokale Seiten bauen\b",
     r"\bVorher/Nachher Beispiele für Vertrauen\b",
 ]
 
-# Avoid rewriting obvious technical lines.
 TECHNICAL_LINE_PATTERNS = [
     r"^\s*import\s+",
     r"^\s*export\s+",
@@ -105,17 +100,29 @@ TECHNICAL_LINE_PATTERNS = [
     r"^\s*function\s+",
     r"^\s*class\s+",
     r"^\s*return\s+",
-    r"^\s*</?[A-Za-z][^>]*>\s*$",   # pure html tag line
+    r"^\s*</?[A-Za-z][^>]*>\s*$",
     r"https?://",
     r"href\s*=",
     r"src\s*=",
     r"class(Name)?\s*=",
     r"id\s*=",
     r"schema\.org",
+
+    # CSS / styles
+    r"^\s*\.[A-Za-z0-9_-]+\s*\{",
+    r"^\s*#[A-Za-z0-9_-]+\s*\{",
+    r"^\s*[A-Za-z0-9_.#:\-\[\]=\"'\s,>]+\{",
+    r"^\s*[A-Za-z-]+\s*:\s*[^;]+;\s*$",
+    r"^\s*\}\s*$",
 ]
 
 def utc_now() -> str:
     return datetime.utcnow().isoformat() + "Z"
+
+def is_in_included_dir(path: Path) -> bool:
+    if not INCLUDE_DIRS:
+        return True
+    return any(part in INCLUDE_DIRS for part in path.parts)
 
 def should_scan(path: Path) -> bool:
     if not path.is_file():
@@ -124,6 +131,8 @@ def should_scan(path: Path) -> bool:
         return False
     parts = set(path.parts)
     if parts & EXCLUDE_DIRS:
+        return False
+    if not is_in_included_dir(path):
         return False
     return True
 
@@ -145,9 +154,11 @@ def is_technical_line(line: str) -> bool:
     stripped = line.strip()
     if not stripped:
         return True
+
     for pattern in TECHNICAL_LINE_PATTERNS:
         if re.search(pattern, stripped, flags=re.I):
             return True
+
     return False
 
 def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
@@ -164,7 +175,6 @@ def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
 
     updated = line
 
-    # Exact replacements
     for pattern, replacement in REPLACEMENTS:
         new_updated, count = re.subn(pattern, replacement, updated, flags=re.I)
         if count > 0:
@@ -175,7 +185,6 @@ def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
             })
             updated = new_updated
 
-    # Suspicious patterns remaining after replacement
     for pattern in SUSPICIOUS_PATTERNS:
         if re.search(pattern, updated, flags=re.I):
             result["flags"].append({
