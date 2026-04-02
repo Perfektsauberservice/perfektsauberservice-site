@@ -36,6 +36,18 @@ INCLUDE_DIRS = set()
 
 MIN_PARAGRAPH_LENGTH = 90
 
+SHORT_COPY_TAG_WHITELIST = {"p", "li", "blockquote"}
+HEADING_TAGS = {"h1", "h2", "h3", "h4", "h5", "h6", "title"}
+
+IGNORE_PAGE_PATTERNS = [
+    r"(^|/)404\.html$",
+    r"(^|/)410\.html$",
+    r"\btest\b",
+    r"\bdraft\b",
+    r"seite wurde entfernt",
+    r"page removed",
+]
+
 REPLACEMENTS = [
     (
         r"Telefon\s*&\s*WhatsApp\s+gut\s+sichtbar",
@@ -102,7 +114,6 @@ WEAK_COPY_PATTERNS = [
 
 WEAK_CTA_PATTERNS = [
     r"^\s*Jetzt anfragen\s*$",
-    r"^\s*Kontakt\s*$",
     r"^\s*Mehr erfahren\s*$",
     r"^\s*Hier klicken\s*$",
 ]
@@ -130,7 +141,6 @@ TECHNICAL_LINE_PATTERNS = [
     r"^\s*function\s+",
     r"^\s*class\s+",
     r"^\s*return\s+",
-    r"^\s*</?[A-Za-z][^>]*>\s*$",
     r"https?://",
     r"href\s*=",
     r"src\s*=",
@@ -178,13 +188,35 @@ def load_audit_targets() -> Optional[set]:
     except Exception:
         return None
 
+def strip_html(line: str) -> str:
+    return re.sub(r"<[^>]+>", "", line).strip()
+
+def extract_tag_name(line: str) -> Optional[str]:
+    match = re.match(r"^\s*<\s*([a-zA-Z0-9]+)", line.strip())
+    if match:
+        return match.group(1).lower()
+    return None
+
+def should_ignore_page(rel: str, content: str) -> bool:
+    haystack = f"{rel}\n{content}".lower()
+    for pattern in IGNORE_PAGE_PATTERNS:
+        if re.search(pattern, haystack, flags=re.I):
+            return True
+    return False
+
 def is_technical_line(line: str) -> bool:
     stripped = line.strip()
     if not stripped:
         return True
+
+    tag = extract_tag_name(stripped)
+    if tag in {"script", "style"}:
+        return True
+
     for pattern in TECHNICAL_LINE_PATTERNS:
         if re.search(pattern, stripped, flags=re.I):
             return True
+
     return False
 
 def looks_like_customer_text(line: str) -> bool:
@@ -193,8 +225,35 @@ def looks_like_customer_text(line: str) -> bool:
         return False
     if is_technical_line(stripped):
         return False
-    letter_count = len(re.findall(r"[A-Za-zÄÖÜäöüß]", stripped))
+
+    text_only = strip_html(stripped)
+    if not text_only:
+        return False
+
+    letter_count = len(re.findall(r"[A-Za-zÄÖÜäöüß]", text_only))
     return letter_count >= 12
+
+def is_short_copy_candidate(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped:
+        return False
+
+    tag = extract_tag_name(stripped)
+
+    if tag in HEADING_TAGS:
+        return False
+
+    if tag is not None and tag not in SHORT_COPY_TAG_WHITELIST:
+        return False
+
+    text_only = strip_html(stripped)
+    if not text_only:
+        return False
+
+    if len(re.findall(r"[A-Za-zÄÖÜäöüß]", text_only)) < 20:
+        return False
+
+    return True
 
 def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
     result = {
@@ -203,7 +262,6 @@ def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
         "replacements": [],
         "flags": [],
         "changed": False,
-        "qualitySignals": [],
     }
 
     if is_technical_line(line):
@@ -231,9 +289,9 @@ def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
             })
 
     if looks_like_customer_text(stripped):
-        text_only = re.sub(r"<[^>]+>", "", stripped).strip()
+        text_only = strip_html(stripped)
 
-        if 0 < len(text_only) < MIN_PARAGRAPH_LENGTH:
+        if is_short_copy_candidate(stripped) and 0 < len(text_only) < MIN_PARAGRAPH_LENGTH:
             result["flags"].append({
                 "type": "short_copy",
                 "pattern": f"length_lt_{MIN_PARAGRAPH_LENGTH}",
@@ -285,6 +343,21 @@ def get_target_files() -> List[Path]:
     return sorted(files)
 
 def analyze_page_quality(rel: str, lines: List[str]) -> Dict[str, Any]:
+    full_content = "".join(lines)
+
+    if should_ignore_page(rel, full_content):
+        return {
+            "file": rel,
+            "wordCount": 0,
+            "shortCopyHits": 0,
+            "weakCopyHits": 0,
+            "weakCtaHits": 0,
+            "trustSignalHits": 0,
+            "score": 100,
+            "rating": "ignored",
+            "pageFlags": ["ignored_page"],
+        }
+
     visible_lines = []
     weak_copy_hits = 0
     weak_cta_hits = 0
@@ -295,13 +368,13 @@ def analyze_page_quality(rel: str, lines: List[str]) -> Dict[str, Any]:
         if not looks_like_customer_text(line):
             continue
 
-        text_only = re.sub(r"<[^>]+>", "", line).strip()
+        text_only = strip_html(line)
         if not text_only:
             continue
 
         visible_lines.append(text_only)
 
-        if len(text_only) < MIN_PARAGRAPH_LENGTH:
+        if is_short_copy_candidate(line) and len(text_only) < MIN_PARAGRAPH_LENGTH:
             short_copy_hits += 1
 
         for pattern in WEAK_COPY_PATTERNS:
