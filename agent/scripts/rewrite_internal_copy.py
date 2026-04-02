@@ -42,10 +42,16 @@ HEADING_TAGS = {"h1", "h2", "h3", "h4", "h5", "h6", "title"}
 IGNORE_PAGE_PATTERNS = [
     r"(^|/)404\.html$",
     r"(^|/)410\.html$",
+    r"(^|/)403\.html$",
+    r"(^|/)500\.html$",
+    r"(^|/)502\.html$",
+    r"(^|/)503\.html$",
+    r"/auto/",
     r"\btest\b",
     r"\bdraft\b",
     r"seite wurde entfernt",
     r"page removed",
+    r"test-draft",
 ]
 
 REPLACEMENTS = [
@@ -102,10 +108,10 @@ SUSPICIOUS_PATTERNS = [
 ]
 
 WEAK_COPY_PATTERNS = [
-    r"\bWir helfen Ihnen gerne\.?\b",
-    r"\bWir sind für Sie da\.?\b",
-    r"\bKontaktieren Sie uns\.?\b",
-    r"\bWir arbeiten schnell und zuverlässig\.?\b",
+    r"\bWir helfen Ihnen gerne\.?$",
+    r"\bWir sind für Sie da\.?$",
+    r"\bKontaktieren Sie uns\.?$",
+    r"\bWir arbeiten schnell und zuverlässig\.?$",
     r"\bprofessionelle Lösungen\b",
     r"\bsauber,\s*diskret und zuverlässig\b",
     r"\bschnell,\s*sauber und zuverlässig\b",
@@ -231,7 +237,7 @@ def looks_like_customer_text(line: str) -> bool:
         return False
 
     letter_count = len(re.findall(r"[A-Za-zÄÖÜäöüß]", text_only))
-    return letter_count >= 12
+    return letter_count >= 18
 
 def is_short_copy_candidate(line: str) -> bool:
     stripped = line.strip()
@@ -250,7 +256,7 @@ def is_short_copy_candidate(line: str) -> bool:
     if not text_only:
         return False
 
-    if len(re.findall(r"[A-Za-zÄÖÜäöüß]", text_only)) < 20:
+    if len(re.findall(r"[A-Za-zÄÖÜäöüß]", text_only)) < 25:
         return False
 
     return True
@@ -467,6 +473,21 @@ def main() -> None:
             })
             continue
 
+        if should_ignore_page(rel, content):
+            summary["filesScanned"] += 1
+            summary["pageQuality"].append({
+                "file": rel,
+                "wordCount": 0,
+                "shortCopyHits": 0,
+                "weakCopyHits": 0,
+                "weakCtaHits": 0,
+                "trustSignalHits": 0,
+                "score": 100,
+                "rating": "ignored",
+                "pageFlags": ["ignored_page"],
+            })
+            continue
+
         lines = content.splitlines(keepends=True)
         updated_lines = []
         file_changes = []
@@ -514,7 +535,7 @@ def main() -> None:
 
     summary["pageQuality"] = sorted(
         summary["pageQuality"],
-        key=lambda x: (x["score"], x["wordCount"])
+        key=lambda x: (0 if x["rating"] != "ignored" else 1, x["score"], x["wordCount"])
     )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
