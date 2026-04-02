@@ -156,6 +156,7 @@ TECHNICAL_LINE_PATTERNS = [
     r"schema\.org",
 
     # CSS
+    r"^\s*@media\s*\(",
     r"^\s*\.[A-Za-z0-9_-]+\s*\{",
     r"^\s*#[A-Za-z0-9_-]+\s*\{",
     r"^\s*[A-Za-z0-9_.#:\-\[\]=\"'\s,>]+\{",
@@ -163,8 +164,12 @@ TECHNICAL_LINE_PATTERNS = [
     r"^\s*\}\s*$",
 
     # inline JS / DOM code
+    r"window\.location",
     r"document\.getElementById\s*\(",
     r"addEventListener\s*\(",
+    r"\.indexOf\s*\(",
+    r"\.includes\s*\(",
+    r"\.replace\s*\(",
     r"\.style\.[A-Za-z0-9_]+\s*=",
     r"^\s*[A-Za-z0-9_.$]+\s*=\s*.*;$",
     r"function\s*\(",
@@ -231,6 +236,30 @@ def is_technical_line(line: str) -> bool:
 
     tag = extract_tag_name(stripped)
     if tag in {"script", "style"}:
+        return True
+
+    # inline CSS / media queries / compact style blocks
+    if stripped.startswith("@media"):
+        return True
+    if "{" in stripped and "}" in stripped and ":" in stripped and ";" in stripped:
+        return True
+
+    # inline JS / DOM / helpers / conditions
+    js_markers = [
+        "window.location",
+        "document.getElementById",
+        "addEventListener(",
+        ".indexOf(",
+        ".includes(",
+        ".replace(",
+        ".style.",
+        "function(",
+        "function (",
+        "=>",
+        "&&",
+        "||",
+    ]
+    if any(marker in stripped for marker in js_markers):
         return True
 
     for pattern in TECHNICAL_LINE_PATTERNS:
