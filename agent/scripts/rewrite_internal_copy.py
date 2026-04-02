@@ -32,9 +32,9 @@ EXCLUDE_DIRS = {
     "agent",
 }
 
-# Optional: if you know exactly where the public site content lives,
-# add those folders here. Leave empty to scan all non-excluded folders.
 INCLUDE_DIRS = set()
+
+MIN_PARAGRAPH_LENGTH = 90
 
 REPLACEMENTS = [
     (
@@ -75,8 +75,6 @@ REPLACEMENTS = [
     ),
 ]
 
-# Keep suspicious patterns focused on internal/project/planning copy,
-# not generic marketing/dev words that create noise.
 SUSPICIOUS_PATTERNS = [
     r"\b\d+\s+Städte\b",
     r"\b\d+\s+Kernleistungen\b",
@@ -89,6 +87,38 @@ SUSPICIOUS_PATTERNS = [
     r"\bgut sichtbar\b",
     r"\blokale Seiten bauen\b",
     r"\bVorher/Nachher Beispiele für Vertrauen\b",
+]
+
+WEAK_COPY_PATTERNS = [
+    r"\bWir helfen Ihnen gerne\.?\b",
+    r"\bWir sind für Sie da\.?\b",
+    r"\bKontaktieren Sie uns\.?\b",
+    r"\bWir arbeiten schnell und zuverlässig\.?\b",
+    r"\bprofessionelle Lösungen\b",
+    r"\bsauber,\s*diskret und zuverlässig\b",
+    r"\bschnell,\s*sauber und zuverlässig\b",
+    r"\bzuverlässig und professionell\b",
+]
+
+WEAK_CTA_PATTERNS = [
+    r"^\s*Jetzt anfragen\s*$",
+    r"^\s*Kontakt\s*$",
+    r"^\s*Mehr erfahren\s*$",
+    r"^\s*Hier klicken\s*$",
+]
+
+TRUST_SIGNALS = [
+    r"\bkostenlose Besichtigung\b",
+    r"\bkostenloses Angebot\b",
+    r"\bunverbindlich\b",
+    r"\bdiskret\b",
+    r"\bnachhaltig\b",
+    r"\bbesenrein\b",
+    r"\bbesenreine Übergabe\b",
+    r"\bkurzfristig\b",
+    r"\bWhatsApp\b",
+    r"\btransparente Preise\b",
+    r"\btransparenter Preis\b",
 ]
 
 TECHNICAL_LINE_PATTERNS = [
@@ -107,8 +137,6 @@ TECHNICAL_LINE_PATTERNS = [
     r"class(Name)?\s*=",
     r"id\s*=",
     r"schema\.org",
-
-    # CSS / styles
     r"^\s*\.[A-Za-z0-9_-]+\s*\{",
     r"^\s*#[A-Za-z0-9_-]+\s*\{",
     r"^\s*[A-Za-z0-9_.#:\-\[\]=\"'\s,>]+\{",
@@ -154,12 +182,19 @@ def is_technical_line(line: str) -> bool:
     stripped = line.strip()
     if not stripped:
         return True
-
     for pattern in TECHNICAL_LINE_PATTERNS:
         if re.search(pattern, stripped, flags=re.I):
             return True
-
     return False
+
+def looks_like_customer_text(line: str) -> bool:
+    stripped = line.strip()
+    if not stripped:
+        return False
+    if is_technical_line(stripped):
+        return False
+    letter_count = len(re.findall(r"[A-Za-zÄÖÜäöüß]", stripped))
+    return letter_count >= 12
 
 def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
     result = {
@@ -168,12 +203,14 @@ def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
         "replacements": [],
         "flags": [],
         "changed": False,
+        "qualitySignals": [],
     }
 
     if is_technical_line(line):
         return result
 
     updated = line
+    stripped = line.strip()
 
     for pattern, replacement in REPLACEMENTS:
         new_updated, count = re.subn(pattern, replacement, updated, flags=re.I)
@@ -188,9 +225,36 @@ def scan_and_rewrite_line(line: str) -> Dict[str, Any]:
     for pattern in SUSPICIOUS_PATTERNS:
         if re.search(pattern, updated, flags=re.I):
             result["flags"].append({
+                "type": "internal_copy",
                 "pattern": pattern,
                 "status": "flagged_for_manual_review",
             })
+
+    if looks_like_customer_text(stripped):
+        text_only = re.sub(r"<[^>]+>", "", stripped).strip()
+
+        if 0 < len(text_only) < MIN_PARAGRAPH_LENGTH:
+            result["flags"].append({
+                "type": "short_copy",
+                "pattern": f"length_lt_{MIN_PARAGRAPH_LENGTH}",
+                "status": "flagged_for_manual_review",
+            })
+
+        for pattern in WEAK_COPY_PATTERNS:
+            if re.search(pattern, text_only, flags=re.I):
+                result["flags"].append({
+                    "type": "weak_generic_copy",
+                    "pattern": pattern,
+                    "status": "flagged_for_manual_review",
+                })
+
+        for pattern in WEAK_CTA_PATTERNS:
+            if re.search(pattern, text_only, flags=re.I):
+                result["flags"].append({
+                    "type": "weak_cta",
+                    "pattern": pattern,
+                    "status": "flagged_for_manual_review",
+                })
 
     result["updated"] = updated
     result["changed"] = updated != line
@@ -220,6 +284,87 @@ def get_target_files() -> List[Path]:
 
     return sorted(files)
 
+def analyze_page_quality(rel: str, lines: List[str]) -> Dict[str, Any]:
+    visible_lines = []
+    weak_copy_hits = 0
+    weak_cta_hits = 0
+    short_copy_hits = 0
+    trust_signal_hits = 0
+
+    for line in lines:
+        if not looks_like_customer_text(line):
+            continue
+
+        text_only = re.sub(r"<[^>]+>", "", line).strip()
+        if not text_only:
+            continue
+
+        visible_lines.append(text_only)
+
+        if len(text_only) < MIN_PARAGRAPH_LENGTH:
+            short_copy_hits += 1
+
+        for pattern in WEAK_COPY_PATTERNS:
+            if re.search(pattern, text_only, flags=re.I):
+                weak_copy_hits += 1
+                break
+
+        for pattern in WEAK_CTA_PATTERNS:
+            if re.search(pattern, text_only, flags=re.I):
+                weak_cta_hits += 1
+                break
+
+        for pattern in TRUST_SIGNALS:
+            if re.search(pattern, text_only, flags=re.I):
+                trust_signal_hits += 1
+
+    word_count = len(re.findall(r"\b\w+\b", " ".join(visible_lines), flags=re.UNICODE))
+    score = 100
+
+    if word_count < 250:
+        score -= 25
+    if short_copy_hits >= 3:
+        score -= 15
+    if weak_copy_hits >= 2:
+        score -= 15
+    if weak_cta_hits >= 1:
+        score -= 10
+    if trust_signal_hits == 0:
+        score -= 20
+    elif trust_signal_hits == 1:
+        score -= 10
+
+    if score >= 85:
+        rating = "good"
+    elif score >= 65:
+        rating = "needs_improvement"
+    else:
+        rating = "weak"
+
+    page_flags = []
+    if word_count < 250:
+        page_flags.append("page_too_thin")
+    if short_copy_hits >= 3:
+        page_flags.append("too_many_short_sections")
+    if weak_copy_hits >= 2:
+        page_flags.append("too_much_generic_copy")
+    if weak_cta_hits >= 1:
+        page_flags.append("weak_cta_present")
+    if trust_signal_hits == 0:
+        page_flags.append("missing_trust_signals")
+
+    return {
+        "file": rel,
+        "wordCount": word_count,
+        "shortCopyHits": short_copy_hits,
+        "weakCopyHits": weak_copy_hits,
+        "weakCtaHits": weak_cta_hits,
+        "trustSignalHits": trust_signal_hits,
+        "score": max(score, 0),
+        "rating": rating,
+        "pageFlags": page_flags,
+    }
+
 def main() -> None:
     files = get_target_files()
 
@@ -235,6 +380,7 @@ def main() -> None:
         "flaggedLines": 0,
         "skippedFiles": [],
         "changes": [],
+        "pageQuality": [],
     }
 
     for path in files:
@@ -278,6 +424,9 @@ def main() -> None:
 
             updated_lines.append(outcome["updated"])
 
+        page_quality = analyze_page_quality(rel, lines)
+        summary["pageQuality"].append(page_quality)
+
         if file_changed:
             summary["filesUpdated"] += 1
             if not DRY_RUN:
@@ -290,6 +439,11 @@ def main() -> None:
                 "issues": file_changes,
             })
 
+    summary["pageQuality"] = sorted(
+        summary["pageQuality"],
+        key=lambda x: (x["score"], x["wordCount"])
+    )
+
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
 
@@ -297,7 +451,7 @@ def main() -> None:
         f"Rewrite scan complete | mode={MODE} | dry_run={DRY_RUN} | "
         f"files_scanned={summary['filesScanned']} | files_updated={summary['filesUpdated']} | "
         f"lines_scanned={summary['linesScanned']} | lines_changed={summary['linesChanged']} | "
-        f"flagged_lines={summary['flaggedLines']}"
+        f"flagged_lines={summary['flaggedLines']} | page_quality_scored={len(summary['pageQuality'])}"
     )
 
 if __name__ == "__main__":
