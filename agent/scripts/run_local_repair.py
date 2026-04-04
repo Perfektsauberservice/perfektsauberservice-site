@@ -1,14 +1,15 @@
 import json
 import re
+import sys
 from pathlib import Path
-
-from agent.scripts.run_local_guard import (
-    compare_page,
-    read_json,
-)
 
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
+from agent.scripts.run_local_guard import compare_page, read_json  # noqa: E402
+
+
 AGENT_DIR = ROOT / "agent"
 CONFIG_DIR = AGENT_DIR / "config"
 STATE_DIR = AGENT_DIR / "state"
@@ -28,10 +29,6 @@ def write_json(path: Path, data):
         json.dumps(data, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
-
-
-def stable_variant_index(file_name: str, count: int) -> int:
-    return sum(ord(c) for c in file_name) % count
 
 
 def replace_section_order_variant(html: str, variant: int) -> str:
@@ -500,17 +497,9 @@ def rewrite_cta(html: str, file_name: str, cta_variant: int) -> str:
     return html
 
 
-def score_candidate(target_file: Path, candidate_html: str, cities: list[str], thresholds: dict) -> tuple[int, dict]:
-    temp_path = ROOT / "__temp_candidate__.html"
-    temp_path.write_text(candidate_html, encoding="utf-8")
-
+def score_candidate(candidate_path: Path, cities: list[str], thresholds: dict) -> tuple[int, dict]:
     compare_files = list(ROOT.glob("entruempelung-*.html"))
-    report = compare_page(temp_path, compare_files, cities, thresholds)
-
-    try:
-        temp_path.unlink()
-    except FileNotFoundError:
-        pass
+    report = compare_page(candidate_path, compare_files, cities, thresholds)
 
     score = (
         report["overall_similarity"] * 3
@@ -547,25 +536,35 @@ def main():
         "report": None,
     }
 
-    for section_variant in range(6):
-        section_html = replace_section_order_variant(original_html, section_variant)
+    temp_path = ROOT / "__temp_candidate__.html"
 
-        for faq_variant in range(10):
-            faq_html = rewrite_faq(section_html, target_file.name, faq_variant)
+    try:
+        for section_variant in range(6):
+            section_html = replace_section_order_variant(original_html, section_variant)
 
-            for cta_variant in range(10):
-                candidate_html = rewrite_cta(faq_html, target_file.name, cta_variant)
-                score, report = score_candidate(target_file, candidate_html, city_names, thresholds)
+            for faq_variant in range(10):
+                faq_html = rewrite_faq(section_html, target_file.name, faq_variant)
 
-                if score < best_score:
-                    best_score = score
-                    best_html = candidate_html
-                    best_meta = {
-                        "section_variant": section_variant,
-                        "faq_variant": faq_variant,
-                        "cta_variant": cta_variant,
-                        "report": report,
-                    }
+                for cta_variant in range(10):
+                    candidate_html = rewrite_cta(faq_html, target_file.name, cta_variant)
+                    temp_path.write_text(candidate_html, encoding="utf-8")
+
+                    score, report = score_candidate(temp_path, city_names, thresholds)
+
+                    if score < best_score:
+                        best_score = score
+                        best_html = candidate_html
+                        best_meta = {
+                            "section_variant": section_variant,
+                            "faq_variant": faq_variant,
+                            "cta_variant": cta_variant,
+                            "report": report,
+                        }
+    finally:
+        try:
+            temp_path.unlink()
+        except FileNotFoundError:
+            pass
 
     changed = best_html != original_html
     if changed:
