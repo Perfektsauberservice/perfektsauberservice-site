@@ -1,5 +1,5 @@
 {
-  "page": "entruempelung-gaggenau.html",
+  "page": "entruempelung-steinmauern.html",
   "changes": [
     "Selected best section order variant",
     "Selected best FAQ variant",
@@ -7,40 +7,40 @@
   ],
   "selected_variants": {
     "section_variant": 5,
-    "faq_variant": 7,
-    "cta_variant": 9
+    "faq_variant": 0,
+    "cta_variant": 6
   },
   "best_report": {
     "page": "__temp_candidate__.html",
-    "overall_similarity": 36,
+    "overall_similarity": 28,
     "risk": "low",
     "closest_matches": [
       {
-        "file": "entruempelung-gaggenau.html",
-        "similarity": 36
+        "file": "entruempelung-steinmauern.html",
+        "similarity": 28
       },
       {
-        "file": "entruempelung-rheinmuenster.html",
-        "similarity": 34
-      },
-      {
-        "file": "entruempelung-bischweier.html",
-        "similarity": 33
-      },
-      {
-        "file": "entruempelung-malsch.html",
-        "similarity": 29
-      },
-      {
-        "file": "entruempelung-loffenau.html",
+        "file": "entruempelung-elchesheim-illingen.html",
         "similarity": 27
+      },
+      {
+        "file": "entruempelung-durmersheim.html",
+        "similarity": 26
+      },
+      {
+        "file": "entruempelung-au-am-rhein.html",
+        "similarity": 26
+      },
+      {
+        "file": "entruempelung-weisenbach.html",
+        "similarity": 21
       }
     ],
     "block_similarity": {
-      "hero": 50,
-      "structure": 36,
-      "faq": 7,
-      "cta": 24
+      "hero": 40,
+      "structure": 30,
+      "faq": 0,
+      "cta": 5
     },
     "problems": [],
     "rewrite_targets": []

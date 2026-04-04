@@ -1,11 +1,7 @@
 {
   "page": "entruempelung-gaggenau.html",
-  "status": "BLOCK",
-  "reasons": [
-    "FAQ similarity too high"
-  ],
-  "required_fixes": [
-    "Rewrite FAQ"
-  ],
-  "summary": "Page blocked for review."
+  "status": "PASS",
+  "reasons": [],
+  "required_fixes": [],
+  "summary": "Page passed guard."
 }
