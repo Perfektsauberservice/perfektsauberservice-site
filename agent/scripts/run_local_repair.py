@@ -22,11 +22,18 @@ def read_json(path: Path):
 
 def write_json(path: Path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    path.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
 
 def replace_section_order(html: str) -> str:
-    sections = re.findall(r'(<section class="section">.*?</section>)', html, flags=re.DOTALL)
+    sections = re.findall(
+        r'(<section class="section">.*?</section>)',
+        html,
+        flags=re.DOTALL,
+    )
     if len(sections) < 6:
         return html
 
@@ -36,20 +43,29 @@ def replace_section_order(html: str) -> str:
         sections[4] if len(sections) > 4 else sections[1],
         sections[1],
         sections[3] if len(sections) > 3 else sections[-1],
-        sections[5] if len(sections) > 5 else sections[-1]
+        sections[5] if len(sections) > 5 else sections[-1],
     ]
 
-    grid_match = re.search(r'(<div class="grid">)(.*?)(</div>\s*<section class="section")', html, flags=re.DOTALL)
+    grid_match = re.search(
+        r'(<div class="grid">)(.*?)(</div>\s*<section class="section")',
+        html,
+        flags=re.DOTALL,
+    )
     if not grid_match:
         return html
 
-    new_grid = "<div class=\"grid\">\n" + "\n\n".join(new_order[:6]) + "\n  </div>\n\n  <section class=\"section\""
+    new_grid = (
+        '<div class="grid">\n'
+        + "\n\n".join(new_order[:6])
+        + '\n  </div>\n\n  <section class="section"'
+    )
+
     html = re.sub(
         r'<div class="grid">.*?</div>\s*<section class="section"',
         new_grid,
         html,
         count=1,
-        flags=re.DOTALL
+        flags=re.DOTALL,
     )
     return html
 
@@ -84,7 +100,7 @@ def rewrite_faq(html: str, file_name: str) -> str:
         new_faq,
         html,
         count=1,
-        flags=re.DOTALL
+        flags=re.DOTALL,
     )
     return html
 
@@ -97,7 +113,7 @@ def rewrite_cta(html: str, file_name: str) -> str:
         .title()
     )
 
-        new_cta = f"""
+    new_cta = f"""
   <section class="section" id="kontakt" style="margin-top:20px">
     <h2>Schnelle Anfrage für {city}</h2>
     <p>
@@ -123,7 +139,7 @@ def rewrite_cta(html: str, file_name: str) -> str:
         new_cta + "\n</div>\n</body>",
         html,
         count=1,
-        flags=re.DOTALL
+        flags=re.DOTALL,
     )
     return html
 
@@ -151,9 +167,9 @@ def main():
         "changes": [
             "Reordered content sections",
             "Rewrote FAQ block",
-            "Rewrote CTA block"
+            "Rewrote CTA block",
         ],
-        "status": "repaired"
+        "status": "repaired",
     }
 
     write_json(STATE_DIR / "differentiation-log.json", log)
