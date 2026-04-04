@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       target_file:
-        description: "HTML file to repair, e.g. entruempelung-oetigheim.html"
+        description: "HTML file to repair, e.g. entruempelung-bischweier.html"
         required: true
         type: string
 
@@ -25,9 +25,9 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run local repair
+      - name: Run local repair v2
         run: |
-          printf "%s\n" "${{ github.event.inputs.target_file }}" | python agent/scripts/run_local_repair.py
+          printf "%s\n" "${{ github.event.inputs.target_file }}" | python agent/scripts/run_local_repair_v2.py
 
       - name: Show repair report
         run: |
@@ -39,7 +39,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${{ github.event.inputs.target_file }}" agent/state/differentiation-log.json || true
-          git diff --cached --quiet || git commit -m "Repair local page: ${{ github.event.inputs.target_file }}"
+          git diff --cached --quiet || git commit -m "Repair local page v2: ${{ github.event.inputs.target_file }}"
           git push
 
       - name: Upload repair report
