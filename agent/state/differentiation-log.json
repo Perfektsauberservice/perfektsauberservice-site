@@ -1,9 +1,49 @@
 {
-  "page": "entruempelung-weisenbach.html",
+  "page": "entruempelung-bischweier.html",
   "changes": [
-    "Reordered content sections",
-    "Rewrote FAQ block",
-    "Rewrote CTA block"
+    "Selected best section order variant",
+    "Selected best FAQ variant",
+    "Selected best CTA variant"
   ],
+  "selected_variants": {
+    "section_variant": 3,
+    "faq_variant": 1,
+    "cta_variant": 6
+  },
+  "best_report": {
+    "page": "__temp_candidate__.html",
+    "overall_similarity": 31,
+    "risk": "low",
+    "closest_matches": [
+      {
+        "file": "entruempelung-bischweier.html",
+        "similarity": 31
+      },
+      {
+        "file": "entruempelung-malsch.html",
+        "similarity": 30
+      },
+      {
+        "file": "entruempelung-durmersheim.html",
+        "similarity": 30
+      },
+      {
+        "file": "entruempelung-gernsbach.html",
+        "similarity": 25
+      },
+      {
+        "file": "entruempelung-bietigheim.html",
+        "similarity": 24
+      }
+    ],
+    "block_similarity": {
+      "hero": 46,
+      "structure": 52,
+      "faq": 5,
+      "cta": 3
+    },
+    "problems": [],
+    "rewrite_targets": []
+  },
   "status": "repaired"
 }
