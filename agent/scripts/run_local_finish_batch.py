@@ -14,6 +14,8 @@ TARGET_PAGES = [
     "entruempelung-gaggenau.html",
 ]
 
+MAX_ROUNDS = 4
+
 
 def run_python_script(script_path: Path, target_file: str) -> tuple[int, str, str]:
     process = subprocess.run(
@@ -35,6 +37,34 @@ def load_json(path: Path) -> dict:
 def save_json(path: Path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def score_guard(guard: dict) -> int:
+    status = guard.get("status", "BLOCK")
+    reasons = guard.get("reasons", [])
+
+    base = {
+        "PASS": 0,
+        "REVIEW": 100,
+        "BLOCK": 200,
+    }.get(status, 300)
+
+    penalty = 0
+    for reason in reasons:
+        if "too few sections" in reason.lower():
+            penalty += 30
+        elif "faq too weak" in reason.lower():
+            penalty += 25
+        elif "faq similarity too high" in reason.lower():
+            penalty += 20
+        elif "cta similarity too high" in reason.lower():
+            penalty += 15
+        elif "structure similarity too high" in reason.lower():
+            penalty += 15
+        else:
+            penalty += 10
+
+    return base + penalty
 
 
 def classify_action(final_guard: dict) -> str:
@@ -61,6 +91,7 @@ def main():
 
     summary = {
         "total_pages": len(TARGET_PAGES),
+        "max_rounds": MAX_ROUNDS,
         "processed": [],
         "pass": [],
         "review": [],
@@ -71,93 +102,132 @@ def main():
     for file_name in TARGET_PAGES:
         item = {
             "page": file_name,
-            "initial_guard": None,
-            "structural_attempted": False,
-            "repair_v2_attempted": False,
+            "rounds": [],
             "final_guard": None,
             "next_action": None,
             "status": None,
         }
 
-        code, stdout, stderr = run_python_script(guard_script, file_name)
-        if code != 0:
-            summary["errors"].append({
-                "page": file_name,
-                "step": "initial_guard",
-                "stdout": stdout,
-                "stderr": stderr,
-            })
-            item["status"] = "ERROR"
-            summary["processed"].append(item)
-            continue
+        best_guard = None
+        best_score = 10**9
+        last_score = None
 
-        initial_guard = load_json(STATE_DIR / "publish-guard-report.json")
-        item["initial_guard"] = initial_guard
+        for round_no in range(1, MAX_ROUNDS + 1):
+            round_info = {
+                "round": round_no,
+                "initial_guard": None,
+                "structural_attempted": False,
+                "repair_v2_attempted": False,
+                "final_guard": None,
+                "score_after_round": None,
+            }
 
-        if initial_guard.get("status") == "PASS":
-            item["final_guard"] = initial_guard
-            item["status"] = "PASS"
-            item["next_action"] = "No action needed"
-            summary["pass"].append(file_name)
-            summary["processed"].append(item)
-            continue
+            # guard before changes
+            code, stdout, stderr = run_python_script(guard_script, file_name)
+            if code != 0:
+                summary["errors"].append({
+                    "page": file_name,
+                    "step": f"round_{round_no}_initial_guard",
+                    "stdout": stdout,
+                    "stderr": stderr,
+                })
+                item["status"] = "ERROR"
+                item["rounds"].append(round_info)
+                break
 
-        item["structural_attempted"] = True
-        code, stdout, stderr = run_python_script(structural_script, file_name)
-        if code != 0:
-            summary["errors"].append({
-                "page": file_name,
-                "step": "structural_repair",
-                "stdout": stdout,
-                "stderr": stderr,
-            })
-            item["status"] = "ERROR"
-            summary["processed"].append(item)
-            continue
+            initial_guard = load_json(STATE_DIR / "publish-guard-report.json")
+            round_info["initial_guard"] = initial_guard
 
-        item["repair_v2_attempted"] = True
-        code, stdout, stderr = run_python_script(repair_v2_script, file_name)
-        if code != 0:
-            summary["errors"].append({
-                "page": file_name,
-                "step": "repair_v2",
-                "stdout": stdout,
-                "stderr": stderr,
-            })
-            item["status"] = "ERROR"
-            summary["processed"].append(item)
-            continue
+            initial_score = score_guard(initial_guard)
+            if initial_score < best_score:
+                best_score = initial_score
+                best_guard = initial_guard
 
-        code, stdout, stderr = run_python_script(guard_script, file_name)
-        if code != 0:
-            summary["errors"].append({
-                "page": file_name,
-                "step": "final_guard",
-                "stdout": stdout,
-                "stderr": stderr,
-            })
-            item["status"] = "ERROR"
-            summary["processed"].append(item)
-            continue
+            if initial_guard.get("status") == "PASS":
+                round_info["final_guard"] = initial_guard
+                round_info["score_after_round"] = initial_score
+                item["rounds"].append(round_info)
+                item["final_guard"] = initial_guard
+                item["status"] = "PASS"
+                summary["pass"].append(file_name)
+                break
 
-        final_guard = load_json(STATE_DIR / "publish-guard-report.json")
-        item["final_guard"] = final_guard
-        item["status"] = final_guard.get("status", "UNKNOWN")
-        item["next_action"] = classify_action(final_guard)
+            # structural repair
+            round_info["structural_attempted"] = True
+            code, stdout, stderr = run_python_script(structural_script, file_name)
+            if code != 0:
+                summary["errors"].append({
+                    "page": file_name,
+                    "step": f"round_{round_no}_structural_repair",
+                    "stdout": stdout,
+                    "stderr": stderr,
+                })
+                item["status"] = "ERROR"
+                item["rounds"].append(round_info)
+                break
 
-        if item["status"] == "PASS":
-            summary["pass"].append(file_name)
-        elif item["status"] == "REVIEW":
+            # repair v2
+            round_info["repair_v2_attempted"] = True
+            code, stdout, stderr = run_python_script(repair_v2_script, file_name)
+            if code != 0:
+                summary["errors"].append({
+                    "page": file_name,
+                    "step": f"round_{round_no}_repair_v2",
+                    "stdout": stdout,
+                    "stderr": stderr,
+                })
+                item["status"] = "ERROR"
+                item["rounds"].append(round_info)
+                break
+
+            # guard after changes
+            code, stdout, stderr = run_python_script(guard_script, file_name)
+            if code != 0:
+                summary["errors"].append({
+                    "page": file_name,
+                    "step": f"round_{round_no}_final_guard",
+                    "stdout": stdout,
+                    "stderr": stderr,
+                })
+                item["status"] = "ERROR"
+                item["rounds"].append(round_info)
+                break
+
+            final_guard = load_json(STATE_DIR / "publish-guard-report.json")
+            final_score = score_guard(final_guard)
+            round_info["final_guard"] = final_guard
+            round_info["score_after_round"] = final_score
+            item["rounds"].append(round_info)
+
+            if final_score < best_score:
+                best_score = final_score
+                best_guard = final_guard
+
+            if final_guard.get("status") == "PASS":
+                item["final_guard"] = final_guard
+                item["status"] = "PASS"
+                summary["pass"].append(file_name)
+                break
+
+            # stop if no improvement
+            if last_score is not None and final_score >= last_score:
+                item["final_guard"] = best_guard if best_guard else final_guard
+                item["status"] = item["final_guard"].get("status", "BLOCK")
+                break
+
+            last_score = final_score
+
+        if item["status"] is None and best_guard is not None:
+            item["final_guard"] = best_guard
+            item["status"] = best_guard.get("status", "BLOCK")
+
+        if item["status"] == "REVIEW":
             summary["review"].append(file_name)
         elif item["status"] == "BLOCK":
             summary["block"].append(file_name)
-        else:
-            summary["errors"].append({
-                "page": file_name,
-                "step": "classification",
-                "stdout": json.dumps(final_guard, ensure_ascii=False),
-                "stderr": "",
-            })
+
+        if item["final_guard"]:
+            item["next_action"] = classify_action(item["final_guard"])
 
         summary["processed"].append(item)
 
