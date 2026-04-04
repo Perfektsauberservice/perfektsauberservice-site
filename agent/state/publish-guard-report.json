@@ -1,0 +1,17 @@
+{
+  "page": "entruempelung-weisenbach.html",
+  "status": "BLOCK",
+  "reasons": [
+    "Too few sections",
+    "FAQ too weak",
+    "FAQ similarity too high",
+    "CTA similarity too high"
+  ],
+  "required_fixes": [
+    "Add more useful sections",
+    "Expand FAQ",
+    "Rewrite FAQ",
+    "Rewrite CTA"
+  ],
+  "summary": "Page blocked for review."
+}
