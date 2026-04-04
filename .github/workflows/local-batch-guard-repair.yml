@@ -1,0 +1,48 @@
+name: Local Batch Guard Repair
+
+on:
+  workflow_dispatch:
+
+jobs:
+  local-batch-guard-repair:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run local batch
+        run: |
+          python agent/scripts/run_local_batch.py
+
+      - name: Show batch summary
+        run: |
+          echo "=== batch-summary.json ==="
+          cat agent/state/batch-summary.json || true
+
+      - name: Commit repaired pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add *.html agent/state/*.json || true
+          git diff --cached --quiet || git commit -m "Batch local guard and repair run"
+          git push
+
+      - name: Upload batch reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-batch-reports
+          path: |
+            agent/state/batch-summary.json
+            agent/state/page-similarity-report.json
+            agent/state/publish-guard-report.json
+            agent/state/differentiation-log.json
