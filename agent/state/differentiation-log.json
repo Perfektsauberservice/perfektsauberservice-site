@@ -1,5 +1,5 @@
 {
-  "page": "entruempelung-weisenbach.html",
+  "page": "entruempelung-sinzheim.html",
   "changes": [
     "Selected best section order variant",
     "Selected best FAQ variant",
@@ -8,49 +8,45 @@
   "selected_variants": {
     "section_variant": 0,
     "faq_variant": 0,
-    "cta_variant": 2
+    "cta_variant": 9
   },
   "best_report": {
     "page": "__temp_candidate__.html",
-    "overall_similarity": 77,
-    "risk": "medium",
+    "overall_similarity": 61,
+    "risk": "low",
     "closest_matches": [
       {
-        "file": "entruempelung-weisenbach.html",
-        "similarity": 77
-      },
-      {
         "file": "entruempelung-sinzheim.html",
-        "similarity": 47
-      },
-      {
-        "file": "entruempelung-stutensee.html",
-        "similarity": 39
+        "similarity": 61
       },
       {
         "file": "entruempelung-steinmauern.html",
-        "similarity": 39
+        "similarity": 56
       },
       {
-        "file": "entruempelung-iffezheim.html",
-        "similarity": 31
+        "file": "entruempelung-weisenbach.html",
+        "similarity": 44
+      },
+      {
+        "file": "entruempelung-loffenau.html",
+        "similarity": 40
+      },
+      {
+        "file": "entruempelung-pforzheim.html",
+        "similarity": 39
       }
     ],
     "block_similarity": {
-      "hero": 82,
-      "structure": 83,
-      "faq": 100,
-      "cta": 5
+      "hero": 78,
+      "structure": 80,
+      "faq": 0,
+      "cta": 24
     },
     "problems": [
-      "Overall similarity too high",
-      "Structure too similar",
-      "FAQ too similar"
+      "Structure too similar"
     ],
     "rewrite_targets": [
-      "body",
-      "section_order",
-      "faq"
+      "section_order"
     ]
   },
   "status": "repaired"
