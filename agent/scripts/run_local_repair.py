@@ -97,24 +97,24 @@ def rewrite_cta(html: str, file_name: str) -> str:
         .title()
     )
 
-    new_cta = f"""
+        new_cta = f"""
   <section class="section" id="kontakt" style="margin-top:20px">
-    <h2>Jetzt Fotos senden und Entrümpelung in {city} anfragen</h2>
+    <h2>Schnelle Anfrage für {city}</h2>
     <p>
-      Sie möchten schnell wissen, wie Ihre Entrümpelung eingeschätzt wird?
-      Senden Sie uns Fotos per WhatsApp oder vereinbaren Sie direkt eine
-      kostenlose Besichtigung in {city}.
+      Schicken Sie uns am besten direkt ein paar Fotos und kurze Infos zum
+      Objekt. So können wir schneller einschätzen, wie die Entrümpelung in
+      {city} sinnvoll geplant werden kann.
     </p>
 
     <div class="cta-row">
-      <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">Fotos per WhatsApp senden</a>
-      <a class="cta secondary" href="/kontakt.html">Besichtigung anfragen</a>
+      <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">Jetzt Anfrage per WhatsApp senden</a>
+      <a class="cta secondary" href="/preisrechner.html">Erst Preis grob einschätzen</a>
     </div>
 
     <div class="link-list">
-      <a href="/preisrechner.html">Preisrechner</a>
-      <a href="/leistungen.html">Leistungen</a>
-      <a href="/einsatzgebiete.html">Einsatzgebiete</a>
+      <a href="/kontakt.html">Kontaktformular</a>
+      <a href="/einsatzgebiete.html">Weitere Einsatzorte</a>
+      <a href="/entruempelung-rastatt.html">Entrümpelung Rastatt</a>
     </div>
   </section>
 """
