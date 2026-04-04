@@ -1,0 +1,52 @@
+name: Local Structural Repair
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_file:
+        description: "HTML file to structurally repair"
+        required: true
+        type: string
+
+jobs:
+  structural-repair:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run structural repair
+        run: |
+          printf "%s\n" "${{ github.event.inputs.target_file }}" | python agent/scripts/run_local_structural_repair.py
+
+      - name: Show structural repair log
+        run: |
+          echo "=== structural-repair-log.json ==="
+          cat agent/state/structural-repair-log.json || true
+
+      - name: Commit structural repair
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ github.event.inputs.target_file }}" agent/state/structural-repair-log.json || true
+          git diff --cached --quiet || git commit -m "Structural repair: ${{ github.event.inputs.target_file }}"
+          git fetch origin main
+          git pull --rebase origin main
+          git push origin main
+
+      - name: Upload structural repair report
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-structural-repair-report
+          path: |
+            agent/state/structural-repair-log.json
