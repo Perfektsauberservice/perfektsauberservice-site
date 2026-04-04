@@ -237,27 +237,33 @@ def compare_page(target_file: Path, compare_files: list[Path], cities: list[str]
     return report
 
 
-def publish_guard(report: dict, html_file: Path):
+def publish_guard(report: dict, html_file: Path, thresholds: dict):
     html = read_text(html_file)
 
     reasons = []
     fixes = []
 
+    missing_critical = False
+
     if "<title>" not in html:
         reasons.append("Missing title")
         fixes.append("Add title")
+        missing_critical = True
 
     if 'meta name="description"' not in html:
         reasons.append("Missing meta description")
         fixes.append("Add meta description")
+        missing_critical = True
 
     if 'rel="canonical"' not in html:
         reasons.append("Missing canonical")
         fixes.append("Add canonical")
+        missing_critical = True
 
     if "<h1" not in html:
         reasons.append("Missing h1")
         fixes.append("Add h1")
+        missing_critical = True
 
     h2_count = len(re.findall(r"<h2[^>]*>", html, flags=re.IGNORECASE))
     if h2_count < 6:
@@ -274,33 +280,60 @@ def publish_guard(report: dict, html_file: Path):
         reasons.append("FAQ too weak")
         fixes.append("Expand FAQ")
 
-    if report["overall_similarity"] >= 85:
+    overall_block = thresholds["block_if"]["overall_similarity_gte"]
+    structure_block = thresholds["block_if"]["structure_similarity_gte"]
+    faq_block = thresholds["block_if"]["faq_similarity_gte"]
+    cta_block = thresholds["block_if"]["cta_similarity_gte"]
+
+    if report["overall_similarity"] >= overall_block:
         reasons.append("Overall similarity too high")
         fixes.append("Rewrite body")
 
-    if report["block_similarity"]["structure"] >= 86:
+    if report["block_similarity"]["structure"] >= structure_block:
         reasons.append("Structure similarity too high")
         fixes.append("Change section order")
 
-    if report["block_similarity"]["faq"] >= 80:
+    if report["block_similarity"]["faq"] >= faq_block:
         reasons.append("FAQ similarity too high")
         fixes.append("Rewrite FAQ")
 
-    if report["block_similarity"]["cta"] >= 80:
+    if report["block_similarity"]["cta"] >= cta_block:
         reasons.append("CTA similarity too high")
         fixes.append("Rewrite CTA")
 
-    if reasons:
-        status = "BLOCK" if any("too high" in r.lower() or "missing" in r.lower() for r in reasons) else "REVIEW"
+    hard_duplicate_problem = (
+        report["overall_similarity"] >= overall_block
+        or report["block_similarity"]["structure"] >= structure_block
+        or report["block_similarity"]["faq"] >= faq_block
+    )
+
+    cta_only_problem = (
+        report["block_similarity"]["cta"] >= cta_block
+        and report["overall_similarity"] < overall_block
+        and report["block_similarity"]["structure"] < structure_block
+        and report["block_similarity"]["faq"] < faq_block
+    )
+
+    if missing_critical or hard_duplicate_problem:
+        status = "BLOCK"
+    elif cta_only_problem or reasons:
+        status = "REVIEW"
     else:
         status = "PASS"
+
+    if status == "PASS":
+        summary = "Page passed guard."
+    elif status == "REVIEW":
+        summary = "Page needs review but is not critically blocked."
+    else:
+        summary = "Page blocked for review."
 
     return {
         "page": html_file.name,
         "status": status,
         "reasons": reasons,
         "required_fixes": list(dict.fromkeys(fixes)),
-        "summary": "Page blocked for review." if status != "PASS" else "Page passed guard.",
+        "summary": summary,
     }
 
 
@@ -324,7 +357,7 @@ def main():
     similarity_report = compare_page(target_file, compare_files, city_names, thresholds)
     write_json(STATE_DIR / "page-similarity-report.json", similarity_report)
 
-    guard_report = publish_guard(similarity_report, target_file)
+    guard_report = publish_guard(similarity_report, target_file, thresholds)
     write_json(STATE_DIR / "publish-guard-report.json", guard_report)
 
     print("\n=== SIMILARITY REPORT ===")
