@@ -33,7 +33,7 @@ def save_json(path: Path, data):
 
 def main():
     guard_script = AGENT_DIR / "scripts" / "run_local_guard.py"
-    repair_script = AGENT_DIR / "scripts" / "run_local_repair.py"
+    repair_script = AGENT_DIR / "scripts" / "run_local_repair_v2.py"
 
     html_files = sorted(
         [
@@ -61,7 +61,6 @@ def main():
             "status": None,
         }
 
-        # first guard
         code, stdout, stderr = run_python_script(guard_script, file_name)
         if code != 0:
             batch_summary["errors"].append(
@@ -76,7 +75,6 @@ def main():
             batch_summary["processed"].append(page_result)
             continue
 
-        similarity_report = load_json(STATE_DIR / "page-similarity-report.json")
         guard_report = load_json(STATE_DIR / "publish-guard-report.json")
         page_result["initial_guard"] = guard_report
 
@@ -87,7 +85,6 @@ def main():
             batch_summary["processed"].append(page_result)
             continue
 
-        # repair
         page_result["repair_attempted"] = True
         code, stdout, stderr = run_python_script(repair_script, file_name)
         if code != 0:
@@ -103,7 +100,6 @@ def main():
             batch_summary["processed"].append(page_result)
             continue
 
-        # second guard
         code, stdout, stderr = run_python_script(guard_script, file_name)
         if code != 0:
             batch_summary["errors"].append(
@@ -148,7 +144,6 @@ def main():
     }
 
     save_json(STATE_DIR / "batch-summary.json", batch_summary)
-
     print(json.dumps(batch_summary, ensure_ascii=False, indent=2))
 
 
