@@ -1,34 +1,34 @@
 {
-  "page": "entruempelung-weisenbach.html",
-  "overall_similarity": 47,
+  "page": "entruempelung-gaggenau.html",
+  "overall_similarity": 34,
   "risk": "low",
   "closest_matches": [
     {
-      "file": "entruempelung-sinzheim.html",
-      "similarity": 47
+      "file": "entruempelung-rheinmuenster.html",
+      "similarity": 34
     },
     {
-      "file": "entruempelung-stutensee.html",
-      "similarity": 39
+      "file": "entruempelung-bischweier.html",
+      "similarity": 33
     },
     {
-      "file": "entruempelung-steinmauern.html",
-      "similarity": 39
-    },
-    {
-      "file": "entruempelung-iffezheim.html",
-      "similarity": 31
-    },
-    {
-      "file": "entruempelung-forbach.html",
+      "file": "entruempelung-malsch.html",
       "similarity": 29
+    },
+    {
+      "file": "entruempelung-loffenau.html",
+      "similarity": 27
+    },
+    {
+      "file": "entruempelung-pforzheim.html",
+      "similarity": 26
     }
   ],
   "block_similarity": {
-    "hero": 38,
-    "structure": 40,
+    "hero": 18,
+    "structure": 25,
     "faq": 100,
-    "cta": 39
+    "cta": 30
   },
   "problems": [
     "FAQ too similar"
