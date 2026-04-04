@@ -115,23 +115,27 @@ def rewrite_cta(html: str, file_name: str) -> str:
 
     new_cta = f"""
   <section class="section" id="kontakt" style="margin-top:20px">
-    <h2>Schnelle Anfrage für {city}</h2>
+    <h2>Entrümpelung in {city} unverbindlich anfragen</h2>
     <p>
-      Schicken Sie uns am besten direkt ein paar Fotos und kurze Infos zum
-      Objekt. So können wir schneller einschätzen, wie die Entrümpelung in
-      {city} sinnvoll geplant werden kann.
+      Wenn Sie den Aufwand besser einschätzen lassen möchten, senden Sie uns
+      einfach ein paar Fotos und eine kurze Beschreibung. So bekommen Sie
+      schneller eine erste Orientierung für Ihr Objekt in {city}.
     </p>
 
     <div class="cta-row">
-      <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">Jetzt Anfrage per WhatsApp senden</a>
-      <a class="cta secondary" href="/preisrechner.html">Erst Preis grob einschätzen</a>
+      <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">Fotos und Infos senden</a>
     </div>
 
-    <div class="link-list">
-      <a href="/kontakt.html">Kontaktformular</a>
-      <a href="/einsatzgebiete.html">Weitere Einsatzorte</a>
-      <a href="/entruempelung-rastatt.html">Entrümpelung Rastatt</a>
-    </div>
+    <p style="margin-top:16px;color:#475569;">
+      Alternativ können Sie zuerst den <a href="/preisrechner.html">Preisrechner</a>
+      nutzen oder uns direkt über das <a href="/kontakt.html">Kontaktformular</a> schreiben.
+    </p>
+
+    <p style="margin-top:10px;color:#475569;">
+      Weitere Informationen finden Sie auch unter
+      <a href="/leistungen.html">Leistungen</a> und
+      <a href="/einsatzgebiete.html">Einsatzgebiete</a>.
+    </p>
   </section>
 """
     html = re.sub(
