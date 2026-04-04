@@ -1,0 +1,51 @@
+name: Local Remaining Batch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  local-remaining-batch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run remaining-pages batch
+        run: |
+          python agent/scripts/run_local_remaining_batch.py
+
+      - name: Show remaining batch summary
+        run: |
+          echo "=== remaining-batch-summary.json ==="
+          cat agent/state/remaining-batch-summary.json || true
+
+      - name: Commit repaired remaining pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add *.html agent/state/*.json || true
+          git diff --cached --quiet || git commit -m "Remaining local pages repair batch"
+          git fetch origin main
+          git pull --rebase origin main
+          git push origin main
+
+      - name: Upload remaining batch reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-remaining-batch-reports
+          path: |
+            agent/state/remaining-batch-summary.json
+            agent/state/page-similarity-report.json
+            agent/state/publish-guard-report.json
+            agent/state/differentiation-log.json
+            agent/state/structural-repair-log.json
