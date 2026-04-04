@@ -1,450 +1,344 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="index,follow" />
-<link rel="canonical" href="https://perfektsauberservice.com/preisrechner" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Entrümpelung Preisrechner | Perfekt Sauber Service</title>
-  <meta name="description" content="Unverbindliche Preisorientierung für Entrümpelung in Rastatt, Baden-Baden, Gaggenau und Umgebung." />
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #475569;
-      --line: #e2e8f0;
-      --dark: #0f172a;
-      --dark2: #1e293b;
-      --green: #10b981;
-      --green-dark: #059669;
-      --green-soft: #ecfdf5;
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-    .hero {
-      overflow: hidden;
-      border-radius: var(--radius-xl);
-      background: linear-gradient(135deg, #020617 0%, #0f172a 45%, #1e293b 100%);
-      color: white;
-      box-shadow: 0 20px 40px rgba(15,23,42,.18);
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 32px;
-    }
-    .hero-left, .hero-right { padding: 32px; }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 14px;
-    }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #34d399; }
-    h1 { font-size: 48px; line-height: 1.08; margin: 18px 0 0; }
-    .hero p.lead {
-      color: #cbd5e1;
-      max-width: 700px;
-      font-size: 18px;
-      margin: 18px 0 0;
-    }
-    .badges, .stats-grid, .main-grid, .faq-grid, .benefit-grid, .form-grid {
-      display: grid;
-      gap: 16px;
-    }
-    .badges {
-      margin-top: 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .badge {
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
-      padding: 8px 14px;
-      font-size: 14px;
-    }
-    .stats-grid {
-      margin-top: 28px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .statbox {
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.06);
-      padding: 16px;
-    }
-    .statbox strong { display:block; font-size: 20px; margin-bottom: 4px; }
-    .hero-estimate {
-      border-radius: 26px;
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.08);
-      backdrop-filter: blur(6px);
-      padding: 24px;
-      margin-top: 36px;
-    }
-    .overline {
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      font-size: 12px;
-      color: #cbd5e1;
-    }
-    .price {
-      font-size: 46px;
-      font-weight: 800;
-      margin-top: 8px;
-    }
-    .hero-estimate p { color: #cbd5e1; font-size: 14px; }
-    .note {
-      margin-top: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.08);
-      padding: 14px;
-      color: #e2e8f0;
-      font-size: 14px;
-    }
-    .main-grid {
-      margin-top: 28px;
-      grid-template-columns: 1.08fr 0.92fr;
-      align-items: start;
-    }
-    .card {
-      background: var(--card);
-      border-radius: var(--radius-xl);
-      padding: 28px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--line);
-    }
-    h2, h3 { margin: 0; }
-    .sub { color: var(--muted); font-size: 14px; margin-top: 8px; }
-    .form-grid { margin-top: 22px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    label { display: block; }
-    label span {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #334155;
-    }
-    input, select, textarea {
-      width: 100%;
-      border-radius: 16px;
-      border: 1px solid #cbd5e1;
-      padding: 14px 16px;
-      font: inherit;
-      outline: none;
-      background: white;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(16,185,129,.12);
-    }
-    textarea { min-height: 110px; resize: vertical; }
-    .full { grid-column: 1 / -1; }
-    .summary-grid, .benefit-grid, .faq-grid { margin-top: 20px; }
-    .summary-grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:14px; }
-    .mini {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 14px;
-    }
-    .mini small {
-      display:block; text-transform:uppercase; letter-spacing:.12em; color:#64748b; font-size:11px;
-    }
-    .mini strong { display:block; margin-top:6px; font-size:18px; }
-    .actions { display:flex; flex-direction:column; gap:12px; margin-top:18px; }
-    .btn {
-      display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-weight:700;
-      border-radius: 18px; padding: 14px 18px; transition: .15s ease;
-    }
-    .btn-primary { background: var(--green); color:white; }
-    .btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
-    .btn-secondary { background:white; color:var(--text); border:1px solid #cbd5e1; }
-    .btn-secondary:hover { background:#f8fafc; }
-    .tip {
-      margin-top: 16px; background: var(--green-soft); color:#065f46; border:1px solid #a7f3d0; padding:14px; border-radius:18px; font-size:14px;
-    }
-    .steps { margin-top: 18px; display:grid; gap:16px; }
-    .step { display:flex; gap:14px; }
-    .step-num {
-      width: 36px; height:36px; border-radius:50%; background: var(--dark); color:white; display:flex; align-items:center; justify-content:center; font-weight:800; flex: 0 0 auto;
-    }
-    .step strong { display:block; margin-bottom:4px; }
-    .step p { margin:0; color:var(--muted); font-size:14px; }
-    .two-col { margin-top: 28px; display:grid; grid-template-columns: 1fr 1fr; gap:24px; }
-    .benefit-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .benefit, .faq {
-      background:#f8fafc; border:1px solid var(--line); border-radius: 18px; padding:16px;
-    }
-    .benefit strong, .faq strong { display:block; margin-bottom:6px; }
-    .benefit p, .faq p { margin:0; color:var(--muted); font-size:14px; }
-    @media (max-width: 980px) {
-      .hero-grid, .main-grid, .two-col { grid-template-columns: 1fr; }
-      h1 { font-size: 38px; }
-    }
-    @media (max-width: 700px) {
-      .container { padding: 14px; }
-      .hero-left, .hero-right, .card { padding: 20px; }
-      .form-grid, .summary-grid, .benefit-grid, .stats-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 32px; }
-      .price { font-size: 34px; }
-    }
-  </style>
+<link rel="canonical" href="https://perfektsauberservice.com/preisrechner.html" />
+<title>Entrümpelung Preisrechner | Perfekt Sauber Service</title>
+<meta name="description" content="Unverbindliche Preisorientierung für Entrümpelung in Rastatt, Baden-Baden, Gaggenau und Umgebung." />
+<style>
+:root{
+  --bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569; --line:#e2e8f0;
+  --dark:#0f172a; --dark2:#1e293b; --green:#10b981; --green-dark:#059669; --green-soft:#ecfdf5;
+  --radius-xl:28px; --radius-lg:22px; --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+.hero{overflow:hidden;border-radius:var(--radius-xl);background:linear-gradient(135deg,#020617 0%,#0f172a 45%,#1e293b 100%);color:white;box-shadow:0 20px 40px rgba(15,23,42,.18)}
+.hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:32px}
+.hero-left,.hero-right{padding:32px}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);border-radius:999px;padding:8px 14px;font-size:14px}
+.dot{width:10px;height:10px;border-radius:50%;background:#34d399}
+h1{font-size:48px;line-height:1.08;margin:18px 0 0}
+.hero p.lead{color:#cbd5e1;max-width:700px;font-size:18px;margin:18px 0 0}
+.badges,.stats-grid,.main-grid,.faq-grid,.benefit-grid,.form-grid{display:grid;gap:16px}
+.badges{margin-top:24px;display:flex;flex-wrap:wrap;gap:10px}
+.badge{border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);padding:8px 14px;font-size:14px}
+.stats-grid{margin-top:28px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.statbox{border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);padding:16px}
+.statbox strong{display:block;font-size:20px;margin-bottom:4px}
+.hero-estimate{border-radius:26px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.08);backdrop-filter:blur(6px);padding:24px;margin-top:36px}
+.overline{text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:#cbd5e1}
+.price{font-size:46px;font-weight:800;margin-top:8px}
+.hero-estimate p{color:#cbd5e1;font-size:14px}
+.note{margin-top:16px;border-radius:18px;background:rgba(255,255,255,.08);padding:14px;color:#e2e8f0;font-size:14px}
+.main-grid{margin-top:28px;grid-template-columns:1.08fr 0.92fr;align-items:start}
+.card{background:var(--card);border-radius:var(--radius-xl);padding:28px;box-shadow:var(--shadow);border:1px solid var(--line)}
+h2,h3{margin:0}
+.sub{color:var(--muted);font-size:14px;margin-top:8px}
+.form-grid{margin-top:22px;grid-template-columns:repeat(2,minmax(0,1fr))}
+label{display:block}
+label span{display:block;margin-bottom:8px;font-size:14px;font-weight:600;color:#334155}
+input,select,textarea{width:100%;border-radius:16px;border:1px solid #cbd5e1;padding:14px 16px;font:inherit;outline:none;background:white}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(16,185,129,.12)}
+textarea{min-height:110px;resize:vertical}
+.full{grid-column:1 / -1}
+.summary-grid,.benefit-grid,.faq-grid{margin-top:20px}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.mini{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}
+.mini small{display:block;text-transform:uppercase;letter-spacing:.12em;color:#64748b;font-size:11px}
+.mini strong{display:block;margin-top:6px;font-size:18px}
+.actions{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:700;border-radius:18px;padding:14px 18px;transition:.15s ease}
+.btn-primary{background:var(--green);color:white}
+.btn-primary:hover{background:var(--green-dark);transform:translateY(-1px)}
+.btn-secondary{background:white;color:var(--text);border:1px solid #cbd5e1}
+.btn-secondary:hover{background:#f8fafc}
+.tip{margin-top:16px;background:var(--green-soft);color:#065f46;border:1px solid #a7f3d0;padding:14px;border-radius:18px;font-size:14px}
+.steps{margin-top:18px;display:grid;gap:16px}
+.step{display:flex;gap:14px}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--dark);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 auto}
+.step strong{display:block;margin-bottom:4px}
+.step p{margin:0;color:var(--muted);font-size:14px}
+.two-col{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.benefit-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.benefit,.faq{background:#f8fafc;border:1px solid var(--line);border-radius:18px;padding:16px}
+.benefit strong,.faq strong{display:block;margin-bottom:6px}
+.benefit p,.faq p{margin:0;color:var(--muted);font-size:14px}
+@media (max-width:980px){.hero-grid,.main-grid,.two-col{grid-template-columns:1fr}h1{font-size:38px}}
+@media (max-width:700px){
+  .container{padding:14px}
+  .hero-left,.hero-right,.card{padding:20px}
+  .form-grid,.summary-grid,.benefit-grid,.stats-grid{grid-template-columns:1fr}
+  h1{font-size:32px}
+  .price{font-size:34px}
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-left">
-          <div class="pill"><span class="dot"></span>Perfekt Sauber Service</div>
-          <h1>Entrümpelung Preisrechner für Rastatt &amp; Umgebung</h1>
-          <p class="lead">Erhalten Sie schnell eine unverbindliche Preisorientierung für Wohnungen, Häuser, Keller, Garagen oder Büros. Transparent, lokal und ohne komplizierte Anfrage.</p>
-          <div class="badges">
-            <div class="badge">Unverbindliche Einschätzung</div>
-            <div class="badge">Schnelle Rückmeldung</div>
-            <div class="badge">Auch kurzfristige Termine</div>
-          </div>
-          <div class="stats-grid">
-            <div class="statbox"><strong>1 Minute</strong><span>für die Einschätzung</span></div>
-            <div class="statbox"><strong>Lokal</strong><span>Raum Rastatt &amp; Umgebung</span></div>
-            <div class="statbox"><strong>Transparent</strong><span>klare Orientierung vorab</span></div>
-          </div>
+<div class="container">
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="pill"><span class="dot"></span>Perfekt Sauber Service</div>
+        <h1>Entrümpelung Preisrechner für Rastatt &amp; Umgebung</h1>
+        <p class="lead">
+          Erhalten Sie schnell eine unverbindliche Preisorientierung für Wohnungen,
+          Häuser, Keller, Garagen oder Büros. Transparent, lokal und ohne komplizierte Anfrage.
+        </p>
+        <div class="badges">
+          <div class="badge">Unverbindliche Einschätzung</div>
+          <div class="badge">Schnelle Rückmeldung</div>
+          <div class="badge">Kostenlose Besichtigung</div>
         </div>
-        <div class="hero-right">
-          <div class="hero-estimate">
-            <div class="overline">Preisorientierung</div>
-            <div class="price" id="heroPrice">600 € – 770 €</div>
-            <p>Endpreis abhängig von Aufwand, Zugänglichkeit, Volumen und Sonderleistungen. Für ein exaktes Angebot senden Sie uns bitte Fotos per WhatsApp.</p>
-            <div class="note">Geeignet für: Wohnungsauflösungen, Haushaltsauflösungen, Kellerentrümpelungen, Garagen, Büros und besenreine Übergaben.</div>
+        <div class="stats-grid">
+          <div class="statbox"><strong>1 Minute</strong><span>für die erste Orientierung</span></div>
+          <div class="statbox"><strong>Lokal</strong><span>Rastatt, Baden-Baden, Gaggenau, Karlsruhe</span></div>
+          <div class="statbox"><strong>Transparent</strong><span>klare Preisspanne vorab</span></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-estimate">
+          <div class="overline">Preisorientierung</div>
+          <div class="price" id="heroPrice">600 € – 770 €</div>
+          <p>
+            Endpreis abhängig von Aufwand, Zugänglichkeit, Volumen und Sonderleistungen.
+            Für ein exaktes Angebot senden Sie uns bitte Fotos per WhatsApp.
+          </p>
+          <div class="note">
+            Geeignet für: Entrümpelungen, Haushaltsauflösungen, Keller, Garagen,
+            Büros und besenreine Übergaben.
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="main-grid">
+  <section class="main-grid">
+    <div class="card">
+      <h2>Ihre Angaben</h2>
+      <div class="sub">Je genauer Ihre Angaben sind, desto realistischer ist die erste Einschätzung.</div>
+
+      <div class="form-grid">
+        <label><span>Ort</span>
+          <select id="city">
+            <option value="Rastatt">Rastatt</option>
+            <option value="Baden_Baden">Baden-Baden</option>
+            <option value="Gaggenau">Gaggenau</option>
+            <option value="Karlsruhe">Karlsruhe</option>
+            <option value="Buehl">Bühl</option>
+            <option value="Kuppenheim">Kuppenheim</option>
+            <option value="Gernsbach">Gernsbach</option>
+            <option value="Andere">Andere</option>
+          </select>
+        </label>
+
+        <label><span>Objektart</span>
+          <select id="propertyType">
+            <option value="Wohnung">Wohnung</option>
+            <option value="Haus">Haus</option>
+            <option value="Keller">Keller</option>
+            <option value="Garage">Garage</option>
+            <option value="Buero">Büro</option>
+          </select>
+        </label>
+
+        <label><span>Ca. Fläche in m²</span><input id="area" type="number" min="1" value="60"></label>
+
+        <label><span>Wie voll ist das Objekt?</span>
+          <select id="fullness">
+            <option value="wenig">Wenig gefüllt</option>
+            <option value="normal" selected>Normal gefüllt</option>
+            <option value="voll">Voll</option>
+            <option value="sehr_voll">Sehr voll</option>
+          </select>
+        </label>
+
+        <label><span>Etage</span><input id="floor" type="number" min="0" value="1"></label>
+
+        <label><span>Aufzug vorhanden?</span>
+          <select id="elevator">
+            <option value="ja">Ja</option>
+            <option value="nein">Nein</option>
+          </select>
+        </label>
+
+        <label><span>Schwere Gegenstände?</span>
+          <select id="heavyItems">
+            <option value="nein">Nein</option>
+            <option value="ja">Ja</option>
+          </select>
+        </label>
+
+        <label><span>Besenreine Übergabe gewünscht?</span>
+          <select id="cleaning">
+            <option value="nein">Nein</option>
+            <option value="ja">Ja</option>
+          </select>
+        </label>
+
+        <label class="full"><span>Schneller Termin gewünscht?</span>
+          <select id="express">
+            <option value="nein">Nein</option>
+            <option value="ja">Ja</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="summary-grid">
+        <div class="mini"><small>Objekt</small><strong id="sumProperty">Wohnung</strong></div>
+        <div class="mini"><small>Fläche</small><strong id="sumArea">60 m²</strong></div>
+        <div class="mini"><small>Etage</small><strong id="sumFloor">1</strong></div>
+      </div>
+    </div>
+
+    <div style="display:grid;gap:24px;">
       <div class="card">
-        <h2>Ihre Angaben</h2>
-        <div class="sub">Je genauer Ihre Angaben sind, desto realistischer ist die erste Einschätzung.</div>
-        <div class="form-grid">
-          <label><span>Ort</span>
-            <select id="city">
-              <option value="Rastatt">Rastatt</option>
-              <option value="Baden_Baden">Baden-Baden</option>
-              <option value="Gaggenau">Gaggenau</option>
-              <option value="Karlsruhe">Karlsruhe</option>
-              <option value="Buehl">Bühl</option>
-              <option value="Kuppenheim">Kuppenheim</option>
-              <option value="Gernsbach">Gernsbach</option>
-              <option value="Andere">Andere</option>
-            </select>
-          </label>
-          <label><span>Objektart</span>
-            <select id="propertyType">
-              <option value="Wohnung">Wohnung</option>
-              <option value="Haus">Haus</option>
-              <option value="Keller">Keller</option>
-              <option value="Garage">Garage</option>
-              <option value="Buero">Büro</option>
-            </select>
-          </label>
-          <label><span>Ca. Fläche in m²</span><input id="area" type="number" min="1" value="60"></label>
-          <label><span>Wie voll ist das Objekt?</span>
-            <select id="fullness">
-              <option value="wenig">Wenig gefüllt</option>
-              <option value="normal" selected>Normal gefüllt</option>
-              <option value="voll">Voll</option>
-              <option value="sehr_voll">Sehr voll</option>
-            </select>
-          </label>
-          <label><span>Etage</span><input id="floor" type="number" min="0" value="1"></label>
-          <label><span>Aufzug vorhanden?</span>
-            <select id="elevator">
-              <option value="ja">Ja</option>
-              <option value="nein">Nein</option>
-            </select>
-          </label>
-          <label><span>Schwere Gegenstände?</span>
-            <select id="heavyItems">
-              <option value="nein">Nein</option>
-              <option value="ja">Ja</option>
-            </select>
-          </label>
-          <label><span>Besenreine Reinigung gewünscht?</span>
-            <select id="cleaning">
-              <option value="nein">Nein</option>
-              <option value="ja">Ja</option>
-            </select>
-          </label>
-          <label class="full"><span>Schneller Termin gewünscht?</span>
-            <select id="express">
-              <option value="nein">Nein</option>
-              <option value="ja">Ja</option>
-            </select>
-          </label>
+        <h2>Kostenlose Anfrage senden</h2>
+        <div class="sub">Für ein exaktes Angebot können Sie uns direkt Ihre Anfrage senden.</div>
+
+        <div class="form-grid" style="grid-template-columns:1fr;">
+          <label><span>Name</span><input id="name" type="text" placeholder="Ihr Name"></label>
+          <label><span>Telefon</span><input id="phone" type="text" placeholder="Ihre Telefonnummer"></label>
+          <label><span>E-Mail</span><input id="email" type="email" placeholder="Ihre E-Mail-Adresse"></label>
+          <label><span>Zusätzliche Informationen</span><textarea id="message" placeholder="Zum Beispiel: 2. Etage ohne Aufzug, Keller komplett voll, Termin nächste Woche gewünscht."></textarea></label>
         </div>
-        <div class="summary-grid">
-          <div class="mini"><small>Objekt</small><strong id="sumProperty">Wohnung</strong></div>
-          <div class="mini"><small>Fläche</small><strong id="sumArea">60 m²</strong></div>
-          <div class="mini"><small>Etage</small><strong id="sumFloor">1</strong></div>
+
+        <div class="tip">Tipp: Wenn Sie uns zusätzlich Fotos senden, können wir die Anfrage deutlich schneller und genauer einschätzen.</div>
+
+        <div class="actions">
+          <a class="btn btn-primary" id="whatsappBtn" href="#">Per WhatsApp anfragen</a>
+          <a class="btn btn-secondary" href="tel:+491639087197">Jetzt anrufen</a>
         </div>
       </div>
 
-      <div style="display:grid; gap:24px;">
-        <div class="card">
-          <h2>Kostenlose Anfrage senden</h2>
-          <div class="sub">Für ein exaktes Angebot können Sie uns direkt Ihre Anfrage senden.</div>
-          <div class="form-grid" style="grid-template-columns:1fr;">
-            <label><span>Name</span><input id="name" type="text" placeholder="Ihr Name"></label>
-            <label><span>Telefon</span><input id="phone" type="text" placeholder="Ihre Telefonnummer"></label>
-            <label><span>E-Mail</span><input id="email" type="email" placeholder="Ihre E-Mail-Adresse"></label>
-            <label><span>Zusätzliche Informationen</span><textarea id="message" placeholder="Zum Beispiel: 2. Etage ohne Aufzug, Keller komplett voll, Termin nächste Woche gewünscht."></textarea></label>
-          </div>
-          <div class="tip">Tipp: Wenn Sie uns zusätzlich Fotos senden, können wir die Anfrage deutlich schneller und genauer einschätzen.</div>
-          <div class="actions">
-            <a class="btn btn-primary" id="whatsappBtn" href="#">Per WhatsApp anfragen</a>
-            <a class="btn btn-secondary" href="tel:+491639087197">Jetzt anrufen</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>So läuft es ab</h3>
-          <div class="steps">
-            <div class="step"><div class="step-num">1</div><div><strong>Angaben eingeben</strong><p>Sie erhalten sofort eine erste Preisorientierung.</p></div></div>
-            <div class="step"><div class="step-num">2</div><div><strong>Fotos senden</strong><p>Per WhatsApp können Sie uns zusätzlich Bilder schicken.</p></div></div>
-            <div class="step"><div class="step-num">3</div><div><strong>Exaktes Angebot erhalten</strong><p>Wir prüfen Aufwand, Zugang und Umfang Ihrer Anfrage.</p></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="two-col">
       <div class="card">
-        <h3>Warum Perfekt Sauber Service?</h3>
-        <div class="benefit-grid">
-          <div class="benefit"><strong>Schnelle Rückmeldung</strong><p>Kurze Wege, direkte Kommunikation und schnelle Einschätzung.</p></div>
-          <div class="benefit"><strong>Faire Preise</strong><p>Klare Preisorientierung statt unnötig komplizierter Angebote.</p></div>
-          <div class="benefit"><strong>Regional im Einsatz</strong><p>Rastatt, Baden-Baden, Gaggenau und Umgebung.</p></div>
-          <div class="benefit"><strong>Saubere Übergabe</strong><p>Auf Wunsch auch besenrein zur Übergabe vorbereitet.</p></div>
+        <h3>So läuft es ab</h3>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div><strong>Angaben eingeben</strong><p>Sie erhalten sofort eine erste Preisorientierung.</p></div></div>
+          <div class="step"><div class="step-num">2</div><div><strong>Fotos senden</strong><p>Per WhatsApp können Sie uns zusätzlich Bilder schicken.</p></div></div>
+          <div class="step"><div class="step-num">3</div><div><strong>Exaktes Angebot erhalten</strong><p>Wir prüfen Aufwand, Zugang und Umfang Ihrer Anfrage.</p></div></div>
         </div>
       </div>
-      <div class="card">
-        <h3>Häufige Fragen</h3>
-        <div class="faq-grid">
-          <div class="faq"><strong>Ist die Berechnung verbindlich?</strong><p>Nein. Die angezeigte Spanne ist eine erste Orientierung. Der genaue Preis hängt vom tatsächlichen Aufwand vor Ort ab.</p></div>
-          <div class="faq"><strong>Wie bekomme ich ein exaktes Angebot?</strong><p>Am besten senden Sie uns zusätzlich Fotos und eine kurze Beschreibung per WhatsApp.</p></div>
-          <div class="faq"><strong>Sind kurzfristige Termine möglich?</strong><p>Ja, nach Verfügbarkeit sind auch kurzfristige Termine möglich.</p></div>
-        </div>
+    </div>
+  </section>
+
+  <section class="two-col">
+    <div class="card">
+      <h3>Warum Perfekt Sauber Service?</h3>
+      <div class="benefit-grid">
+        <div class="benefit"><strong>Schnelle Rückmeldung</strong><p>Kurze Wege, direkte Kommunikation und schnelle Einschätzung.</p></div>
+        <div class="benefit"><strong>Faire Orientierung</strong><p>Klare Preisspanne statt unnötig komplizierter Angebote.</p></div>
+        <div class="benefit"><strong>Regional im Einsatz</strong><p>Rastatt, Baden-Baden, Gaggenau und Umgebung.</p></div>
+        <div class="benefit"><strong>Saubere Übergabe</strong><p>Auf Wunsch auch besenrein zur Übergabe vorbereitet.</p></div>
       </div>
-    </section>
-  </div>
+    </div>
 
-  <script>
-    const cityAdjustments = {
-      Rastatt: 0,
-      Baden_Baden: 30,
-      Gaggenau: 20,
-      Karlsruhe: 45,
-      Buehl: 25,
-      Kuppenheim: 15,
-      Gernsbach: 20,
-      Andere: 35,
-    };
-    const propertyMultipliers = {
-      Wohnung: 1.0,
-      Haus: 1.18,
-      Keller: 0.72,
-      Garage: 0.64,
-      Buero: 1.08,
-    };
-    const fullnessMultipliers = {
-      wenig: 0.78,
-      normal: 1.0,
-      voll: 1.32,
-      sehr_voll: 1.68,
-    };
-    const fullnessLabels = {
-      wenig: 'Wenig gefüllt',
-      normal: 'Normal gefüllt',
-      voll: 'Voll',
-      sehr_voll: 'Sehr voll',
-    };
-    const yesNo = { ja: 'Ja', nein: 'Nein' };
+    <div class="card">
+      <h3>Häufige Fragen</h3>
+      <div class="faq-grid">
+        <div class="faq"><strong>Ist die Berechnung verbindlich?</strong><p>Nein. Die angezeigte Spanne ist nur eine erste Orientierung.</p></div>
+        <div class="faq"><strong>Wie bekomme ich ein exaktes Angebot?</strong><p>Am besten senden Sie uns zusätzlich Fotos und eine kurze Beschreibung per WhatsApp.</p></div>
+        <div class="faq"><strong>Sind kurzfristige Termine möglich?</strong><p>Ja, je nach Verfügbarkeit sind auch kurzfristige Termine möglich.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
 
-    const ids = ['city','propertyType','area','fullness','floor','elevator','heavyItems','cleaning','express','name','phone','email','message'];
-    ids.forEach(id => document.getElementById(id).addEventListener('input', update));
-    ids.forEach(id => document.getElementById(id).addEventListener('change', update));
+<script>
+const cityAdjustments = {
+  Rastatt: 0,
+  Baden_Baden: 30,
+  Gaggenau: 20,
+  Karlsruhe: 45,
+  Buehl: 25,
+  Kuppenheim: 15,
+  Gernsbach: 20,
+  Andere: 35
+};
 
-    function getVal(id) { return document.getElementById(id).value; }
+const propertyMultipliers = {
+  Wohnung: 1.0,
+  Haus: 1.18,
+  Keller: 0.72,
+  Garage: 0.64,
+  Buero: 1.08
+};
 
-    function calculate() {
-      const area = Number(getVal('area')) || 0;
-      const floor = Number(getVal('floor')) || 0;
-      let base = 140;
-      base += area * 7.8;
-      base *= propertyMultipliers[getVal('propertyType')] || 1;
-      base *= fullnessMultipliers[getVal('fullness')] || 1;
-      base += getVal('elevator') === 'nein' ? floor * 38 : floor * 12;
-      if (getVal('heavyItems') === 'ja') base += 150;
-      if (getVal('express') === 'ja') base += 90;
-      if (getVal('cleaning') === 'ja') base += 120;
-      base += cityAdjustments[getVal('city')] || 0;
-      return {
-        low: Math.round(base * 0.9),
-        high: Math.round(base * 1.16)
-      };
-    }
+const fullnessMultipliers = {
+  wenig: 0.78,
+  normal: 1.0,
+  voll: 1.32,
+  sehr_voll: 1.68
+};
 
-    function update() {
-      const result = calculate();
-      const priceText = `${result.low} € – ${result.high} €`;
-      document.getElementById('heroPrice').textContent = priceText;
-      document.getElementById('sumProperty').textContent = getVal('propertyType');
-      document.getElementById('sumArea').textContent = `${getVal('area')} m²`;
-      document.getElementById('sumFloor').textContent = getVal('floor');
+function euro(value){
+  return Math.round(value).toLocaleString("de-DE") + " €";
+}
 
-      const text = `Guten Tag, ich interessiere mich fuer eine Entruempelung.\n\n`
-        + `Ort: ${getVal('city').replaceAll('_','-')}\n`
-        + `Objekt: ${getVal('propertyType')}\n`
-        + `Flaeche: ${getVal('area')} m²\n`
-        + `Fuellstand: ${fullnessLabels[getVal('fullness')]}\n`
-        + `Etage: ${getVal('floor')}\n`
-        + `Aufzug: ${yesNo[getVal('elevator')]}\n`
-        + `Schwere Gegenstaende: ${yesNo[getVal('heavyItems')]}\n`
-        + `Besenreine Reinigung: ${yesNo[getVal('cleaning')]}\n`
-        + `Express: ${yesNo[getVal('express')]}\n`
-        + `Preisorientierung: ${result.low} € - ${result.high} €\n`
-        + `Name: ${getVal('name')}\n`
-        + `Telefon: ${getVal('phone')}\n`
-        + `E-Mail: ${getVal('email')}\n`
-        + `Nachricht: ${getVal('message')}`;
+function update(){
+  const city = document.getElementById("city").value;
+  const propertyType = document.getElementById("propertyType").value;
+  const area = parseFloat(document.getElementById("area").value || "0");
+  const fullness = document.getElementById("fullness").value;
+  const floor = parseFloat(document.getElementById("floor").value || "0");
+  const elevator = document.getElementById("elevator").value;
+  const heavyItems = document.getElementById("heavyItems").value;
+  const cleaning = document.getElementById("cleaning").value;
+  const express = document.getElementById("express").value;
 
-      document.getElementById('whatsappBtn').href = `https://wa.me/491639087197?text=${encodeURIComponent(text)}`;
-    }
+  let base = area * 8.5;
+  base *= propertyMultipliers[propertyType] || 1;
+  base *= fullnessMultipliers[fullness] || 1;
+  base += cityAdjustments[city] || 0;
+  base += floor * (elevator === "nein" ? 35 : 10);
 
-    update();
-  </script>
+  if(heavyItems === "ja") base += 90;
+  if(cleaning === "ja") base += 80;
+  if(express === "ja") base += 120;
 
-<section class="pss-links"><h2>Weitere Seiten</h2><ul><li><a href="/entruempelung-rastatt.html">Entrümpelung Rastatt</a></li><li><a href="/entruempelung-baden-baden.html">Entrümpelung Baden-Baden</a></li><li><a href="/entruempelung-gaggenau.html">Entrümpelung Gaggenau</a></li><li><a href="/entruempelung-karlsruhe.html">Entrümpelung Karlsruhe</a></li></ul></section>
+  const low = Math.max(180, base * 0.92);
+  const high = base * 1.18;
+
+  document.getElementById("heroPrice").textContent = euro(low) + " – " + euro(high);
+  document.getElementById("sumProperty").textContent = propertyType;
+  document.getElementById("sumArea").textContent = area + " m²";
+  document.getElementById("sumFloor").textContent = floor;
+
+  const name = document.getElementById("name").value || "";
+  const phone = document.getElementById("phone").value || "";
+  const email = document.getElementById("email").value || "";
+  const message = document.getElementById("message").value || "";
+
+  const text =
+`Hallo, ich möchte eine Einschätzung für eine Entrümpelung.
+
+Ort: ${city.replace("_","-")}
+Objektart: ${propertyType}
+Fläche: ${area} m²
+Füllstand: ${fullness}
+Etage: ${floor}
+Aufzug: ${elevator}
+Schwere Gegenstände: ${heavyItems}
+Besenreine Übergabe: ${cleaning}
+Schneller Termin: ${express}
+Preisorientierung: ${euro(low)} – ${euro(high)}
+
+Name: ${name}
+Telefon: ${phone}
+E-Mail: ${email}
+Zusätzliche Informationen: ${message}`;
+
+  document.getElementById("whatsappBtn").href =
+    "https://wa.me/491639087197?text=" + encodeURIComponent(text);
+}
+
+["city","propertyType","area","fullness","floor","elevator","heavyItems","cleaning","express","name","phone","email","message"]
+  .forEach(id => document.getElementById(id).addEventListener("input", update));
+
+update();
+</script>
 </body>
 </html>
