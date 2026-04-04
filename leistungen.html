@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
   <title>Leistungen | Perfekt Sauber Service</title>
   <meta name="description" content="Unsere Leistungen im Überblick: Entrümpelung, Haushaltsauflösung, Wohnungsauflösung, Gewerberäumung sowie weitere Spezialleistungen in Rastatt und Umgebung." />
+  <link rel="canonical" href="https://perfektsauberservice.com/leistungen.html" />
   <style>
     body{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f8fb;color:#10213f;line-height:1.7}
-    .wrap{max-width:1180px;margin:0 auto;padding:32px 18px 56px} 
-    .hero,.card,.cta-box,.list-box{background:#fff;border:1px solid #e5e7eb;border-radius:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+    .wrap{max-width:1180px;margin:0 auto;padding:32px 18px 56px}
+    .hero,.card,.cta-box,.list-box,.trust-box{background:#fff;border:1px solid #e5e7eb;border-radius:24px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
     .hero{padding:28px;margin-bottom:22px}
     .eyebrow{display:inline-block;background:#eef2ff;color:#17315c;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;margin-bottom:12px}
     h1{font-size:44px;line-height:1.1;margin:0 0 12px}
@@ -20,8 +22,15 @@
     .card h2{margin:0 0 10px;font-size:28px}
     .card p{margin:0 0 14px;color:#475569}
     .card a{display:inline-block;text-decoration:none;background:#77c043;color:#17315c;font-weight:800;padding:12px 18px;border-radius:14px}
+    .trust-box{padding:24px;margin:22px 0}
+    .trust-box h2{margin:0 0 10px}
+    .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+    .trust-item{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:16px}
+    .trust-item strong{display:block;margin-bottom:6px}
+    .trust-item span{display:block;color:#475569;font-size:15px}
     .list-box{padding:24px;margin-top:22px}
-    .list-box h2{margin:0 0 16px}
+    .list-box h2{margin:0 0 10px}
+    .list-box p{margin:0 0 18px;color:#475569}
     .services-list{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:0;margin:0;list-style:none}
     .mini-card{display:block;background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:16px;text-decoration:none;color:#10213f}
     .mini-card strong{display:block;font-size:18px;margin-bottom:6px}
@@ -30,10 +39,12 @@
     .cta-box{padding:24px;margin-top:22px}
     .cta-box h2{margin:0 0 10px}
     .cta-box p{margin:0 0 14px;color:#475569}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
     .cta{display:inline-block;text-decoration:none;background:#77c043;color:#17315c;font-weight:800;padding:14px 20px;border-radius:14px}
-    @media (max-width:980px){.services-list{grid-template-columns:1fr 1fr}}
+    .cta.secondary{background:#17315c;color:#fff}
+    @media (max-width:980px){.services-list,.trust-grid{grid-template-columns:1fr 1fr}}
     @media (max-width:860px){.grid{grid-template-columns:1fr}h1{font-size:34px}}
-    @media (max-width:640px){.services-list{grid-template-columns:1fr}}
+    @media (max-width:640px){.services-list,.trust-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -41,80 +52,131 @@
     <section class="hero">
       <div class="eyebrow">Perfekt Sauber Service</div>
       <h1>Unsere Leistungen</h1>
-      <p class="sub">Wir unterstützen Sie schnell, diskret und zuverlässig – von der kostenlosen Besichtigung über ein transparentes Festpreisangebot bis zur besenreinen Übergabe und nachhaltigen Entsorgung.</p>
+      <p class="sub">
+        Wir unterstützen Sie schnell, diskret und zuverlässig – von der kostenlosen
+        Besichtigung über eine klare Einschätzung bis zur besenreinen Übergabe.
+        Für private und gewerbliche Räumungen in Rastatt, Baden-Baden, Gaggenau,
+        Karlsruhe und Umgebung.
+      </p>
       <div class="badges">
-        <span class="badge">Kurzfristige Termine</span>
         <span class="badge">Kostenlose Besichtigung</span>
-        <span class="badge">Festpreisangebot</span>
+        <span class="badge">Diskrete Abwicklung</span>
+        <span class="badge">Faire Festpreise</span>
         <span class="badge">Besenreine Übergabe</span>
+      </div>
+    </section>
+
+    <section class="trust-box">
+      <h2>Darauf können Sie sich verlassen</h2>
+      <div class="trust-grid">
+        <div class="trust-item">
+          <strong>Persönlicher Ansprechpartner</strong>
+          <span>Direkte Abstimmung statt unnötiger Umwege.</span>
+        </div>
+        <div class="trust-item">
+          <strong>Schnelle Rückmeldung</strong>
+          <span>Auch per WhatsApp mit Fotos für eine erste Einschätzung.</span>
+        </div>
+        <div class="trust-item">
+          <strong>Strukturierter Ablauf</strong>
+          <span>Klare Planung vom ersten Kontakt bis zur Übergabe.</span>
+        </div>
+        <div class="trust-item">
+          <strong>Nachhaltige Entsorgung</strong>
+          <span>Wo möglich achten wir auf eine sinnvolle und saubere Lösung.</span>
+        </div>
       </div>
     </section>
 
     <section class="grid">
       <article class="card">
         <h2>Entrümpelung</h2>
-        <p>Ob Keller, Dachboden, Garage, einzelne Räume oder komplette Objekte – wir übernehmen Entrümpelungen strukturiert, diskret und termingerecht, inklusive kostenloser Besichtigung und besenreiner Übergabe.</p>
+        <p>
+          Ob Keller, Dachboden, Garage, einzelne Räume oder komplette Objekte –
+          wir übernehmen Entrümpelungen strukturiert, diskret und termingerecht.
+        </p>
         <a href="/entruempelung-rastatt.html">Mehr erfahren</a>
       </article>
 
       <article class="card">
         <h2>Haushaltsauflösung</h2>
-        <p>Wenn ein kompletter Haushalt aufgelöst werden muss, sorgen wir für einen klaren Ablauf, eine respektvolle und diskrete Umsetzung sowie eine besenreine Übergabe zum vereinbarten Festpreis.</p>
+        <p>
+          Wenn ein kompletter Haushalt aufgelöst werden muss, sorgen wir für
+          einen klaren Ablauf, eine respektvolle Umsetzung und eine besenreine
+          Übergabe.
+        </p>
         <a href="/haushaltsaufloesung-rastatt.html">Mehr erfahren</a>
       </article>
 
       <article class="card">
         <h2>Wohnungsauflösung</h2>
-        <p>Wir übernehmen Wohnungsauflösungen planbar, zügig und zuverlässig – mit kostenloser Besichtigung, transparenter Abstimmung und sauberer Übergabe.</p>
+        <p>
+          Wir übernehmen Wohnungsauflösungen planbar, zügig und zuverlässig –
+          mit kostenloser Besichtigung, transparenter Abstimmung und sauberer Übergabe.
+        </p>
         <a href="/wohnungsaufloesung-rastatt.html">Mehr erfahren</a>
       </article>
 
       <article class="card">
         <h2>Gewerberäumung</h2>
-        <p>Für Büros, Lager, Gewerbeflächen und andere betriebliche Räume bieten wir eine strukturierte, diskrete und nachhaltig geplante Räumung mit klaren Abläufen.</p>
+        <p>
+          Für Büros, Lager, Gewerbeflächen und andere betriebliche Räume bieten
+          wir eine strukturierte, diskrete und effizient geplante Räumung.
+        </p>
         <a href="/gewerberaeumung-rastatt.html">Mehr erfahren</a>
       </article>
     </section>
 
     <section class="list-box">
       <h2>Weitere Leistungen</h2>
+      <p>
+        Neben den Hauptleistungen unterstützen wir auch bei einzelnen Bereichen
+        und sensiblen Situationen – klar abgestimmt und ohne unnötige Komplikationen.
+      </p>
+
       <div class="services-list">
         <a class="mini-card" href="/kellerentruempelung-rastatt.html">
           <strong>Kellerentrümpelung</strong>
-          <span>Wir räumen volle oder lange ungenutzte Keller zuverlässig, diskret und strukturiert – auf Wunsch mit besenreiner Übergabe.</span>
+          <span>Wir räumen volle oder lange ungenutzte Keller zuverlässig, diskret und strukturiert.</span>
         </a>
 
         <a class="mini-card" href="/dachbodenentruempelung-rastatt.html">
           <strong>Dachbodenentrümpelung</strong>
-          <span>Auch schwer zugängliche Dachböden entrümpeln wir sicher, sorgfältig und mit klarer Planung – inklusive sauberer Übergabe.</span>
+          <span>Auch schwer zugängliche Dachböden entrümpeln wir sicher, sorgfältig und planbar.</span>
         </a>
 
         <a class="mini-card" href="/garagenentruempelung-rastatt.html">
           <strong>Garagenentrümpelung</strong>
-          <span>Wir befreien Garagen von alten Möbeln, Kartons, Sperrmüll und ungenutzten Gegenständen – schnell, ordentlich und zuverlässig.</span>
+          <span>Wir befreien Garagen von alten Möbeln, Kartons, Sperrmüll und ungenutzten Gegenständen.</span>
         </a>
 
         <a class="mini-card" href="/bueroaufloesung-rastatt.html">
           <strong>Büroauflösung</strong>
-          <span>Bei Büroauflösungen sorgen wir für eine zügige, diskrete und gut organisierte Räumung mit möglichst reibungslosem Ablauf.</span>
+          <span>Bei Büroauflösungen sorgen wir für eine zügige, diskrete und gut organisierte Räumung.</span>
         </a>
 
         <a class="mini-card" href="/messi-wohnung-rastatt.html">
           <strong>Messi-Wohnung</strong>
-          <span>Auch in sensiblen und schwierigen Fällen unterstützen wir diskret, respektvoll und ohne Vorurteile – mit einer klaren, lösungsorientierten Vorgehensweise.</span>
+          <span>Auch in schwierigen Fällen unterstützen wir diskret, respektvoll und lösungsorientiert.</span>
         </a>
 
         <a class="mini-card" href="/nachlassaufloesung-rastatt.html">
           <strong>Nachlassauflösung</strong>
-          <span>Nachlassauflösungen begleiten wir mit Respekt, Ruhe und Diskretion – zuverlässig, strukturiert und mit besonderem Feingefühl.</span>
+          <span>Nachlassauflösungen begleiten wir mit Ruhe, Respekt und klarer Struktur.</span>
         </a>
       </div>
     </section>
 
-    <section class="cta-box" id="kontakt">
-      <h2>Jetzt unverbindlich anfragen</h2>
-      <p>Sie möchten eine schnelle Einschätzung oder ein transparentes Festpreisangebot? Kontaktieren Sie uns direkt – wir melden uns zeitnah zurück und vereinbaren auf Wunsch eine kostenlose Besichtigung vor Ort.</p>
-      <a class="cta" href="/#kontakt">Kostenloses Angebot anfragen</a>
+    <section class="cta-box">
+      <h2>Sie sind unsicher, welche Leistung passt?</h2>
+      <p>
+        Schreiben Sie uns kurz per WhatsApp oder nutzen Sie den Preisrechner.
+        Wir helfen Ihnen schnell dabei, die passende Leistung für Ihr Objekt einzuordnen.
+      </p>
+      <div class="cta-row">
+        <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">WhatsApp</a>
+        <a class="cta secondary" href="/preisrechner.html">Preisrechner</a>
+      </div>
     </section>
   </div>
 </body>
