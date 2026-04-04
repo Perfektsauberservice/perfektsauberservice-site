@@ -5,18 +5,6 @@
       "page": "entruempelung-achern.html",
       "initial_guard": {
         "page": "entruempelung-achern.html",
-        "status": "REVIEW",
-        "reasons": [
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite CTA"
-        ],
-        "summary": "Page needs review but is not critically blocked."
-      },
-      "repair_attempted": true,
-      "final_guard": {
-        "page": "entruempelung-achern.html",
         "status": "BLOCK",
         "reasons": [
           "FAQ similarity too high",
@@ -28,7 +16,15 @@
         ],
         "summary": "Page blocked for review."
       },
-      "status": "BLOCK"
+      "repair_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-achern.html",
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
+      },
+      "status": "PASS"
     },
     {
       "page": "entruempelung-au-am-rhein.html",
@@ -48,6 +44,17 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-au-am-rhein.html",
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
+      },
+      "status": "PASS"
+    },
+    {
+      "page": "entruempelung-bad-herrenalb.html",
+      "initial_guard": {
+        "page": "entruempelung-bad-herrenalb.html",
         "status": "BLOCK",
         "reasons": [
           "FAQ similarity too high",
@@ -59,11 +66,8 @@
         ],
         "summary": "Page blocked for review."
       },
-      "status": "BLOCK"
-    },
-    {
-      "page": "entruempelung-bad-herrenalb.html",
-      "initial_guard": {
+      "repair_attempted": true,
+      "final_guard": {
         "page": "entruempelung-bad-herrenalb.html",
         "status": "REVIEW",
         "reasons": [
@@ -74,21 +78,7 @@
         ],
         "summary": "Page needs review but is not critically blocked."
       },
-      "repair_attempted": true,
-      "final_guard": {
-        "page": "entruempelung-bad-herrenalb.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
-      },
-      "status": "BLOCK"
+      "status": "REVIEW"
     },
     {
       "page": "entruempelung-bad-wildbad.html",
@@ -108,18 +98,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-bad-wildbad.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-baden-baden.html",
@@ -127,11 +111,11 @@
         "page": "entruempelung-baden-baden.html",
         "status": "BLOCK",
         "reasons": [
-          "Structure similarity too high",
+          "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
-          "Change section order",
+          "Rewrite FAQ",
           "Rewrite CTA"
         ],
         "summary": "Page blocked for review."
@@ -139,18 +123,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-baden-baden.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-bietigheim.html",
@@ -158,12 +136,10 @@
         "page": "entruempelung-bietigheim.html",
         "status": "BLOCK",
         "reasons": [
-          "Structure similarity too high",
           "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
-          "Change section order",
           "Rewrite FAQ",
           "Rewrite CTA"
         ],
@@ -172,54 +148,17 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-bietigheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-bischweier.html",
       "initial_guard": {
         "page": "entruempelung-bischweier.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
-      },
-      "repair_attempted": true,
-      "final_guard": {
-        "page": "entruempelung-bischweier.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
-      },
-      "status": "BLOCK"
-    },
-    {
-      "page": "entruempelung-buehl.html",
-      "initial_guard": {
-        "page": "entruempelung-buehl.html",
         "status": "REVIEW",
         "reasons": [
           "CTA similarity too high"
@@ -231,21 +170,38 @@
       },
       "repair_attempted": true,
       "final_guard": {
+        "page": "entruempelung-bischweier.html",
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
+      },
+      "status": "PASS"
+    },
+    {
+      "page": "entruempelung-buehl.html",
+      "initial_guard": {
         "page": "entruempelung-buehl.html",
         "status": "BLOCK",
         "reasons": [
-          "Structure similarity too high",
           "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
-          "Change section order",
           "Rewrite FAQ",
           "Rewrite CTA"
         ],
         "summary": "Page blocked for review."
       },
-      "status": "BLOCK"
+      "repair_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-buehl.html",
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
+      },
+      "status": "PASS"
     },
     {
       "page": "entruempelung-durmersheim.html",
@@ -267,18 +223,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-durmersheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-elchesheim-illingen.html",
@@ -298,18 +248,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-elchesheim-illingen.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-ettlingen.html",
@@ -317,11 +261,11 @@
         "page": "entruempelung-ettlingen.html",
         "status": "BLOCK",
         "reasons": [
-          "Structure similarity too high",
+          "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
-          "Change section order",
+          "Rewrite FAQ",
           "Rewrite CTA"
         ],
         "summary": "Page blocked for review."
@@ -329,18 +273,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-ettlingen.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-forbach.html",
@@ -348,12 +286,10 @@
         "page": "entruempelung-forbach.html",
         "status": "BLOCK",
         "reasons": [
-          "Structure similarity too high",
           "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
-          "Change section order",
           "Rewrite FAQ",
           "Rewrite CTA"
         ],
@@ -362,18 +298,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-forbach.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-gaggenau.html",
@@ -381,11 +311,11 @@
         "page": "entruempelung-gaggenau.html",
         "status": "BLOCK",
         "reasons": [
-          "Structure similarity too high",
+          "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
-          "Change section order",
+          "Rewrite FAQ",
           "Rewrite CTA"
         ],
         "summary": "Page blocked for review."
@@ -395,12 +325,10 @@
         "page": "entruempelung-gaggenau.html",
         "status": "BLOCK",
         "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
+          "FAQ similarity too high"
         ],
         "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
+          "Rewrite FAQ"
         ],
         "summary": "Page blocked for review."
       },
@@ -424,18 +352,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-gernsbach.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-huegelsheim.html",
@@ -455,20 +377,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-huegelsheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "Structure similarity too high",
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Change section order",
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-iffezheim.html",
@@ -488,35 +402,17 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-iffezheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-karlsruhe.html",
       "initial_guard": {
         "page": "entruempelung-karlsruhe.html",
-        "status": "REVIEW",
-        "reasons": [
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite CTA"
-        ],
-        "summary": "Page needs review but is not critically blocked."
-      },
-      "repair_attempted": true,
-      "final_guard": {
-        "page": "entruempelung-karlsruhe.html",
         "status": "BLOCK",
         "reasons": [
           "FAQ similarity too high",
@@ -528,7 +424,15 @@
         ],
         "summary": "Page blocked for review."
       },
-      "status": "BLOCK"
+      "repair_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-karlsruhe.html",
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
+      },
+      "status": "PASS"
     },
     {
       "page": "entruempelung-kuppenheim.html",
@@ -548,18 +452,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-kuppenheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-loffenau.html",
@@ -579,18 +477,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-loffenau.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-malsch.html",
@@ -610,20 +502,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-malsch.html",
-        "status": "BLOCK",
-        "reasons": [
-          "Structure similarity too high",
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Change section order",
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-muggensturm.html",
@@ -643,18 +527,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-muggensturm.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-oetigheim.html",
@@ -674,18 +552,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-oetigheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-pforzheim.html",
@@ -705,20 +577,12 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-pforzheim.html",
-        "status": "BLOCK",
-        "reasons": [
-          "Structure similarity too high",
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Change section order",
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-rastatt.html",
@@ -757,47 +621,31 @@
       "repair_attempted": true,
       "final_guard": {
         "page": "entruempelung-rheinmuenster.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-rheinstetten.html",
       "initial_guard": {
         "page": "entruempelung-rheinstetten.html",
-        "status": "REVIEW",
-        "reasons": [
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite CTA"
-        ],
-        "summary": "Page needs review but is not critically blocked."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "repair_attempted": true,
+      "repair_attempted": false,
       "final_guard": {
         "page": "entruempelung-rheinstetten.html",
-        "status": "BLOCK",
-        "reasons": [
-          "FAQ similarity too high",
-          "CTA similarity too high"
-        ],
-        "required_fixes": [
-          "Rewrite FAQ",
-          "Rewrite CTA"
-        ],
-        "summary": "Page blocked for review."
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
       },
-      "status": "BLOCK"
+      "status": "PASS"
     },
     {
       "page": "entruempelung-sinzheim.html",
@@ -806,14 +654,12 @@
         "status": "BLOCK",
         "reasons": [
           "Too few sections",
-          "Too few internal links",
           "FAQ too weak",
           "FAQ similarity too high",
           "CTA similarity too high"
         ],
         "required_fixes": [
           "Add more useful sections",
-          "Add at least 3 internal links",
           "Expand FAQ",
           "Rewrite FAQ",
           "Rewrite CTA"
@@ -845,13 +691,11 @@
         "status": "BLOCK",
         "reasons": [
           "Too few sections",
-          "Too few internal links",
           "FAQ too weak",
           "FAQ similarity too high"
         ],
         "required_fixes": [
           "Add more useful sections",
-          "Add at least 3 internal links",
           "Expand FAQ",
           "Rewrite FAQ"
         ],
@@ -884,13 +728,11 @@
         "status": "BLOCK",
         "reasons": [
           "Too few sections",
-          "Too few internal links",
           "FAQ too weak",
           "FAQ similarity too high"
         ],
         "required_fixes": [
           "Add more useful sections",
-          "Add at least 3 internal links",
           "Expand FAQ",
           "Rewrite FAQ"
         ],
@@ -903,14 +745,12 @@
         "reasons": [
           "Too few sections",
           "FAQ too weak",
-          "FAQ similarity too high",
-          "CTA similarity too high"
+          "FAQ similarity too high"
         ],
         "required_fixes": [
           "Add more useful sections",
           "Expand FAQ",
-          "Rewrite FAQ",
-          "Rewrite CTA"
+          "Rewrite FAQ"
         ],
         "summary": "Page blocked for review."
       },
@@ -923,13 +763,11 @@
         "status": "BLOCK",
         "reasons": [
           "Too few sections",
-          "Too few internal links",
           "FAQ too weak",
           "FAQ similarity too high"
         ],
         "required_fixes": [
           "Add more useful sections",
-          "Add at least 3 internal links",
           "Expand FAQ",
           "Rewrite FAQ"
         ],
@@ -942,14 +780,12 @@
         "reasons": [
           "Too few sections",
           "FAQ too weak",
-          "FAQ similarity too high",
-          "CTA similarity too high"
+          "FAQ similarity too high"
         ],
         "required_fixes": [
           "Add more useful sections",
           "Expand FAQ",
-          "Rewrite FAQ",
-          "Rewrite CTA"
+          "Rewrite FAQ"
         ],
         "summary": "Page blocked for review."
       },
@@ -957,13 +793,8 @@
     }
   ],
   "pass": [
-    "entruempelung-rastatt.html"
-  ],
-  "review": [],
-  "block": [
     "entruempelung-achern.html",
     "entruempelung-au-am-rhein.html",
-    "entruempelung-bad-herrenalb.html",
     "entruempelung-bad-wildbad.html",
     "entruempelung-baden-baden.html",
     "entruempelung-bietigheim.html",
@@ -973,7 +804,6 @@
     "entruempelung-elchesheim-illingen.html",
     "entruempelung-ettlingen.html",
     "entruempelung-forbach.html",
-    "entruempelung-gaggenau.html",
     "entruempelung-gernsbach.html",
     "entruempelung-huegelsheim.html",
     "entruempelung-iffezheim.html",
@@ -984,8 +814,15 @@
     "entruempelung-muggensturm.html",
     "entruempelung-oetigheim.html",
     "entruempelung-pforzheim.html",
+    "entruempelung-rastatt.html",
     "entruempelung-rheinmuenster.html",
-    "entruempelung-rheinstetten.html",
+    "entruempelung-rheinstetten.html"
+  ],
+  "review": [
+    "entruempelung-bad-herrenalb.html"
+  ],
+  "block": [
+    "entruempelung-gaggenau.html",
     "entruempelung-sinzheim.html",
     "entruempelung-steinmauern.html",
     "entruempelung-stutensee.html",
@@ -993,9 +830,9 @@
   ],
   "errors": [],
   "counts": {
-    "pass": 1,
-    "review": 0,
-    "block": 29,
+    "pass": 24,
+    "review": 1,
+    "block": 5,
     "errors": 0
   }
 }

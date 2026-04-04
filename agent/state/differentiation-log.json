@@ -1,49 +1,57 @@
 {
-  "page": "entruempelung-bischweier.html",
+  "page": "entruempelung-weisenbach.html",
   "changes": [
     "Selected best section order variant",
     "Selected best FAQ variant",
     "Selected best CTA variant"
   ],
   "selected_variants": {
-    "section_variant": 3,
-    "faq_variant": 1,
-    "cta_variant": 6
+    "section_variant": 0,
+    "faq_variant": 0,
+    "cta_variant": 2
   },
   "best_report": {
     "page": "__temp_candidate__.html",
-    "overall_similarity": 31,
-    "risk": "low",
+    "overall_similarity": 77,
+    "risk": "medium",
     "closest_matches": [
       {
-        "file": "entruempelung-bischweier.html",
+        "file": "entruempelung-weisenbach.html",
+        "similarity": 77
+      },
+      {
+        "file": "entruempelung-sinzheim.html",
+        "similarity": 47
+      },
+      {
+        "file": "entruempelung-stutensee.html",
+        "similarity": 39
+      },
+      {
+        "file": "entruempelung-steinmauern.html",
+        "similarity": 39
+      },
+      {
+        "file": "entruempelung-iffezheim.html",
         "similarity": 31
-      },
-      {
-        "file": "entruempelung-malsch.html",
-        "similarity": 30
-      },
-      {
-        "file": "entruempelung-durmersheim.html",
-        "similarity": 30
-      },
-      {
-        "file": "entruempelung-gernsbach.html",
-        "similarity": 25
-      },
-      {
-        "file": "entruempelung-bietigheim.html",
-        "similarity": 24
       }
     ],
     "block_similarity": {
-      "hero": 46,
-      "structure": 52,
-      "faq": 5,
-      "cta": 3
+      "hero": 82,
+      "structure": 83,
+      "faq": 100,
+      "cta": 5
     },
-    "problems": [],
-    "rewrite_targets": []
+    "problems": [
+      "Overall similarity too high",
+      "Structure too similar",
+      "FAQ too similar"
+    ],
+    "rewrite_targets": [
+      "body",
+      "section_order",
+      "faq"
+    ]
   },
   "status": "repaired"
 }

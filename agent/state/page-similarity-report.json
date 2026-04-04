@@ -1,41 +1,39 @@
 {
   "page": "entruempelung-weisenbach.html",
-  "overall_similarity": 61,
+  "overall_similarity": 47,
   "risk": "low",
   "closest_matches": [
     {
       "file": "entruempelung-sinzheim.html",
-      "similarity": 61
-    },
-    {
-      "file": "entruempelung-ettlingen.html",
-      "similarity": 53
-    },
-    {
-      "file": "entruempelung-steinmauern.html",
-      "similarity": 49
-    },
-    {
-      "file": "entruempelung-stutensee.html",
       "similarity": 47
     },
     {
-      "file": "entruempelung-baden-baden.html",
-      "similarity": 38
+      "file": "entruempelung-stutensee.html",
+      "similarity": 39
+    },
+    {
+      "file": "entruempelung-steinmauern.html",
+      "similarity": 39
+    },
+    {
+      "file": "entruempelung-iffezheim.html",
+      "similarity": 31
+    },
+    {
+      "file": "entruempelung-forbach.html",
+      "similarity": 29
     }
   ],
   "block_similarity": {
-    "hero": 47,
-    "structure": 45,
+    "hero": 38,
+    "structure": 40,
     "faq": 100,
-    "cta": 95
+    "cta": 39
   },
   "problems": [
-    "FAQ too similar",
-    "CTA too similar"
+    "FAQ too similar"
   ],
   "rewrite_targets": [
-    "faq",
-    "cta"
+    "faq"
   ]
 }
