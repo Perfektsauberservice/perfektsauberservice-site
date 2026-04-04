@@ -1,0 +1,20 @@
+{
+  "green_max": 54,
+  "yellow_max": 74,
+  "orange_max": 84,
+  "red_min": 85,
+  "block_if": {
+    "overall_similarity_gte": 85,
+    "structure_similarity_gte": 86,
+    "faq_similarity_gte": 80,
+    "cta_similarity_gte": 80
+  },
+  "warn_if": {
+    "overall_similarity_gte": 75,
+    "structure_similarity_gte": 78,
+    "faq_similarity_gte": 70,
+    "cta_similarity_gte": 70
+  },
+  "city_name_normalization": true,
+  "strip_common_local_terms": true
+}
