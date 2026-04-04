@@ -1,1 +1,85 @@
-
+{
+  "titleMin": 35,
+  "titleMax": 65,
+  "metaMin": 70,
+  "metaMax": 160,
+  "minWordCount": 350,
+  "nearDuplicateThreshold": 0.72,
+  "highDuplicateThreshold": 0.85,
+  "brandTerms": [
+    "Perfekt Sauber Service",
+    "PSS"
+  ],
+  "ctaTerms": [
+    "Jetzt anfragen",
+    "Kostenlos anfragen",
+    "Kontakt aufnehmen",
+    "Kostenlose Besichtigung",
+    "Unverbindlich anfragen",
+    "Jetzt kostenlos anfragen",
+    "Besichtigung vereinbaren",
+    "Angebot anfordern"
+  ],
+  "localTerms": [
+    "Rastatt",
+    "Karlsruhe",
+    "Baden-Baden",
+    "Gaggenau",
+    "Gernsbach",
+    "Loffenau",
+    "Muggensturm",
+    "Kuppenheim",
+    "Bietigheim",
+    "Ötigheim",
+    "Durmersheim",
+    "Malsch",
+    "Ettlingen",
+    "Sinzheim",
+    "Bühl",
+    "Achern",
+    "Rheinmünster",
+    "Bischweier"
+  ],
+  "mainContentSelectors": [
+    "main",
+    "[data-main-content]",
+    ".service-content",
+    ".location-content",
+    ".page-content",
+    ".content",
+    "article",
+    ".container"
+  ],
+  "ignoreSelectors": [
+    "script",
+    "style",
+    "noscript",
+    "svg",
+    "header",
+    "footer",
+    "nav",
+    ".menu",
+    ".navigation",
+    ".nav",
+    ".navbar",
+    ".footer",
+    ".header",
+    ".cookie-banner",
+    ".cookies",
+    ".faq-schema",
+    ".modal",
+    ".popup",
+    ".offcanvas"
+  ],
+  "ctaSelectors": [
+    "a",
+    "button",
+    ".btn",
+    ".cta",
+    ".button"
+  ],
+  "riskLevels": {
+    "highScoreMax": 49,
+    "mediumScoreMax": 74
+  }
+}
