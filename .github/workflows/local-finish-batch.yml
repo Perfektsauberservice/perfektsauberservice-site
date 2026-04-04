@@ -6,6 +6,7 @@ on:
 jobs:
   local-finish-batch:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write
 
