@@ -1,5 +1,4 @@
 import json
-import os
 import re
 from pathlib import Path
 from difflib import SequenceMatcher
@@ -37,6 +36,7 @@ def normalize_text(text: str, city_names: list[str]) -> str:
     text = text.lower()
     for city in city_names:
         text = re.sub(re.escape(city.lower()), " ", text)
+
     boilerplate = [
         "kostenlose besichtigung",
         "unverbindliche einschätzung",
@@ -46,10 +46,11 @@ def normalize_text(text: str, city_names: list[str]) -> str:
         "kontakt",
         "preisrechner",
         "leistungen",
-        "entrümpelung"
+        "entrümpelung",
     ]
     for phrase in boilerplate:
         text = text.replace(phrase, " ")
+
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
@@ -63,13 +64,51 @@ def extract_h2(html: str) -> list[str]:
 
 
 def extract_faq_block(html: str) -> str:
-    h3s = re.findall(r"<h3[^>]*>(.*?)</h3>\s*<p[^>]*>(.*?)</p>", html, flags=re.IGNORECASE | re.DOTALL)
+    h3s = re.findall(
+        r"<h3[^>]*>(.*?)</h3>\s*<p[^>]*>(.*?)</p>",
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
     return " ".join([f"{q} {a}" for q, a in h3s]).strip()
 
 
 def extract_cta_block(html: str) -> str:
-    matches = re.findall(r'href="([^"]+)"[^>]*>(.*?)</a>', html, flags=re.IGNORECASE | re.DOTALL)
-    return " ".join([f"{href} {label}" for href, label in matches]).strip()
+    match = re.search(
+        r'<section class="section" id="kontakt" style="margin-top:20px">.*?</section>',
+        html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not match:
+        return ""
+
+    cta_html = match.group(0)
+
+    cta_text = re.sub(
+        r'<a [^>]*>(.*?)</a>',
+        r" \1 ",
+        cta_html,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    cta_text = re.sub(r"<[^>]+>", " ", cta_text)
+    cta_text = re.sub(r"\s+", " ", cta_text).strip()
+
+    common = [
+        "whatsapp",
+        "kontaktformular",
+        "kontakt",
+        "preisrechner",
+        "leistungen",
+        "einsatzgebiete",
+        "anfrage",
+        "entrümpelung",
+    ]
+
+    text = cta_text.lower()
+    for phrase in common:
+        text = text.replace(phrase, " ")
+
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
 
 def detect_problem_blocks(overall, structure_sim, faq_sim, cta_sim, thresholds):
@@ -130,17 +169,25 @@ def compare_page(target_file: Path, compare_files: list[Path], cities: list[str]
         faq_sim = similarity(target_faq, other_faq)
         cta_sim = similarity(target_cta, other_cta)
 
-        overall = round((raw_sim * 0.25) + (norm_sim * 0.30) + (structure_sim * 0.20) + (faq_sim * 0.15) + (cta_sim * 0.10))
+        overall = round(
+            (raw_sim * 0.25)
+            + (norm_sim * 0.30)
+            + (structure_sim * 0.20)
+            + (faq_sim * 0.15)
+            + (cta_sim * 0.10)
+        )
 
-        matches.append({
-            "file": other.name,
-            "raw_similarity": raw_sim,
-            "normalized_similarity": norm_sim,
-            "structure_similarity": structure_sim,
-            "faq_similarity": faq_sim,
-            "cta_similarity": cta_sim,
-            "overall_similarity": overall
-        })
+        matches.append(
+            {
+                "file": other.name,
+                "raw_similarity": raw_sim,
+                "normalized_similarity": norm_sim,
+                "structure_similarity": structure_sim,
+                "faq_similarity": faq_sim,
+                "cta_similarity": cta_sim,
+                "overall_similarity": overall,
+            }
+        )
 
     matches.sort(key=lambda x: x["overall_similarity"], reverse=True)
     top = matches[:5]
@@ -152,7 +199,7 @@ def compare_page(target_file: Path, compare_files: list[Path], cities: list[str]
             worst["structure_similarity"],
             worst["faq_similarity"],
             worst["cta_similarity"],
-            thresholds
+            thresholds,
         )
         report = {
             "page": target_file.name,
@@ -166,10 +213,10 @@ def compare_page(target_file: Path, compare_files: list[Path], cities: list[str]
                 "hero": worst["raw_similarity"],
                 "structure": worst["structure_similarity"],
                 "faq": worst["faq_similarity"],
-                "cta": worst["cta_similarity"]
+                "cta": worst["cta_similarity"],
             },
             "problems": problems,
-            "rewrite_targets": targets
+            "rewrite_targets": targets,
         }
     else:
         report = {
@@ -181,36 +228,42 @@ def compare_page(target_file: Path, compare_files: list[Path], cities: list[str]
                 "hero": 0,
                 "structure": 0,
                 "faq": 0,
-                "cta": 0
+                "cta": 0,
             },
             "problems": [],
-            "rewrite_targets": []
+            "rewrite_targets": [],
         }
 
     return report
 
 
-def publish_guard(report: dict, html_file: Path):
+def publish_guard(report: dict, html_file: Path, thresholds: dict):
     html = read_text(html_file)
 
     reasons = []
     fixes = []
 
+    missing_critical = False
+
     if "<title>" not in html:
         reasons.append("Missing title")
         fixes.append("Add title")
+        missing_critical = True
 
     if 'meta name="description"' not in html:
         reasons.append("Missing meta description")
         fixes.append("Add meta description")
+        missing_critical = True
 
     if 'rel="canonical"' not in html:
         reasons.append("Missing canonical")
         fixes.append("Add canonical")
+        missing_critical = True
 
     if "<h1" not in html:
         reasons.append("Missing h1")
         fixes.append("Add h1")
+        missing_critical = True
 
     h2_count = len(re.findall(r"<h2[^>]*>", html, flags=re.IGNORECASE))
     if h2_count < 6:
@@ -227,40 +280,70 @@ def publish_guard(report: dict, html_file: Path):
         reasons.append("FAQ too weak")
         fixes.append("Expand FAQ")
 
-    if report["overall_similarity"] >= 85:
+    overall_block = thresholds["block_if"]["overall_similarity_gte"]
+    structure_block = thresholds["block_if"]["structure_similarity_gte"]
+    faq_block = thresholds["block_if"]["faq_similarity_gte"]
+    cta_block = thresholds["block_if"]["cta_similarity_gte"]
+
+    if report["overall_similarity"] >= overall_block:
         reasons.append("Overall similarity too high")
         fixes.append("Rewrite body")
 
-    if report["block_similarity"]["structure"] >= 86:
+    if report["block_similarity"]["structure"] >= structure_block:
         reasons.append("Structure similarity too high")
         fixes.append("Change section order")
 
-    if report["block_similarity"]["faq"] >= 80:
+    if report["block_similarity"]["faq"] >= faq_block:
         reasons.append("FAQ similarity too high")
         fixes.append("Rewrite FAQ")
 
-    if report["block_similarity"]["cta"] >= 80:
+    if report["block_similarity"]["cta"] >= cta_block:
         reasons.append("CTA similarity too high")
         fixes.append("Rewrite CTA")
 
-    if reasons:
-        status = "BLOCK" if any("too high" in r.lower() or "missing" in r.lower() for r in reasons) else "REVIEW"
+    hard_duplicate_problem = (
+        report["overall_similarity"] >= overall_block
+        or report["block_similarity"]["structure"] >= structure_block
+        or report["block_similarity"]["faq"] >= faq_block
+    )
+
+    cta_only_problem = (
+        report["block_similarity"]["cta"] >= cta_block
+        and report["overall_similarity"] < overall_block
+        and report["block_similarity"]["structure"] < structure_block
+        and report["block_similarity"]["faq"] < faq_block
+    )
+
+    if missing_critical or hard_duplicate_problem:
+        status = "BLOCK"
+    elif cta_only_problem or reasons:
+        status = "REVIEW"
     else:
         status = "PASS"
+
+    if status == "PASS":
+        summary = "Page passed guard."
+    elif status == "REVIEW":
+        summary = "Page needs review but is not critically blocked."
+    else:
+        summary = "Page blocked for review."
 
     return {
         "page": html_file.name,
         "status": status,
         "reasons": reasons,
         "required_fixes": list(dict.fromkeys(fixes)),
-        "summary": "Page blocked for review." if status != "PASS" else "Page passed guard."
+        "summary": summary,
     }
 
 
 def main():
     thresholds = read_json(CONFIG_DIR / "duplicate-thresholds.json")
     cities_json = read_json(CONFIG_DIR / "cities.json")
-    city_names = [c["slug"].replace("-", " ") if isinstance(c, dict) and "slug" in c else str(c) for c in cities_json]
+    city_names = [
+        c["slug"].replace("-", " ") if isinstance(c, dict) and "slug" in c else str(c)
+        for c in cities_json
+    ]
 
     target_name = input("Enter target HTML file name: ").strip()
     target_file = ROOT / target_name
@@ -274,7 +357,7 @@ def main():
     similarity_report = compare_page(target_file, compare_files, city_names, thresholds)
     write_json(STATE_DIR / "page-similarity-report.json", similarity_report)
 
-    guard_report = publish_guard(similarity_report, target_file)
+    guard_report = publish_guard(similarity_report, target_file, thresholds)
     write_json(STATE_DIR / "publish-guard-report.json", guard_report)
 
     print("\n=== SIMILARITY REPORT ===")
