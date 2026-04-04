@@ -115,27 +115,27 @@ def rewrite_cta(html: str, file_name: str) -> str:
 
     new_cta = f"""
   <section class="section" id="kontakt" style="margin-top:20px">
-    <h2>Entrümpelung in {city} unverbindlich anfragen</h2>
+    <h2>Unverbindliche Anfrage für {city}</h2>
     <p>
-      Wenn Sie den Aufwand besser einschätzen lassen möchten, senden Sie uns
-      einfach ein paar Fotos und eine kurze Beschreibung. So bekommen Sie
-      schneller eine erste Orientierung für Ihr Objekt in {city}.
+      Beschreiben Sie kurz, welche Räume betroffen sind und ob es sich um
+      Wohnung, Haus, Keller, Garage oder mehrere Bereiche handelt. So lässt
+      sich der Aufwand für {city} schneller einordnen.
     </p>
 
-    <div class="cta-row">
-      <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">Fotos und Infos senden</a>
-    </div>
+    <p style="margin-top:16px;">
+      <a class="cta" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">Anfrage direkt senden</a>
+    </p>
 
     <p style="margin-top:16px;color:#475569;">
-      Alternativ können Sie zuerst den <a href="/preisrechner.html">Preisrechner</a>
-      nutzen oder uns direkt über das <a href="/kontakt.html">Kontaktformular</a> schreiben.
+      Für eine erste Orientierung können Sie auch unseren Preisrechner nutzen
+      oder uns später über das Kontaktformular schreiben.
     </p>
 
-    <p style="margin-top:10px;color:#475569;">
-      Weitere Informationen finden Sie auch unter
-      <a href="/leistungen.html">Leistungen</a> und
-      <a href="/einsatzgebiete.html">Einsatzgebiete</a>.
-    </p>
+    <ul style="margin-top:14px;color:#475569; padding-left:18px;">
+      <li><a href="/preisrechner.html">Preis grob berechnen</a></li>
+      <li><a href="/kontakt.html">Kontaktformular öffnen</a></li>
+      <li><a href="/leistungen.html">Leistungsübersicht ansehen</a></li>
+    </ul>
   </section>
 """
     html = re.sub(
