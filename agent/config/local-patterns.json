@@ -1,0 +1,76 @@
+{
+  "A_big_city": {
+    "label": "Big city / stronger competition",
+    "focus": [
+      "apartments",
+      "volume",
+      "logistics",
+      "fast turnaround",
+      "multi-floor access"
+    ],
+    "allowed_section_orders": [
+      ["hero", "why_us", "areas", "costs", "process", "faq", "cta"],
+      ["hero", "costs", "process", "areas", "why_us", "faq", "cta"],
+      ["hero", "situations", "areas", "process", "costs", "faq", "cta"]
+    ],
+    "faq_style": "urban"
+  },
+  "B_medium_city": {
+    "label": "Medium city / mixed intent",
+    "focus": [
+      "private homes",
+      "mixed properties",
+      "flexibility",
+      "clear planning"
+    ],
+    "allowed_section_orders": [
+      ["hero", "why_us", "situations", "areas", "process", "costs", "faq", "cta"],
+      ["hero", "areas", "situations", "costs", "process", "faq", "cta"]
+    ],
+    "faq_style": "balanced"
+  },
+  "C_small_town": {
+    "label": "Small town / village",
+    "focus": [
+      "houses",
+      "garages",
+      "side rooms",
+      "simple process",
+      "local accessibility"
+    ],
+    "allowed_section_orders": [
+      ["hero", "why_us", "areas", "situations", "process", "costs", "faq", "cta"],
+      ["hero", "areas", "why_us", "process", "costs", "faq", "cta"]
+    ],
+    "faq_style": "household"
+  },
+  "D_sensitive_premium": {
+    "label": "Sensitive / discreet / premium",
+    "focus": [
+      "discretion",
+      "calm process",
+      "careful handling",
+      "structured communication"
+    ],
+    "allowed_section_orders": [
+      ["hero", "why_us", "sensitive_cases", "process", "costs", "faq", "cta"],
+      ["hero", "sensitive_cases", "why_us", "areas", "costs", "faq", "cta"]
+    ],
+    "faq_style": "sensitive"
+  },
+  "E_houses_annexes": {
+    "label": "Houses, annexes, multiple spaces",
+    "focus": [
+      "houses",
+      "cellars",
+      "attics",
+      "garages",
+      "multiple spaces"
+    ],
+    "allowed_section_orders": [
+      ["hero", "areas", "why_us", "process", "costs", "faq", "cta"],
+      ["hero", "areas", "situations", "process", "costs", "faq", "cta"]
+    ],
+    "faq_style": "multi_area"
+  }
+}
