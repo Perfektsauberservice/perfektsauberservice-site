@@ -6,47 +6,47 @@
     "Selected best CTA variant"
   ],
   "selected_variants": {
-    "section_variant": 0,
+    "section_variant": 2,
     "faq_variant": 0,
     "cta_variant": 9
   },
   "best_report": {
     "page": "__temp_candidate__.html",
-    "overall_similarity": 61,
+    "overall_similarity": 44,
     "risk": "low",
     "closest_matches": [
       {
         "file": "entruempelung-sinzheim.html",
-        "similarity": 61
-      },
-      {
-        "file": "entruempelung-steinmauern.html",
-        "similarity": 56
+        "similarity": 44
       },
       {
         "file": "entruempelung-weisenbach.html",
         "similarity": 44
       },
       {
-        "file": "entruempelung-loffenau.html",
-        "similarity": 40
+        "file": "entruempelung-malsch.html",
+        "similarity": 34
       },
       {
-        "file": "entruempelung-pforzheim.html",
-        "similarity": 39
+        "file": "entruempelung-stutensee.html",
+        "similarity": 33
+      },
+      {
+        "file": "entruempelung-steinmauern.html",
+        "similarity": 33
       }
     ],
     "block_similarity": {
-      "hero": 78,
-      "structure": 80,
+      "hero": 55,
+      "structure": 20,
       "faq": 0,
-      "cta": 24
+      "cta": 100
     },
     "problems": [
-      "Structure too similar"
+      "CTA too similar"
     ],
     "rewrite_targets": [
-      "section_order"
+      "cta"
     ]
   },
   "status": "repaired"
