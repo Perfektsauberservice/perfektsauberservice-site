@@ -105,11 +105,36 @@ Mindestens 4 Abschnitte mit je min. 100 Wörtern. Echte, verwertbare Information
 
   const raw = await callClaude(systemPrompt, userPrompt, 2500);
 
-  // Extract JSON even if Claude adds some wrapper text
-  const match = raw.match(/\{[\s\S]*\}/);
-  if (!match) throw new Error('Research Agent: Kein JSON in der Antwort gefunden.');
+  // Extract JSON robustly
+  let research;
+  try {
+    const match = raw.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('Kein JSON-Block gefunden.');
+    // Fix common JSON issues: unescaped newlines inside strings
+    const cleaned = match[0]
+      .replace(/[\r\n]+/g, ' ')
+      .replace(/,\s*}/g, '}')
+      .replace(/,\s*\]/g, ']');
+    research = JSON.parse(cleaned);
+  } catch (e) {
+    // Retry with stricter prompt
+    console.warn(`   ⚠️  JSON Parse Fehler, versuche erneut...`);
+    const retry = await callClaude(
+      'Antworte NUR mit validem JSON. Kein Markdown, keine Erklärungen, nur reines JSON.',
+      `Erstelle ein JSON für: Thema="${topic}", Stadt="${city}", Service="${service}". Felder: titel, meta_description, hauptpunkte(array), abschnitte(array von {h2,inhalt}), preishinweise, lokale_besonderheiten, haeufige_fragen(array von {frage,antwort}), seo_keywords(array), bild_suchbegriffe(array englisch), artikel_winkel`,
+      2000
+    );
+    const match2 = retry.match(/\{[\s\S]*\}/);
+    if (!match2) throw new Error('Research Agent: JSON konnte nicht geparst werden.');
+    research = JSON.parse(match2[0].replace(/[\r\n]+/g, ' ').replace(/,\s*}/g, '}').replace(/,\s*\]/g, ']'));
+  }
 
-  const research = JSON.parse(match[0]);
+  // Ensure required fields have defaults
+  research.abschnitte = research.abschnitte || [];
+  research.haeufige_fragen = research.haeufige_fragen || [];
+  research.seo_keywords = research.seo_keywords || [];
+  research.bild_suchbegriffe = research.bild_suchbegriffe || ['professional cleaning', 'home organization'];
+
   console.log(`   ✅  Keywords: ${research.seo_keywords?.join(', ')}`);
   console.log(`   ✅  Abschnitte: ${research.abschnitte?.length}`);
   return research;
