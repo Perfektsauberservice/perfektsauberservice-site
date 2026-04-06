@@ -24,9 +24,17 @@ const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
 const PEXELS_API_KEY = process.env.PEXELS_API_KEY;
 
 if (!ANTHROPIC_API_KEY) {
-  console.error('❌  ANTHROPIC_API_KEY fehlt. Bitte .env oder Umgebungsvariablen setzen.');
+  console.error('[FEHLER] ANTHROPIC_API_KEY fehlt.');
   process.exit(1);
 }
+
+// Node.js version check - fetch requires Node 18+
+const [major] = process.versions.node.split('.').map(Number);
+if (major < 18) {
+  console.error(`[FEHLER] Node.js ${process.versions.node} zu alt. Mindestens v18 erforderlich.`);
+  process.exit(1);
+}
+console.log(`[OK] Node.js ${process.versions.node}`);
 
 const CLAUDE_MODEL = 'claude-sonnet-4-6';
 const WHATSAPP = 'https://wa.me/491639087197';
@@ -120,24 +128,43 @@ async function researchAgent(topic, city, service) {
     }]
   };
 
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
-    },
-    body: JSON.stringify(body)
-  });
+  console.log('   [DEBUG] Calling Anthropic API...');
+  let res;
+  try {
+    res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify(body)
+    });
+  } catch (fetchErr) {
+    throw new Error('Network error: ' + fetchErr.message);
+  }
+  console.log('   [DEBUG] HTTP Status: ' + res.status);
 
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Research Agent API Fehler ${res.status}: ${err}`);
+    throw new Error('Research Agent API Error ' + res.status + ': ' + err);
   }
 
   const data = await res.json();
+  console.log('   [DEBUG] stop_reason: ' + data.stop_reason + ', type: ' + data.content?.[0]?.type);
+
+  if (!data.content || data.content.length === 0) {
+    throw new Error(`Research Agent: Leere API-Antwort. stop_reason=${data.stop_reason}`);
+  }
+
+  const toolBlock = data.content.find(b => b.type === 'tool_use');
+  if (!toolBlock) {
+    console.error('   API Antwort:', JSON.stringify(data).substring(0, 500));
+    throw new Error('Research Agent: Kein tool_use Block in der Antwort.');
+  }
+
   // tool_use response — input is always valid JSON
-  const research = data.content[0].input;
+  const research = toolBlock.input;
 
   research.abschnitte = research.abschnitte || [];
   research.haeufige_fragen = research.haeufige_fragen || [];
@@ -518,4 +545,12 @@ async function main() {
   }
 }
 
-main();
+process.on('unhandledRejection', (err) => {
+  console.error('\n❌  Unhandled Rejection:', err);
+  process.exit(1);
+});
+
+main().catch(err => {
+  console.error('\n❌  Fatal:', err);
+  process.exit(1);
+});
