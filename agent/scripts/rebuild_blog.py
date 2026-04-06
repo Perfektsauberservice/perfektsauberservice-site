@@ -99,9 +99,8 @@ def should_include(path: Path) -> bool:
     name = path.name
     if name in EXCLUDE_FILES or name.startswith("_") or not name.endswith(".html"):
         return False
-    if parts[0] in {"blog", "auto"}:
-        return True
-    if len(parts) == 1 and re.match(r"^(entruempelung|haushaltsaufloesung|wohnungsaufloesung|kellerentruempelung|gewerbe|was-|wie-).+\.html$", name):
+    # Only include actual blog articles from blog/ folder — service pages stay out
+    if parts[0] == "blog":
         return True
     return False
 
