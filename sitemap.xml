@@ -1,20 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://perfektsauberservice.com/</loc></url>
-  <url><loc>https://perfektsauberservice.com/entruempelung-rastatt</loc></url>
-  <url><loc>https://perfektsauberservice.com/entruempelung-baden-baden</loc></url>
-  <url><loc>https://perfektsauberservice.com/entruempelung-gaggenau</loc></url>
-  <url><loc>https://perfektsauberservice.com/entruempelung-karlsruhe</loc></url>
+  <!-- Homepage -->
+  <url><loc>https://perfektsauberservice.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
+
+  <!-- Hauptseiten -->
+  <url><loc>https://perfektsauberservice.com/leistungen.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/einsatzgebiete.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/blog.html</loc><priority>0.8</priority><changefreq>daily</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/preisrechner.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Spezialseiten Rastatt -->
+  <url><loc>https://perfektsauberservice.com/bueroaufloesung-rastatt.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/dachbodenentruempelung-rastatt.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/garagenentruempelung-rastatt.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/kellerentruempelung-rastatt.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/messi-wohnung-rastatt.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/nachlassaufloesung-rastatt.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-rastatt-ablauf.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entrumpelung-durmersheim-kosten.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Entrümpelung - alle Städte -->
+  <url><loc>https://perfektsauberservice.com/entruempelung-rastatt.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-baden-baden.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-gaggenau.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-karlsruhe.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-achern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-au-am-rhein.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-bad-herrenalb.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-bad-wildbad.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-bietigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-bischweier.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-buehl.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-durmersheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-elchesheim-illingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-ettlingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-forbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-gernsbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-huegelsheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-iffezheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-kuppenheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-loffenau.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-malsch.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-muggensturm.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-oetigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-pforzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-rheinmuenster.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-rheinstetten.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-sinzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-steinmauern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-stutensee.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/entruempelung-weisenbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Haushaltsauflösung - alle Städte -->
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-rastatt.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-baden-baden.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-gaggenau.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-karlsruhe.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-achern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-au-am-rhein.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-bad-herrenalb.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-bad-wildbad.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-bietigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-bischweier.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-buehl.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-durmersheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-elchesheim-illingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-ettlingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-forbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-gernsbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-huegelsheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-iffezheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-kuppenheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-loffenau.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-malsch.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-muggensturm.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-oetigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-pforzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-rheinmuenster.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-rheinstetten.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-sinzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-steinmauern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-stutensee.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/haushaltsaufloesung-weisenbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Wohnungsauflösung - alle Städte -->
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-rastatt.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-baden-baden.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-gaggenau.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-karlsruhe.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-achern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-au-am-rhein.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-bad-herrenalb.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-bad-wildbad.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-bietigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-bischweier.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-buehl.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-durmersheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-elchesheim-illingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-ettlingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-forbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-gernsbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-huegelsheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-iffezheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-kuppenheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-loffenau.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-malsch.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-muggensturm.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-oetigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-pforzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-rheinmuenster.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-rheinstetten.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-sinzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-steinmauern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-stutensee.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/wohnungsaufloesung-weisenbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Gewerberäumung - alle Städte -->
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-rastatt.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-baden-baden.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-gaggenau.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-karlsruhe.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-achern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-au-am-rhein.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-bad-herrenalb.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-bad-wildbad.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-bietigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-bischweier.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-buehl.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-durmersheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-elchesheim-illingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-ettlingen.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-forbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-gernsbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-huegelsheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-iffezheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-kuppenheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-loffenau.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-malsch.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-muggensturm.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-oetigheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-pforzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-rheinmuenster.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-rheinstetten.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-sinzheim.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-steinmauern.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-stutensee.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://perfektsauberservice.com/gewerberaeumung-weisenbach.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+
+  <!-- Blog Artikel -->
   <url>
-    <loc>https://perfektsauberservice.com/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html</loc>
-    <lastmod>2026-03-30T09:09:14.987Z</lastmod>
+    <loc>https://perfektsauberservice.com/blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html</loc>
+    <lastmod>2026-04-06T03:12:52.533Z</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://perfektsauberservice.com/blog/was-kostet-eine-entruempelung-in-rastatt.html</loc>
     <lastmod>2026-03-30T14:59:11.787Z</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://perfektsauberservice.com/blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html</loc>
-    <lastmod>2026-04-06T03:12:52.533Z</lastmod>
+    <loc>https://perfektsauberservice.com/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html</loc>
+    <lastmod>2026-03-30T09:09:14.987Z</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
   </url>
 </urlset>
