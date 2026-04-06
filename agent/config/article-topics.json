@@ -1,147 +1,662 @@
 {
   "queue": [
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Wann ist der beste Zeitpunkt für eine Entrümpelung?" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Entrümpelung nach einem Todesfall – Was tun?" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Messie-Wohnung räumen lassen – Ablauf und Kosten" },
-    { "service": "Entrümpelung", "city": "Gaggenau", "topic": "Keller entrümpeln – Tipps und Kosten" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Haushaltsauflösung planen – Schritt für Schritt" },
-    { "service": "Haushaltsauflösung", "city": "Baden-Baden", "topic": "Was passiert mit verwertbaren Gegenständen bei der Haushaltsauflösung?" },
-    { "service": "Haushaltsauflösung", "city": "Karlsruhe", "topic": "Haushaltsauflösung Kosten – Was beeinflusst den Preis?" },
-    { "service": "Haushaltsauflösung", "city": "Gaggenau", "topic": "Haushaltsauflösung selbst machen oder Firma beauftragen?" },
-    { "service": "Wohnungsauflösung", "city": "Rastatt", "topic": "Wohnungsauflösung – Checkliste für einen reibungslosen Ablauf" },
-    { "service": "Wohnungsauflösung", "city": "Baden-Baden", "topic": "Wohnungsauflösung und Endreinigung aus einer Hand" },
-    { "service": "Wohnungsauflösung", "city": "Karlsruhe", "topic": "Wohnungsübergabe nach Auflösung – Worauf achten?" },
-    { "service": "Entrümpelung", "city": "Bühl", "topic": "Dachboden entrümpeln – So läuft es ab" },
-    { "service": "Entrümpelung", "city": "Ettlingen", "topic": "Garage entrümpeln – Tipps für eine stressfreie Räumung" },
-    { "service": "Entrümpelung", "city": "Pforzheim", "topic": "Was darf nicht in den Sperrmüll? – Entsorgungsregeln" },
-    { "service": "Haushaltsauflösung", "city": "Bühl", "topic": "Nachlassauflösung – Rechtliches und Praktisches" },
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Wie lange dauert eine Entrümpelung?" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Entrümpelung mit Wertanrechnung – Lohnt sich das?"},
-
-    { "service": "Entrümpelung", "city": "Gernsbach", "topic": "Wie finde ich eine seriöse Entrümpelungsfirma?" },
-    { "service": "Entrümpelung", "city": "Muggensturm", "topic": "Entrümpelung vor dem Hausverkauf – Was beachten?" },
-    { "service": "Entrümpelung", "city": "Durmersheim", "topic": "Sperrmüll vs. Entrümpelung – Was ist der Unterschied?" },
-    { "service": "Entrümpelung", "city": "Malsch", "topic": "Entrümpelung bei Eigentümerwechsel – Ablauf und Kosten" },
-    { "service": "Entrümpelung", "city": "Sinzheim", "topic": "Wer zahlt die Entrümpelung? – Mieter oder Vermieter" },
-    { "service": "Entrümpelung", "city": "Kuppenheim", "topic": "Entrümpelung Altbau – Besonderheiten und Herausforderungen" },
-    { "service": "Entrümpelung", "city": "Achern", "topic": "Entrümpelung im Winter – Tipps für die kalte Jahreszeit" },
-    { "service": "Entrümpelung", "city": "Stutensee", "topic": "Wie viele Helfer braucht man für eine Entrümpelung?" },
-    { "service": "Entrümpelung", "city": "Rheinstetten", "topic": "Entrümpelung nach Wasserschaden – So gehen Sie vor" },
-    { "service": "Entrümpelung", "city": "Bietigheim", "topic": "Elektroschrott bei der Entrümpelung – Was ist zu beachten?" },
-    { "service": "Entrümpelung", "city": "Iffezheim", "topic": "Entrümpelung mit besenreiner Übergabe – Was bedeutet das?" },
-    { "service": "Entrümpelung", "city": "Rheinmünster", "topic": "Günstig entrümpeln – Worauf sollte man achten?" },
-    { "service": "Entrümpelung", "city": "Forbach", "topic": "Entrümpelung ländlicher Anwesen – Besonderheiten" },
-    { "service": "Entrümpelung", "city": "Weisenbach", "topic": "Schnelle Entrümpelung bei Zeitmangel – Ist das möglich?" },
-    { "service": "Entrümpelung", "city": "Loffenau", "topic": "Kleine Entrümpelung – Lohnt sich eine Firma?" },
-    { "service": "Entrümpelung", "city": "Hügelsheim", "topic": "Entrümpelung für Senioren – Diskret und einfühlsam" },
-    { "service": "Entrümpelung", "city": "Steinmauern", "topic": "Was passiert mit alten Möbeln bei der Entrümpelung?" },
-    { "service": "Entrümpelung", "city": "Oetigheim", "topic": "Entrümpelung nach Scheidung – Neutrale Hilfe gefragt" },
-    { "service": "Entrümpelung", "city": "Elchesheim-Illingen", "topic": "Entrümpelung ohne Aufzug – Kosten und Ablauf" },
-    { "service": "Entrümpelung", "city": "Au am Rhein", "topic": "Entrümpelung im Frühjahr – Warum das die beste Zeit ist" },
-    { "service": "Entrümpelung", "city": "Bad Herrenalb", "topic": "Entrümpelung Ferienhaus – Saisonale Räumung leicht gemacht" },
-    { "service": "Entrümpelung", "city": "Bad Wildbad", "topic": "Entrümpelung nach Haushaltsauflösung – Was kommt danach?" },
-    { "service": "Entrümpelung", "city": "Bischweier", "topic": "Entrümpelung mit Sondermüll – Fachgerechte Entsorgung" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Großraumwohnung entrümpeln – Planung und Kosten" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Entrümpelung Luxuswohnung – Besondere Anforderungen" },
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Entrümpelung Reihenhaus – Typischer Ablauf" },
-    { "service": "Entrümpelung", "city": "Gaggenau", "topic": "Entrümpelung bei Räumungsklage – Was ist zu tun?" },
-
-    { "service": "Haushaltsauflösung", "city": "Gernsbach", "topic": "Haushaltsauflösung bei Umzug ins Pflegeheim" },
-    { "service": "Haushaltsauflösung", "city": "Ettlingen", "topic": "Haushaltsauflösung Checkliste – Nichts vergessen" },
-    { "service": "Haushaltsauflösung", "city": "Pforzheim", "topic": "Haushaltsauflösung Sommer vs. Winter – Unterschiede" },
-    { "service": "Haushaltsauflösung", "city": "Achern", "topic": "Haushaltsauflösung bei Erbschaft – Wer ist zuständig?" },
-    { "service": "Haushaltsauflösung", "city": "Stutensee", "topic": "Antike Möbel bei Haushaltsauflösung – Was ist wertvoll?" },
-    { "service": "Haushaltsauflösung", "city": "Rheinstetten", "topic": "Haushaltsauflösung mit Wertanrechnung – So funktioniert es" },
-    { "service": "Haushaltsauflösung", "city": "Muggensturm", "topic": "Wie schnell kann eine Haushaltsauflösung durchgeführt werden?" },
-    { "service": "Haushaltsauflösung", "city": "Durmersheim", "topic": "Haushaltsauflösung Kosten senken – Praktische Tipps" },
-    { "service": "Haushaltsauflösung", "city": "Sinzheim", "topic": "Bücher und Bibliotheken bei der Haushaltsauflösung" },
-    { "service": "Haushaltsauflösung", "city": "Kuppenheim", "topic": "Haushaltsauflösung emotional bewältigen – Tipps für Angehörige" },
-    { "service": "Haushaltsauflösung", "city": "Bietigheim", "topic": "Was gehört in einen Haushaltsauflösungsvertrag?" },
-    { "service": "Haushaltsauflösung", "city": "Karlsruhe", "topic": "Großer Haushalt auflösen – Mehrfamilienhaus und Villen" },
-    { "service": "Haushaltsauflösung", "city": "Baden-Baden", "topic": "Haushaltsauflösung diskret – Wenn Privatsphäre wichtig ist" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Haushaltsauflösung in 48 Stunden – Geht das?" },
-    { "service": "Haushaltsauflösung", "city": "Gaggenau", "topic": "Gartengeräte und Außenmöbel bei der Haushaltsauflösung" },
-    { "service": "Haushaltsauflösung", "city": "Bühl", "topic": "Haushaltsauflösung Schritt für Schritt – Der komplette Leitfaden" },
-
-    { "service": "Wohnungsauflösung", "city": "Gaggenau", "topic": "Wohnungsauflösung nach Tod – Fristen und Pflichten" },
-    { "service": "Wohnungsauflösung", "city": "Bühl", "topic": "Wohnungsauflösung Mietwohnung – Worauf Mieter achten müssen" },
-    { "service": "Wohnungsauflösung", "city": "Ettlingen", "topic": "Wohnungsauflösung Kosten sparen – So geht's" },
-    { "service": "Wohnungsauflösung", "city": "Pforzheim", "topic": "Wohnungsauflösung beim Auszug – Alles auf einmal erledigen" },
-    { "service": "Wohnungsauflösung", "city": "Gernsbach", "topic": "Möbel verkaufen oder entsorgen? – Tipps bei Wohnungsauflösung" },
-    { "service": "Wohnungsauflösung", "city": "Muggensturm", "topic": "Wohnungsauflösung Studentenwohnung – Schnell und günstig" },
-    { "service": "Wohnungsauflösung", "city": "Achern", "topic": "Wohnungsauflösung mit Renovierung kombinieren" },
-    { "service": "Wohnungsauflösung", "city": "Stutensee", "topic": "Wohnungsauflösung bei Zwangsräumung – Ablauf und Kosten" },
-    { "service": "Wohnungsauflösung", "city": "Rheinstetten", "topic": "Wohnungsauflösung im Erdgeschoss vs. Dachgeschoss" },
-    { "service": "Wohnungsauflösung", "city": "Sinzheim", "topic": "Was bleibt in der Wohnung? – Was muss weg bei Auflösung?" },
-    { "service": "Wohnungsauflösung", "city": "Karlsruhe", "topic": "Wohnungsauflösung Großstadt – Besonderheiten und Parkprobleme" },
-    { "service": "Wohnungsauflösung", "city": "Rastatt", "topic": "Wohnungsauflösung und Kautionsrückgabe – Was hängt zusammen?" },
-
-    { "service": "Gewerberäumung", "city": "Rastatt", "topic": "Gewerberäumung – Was ist zu beachten?" },
-    { "service": "Gewerberäumung", "city": "Karlsruhe", "topic": "Büroauflösung – Ablauf und Kosten in Karlsruhe" },
-    { "service": "Gewerberäumung", "city": "Baden-Baden", "topic": "Gewerberäumung nach Insolvenz – Wer ist verantwortlich?" },
-    { "service": "Gewerberäumung", "city": "Gaggenau", "topic": "Ladenlokal räumen lassen – Tipps für Gewerbetreibende" },
-    { "service": "Gewerberäumung", "city": "Bühl", "topic": "Gewerberäumung Lager und Halle – Kosten und Ablauf" },
-    { "service": "Gewerberäumung", "city": "Ettlingen", "topic": "Gewerberäumung Gastronomie – Küche und Mobiliar entsorgen" },
-    { "service": "Gewerberäumung", "city": "Pforzheim", "topic": "Praxisauflösung – Arzt und Zahnarzt Praxis räumen" },
-    { "service": "Gewerberäumung", "city": "Karlsruhe", "topic": "IT-Schrott bei Gewerberäumung – Datenschutz beachten" },
-    { "service": "Gewerberäumung", "city": "Rastatt", "topic": "Gewerberäumung über Nacht – Ist das möglich?" },
-    { "service": "Gewerberäumung", "city": "Baden-Baden", "topic": "Hotelzimmer und Pensionen räumen lassen" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Keller entrümpeln vor Wintereinbruch – Checkliste" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Entrümpelung nach Brandschaden – Spezielle Herausforderungen" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Entrümpelung Denkmalschutz-Gebäude – Was ist erlaubt?" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Haushaltsauflösung organisieren – Tipps für Erben" },
-    { "service": "Haushaltsauflösung", "city": "Karlsruhe", "topic": "Schmuck und Wertsachen bei Haushaltsauflösung – Was tun?" },
-    { "service": "Haushaltsauflösung", "city": "Baden-Baden", "topic": "Haushaltsauflösung Schätzung – Wann lohnt sich ein Gutachter?" },
-    { "service": "Wohnungsauflösung", "city": "Rastatt", "topic": "Wohnungsauflösung im Winter – Besonderheiten" },
-    { "service": "Wohnungsauflösung", "city": "Karlsruhe", "topic": "Wohnungsauflösung Altbau vs. Neubau – Unterschiede" },
-    { "service": "Wohnungsauflösung", "city": "Baden-Baden", "topic": "Wohnungsauflösung mit Hausmeisterservice kombinieren" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "5 Fehler bei der Entrümpelung – Und wie man sie vermeidet" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Entrümpelung Kosten steuerlich absetzen – Geht das?" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Entrümpelung nach Hochwasser – Schnelle Hilfe gefragt" },
-    { "service": "Entrümpelung", "city": "Gaggenau", "topic": "Wie wähle ich das richtige Entrümpelungsunternehmen?" },
-    { "service": "Haushaltsauflösung", "city": "Karlsruhe", "topic": "Haushaltsauflösung Senioren – Behutsam und respektvoll" },
-    { "service": "Haushaltsauflösung", "city": "Baden-Baden", "topic": "Haushalt auflösen bei Umzug ins Ausland" },
-    { "service": "Haushaltsauflösung", "city": "Gaggenau", "topic": "Hausrat spenden statt entsorgen – Optionen in der Region" },
-    { "service": "Wohnungsauflösung", "city": "Bühl", "topic": "Wohnungsauflösung und Schönheitsreparaturen – Was gehört dazu?" },
-    { "service": "Wohnungsauflösung", "city": "Ettlingen", "topic": "Wohnungsauflösung Zeitplan – Wie viel Zeit einplanen?" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Sperrmülltermin verpasst – Was tun?" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Entrümpelung Wochenende – Gibt es Notfallservices?" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Entrümpelung Erfahrungen – Worauf Kunden achten" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Haushaltsauflösung Angebote vergleichen – So geht's richtig" },
-    { "service": "Haushaltsauflösung", "city": "Karlsruhe", "topic": "Haushaltsauflösung Massivholzmöbel – Wert erhalten" },
-    { "service": "Wohnungsauflösung", "city": "Rastatt", "topic": "Wohnungsauflösung Fotos machen – Warum das wichtig ist" },
-    { "service": "Gewerberäumung", "city": "Karlsruhe", "topic": "Gewerberäumung Fristen – Wie schnell muss geräumt werden?" },
-    { "service": "Gewerberäumung", "city": "Rastatt", "topic": "Gewerberäumung günstig – Tipps für kleine Unternehmen" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Nachbarschaftshilfe vs. Profi-Entrümpelung – Ein Vergleich" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Entrümpelung Mehrfamilienhaus – Koordination und Kosten" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Vintage und Antiquitäten bei der Entrümpelung – Richtig bewerten" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Haushaltsauflösung Haustiere – Was tun mit Zubehör?" },
-    { "service": "Haushaltsauflösung", "city": "Karlsruhe", "topic": "Komplette Haushaltsauflösung in einem Tag – Realistisch?" },
-    { "service": "Wohnungsauflösung", "city": "Karlsruhe", "topic": "Wohnungsauflösung günstigster Anbieter – Vorsicht vor Fallen" },
-    { "service": "Wohnungsauflösung", "city": "Baden-Baden", "topic": "Wohnungsauflösung Luxussegment – Besondere Anforderungen" },
-    { "service": "Gewerberäumung", "city": "Baden-Baden", "topic": "Gewerberäumung Einzelhandel – Tipps für Ladenbesitzer" },
-    { "service": "Gewerberäumung", "city": "Gaggenau", "topic": "Werkstatt und Werkzeuge bei Gewerberäumung – Wert und Entsorgung" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Entrümpelung Frühjahrsputz – Den großen Hausputz professionell angehen" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Entrümpelung nach dem Sommer – Garten und Keller" },
-    { "service": "Entrümpelung", "city": "Baden-Baden", "topic": "Jahresendräumung – Entrümpelung zum Jahreswechsel" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Haushaltsauflösung Frühjahr – Warum die beste Jahreszeit?" },
-    { "service": "Haushaltsauflösung", "city": "Baden-Baden", "topic": "Haushaltsauflösung Herbst – Saisonale Besonderheiten" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Entrümpelung und Nachhaltigkeit – Wiederverwertung im Fokus" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Welche Gegenstände können gespendet werden?" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Nachhaltiger Umgang mit Hausrat – Spenden, Verkaufen, Recyceln" },
-    { "service": "Wohnungsauflösung", "city": "Rastatt", "topic": "CO2-neutral entrümpeln – Gibt es das?" },
-
-    { "service": "Entrümpelung", "city": "Rastatt", "topic": "Schwarze Schafe bei Entrümpelungsfirmen – So schützen Sie sich" },
-    { "service": "Entrümpelung", "city": "Karlsruhe", "topic": "Festpreisangebot Entrümpelung – Vorteile und Risiken" },
-    { "service": "Haushaltsauflösung", "city": "Rastatt", "topic": "Seriöse Haushaltsauflösung – 7 Merkmale einer guten Firma" },
-    { "service": "Wohnungsauflösung", "city": "Karlsruhe", "topic": "Wohnungsauflösung Betrug vermeiden – Tipps vom Experten" },
-    { "service": "Gewerberäumung", "city": "Karlsruhe", "topic": "Gewerberäumung Vertrag – Was muss drinstehen?" }
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Entrümpelung nach einem Todesfall – Was tun?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Messie-Wohnung räumen lassen – Ablauf und Kosten"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Gaggenau",
+      "topic": "Keller entrümpeln – Tipps und Kosten"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Haushaltsauflösung planen – Schritt für Schritt"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Was passiert mit verwertbaren Gegenständen bei der Haushaltsauflösung?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Haushaltsauflösung Kosten – Was beeinflusst den Preis?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Gaggenau",
+      "topic": "Haushaltsauflösung selbst machen oder Firma beauftragen?"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Rastatt",
+      "topic": "Wohnungsauflösung – Checkliste für einen reibungslosen Ablauf"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Wohnungsauflösung und Endreinigung aus einer Hand"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Wohnungsübergabe nach Auflösung – Worauf achten?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Bühl",
+      "topic": "Dachboden entrümpeln – So läuft es ab"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Ettlingen",
+      "topic": "Garage entrümpeln – Tipps für eine stressfreie Räumung"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Pforzheim",
+      "topic": "Was darf nicht in den Sperrmüll? – Entsorgungsregeln"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Bühl",
+      "topic": "Nachlassauflösung – Rechtliches und Praktisches"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Wie lange dauert eine Entrümpelung?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Entrümpelung mit Wertanrechnung – Lohnt sich das?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Gernsbach",
+      "topic": "Wie finde ich eine seriöse Entrümpelungsfirma?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Muggensturm",
+      "topic": "Entrümpelung vor dem Hausverkauf – Was beachten?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Durmersheim",
+      "topic": "Sperrmüll vs. Entrümpelung – Was ist der Unterschied?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Malsch",
+      "topic": "Entrümpelung bei Eigentümerwechsel – Ablauf und Kosten"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Sinzheim",
+      "topic": "Wer zahlt die Entrümpelung? – Mieter oder Vermieter"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Kuppenheim",
+      "topic": "Entrümpelung Altbau – Besonderheiten und Herausforderungen"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Achern",
+      "topic": "Entrümpelung im Winter – Tipps für die kalte Jahreszeit"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Stutensee",
+      "topic": "Wie viele Helfer braucht man für eine Entrümpelung?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rheinstetten",
+      "topic": "Entrümpelung nach Wasserschaden – So gehen Sie vor"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Bietigheim",
+      "topic": "Elektroschrott bei der Entrümpelung – Was ist zu beachten?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Iffezheim",
+      "topic": "Entrümpelung mit besenreiner Übergabe – Was bedeutet das?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rheinmünster",
+      "topic": "Günstig entrümpeln – Worauf sollte man achten?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Forbach",
+      "topic": "Entrümpelung ländlicher Anwesen – Besonderheiten"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Weisenbach",
+      "topic": "Schnelle Entrümpelung bei Zeitmangel – Ist das möglich?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Loffenau",
+      "topic": "Kleine Entrümpelung – Lohnt sich eine Firma?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Hügelsheim",
+      "topic": "Entrümpelung für Senioren – Diskret und einfühlsam"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Steinmauern",
+      "topic": "Was passiert mit alten Möbeln bei der Entrümpelung?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Oetigheim",
+      "topic": "Entrümpelung nach Scheidung – Neutrale Hilfe gefragt"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Elchesheim-Illingen",
+      "topic": "Entrümpelung ohne Aufzug – Kosten und Ablauf"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Au am Rhein",
+      "topic": "Entrümpelung im Frühjahr – Warum das die beste Zeit ist"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Bad Herrenalb",
+      "topic": "Entrümpelung Ferienhaus – Saisonale Räumung leicht gemacht"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Bad Wildbad",
+      "topic": "Entrümpelung nach Haushaltsauflösung – Was kommt danach?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Bischweier",
+      "topic": "Entrümpelung mit Sondermüll – Fachgerechte Entsorgung"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Großraumwohnung entrümpeln – Planung und Kosten"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Entrümpelung Luxuswohnung – Besondere Anforderungen"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Entrümpelung Reihenhaus – Typischer Ablauf"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Gaggenau",
+      "topic": "Entrümpelung bei Räumungsklage – Was ist zu tun?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Gernsbach",
+      "topic": "Haushaltsauflösung bei Umzug ins Pflegeheim"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Ettlingen",
+      "topic": "Haushaltsauflösung Checkliste – Nichts vergessen"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Pforzheim",
+      "topic": "Haushaltsauflösung Sommer vs. Winter – Unterschiede"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Achern",
+      "topic": "Haushaltsauflösung bei Erbschaft – Wer ist zuständig?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Stutensee",
+      "topic": "Antike Möbel bei Haushaltsauflösung – Was ist wertvoll?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rheinstetten",
+      "topic": "Haushaltsauflösung mit Wertanrechnung – So funktioniert es"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Muggensturm",
+      "topic": "Wie schnell kann eine Haushaltsauflösung durchgeführt werden?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Durmersheim",
+      "topic": "Haushaltsauflösung Kosten senken – Praktische Tipps"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Sinzheim",
+      "topic": "Bücher und Bibliotheken bei der Haushaltsauflösung"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Kuppenheim",
+      "topic": "Haushaltsauflösung emotional bewältigen – Tipps für Angehörige"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Bietigheim",
+      "topic": "Was gehört in einen Haushaltsauflösungsvertrag?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Großer Haushalt auflösen – Mehrfamilienhaus und Villen"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Haushaltsauflösung diskret – Wenn Privatsphäre wichtig ist"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Haushaltsauflösung in 48 Stunden – Geht das?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Gaggenau",
+      "topic": "Gartengeräte und Außenmöbel bei der Haushaltsauflösung"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Bühl",
+      "topic": "Haushaltsauflösung Schritt für Schritt – Der komplette Leitfaden"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Gaggenau",
+      "topic": "Wohnungsauflösung nach Tod – Fristen und Pflichten"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Bühl",
+      "topic": "Wohnungsauflösung Mietwohnung – Worauf Mieter achten müssen"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Ettlingen",
+      "topic": "Wohnungsauflösung Kosten sparen – So geht's"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Pforzheim",
+      "topic": "Wohnungsauflösung beim Auszug – Alles auf einmal erledigen"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Gernsbach",
+      "topic": "Möbel verkaufen oder entsorgen? – Tipps bei Wohnungsauflösung"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Muggensturm",
+      "topic": "Wohnungsauflösung Studentenwohnung – Schnell und günstig"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Achern",
+      "topic": "Wohnungsauflösung mit Renovierung kombinieren"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Stutensee",
+      "topic": "Wohnungsauflösung bei Zwangsräumung – Ablauf und Kosten"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Rheinstetten",
+      "topic": "Wohnungsauflösung im Erdgeschoss vs. Dachgeschoss"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Sinzheim",
+      "topic": "Was bleibt in der Wohnung? – Was muss weg bei Auflösung?"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Wohnungsauflösung Großstadt – Besonderheiten und Parkprobleme"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Rastatt",
+      "topic": "Wohnungsauflösung und Kautionsrückgabe – Was hängt zusammen?"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Rastatt",
+      "topic": "Gewerberäumung – Was ist zu beachten?"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Karlsruhe",
+      "topic": "Büroauflösung – Ablauf und Kosten in Karlsruhe"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Baden-Baden",
+      "topic": "Gewerberäumung nach Insolvenz – Wer ist verantwortlich?"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Gaggenau",
+      "topic": "Ladenlokal räumen lassen – Tipps für Gewerbetreibende"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Bühl",
+      "topic": "Gewerberäumung Lager und Halle – Kosten und Ablauf"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Ettlingen",
+      "topic": "Gewerberäumung Gastronomie – Küche und Mobiliar entsorgen"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Pforzheim",
+      "topic": "Praxisauflösung – Arzt und Zahnarzt Praxis räumen"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Karlsruhe",
+      "topic": "IT-Schrott bei Gewerberäumung – Datenschutz beachten"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Rastatt",
+      "topic": "Gewerberäumung über Nacht – Ist das möglich?"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Baden-Baden",
+      "topic": "Hotelzimmer und Pensionen räumen lassen"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Keller entrümpeln vor Wintereinbruch – Checkliste"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Entrümpelung nach Brandschaden – Spezielle Herausforderungen"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Entrümpelung Denkmalschutz-Gebäude – Was ist erlaubt?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Haushaltsauflösung organisieren – Tipps für Erben"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Schmuck und Wertsachen bei Haushaltsauflösung – Was tun?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Haushaltsauflösung Schätzung – Wann lohnt sich ein Gutachter?"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Rastatt",
+      "topic": "Wohnungsauflösung im Winter – Besonderheiten"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Wohnungsauflösung Altbau vs. Neubau – Unterschiede"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Wohnungsauflösung mit Hausmeisterservice kombinieren"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "5 Fehler bei der Entrümpelung – Und wie man sie vermeidet"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Entrümpelung Kosten steuerlich absetzen – Geht das?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Entrümpelung nach Hochwasser – Schnelle Hilfe gefragt"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Gaggenau",
+      "topic": "Wie wähle ich das richtige Entrümpelungsunternehmen?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Haushaltsauflösung Senioren – Behutsam und respektvoll"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Haushalt auflösen bei Umzug ins Ausland"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Gaggenau",
+      "topic": "Hausrat spenden statt entsorgen – Optionen in der Region"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Bühl",
+      "topic": "Wohnungsauflösung und Schönheitsreparaturen – Was gehört dazu?"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Ettlingen",
+      "topic": "Wohnungsauflösung Zeitplan – Wie viel Zeit einplanen?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Sperrmülltermin verpasst – Was tun?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Entrümpelung Wochenende – Gibt es Notfallservices?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Entrümpelung Erfahrungen – Worauf Kunden achten"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Haushaltsauflösung Angebote vergleichen – So geht's richtig"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Haushaltsauflösung Massivholzmöbel – Wert erhalten"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Rastatt",
+      "topic": "Wohnungsauflösung Fotos machen – Warum das wichtig ist"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Karlsruhe",
+      "topic": "Gewerberäumung Fristen – Wie schnell muss geräumt werden?"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Rastatt",
+      "topic": "Gewerberäumung günstig – Tipps für kleine Unternehmen"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Nachbarschaftshilfe vs. Profi-Entrümpelung – Ein Vergleich"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Entrümpelung Mehrfamilienhaus – Koordination und Kosten"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Vintage und Antiquitäten bei der Entrümpelung – Richtig bewerten"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Haushaltsauflösung Haustiere – Was tun mit Zubehör?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Komplette Haushaltsauflösung in einem Tag – Realistisch?"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Wohnungsauflösung günstigster Anbieter – Vorsicht vor Fallen"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Wohnungsauflösung Luxussegment – Besondere Anforderungen"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Baden-Baden",
+      "topic": "Gewerberäumung Einzelhandel – Tipps für Ladenbesitzer"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Gaggenau",
+      "topic": "Werkstatt und Werkzeuge bei Gewerberäumung – Wert und Entsorgung"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Entrümpelung Frühjahrsputz – Den großen Hausputz professionell angehen"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Entrümpelung nach dem Sommer – Garten und Keller"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Baden-Baden",
+      "topic": "Jahresendräumung – Entrümpelung zum Jahreswechsel"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Haushaltsauflösung Frühjahr – Warum die beste Jahreszeit?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Baden-Baden",
+      "topic": "Haushaltsauflösung Herbst – Saisonale Besonderheiten"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Entrümpelung und Nachhaltigkeit – Wiederverwertung im Fokus"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Welche Gegenstände können gespendet werden?"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Nachhaltiger Umgang mit Hausrat – Spenden, Verkaufen, Recyceln"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Rastatt",
+      "topic": "CO2-neutral entrümpeln – Gibt es das?"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Rastatt",
+      "topic": "Schwarze Schafe bei Entrümpelungsfirmen – So schützen Sie sich"
+    },
+    {
+      "service": "Entrümpelung",
+      "city": "Karlsruhe",
+      "topic": "Festpreisangebot Entrümpelung – Vorteile und Risiken"
+    },
+    {
+      "service": "Haushaltsauflösung",
+      "city": "Rastatt",
+      "topic": "Seriöse Haushaltsauflösung – 7 Merkmale einer guten Firma"
+    },
+    {
+      "service": "Wohnungsauflösung",
+      "city": "Karlsruhe",
+      "topic": "Wohnungsauflösung Betrug vermeiden – Tipps vom Experten"
+    },
+    {
+      "service": "Gewerberäumung",
+      "city": "Karlsruhe",
+      "topic": "Gewerberäumung Vertrag – Was muss drinstehen?"
+    }
   ],
-  "completed": []
+  "completed": [
+    {
+      "topic": "Wann ist der beste Zeitpunkt für eine Entrümpelung?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-06T03:12:52.533Z"
+    }
+  ]
 }
