@@ -21,6 +21,16 @@
   from = "/blog"
   to = "/blog.html"
   status = 200
+
+[[redirects]]
+  from = "/impressum"
+  to = "/impressum.html"
+  status = 200
+
+[[redirects]]
+  from = "/datenschutz"
+  to = "/datenschutz.html"
+  status = 200
 [[redirects]]
   from = "/service-page/fensterreinigung"
   to = "/410.html"
