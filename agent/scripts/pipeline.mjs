@@ -426,9 +426,9 @@ function paragraphs(text) {
 async function main() {
   console.log('🚀  PSS Content Pipeline gestartet\n');
 
-  // Parse CLI args for manual run
   const args = process.argv.slice(2);
   let service, city, topic;
+  let markDone = null;
 
   if (args.includes('--topic')) {
     topic   = args[args.indexOf('--topic') + 1];
@@ -436,51 +436,44 @@ async function main() {
     service = args[args.indexOf('--service') + 1] || 'Entrümpelung';
     console.log(`📌  Manueller Modus: ${service} · ${city} · "${topic}"`);
   } else {
-    // Auto mode: pick from queue
     const next = getNextTopic();
-    if (!next) process.exit(0);
-    ({ topic: { topic, city, service }, data: queueData, topicsPath: queuePath } = next);
+    if (!next) {
+      console.log('ℹ️  Queue ist leer.');
+      process.exit(0);
+    }
+    const { topic: topicObj, data: queueData, topicsPath: queuePath } = next;
+    topic   = topicObj.topic;
+    city    = topicObj.city;
+    service = topicObj.service;
+    markDone = () => markTopicDone({ topic, city, service }, queueData, queuePath);
     console.log(`📋  Queue-Modus: ${service} · ${city} · "${topic}"`);
-
-    // Mark as done AFTER successful generation (below)
-    var _markDone = () => markTopicDone({ topic, city, service }, queueData, queuePath);
   }
 
   const slug = generateSlug(service, city, topic);
   const outputPath = join(ROOT, 'blog', `${slug}.html`);
 
-  // Skip if already exists
   if (existsSync(outputPath)) {
     console.log(`⏭️  Artikel existiert bereits: ${outputPath}`);
-    if (_markDone) _markDone();
+    if (markDone) markDone();
     process.exit(0);
   }
 
   try {
-    // Agent 1 + Agent 2 parallel
-    const [research, image] = await Promise.all([
-      researchAgent(topic, city, service),
-      imageAgent(
-        ['clutter', 'professional cleaning', 'home organization'], // temp default
-        city, service
-      )
-    ]);
+    // Agent 1 (Research) — zuerst ausfuehren um Bildsuche-Begriffe zu erhalten
+    const research = await researchAgent(topic, city, service);
 
-    // Update image search with research-provided terms
-    const betterImage = await imageAgent(research.bild_suchbegriffe || [], city, service);
+    // Agent 2 (Images) — mit research-basierten Suchbegriffen
+    const image = await imageAgent(research.bild_suchbegriffe || [], city, service);
 
-    // Agent 3
-    const html = await writingAgent(topic, city, service, research, betterImage, slug);
+    // Agent 3 (Writing)
+    const html = await writingAgent(topic, city, service, research, image, slug);
 
-    // Save article
     writeFileSync(outputPath, html, 'utf8');
     console.log(`\n💾  Gespeichert: blog/${slug}.html`);
 
-    // Update sitemap
     updateSitemap(slug);
 
-    // Mark topic as done
-    if (_markDone) _markDone();
+    if (markDone) markDone();
 
     console.log('\n🎉  Pipeline erfolgreich abgeschlossen!');
     console.log(`   URL: ${SITE}/blog/${slug}.html\n`);
