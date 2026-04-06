@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direktory-Einträge | PerfektSauberService</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+
+  .header {
+    background: linear-gradient(135deg, #1e3a5f, #164e3a);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #22c55e;
+  }
+  .header h1 { font-size: 1.5rem; color: #fff; }
+  .header span { font-size: 0.85rem; color: #94a3b8; }
+
+  .progress-bar-wrap {
+    background: #1e293b;
+    padding: 20px 32px;
+    border-bottom: 1px solid #334155;
+  }
+  .progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+  .progress-label span { color: #22c55e; font-weight: bold; font-size: 1.1rem; }
+  .bar-bg { background: #334155; border-radius: 99px; height: 14px; overflow: hidden; }
+  .bar-fill { background: linear-gradient(90deg, #22c55e, #16a34a); height: 100%; border-radius: 99px; transition: width 0.4s; }
+
+  .container { display: grid; grid-template-columns: 1fr 340px; gap: 24px; padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+
+  /* BUSINESS CARD */
+  .business-card {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #334155;
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+  }
+  .business-card h3 { color: #22c55e; margin-bottom: 16px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+  .field-group { margin-bottom: 12px; }
+  .field-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .field-value {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 0.88rem;
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    word-break: break-word;
+  }
+  .field-value:hover { border-color: #22c55e; background: #0d1f10; }
+  .copy-hint { font-size: 0.7rem; color: #64748b; margin-top: 4px; }
+  .copied-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #22c55e;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .copied-toast.show { opacity: 1; }
+
+  /* DIRECTORIES LIST */
+  .directories { }
+  .section-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #64748b;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  .dir-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+  .dir-card:hover { border-color: #475569; }
+  .dir-card.done { border-color: #22c55e; background: #0d2018; opacity: 0.8; }
+  .dir-card.done .dir-name { text-decoration: line-through; color: #64748b; }
+
+  .dir-check {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    accent-color: #22c55e;
+    cursor: pointer;
+  }
+  .dir-info { flex: 1; }
+  .dir-name { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; margin-bottom: 2px; }
+  .dir-meta { font-size: 0.78rem; color: #64748b; }
+  .dir-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tag-free { background: #14532d; color: #4ade80; }
+  .tag-paid { background: #7c2d12; color: #fb923c; }
+  .tag-wichtig { background: #1e3a8a; color: #60a5fa; }
+  .tag-einfach { background: #1e293b; color: #94a3b8; border: 1px solid #334155; }
+
+  .open-btn {
+    background: #22c55e;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .open-btn:hover { background: #16a34a; }
+  .dir-card.done .open-btn { background: #334155; color: #64748b; }
+
+  .filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover { border-color: #22c55e; color: #22c55e; background: #0d2018; }
+
+  .reset-btn {
+    margin-top: 16px;
+    background: #7c2d12;
+    color: #fca5a5;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .reset-btn:hover { background: #991b1b; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Direktory-Einträge — PerfektSauberService</h1>
+  <span>Klicke auf ein Feld um es zu kopieren · Hake ab wenn fertig</span>
+</div>
+
+<div class="progress-bar-wrap">
+  <div class="progress-label">
+    <div>Fortschritt</div>
+    <span id="progress-text">0 / 50 erledigt</span>
+  </div>
+  <div class="bar-bg">
+    <div class="bar-fill" id="bar-fill" style="width:0%"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- DIRECTORIES -->
+  <div class="directories">
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterDirs('all', this)">Alle (50)</button>
+      <button class="filter-btn" onclick="filterDirs('offen', this)">Offen</button>
+      <button class="filter-btn" onclick="filterDirs('done', this)">Erledigt</button>
+      <button class="filter-btn" onclick="filterDirs('wichtig', this)">Wichtig</button>
+      <button class="filter-btn" onclick="filterDirs('free', this)">Kostenlos</button>
+    </div>
+
+    <div id="dir-list"></div>
+    <button class="reset-btn" onclick="resetAll()">Alle Fortschritte zurücksetzen</button>
+  </div>
+
+  <!-- BUSINESS CARD -->
+  <div>
+    <div class="business-card">
+      <h3>Firmendaten — zum Kopieren</h3>
+
+      <div class="field-group">
+        <div class="field-label">Firmenname</div>
+        <div class="field-value" onclick="copyText('PerfektSauberService')">PerfektSauberService</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Inhaber</div>
+        <div class="field-value" onclick="copyText('Laura Craciun')">Laura Craciun</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Adresse</div>
+        <div class="field-value" onclick="copyText('Reutstraße 9, 76597 Loffenau')">Reutstraße 9, 76597 Loffenau</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Telefon</div>
+        <div class="field-value" onclick="copyText('+49 163 9087197')">+49 163 9087197</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">E-Mail</div>
+        <div class="field-value" onclick="copyText('kontact@perfektsauberservice.com')">kontact@perfektsauberservice.com</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Website</div>
+        <div class="field-value" onclick="copyText('https://perfektsauberservice.com')">https://perfektsauberservice.com</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">PLZ / Stadt</div>
+        <div class="field-value" onclick="copyText('76597 Loffenau')">76597 Loffenau</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Branche / Kategorie</div>
+        <div class="field-value" onclick="copyText('Entrümpelungsservice, Haushaltsauflösung, Gewerberäumung')">Entrümpelungsservice, Haushaltsauflösung, Gewerberäumung</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Kurzbeschreibung (DE)</div>
+        <div class="field-value" onclick="copyText('PerfektSauberService – Ihr zuverlässiger Partner für Entrümpelung, Haushaltsauflösung und Gewerberäumung in der Region Rastatt, Baden-Baden und Karlsruhe. Schnell, sauber, fair.')">PerfektSauberService – Ihr zuverlässiger Partner für Entrümpelung, Haushaltsauflösung und Gewerberäumung in der Region Rastatt, Baden-Baden und Karlsruhe. Schnell, sauber, fair.</div>
+        <div class="copy-hint">Klicken zum Kopieren</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Langbeschreibung (DE)</div>
+        <div class="field-value" onclick="copyText('PerfektSauberService bietet professionelle Entrümpelung, Haushaltsauflösung, Wohnungsauflösung und Gewerberäumung in der Region Rastatt, Baden-Baden, Karlsruhe und Pforzheim. Wir arbeiten zuverlässig, diskret und zu fairen Preisen. Kostenlose Besichtigung und schnelle Terminvergabe. Rufen Sie uns an: +49 163 9087197.')">PerfektSauberService bietet professionelle Entrümpelung, Haushaltsauflösung, Wohnungsauflösung und Gewerberäumung in der Region Rastatt, Baden-Baden, Karlsruhe und Pforzheim. Wir arbeiten zuverlässig, diskret und zu fairen Preisen. Kostenlose Besichtigung und schnelle Terminvergabe. Rufen Sie uns an: +49 163 9087197.</div>
+        <div class="copy-hint">Klicken zum Kopieren</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Öffnungszeiten</div>
+        <div class="field-value" onclick="copyText('Mo–Fr: 08:00–18:00, Sa: 09:00–14:00')">Mo–Fr: 08:00–18:00, Sa: 09:00–14:00</div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-label">Einzugsgebiet</div>
+        <div class="field-value" onclick="copyText('Rastatt, Baden-Baden, Karlsruhe, Pforzheim, Bühl, Ettlingen, Gaggenau, Gernsbach und Umgebung')">Rastatt, Baden-Baden, Karlsruhe, Pforzheim, Bühl, Ettlingen, Gaggenau, Gernsbach und Umgebung</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="copied-toast" id="toast">Kopiert!</div>
+
+<script>
+const directories = [
+  { id:1, name:"Gelbe Seiten", url:"https://www.gelbeseiten.de/meineseite/eintragen", meta:"Größtes deutsches Branchenverzeichnis", tags:["wichtig","free"] },
+  { id:2, name:"Das Örtliche", url:"https://www.dasoertliche.de/eintrag-kostenlos", meta:"Telefonbuch & Branchenbuch", tags:["wichtig","free"] },
+  { id:3, name:"11880.com", url:"https://www.11880.com/eintragen", meta:"Großes Branchenportal Deutschland", tags:["wichtig","free"] },
+  { id:4, name:"Cylex Deutschland", url:"https://www.cylex.de/firma-eintragen.html", meta:"Branchenverzeichnis mit Bewertungen", tags:["wichtig","free"] },
+  { id:5, name:"MeineStadt.de", url:"https://www.meinestadt.de/eintrag-eintragen", meta:"Lokale Stadtportale", tags:["wichtig","free"] },
+  { id:6, name:"Yelp Deutschland", url:"https://biz.yelp.de/signup", meta:"Bewertungsplattform mit Firmenprofil", tags:["wichtig","free"] },
+  { id:7, name:"GoLocal.de", url:"https://www.golocal.de/anbieter/registrierung", meta:"Lokales Branchenverzeichnis + Bewertungen", tags:["wichtig","free"] },
+  { id:8, name:"Bing Places", url:"https://www.bingplaces.com", meta:"Microsoft Karten & Suche", tags:["wichtig","free"] },
+  { id:9, name:"Xing (Unternehmensprofil)", url:"https://www.xing.com/pages/neue-seite", meta:"Business-Netzwerk", tags:["free"] },
+  { id:10, name:"MyHammer", url:"https://www.myhammer.de/handwerker/registrierung", meta:"Handwerker-Auftragsplattform", tags:["wichtig","free"] },
+  { id:11, name:"Wer liefert was", url:"https://www.wlw.de/de/eintrag-erstellen", meta:"B2B Lieferantenverzeichnis", tags:["free"] },
+  { id:12, name:"Kennst du einen?", url:"https://www.kennstdueinen.de/eintragen", meta:"Empfehlungsportal für Handwerker", tags:["free"] },
+  { id:13, name:"Handwerker.de", url:"https://www.handwerker.de/registrierung", meta:"Handwerkerportal", tags:["free"] },
+  { id:14, name:"Locanto", url:"https://www.locanto.de/user/register", meta:"Kleinanzeigen & Dienstleistungen", tags:["free"] },
+  { id:15, name:"Regiolist", url:"https://www.regiolist.de/eintrag-erfassen", meta:"Regionales Branchenverzeichnis", tags:["free"] },
+  { id:16, name:"Hot-Frog Deutschland", url:"https://www.hotfrog.de/AddBusiness.aspx", meta:"Internationales Branchenverzeichnis", tags:["free"] },
+  { id:17, name:"Stadtbranchenbuch.com", url:"https://www.stadtbranchenbuch.com/eintragen", meta:"Lokales Branchenbuch", tags:["free"] },
+  { id:18, name:"Branchen-Info.net", url:"https://www.branchen-info.net/eintragen.php", meta:"Branchenverzeichnis", tags:["free"] },
+  { id:19, name:"Mister What", url:"https://de.misterwhat.com/eintragen", meta:"Lokales Unternehmensverzeichnis", tags:["free"] },
+  { id:20, name:"Kompass.com", url:"https://de.kompass.com/join-us", meta:"Internationales B2B-Verzeichnis", tags:["free"] },
+  { id:21, name:"Tupalo.de", url:"https://tupalo.com/de/sign-up", meta:"Restaurante & Dienstleister Bewertungen", tags:["free"] },
+  { id:22, name:"n-ost.com / Trusted Shops", url:"https://www.trustedshops.de/shopbewerbung", meta:"Vertrauenssiegel Deutschland", tags:["free"] },
+  { id:23, name:"Dienstleister.de", url:"https://www.dienstleister.de/eintragen", meta:"Dienstleister-Verzeichnis", tags:["free"] },
+  { id:24, name:"Umzug.de Verzeichnis", url:"https://www.umzug.de/partner-werden", meta:"Umzugs- und Räumungspartner", tags:["free"] },
+  { id:25, name:"Blauarbeit.de", url:"https://www.blauarbeit.de/handwerker-registrierung", meta:"Handwerker Auftragsportal", tags:["free"] },
+  { id:26, name:"Heimwerker.de", url:"https://www.heimwerker.de/handwerker-eintragen", meta:"DIY & Handwerkerportal", tags:["free"] },
+  { id:27, name:"Was-Bin-Ich.de", url:"https://www.was-bin-ich.de/eintragen", meta:"Branchenverzeichnis", tags:["free"] },
+  { id:28, name:"Anbieter.de", url:"https://www.anbieter.de/registrierung", meta:"Unternehmensverzeichnis", tags:["free"] },
+  { id:29, name:"Web.de Branchenverzeichnis", url:"https://branchenbuch.web.de/eintragen", meta:"Web.de Lokale Einträge", tags:["free"] },
+  { id:30, name:"GMX Branchenverzeichnis", url:"https://branchenbuch.gmx.net/eintragen", meta:"GMX Lokale Einträge", tags:["free"] },
+  { id:31, name:"1A-Branchenbuch", url:"https://www.1a-branchenbuch.de/eintragen", meta:"Branchenverzeichnis", tags:["free"] },
+  { id:32, name:"Deutsches Branchenbuch", url:"https://www.deutsches-branchenbuch.de/eintragen", meta:"Nationales Branchenverzeichnis", tags:["free"] },
+  { id:33, name:"Firmen.de", url:"https://www.firmen.de/eintragen", meta:"Firmenverzeichnis", tags:["free"] },
+  { id:34, name:"Unternehmensregister", url:"https://www.unternehmensregister.de", meta:"Amtliches Register (Pflicht für GmbH etc.)", tags:["einfach"] },
+  { id:35, name:"Proven Expert", url:"https://www.provenexpert.com/de-de/registrierung", meta:"Bewertungsplattform mit Firmenprofil", tags:["free"] },
+  { id:36, name:"Trustpilot Deutschland", url:"https://de.business.trustpilot.com/signup", meta:"Bewertungsplattform International", tags:["wichtig","free"] },
+  { id:37, name:"Foursquare für Businesses", url:"https://foursquare.com/add-venue", meta:"Location-Plattform", tags:["free"] },
+  { id:38, name:"Brownbook.net", url:"https://www.brownbook.net/add-business", meta:"Internationales Verzeichnis", tags:["free"] },
+  { id:39, name:"Europages.de", url:"https://www.europages.de/eintrag-erstellen", meta:"Europäisches B2B-Verzeichnis", tags:["free"] },
+  { id:40, name:"Yalwa Deutschland", url:"https://www.yalwa.de/eintragen", meta:"Lokales Verzeichnis", tags:["free"] },
+  { id:41, name:"Qype (via Yelp)", url:"https://biz.yelp.de/signup", meta:"Fusion mit Yelp — gleicher Account", tags:["free"] },
+  { id:42, name:"Erento.com", url:"https://www.erento.com/anbieter-werden", meta:"Vermiet- & Dienstleistungsportal", tags:["free"] },
+  { id:43, name:"Kreis Rastatt Gewerbeverzeichnis", url:"https://www.landkreis-rastatt.de/wirtschaft", meta:"Lokale Kammer / Landkreis-Seite", tags:["wichtig","free"] },
+  { id:44, name:"IHK Karlsruhe Mitglieder", url:"https://www.ihk.de/karlsruhe", meta:"IHK-Branchenverzeichnis (nach Anmeldung)", tags:["free"] },
+  { id:45, name:"Handwerkskammer Karlsruhe", url:"https://www.hwk-karlsruhe.de", meta:"Handwerkskammer Betriebssuche", tags:["free"] },
+  { id:46, name:"Werbeagentur-Verzeichnis.de", url:"https://www.werbeagentur-verzeichnis.de", meta:"Dienstleister-Verzeichnis", tags:["free"] },
+  { id:47, name:"Aroundme (App)", url:"https://www.aroundme.com/listing", meta:"Mobile Lokale Suche", tags:["free"] },
+  { id:48, name:"Streetdirectory Germany", url:"https://www.streetdirectory.com/businessfinder/add_business", meta:"Kartendienst", tags:["free"] },
+  { id:49, name:"Wer kennt den BESTEN", url:"https://www.wer-kennt-den-besten.de/registrierung", meta:"Empfehlungsplattform Deutschland", tags:["free"] },
+  { id:50, name:"Facebook Business Page", url:"https://www.facebook.com/pages/create", meta:"Facebook Unternehmensseite (wichtig für Ads)", tags:["wichtig","free"] },
+];
+
+let activeFilter = 'all';
+
+function getState() {
+  const raw = localStorage.getItem('dir-done');
+  return raw ? JSON.parse(raw) : {};
+}
+function setState(state) {
+  localStorage.setItem('dir-done', JSON.stringify(state));
+}
+
+function updateProgress() {
+  const state = getState();
+  const done = Object.values(state).filter(Boolean).length;
+  const total = directories.length;
+  document.getElementById('progress-text').textContent = `${done} / ${total} erledigt`;
+  document.getElementById('bar-fill').style.width = `${(done/total)*100}%`;
+}
+
+function renderDirs() {
+  const state = getState();
+  const list = document.getElementById('dir-list');
+  list.innerHTML = '';
+
+  let filtered = directories;
+  if (activeFilter === 'offen') filtered = directories.filter(d => !state[d.id]);
+  else if (activeFilter === 'done') filtered = directories.filter(d => state[d.id]);
+  else if (activeFilter === 'wichtig') filtered = directories.filter(d => d.tags.includes('wichtig'));
+  else if (activeFilter === 'free') filtered = directories.filter(d => d.tags.includes('free'));
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<p style="color:#64748b;padding:20px;text-align:center;">Keine Einträge gefunden.</p>';
+    return;
+  }
+
+  filtered.forEach(d => {
+    const done = state[d.id];
+    const tagHtml = d.tags.map(t => {
+      const cls = t === 'free' ? 'tag-free' : t === 'paid' ? 'tag-paid' : t === 'wichtig' ? 'tag-wichtig' : 'tag-einfach';
+      const label = t === 'free' ? 'Kostenlos' : t === 'paid' ? 'Kostenpflichtig' : t === 'wichtig' ? 'Wichtig' : t;
+      return `<span class="tag ${cls}">${label}</span>`;
+    }).join('');
+
+    const card = document.createElement('div');
+    card.className = `dir-card${done ? ' done' : ''}`;
+    card.id = `dir-${d.id}`;
+    card.innerHTML = `
+      <input type="checkbox" class="dir-check" ${done ? 'checked' : ''} onchange="toggleDone(${d.id}, this)">
+      <div class="dir-info">
+        <div class="dir-name">${d.id}. ${d.name}</div>
+        <div class="dir-meta">${d.meta}</div>
+        <div class="dir-tags">${tagHtml}</div>
+      </div>
+      <a href="${d.url}" target="_blank" class="open-btn">Öffnen →</a>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function toggleDone(id, checkbox) {
+  const state = getState();
+  state[id] = checkbox.checked;
+  setState(state);
+  updateProgress();
+  renderDirs();
+}
+
+function filterDirs(filter, btn) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDirs();
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  });
+}
+
+function resetAll() {
+  if (confirm('Alle Fortschritte zurücksetzen?')) {
+    localStorage.removeItem('dir-done');
+    updateProgress();
+    renderDirs();
+  }
+}
+
+// Init
+renderDirs();
+updateProgress();
+</script>
+
+</body>
+</html>
