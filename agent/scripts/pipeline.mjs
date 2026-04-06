@@ -131,6 +131,11 @@ async function researchAgent(topic, city, service) {
   console.log('   [DEBUG] Calling Anthropic API...');
   let res;
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      console.log('   [DEBUG] Timeout nach 60s - Verbindung abgebrochen');
+      controller.abort();
+    }, 60000);
     res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -138,10 +143,12 @@ async function researchAgent(topic, city, service) {
         'x-api-key': ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      signal: controller.signal
     });
+    clearTimeout(timeout);
   } catch (fetchErr) {
-    throw new Error('Network error: ' + fetchErr.message);
+    throw new Error('Network/Fetch error: ' + fetchErr.message + ' | type: ' + fetchErr.name);
   }
   console.log('   [DEBUG] HTTP Status: ' + res.status);
 
