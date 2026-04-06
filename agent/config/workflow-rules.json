@@ -1,0 +1,50 @@
+{
+  "maxNewArticlesPerRun": 1,
+  "maxUpdatedFilesPerRun": 3,
+  "maxNewLinksPerFile": 2,
+  "updateScopes": [
+    "blog",
+    "blog-index"
+  ],
+  "imageApprovalRequired": true,
+  "preferredImageTypes": [
+    "city-background",
+    "before-after",
+    "team",
+    "van",
+    "room"
+  ],
+  "rejectIfDuplicateStatusIn": [
+    "reject"
+  ],
+  "publishAllowedStatuses": [
+    "create new",
+    "update existing",
+    "merge with existing"
+  ],
+  "customerFacingCopyOnly": true,
+  "copyStyleRule": "All output must read like final customer-facing website copy, never like internal planning notes, SEO notes, wireframe labels, checklists, or project instructions.",
+  "rewriteRule": "Replace abstract or internal phrasing with natural client-facing language, concrete service benefits, and clear business wording.",
+  "forbiddenInternalPhrasing": [
+    "direkt sichtbar",
+    "eingebunden",
+    "im Fokus",
+    "1 Ziel",
+    "2 Beispiele",
+    "klar und sofort verständlich",
+    "können wir danach bauen",
+    "core services",
+    "trust examples",
+    "planning notes",
+    "project notes",
+    "wireframe text"
+  ],
+  "requiredSellingPoints": [
+    "kostenlose Besichtigung",
+    "diskret",
+    "nachhaltig",
+    "kurzfristige Termine",
+    "Festpreisangebot",
+    "besenreine Übergabe"
+  ]
+}

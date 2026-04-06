@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfekt Sauber Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+  <div class="shell app" id="app">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="logo-badge" style="width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,#17304f,#2f6bff);color:#fff;">P</div>
+        <div>
+          <div style="font-weight:900">Perfekt Sauber</div>
+          <div class="note">Admin Dashboard</div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <a class="active" href="#overview">🏠 Dashboard</a>
+        <a href="#homepage">✨ Homepage</a>
+        <a href="#projects">📁 Projekte / Archiv</a>
+        <a href="#leads">📨 Leads / Cereri</a>
+        <a href="#photos">🖼️ Poze</a>
+        <a href="#users">👥 Utilizatori</a>
+        <a href="#company">🏢 Date firmă</a>
+        <a href="agent.html">🤖 Auto Agent</a>
+        <a href="#seo">🔎 SEO / Google</a>
+        <a href="#settings">⚙️ Setări</a>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="kicker">Status</div>
+        <div style="font-weight:900;margin-top:6px">Dashboard pregătit</div>
+        <div class="note" style="margin-top:8px">Poți intra din /dashboard/login.html. Pentru multi-admin real, activezi Identity în Netlify.</div>
+        <div style="height:12px"></div>
+        <a class="btn btn-soft" href="../index.html" style="width:100%">Vezi homepage</a>
+        <div style="height:10px"></div>
+        <a class="btn btn-soft" href="./README-dashboard.txt" style="width:100%">Setup auth</a>
+        <div style="height:10px"></div>
+        <a class="btn btn-soft" href="./login.html" id="logoutBtn" style="width:100%">Logout</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="hero" id="overview">
+        <div class="hero-main">
+          <div class="kicker" style="color:#dbeafe">Panou principal</div>
+          <div style="font-size:2.2rem;font-weight:900;line-height:1.08;margin-top:10px;max-width:700px;">
+            Controlezi homepage-ul, proiectele și echipa dintr-un singur loc.
+          </div>
+          <div style="margin-top:14px;max-width:680px;line-height:1.7;opacity:.94;">
+            Gândit pentru Perfekt Sauber Service: adaugi lucrări, muți proiecte în arhivă, schimbi poze pe HOME, urmărești cereri și gestionezi utilizatori multipli.
+          </div>
+          <div style="height:18px"></div>
+          <div class="actions">
+            <button class="btn btn-primary">+ Adaugă lucrare</button>
+            <button class="btn btn-green">+ Invită admin</button>
+            <a class="btn btn-soft" href="agent.html" style="text-decoration:none">Deschide agentul</a>
+            <button class="btn btn-soft">Vezi site live</button>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="mini-card">
+            <div class="kicker">Echipa</div>
+            <div style="font-size:1.5rem;font-weight:900;margin-top:8px">2 admini activi</div>
+            <div class="note" style="margin-top:6px">Owner, Admin, Editor — roluri separate pentru lucru mai sigur.</div>
+          </div>
+          <div class="mini-card">
+            <div class="kicker">Site</div>
+            <div style="font-size:1.5rem;font-weight:900;margin-top:8px">Homepage + Dashboard + Preisrechner + Auto Agent</div>
+            <div class="note" style="margin-top:6px">Dashboardul este deja integrat în arhivă la ruta /dashboard/.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="stat blue">
+          <div class="note">Lucrări pe HOME</div>
+          <div class="value">3</div>
+          <div class="badge blue">active acum</div>
+        </div>
+        <div class="stat green">
+          <div class="note">Proiecte în arhivă</div>
+          <div class="value">12</div>
+          <div class="badge green">gata publicate</div>
+        </div>
+        <div class="stat amber">
+          <div class="note">Cereri noi</div>
+          <div class="value">5</div>
+          <div class="badge amber">necontactate</div>
+        </div>
+        <div class="stat pink">
+          <div class="note">Utilizatori dashboard</div>
+          <div class="value">4</div>
+          <div class="badge pink">1 owner, 1 admin</div>
+        </div>
+      </section>
+
+      <section class="cols">
+        <div class="panel">
+          <div class="kicker">Acțiuni rapide</div>
+          <h2 style="margin:.35rem 0 0">Ce faci cel mai des</h2>
+          <div class="note" style="margin-top:6px">Butonul real va fi legat ulterior la formulare și salvare în sistem.</div>
+          <div style="height:16px"></div>
+          <div class="quick-grid">
+            <div class="quick-card primary">Adaugă lucrare nouă</div>
+            <div class="quick-card">Mută lucrare în arhivă</div>
+            <div class="quick-card green">Schimbă poze pe HOME</div>
+            <div class="quick-card">Actualizează date contact</div>
+          </div>
+        </div>
+
+        <div class="panel" id="homepage">
+          <div class="kicker">Homepage acum</div>
+          <h2 style="margin:.35rem 0 0">Blocuri active</h2>
+          <div class="stack" style="margin-top:16px">
+            <div class="row-card">
+              <div><strong>Hero</strong><div class="note">Titlu principal, buton WhatsApp, poză cover</div></div>
+              <button class="btn btn-soft">Edit</button>
+            </div>
+            <div class="row-card">
+              <div><strong>Servicii</strong><div class="note">Entrümpelung, Haushaltsauflösung, Reinigung</div></div>
+              <button class="btn btn-soft">Edit</button>
+            </div>
+            <div class="row-card">
+              <div><strong>Proiecte HOME</strong><div class="note">Rastatt, Karlsruhe, Baden-Baden</div></div>
+              <button class="btn btn-soft">Manage</button>
+            </div>
+            <div class="row-card">
+              <div><strong>Contact</strong><div class="note">Telefon, email, formular, WhatsApp</div></div>
+              <button class="btn btn-soft">Edit</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cols" id="projects">
+        <div class="panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <div>
+              <div class="kicker">Proiecte</div>
+              <h2 style="margin:.35rem 0 0">Ultimele lucrări</h2>
+            </div>
+            <button class="btn btn-soft">Vezi toate</button>
+          </div>
+          <div style="height:16px"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Proiect</th>
+                  <th>Oraș</th>
+                  <th>Status</th>
+                  <th>Pe HOME</th>
+                  <th>Acțiuni</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Rastatt Wohnung</strong></td><td>Rastatt</td><td><span class="badge green">Publicat</span></td><td>Da</td><td><button class="btn btn-soft">Edit</button> <button class="btn btn-soft">Archive</button></td></tr>
+                <tr><td><strong>Karlsruhe Küche</strong></td><td>Karlsruhe</td><td><span class="badge blue">Arhivat</span></td><td>Nu</td><td><button class="btn btn-soft">Edit</button> <button class="btn btn-soft">Archive</button></td></tr>
+                <tr><td><strong>Baden-Baden Haus</strong></td><td>Baden-Baden</td><td><span class="badge amber">Draft</span></td><td>Nu</td><td><button class="btn btn-soft">Edit</button> <button class="btn btn-soft">Archive</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel" id="leads">
+          <div class="kicker">Leaduri</div>
+          <h2 style="margin:.35rem 0 0">Cereri noi</h2>
+          <div class="stack" style="margin-top:16px">
+            <div class="row-card" style="display:block">
+              <div style="display:flex;justify-content:space-between;gap:12px"><div><strong>Müller</strong><div class="note">Rastatt · Entrümpelung</div></div><span class="badge amber">Nou</span></div>
+              <div class="actions" style="margin-top:14px"><button class="btn btn-primary">Deschide</button><button class="btn btn-soft">Marchează</button></div>
+            </div>
+            <div class="row-card" style="display:block">
+              <div style="display:flex;justify-content:space-between;gap:12px"><div><strong>Schneider</strong><div class="note">Gaggenau · Reinigung</div></div><span class="badge blue">Contactat</span></div>
+              <div class="actions" style="margin-top:14px"><button class="btn btn-primary">Deschide</button><button class="btn btn-soft">Marchează</button></div>
+            </div>
+            <div class="row-card" style="display:block">
+              <div style="display:flex;justify-content:space-between;gap:12px"><div><strong>Weber</strong><div class="note">Baden-Baden · Haushaltsauflösung</div></div><span class="badge pink">Așteaptă răspuns</span></div>
+              <div class="actions" style="margin-top:14px"><button class="btn btn-primary">Deschide</button><button class="btn btn-soft">Marchează</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="users">
+        <div class="cols" style="grid-template-columns:1fr 1fr">
+          <div>
+            <div class="kicker">Multi-admin</div>
+            <h2 style="margin:.35rem 0 0">Utilizatori dashboard</h2>
+            <div class="note" style="margin-top:8px">Aici se vede cum va arăta gestionarea userilor. Interfața este gata; funcționarea reală a invitațiilor se activează prin Netlify Identity.</div>
+
+            <div style="height:16px"></div>
+            <div class="cards-3">
+              <div class="user-card">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div class="avatar">L</div>
+                  <div><strong>Laura</strong><div class="note">laral35@gmail.com</div></div>
+                </div>
+                <div style="height:14px"></div>
+                <span class="badge pink">Owner</span>
+                <div class="actions" style="margin-top:14px"><button class="btn btn-soft">Editează</button></div>
+              </div>
+              <div class="user-card">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div class="avatar" style="background:linear-gradient(135deg,#18a957,#4ade80)">D</div>
+                  <div><strong>Dominic</strong><div class="note">kontakt@perfektsauberservice.com</div></div>
+                </div>
+                <div style="height:14px"></div>
+                <span class="badge green">Admin</span>
+                <div class="actions" style="margin-top:14px"><button class="btn btn-soft">Editează</button><button class="btn btn-soft">Dezactivează</button></div>
+              </div>
+              <div class="user-card">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div class="avatar" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">M</div>
+                  <div><strong>Laurențiu</strong><div class="note">laurentiu@perfektsauberservice.com</div></div>
+                </div>
+                <div style="height:14px"></div>
+                <span class="badge green">Admin</span>
+                <div class="actions" style="margin-top:14px"><button class="btn btn-soft">Editează</button><button class="btn btn-soft">Dezactivează</button></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="kicker">Invită user nou</div>
+            <h2 style="margin:.35rem 0 0">Adaugă admin sau editor</h2>
+            <div style="height:16px"></div>
+            <div class="grid-2">
+              <div>
+                <label class="note" style="display:block;margin-bottom:8px">Nume</label>
+                <input class="input" placeholder="Ex: Dominic" />
+              </div>
+              <div>
+                <label class="note" style="display:block;margin-bottom:8px">Rol</label>
+                <select class="select">
+                  <option>Admin</option>
+                  <option>Viewer</option>
+                </select>
+              </div>
+            </div>
+            <div style="height:14px"></div>
+            <label class="note" style="display:block;margin-bottom:8px">Email</label>
+            <input class="input" placeholder="nume@firma.de" />
+            <div style="height:14px"></div>
+            <label class="note" style="display:block;margin-bottom:8px">Permisiuni / notițe</label>
+            <textarea class="textarea" placeholder="Ex: poate edita homepage-ul și proiectele, dar nu poate șterge useri."></textarea>
+            <div style="height:16px"></div>
+            <div class="actions">
+              <button class="btn btn-green" id="inviteIdentityBtn">Trimite invitație</button>
+              <button class="btn btn-soft">Salvează draft</button>
+            </div>
+            <div class="warning" style="margin-top:14px" id="inviteMsg">
+              Butonul de invitație este pregătit pentru varianta reală cu Netlify Identity. În demo, servește ca placeholder clar pentru fluxul de administrare.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="photos">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <div class="kicker">Bibliotecă media</div>
+            <h2 style="margin:.35rem 0 0">Poze recente</h2>
+            <div class="note" style="margin-top:6px">Le poți seta ca cover sau trimite direct în arhivă.</div>
+          </div>
+          <button class="btn btn-soft">Upload poze</button>
+        </div>
+        <div style="height:16px"></div>
+        <div class="photo-grid">
+          <div class="photo-card"><div class="photo"></div><div class="photo-actions"><button class="btn btn-soft">Setează cover</button><button class="btn btn-soft">Adaugă la proiect</button></div></div>
+          <div class="photo-card"><div class="photo"></div><div class="photo-actions"><button class="btn btn-soft">Setează cover</button><button class="btn btn-soft">Adaugă la proiect</button></div></div>
+          <div class="photo-card"><div class="photo"></div><div class="photo-actions"><button class="btn btn-soft">Setează cover</button><button class="btn btn-soft">Adaugă la proiect</button></div></div>
+          <div class="photo-card"><div class="photo"></div><div class="photo-actions"><button class="btn btn-soft">Setează cover</button><button class="btn btn-soft">Adaugă la proiect</button></div></div>
+          <div class="photo-card"><div class="photo"></div><div class="photo-actions"><button class="btn btn-soft">Setează cover</button><button class="btn btn-soft">Adaugă la proiect</button></div></div>
+          <div class="photo-card"><div class="photo"></div><div class="photo-actions"><button class="btn btn-soft">Setează cover</button><button class="btn btn-soft">Adaugă la proiect</button></div></div>
+        </div>
+      </section>
+
+      <section class="cols" style="grid-template-columns:1fr 1fr">
+        <div class="panel" id="company">
+          <div class="kicker">Date firmă</div>
+          <h2 style="margin:.35rem 0 0">Informații globale</h2>
+          <div style="height:14px"></div>
+          <div class="stack">
+            <div class="row-card"><div><strong>Telefon</strong><div class="note">+49 163 9087197</div></div><button class="btn btn-soft">Edit</button></div>
+            <div class="row-card"><div><strong>Email</strong><div class="note">kontakt@perfektsauberservice.com</div></div><button class="btn btn-soft">Edit</button></div>
+            <div class="row-card"><div><strong>Adresă</strong><div class="note">Reutstr. 9, 76597 Loffenau</div></div><button class="btn btn-soft">Edit</button></div>
+          </div>
+        </div>
+
+        <div class="panel" id="seo">
+          <div class="kicker">Google / SEO</div>
+          <h2 style="margin:.35rem 0 0">Status rapid</h2>
+          <div class="stack" style="margin-top:14px">
+            <div class="row-card"><div><strong>Search Console</strong><div class="note">Conectat și colectează impresii</div></div><span class="badge green">Activ</span></div>
+            <div class="row-card"><div><strong>Sitemap</strong><div class="note">sitemap.xml prezent</div></div><span class="badge blue">OK</span></div>
+            <div class="row-card"><div><strong>Redirect homepage</strong><div class="note">de verificat dacă este intenționat</div></div><span class="badge amber">Monitorizare</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="settings">
+        <div class="kicker">Setări și autentificare</div>
+        <h2 style="margin:.35rem 0 0">Ce mai trebuie pentru versiunea reală</h2>
+        <div class="warning" style="margin-top:14px">
+          Varianta din arhivă este una foarte bună ca bază vizuală și structurală. Pentru utilizare reală cu mai mulți admini trebuie activat Netlify Identity și apoi legate acțiunile dashboardului la date reale.
+        </div>
+        <div style="height:16px"></div>
+        <div class="actions">
+          <a class="btn btn-primary" href="./README-dashboard.txt">Vezi pașii de activare</a>
+          <button class="btn btn-soft" id="openIdentityBtn">Deschide Identity widget</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+
+
+
+<div class="action-backdrop" id="actionBackdrop"></div>
+<div class="action-modal" id="actionModal" aria-hidden="true">
+  <div class="modal-head">
+    <div>
+      <div class="kicker">Acțiune dashboard</div>
+      <h3 class="modal-title" id="actionModalTitle">Detalii</h3>
+    </div>
+    <button class="btn btn-soft" id="actionModalClose" type="button">Închide</button>
+  </div>
+  <div class="modal-body" id="actionModalBody">Acțiunea a fost pregătită.</div>
+  <div class="modal-actions" id="actionModalActions"></div>
+</div>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+(() => {
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => Array.from(root.querySelectorAll(s));
+  const stateKey = 'pss_dashboard_state_v2';
+  const defaultState = {
+    company: {
+      phone: '+49 163 9087197',
+      email: 'kontakt@perfektsauberservice.com',
+      address: 'Reutstr. 9, 76597 Loffenau'
+    },
+    leads: ['Nou', 'Contactat', 'Așteaptă răspuns'],
+    archived: [false, true, false],
+    homeBlocks: {
+      hero: 'Titlu principal, buton WhatsApp, poză cover',
+      servicii: 'Entrümpelung, Haushaltsauflösung, Reinigung',
+      proiecte: 'Rastatt, Karlsruhe, Baden-Baden',
+      contact: 'Telefon, email, formular, WhatsApp'
+    },
+    selectedCover: -1
+  };
+  const state = JSON.parse(localStorage.getItem(stateKey) || 'null') || structuredClone(defaultState);
+  const saveState = () => localStorage.setItem(stateKey, JSON.stringify(state));
+
+  function openActionModal(title, body, actionsHtml = '') {
+    $('#actionModalTitle').textContent = title;
+    $('#actionModalBody').innerHTML = body;
+    $('#actionModalActions').innerHTML = actionsHtml;
+    $('#actionModal').classList.add('open');
+    $('#actionBackdrop').classList.add('open');
+    document.body.classList.add('body-locked');
+  }
+  function closeActionModal() {
+    $('#actionModal').classList.remove('open');
+    $('#actionBackdrop').classList.remove('open');
+    document.body.classList.remove('body-locked');
+  }
+  $('#actionModalClose').addEventListener('click', closeActionModal);
+  $('#actionBackdrop').addEventListener('click', closeActionModal);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeActionModal(); });
+  window.closeActionModal = closeActionModal;
+
+  function showApp() {
+    $('#app').style.display = 'grid';
+  }
+  const demoOk = localStorage.getItem('pss_dashboard_demo_login') === 'ok';
+  if (window.netlifyIdentity) {
+    try {
+      window.netlifyIdentity.on('init', user => { if (!demoOk && !user) location.href='./login.html'; else showApp(); });
+      window.netlifyIdentity.on('login', showApp);
+      window.netlifyIdentity.on('logout', () => { localStorage.removeItem('pss_dashboard_demo_login'); location.href='./login.html'; });
+      window.netlifyIdentity.init();
+    } catch (e) { showApp(); }
+  } else if (demoOk) {
+    showApp();
+  } else {
+    location.href='./login.html';
+  }
+
+  // Core links
+  $$('a.btn, .actions .btn-soft, .sidebar-card .btn-soft').forEach(el => {
+    const t = el.textContent.trim();
+    if (t === 'Vezi site live' || t === 'Vezi homepage') el.setAttribute('href', '../index.html');
+    if (t === 'Deschide agentul') el.setAttribute('href', './agent.html');
+  });
+
+  // Company card updates
+  function renderCompany() {
+    const rows = $$('#company .row-card');
+    if (rows[0]) rows[0].querySelector('.note').textContent = state.company.phone;
+    if (rows[1]) rows[1].querySelector('.note').textContent = state.company.email;
+    if (rows[2]) rows[2].querySelector('.note').textContent = state.company.address;
+  }
+  renderCompany();
+
+  // Homepage block labels
+  function renderHomeBlocks() {
+    const rows = $$('#homepage .row-card');
+    if (rows[0]) rows[0].querySelector('.note').textContent = state.homeBlocks.hero;
+    if (rows[1]) rows[1].querySelector('.note').textContent = state.homeBlocks.servicii;
+    if (rows[2]) rows[2].querySelector('.note').textContent = state.homeBlocks.proiecte;
+    if (rows[3]) rows[3].querySelector('.note').textContent = state.homeBlocks.contact;
+  }
+  renderHomeBlocks();
+
+  // Lead statuses
+  function renderLeads() {
+    const cards = $$('#leads .row-card');
+    cards.forEach((card, idx) => {
+      const badge = $('.badge', card);
+      const val = state.leads[idx] || 'Nou';
+      badge.textContent = val;
+      badge.className = 'badge ' + (val === 'Nou' ? 'amber' : val === 'Contactat' ? 'blue' : 'pink');
+    });
+  }
+  renderLeads();
+
+  // Project archive states
+  function renderProjects() {
+    const rows = $$('#projects tbody tr');
+    rows.forEach((row, idx) => {
+      const badge = $('.badge', row);
+      if (idx===0) return;
+      const archived = state.archived[idx];
+      badge.textContent = archived ? 'Arhivat' : 'Draft';
+      badge.className = 'badge ' + (archived ? 'blue' : 'amber');
+    });
+  }
+  renderProjects();
+
+  // Photo cover selection
+  function renderPhotos() {
+    const cards = $$('#photos .photo-card');
+    cards.forEach((card, idx) => {
+      card.style.boxShadow = idx === state.selectedCover ? '0 0 0 3px rgba(47,107,255,.35)' : 'none';
+      const btn = $$('.btn', card)[0];
+      if (btn) btn.textContent = idx === state.selectedCover ? 'Cover activ' : 'Setează cover';
+    });
+  }
+  renderPhotos();
+
+  // Button wiring
+  $('#logoutBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('pss_dashboard_demo_login');
+    try { window.netlifyIdentity && window.netlifyIdentity.logout(); } catch (e) {}
+    location.href = './login.html';
+  });
+  $('#inviteIdentityBtn')?.addEventListener('click', () => {
+    openActionModal('Invită admin', 'Invitațiile reale intră în Netlify Identity. În patch-ul actual, butonul confirmă fluxul și rămâne pregătit pentru legarea la backend.', '<button class="btn btn-primary" onclick="closeActionModal()">Am înțeles</button>');
+  });
+  $('#openIdentityBtn')?.addEventListener('click', () => {
+    openActionModal('Setup auth', 'Activează Netlify Identity din panoul Netlify, apoi leagă invitațiile și rolurile reale. Interfața din dashboard este deja pregătită.', '<a class="btn btn-primary" href="./README-dashboard.txt">Deschide ghidul</a>');
+  });
+
+  const heroButtons = $$('.hero .actions .btn, .quick-card');
+  heroButtons.forEach(el => {
+    const t = el.textContent.trim();
+    if (t.includes('Adaugă lucrare')) {
+      el.addEventListener('click', () => openActionModal('Adaugă lucrare nouă', 'Aici legăm formularul real pentru proiecte noi. În această versiune poți merge direct în secțiunea proiecte.', '<a class="btn btn-primary" href="#projects" onclick="closeActionModal()">Mergi la proiecte</a>'));
+    } else if (t.includes('Invită admin')) {
+      el.addEventListener('click', () => openActionModal('Invită admin', 'Acțiunea este pregătită pentru Netlify Identity. După activare, aici trimiți invitația reală.', '<a class="btn btn-primary" href="#users" onclick="closeActionModal()">Deschide utilizatori</a>'));
+    } else if (t.includes('Mută lucrare')) {
+      el.addEventListener('click', () => { state.archived[2] = !state.archived[2]; saveState(); renderProjects(); openActionModal('Arhivare proiect', 'Ultimul proiect a fost comutat vizual între Draft și Arhivat. Următorul pas este persistarea în backend.', '<button class="btn btn-primary" onclick="closeActionModal()">OK</button>'); });
+    } else if (t.includes('Schimbă poze')) {
+      el.addEventListener('click', () => location.hash = '#photos');
+    } else if (t.includes('Actualizează date')) {
+      el.addEventListener('click', () => location.hash = '#company');
+    }
+  });
+
+  // Homepage section buttons
+  $$('#homepage .row-card').forEach((row, idx) => {
+    const btn = $('.btn', row);
+    btn.addEventListener('click', () => {
+      const name = $('strong', row).textContent;
+      const current = $('.note', row).textContent;
+      const next = prompt('Editează blocul: ' + name, current);
+      if (next !== null && next.trim()) {
+        const map = ['hero','servicii','proiecte','contact'];
+        state.homeBlocks[map[idx]] = next.trim();
+        saveState(); renderHomeBlocks();
+      }
+    });
+  });
+
+  // Project table buttons
+  $$('#projects tbody tr').forEach((row, idx) => {
+    const buttons = $$('.btn', row);
+    const projectName = $('strong', row)?.textContent || 'Proiect';
+    buttons[0]?.addEventListener('click', () => openActionModal('Edit proiect', 'Deschizi editorul pentru <strong>' + projectName + '</strong>. În patch-ul curent, asta este o acțiune funcțională de tip preview.', '<button class="btn btn-primary" onclick="closeActionModal()">Închide</button>'));
+    buttons[1]?.addEventListener('click', () => {
+      if (idx === 0) return openActionModal('Arhivare blocată', 'Proiectul publicat de pe prima linie este setat să rămână pe HOME în demo. Celelalte pot fi mutate vizual.');
+      state.archived[idx] = !state.archived[idx]; saveState(); renderProjects();
+    });
+  });
+
+  // Leads buttons
+  $$('#leads .row-card').forEach((card, idx) => {
+    const [openBtn, markBtn] = $$('.btn', card);
+    const name = $('strong', card).textContent;
+    openBtn?.addEventListener('click', () => openActionModal('Lead: ' + name, 'Detaliu lead deschis. În pasul următor îl putem lega la date reale sau la formularul de contact salvat.', '<button class="btn btn-primary" onclick="closeActionModal()">OK</button>'));
+    markBtn?.addEventListener('click', () => {
+      const vals = ['Nou', 'Contactat', 'Așteaptă răspuns'];
+      const current = vals.indexOf(state.leads[idx]);
+      state.leads[idx] = vals[(current + 1) % vals.length];
+      saveState(); renderLeads();
+    });
+  });
+
+  // Users buttons
+  $$('#users .user-card').forEach(card => {
+    $$('.btn', card).forEach(btn => btn.addEventListener('click', () => openActionModal(btn.textContent.trim(), 'Această acțiune este pregătită și răspunde corect în UI. Persistența multi-user reală vine în pasul cu backend / Identity.')));
+  });
+
+  // Photos
+  $$('#photos .photo-card').forEach((card, idx) => {
+    const [coverBtn, addBtn] = $$('.btn', card);
+    coverBtn?.addEventListener('click', () => { state.selectedCover = idx; saveState(); renderPhotos(); });
+    addBtn?.addEventListener('click', () => openActionModal('Adaugă la proiect', 'Alege proiectul în care vrei să pui poza. În patch-ul actual, selectorul este pregătit vizual.', '<a class="btn btn-primary" href="#projects" onclick="closeActionModal()">Deschide proiecte</a>'));
+  });
+  $$('#photos > div .btn-soft').forEach(btn => {
+    if (btn.textContent.trim() === 'Upload poze') btn.addEventListener('click', () => openActionModal('Upload poze', 'Uploadul real se leagă la backend sau storage. În interfața curentă butonul este activ și clar, nu mort.'));
+  });
+
+  // Company edit buttons
+  $$('#company .row-card').forEach((row, idx) => {
+    $('.btn', row)?.addEventListener('click', () => {
+      const keys = ['phone','email','address'];
+      const labels = ['Telefon','Email','Adresă'];
+      const next = prompt('Editează ' + labels[idx], state.company[keys[idx]]);
+      if (next !== null && next.trim()) {
+        state.company[keys[idx]] = next.trim(); saveState(); renderCompany();
+      }
+    });
+  });
+
+  // Generic visible app for users coming from login
+  showApp();
+})();
+</script>
+</body>
+</html>

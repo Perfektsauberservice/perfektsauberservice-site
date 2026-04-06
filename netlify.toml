@@ -1,0 +1,40 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/pss-auto-content"
+  to = "/.netlify/functions/pss-auto-content"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard/agent"
+  to = "/dashboard/agent.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog"
+  to = "/blog.html"
+  status = 200
+[[redirects]]
+  from = "/service-page/fensterreinigung"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/book-online"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/410.html"
+  status = 410
+  force = true

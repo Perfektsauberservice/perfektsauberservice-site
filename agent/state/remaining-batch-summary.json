@@ -1,0 +1,186 @@
+{
+  "total_pages": 5,
+  "processed": [
+    {
+      "page": "entruempelung-bad-herrenalb.html",
+      "initial_guard": {
+        "page": "entruempelung-bad-herrenalb.html",
+        "status": "BLOCK",
+        "reasons": [
+          "FAQ similarity too high"
+        ],
+        "required_fixes": [
+          "Rewrite FAQ"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "structural_attempted": true,
+      "repair_v2_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-bad-herrenalb.html",
+        "status": "BLOCK",
+        "reasons": [
+          "FAQ similarity too high"
+        ],
+        "required_fixes": [
+          "Rewrite FAQ"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "status": "BLOCK"
+    },
+    {
+      "page": "entruempelung-weisenbach.html",
+      "initial_guard": {
+        "page": "entruempelung-weisenbach.html",
+        "status": "BLOCK",
+        "reasons": [
+          "Too few sections",
+          "FAQ too weak",
+          "FAQ similarity too high",
+          "CTA similarity too high"
+        ],
+        "required_fixes": [
+          "Add more useful sections",
+          "Expand FAQ",
+          "Rewrite FAQ",
+          "Rewrite CTA"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "structural_attempted": true,
+      "repair_v2_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-weisenbach.html",
+        "status": "BLOCK",
+        "reasons": [
+          "FAQ too weak",
+          "FAQ similarity too high",
+          "CTA similarity too high"
+        ],
+        "required_fixes": [
+          "Expand FAQ",
+          "Rewrite FAQ",
+          "Rewrite CTA"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "status": "BLOCK"
+    },
+    {
+      "page": "entruempelung-steinmauern.html",
+      "initial_guard": {
+        "page": "entruempelung-steinmauern.html",
+        "status": "BLOCK",
+        "reasons": [
+          "Too few sections",
+          "FAQ too weak",
+          "FAQ similarity too high",
+          "CTA similarity too high"
+        ],
+        "required_fixes": [
+          "Add more useful sections",
+          "Expand FAQ",
+          "Rewrite FAQ",
+          "Rewrite CTA"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "structural_attempted": true,
+      "repair_v2_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-steinmauern.html",
+        "status": "REVIEW",
+        "reasons": [
+          "FAQ too weak",
+          "CTA similarity too high"
+        ],
+        "required_fixes": [
+          "Expand FAQ",
+          "Rewrite CTA"
+        ],
+        "summary": "Page needs review but is not critically blocked."
+      },
+      "status": "REVIEW"
+    },
+    {
+      "page": "entruempelung-stutensee.html",
+      "initial_guard": {
+        "page": "entruempelung-stutensee.html",
+        "status": "REVIEW",
+        "reasons": [
+          "Too few sections",
+          "FAQ too weak",
+          "CTA similarity too high"
+        ],
+        "required_fixes": [
+          "Add more useful sections",
+          "Expand FAQ",
+          "Rewrite CTA"
+        ],
+        "summary": "Page needs review but is not critically blocked."
+      },
+      "structural_attempted": true,
+      "repair_v2_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-stutensee.html",
+        "status": "BLOCK",
+        "reasons": [
+          "FAQ too weak",
+          "FAQ similarity too high"
+        ],
+        "required_fixes": [
+          "Expand FAQ",
+          "Rewrite FAQ"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "status": "BLOCK"
+    },
+    {
+      "page": "entruempelung-gaggenau.html",
+      "initial_guard": {
+        "page": "entruempelung-gaggenau.html",
+        "status": "BLOCK",
+        "reasons": [
+          "FAQ similarity too high"
+        ],
+        "required_fixes": [
+          "Rewrite FAQ"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "structural_attempted": true,
+      "repair_v2_attempted": true,
+      "final_guard": {
+        "page": "entruempelung-gaggenau.html",
+        "status": "BLOCK",
+        "reasons": [
+          "FAQ similarity too high"
+        ],
+        "required_fixes": [
+          "Rewrite FAQ"
+        ],
+        "summary": "Page blocked for review."
+      },
+      "status": "BLOCK"
+    }
+  ],
+  "pass": [],
+  "review": [
+    "entruempelung-steinmauern.html"
+  ],
+  "block": [
+    "entruempelung-bad-herrenalb.html",
+    "entruempelung-weisenbach.html",
+    "entruempelung-stutensee.html",
+    "entruempelung-gaggenau.html"
+  ],
+  "errors": [],
+  "counts": {
+    "pass": 0,
+    "review": 1,
+    "block": 4,
+    "errors": 0
+  }
+}

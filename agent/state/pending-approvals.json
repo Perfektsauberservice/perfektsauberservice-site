@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": "approval-1774879413292-rastatt-entruempelung",
+      "city": "rastatt",
+      "cityName": "Rastatt",
+      "service": "entruempelung",
+      "serviceName": "Entrümpelung",
+      "selectedImage": "images/city/rastatt-bg.png",
+      "approvedAt": "2026-03-30T14:03:33.292Z",
+      "status": "approved"
+    }
+  ]
+}

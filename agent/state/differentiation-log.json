@@ -1,0 +1,49 @@
+{
+  "page": "entruempelung-steinmauern.html",
+  "changes": [
+    "Selected best section order variant",
+    "Selected best FAQ variant",
+    "Selected best CTA variant"
+  ],
+  "selected_variants": {
+    "section_variant": 5,
+    "faq_variant": 0,
+    "cta_variant": 6
+  },
+  "best_report": {
+    "page": "__temp_candidate__.html",
+    "overall_similarity": 28,
+    "risk": "low",
+    "closest_matches": [
+      {
+        "file": "entruempelung-steinmauern.html",
+        "similarity": 28
+      },
+      {
+        "file": "entruempelung-elchesheim-illingen.html",
+        "similarity": 27
+      },
+      {
+        "file": "entruempelung-durmersheim.html",
+        "similarity": 26
+      },
+      {
+        "file": "entruempelung-au-am-rhein.html",
+        "similarity": 26
+      },
+      {
+        "file": "entruempelung-weisenbach.html",
+        "similarity": 21
+      }
+    ],
+    "block_similarity": {
+      "hero": 40,
+      "structure": 30,
+      "faq": 0,
+      "cta": 5
+    },
+    "problems": [],
+    "rewrite_targets": []
+  },
+  "status": "repaired"
+}

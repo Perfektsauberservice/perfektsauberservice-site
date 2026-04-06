@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfekt Sauber Dashboard Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+  <div class="shell auth-wrap">
+    <div class="auth-card">
+      <div class="auth-visual">
+        <div>
+          <div class="logo-badge">P</div>
+          <div style="margin-top:18px" class="kicker">Dashboard intern</div>
+          <div style="font-size:2rem;font-weight:900;line-height:1.08;margin-top:8px;">
+            Perfekt Sauber Service
+          </div>
+          <div style="margin-top:14px;max-width:420px;line-height:1.6;opacity:.94;">
+            Loginul real Netlify Identity este activ aici. Varianta demo rămâne disponibilă doar ca rezervă.
+          </div>
+
+          <div class="auth-bullets">
+            <div class="auth-pill">Owner: laral35@gmail.com</div>
+            <div class="auth-pill">Admin: kontakt@perfektsauberservice.com</div>
+            <div class="auth-pill">Poți intra prin invitația primită pe email</div>
+          </div>
+        </div>
+
+        <div class="note" style="color:rgba(255,255,255,.86)">
+          Dacă ai venit aici din emailul Netlify, pagina va deschide automat fereastra oficială de autentificare.
+        </div>
+      </div>
+
+      <div class="auth-panel">
+        <div class="kicker">Login</div>
+        <h1>Intră în dashboard</h1>
+        <div class="note" style="margin-top:10px">
+          Pentru loginul real folosește fereastra oficială Netlify care se deschide din buton. Dacă ai venit din email, se va deschide automat.
+        </div>
+
+        <div id="statusBox" class="warning" style="margin-top:16px">
+          Inițializăm autentificarea Netlify Identity...
+        </div>
+
+        <div style="height:18px"></div>
+
+        <label class="note" for="email" style="display:block;margin-bottom:8px">Email informativ</label>
+        <input id="email" class="input" type="email" placeholder="nume@firma.de" />
+
+        <div style="height:14px"></div>
+        <label class="note" for="password" style="display:block;margin-bottom:8px">Parolă demo</label>
+        <input id="password" class="input" type="password" placeholder="Introdu parola demo dacă vrei doar preview" />
+
+        <div style="height:14px"></div>
+        <div class="grid-2">
+          <button class="btn btn-primary" id="realLoginBtn" type="button">Deschide login real</button>
+          <button class="btn btn-soft" id="demoLoginBtn" type="button">Intră cu demo</button>
+        </div>
+
+        <div style="height:14px"></div>
+        <div class="footer-tools">
+          <button class="btn btn-dark" id="forgotBtn" type="button">Resetare parolă</button>
+          <a class="btn btn-soft" href="../index.html">Înapoi la site</a>
+        </div>
+
+        <div id="msg" class="note" style="margin-top:14px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+const DEMO_PASSWORD = "PSS-dashboard-2026";
+const statusBox = document.getElementById('statusBox');
+const msg = document.getElementById('msg');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+
+function setStatus(text, ok) {
+  statusBox.textContent = text;
+  statusBox.style.borderColor = ok ? '#bbf7d0' : '#fde7ba';
+  statusBox.style.background = ok ? '#f0fdf4' : '#fffaf0';
+  statusBox.style.color = ok ? '#166534' : '#8a5a00';
+}
+
+document.getElementById('demoLoginBtn').addEventListener('click', function() {
+  const val = passwordInput.value.trim();
+  if (!val || val === DEMO_PASSWORD) {
+    localStorage.setItem('pss_dashboard_demo_login', 'ok');
+    window.location.href = './index.html';
+  } else {
+    msg.textContent = 'Parola demo nu este corectă.';
+    msg.style.color = '#b91c1c';
+  }
+});
+
+function openIdentity(mode) {
+  if (!window.netlifyIdentity) {
+    setStatus('Widgetul Netlify Identity nu s-a încărcat.', false);
+    return;
+  }
+  try {
+    if (mode === 'login') {
+      window.netlifyIdentity.open('login');
+      setStatus('Se deschide fereastra de login real...', true);
+    } else if (mode === 'recover') {
+      window.netlifyIdentity.open('recover');
+      setStatus('Se deschide fereastra de resetare parolă...', true);
+    } else {
+      window.netlifyIdentity.open();
+      setStatus('Se deschide fereastra Netlify Identity...', true);
+    }
+  } catch (e) {
+    msg.textContent = e && e.message ? e.message : String(e);
+    msg.style.color = '#b91c1c';
+    setStatus('Nu am putut deschide fereastra Identity.', false);
+  }
+}
+
+document.getElementById('realLoginBtn').addEventListener('click', function() {
+  openIdentity('login');
+});
+
+document.getElementById('forgotBtn').addEventListener('click', function() {
+  openIdentity('recover');
+});
+
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on('init', function(user) {
+    if (user) {
+      setStatus('Ești deja autentificat(ă) ca ' + user.email + '. Te trimitem în dashboard...', true);
+      setTimeout(function(){ window.location.href = './index.html'; }, 700);
+      return;
+    }
+    const h = window.location.hash || '';
+    if (
+      h.indexOf('invite_token=') !== -1 ||
+      h.indexOf('confirmation_token=') !== -1 ||
+      h.indexOf('recovery_token=') !== -1 ||
+      h.indexOf('email_change_token=') !== -1
+    ) {
+      setStatus('Am detectat un token din email. Deschidem fereastra oficială Netlify Identity...', false);
+      setTimeout(function(){ openIdentity(); }, 400);
+    } else {
+      setStatus('Poți folosi loginul real sau demo.', false);
+    }
+  });
+
+  window.netlifyIdentity.on('login', function(user) {
+    setStatus('Login reușit pentru ' + user.email + '. Te trimitem în dashboard...', true);
+    setTimeout(function() {
+      window.netlifyIdentity.close();
+      window.location.href = './index.html';
+    }, 500);
+  });
+
+  window.netlifyIdentity.on('logout', function() {
+    localStorage.removeItem('pss_dashboard_demo_login');
+    setStatus('Ai fost delogat(ă).', false);
+  });
+
+  window.netlifyIdentity.on('error', function(err) {
+    msg.textContent = err && err.message ? err.message : String(err);
+    msg.style.color = '#b91c1c';
+    setStatus('A apărut o eroare la autentificare.', false);
+  });
+
+  window.netlifyIdentity.init();
+} else {
+  setStatus('Widgetul Identity nu a fost încărcat.', false);
+}
+</script>
+</body>
+</html>

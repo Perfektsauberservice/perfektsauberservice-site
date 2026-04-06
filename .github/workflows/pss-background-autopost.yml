@@ -1,0 +1,40 @@
+
+name: PSS Background Auto-publish
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  autopublish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run background auto-publish
+        env:
+          PSS_AUTOPUBLISH_TOKEN: ${{ secrets.PSS_AUTOPUBLISH_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python agent/scripts/background_autopost.py
+
+      - name: Rebuild blog index
+        run: python agent/scripts/rebuild_blog.py
+
+      - name: Commit blog index changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/auto/blog-index.json
+          git diff --cached --quiet && echo "No blog index changes to commit." && exit 0
+          git commit -m "chore(blog): rebuild blog index after autopost"
+          git push

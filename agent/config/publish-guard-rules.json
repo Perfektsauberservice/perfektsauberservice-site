@@ -1,0 +1,36 @@
+{
+  "required_elements": {
+    "title": true,
+    "meta_description": true,
+    "canonical": true,
+    "h1": true,
+    "faq": true,
+    "cta": true,
+    "internal_links_min": 3
+  },
+  "quality_rules": {
+    "min_sections": 6,
+    "min_word_count": 450,
+    "max_generic_faq_questions": 2,
+    "max_generic_cta_patterns": 1
+  },
+  "block_conditions": [
+    "missing_title",
+    "missing_meta_description",
+    "missing_canonical",
+    "missing_h1",
+    "missing_faq",
+    "missing_cta",
+    "internal_links_below_min",
+    "overall_similarity_gte_block_threshold",
+    "structure_similarity_gte_block_threshold",
+    "faq_similarity_gte_block_threshold",
+    "cta_similarity_gte_block_threshold"
+  ],
+  "review_conditions": [
+    "word_count_low",
+    "too_generic",
+    "too_template_like",
+    "weak_city_differentiation"
+  ]
+}

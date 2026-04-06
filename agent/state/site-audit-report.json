@@ -1,0 +1,1762 @@
+{
+  "generatedAt": "2026-03-30T20:39:15.210Z",
+  "site": "https://perfektsauberservice.com",
+  "totals": {
+    "articles": 40,
+    "critical": 43,
+    "medium": 180,
+    "minor": 39
+  },
+  "articles": [
+    {
+      "file": "content/auto/endreinigung-baden-baden-was-ist-bei-einer-endreinigung-vor-der-wohnungsubergabe-in-baden-baden-wichtig.md",
+      "slug": "",
+      "title": "Was ist bei einer Endreinigung vor der Wohnungsübergabe in Baden-Baden wichtig?",
+      "city": "Baden-Baden",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 71,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (71 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-baden-baden-was-kostet-eine-endreinigung-in-baden-baden.md",
+      "slug": "",
+      "title": "Was kostet eine Endreinigung in Baden-Baden?",
+      "city": "Baden-Baden",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 66,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (66 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-gaggenau-was-ist-bei-einer-endreinigung-vor-der-wohnungsubergabe-in-gaggenau-wichtig.md",
+      "slug": "",
+      "title": "Was ist bei einer Endreinigung vor der Wohnungsübergabe in Gaggenau wichtig?",
+      "city": "Gaggenau",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 71,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (71 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-gaggenau-was-kostet-eine-endreinigung-in-gaggenau.md",
+      "slug": "",
+      "title": "Was kostet eine Endreinigung in Gaggenau?",
+      "city": "Gaggenau",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 66,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (66 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-karlsruhe-was-ist-bei-einer-endreinigung-vor-der-wohnungsubergabe-in-karlsruhe-wichtig.md",
+      "slug": "",
+      "title": "Was ist bei einer Endreinigung vor der Wohnungsübergabe in Karlsruhe wichtig?",
+      "city": "Karlsruhe",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 71,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (71 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-karlsruhe-was-kostet-eine-endreinigung-in-karlsruhe.md",
+      "slug": "",
+      "title": "Was kostet eine Endreinigung in Karlsruhe?",
+      "city": "Karlsruhe",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 66,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (66 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-rastatt-was-ist-bei-einer-endreinigung-vor-der-wohnungsubergabe-in-rastatt-wichtig.md",
+      "slug": "",
+      "title": "Was ist bei einer Endreinigung vor der Wohnungsübergabe in Rastatt wichtig?",
+      "city": "Rastatt",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 71,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (71 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/endreinigung-rastatt-was-kostet-eine-endreinigung-in-rastatt.md",
+      "slug": "",
+      "title": "Was kostet eine Endreinigung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Endreinigung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 66,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (66 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-baden-baden-was-kostet-eine-entrumpelung-in-baden-baden.md",
+      "slug": "",
+      "title": "Was kostet eine Entrümpelung in Baden-Baden?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-baden-baden-wie-lauft-eine-entrumpelung-in-baden-baden-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-baden-baden-wie-schnell-bekommt-man-einen-termin-fur-eine-entrumpelung-in-baden-baden.md",
+      "slug": "",
+      "title": "Wie schnell bekommt man einen Termin für eine Entrümpelung in Baden-Baden?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 72,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (72 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-gaggenau-was-kostet-eine-entrumpelung-in-gaggenau.md",
+      "slug": "",
+      "title": "Was kostet eine Entrümpelung in Gaggenau?",
+      "city": "Gaggenau",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-gaggenau-wie-lauft-eine-entrumpelung-in-gaggenau-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Entrümpelung in Gaggenau ab?",
+      "city": "Gaggenau",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-gaggenau-wie-schnell-bekommt-man-einen-termin-fur-eine-entrumpelung-in-gaggenau.md",
+      "slug": "",
+      "title": "Wie schnell bekommt man einen Termin für eine Entrümpelung in Gaggenau?",
+      "city": "Gaggenau",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 72,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (72 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-karlsruhe-was-kostet-eine-entrumpelung-in-karlsruhe.md",
+      "slug": "",
+      "title": "Was kostet eine Entrümpelung in Karlsruhe?",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-karlsruhe-wie-lauft-eine-entrumpelung-in-karlsruhe-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Entrümpelung in Karlsruhe ab?",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-karlsruhe-wie-schnell-bekommt-man-einen-termin-fur-eine-entrumpelung-in-karlsruhe.md",
+      "slug": "",
+      "title": "Wie schnell bekommt man einen Termin für eine Entrümpelung in Karlsruhe?",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 72,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (72 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-rastatt-was-kostet-eine-entrumpelung-in-rastatt.md",
+      "slug": "",
+      "title": "Was kostet eine Entrümpelung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-rastatt-wie-lauft-eine-entrumpelung-in-rastatt-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Entrümpelung in Rastatt ab?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/entruempelung-rastatt-wie-schnell-bekommt-man-einen-termin-fur-eine-entrumpelung-in-rastatt.md",
+      "slug": "",
+      "title": "Wie schnell bekommt man einen Termin für eine Entrümpelung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 72,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (72 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-baden-baden-fensterreinigung-in-baden-baden-preise-dauer-ablauf.md",
+      "slug": "",
+      "title": "Fensterreinigung in Baden-Baden: Preise, Dauer, Ablauf",
+      "city": "Baden-Baden",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 64,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (64 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-baden-baden-wie-oft-sollte-man-fenster-in-baden-baden-reinigen-lassen.md",
+      "slug": "",
+      "title": "Wie oft sollte man Fenster in Baden-Baden reinigen lassen?",
+      "city": "Baden-Baden",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-gaggenau-fensterreinigung-in-gaggenau-preise-dauer-ablauf.md",
+      "slug": "",
+      "title": "Fensterreinigung in Gaggenau: Preise, Dauer, Ablauf",
+      "city": "Gaggenau",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 64,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (64 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-gaggenau-wie-oft-sollte-man-fenster-in-gaggenau-reinigen-lassen.md",
+      "slug": "",
+      "title": "Wie oft sollte man Fenster in Gaggenau reinigen lassen?",
+      "city": "Gaggenau",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-karlsruhe-fensterreinigung-in-karlsruhe-preise-dauer-ablauf.md",
+      "slug": "",
+      "title": "Fensterreinigung in Karlsruhe: Preise, Dauer, Ablauf",
+      "city": "Karlsruhe",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 64,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (64 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-karlsruhe-wie-oft-sollte-man-fenster-in-karlsruhe-reinigen-lassen.md",
+      "slug": "",
+      "title": "Wie oft sollte man Fenster in Karlsruhe reinigen lassen?",
+      "city": "Karlsruhe",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-rastatt-fensterreinigung-in-rastatt-preise-dauer-ablauf.md",
+      "slug": "",
+      "title": "Fensterreinigung in Rastatt: Preise, Dauer, Ablauf",
+      "city": "Rastatt",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 64,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (64 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/fensterreinigung-rastatt-wie-oft-sollte-man-fenster-in-rastatt-reinigen-lassen.md",
+      "slug": "",
+      "title": "Wie oft sollte man Fenster in Rastatt reinigen lassen?",
+      "city": "Rastatt",
+      "service": "Fensterreinigung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 67,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (67 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/was-kostet-eine-entruempelung-in-rastatt.md",
+      "slug": "was-kostet-eine-entruempelung-in-rastatt",
+      "title": "Was kostet eine Entrümpelung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "heroImage": "images/city/rastatt-bg.png",
+      "wordCount": 533,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wie-laeuft-eine-entruempelung-in-baden-baden-ab.md",
+      "slug": "wie-laeuft-eine-entruempelung-in-baden-baden-ab",
+      "title": "Wie läuft eine Entrümpelung in Baden-Baden ab?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "heroImage": "images/city/baden-baden-bg.png",
+      "wordCount": 530,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.md",
+      "slug": "wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt",
+      "title": "Wie schnell bekommt man einen Termin für eine Entrümpelung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "heroImage": "images/city/rastatt-bg.png",
+      "wordCount": 499,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wie-schnell-termin-entruempelung-rastatt.md",
+      "slug": "wie-schnell-termin-entruempelung-rastatt",
+      "title": "Wie schnell bekommt man einen Termin für eine Entrümpelung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "heroImage": "images/city/rastatt-bg.png",
+      "wordCount": 572,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "duplicate_title",
+          "message": "Titel ist mehrfach vorhanden."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-baden-baden-was-kostet-eine-wohnungsauflosung-in-baden-baden.md",
+      "slug": "",
+      "title": "Was kostet eine Wohnungsauflösung in Baden-Baden?",
+      "city": "Baden-Baden",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-baden-baden-wie-lauft-eine-wohnungsauflosung-in-baden-baden-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Wohnungsauflösung in Baden-Baden ab?",
+      "city": "Baden-Baden",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/baden-baden-bg.png",
+      "wordCount": 69,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (69 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-gaggenau-was-kostet-eine-wohnungsauflosung-in-gaggenau.md",
+      "slug": "",
+      "title": "Was kostet eine Wohnungsauflösung in Gaggenau?",
+      "city": "Gaggenau",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-gaggenau-wie-lauft-eine-wohnungsauflosung-in-gaggenau-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Wohnungsauflösung in Gaggenau ab?",
+      "city": "Gaggenau",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/gaggenau-bg.png",
+      "wordCount": 69,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (69 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-karlsruhe-was-kostet-eine-wohnungsauflosung-in-karlsruhe.md",
+      "slug": "",
+      "title": "Was kostet eine Wohnungsauflösung in Karlsruhe?",
+      "city": "Karlsruhe",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-karlsruhe-wie-lauft-eine-wohnungsauflosung-in-karlsruhe-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Wohnungsauflösung in Karlsruhe ab?",
+      "city": "Karlsruhe",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/karlsruhe-bg.png",
+      "wordCount": 69,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (69 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-rastatt-was-kostet-eine-wohnungsauflosung-in-rastatt.md",
+      "slug": "",
+      "title": "Was kostet eine Wohnungsauflösung in Rastatt?",
+      "city": "Rastatt",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 68,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (68 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    },
+    {
+      "file": "content/auto/wohnungsaufloesung-rastatt-wie-lauft-eine-wohnungsauflosung-in-rastatt-ab.md",
+      "slug": "",
+      "title": "Wie läuft eine Wohnungsauflösung in Rastatt ab?",
+      "city": "Rastatt",
+      "service": "Wohnungsauflösung",
+      "heroImage": "/images/city/rastatt-bg.png",
+      "wordCount": 69,
+      "issues": [
+        {
+          "level": "critical",
+          "code": "missing_slug",
+          "message": "Slug fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_seo_title",
+          "message": "SEO title fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_meta_description",
+          "message": "Meta description fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "too_short",
+          "message": "Artikel ist eher kurz (69 Wörter)."
+        },
+        {
+          "level": "medium",
+          "code": "missing_faq",
+          "message": "FAQ-Bereich fehlt."
+        },
+        {
+          "level": "medium",
+          "code": "missing_blog_index",
+          "message": "Artikel fehlt im Blog-Index."
+        },
+        {
+          "level": "minor",
+          "code": "image_reuse_high",
+          "message": "Dieses Bild wird sehr oft wiederverwendet."
+        }
+      ]
+    }
+  ]
+}
