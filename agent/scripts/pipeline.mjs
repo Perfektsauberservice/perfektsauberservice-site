@@ -78,7 +78,7 @@ async function researchAgent(topic, city, service) {
   // Use tool_use (function calling) — guarantees valid JSON output
   const body = {
     model: CLAUDE_MODEL,
-    max_tokens: 3000,
+    max_tokens: 4000,
     system: `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`,
     tools: [{
       name: 'artikel_research',
