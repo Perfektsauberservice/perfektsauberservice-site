@@ -1,0 +1,44 @@
+name: Local Guard Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_file:
+        description: "HTML file to check, e.g. entruempelung-oetigheim.html"
+        required: true
+        type: string
+
+jobs:
+  run-local-guard:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run local guard
+        run: |
+          printf "%s\n" "${{ github.event.inputs.target_file }}" | python agent/scripts/run_local_guard.py
+
+      - name: Show similarity report
+        run: |
+          echo "=== page-similarity-report.json ==="
+          cat agent/state/page-similarity-report.json || true
+
+      - name: Show publish guard report
+        run: |
+          echo "=== publish-guard-report.json ==="
+          cat agent/state/publish-guard-report.json || true
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-guard-reports
+          path: |
+            agent/state/page-similarity-report.json
+            agent/state/publish-guard-report.json

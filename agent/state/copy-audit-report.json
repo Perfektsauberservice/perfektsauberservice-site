@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-04-01T22:29:31.303036Z",
+  "filesScanned": 138,
+  "filesWithIssues": 2,
+  "results": [
+    {
+      "file": "index.html",
+      "issuesCount": 3,
+      "issues": [
+        {
+          "pattern": "eingebunden",
+          "match": "eingebunden",
+          "snippet": "><div class=\"stats-grid\"><div class=\"stat\"><b>4</b><span>Städte direkt auf der Startseite eingebunden</span></div><div class=\"stat\"><b>4</b><span>Kernleistungen klar und sofort verständlich</"
+        },
+        {
+          "pattern": "im Fokus",
+          "match": "im Fokus",
+          "snippet": "-top:12px\">Rastatt, Baden-Baden, Gaggenau und Karlsruhe</h2><p>Diese Städte stehen direkt im Fokus. Daraus können wir danach einzelne lokale Seiten bauen: Entrümpelung Rastatt, Haushaltsau"
+        },
+        {
+          "pattern": "klar und sofort verständlich",
+          "match": "klar und sofort verständlich",
+          "snippet": "auf der Startseite eingebunden</span></div><div class=\"stat\"><b>4</b><span>Kernleistungen klar und sofort verständlich</span></div><div class=\"stat\"><b>2</b><span>Reale Vorher/Nachher Beispiele für Vertrauen<"
+        }
+      ]
+    },
+    {
+      "file": "index.html.html",
+      "issuesCount": 3,
+      "issues": [
+        {
+          "pattern": "eingebunden",
+          "match": "eingebunden",
+          "snippet": "><div class=\"stats-grid\"><div class=\"stat\"><b>4</b><span>Städte direkt auf der Startseite eingebunden</span></div><div class=\"stat\"><b>4</b><span>Kernleistungen klar und sofort verständlich</"
+        },
+        {
+          "pattern": "im Fokus",
+          "match": "im Fokus",
+          "snippet": "-top:12px\">Rastatt, Baden-Baden, Gaggenau und Karlsruhe</h2><p>Diese Städte stehen direkt im Fokus. Daraus können wir danach einzelne lokale Seiten bauen: Entrümpelung Rastatt, Haushaltsau"
+        },
+        {
+          "pattern": "klar und sofort verständlich",
+          "match": "klar und sofort verständlich",
+          "snippet": "auf der Startseite eingebunden</span></div><div class=\"stat\"><b>4</b><span>Kernleistungen klar und sofort verständlich</span></div><div class=\"stat\"><b>2</b><span>Reale Vorher/Nachher Beispiele für Vertrauen<"
+        }
+      ]
+    }
+  ]
+}

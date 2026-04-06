@@ -1,0 +1,1208 @@
+{
+  "updatedAt": "2026-04-01T19:36:39.188318Z",
+  "totalCities": 30,
+  "servicesPerCity": 4,
+  "totalPages": 120,
+  "items": [
+    {
+      "slug": "entruempelung-rastatt",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-rastatt.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.130948Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-rastatt",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-rastatt.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.131516Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-rastatt",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-rastatt.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.131971Z"
+    },
+    {
+      "slug": "gewerberaeumung-rastatt",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-rastatt.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.132500Z"
+    },
+    {
+      "slug": "entruempelung-baden-baden",
+      "city": "Baden-Baden",
+      "citySlug": "baden-baden",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-baden-baden.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.133334Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-baden-baden",
+      "city": "Baden-Baden",
+      "citySlug": "baden-baden",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-baden-baden.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.133788Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-baden-baden",
+      "city": "Baden-Baden",
+      "citySlug": "baden-baden",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-baden-baden.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.134285Z"
+    },
+    {
+      "slug": "gewerberaeumung-baden-baden",
+      "city": "Baden-Baden",
+      "citySlug": "baden-baden",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-baden-baden.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.134742Z"
+    },
+    {
+      "slug": "entruempelung-gaggenau",
+      "city": "Gaggenau",
+      "citySlug": "gaggenau",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-gaggenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.135595Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-gaggenau",
+      "city": "Gaggenau",
+      "citySlug": "gaggenau",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-gaggenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.136071Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-gaggenau",
+      "city": "Gaggenau",
+      "citySlug": "gaggenau",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-gaggenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.136602Z"
+    },
+    {
+      "slug": "gewerberaeumung-gaggenau",
+      "city": "Gaggenau",
+      "citySlug": "gaggenau",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-gaggenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.137179Z"
+    },
+    {
+      "slug": "entruempelung-karlsruhe",
+      "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-karlsruhe.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.137831Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-karlsruhe",
+      "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-karlsruhe.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.138374Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-karlsruhe",
+      "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-karlsruhe.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.138873Z"
+    },
+    {
+      "slug": "gewerberaeumung-karlsruhe",
+      "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-karlsruhe.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.139431Z"
+    },
+    {
+      "slug": "entruempelung-kuppenheim",
+      "city": "Kuppenheim",
+      "citySlug": "kuppenheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-kuppenheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.140080Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-kuppenheim",
+      "city": "Kuppenheim",
+      "citySlug": "kuppenheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-kuppenheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.140596Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-kuppenheim",
+      "city": "Kuppenheim",
+      "citySlug": "kuppenheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-kuppenheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.141006Z"
+    },
+    {
+      "slug": "gewerberaeumung-kuppenheim",
+      "city": "Kuppenheim",
+      "citySlug": "kuppenheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-kuppenheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.141479Z"
+    },
+    {
+      "slug": "entruempelung-muggensturm",
+      "city": "Muggensturm",
+      "citySlug": "muggensturm",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-muggensturm.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.141943Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-muggensturm",
+      "city": "Muggensturm",
+      "citySlug": "muggensturm",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-muggensturm.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.142418Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-muggensturm",
+      "city": "Muggensturm",
+      "citySlug": "muggensturm",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-muggensturm.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.142878Z"
+    },
+    {
+      "slug": "gewerberaeumung-muggensturm",
+      "city": "Muggensturm",
+      "citySlug": "muggensturm",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-muggensturm.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.143417Z"
+    },
+    {
+      "slug": "entruempelung-durmersheim",
+      "city": "Durmersheim",
+      "citySlug": "durmersheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-durmersheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.143871Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-durmersheim",
+      "city": "Durmersheim",
+      "citySlug": "durmersheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-durmersheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.144351Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-durmersheim",
+      "city": "Durmersheim",
+      "citySlug": "durmersheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-durmersheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.144815Z"
+    },
+    {
+      "slug": "gewerberaeumung-durmersheim",
+      "city": "Durmersheim",
+      "citySlug": "durmersheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-durmersheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.145295Z"
+    },
+    {
+      "slug": "entruempelung-bietigheim",
+      "city": "Bietigheim",
+      "citySlug": "bietigheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-bietigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.145706Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-bietigheim",
+      "city": "Bietigheim",
+      "citySlug": "bietigheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-bietigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.146141Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-bietigheim",
+      "city": "Bietigheim",
+      "citySlug": "bietigheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-bietigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.146563Z"
+    },
+    {
+      "slug": "gewerberaeumung-bietigheim",
+      "city": "Bietigheim",
+      "citySlug": "bietigheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-bietigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.147018Z"
+    },
+    {
+      "slug": "entruempelung-oetigheim",
+      "city": "Ötigheim",
+      "citySlug": "oetigheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-oetigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.147700Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-oetigheim",
+      "city": "Ötigheim",
+      "citySlug": "oetigheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-oetigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.148145Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-oetigheim",
+      "city": "Ötigheim",
+      "citySlug": "oetigheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-oetigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.148569Z"
+    },
+    {
+      "slug": "gewerberaeumung-oetigheim",
+      "city": "Ötigheim",
+      "citySlug": "oetigheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-oetigheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.149002Z"
+    },
+    {
+      "slug": "entruempelung-malsch",
+      "city": "Malsch",
+      "citySlug": "malsch",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-malsch.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.149445Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-malsch",
+      "city": "Malsch",
+      "citySlug": "malsch",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-malsch.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.149851Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-malsch",
+      "city": "Malsch",
+      "citySlug": "malsch",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-malsch.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.150258Z"
+    },
+    {
+      "slug": "gewerberaeumung-malsch",
+      "city": "Malsch",
+      "citySlug": "malsch",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-malsch.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.150825Z"
+    },
+    {
+      "slug": "entruempelung-sinzheim",
+      "city": "Sinzheim",
+      "citySlug": "sinzheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-sinzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.151277Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-sinzheim",
+      "city": "Sinzheim",
+      "citySlug": "sinzheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-sinzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.151775Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-sinzheim",
+      "city": "Sinzheim",
+      "citySlug": "sinzheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-sinzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.152266Z"
+    },
+    {
+      "slug": "gewerberaeumung-sinzheim",
+      "city": "Sinzheim",
+      "citySlug": "sinzheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-sinzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.152718Z"
+    },
+    {
+      "slug": "entruempelung-buehl",
+      "city": "Bühl",
+      "citySlug": "buehl",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-buehl.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.153228Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-buehl",
+      "city": "Bühl",
+      "citySlug": "buehl",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-buehl.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.153682Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-buehl",
+      "city": "Bühl",
+      "citySlug": "buehl",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-buehl.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.154185Z"
+    },
+    {
+      "slug": "gewerberaeumung-buehl",
+      "city": "Bühl",
+      "citySlug": "buehl",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-buehl.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.154626Z"
+    },
+    {
+      "slug": "entruempelung-achern",
+      "city": "Achern",
+      "citySlug": "achern",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-achern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.155040Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-achern",
+      "city": "Achern",
+      "citySlug": "achern",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-achern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.155491Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-achern",
+      "city": "Achern",
+      "citySlug": "achern",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-achern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.155962Z"
+    },
+    {
+      "slug": "gewerberaeumung-achern",
+      "city": "Achern",
+      "citySlug": "achern",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-achern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.156417Z"
+    },
+    {
+      "slug": "entruempelung-ettlingen",
+      "city": "Ettlingen",
+      "citySlug": "ettlingen",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-ettlingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.156849Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-ettlingen",
+      "city": "Ettlingen",
+      "citySlug": "ettlingen",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-ettlingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.157282Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-ettlingen",
+      "city": "Ettlingen",
+      "citySlug": "ettlingen",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-ettlingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.157763Z"
+    },
+    {
+      "slug": "gewerberaeumung-ettlingen",
+      "city": "Ettlingen",
+      "citySlug": "ettlingen",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-ettlingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.158238Z"
+    },
+    {
+      "slug": "entruempelung-gernsbach",
+      "city": "Gernsbach",
+      "citySlug": "gernsbach",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-gernsbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.158648Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-gernsbach",
+      "city": "Gernsbach",
+      "citySlug": "gernsbach",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-gernsbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.159236Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-gernsbach",
+      "city": "Gernsbach",
+      "citySlug": "gernsbach",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-gernsbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.159642Z"
+    },
+    {
+      "slug": "gewerberaeumung-gernsbach",
+      "city": "Gernsbach",
+      "citySlug": "gernsbach",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-gernsbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.160077Z"
+    },
+    {
+      "slug": "entruempelung-loffenau",
+      "city": "Loffenau",
+      "citySlug": "loffenau",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-loffenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.160594Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-loffenau",
+      "city": "Loffenau",
+      "citySlug": "loffenau",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-loffenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.161075Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-loffenau",
+      "city": "Loffenau",
+      "citySlug": "loffenau",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-loffenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.161543Z"
+    },
+    {
+      "slug": "gewerberaeumung-loffenau",
+      "city": "Loffenau",
+      "citySlug": "loffenau",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-loffenau.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.162019Z"
+    },
+    {
+      "slug": "entruempelung-iffezheim",
+      "city": "Iffezheim",
+      "citySlug": "iffezheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-iffezheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.162526Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-iffezheim",
+      "city": "Iffezheim",
+      "citySlug": "iffezheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-iffezheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.162937Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-iffezheim",
+      "city": "Iffezheim",
+      "citySlug": "iffezheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-iffezheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.163366Z"
+    },
+    {
+      "slug": "gewerberaeumung-iffezheim",
+      "city": "Iffezheim",
+      "citySlug": "iffezheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-iffezheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.163771Z"
+    },
+    {
+      "slug": "entruempelung-huegelsheim",
+      "city": "Hügelsheim",
+      "citySlug": "huegelsheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-huegelsheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.164220Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-huegelsheim",
+      "city": "Hügelsheim",
+      "citySlug": "huegelsheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-huegelsheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.164710Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-huegelsheim",
+      "city": "Hügelsheim",
+      "citySlug": "huegelsheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-huegelsheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.165190Z"
+    },
+    {
+      "slug": "gewerberaeumung-huegelsheim",
+      "city": "Hügelsheim",
+      "citySlug": "huegelsheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-huegelsheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.165637Z"
+    },
+    {
+      "slug": "entruempelung-rheinmuenster",
+      "city": "Rheinmünster",
+      "citySlug": "rheinmuenster",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-rheinmuenster.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.166075Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-rheinmuenster",
+      "city": "Rheinmünster",
+      "citySlug": "rheinmuenster",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-rheinmuenster.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.166547Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-rheinmuenster",
+      "city": "Rheinmünster",
+      "citySlug": "rheinmuenster",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-rheinmuenster.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.166984Z"
+    },
+    {
+      "slug": "gewerberaeumung-rheinmuenster",
+      "city": "Rheinmünster",
+      "citySlug": "rheinmuenster",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-rheinmuenster.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.167456Z"
+    },
+    {
+      "slug": "entruempelung-steinmauern",
+      "city": "Steinmauern",
+      "citySlug": "steinmauern",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-steinmauern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.167899Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-steinmauern",
+      "city": "Steinmauern",
+      "citySlug": "steinmauern",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-steinmauern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.168359Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-steinmauern",
+      "city": "Steinmauern",
+      "citySlug": "steinmauern",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-steinmauern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.168832Z"
+    },
+    {
+      "slug": "gewerberaeumung-steinmauern",
+      "city": "Steinmauern",
+      "citySlug": "steinmauern",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-steinmauern.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.169327Z"
+    },
+    {
+      "slug": "entruempelung-elchesheim-illingen",
+      "city": "Elchesheim-Illingen",
+      "citySlug": "elchesheim-illingen",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-elchesheim-illingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.169798Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-elchesheim-illingen",
+      "city": "Elchesheim-Illingen",
+      "citySlug": "elchesheim-illingen",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-elchesheim-illingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.170248Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-elchesheim-illingen",
+      "city": "Elchesheim-Illingen",
+      "citySlug": "elchesheim-illingen",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-elchesheim-illingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.170698Z"
+    },
+    {
+      "slug": "gewerberaeumung-elchesheim-illingen",
+      "city": "Elchesheim-Illingen",
+      "citySlug": "elchesheim-illingen",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-elchesheim-illingen.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.171249Z"
+    },
+    {
+      "slug": "entruempelung-au-am-rhein",
+      "city": "Au am Rhein",
+      "citySlug": "au-am-rhein",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-au-am-rhein.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.171728Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-au-am-rhein",
+      "city": "Au am Rhein",
+      "citySlug": "au-am-rhein",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-au-am-rhein.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.172214Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-au-am-rhein",
+      "city": "Au am Rhein",
+      "citySlug": "au-am-rhein",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-au-am-rhein.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.172663Z"
+    },
+    {
+      "slug": "gewerberaeumung-au-am-rhein",
+      "city": "Au am Rhein",
+      "citySlug": "au-am-rhein",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-au-am-rhein.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.173526Z"
+    },
+    {
+      "slug": "entruempelung-bischweier",
+      "city": "Bischweier",
+      "citySlug": "bischweier",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-bischweier.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.173940Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-bischweier",
+      "city": "Bischweier",
+      "citySlug": "bischweier",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-bischweier.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.174496Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-bischweier",
+      "city": "Bischweier",
+      "citySlug": "bischweier",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-bischweier.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.174990Z"
+    },
+    {
+      "slug": "gewerberaeumung-bischweier",
+      "city": "Bischweier",
+      "citySlug": "bischweier",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-bischweier.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.175461Z"
+    },
+    {
+      "slug": "entruempelung-weisenbach",
+      "city": "Weisenbach",
+      "citySlug": "weisenbach",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-weisenbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.175877Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-weisenbach",
+      "city": "Weisenbach",
+      "citySlug": "weisenbach",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-weisenbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.176315Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-weisenbach",
+      "city": "Weisenbach",
+      "citySlug": "weisenbach",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-weisenbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.176719Z"
+    },
+    {
+      "slug": "gewerberaeumung-weisenbach",
+      "city": "Weisenbach",
+      "citySlug": "weisenbach",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-weisenbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.177208Z"
+    },
+    {
+      "slug": "entruempelung-forbach",
+      "city": "Forbach",
+      "citySlug": "forbach",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-forbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.177639Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-forbach",
+      "city": "Forbach",
+      "citySlug": "forbach",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-forbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.178036Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-forbach",
+      "city": "Forbach",
+      "citySlug": "forbach",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-forbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.178472Z"
+    },
+    {
+      "slug": "gewerberaeumung-forbach",
+      "city": "Forbach",
+      "citySlug": "forbach",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-forbach.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.178881Z"
+    },
+    {
+      "slug": "entruempelung-rheinstetten",
+      "city": "Rheinstetten",
+      "citySlug": "rheinstetten",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-rheinstetten.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.179400Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-rheinstetten",
+      "city": "Rheinstetten",
+      "citySlug": "rheinstetten",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-rheinstetten.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.179850Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-rheinstetten",
+      "city": "Rheinstetten",
+      "citySlug": "rheinstetten",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-rheinstetten.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.180296Z"
+    },
+    {
+      "slug": "gewerberaeumung-rheinstetten",
+      "city": "Rheinstetten",
+      "citySlug": "rheinstetten",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-rheinstetten.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.180731Z"
+    },
+    {
+      "slug": "entruempelung-stutensee",
+      "city": "Stutensee",
+      "citySlug": "stutensee",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-stutensee.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.181300Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-stutensee",
+      "city": "Stutensee",
+      "citySlug": "stutensee",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-stutensee.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.181720Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-stutensee",
+      "city": "Stutensee",
+      "citySlug": "stutensee",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-stutensee.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.182157Z"
+    },
+    {
+      "slug": "gewerberaeumung-stutensee",
+      "city": "Stutensee",
+      "citySlug": "stutensee",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-stutensee.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.182585Z"
+    },
+    {
+      "slug": "entruempelung-bad-herrenalb",
+      "city": "Bad Herrenalb",
+      "citySlug": "bad-herrenalb",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-bad-herrenalb.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.183017Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-bad-herrenalb",
+      "city": "Bad Herrenalb",
+      "citySlug": "bad-herrenalb",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-bad-herrenalb.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.183515Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-bad-herrenalb",
+      "city": "Bad Herrenalb",
+      "citySlug": "bad-herrenalb",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-bad-herrenalb.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.183993Z"
+    },
+    {
+      "slug": "gewerberaeumung-bad-herrenalb",
+      "city": "Bad Herrenalb",
+      "citySlug": "bad-herrenalb",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-bad-herrenalb.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.184480Z"
+    },
+    {
+      "slug": "entruempelung-bad-wildbad",
+      "city": "Bad Wildbad",
+      "citySlug": "bad-wildbad",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-bad-wildbad.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.184960Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-bad-wildbad",
+      "city": "Bad Wildbad",
+      "citySlug": "bad-wildbad",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-bad-wildbad.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.185475Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-bad-wildbad",
+      "city": "Bad Wildbad",
+      "citySlug": "bad-wildbad",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-bad-wildbad.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.185945Z"
+    },
+    {
+      "slug": "gewerberaeumung-bad-wildbad",
+      "city": "Bad Wildbad",
+      "citySlug": "bad-wildbad",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-bad-wildbad.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.186437Z"
+    },
+    {
+      "slug": "entruempelung-pforzheim",
+      "city": "Pforzheim",
+      "citySlug": "pforzheim",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "targetPath": "entruempelung-pforzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.186894Z"
+    },
+    {
+      "slug": "haushaltsaufloesung-pforzheim",
+      "city": "Pforzheim",
+      "citySlug": "pforzheim",
+      "service": "Haushaltsauflösung",
+      "serviceSlug": "haushaltsaufloesung",
+      "targetPath": "haushaltsaufloesung-pforzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.187380Z"
+    },
+    {
+      "slug": "wohnungsaufloesung-pforzheim",
+      "city": "Pforzheim",
+      "citySlug": "pforzheim",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "targetPath": "wohnungsaufloesung-pforzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.187820Z"
+    },
+    {
+      "slug": "gewerberaeumung-pforzheim",
+      "city": "Pforzheim",
+      "citySlug": "pforzheim",
+      "service": "Gewerberäumung",
+      "serviceSlug": "gewerberaeumung",
+      "targetPath": "gewerberaeumung-pforzheim.html",
+      "status": "created",
+      "createdAt": "2026-04-01T19:36:39.188311Z"
+    }
+  ]
+}

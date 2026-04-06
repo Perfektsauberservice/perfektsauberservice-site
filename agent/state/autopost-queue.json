@@ -1,0 +1,47 @@
+{
+  "dailyLimit": 15,
+  "publishedToday": 0,
+  "lastPublishedAt": "",
+  "items": [
+    {
+      "id": "c32nclxw3fsmnf2pjub",
+      "title": "Entrümpelung Rastatt | Perfekt Sauber Service",
+      "path": "entruempelung-rastatt.html",
+      "stagedPath": "agent/staging/entruempelung-rastatt.html",
+      "status": "queued",
+      "queuedAt": "2026-03-31T20:33:34.204Z"
+    },
+    {
+      "id": "haushaltsaufloesung-rastatt-ablauf",
+      "title": "Haushaltsauflösung Rastatt | Perfekt Sauber Service",
+      "path": "haushaltsaufloesung-rastatt.html",
+      "stagedPath": "agent/staging/haushaltsaufloesung-rastatt-ablauf.html",
+      "status": "queued",
+      "queuedAt": "2026-04-01T17:42:07Z"
+    },
+    {
+      "id": "wohnungsaufloesung-rastatt",
+      "title": "Wohnungsauflösung Rastatt | Perfekt Sauber Service",
+      "path": "wohnungsaufloesung-rastatt.html",
+      "stagedPath": "agent/staging/wohnungsaufloesung-rastatt.html",
+      "status": "queued",
+      "queuedAt": "2026-04-01T19:04:58Z"
+    },
+    {
+      "id": "gewerberaeumung-rastatt",
+      "title": "Gewerberäumung Rastatt | Perfekt Sauber Service",
+      "path": "gewerberaeumung-rastatt.html",
+      "stagedPath": "agent/staging/gewerberaeumung-rastatt.html",
+      "status": "queued",
+      "queuedAt": "2026-04-01T19:04:58Z"
+    },
+    {
+      "id": "haushaltsaufloesung-baden-baden",
+      "title": "Haushaltsauflösung Baden-Baden | Perfekt Sauber Service",
+      "path": "haushaltsaufloesung-baden-baden.html",
+      "stagedPath": "agent/staging/haushaltsaufloesung-baden-baden.html",
+      "status": "queued",
+      "queuedAt": "2026-04-01T19:04:58Z"
+    }
+  ]
+}

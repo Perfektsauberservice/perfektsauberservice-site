@@ -1,0 +1,41 @@
+{
+  "services": [
+    {
+      "slug": "entruempelung",
+      "name": "Entrümpelung",
+      "questionTemplates": [
+        "Was kostet eine Entrümpelung in {city}?",
+        "Wie läuft eine Entrümpelung in {city} ab?",
+        "Wie schnell bekommt man einen Termin für eine Entrümpelung in {city}?"
+      ],
+      "cta": "Kostenlose Anfrage per WhatsApp oder Telefon"
+    },
+    {
+      "slug": "wohnungsaufloesung",
+      "name": "Wohnungsauflösung",
+      "questionTemplates": [
+        "Wie läuft eine Wohnungsauflösung in {city} ab?",
+        "Was kostet eine Wohnungsauflösung in {city}?"
+      ],
+      "cta": "Jetzt unverbindlich Bilder senden und Einschätzung erhalten"
+    },
+    {
+      "slug": "endreinigung",
+      "name": "Endreinigung",
+      "questionTemplates": [
+        "Was ist bei einer Endreinigung vor der Wohnungsübergabe in {city} wichtig?",
+        "Was kostet eine Endreinigung in {city}?"
+      ],
+      "cta": "Termin für Endreinigung jetzt anfragen"
+    },
+    {
+      "slug": "fensterreinigung",
+      "name": "Fensterreinigung",
+      "questionTemplates": [
+        "Fensterreinigung in {city}: Preise, Dauer, Ablauf",
+        "Wie oft sollte man Fenster in {city} reinigen lassen?"
+      ],
+      "cta": "Fensterreinigung schnell anfragen"
+    }
+  ]
+}

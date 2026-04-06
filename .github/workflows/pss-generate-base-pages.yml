@@ -1,0 +1,30 @@
+name: PSS Generate Base Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-base-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate base pages
+        run: python agent/scripts/generate_base_pages.py
+
+      - name: Commit generated base pages
+        run: |
+          git config user.name "Perfektsauberservice Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add *.html agent/state/base-pages-plan.json
+          git diff --cached --quiet || git commit -m "chore(base-pages): generate city service pages"
+          git push

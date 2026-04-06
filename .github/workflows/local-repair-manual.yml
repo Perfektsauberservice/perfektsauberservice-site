@@ -1,0 +1,52 @@
+name: Local Repair Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_file:
+        description: "HTML file to repair, e.g. entruempelung-bischweier.html"
+        required: true
+        type: string
+
+jobs:
+  repair-local-page:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run local repair v2
+        run: |
+          printf "%s\n" "${{ github.event.inputs.target_file }}" | python agent/scripts/run_local_repair_v2.py
+
+      - name: Show repair report
+        run: |
+          echo "=== differentiation-log.json ==="
+          cat agent/state/differentiation-log.json || true
+
+      - name: Commit repaired file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ github.event.inputs.target_file }}" agent/state/differentiation-log.json || true
+          git diff --cached --quiet || git commit -m "Repair local page v2: ${{ github.event.inputs.target_file }}"
+          git push
+
+      - name: Upload repair report
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-repair-report
+          path: |
+            agent/state/differentiation-log.json
+            agent/state/page-similarity-report.json
+            agent/state/publish-guard-report.json

@@ -1,0 +1,35 @@
+{
+  "page": "entruempelung-gaggenau.html",
+  "overall_similarity": 21,
+  "risk": "low",
+  "closest_matches": [
+    {
+      "file": "entruempelung-rheinstetten.html",
+      "similarity": 21
+    },
+    {
+      "file": "entruempelung-bad-wildbad.html",
+      "similarity": 20
+    },
+    {
+      "file": "entruempelung-rheinmuenster.html",
+      "similarity": 19
+    },
+    {
+      "file": "entruempelung-bad-herrenalb.html",
+      "similarity": 18
+    },
+    {
+      "file": "entruempelung-gernsbach.html",
+      "similarity": 18
+    }
+  ],
+  "block_similarity": {
+    "hero": 19,
+    "structure": 45,
+    "faq": 2,
+    "cta": 21
+  },
+  "problems": [],
+  "rewrite_targets": []
+}

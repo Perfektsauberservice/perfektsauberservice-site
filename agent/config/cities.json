@@ -1,0 +1,56 @@
+{
+  "cities": [
+    {
+      "slug": "rastatt",
+      "name": "Rastatt",
+      "servicePage": "entruempelung-rastatt.html",
+      "heroImage": "images/city/rastatt-bg.png",
+      "articleImage": "images/city/rastatt-bg.png",
+      "keywords": [
+        "Entrümpelung Rastatt",
+        "Wohnungsauflösung Rastatt",
+        "Endreinigung Rastatt"
+      ],
+      "backgroundAlt": "Schloss Rastatt"
+    },
+    {
+      "slug": "baden-baden",
+      "name": "Baden-Baden",
+      "servicePage": "entruempelung-baden-baden.html",
+      "heroImage": "images/city/baden-baden-bg.png",
+      "articleImage": "images/city/baden-baden-bg.png",
+      "keywords": [
+        "Entrümpelung Baden-Baden",
+        "Wohnungsauflösung Baden-Baden",
+        "Endreinigung Baden-Baden"
+      ],
+      "backgroundAlt": "Baden-Baden Casino"
+    },
+    {
+      "slug": "gaggenau",
+      "name": "Gaggenau",
+      "servicePage": "entruempelung-gaggenau.html",
+      "heroImage": "images/city/gaggenau-bg.png",
+      "articleImage": "images/city/gaggenau-bg.png",
+      "keywords": [
+        "Entrümpelung Gaggenau",
+        "Wohnungsauflösung Gaggenau",
+        "Endreinigung Gaggenau"
+      ],
+      "backgroundAlt": "Stadt Gaggenau"
+    },
+    {
+      "slug": "karlsruhe",
+      "name": "Karlsruhe",
+      "servicePage": "entruempelung-karlsruhe.html",
+      "heroImage": "images/city/karlsruhe-bg.png",
+      "articleImage": "images/city/karlsruhe-bg.png",
+      "keywords": [
+        "Entrümpelung Karlsruhe",
+        "Wohnungsauflösung Karlsruhe",
+        "Endreinigung Karlsruhe"
+      ],
+      "backgroundAlt": "Stadt Karlsruhe"
+    }
+  ]
+}

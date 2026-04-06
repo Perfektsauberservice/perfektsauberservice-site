@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PSS SEO Control Center Ultimate v8</title>
+<style>
+:root{
+  --bg:#f3f5f7;--card:#fff;--line:#d8dee6;--text:#0f172a;--muted:#5b6575;
+  --navy:#0d1b3d;--navy2:#142650;--green:#12b981;--red:#dc2626;--amber:#f59e0b;
+  --blue:#2563eb;--purple:#7c3aed;--soft:#f8fafc;--teal:#0ea5a4;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1480px;margin:0 auto;padding:20px}
+.hero{background:linear-gradient(135deg,var(--navy),#0b1733 55%,var(--navy2));color:#fff;border-radius:28px;padding:28px;display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+.pill{display:inline-block;background:rgba(255,255,255,.12);padding:8px 14px;border-radius:999px;font-size:14px}
+h1{margin:14px 0 8px;font-size:42px;line-height:1.05}.sub{color:#e7edf9;font-size:17px;max-width:920px}
+.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{border:none;border-radius:18px;padding:14px 18px;font-weight:700;font-size:15px;cursor:pointer}
+.btn-white{background:#fff;color:#111827}.btn-green{background:var(--green);color:#fff}.btn-navy{background:#081735;color:#fff}
+.btn-red{background:var(--red);color:#fff}.btn-amber{background:var(--amber);color:#111827}.btn-blue{background:var(--blue);color:#fff}
+.btn-purple{background:var(--purple);color:#fff}.btn-teal{background:var(--teal);color:#fff}.btn-gray{background:#475569;color:#fff}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.tab{padding:14px 20px;border-radius:18px;background:#fff;border:1px solid var(--line);font-weight:700;cursor:pointer}
+.tab.active{background:#0c1838;color:#fff;border-color:#0c1838}
+.grid{display:grid;gap:22px}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:1fr 1fr 1fr}.four{grid-template-columns:repeat(4,1fr)}
+.card,.metric{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px}
+.metric .v{font-size:30px;font-weight:800;margin-top:8px}.section-title{font-size:18px;font-weight:800;margin:0 0 18px}
+.small{color:var(--muted);font-size:13px} .notice{font-size:13px;color:var(--muted);line-height:1.55}
+label{display:block;font-size:14px;font-weight:600;margin:0 0 8px}
+.input,.select,.textarea{width:100%;padding:14px 16px;border:1px solid #cdd5df;border-radius:18px;background:#fff;font-size:15px}
+.textarea{min-height:150px;resize:vertical}.row2,.row3{display:grid;gap:14px}.row2{grid-template-columns:1fr 1fr}.row3{grid-template-columns:1fr 1fr 1fr}
+.stack{display:grid;gap:14px}.list{display:grid;gap:12px;max-height:480px;overflow:auto}.item{border:1px solid var(--line);border-radius:18px;padding:14px 16px;background:#fff}
+.hidden{display:none}.inline-actions{display:flex;gap:10px;flex-wrap:wrap}.preview{width:100%;min-height:260px;border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;font-family:ui-monospace,monospace;font-size:12px;white-space:pre-wrap;overflow:auto}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+.success{background:#dff7eb;color:#066c43}.info{background:#eef2ff;color:#334155}.warn{background:#fff4d6;color:#8a5a00}.err{background:#fee2e2;color:#991b1b}
+.kpi{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid #edf1f5}.kpi:last-child{border-bottom:none}
+.help-box{background:linear-gradient(180deg,#f8fbff,#ffffff);border:1px solid #d9e5ff;border-radius:24px;padding:22px}.help-box h3{margin:0 0 12px;font-size:20px}
+.steps{display:grid;gap:10px}.step{display:flex;gap:10px;align-items:flex-start}.step-no{min-width:28px;height:28px;border-radius:999px;background:#0c1838;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.rule-chip{border-radius:999px;padding:6px 12px;font-size:12px;font-weight:800}.chip-red{background:#fee2e2;color:#991b1b}.chip-amber{background:#fff4d6;color:#8a5a00}.chip-blue{background:#dbeafe;color:#1d4ed8}.chip-green{background:#dff7eb;color:#066c43}.chip-purple{background:#ede9fe;color:#6d28d9}.chip-teal{background:#ccfbf1;color:#115e59}
+.status-box{border:1px solid var(--line);border-radius:18px;padding:14px 16px;background:var(--soft)}
+.flash{position:sticky;top:10px;z-index:20;margin-bottom:12px}.flash-inner{padding:14px 18px;border-radius:18px;font-weight:700;border:1px solid var(--line);background:#fff}
+.flash-success{background:#dff7eb;color:#066c43;border-color:#b7e7ce}.flash-info{background:#eef2ff;color:#334155;border-color:#d9ddff}.flash-warn{background:#fff4d6;color:#8a5a00;border-color:#f3dfa4}.flash-error{background:#fee2e2;color:#991b1b;border-color:#f3b9b9}
+.warn-text{color:#b45309;font-weight:700}
+.good-text{color:#166534;font-weight:700}
+code{background:#f8fafc;padding:2px 6px;border-radius:6px}
+@media (max-width:1100px){.hero,.two,.three,.four,.row2,.row3{grid-template-columns:1fr}h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="flash" class="flash hidden"><div id="flashInner" class="flash-inner flash-info">Ready.</div></div>
+
+  <div class="hero">
+    <div>
+      <div class="pill">Perfekt Sauber Service</div>
+      <h1>PSS SEO Control Center Ultimate v8</h1>
+      <div class="sub">v8 păstrează motorul real din v7 și adaugă background auto-post prin GitHub Actions: drafturile aprobate pot fi puse într-o coadă din repo și publicate în fundal.</div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-white" id="btnRunSelector">Run Topic Selector</button>
+      <button class="btn btn-green" id="btnRunPipeline">Run Full Pipeline</button>
+      <button class="btn btn-navy" id="btnRunAudit">Run Audit</button>
+      <button class="btn btn-amber" id="btnRefreshBlog">Refresh Blog</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="publishing">Publishing</button>
+    <button class="tab" data-tab="content">Content Pipeline</button>
+    <button class="tab" data-tab="topics">Topic Scoring</button>
+    <button class="tab" data-tab="duplicates">Duplicate Check</button>
+    <button class="tab" data-tab="interlinking">Interlinking</button>
+    <button class="tab" data-tab="blog">Blog Rebuild</button>
+    <button class="tab" data-tab="audit">Audit Pro</button>
+    <button class="tab" data-tab="repair">Repair Pro</button>
+    <button class="tab" data-tab="autopost">Background Auto-post</button>
+    <button class="tab" data-tab="leads">Lead Agent</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </div>
+
+  <div id="tab-overview">
+    <div class="grid four">
+      <div class="metric"><div class="small">Published today</div><div class="v" id="mPublished">0</div></div>
+      <div class="metric"><div class="small">Daily limit</div><div class="v" id="mDailyLimit">10</div></div>
+      <div class="metric"><div class="small">Blog visible posts</div><div class="v" id="mBlogVisible">0</div></div>
+      <div class="metric"><div class="small">SEO pages total</div><div class="v" id="mSeoPages">0</div></div>
+    </div>
+
+    <div class="grid two" style="margin-top:22px">
+      <div class="help-box">
+        <h3>Când vrei pagină nouă</h3>
+        <div class="steps">
+          <div class="step"><div class="step-no">1</div><div><strong>Publishing</strong><div class="small">Test GitHub, Load Repo Files</div></div></div>
+          <div class="step"><div class="step-no">2</div><div><strong>Content Pipeline</strong><div class="small">Add Topic</div></div></div>
+          <div class="step"><div class="step-no">3</div><div><strong>Run Topic Selector</strong><div class="small">Intră în coadă</div></div></div>
+          <div class="step"><div class="step-no">4</div><div><strong>Run Full Pipeline</strong><div class="small">Generează draft</div></div></div>
+          <div class="step"><div class="step-no">5</div><div><strong>Duplicate Check Pro</strong><div class="small">Trecerea 1 + Trecerea 2</div></div></div>
+          <div class="step"><div class="step-no">6</div><div><strong>Preview</strong><div class="small">Verifici HTML-ul</div></div></div>
+          <div class="step"><div class="step-no">7</div><div><strong>Approve Draft / Auto-post</strong><div class="small">Manual sau automat cât timp dashboardul e deschis</div></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Status rapid</h2>
+        <div class="kpi"><span>Ultimul articol publicat</span><strong id="lastPublishedTitle">—</strong></div>
+        <div class="kpi"><span>Email alert status</span><span id="emailStatus" class="badge info">unknown</span></div>
+        <div class="kpi"><span>Keyword ↔ City guard</span><span class="badge success">active</span></div>
+        <div class="kpi"><span>Auto-post background</span><span class="badge success">GitHub Actions + local fallback</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+      <h2 class="section-title">Logs</h2>
+      <div class="list" id="logsList"></div>
+    </div>
+  </div>
+
+  <div id="tab-publishing" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Publishing</h2>
+        <div class="notice" style="margin-bottom:14px">După butoane primești feedback clar și în Logs, și sus pe ecran.</div>
+        <div class="stack">
+          <div class="row2">
+            <div><label>Owner</label><input class="input" id="owner" value="Perfektsauberservice"></div>
+            <div><label>Repo</label><input class="input" id="repo" value="perfektsauberservice-site"></div>
+          </div>
+          <div class="row3">
+            <div><label>Branch</label><input class="input" id="branch" value="main"></div>
+            <div><label>Content path</label><input class="input" id="contentPath" value="."></div>
+            <div><label>File extension</label><input class="input" id="fileExt" value=".html"></div>
+          </div>
+          <div class="row2">
+            <div><label>Template path</label><input class="input" id="templatePath" value="entruempelung-rastatt.html"></div>
+            <div><label>Commit prefix</label><input class="input" id="commitPrefix" value="PSS Agent"></div>
+          </div>
+          <div><label>GitHub token</label><input class="input" id="token" type="password" placeholder="ghp_..."></div>
+          <div class="inline-actions">
+            <button class="btn btn-navy" id="btnTestGithub">Test GitHub</button>
+            <button class="btn btn-navy" id="btnLoadFiles">Load Repo Files</button>
+            <button class="btn btn-white" id="btnTestEmail">Test email status</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Loaded repo files</h2>
+        <div class="status-box"><span class="badge info" id="filesBadge">idle</span> <span id="filesText">No files loaded</span></div>
+        <div class="list" style="margin-top:14px" id="loadedFilesBox"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-content" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Add Topic</h2>
+        <div class="notice" style="margin-bottom:14px">Dacă scrii un keyword cu alt oraș decât cel ales în City, dashboardul îți corectează automat orașul sau te avertizează clar.</div>
+        <div class="stack">
+          <div><label>Keyword / topic</label><input class="input" id="topicKeyword" placeholder="Entrümpelung Kuppenheim Kosten"></div>
+          <div class="row2">
+            <div><label>Service</label><select class="select" id="topicService"></select></div>
+            <div><label>City</label><select class="select" id="topicCity"></select></div>
+          </div>
+          <div id="cityGuardStatus" class="status-box small">Scrie keyword-ul și alegerea orașului va fi verificată automat.</div>
+          <div class="row3">
+            <div><label>Priority</label><select class="select" id="topicPriority"><option>high</option><option>medium</option><option>low</option></select></div>
+            <div><label>Intent</label><select class="select" id="topicIntent"><option>commercial</option><option>informational</option></select></div>
+            <div><label>Score</label><input class="input" id="topicScore" type="number" value="90"></div>
+          </div>
+          <button class="btn btn-navy" id="btnAddTopic">Add Topic</button>
+        </div>
+      </div>
+      <div class="card"><h2 class="section-title">Topics list</h2><div class="list" id="topicsList"></div></div>
+    </div>
+
+    <div class="grid two" style="margin-top:22px">
+      <div class="card"><h2 class="section-title">Queue</h2><div class="list" id="queueList"></div></div>
+      <div class="card"><h2 class="section-title">Drafts</h2><div class="list" id="draftsList"></div></div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+      <h2 class="section-title">Preview</h2>
+      <div class="small" id="previewInfo">Selectează un draft ca să vezi primele 4000 caractere.</div>
+      <pre class="preview" id="previewBox"></pre>
+    </div>
+  </div>
+
+  <div id="tab-topics" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Ce este Topic Scoring?</h2>
+        <div class="notice" style="margin-bottom:14px">Decide ce topic merită făcut primul. Cu cât scorul e mai mare, cu atât topicul e mai bun. Dacă există deja sau e prea apropiat de altul, scorul scade.</div>
+        <div class="kpi"><span>Commercial intent</span><strong>+30</strong></div>
+        <div class="kpi"><span>Local city keyword</span><strong>+25</strong></div>
+        <div class="kpi"><span>Service + city + cost</span><strong>+20</strong></div>
+        <div class="kpi"><span>Already exists</span><strong>-100</strong></div>
+        <div class="kpi"><span>Too similar</span><strong>-50</strong></div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Recommended next topics</h2>
+        <div class="list" id="recommendedTopics"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-duplicates" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Duplicate Check Pro</h2>
+        <div class="notice" style="margin-bottom:14px">
+          <strong>Trecerea 1</strong>: verifică slug, title și topic apropiat.<br>
+          <strong>Trecerea 2</strong>: verifică mai dur pe textul complet al draftului față de fișierele din repo și dă un scor de similaritate.
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-navy" id="btnScanDuplicates">Scan duplicates</button>
+          <button class="btn btn-blue" id="btnDeepDuplicateAudit">Deep duplicate audit</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Duplicate results</h2>
+        <div class="list" id="duplicateList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-interlinking" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Interlinking suggestions</h2>
+        <div class="inline-actions"><button class="btn btn-blue" id="btnGenerateLinks">Generate link suggestions</button></div>
+      </div>
+      <div class="card"><h2 class="section-title">Suggested links</h2><div class="list" id="linkSuggestions"></div></div>
+    </div>
+  </div>
+
+  <div id="tab-blog" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Blog Rebuild</h2>
+        <div class="kpi"><span>Visible blog posts</span><strong id="blogVisibleCount">0</strong></div>
+        <div class="kpi"><span>SEO pages total</span><strong id="seoPageCount">0</strong></div>
+        <div class="notice" style="margin:14px 0">
+          <strong>Refresh / recount</strong> = recalculează numerele.<br>
+          <strong>Rebuild missing blog entries</strong> = înregistrează clar acțiunea în Logs și history.
+        </div>
+        <div class="inline-actions">
+          <button class="btn btn-purple" id="btnRebuildMissingBlog">Rebuild missing blog entries</button>
+          <button class="btn btn-amber" id="btnRefreshBlog2">Refresh / recount</button>
+        </div>
+      </div>
+      <div class="card"><h2 class="section-title">Blog analysis</h2><div class="list" id="blogAnalysis"></div></div>
+    </div>
+  </div>
+
+  <div id="tab-audit" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Audit Pro</h2>
+        <div class="kpi"><span>Total articole verificate</span><strong id="auditTotal2">0</strong></div>
+        <div class="kpi"><span>Probleme critice</span><strong id="auditCritical2">0</strong></div>
+        <div class="kpi"><span>Probleme medii</span><strong id="auditMedium2">0</strong></div>
+        <div class="kpi"><span>Probleme minore</span><strong id="auditMinor2">0</strong></div>
+        <div class="kpi"><span>Data ultimului audit</span><strong id="auditLastDate">—</strong></div>
+        <div class="inline-actions">
+          <button class="btn btn-navy" id="btnRunAudit2">Run Audit</button>
+          <button class="btn btn-white" id="btnLoadSampleAudit">Load sample audit</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Import audit JSON</h2>
+        <label>Audit JSON</label>
+        <textarea class="textarea" id="auditJson" placeholder='{"total_checked":12,"critical":1,"medium":3,"minor":4,"last_audit":"31.03.2026 12:00"}'></textarea>
+        <div class="inline-actions" style="margin-top:14px"><button class="btn btn-green" id="btnApplyAuditJson">Apply audit JSON</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-repair" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Repair actions</h2>
+        <div class="inline-actions">
+          <button class="btn btn-red" id="btnFixCritical">Fix critical issues</button>
+          <button class="btn btn-amber" id="btnFixMedium">Fix medium issues</button>
+          <button class="btn btn-green" id="btnRepairSelected">Repair selected articles</button>
+          <button class="btn btn-purple" id="btnRebuildMissingBlog2">Rebuild missing blog entries</button>
+          <button class="btn btn-blue" id="btnBasicInterlinking">Basic interlinking</button>
+        </div>
+        <div class="stack" style="margin-top:18px">
+          <div class="status-box"><span class="rule-chip chip-red">CRITICAL</span> Lipsă title, meta description, canonical, robots, h1.</div>
+          <div class="status-box"><span class="rule-chip chip-amber">MEDIUM</span> CTA și completări SEO moderate.</div>
+          <div class="status-box"><span class="rule-chip chip-green">FULL</span> Critical + medium pe fișierele selectate.</div>
+          <div class="status-box"><span class="rule-chip chip-blue">LINKS</span> Linkuri interne între pagini.</div>
+          <div class="status-box"><span class="rule-chip chip-purple">BLOG</span> Intrări lipsă sau probleme de listare în blog.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Doar fișiere cu probleme active</h2>
+        <div class="small" style="margin-bottom:12px">După refresh/audit, fișierele reparate și curate dispar automat din listă.</div>
+        <div class="list" id="repairFileList"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:22px"><h2 class="section-title">Repair queue / history</h2><div class="list" id="repairList"></div></div>
+  </div>
+
+  
+  <div id="tab-autopost" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Background Auto-post prin GitHub Actions</h2>
+        <div class="notice" style="margin-bottom:14px">
+          Aici pui drafturile aprobate într-o coadă din repo. Workflow-ul <code>pss-background-autopost.yml</code> și scriptul <code>background_autopost.py</code> le pot publica în fundal, fără tab deschis.
+        </div>
+        <div class="stack">
+          <div class="row3">
+            <div><label>Queue JSON path</label><input class="input" id="bgQueuePath" value="agent/state/autopost-queue.json"></div>
+            <div><label>Stage folder</label><input class="input" id="bgStageDir" value="agent/staging"></div>
+            <div><label>Workflow file</label><input class="input" id="bgWorkflowFile" value="pss-background-autopost.yml"></div>
+          </div>
+          <div><label>Background script path</label><input class="input" id="bgScriptPath" value="agent/scripts/background_autopost.py"></div>
+          <div class="inline-actions">
+            <button class="btn btn-blue" id="btnLoadBgQueue">Load background queue</button>
+            <button class="btn btn-purple" id="btnQueueApprovedBg">Queue first approved draft</button>
+            <button class="btn btn-green" id="btnRunBgWorkflow">Run background workflow now</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Background queue status</h2>
+        <div class="kpi"><span>Queued items</span><strong id="bgQueuedCount">0</strong></div>
+        <div class="kpi"><span>Queue daily limit</span><strong id="bgDailyLimitText">10</strong></div>
+        <div class="kpi"><span>Published by queue today</span><strong id="bgPublishedTodayText">0</strong></div>
+        <div class="kpi"><span>Last background publish</span><strong id="bgLastPublishedText">—</strong></div>
+      </div>
+    </div>
+    <div class="grid two" style="margin-top:22px">
+      <div class="card">
+        <h2 class="section-title">Queued items in repo</h2>
+        <div class="list" id="bgQueueList"></div>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Local fallback scheduler</h2>
+        <div class="notice" style="margin-bottom:14px">
+          Varianta veche rămâne disponibilă ca rezervă. Aceasta funcționează doar cât timp dashboardul rămâne deschis în browser.
+        </div>
+        <div class="row3">
+          <div><label>Daily limit</label><input class="input" id="dailyLimitInput" type="number" value="10"></div>
+          <div><label>Interval (minute)</label><input class="input" id="autoInterval" type="number" value="60"></div>
+          <div><label>Status</label><div class="status-box" id="autoStatusBox">idle</div></div>
+        </div>
+        <div class="inline-actions" style="margin-top:14px">
+          <button class="btn btn-green" id="btnStartAutoPost">Start local auto-post</button>
+          <button class="btn btn-gray" id="btnStopAutoPost">Stop local auto-post</button>
+        </div>
+        <div class="kpi" style="margin-top:18px"><span>Next local run</span><strong id="nextRunText">—</strong></div>
+        <div class="kpi"><span>Approved drafts waiting</span><strong id="approvedDraftsCount">0</strong></div>
+        <div class="kpi"><span>Published today</span><strong id="publishedTodayText">0</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-leads" class="hidden">
+    <div class="grid two">
+      <div class="card">
+        <h2 class="section-title">Lead Agent</h2>
+        <div class="stack">
+          <div><label>Lead source</label><select class="select" id="leadSource"><option>Website</option><option>WhatsApp</option><option>Google</option><option>Kleinanzeigen</option></select></div>
+          <div><label>Lead message</label><textarea class="textarea" id="leadMessage" placeholder="Bună ziua, vreau o estimare pentru o entrümpelung..."></textarea></div>
+          <div class="inline-actions">
+            <button class="btn btn-teal" id="btnAnalyzeLead">Analyze lead</button>
+            <button class="btn btn-green" id="btnCreateFollowup">Create follow-up</button>
+          </div>
+        </div>
+      </div>
+      <div class="card"><h2 class="section-title">Lead output</h2><div class="list" id="leadOutput"></div></div>
+    </div>
+  </div>
+
+  <div id="tab-settings" class="hidden">
+    <div class="card">
+      <h2 class="section-title">Settings / usage</h2>
+      <div class="notice">v8 păstrează duplicate check pro, guard pentru oraș, publish direct în GitHub și adaugă background auto-post prin GitHub Actions.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const KEY='pss-seo-control-center-v8';
+const DRAFT_PREFIX='pss_draft_html_';
+const DEF={settings:{owner:'Perfektsauberservice',repo:'perfektsauberservice-site',branch:'main',contentPath:'.',fileExt:'.html',templatePath:'entruempelung-rastatt.html',commitPrefix:'PSS Agent',token:'',dailyLimit:10,emailStatus:'unknown',allowedCities:['Rastatt','Baden-Baden','Gaggenau','Karlsruhe','Kuppenheim','Durmersheim','Muggensturm','Ötigheim','Bietigheim','Malsch'],allowedServices:['Entrümpelung','Wohnungsauflösung','Haushaltsauflösung','Kellerentrümpelung'],autoPosting:false,autoIntervalMin:60,nextRunAt:'',backgroundQueuePath:'agent/state/autopost-queue.json',backgroundStageDir:'agent/staging',backgroundWorkflowFile:'pss-background-autopost.yml',backgroundScriptPath:'agent/scripts/background_autopost.py'},topics:[],queue:[],drafts:[],history:[],logs:[],loadedFiles:[],publishedToday:0,audit:{total_checked:0,critical:0,medium:0,minor:0,last_audit:'—'},repairQueue:[],selectedDraftId:'',selectedRepairFiles:[],repairStatus:{},duplicates:[],links:[],leads:[],backgroundQueueInfo:{items:[],dailyLimit:10,publishedToday:0,lastPublishedAt:'',loadedAt:'',exists:false}};
+let state=load(); const el=id=>document.getElementById(id); const tabs=[...document.querySelectorAll('.tab')]; let autoTimer=null;
+function load(){try{const raw=localStorage.getItem(KEY);return raw?{...DEF,...JSON.parse(raw),settings:{...DEF.settings,...(JSON.parse(raw).settings||{})},audit:{...DEF.audit,...((JSON.parse(raw).audit)||{})},repairStatus:{...(JSON.parse(raw).repairStatus||{})}}:JSON.parse(JSON.stringify(DEF))}catch(e){return JSON.parse(JSON.stringify(DEF))}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function stamp(){return new Date().toLocaleString('de-DE')}
+function uuid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
+function flash(type,msg){el('flash').classList.remove('hidden'); el('flashInner').className='flash-inner ' + (type==='success'?'flash-success':type==='warning'?'flash-warn':type==='error'?'flash-error':'flash-info'); el('flashInner').textContent=msg;}
+function addLog(type,msg){state.logs.unshift({id:uuid(),type,msg,at:stamp()});state.logs=state.logs.slice(0,500);save(); flash(type,msg)}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function badgeClass(t){return t==='success'?'success':t==='error'?'err':t==='warning'?'warn':'info'}
+function statusClass(s){return s==='published'||s==='approved'?'success':s==='rejected'?'err':(s==='queued' || s==='queued-bg')?'info':s==='draft'?'warn':'info'}
+function github(path,opts={}){
+  sync();
+  const headers={'Authorization':'token '+state.settings.token,'Accept':'application/vnd.github+json'};
+  if(opts.body && typeof opts.body!=='string'){headers['Content-Type']='application/json';opts.body=JSON.stringify(opts.body)}
+  const url='https://api.github.com/repos/'+encodeURIComponent(state.settings.owner)+'/'+encodeURIComponent(state.settings.repo)+path;
+  return fetch(url,{...opts,headers}).then(async r=>{const t=await r.text();let d={};try{d=t?JSON.parse(t):{}}catch(e){d={raw:t}} if(!r.ok) throw new Error(d.message||('GitHub error '+r.status)); return d;});
+}
+function sync(){
+  ['owner','repo','branch','contentPath','fileExt','templatePath','commitPrefix','token'].forEach(id=>{
+    if(el(id)) state.settings[id==='owner'?'owner':id==='repo'?'repo':id==='branch'?'branch':id==='contentPath'?'contentPath':id==='fileExt'?'fileExt':id==='templatePath'?'templatePath':id==='commitPrefix'?'commitPrefix':'token']=el(id).value.trim();
+  });
+  if(el('bgQueuePath')) state.settings.backgroundQueuePath=el('bgQueuePath').value.trim() || DEF.settings.backgroundQueuePath;
+  if(el('bgStageDir')) state.settings.backgroundStageDir=el('bgStageDir').value.trim() || DEF.settings.backgroundStageDir;
+  if(el('bgWorkflowFile')) state.settings.backgroundWorkflowFile=el('bgWorkflowFile').value.trim() || DEF.settings.backgroundWorkflowFile;
+  if(el('bgScriptPath')) state.settings.backgroundScriptPath=el('bgScriptPath').value.trim() || DEF.settings.backgroundScriptPath;
+  if(el('dailyLimitInput')) state.settings.dailyLimit=Number(el('dailyLimitInput').value||10);
+  if(el('autoInterval')) state.settings.autoIntervalMin=Number(el('autoInterval').value||60);
+}
+function slugify(text){text=text.toLowerCase();const repl={"ä":"ae","ö":"oe","ü":"ue","ß":"ss","ă":"a","â":"a","î":"i","ș":"s","ş":"s","ț":"t","ţ":"t"};Object.entries(repl).forEach(([k,v])=>text=text.split(k).join(v));text=text.replace(/[^a-z0-9]+/g,'-');return text.replace(/-{2,}/g,'-').replace(/^-+|-+$/g,'')}
+function cityFromKeyword(keyword,fallback){
+  const cities=state.settings.allowedCities||[];
+  const lower=keyword.toLowerCase();
+  for(const c of cities){
+    if(lower.includes(c.toLowerCase())) return c;
+  }
+  const m=keyword.match(/entruempelung\s+(.+?)\s+kosten/i);
+  return m?m[1].trim().replace(/\b\w/g,x=>x.toUpperCase()):fallback;
+}
+function guardKeywordCity(){
+  const kw=(el('topicKeyword')?.value||'').trim();
+  const current=el('topicCity')?.value||'';
+  if(!kw){ if(el('cityGuardStatus')) el('cityGuardStatus').textContent='Scrie keyword-ul și alegerea orașului va fi verificată automat.'; return; }
+  const detected=cityFromKeyword(kw,current);
+  if(detected && current && detected!==current){
+    el('topicCity').value=detected;
+    el('cityGuardStatus').innerHTML='<span class="warn-text">Orașul din keyword nu se potrivea. City a fost corectat automat la: '+esc(detected)+'</span>';
+  } else {
+    el('cityGuardStatus').innerHTML='<span class="good-text">Keyword și City se potrivesc: '+esc(detected||current)+'</span>';
+  }
+}
+function saveDraftHtml(id, html){ sessionStorage.setItem(DRAFT_PREFIX+id, html); }
+function getDraftHtml(id){ return sessionStorage.getItem(DRAFT_PREFIX+id) || ''; }
+async function fetchTemplateHtml(){const meta=await github('/contents/'+encodeURIComponent(state.settings.templatePath).replace(/%2F/g,'/')+'?ref='+encodeURIComponent(state.settings.branch));const blob=await github('/git/blobs/'+meta.sha);return decodeURIComponent(escape(atob(blob.content.replace(/\n/g,''))))}
+function buildFromTemplate(templateHtml,topic){
+  const city=cityFromKeyword(topic.keyword,topic.city); const pageSlug='entruempelung-'+slugify(city); const pageFile=pageSlug+state.settings.fileExt; let html=templateHtml;
+  html=html.replace(/<title>.*?<\/title>/is,'<title>Entrümpelung '+city+' | Perfekt Sauber Service</title>');
+  html=html.replace(/<meta name="description" content=".*?"\s*\/?>/is,'<meta name="description" content="Entrümpelung in '+city+' für Wohnungen und Häuser. Schnell, zuverlässig und besenrein. Jetzt kostenlos anfragen bei Perfekt Sauber Service." />');
+  html=html.replace(/<link rel="canonical" href="https:\/\/perfektsauberservice\.com\/[^"]*"\s*\/?>/is,'<link rel="canonical" href="https://perfektsauberservice.com/'+pageSlug+'" />');
+  [['Entrümpelung Rastatt','Entrümpelung '+city],['in Rastatt','in '+city],['Rastatt und Umgebung',city+' und Umgebung'],['aus Rastatt','aus '+city],['für Rastatt','für '+city]].forEach(p=>{html=html.split(p[0]).join(p[1])});
+  html=html.split('/entruempelung-rastatt.html').join('/'+pageFile); html=html.split('/entruempelung-rastatt').join('/'+pageSlug); html=html.split('Rastatt').join(city);
+  return {html,fileName:pageFile,title:'Entrümpelung '+city+' | Perfekt Sauber Service',htmlLength:html.length,city};
+}
+function calcBlogVisible(){return state.loadedFiles.filter(f=>(f.path||'').toLowerCase()==='blog.html').length?4:0}
+function calcSeoPages(){return state.loadedFiles.filter(f=>(f.path||'').toLowerCase().startsWith('entruempelung-')).length}
+function deriveTitleFromFilename(path){const name=path.replace(/\.html$/,'').replace(/-/g,' ');return name.replace(/\b\w/g,c=>c.toUpperCase())+' | Perfekt Sauber Service';}
+function pageUrlFromPath(path){return 'https://perfektsauberservice.com/'+path.replace(/\.html$/,'')}
+function ensureTitle(html,path){if (/<title>.*?<\/title>/is.test(html)) return html; return html.replace(/<head>/i,'<head>\n<title>'+deriveTitleFromFilename(path)+'</title>')}
+function ensureMetaDescription(html){if (/meta name="description"/i.test(html)) return html; return html.replace(/<head>/i,'<head>\n<meta name="description" content="SEO page generated and maintained by Perfekt Sauber Service." />')}
+function ensureCanonical(html,path){if (/rel="canonical"/i.test(html)) return html; return html.replace(/<head>/i,'<head>\n<link rel="canonical" href="'+pageUrlFromPath(path)+'" />')}
+function ensureRobots(html){if (/meta name="robots"/i.test(html)) return html; return html.replace(/<head>/i,'<head>\n<meta name="robots" content="index,follow" />')}
+function ensureH1(html,path){if (/<h1[\s>]/i.test(html)) return html; const title=deriveTitleFromFilename(path).replace(/\s*\|\s*Perfekt Sauber Service/i,''); if (/<main[^>]*>/i.test(html)) return html.replace(/<main([^>]*)>/i,'<main$1>\n<h1>'+title+'</h1>'); return html.replace(/<body([^>]*)>/i,'<body$1>\n<h1>'+title+'</h1>')}
+function ensureCTA(html){if (/preisrechner\.html|whatsapp/i.test(html)) return html; const block='\n<section class="pss-cta"><h2>Direkte Anfrage</h2><p><a href="/preisrechner.html">Zum Preisrechner</a></p></section>\n'; if (/<\/main>/i.test(html)) return html.replace(/<\/main>/i,block+'</main>'); return html.replace(/<\/body>/i,block+'</body>')}
+function ensureInterlinking(html){if (/Weitere Seiten|Mehr aus/i.test(html)) return html; const block='\n<section class="pss-links"><h2>Weitere Seiten</h2><ul><li><a href="/entruempelung-rastatt.html">Entrümpelung Rastatt</a></li><li><a href="/entruempelung-baden-baden.html">Entrümpelung Baden-Baden</a></li><li><a href="/entruempelung-gaggenau.html">Entrümpelung Gaggenau</a></li><li><a href="/entruempelung-karlsruhe.html">Entrümpelung Karlsruhe</a></li></ul></section>\n'; if (/<\/main>/i.test(html)) return html.replace(/<\/main>/i,block+'</main>'); return html.replace(/<\/body>/i,block+'</body>')}
+function repairCriticalHtml(html,path){let out=html; out=ensureTitle(out,path); out=ensureMetaDescription(out); out=ensureCanonical(out,path); out=ensureRobots(out); out=ensureH1(out,path); return out}
+function repairMediumHtml(html){let out=html; out=ensureCTA(out); out=ensureInterlinking(out); return out}
+async function fetchHtmlFile(path){const meta=await github('/contents/'+encodeURIComponent(path).replace(/%2F/g,'/')+'?ref='+encodeURIComponent(state.settings.branch));const blob=await github('/git/blobs/'+meta.sha);return {html:decodeURIComponent(escape(atob(blob.content.replace(/\n/g,'')))),sha:meta.sha}}
+async function updateHtmlFile(path, html, sha, message){const body={message,content:btoa(unescape(encodeURIComponent(html))),branch:state.settings.branch}; if(sha) body.sha=sha; await github('/contents/'+encodeURIComponent(path).replace(/%2F/g,'/'),{method:'PUT',body})}
+async function analyzeFileProblems(path){
+  try{
+    const data=await fetchHtmlFile(path); const html=data.html; const problems={critical:false,medium:false,interlinking:false,selected:false};
+    if(!/<title>.*?<\/title>/is.test(html) || !/meta name="description"/i.test(html) || !/rel="canonical"/i.test(html) || !/meta name="robots"/i.test(html) || !/<h1[\s>]/i.test(html)) problems.critical=true;
+    if(!/preisrechner\.html|whatsapp/i.test(html)) problems.medium=true;
+    if(!/Weitere Seiten|Mehr aus/i.test(html)) {problems.medium=true; problems.interlinking=true;}
+    problems.selected=problems.critical||problems.medium; return problems;
+  }catch(e){return {critical:false,medium:false,interlinking:false,selected:false}}
+}
+async function refreshRepairStatus(silent=false){
+  const htmlFiles=state.loadedFiles.map(f=>f.path||'').filter(p=>/\.html$/i.test(p)).filter(p=>p.toLowerCase()!=='entruempelung-rastatt.html');
+  const next={}; for(const path of htmlFiles){next[path]=await analyzeFileProblems(path)}
+  state.repairStatus=next;
+  state.selectedRepairFiles=state.selectedRepairFiles.filter(p=>next[p] && (next[p].critical||next[p].medium||next[p].interlinking||next[p].selected));
+  if(!silent) addLog('success','Repair list refreshed and cleaned.');
+  save();
+}
+async function repairFiles(paths, mode){
+  if(!paths.length){addLog('warning','Select at least one repair file.'); return;}
+  for(const path of paths){
+    try{
+      addLog('info','Repair '+mode+' started: '+path);
+      const data=await fetchHtmlFile(path); let repaired=data.html;
+      if(mode==='critical') repaired=repairCriticalHtml(repaired,path);
+      if(mode==='medium') repaired=repairMediumHtml(repaired);
+      if(mode==='selected') repaired=repairMediumHtml(repairCriticalHtml(repaired,path));
+      if(mode==='interlinking') repaired=ensureInterlinking(repaired);
+      if(repaired===data.html){addLog('info','No changes needed: '+path); continue;}
+      await updateHtmlFile(path,repaired,data.sha,state.settings.commitPrefix+': repair '+mode+' '+path);
+      addLog('success','Repair '+mode+' applied: '+path);
+    }catch(e){addLog('error',path+': '+e.message)}
+  }
+  await refreshRepairStatus();
+}
+async function runAudit(){
+  await refreshRepairStatus(true);
+  const files=state.loadedFiles.map(f=>f.path||'').filter(p=>/\.html$/i.test(p));
+  let critical=0,medium=0,minor=0; files.forEach(path=>{const st=state.repairStatus[path]; if(st?.critical) critical++; if(st?.medium) medium++; if(st?.interlinking) minor++;});
+  state.audit={total_checked:files.length,critical,medium,minor,last_audit:stamp()};
+  addLog('success','Audit finished. Checked '+state.audit.total_checked+' article(s).');
+  save();
+}
+function computeRecommendedTopics(){
+  const base=['Entrümpelung Muggensturm Kosten','Entrümpelung Ötigheim Kosten','Entrümpelung Bietigheim Kosten','Entrümpelung Malsch Kosten'];
+  const existing=new Set(state.loadedFiles.map(f=>(f.path||'').toLowerCase()));
+  return base.map(k=>{
+    const city=cityFromKeyword(k,k); const slug='entruempelung-'+slugify(city)+'.html';
+    let score=75; if(/kosten/i.test(k)) score+=20; if(existing.has(slug)) score-=100;
+    return {keyword:k,score,exists:existing.has(slug)};
+  }).sort((a,b)=>b.score-a.score);
+}
+function scanDuplicates(){
+  if(!state.topics.length){
+    state.duplicates=[{keyword:'—',slug:'—',exists:false,level:'No topics to compare. Add at least one topic first.'}];
+    addLog('warning','No topics to compare. Add at least one topic first.');
+    save(); return;
+  }
+  const existing=state.loadedFiles.map(f=>(f.path||'').toLowerCase());
+  state.duplicates = state.topics.map(t=>{
+    const slug='entruempelung-'+slugify(cityFromKeyword(t.keyword,t.city))+'.html';
+    const exists=existing.includes(slug);
+    return {keyword:t.keyword,slug,exists,level:exists?'already exists':'ok',stage:'stage 1'};
+  });
+  addLog('success','Duplicate scan stage 1 finished.');
+  save();
+}
+function similarity(a,b){
+  const sa=new Set((a.toLowerCase().match(/[a-z0-9äöüß]+/g)||[]));
+  const sb=new Set((b.toLowerCase().match(/[a-z0-9äöüß]+/g)||[]));
+  let inter=0; sa.forEach(x=>{if(sb.has(x)) inter++});
+  const union = new Set([...sa,...sb]).size || 1;
+  return Math.round((inter/union)*100);
+}
+async function deepDuplicateAudit(){
+  const draft = state.drafts[0];
+  if(!draft){addLog('warning','No draft available for deep duplicate audit.'); return;}
+  const draftHtml = getDraftHtml(draft.id);
+  if(!draftHtml){addLog('warning','Draft HTML missing for deep duplicate audit.'); return;}
+  const pages = state.loadedFiles.map(f=>f.path||'').filter(p=>p.toLowerCase().startsWith('entruempelung-')).slice(0,8);
+  const results=[];
+  for(const path of pages){
+    try{
+      const data=await fetchHtmlFile(path);
+      const score=similarity(draftHtml, data.html);
+      results.push({keyword:draft.title,slug:path,exists:score>0,level:score>=45?'high risk duplicate':score>=25?'too similar':'safe',stage:'stage 2',score});
+    }catch(e){}
+  }
+  results.sort((a,b)=>b.score-a.score);
+  state.duplicates = results.length ? results.slice(0,6) : [{keyword:draft.title,slug:'—',exists:false,level:'No comparable pages loaded',stage:'stage 2',score:0}];
+  addLog('success','Deep duplicate audit finished.');
+  save();
+}
+function generateLinkSuggestions(){
+  const pages=state.loadedFiles.map(f=>f.path||'').filter(p=>p.toLowerCase().startsWith('entruempelung-')).slice(0,8);
+  state.links = pages.length ? pages.map((p,i)=>({from:p,to:pages[(i+1)%pages.length]||p})) : [];
+  addLog('success','Interlinking suggestions generated.');
+  save();
+}
+function analyzeLead(){
+  const src=el('leadSource').value; const msg=el('leadMessage').value.trim(); if(!msg){addLog('warning','Adaugă mesajul leadului mai întâi.'); return;}
+  let intent='warm'; if(/preis|kosten|wann|termin/i.test(msg)) intent='hot';
+  const reply = intent==='hot'
+    ? 'Bună ziua! Vă putem face rapid o estimare. Trimiteți localitatea, tipul spațiului și eventual poze.'
+    : 'Bună ziua! Mulțumim pentru mesaj. Spuneți-ne localitatea și ce tip de serviciu doriți.';
+  state.leads.unshift({source:src,message:msg,intent,reply,at:stamp()}); addLog('success','Lead analyzed: '+intent); save();
+}
+function createFollowup(){
+  if(!state.leads.length){addLog('warning','No analyzed lead available.'); return;}
+  const lead=state.leads[0];
+  lead.followup='Revenim dacă nu răspunde în 24h cu o întrebare scurtă despre localitate și volum.';
+  addLog('success','Lead follow-up created.'); save();
+}
+
+function decodeBase64Utf8(content){return decodeURIComponent(escape(atob(content)));}
+function encodeBase64Utf8(content){return btoa(unescape(encodeURIComponent(content)));}
+async function getRepoFileMeta(path){
+  return await github('/contents/'+encodeURIComponent(path).replace(/%2F/g,'/')+'?ref='+encodeURIComponent(state.settings.branch));
+}
+async function getRepoTextFile(path){
+  const meta = await getRepoFileMeta(path);
+  if(meta.content) return decodeBase64Utf8(meta.content.replace(/\n/g,''));
+  const blob = await github('/git/blobs/'+meta.sha);
+  return decodeBase64Utf8(blob.content.replace(/\n/g,''));
+}
+async function putRepoTextFile(path, content, message){
+  let sha=null;
+  try{ const existing=await getRepoFileMeta(path); sha=existing.sha||null; }catch(e){ sha=null; }
+  const body={message:message,content:encodeBase64Utf8(content),branch:state.settings.branch};
+  if(sha) body.sha=sha;
+  await github('/contents/'+encodeURIComponent(path).replace(/%2F/g,'/'),{method:'PUT',body});
+}
+async function loadBackgroundQueue(){
+  try{
+    sync();
+    const raw = await getRepoTextFile(state.settings.backgroundQueuePath);
+    const data = JSON.parse(raw);
+    state.backgroundQueueInfo = {
+      items:Array.isArray(data.items)?data.items:[],
+      dailyLimit:Number(data.dailyLimit ?? state.settings.dailyLimit ?? 10),
+      publishedToday:Number(data.publishedToday ?? 0),
+      lastPublishedAt:data.lastPublishedAt || '',
+      loadedAt:stamp(),
+      exists:true
+    };
+    addLog('success','Background queue loaded from repo.');
+    save();
+    return state.backgroundQueueInfo;
+  }catch(e){
+    state.backgroundQueueInfo = {items:[],dailyLimit:state.settings.dailyLimit,publishedToday:0,lastPublishedAt:'',loadedAt:stamp(),exists:false};
+    addLog('warning','Background queue not found in repo yet. It will be created on first queue action.');
+    save();
+    return state.backgroundQueueInfo;
+  }
+}
+async function queueDraftToBackgroundById(id){
+  try{
+    sync();
+    const d=state.drafts.find(x=>x.id===id); if(!d){addLog('error','Draft not found.'); return false;}
+    if(d.status!=='approved'){addLog('error','Background queue blocked. Draft not approved: '+d.path); return false;}
+    const html=getDraftHtml(id); if(!html || !html.trim()){addLog('error','Background queue blocked. Draft HTML is empty: '+d.path); return false;}
+    let queue;
+    try{ queue = await loadBackgroundQueue(); }
+    catch(e){ queue = {items:[],dailyLimit:state.settings.dailyLimit,publishedToday:0,lastPublishedAt:'',exists:false}; }
+    const alreadyQueued = (queue.items||[]).some(item => item.path===d.path || item.id===d.id);
+    if(alreadyQueued){ addLog('warning','Draft already exists in background queue: '+d.path); return false; }
+    const stagePath = (state.settings.backgroundStageDir.replace(/\/$/,'') + '/' + d.path.split('/').pop()).replace(/^\.\//,'');
+    await putRepoTextFile(stagePath, html, state.settings.commitPrefix+': stage background draft '+d.path);
+    const queuePayload = {
+      dailyLimit:Number(queue.dailyLimit || state.settings.dailyLimit || 10),
+      publishedToday:Number(queue.publishedToday || 0),
+      lastPublishedAt:queue.lastPublishedAt || '',
+      items:[...(queue.items||[]), {id:d.id,title:d.title,path:d.path,stagedPath:stagePath,status:'queued',queuedAt:new Date().toISOString()}]
+    };
+    await putRepoTextFile(state.settings.backgroundQueuePath, JSON.stringify(queuePayload,null,2), state.settings.commitPrefix+': queue background draft '+d.path);
+    d.status='queued-bg';
+    state.backgroundQueueInfo = {...queuePayload, loadedAt:stamp(), exists:true};
+    addLog('success','Draft queued for background auto-post: '+d.path);
+    save();
+    return true;
+  }catch(e){ addLog('error',e.message); return false; }
+}
+async function queueFirstApprovedDraftToBackground(){
+  const draft = nextApprovedDraft();
+  if(!draft){ addLog('warning','No approved draft waiting for background queue.'); return false; }
+  return await queueDraftToBackgroundById(draft.id);
+}
+async function runBackgroundWorkflowNow(){
+  try{
+    sync();
+    await github('/actions/workflows/'+encodeURIComponent(state.settings.backgroundWorkflowFile)+'/dispatches',{method:'POST',body:{ref:state.settings.branch}});
+    addLog('success','Background workflow dispatched manually.');
+    return true;
+  }catch(e){ addLog('error',e.message); return false; }
+}
+async function publishDraftById(id, isAuto=false){
+  try{
+    sync();
+    const d=state.drafts.find(x=>x.id===id); if(!d) return false;
+    if(d.status!=='approved'){ if(!isAuto) addLog('error','Publish blocked. Draft not approved: '+d.path); return false; }
+    if(state.publishedToday >= state.settings.dailyLimit){ addLog('warning','Daily limit reached: '+state.settings.dailyLimit); return false; }
+    const html=getDraftHtml(id); if(!html || !html.trim()){addLog('error','Publish blocked. Draft HTML is empty: '+d.path); return false;}
+    let sha=null; try{const existing=await github('/contents/'+encodeURIComponent(d.path).replace(/%2F/g,'/')+'?ref='+encodeURIComponent(state.settings.branch)); sha=existing.sha||null;}catch(e){sha=null;}
+    const body={message:state.settings.commitPrefix+': '+(sha?'update':'create')+' '+d.path,content:btoa(unescape(encodeURIComponent(html))),branch:state.settings.branch}; if(sha) body.sha=sha;
+    await github('/contents/'+encodeURIComponent(d.path).replace(/%2F/g,'/'),{method:'PUT',body});
+    d.status='published'; d.publishedAt=stamp(); state.history.unshift({...d}); state.publishedToday+=1; state.loadedFiles.unshift({path:d.path});
+    addLog('success',(isAuto?'Auto-post published: ':'Published successfully: ')+d.path);
+    await refreshRepairStatus(true); save(); return true;
+  }catch(e){addLog('error',e.message); return false;}
+}
+function nextApprovedDraft(){return state.drafts.find(d=>d.status==='approved')}
+function startAutoPosting(){
+  sync();
+  if(state.settings.autoPosting){addLog('warning','Auto-post already running.'); return;}
+  state.settings.autoPosting=true;
+  scheduleNextRun();
+  addLog('success','Auto-post started. Interval = '+state.settings.autoIntervalMin+' min, daily limit = '+state.settings.dailyLimit+'.');
+  save();
+}
+function stopAutoPosting(){
+  state.settings.autoPosting=false; state.settings.nextRunAt='';
+  if(autoTimer) clearTimeout(autoTimer); autoTimer=null;
+  addLog('success','Auto-post stopped.');
+  save();
+}
+function scheduleNextRun(){
+  if(autoTimer) clearTimeout(autoTimer);
+  if(!state.settings.autoPosting) return;
+  const ms=(Number(state.settings.autoIntervalMin)||60)*60*1000;
+  const next=new Date(Date.now()+ms);
+  state.settings.nextRunAt=next.toLocaleString('de-DE');
+  autoTimer=setTimeout(async ()=>{
+    const d=nextApprovedDraft();
+    if(d){ await publishDraftById(d.id, true); }
+    else addLog('info','Auto-post tick: no approved draft waiting.');
+    if(state.settings.autoPosting) scheduleNextRun();
+  }, ms);
+}
+function render(){
+  ['owner','repo','branch','contentPath','fileExt','templatePath','commitPrefix','token'].forEach(id=>{
+    if(el(id)) el(id).value=state.settings[id==='owner'?'owner':id==='repo'?'repo':id==='branch'?'branch':id==='contentPath'?'contentPath':id==='fileExt'?'fileExt':id==='templatePath'?'templatePath':id==='commitPrefix'?'commitPrefix':'token'];
+  });
+  if(el('dailyLimitInput')) el('dailyLimitInput').value=state.settings.dailyLimit;
+  if(el('autoInterval')) el('autoInterval').value=state.settings.autoIntervalMin;
+  if(el('bgQueuePath')) el('bgQueuePath').value=state.settings.backgroundQueuePath;
+  if(el('bgStageDir')) el('bgStageDir').value=state.settings.backgroundStageDir;
+  if(el('bgWorkflowFile')) el('bgWorkflowFile').value=state.settings.backgroundWorkflowFile;
+  if(el('bgScriptPath')) el('bgScriptPath').value=state.settings.backgroundScriptPath;
+  if(el('bgQueuePath')) el('bgQueuePath').value=state.settings.backgroundQueuePath;
+  if(el('bgStageDir')) el('bgStageDir').value=state.settings.backgroundStageDir;
+  if(el('bgWorkflowFile')) el('bgWorkflowFile').value=state.settings.backgroundWorkflowFile;
+  if(el('bgScriptPath')) el('bgScriptPath').value=state.settings.backgroundScriptPath;
+
+  el('mPublished').textContent=state.publishedToday;
+  el('mDailyLimit').textContent=state.settings.dailyLimit;
+  el('mBlogVisible').textContent=calcBlogVisible();
+  el('mSeoPages').textContent=calcSeoPages();
+  el('lastPublishedTitle').textContent=state.history[0]?.title || '—';
+  const emailEl=el('emailStatus'); emailEl.className='badge '+(state.settings.emailStatus==='ok'?'success':state.settings.emailStatus==='failed'?'err':'info'); emailEl.textContent=state.settings.emailStatus;
+
+  ['auditTotal2'].forEach(id=>el(id).textContent=state.audit.total_checked);
+  ['auditCritical2'].forEach(id=>el(id).textContent=state.audit.critical);
+  ['auditMedium2'].forEach(id=>el(id).textContent=state.audit.medium);
+  ['auditMinor2'].forEach(id=>el(id).textContent=state.audit.minor);
+  el('auditLastDate').textContent=state.audit.last_audit;
+  el('blogVisibleCount').textContent=calcBlogVisible();
+  el('seoPageCount').textContent=calcSeoPages();
+
+  el('filesBadge').className='badge '+(state.loadedFiles.length?'success':'info');
+  el('filesBadge').textContent=state.loadedFiles.length?'loaded':'idle';
+  el('filesText').textContent=state.loadedFiles.length?state.loadedFiles.length+' file(s) found':'No files loaded';
+  el('loadedFilesBox').innerHTML=state.loadedFiles.length?state.loadedFiles.map(f=>'<div class="item">'+esc(f.path||f)+'</div>').join(''):'<div class="small">Nothing loaded yet.</div>';
+  el('logsList').innerHTML=state.logs.length?state.logs.map(x=>'<div class="item"><span class="badge '+badgeClass(x.type)+'">'+esc(x.type)+'</span> <span class="small" style="margin-left:8px">'+esc(x.at)+'</span><div style="margin-top:8px">'+esc(x.msg)+'</div></div>').join(''):'<div class="small">No logs yet.</div>';
+
+  el('topicCity').innerHTML=state.settings.allowedCities.map(c=>'<option>'+esc(c)+'</option>').join('');
+  el('topicService').innerHTML=state.settings.allowedServices.map(s=>'<option>'+esc(s)+'</option>').join('');
+  el('topicsList').innerHTML=state.topics.length?state.topics.map(t=>'<div class="item"><div style="display:flex;justify-content:space-between;gap:12px"><div><div><strong>'+esc(t.keyword)+'</strong></div><div class="small">'+esc(t.service)+' · '+esc(t.city)+' · score '+t.score+'</div></div><span class="badge '+statusClass(t.status)+'">'+esc(t.status)+'</span></div></div>').join(''):'<div class="small">No topics yet.</div>';
+  el('queueList').innerHTML=state.queue.length?state.queue.map(q=>'<div class="item"><strong>'+esc(q.keyword)+'</strong><div class="small">'+esc(q.service)+' · '+esc(q.city)+' · queued '+esc(q.queueAt||'')+'</div></div>').join(''):'<div class="small">Queue is empty.</div>';
+  el('draftsList').innerHTML=state.drafts.length?state.drafts.map(d=>'<div class="item"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:280px"><div><strong>'+esc(d.title)+'</strong></div><div class="small">'+esc(d.path)+' · '+esc(d.createdAt)+' · HTML '+(d.htmlLength||0)+' chars</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge '+statusClass(d.status)+'">'+esc(d.status)+'</span><button class="btn btn-white" onclick="window.__previewDraft(\''+d.id+'\')">Preview</button><button class="btn btn-white" onclick="window.__approveDraft(\''+d.id+'\')">Approve Draft</button><button class="btn btn-blue" onclick="window.__queueBackgroundDraft(\''+d.id+'\')">Queue Background</button><button class="btn btn-green" onclick="window.__publishDraft(\''+d.id+'\')">Publish to GitHub</button></div></div></div>').join(''):'<div class="small">No drafts yet.</div>';
+  const previewId=state.selectedDraftId; const html=previewId?getDraftHtml(previewId):''; el('previewBox').textContent=html?html.slice(0,4000):''; el('previewInfo').textContent=html?'Preview draft: '+html.length+' chars':'Selectează un draft ca să vezi primele 4000 caractere.';
+
+  const rec=computeRecommendedTopics();
+  el('recommendedTopics').innerHTML=rec.map(r=>'<div class="item"><strong>'+esc(r.keyword)+'</strong><div class="small">score '+r.score+(r.exists?' · exists already':'')+'</div></div>').join('');
+  el('duplicateList').innerHTML=state.duplicates.length?state.duplicates.map(d=>'<div class="item"><strong>'+esc(d.keyword)+'</strong><div class="small">'+esc(d.slug)+' · '+esc(d.level)+(d.score!==undefined?' · similarity '+d.score+'%':'')+' · '+esc(d.stage||'')+'</div></div>').join(''):'<div class="small">Nimic încă. Adaugă un topic și rulează Scan duplicates sau Deep duplicate audit.</div>';
+  el('linkSuggestions').innerHTML=state.links.length?state.links.map(l=>'<div class="item"><strong>'+esc(l.from)+'</strong><div class="small">→ '+esc(l.to)+'</div></div>').join(''):'<div class="small">No link suggestions yet.</div>';
+  el('blogAnalysis').innerHTML='<div class="item"><strong>Blog visible posts</strong><div class="small">'+calcBlogVisible()+'</div></div><div class="item"><strong>SEO pages total</strong><div class="small">'+calcSeoPages()+'</div></div><div class="item"><strong>Refresh / recount</strong><div class="small">Recalculează numerele și refresh la repair status.</div></div><div class="item"><strong>Rebuild missing blog entries</strong><div class="small">Înregistrează acțiunea în Logs și history.</div></div>';
+
+  const repairFiles=state.loadedFiles.map(f=>f.path||'').filter(p=>/\.html$/i.test(p)).filter(p=>p.toLowerCase()!=='entruempelung-rastatt.html').filter(p=>{const st=state.repairStatus[p]; return st && (st.critical||st.medium||st.interlinking||st.selected);});
+  el('repairFileList').innerHTML=repairFiles.length?repairFiles.map(path=>{const st=state.repairStatus[path]||{}; const tags=[]; if(st.critical) tags.push('<span class="rule-chip chip-red">critical</span>'); if(st.medium) tags.push('<span class="rule-chip chip-amber">medium</span>'); if(st.interlinking) tags.push('<span class="rule-chip chip-blue">links</span>'); const checked=state.selectedRepairFiles.includes(path)?'checked':''; return '<div class="item"><div style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" '+checked+' onchange="window.__toggleRepairFile(\''+path.replace(/'/g,"\\'")+'\')"><div style="flex:1"><strong>'+esc(path)+'</strong><div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">'+tags.join(' ')+'</div></div></div></div>';}).join(''):'<div class="small">Nu mai sunt fișiere cu probleme active.</div>';
+  el('repairList').innerHTML=state.repairQueue.length?state.repairQueue.map(r=>'<div class="item"><strong>'+esc(r.label)+'</strong><div class="small">'+esc(r.at)+'</div></div>').join(''):'<div class="small">No repair actions queued yet.</div>';
+
+  el('autoStatusBox').textContent = state.settings.autoPosting ? 'running' : 'idle';
+  el('nextRunText').textContent = state.settings.nextRunAt || '—';
+  el('approvedDraftsCount').textContent = state.drafts.filter(d=>d.status==='approved').length;
+  el('publishedTodayText').textContent = state.publishedToday;
+  el('leadOutput').innerHTML=state.leads.length?state.leads.map(l=>'<div class="item"><strong>'+esc(l.intent.toUpperCase())+'</strong><div class="small">'+esc(l.source)+' · '+esc(l.at)+'</div><div style="margin-top:8px">'+esc(l.reply)+'</div>'+(l.followup?'<div class="small" style="margin-top:8px">Follow-up: '+esc(l.followup)+'</div>':'')+'</div>').join(''):'<div class="small">No lead analyzed yet.</div>';
+}
+tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');['overview','publishing','content','topics','duplicates','interlinking','blog','audit','repair','autopost','leads','settings'].forEach(name=>document.getElementById('tab-'+name).classList.toggle('hidden',t.dataset.tab!==name))}));
+el('topicKeyword').addEventListener('input', guardKeywordCity);
+el('topicCity').addEventListener('change', guardKeywordCity);
+
+el('btnTestGithub').addEventListener('click',async()=>{try{sync(); await github(''); addLog('success','GitHub connection ok. Butonul Test GitHub a mers.')}catch(e){addLog('error',e.message)}});
+el('btnLoadFiles').addEventListener('click',async()=>{try{sync(); const base=state.settings.contentPath && state.settings.contentPath!=='.' ? '/'+state.settings.contentPath:''; const list=await github('/contents'+base+'?ref='+encodeURIComponent(state.settings.branch)); const files=Array.isArray(list)?list.filter(x=>x.type==='file'):[]; state.loadedFiles=files.map(f=>({path:f.path,sha:f.sha})); addLog('success','Load Repo Files a mers. S-au încărcat '+state.loadedFiles.length+' fișiere.'); await refreshRepairStatus(true); save();}catch(e){addLog('error',e.message)}});
+el('btnTestEmail').addEventListener('click',()=>{state.settings.emailStatus='ok'; addLog('success','Email alert status set to ok.'); save()});
+el('btnAddTopic').addEventListener('click',()=>{
+  guardKeywordCity();
+  const kw=el('topicKeyword').value.trim(); if(!kw){addLog('warning','Add a keyword/topic first.'); return;}
+  const city=el('topicCity').value;
+  state.topics.unshift({id:uuid(),keyword:kw,service:el('topicService').value,city,priority:el('topicPriority').value,intent:el('topicIntent').value,score:Number(el('topicScore').value||0),status:'pending'});
+  el('topicKeyword').value=''; guardKeywordCity();
+  addLog('success','Topic added: '+kw+' / city = '+city);
+});
+el('btnRunSelector').addEventListener('click',()=>{const available=state.topics.filter(t=>t.status==='pending'&&t.score>=70); if(!available.length){addLog('warning','No valid topics found. Add a topic first.'); return;} available.sort((a,b)=>({high:3,medium:2,low:1}[b.priority]-{high:3,medium:2,low:1}[a.priority]||b.score-a.score)); const next=available[0]; next.status='queued'; state.queue.unshift({...next,queueAt:stamp()}); addLog('success','Run Topic Selector finished. Topic selected: '+next.keyword); save()});
+el('btnRunPipeline').addEventListener('click',async()=>{try{sync(); const candidate=state.queue.find(q=>!q.processed); if(!candidate){addLog('warning','No queued topic available.'); return;} addLog('info','Fetching template via git blob sha...'); const templateHtml=await fetchTemplateHtml(); const built=buildFromTemplate(templateHtml,candidate); const path=(state.settings.contentPath&&state.settings.contentPath!=='.'?state.settings.contentPath+'/':'')+built.fileName; candidate.processed=true; const orig=state.topics.find(t=>t.id===candidate.id); if(orig) orig.status='draft'; const draftId=uuid(); saveDraftHtml(draftId,built.html); state.drafts.unshift({id:draftId,topicId:candidate.id,title:built.title,path,status:'draft',createdAt:stamp(),htmlLength:built.htmlLength,city:built.city}); state.selectedDraftId=draftId; addLog('success','Run Full Pipeline finished. Draft creat: '+path+' ('+built.htmlLength+' chars)'); save();}catch(e){addLog('error',e.message)}});
+window.__previewDraft=function(id){state.selectedDraftId=id; save(); flash('info','Preview loaded.');}
+window.__approveDraft=function(id){const d=state.drafts.find(x=>x.id===id); if(!d) return; d.status='approved'; addLog('success','Draft approved: '+d.path);};
+window.__queueBackgroundDraft=async function(id){await queueDraftToBackgroundById(id);};
+window.__publishDraft=async function(id){await publishDraftById(id,false)}
+el('btnRunAudit').addEventListener('click',runAudit); el('btnRunAudit2').addEventListener('click',runAudit);
+el('btnLoadSampleAudit').addEventListener('click',()=>{el('auditJson').value=JSON.stringify({total_checked:12,critical:1,medium:3,minor:4,last_audit:stamp()},null,2); addLog('success','Sample audit JSON loaded.')});
+el('btnApplyAuditJson').addEventListener('click',()=>{try{const data=JSON.parse(el('auditJson').value.trim()); state.audit={total_checked:Number(data.total_checked||0),critical:Number(data.critical||0),medium:Number(data.medium||0),minor:Number(data.minor||0),last_audit:data.last_audit||stamp()}; addLog('success','Audit JSON applied.'); save()}catch(e){addLog('error','Invalid audit JSON')}});
+window.__toggleRepairFile=function(path){const i=state.selectedRepairFiles.indexOf(path); if(i>=0) state.selectedRepairFiles.splice(i,1); else state.selectedRepairFiles.push(path); save();}
+async function runRepair(mode){const paths=[...state.selectedRepairFiles]; if(!paths.length){addLog('warning','Select at least one repair file.'); return;} state.repairQueue.unshift({id:uuid(),label:'Repair '+mode+' on '+paths.length+' file(s)',at:stamp()}); save(); await repairFiles(paths,mode);}
+el('btnFixCritical').addEventListener('click',()=>runRepair('critical'));
+el('btnFixMedium').addEventListener('click',()=>runRepair('medium'));
+el('btnRepairSelected').addEventListener('click',()=>runRepair('selected'));
+el('btnBasicInterlinking').addEventListener('click',()=>runRepair('interlinking'));
+el('btnRebuildMissingBlog').addEventListener('click',()=>{state.repairQueue.unshift({id:uuid(),label:'Rebuild missing blog entries',at:stamp()}); addLog('success','Rebuild missing blog entries triggered. Acțiunea a fost înregistrată.'); save()});
+el('btnRebuildMissingBlog2').addEventListener('click',()=>{state.repairQueue.unshift({id:uuid(),label:'Rebuild missing blog entries',at:stamp()}); addLog('success','Rebuild missing blog entries triggered. Acțiunea a fost înregistrată.'); save()});
+el('btnRefreshBlog').addEventListener('click',async()=>{await refreshRepairStatus(true); addLog('success','Refresh Blog finished. Numerele și repair status au fost reîmprospătate.'); save();});
+el('btnRefreshBlog2').addEventListener('click',async()=>{await refreshRepairStatus(true); addLog('success','Refresh / recount finished. Visible blog posts = '+calcBlogVisible()+', SEO pages total = '+calcSeoPages()+'.'); save();});
+el('btnScanDuplicates').addEventListener('click',scanDuplicates);
+el('btnDeepDuplicateAudit').addEventListener('click',deepDuplicateAudit);
+el('btnGenerateLinks').addEventListener('click',generateLinkSuggestions);
+el('btnAnalyzeLead').addEventListener('click',analyzeLead);
+el('btnCreateFollowup').addEventListener('click',createFollowup);
+el('btnLoadBgQueue').addEventListener('click',async()=>{await loadBackgroundQueue(); render();});
+el('btnQueueApprovedBg').addEventListener('click',async()=>{await queueFirstApprovedDraftToBackground(); render();});
+el('btnRunBgWorkflow').addEventListener('click',async()=>{await runBackgroundWorkflowNow();});
+el('btnStartAutoPost').addEventListener('click',()=>{startAutoPosting(); render();});
+el('btnStopAutoPost').addEventListener('click',()=>{stopAutoPosting(); render();});
+
+function render(){ /* overwritten below */ }
+const realRender = function(){
+  if(el('owner')) el('owner').value=state.settings.owner;
+  if(el('repo')) el('repo').value=state.settings.repo;
+  if(el('branch')) el('branch').value=state.settings.branch;
+  if(el('contentPath')) el('contentPath').value=state.settings.contentPath;
+  if(el('fileExt')) el('fileExt').value=state.settings.fileExt;
+  if(el('templatePath')) el('templatePath').value=state.settings.templatePath;
+  if(el('commitPrefix')) el('commitPrefix').value=state.settings.commitPrefix;
+  if(el('token')) el('token').value=state.settings.token;
+  if(el('dailyLimitInput')) el('dailyLimitInput').value=state.settings.dailyLimit;
+  if(el('autoInterval')) el('autoInterval').value=state.settings.autoIntervalMin;
+  if(el('bgQueuePath')) el('bgQueuePath').value=state.settings.backgroundQueuePath;
+  if(el('bgStageDir')) el('bgStageDir').value=state.settings.backgroundStageDir;
+  if(el('bgWorkflowFile')) el('bgWorkflowFile').value=state.settings.backgroundWorkflowFile;
+  if(el('bgScriptPath')) el('bgScriptPath').value=state.settings.backgroundScriptPath;
+  el('mPublished').textContent=state.publishedToday;
+  el('mDailyLimit').textContent=state.settings.dailyLimit;
+  el('mBlogVisible').textContent=calcBlogVisible();
+  el('mSeoPages').textContent=calcSeoPages();
+  el('lastPublishedTitle').textContent=state.history[0]?.title || '—';
+  const emailEl=el('emailStatus'); emailEl.className='badge '+(state.settings.emailStatus==='ok'?'success':state.settings.emailStatus==='failed'?'err':'info'); emailEl.textContent=state.settings.emailStatus;
+  el('auditTotal2').textContent=state.audit.total_checked; el('auditCritical2').textContent=state.audit.critical; el('auditMedium2').textContent=state.audit.medium; el('auditMinor2').textContent=state.audit.minor; el('auditLastDate').textContent=state.audit.last_audit;
+  el('blogVisibleCount').textContent=calcBlogVisible(); el('seoPageCount').textContent=calcSeoPages();
+  el('filesBadge').className='badge '+(state.loadedFiles.length?'success':'info'); el('filesBadge').textContent=state.loadedFiles.length?'loaded':'idle'; el('filesText').textContent=state.loadedFiles.length?state.loadedFiles.length+' file(s) found':'No files loaded';
+  el('loadedFilesBox').innerHTML=state.loadedFiles.length?state.loadedFiles.map(f=>'<div class="item">'+esc(f.path||f)+'</div>').join(''):'<div class="small">Nothing loaded yet.</div>';
+  el('logsList').innerHTML=state.logs.length?state.logs.map(x=>'<div class="item"><span class="badge '+badgeClass(x.type)+'">'+esc(x.type)+'</span> <span class="small" style="margin-left:8px">'+esc(x.at)+'</span><div style="margin-top:8px">'+esc(x.msg)+'</div></div>').join(''):'<div class="small">No logs yet.</div>';
+  el('topicCity').innerHTML=state.settings.allowedCities.map(c=>'<option '+(c===state.topics[0]?.city?'selected':'')+'>'+esc(c)+'</option>').join('');
+  el('topicService').innerHTML=state.settings.allowedServices.map(s=>'<option>'+esc(s)+'</option>').join('');
+  el('topicsList').innerHTML=state.topics.length?state.topics.map(t=>'<div class="item"><div style="display:flex;justify-content:space-between;gap:12px"><div><div><strong>'+esc(t.keyword)+'</strong></div><div class="small">'+esc(t.service)+' · '+esc(t.city)+' · score '+t.score+'</div></div><span class="badge '+statusClass(t.status)+'">'+esc(t.status)+'</span></div></div>').join(''):'<div class="small">No topics yet.</div>';
+  el('queueList').innerHTML=state.queue.length?state.queue.map(q=>'<div class="item"><strong>'+esc(q.keyword)+'</strong><div class="small">'+esc(q.service)+' · '+esc(q.city)+' · queued '+esc(q.queueAt||'')+'</div></div>').join(''):'<div class="small">Queue is empty.</div>';
+  el('draftsList').innerHTML=state.drafts.length?state.drafts.map(d=>'<div class="item"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div style="flex:1;min-width:280px"><div><strong>'+esc(d.title)+'</strong></div><div class="small">'+esc(d.path)+' · '+esc(d.createdAt)+' · HTML '+(d.htmlLength||0)+' chars</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge '+statusClass(d.status)+'">'+esc(d.status)+'</span><button class="btn btn-white" onclick="window.__previewDraft(\''+d.id+'\')">Preview</button><button class="btn btn-white" onclick="window.__approveDraft(\''+d.id+'\')">Approve Draft</button><button class="btn btn-blue" onclick="window.__queueBackgroundDraft(\''+d.id+'\')">Queue Background</button><button class="btn btn-green" onclick="window.__publishDraft(\''+d.id+'\')">Publish to GitHub</button></div></div></div>').join(''):'<div class="small">No drafts yet.</div>';
+  const previewId=state.selectedDraftId; const html=previewId?getDraftHtml(previewId):''; el('previewBox').textContent=html?html.slice(0,4000):''; el('previewInfo').textContent=html?'Preview draft: '+html.length+' chars':'Selectează un draft ca să vezi primele 4000 caractere.';
+  const rec=computeRecommendedTopics();
+  el('recommendedTopics').innerHTML=rec.map(r=>'<div class="item"><strong>'+esc(r.keyword)+'</strong><div class="small">score '+r.score+(r.exists?' · exists already':'')+'</div></div>').join('');
+  el('duplicateList').innerHTML=state.duplicates.length?state.duplicates.map(d=>'<div class="item"><strong>'+esc(d.keyword)+'</strong><div class="small">'+esc(d.slug)+' · '+esc(d.level)+(d.score!==undefined?' · similarity '+d.score+'%':'')+' · '+esc(d.stage||'')+'</div></div>').join(''):'<div class="small">Nimic încă. Adaugă un topic și rulează Scan duplicates sau Deep duplicate audit.</div>';
+  el('linkSuggestions').innerHTML=state.links.length?state.links.map(l=>'<div class="item"><strong>'+esc(l.from)+'</strong><div class="small">→ '+esc(l.to)+'</div></div>').join(''):'<div class="small">No link suggestions yet.</div>';
+  el('blogAnalysis').innerHTML='<div class="item"><strong>Blog visible posts</strong><div class="small">'+calcBlogVisible()+'</div></div><div class="item"><strong>SEO pages total</strong><div class="small">'+calcSeoPages()+'</div></div><div class="item"><strong>Refresh / recount</strong><div class="small">Recalculează numerele și repair status.</div></div><div class="item"><strong>Rebuild missing blog entries</strong><div class="small">Înregistrează acțiunea în Logs și history.</div></div>';
+  const repairFiles=state.loadedFiles.map(f=>f.path||'').filter(p=>/\.html$/i.test(p)).filter(p=>p.toLowerCase()!=='entruempelung-rastatt.html').filter(p=>{const st=state.repairStatus[p]; return st && (st.critical||st.medium||st.interlinking||st.selected);});
+  el('repairFileList').innerHTML=repairFiles.length?repairFiles.map(path=>{const st=state.repairStatus[path]||{}; const tags=[]; if(st.critical) tags.push('<span class="rule-chip chip-red">critical</span>'); if(st.medium) tags.push('<span class="rule-chip chip-amber">medium</span>'); if(st.interlinking) tags.push('<span class="rule-chip chip-blue">links</span>'); const checked=state.selectedRepairFiles.includes(path)?'checked':''; return '<div class="item"><div style="display:flex;gap:10px;align-items:flex-start"><input type="checkbox" '+checked+' onchange="window.__toggleRepairFile(\''+path.replace(/'/g,"\\'")+'\')"><div style="flex:1"><strong>'+esc(path)+'</strong><div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">'+tags.join(' ')+'</div></div></div></div>';}).join(''):'<div class="small">Nu mai sunt fișiere cu probleme active.</div>';
+  el('repairList').innerHTML=state.repairQueue.length?state.repairQueue.map(r=>'<div class="item"><strong>'+esc(r.label)+'</strong><div class="small">'+esc(r.at)+'</div></div>').join(''):'<div class="small">No repair actions queued yet.</div>';
+  el('autoStatusBox').textContent=state.settings.autoPosting ? 'running' : 'idle';
+  el('nextRunText').textContent=state.settings.nextRunAt || '—';
+  el('approvedDraftsCount').textContent=state.drafts.filter(d=>d.status==='approved').length;
+  el('publishedTodayText').textContent=state.publishedToday;
+  el('bgQueuedCount').textContent=(state.backgroundQueueInfo?.items||[]).length;
+  el('bgDailyLimitText').textContent=state.backgroundQueueInfo?.dailyLimit ?? state.settings.dailyLimit;
+  el('bgPublishedTodayText').textContent=state.backgroundQueueInfo?.publishedToday ?? 0;
+  el('bgLastPublishedText').textContent=state.backgroundQueueInfo?.lastPublishedAt || '—';
+  el('bgQueueList').innerHTML=(state.backgroundQueueInfo?.items||[]).length ? state.backgroundQueueInfo.items.map(item=>'<div class="item"><strong>'+esc(item.title||item.path)+'</strong><div class="small">'+esc(item.path)+' · staged: '+esc(item.stagedPath||'—')+'</div><div class="small">queued '+esc(item.queuedAt||'')+'</div></div>').join('') : '<div class="small">No queued background items loaded yet.</div>';
+  el('leadOutput').innerHTML=state.leads.length?state.leads.map(l=>'<div class="item"><strong>'+esc(l.intent.toUpperCase())+'</strong><div class="small">'+esc(l.source)+' · '+esc(l.at)+'</div><div style="margin-top:8px">'+esc(l.reply)+'</div>'+(l.followup?'<div class="small" style="margin-top:8px">Follow-up: '+esc(l.followup)+'</div>':'')+'</div>').join(''):'<div class="small">No lead analyzed yet.</div>';
+};
+render = realRender;
+tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));t.classList.add('active');['overview','publishing','content','topics','duplicates','interlinking','blog','audit','repair','autopost','leads','settings'].forEach(name=>document.getElementById('tab-'+name).classList.toggle('hidden',t.dataset.tab!==name))}));
+render(); flash('info','PSS SEO Control Center Ultimate v8 ready.');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+name: Daily Content Pipeline
+
+on:
+  schedule:
+    # 3 articole pe zi: 07:00, 12:00, 17:00 ora Germaniei (UTC+2 vara)
+    - cron: '0 5 * * *'   # 07:00 Germania
+    - cron: '0 10 * * *'  # 12:00 Germania
+    - cron: '0 15 * * *'  # 17:00 Germania
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Subiect manual (optional)'
+        required: false
+      city:
+        description: 'Oras (default: din queue)'
+        required: false
+      service:
+        description: 'Serviciu (default: din queue)'
+        required: false
+
+jobs:
+  generate-article:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Content Pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: |
+          if [ -n "${{ github.event.inputs.topic }}" ]; then
+            node agent/scripts/pipeline.mjs \
+              --topic "${{ github.event.inputs.topic }}" \
+              --city "${{ github.event.inputs.city || 'Rastatt' }}" \
+              --service "${{ github.event.inputs.service || 'Entrümpelung' }}"
+          else
+            node agent/scripts/pipeline.mjs
+          fi
+
+      - name: Commit & Push new article
+        run: |
+          git config user.name "PSS Content Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add blog/ sitemap.xml agent/config/article-topics.json
+          git diff --staged --quiet || git commit -m "content: neuer Artikel generiert [$(date +%Y-%m-%d)]"
+          git push

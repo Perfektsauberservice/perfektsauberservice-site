@@ -1,0 +1,30 @@
+{
+  "businessGoals": [
+    "lead_generation",
+    "local_pages_support",
+    "seo_support",
+    "geo_support"
+  ],
+  "primaryConversionPaths": [
+    "whatsapp",
+    "preisrechner",
+    "phone",
+    "email"
+  ],
+  "preferredOutputFormats": [
+    "article",
+    "local_page",
+    "faq",
+    "tool_support_page"
+  ],
+  "brandTone": {
+    "language": "de",
+    "style": [
+      "klar",
+      "direkt",
+      "lokal",
+      "ohne Agentur-Floskeln",
+      "leicht zitierbar"
+    ]
+  }
+}

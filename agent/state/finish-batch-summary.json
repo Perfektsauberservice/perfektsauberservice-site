@@ -1,0 +1,207 @@
+{
+  "total_pages": 3,
+  "max_rounds": 4,
+  "processed": [
+    {
+      "page": "entruempelung-bad-herrenalb.html",
+      "rounds": [
+        {
+          "round": 1,
+          "initial_guard": {
+            "page": "entruempelung-bad-herrenalb.html",
+            "status": "REVIEW",
+            "reasons": [
+              "CTA similarity too high"
+            ],
+            "required_fixes": [
+              "Rewrite CTA"
+            ],
+            "summary": "Page needs review but is not critically blocked."
+          },
+          "structural_attempted": true,
+          "repair_v2_attempted": true,
+          "final_guard": {
+            "page": "entruempelung-bad-herrenalb.html",
+            "status": "BLOCK",
+            "reasons": [
+              "FAQ similarity too high"
+            ],
+            "required_fixes": [
+              "Rewrite FAQ"
+            ],
+            "summary": "Page blocked for review."
+          },
+          "score_after_round": 220
+        },
+        {
+          "round": 2,
+          "initial_guard": {
+            "page": "entruempelung-bad-herrenalb.html",
+            "status": "BLOCK",
+            "reasons": [
+              "FAQ similarity too high"
+            ],
+            "required_fixes": [
+              "Rewrite FAQ"
+            ],
+            "summary": "Page blocked for review."
+          },
+          "structural_attempted": true,
+          "repair_v2_attempted": true,
+          "final_guard": {
+            "page": "entruempelung-bad-herrenalb.html",
+            "status": "BLOCK",
+            "reasons": [
+              "FAQ similarity too high"
+            ],
+            "required_fixes": [
+              "Rewrite FAQ"
+            ],
+            "summary": "Page blocked for review."
+          },
+          "score_after_round": 220
+        }
+      ],
+      "final_guard": {
+        "page": "entruempelung-bad-herrenalb.html",
+        "status": "REVIEW",
+        "reasons": [
+          "CTA similarity too high"
+        ],
+        "required_fixes": [
+          "Rewrite CTA"
+        ],
+        "summary": "Page needs review but is not critically blocked."
+      },
+      "next_action": "Quick manual review",
+      "status": "REVIEW"
+    },
+    {
+      "page": "entruempelung-steinmauern.html",
+      "rounds": [
+        {
+          "round": 1,
+          "initial_guard": {
+            "page": "entruempelung-steinmauern.html",
+            "status": "BLOCK",
+            "reasons": [
+              "FAQ similarity too high",
+              "CTA similarity too high"
+            ],
+            "required_fixes": [
+              "Rewrite FAQ",
+              "Rewrite CTA"
+            ],
+            "summary": "Page blocked for review."
+          },
+          "structural_attempted": true,
+          "repair_v2_attempted": true,
+          "final_guard": {
+            "page": "entruempelung-steinmauern.html",
+            "status": "REVIEW",
+            "reasons": [
+              "FAQ too weak"
+            ],
+            "required_fixes": [
+              "Expand FAQ"
+            ],
+            "summary": "Page needs review but is not critically blocked."
+          },
+          "score_after_round": 125
+        },
+        {
+          "round": 2,
+          "initial_guard": {
+            "page": "entruempelung-steinmauern.html",
+            "status": "REVIEW",
+            "reasons": [
+              "FAQ too weak"
+            ],
+            "required_fixes": [
+              "Expand FAQ"
+            ],
+            "summary": "Page needs review but is not critically blocked."
+          },
+          "structural_attempted": true,
+          "repair_v2_attempted": true,
+          "final_guard": {
+            "page": "entruempelung-steinmauern.html",
+            "status": "REVIEW",
+            "reasons": [
+              "FAQ too weak",
+              "CTA similarity too high"
+            ],
+            "required_fixes": [
+              "Expand FAQ",
+              "Rewrite CTA"
+            ],
+            "summary": "Page needs review but is not critically blocked."
+          },
+          "score_after_round": 140
+        }
+      ],
+      "final_guard": {
+        "page": "entruempelung-steinmauern.html",
+        "status": "REVIEW",
+        "reasons": [
+          "FAQ too weak"
+        ],
+        "required_fixes": [
+          "Expand FAQ"
+        ],
+        "summary": "Page needs review but is not critically blocked."
+      },
+      "next_action": "Quick manual review",
+      "status": "REVIEW"
+    },
+    {
+      "page": "entruempelung-gaggenau.html",
+      "rounds": [
+        {
+          "round": 1,
+          "initial_guard": {
+            "page": "entruempelung-gaggenau.html",
+            "status": "PASS",
+            "reasons": [],
+            "required_fixes": [],
+            "summary": "Page passed guard."
+          },
+          "structural_attempted": false,
+          "repair_v2_attempted": false,
+          "final_guard": {
+            "page": "entruempelung-gaggenau.html",
+            "status": "PASS",
+            "reasons": [],
+            "required_fixes": [],
+            "summary": "Page passed guard."
+          },
+          "score_after_round": 0
+        }
+      ],
+      "final_guard": {
+        "page": "entruempelung-gaggenau.html",
+        "status": "PASS",
+        "reasons": [],
+        "required_fixes": [],
+        "summary": "Page passed guard."
+      },
+      "next_action": "No action needed",
+      "status": "PASS"
+    }
+  ],
+  "pass": [
+    "entruempelung-gaggenau.html"
+  ],
+  "review": [
+    "entruempelung-bad-herrenalb.html",
+    "entruempelung-steinmauern.html"
+  ],
+  "block": [],
+  "errors": [],
+  "counts": {
+    "pass": 1,
+    "review": 2,
+    "block": 0,
+    "errors": 0
+  }
+}
