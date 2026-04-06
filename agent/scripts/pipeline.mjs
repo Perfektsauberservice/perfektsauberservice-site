@@ -439,6 +439,44 @@ function updateSitemap(slug) {
   console.log(`   ✅  Sitemap aktualisiert: ${url}`);
 }
 
+// ─── Blog index updater ───────────────────────────────────────────────────────
+
+function updateBlogIndex(slug, research, image, city, service) {
+  const indexPath = join(ROOT, 'content', 'auto', 'blog-index.json');
+  let data = { updatedAt: new Date().toISOString(), items: [] };
+
+  try {
+    data = JSON.parse(readFileSync(indexPath, 'utf8'));
+  } catch (e) {}
+
+  const url = `${SITE}/blog/${slug}.html`;
+
+  // Skip if already in index
+  if (data.items.find(i => i.url === url)) {
+    console.log('   [INFO] Blog index: already present');
+    return;
+  }
+
+  const entry = {
+    slug,
+    title: research.titel || slug,
+    seoTitle: research.titel || slug,
+    metaDescription: research.meta_description || '',
+    intro: research.abschnitte?.[0]?.inhalt?.substring(0, 160) || '',
+    city,
+    service,
+    image: image.source !== 'local' ? image.url : '',
+    publishedAt: new Date().toISOString(),
+    url,
+    htmlPath: `blog/${slug}.html`
+  };
+
+  data.items.unshift(entry); // newest first
+  data.updatedAt = new Date().toISOString();
+  writeFileSync(indexPath, JSON.stringify(data, null, 2));
+  console.log('[OK] Blog index aktualisiert');
+}
+
 // ─── Topics queue manager ─────────────────────────────────────────────────────
 
 function getNextTopic() {
@@ -540,6 +578,7 @@ async function main() {
     console.log(`\n💾  Gespeichert: blog/${slug}.html`);
 
     updateSitemap(slug);
+    updateBlogIndex(slug, research, image, city, service);
 
     if (markDone) markDone();
 
