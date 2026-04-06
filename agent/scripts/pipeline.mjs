@@ -67,69 +67,78 @@ async function callClaude(systemPrompt, userPrompt, maxTokens = 3000) {
 async function researchAgent(topic, city, service) {
   console.log(`\n🔍  [Agent 1 – Research] ${service} · ${city} · "${topic}"`);
 
-  const systemPrompt = `Du bist ein lokaler SEO-Experte und Marktkenner für Entrümpelung, Haushaltsauflösung und Reinigungsdienstleistungen in der Region ${city}, Baden-Württemberg, Deutschland.
-Du kennst die lokalen Preise, Vorschriften, saisonalen Besonderheiten und die Bedürfnisse der Bewohner in dieser Region genau.
-Antworte immer auf Deutsch. Antworte NUR mit validem JSON, kein anderer Text.`;
+  // Use tool_use (function calling) — guarantees valid JSON output
+  const body = {
+    model: CLAUDE_MODEL,
+    max_tokens: 3000,
+    system: `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`,
+    tools: [{
+      name: 'artikel_research',
+      description: 'Strukturierte Recherche für einen deutschen SEO-Blogartikel über Entrümpelung/Haushaltsauflösung',
+      input_schema: {
+        type: 'object',
+        properties: {
+          titel: { type: 'string', description: 'SEO-Titel max 65 Zeichen' },
+          meta_description: { type: 'string', description: 'Meta-Description max 155 Zeichen' },
+          abschnitte: {
+            type: 'array',
+            description: 'Mindestens 4 Abschnitte mit je min. 100 Wörtern',
+            items: {
+              type: 'object',
+              properties: {
+                h2: { type: 'string', description: 'Überschrift als Frage oder klare Aussage' },
+                inhalt: { type: 'string', description: 'Mindestens 100 Wörter nützlicher Inhalt' }
+              },
+              required: ['h2', 'inhalt']
+            }
+          },
+          preishinweise: { type: 'string', description: 'Realistische Preisspanne für die Stadt, 2-3 Sätze' },
+          lokale_besonderheiten: { type: 'string', description: 'Stadtspezifische Infos zu Infrastruktur und Gebäuden' },
+          haeufige_fragen: {
+            type: 'array',
+            description: '4 häufige Fragen der Zielgruppe mit Antworten',
+            items: {
+              type: 'object',
+              properties: {
+                frage: { type: 'string' },
+                antwort: { type: 'string', description: '2-4 Sätze direkte Antwort' }
+              },
+              required: ['frage', 'antwort']
+            }
+          },
+          seo_keywords: { type: 'array', items: { type: 'string' }, description: '5 relevante Keywords' },
+          bild_suchbegriffe: { type: 'array', items: { type: 'string' }, description: '3 englische Suchbegriffe für Unsplash/Pexels' },
+          artikel_winkel: { type: 'string', description: 'Was macht diesen Artikel einzigartig?' }
+        },
+        required: ['titel', 'meta_description', 'abschnitte', 'preishinweise', 'lokale_besonderheiten', 'haeufige_fragen', 'seo_keywords', 'bild_suchbegriffe', 'artikel_winkel']
+      }
+    }],
+    tool_choice: { type: 'tool', name: 'artikel_research' },
+    messages: [{
+      role: 'user',
+      content: `Recherchiere dieses Thema für einen Blogartikel:\n\nThema: "${topic}"\nStadt: ${city}\nDienstleistung: ${service}\n\nMindestens 4 Abschnitte mit echten, nützlichen Informationen für Bewohner in ${city}.`
+    }]
+  };
 
-  const userPrompt = `Recherchiere das folgende Thema für einen Blogartikel:
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': ANTHROPIC_API_KEY,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify(body)
+  });
 
-Thema: "${topic}"
-Stadt: ${city}
-Dienstleistung: ${service}
-
-Liefere ein JSON-Objekt mit EXAKT diesen Feldern:
-{
-  "titel": "SEO-optimierter Artikel-Titel (max 65 Zeichen)",
-  "meta_description": "Überzeugende Meta-Description (max 155 Zeichen, mit Keyword und CTA)",
-  "hauptpunkte": ["Punkt 1", "Punkt 2", "Punkt 3", "Punkt 4", "Punkt 5"],
-  "abschnitte": [
-    {
-      "h2": "Abschnitts-Überschrift als Frage oder klare Aussage",
-      "inhalt": "Mindestens 100 Wörter mit echten, nützlichen Informationen. Kein Marketing-Blabla."
-    }
-  ],
-  "preishinweise": "Realistische Preisspanne und Faktoren für ${city} (2-3 Sätze)",
-  "lokale_besonderheiten": "Was ist spezifisch für ${city}? Stadtteil, Infrastruktur, typische Gebäude (2-3 Sätze)",
-  "haeufige_fragen": [
-    { "frage": "Konkrete Frage der Zielgruppe?", "antwort": "Direkte, hilfreiche Antwort in 2-4 Sätzen." },
-    { "frage": "...", "antwort": "..." },
-    { "frage": "...", "antwort": "..." },
-    { "frage": "...", "antwort": "..." }
-  ],
-  "seo_keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
-  "bild_suchbegriffe": ["englischer Suchbegriff für Unsplash/Pexels passend zum Thema", "Alternative 1", "Alternative 2"],
-  "artikel_winkel": "Was macht diesen Artikel einzigartig und besonders nützlich?"
-}
-
-Mindestens 4 Abschnitte mit je min. 100 Wörtern. Echte, verwertbare Informationen.`;
-
-  const raw = await callClaude(systemPrompt, userPrompt, 2500);
-
-  // Extract JSON robustly
-  let research;
-  try {
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('Kein JSON-Block gefunden.');
-    // Fix common JSON issues: unescaped newlines inside strings
-    const cleaned = match[0]
-      .replace(/[\r\n]+/g, ' ')
-      .replace(/,\s*}/g, '}')
-      .replace(/,\s*\]/g, ']');
-    research = JSON.parse(cleaned);
-  } catch (e) {
-    // Retry with stricter prompt
-    console.warn(`   ⚠️  JSON Parse Fehler, versuche erneut...`);
-    const retry = await callClaude(
-      'Antworte NUR mit validem JSON. Kein Markdown, keine Erklärungen, nur reines JSON.',
-      `Erstelle ein JSON für: Thema="${topic}", Stadt="${city}", Service="${service}". Felder: titel, meta_description, hauptpunkte(array), abschnitte(array von {h2,inhalt}), preishinweise, lokale_besonderheiten, haeufige_fragen(array von {frage,antwort}), seo_keywords(array), bild_suchbegriffe(array englisch), artikel_winkel`,
-      2000
-    );
-    const match2 = retry.match(/\{[\s\S]*\}/);
-    if (!match2) throw new Error('Research Agent: JSON konnte nicht geparst werden.');
-    research = JSON.parse(match2[0].replace(/[\r\n]+/g, ' ').replace(/,\s*}/g, '}').replace(/,\s*\]/g, ']'));
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Research Agent API Fehler ${res.status}: ${err}`);
   }
 
-  // Ensure required fields have defaults
+  const data = await res.json();
+  // tool_use response — input is always valid JSON
+  const research = data.content[0].input;
+
   research.abschnitte = research.abschnitte || [];
   research.haeufige_fragen = research.haeufige_fragen || [];
   research.seo_keywords = research.seo_keywords || [];
