@@ -1,19 +1,6 @@
 {
-  "updatedAt": "2026-04-07T16:38:23.987Z",
+  "updatedAt": "2026-04-07T18:11:05.162117Z",
   "items": [
-    {
-      "slug": "entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten",
-      "title": "Keller entrümpeln in Gaggenau – Tipps & Kosten",
-      "seoTitle": "Keller entrümpeln in Gaggenau – Tipps & Kosten",
-      "metaDescription": "Keller entrümpeln in Gaggenau: Kosten, Tipps & Ablauf für Ihre Kellerentrümpelung. Jetzt Angebot einholen & Keller besenrein übergeben lassen.",
-      "intro": "Gaggenau ist eine mittelgroße Stadt im Landkreis Rastatt mit rund 30.000 Einwohnern und einem hohen Anteil an älteren Bestands- und Mehrfamilienhäusern, besonde",
-      "city": "Gaggenau",
-      "service": "Entrümpelung",
-      "image": "https://images.pexels.com/photos/17181949/pexels-photo-17181949.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "publishedAt": "2026-04-07T16:38:23.987Z",
-      "url": "https://perfektsauberservice.com/blog/entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten.html",
-      "htmlPath": "blog/entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten.html"
-    },
     {
       "slug": "entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer",
       "title": "Beste Zeit für Entrümpelung in Rastatt – Tipps",
@@ -26,7 +13,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Beste Zeit für Entrümpelung in Rastatt – Tipps",
       "image": "/public/images/locations/rastatt-1.jpg",
-      "publishedAt": "2026-04-07T14:58:23.542143Z",
+      "publishedAt": "2026-04-07T18:11:04.629515Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html",
       "htmlPath": "blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html"
     },
@@ -42,9 +29,25 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt: Wie schnell ist ein Termin möglich?",
       "image": "/public/images/locations/rastatt-2.jpg",
-      "publishedAt": "2026-04-07T14:58:23.542143Z",
+      "publishedAt": "2026-04-07T18:11:04.629515Z",
       "url": "https://perfektsauberservice.com/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html"
+    },
+    {
+      "slug": "entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten",
+      "title": "Keller entrümpeln in Gaggenau – Tipps & Kosten",
+      "seoTitle": "Keller entrümpeln in Gaggenau – Tipps & Kosten",
+      "metaDescription": "Keller entrümpeln in Gaggenau: Kosten, Tipps & Ablauf für Ihre Kellerentrümpelung. Jetzt Angebot einholen & Keller besenrein übergeben lassen.",
+      "intro": "Gaggenau liegt im Murgtal und ist geprägt von einer Mischung aus Industriegeschichte (ehemaliges Mercedes-Benz-Werk) und gewachsenen Wohnvierteln mit vielen Altbauten aus den 1950er bis 1970er Jahren. Diese Gebäude haben häufig tiefe Kelleranlagen mit mehreren Abteilen, niedrigen Decken und engen Treppenhäusern. In Sta",
+      "city": "Gaggenau",
+      "citySlug": "gaggenau",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "topic": "Keller entrümpeln in Gaggenau – Tipps & Kosten",
+      "image": "/public/images/locations/gaggenau-1.jpg",
+      "publishedAt": "2026-04-07T18:11:04.629515Z",
+      "url": "https://perfektsauberservice.com/blog/entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten.html",
+      "htmlPath": "blog/entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten.html"
     },
     {
       "slug": "entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und",
@@ -58,7 +61,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
       "image": "/public/images/locations/karlsruhe-1.jpg",
-      "publishedAt": "2026-04-07T14:58:23.542143Z",
+      "publishedAt": "2026-04-07T18:11:04.629515Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html",
       "htmlPath": "blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html"
     },
@@ -74,7 +77,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Was kostet eine Entrümpelung in Rastatt? Preise, Faktoren & Tipps",
       "image": "/public/images/locations/rastatt-3.jpg",
-      "publishedAt": "2026-04-07T14:58:23.542143Z",
+      "publishedAt": "2026-04-07T18:11:04.629515Z",
       "url": "https://perfektsauberservice.com/blog/was-kostet-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/was-kostet-eine-entruempelung-in-rastatt.html"
     },
@@ -90,7 +93,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung nach Todesfall in Baden-Baden",
       "image": "/public/images/locations/baden-baden-1.jpg",
-      "publishedAt": "2026-04-07T14:58:23.541717Z",
+      "publishedAt": "2026-04-07T18:11:04.629127Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-baden-baden-entruempelung-nach-einem-todesfall--was.html",
       "htmlPath": "blog/entruempelung-baden-baden-entruempelung-nach-einem-todesfall--was.html"
     }
