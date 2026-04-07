@@ -49,8 +49,3 @@
   status = 410
   force = true
 
-# Redirect URL-uri fara .html la versiunea cu .html (fix pentru Google index)
-[[redirects]]
-  from = "/:slug"
-  to = "/:slug.html"
-  status = 301
