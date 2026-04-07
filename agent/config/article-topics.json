@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Karlsruhe",
-      "topic": "Messie-Wohnung räumen lassen – Ablauf und Kosten"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Gaggenau",
       "topic": "Keller entrümpeln – Tipps und Kosten"
     },
@@ -658,6 +653,12 @@
       "city": "Baden-Baden",
       "service": "Entrümpelung",
       "completedAt": "2026-04-07T10:08:13.697Z"
+    },
+    {
+      "topic": "Messie-Wohnung räumen lassen – Ablauf und Kosten",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-07T12:09:32.937Z"
     }
   ]
 }
