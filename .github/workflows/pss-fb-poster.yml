@@ -9,6 +9,8 @@ on:
 jobs:
   post-to-facebook:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -25,12 +27,9 @@ jobs:
         run: node agent/scripts/fb-poster.mjs
 
       - name: Commit posted log
-        env:
-          GH_TOKEN: ${{ secrets.PSS_AUTOPUBLISH_TOKEN }}
         run: |
           git config user.name "PSS Bot"
           git config user.email "bot@perfektsauberservice.com"
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/Perfektsauberservice/perfektsauberservice-site.git
           git add agent/config/fb-posted.json
           git diff --staged --quiet || git commit -m "chore: update fb-posted log"
           git push
