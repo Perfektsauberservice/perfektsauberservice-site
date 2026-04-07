@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Baden-Baden",
-      "topic": "Entrümpelung nach einem Todesfall – Was tun?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Karlsruhe",
       "topic": "Messie-Wohnung räumen lassen – Ablauf und Kosten"
     },
@@ -657,6 +652,12 @@
       "city": "Rastatt",
       "service": "Entrümpelung",
       "completedAt": "2026-04-06T03:12:52.533Z"
+    },
+    {
+      "topic": "Entrümpelung nach einem Todesfall – Was tun?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-07T10:08:13.697Z"
     }
   ]
 }
