@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Requester | PerfektSauberService</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 16px; }
+
+  .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 32px;
+    width: 100%;
+    max-width: 560px;
+    margin-bottom: 24px;
+  }
+
+  h1 { font-size: 1.4rem; color: #fff; margin-bottom: 4px; }
+  .subtitle { font-size: 0.85rem; color: #64748b; margin-bottom: 28px; }
+
+  label { display: block; font-size: 0.78rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  input {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus { border-color: #22c55e; }
+
+  .btn {
+    width: 100%;
+    background: #22c55e;
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  .btn:hover { background: #16a34a; }
+  .btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+
+  .btn-secondary {
+    background: #1e3a5f;
+    color: #60a5fa;
+    margin-top: 10px;
+  }
+  .btn-secondary:hover { background: #1e40af; }
+
+  .preview-box {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: #cbd5e1;
+    margin-top: 20px;
+    display: none;
+  }
+  .preview-box.visible { display: block; }
+
+  .review-link-box {
+    margin-top: 12px;
+    font-size: 0.78rem;
+    color: #64748b;
+  }
+  .review-link-box a { color: #22c55e; }
+
+  .history-card { }
+  .history-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 12px; }
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e293b;
+    font-size: 0.88rem;
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-name { color: #e2e8f0; }
+  .history-date { color: #64748b; font-size: 0.75rem; }
+  .resend-btn {
+    background: #1e3a5f;
+    color: #60a5fa;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+  .resend-btn:hover { background: #1e40af; }
+
+  .empty-history { color: #64748b; font-size: 0.85rem; text-align: center; padding: 16px 0; }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #22c55e;
+    color: #000;
+    font-weight: bold;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .toast.show { opacity: 1; }
+
+  .step-badge {
+    display: inline-block;
+    background: #22c55e;
+    color: #000;
+    font-weight: 700;
+    font-size: 0.7rem;
+    border-radius: 99px;
+    padding: 2px 10px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .info-box {
+    background: #0d2018;
+    border: 1px solid #166534;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: #86efac;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>⭐ Review Requester</h1>
+  <p class="subtitle">Trimite clientului un mesaj WhatsApp cu link-ul de recenzie Google</p>
+
+  <div class="info-box">
+    Dupa fiecare lucrare finalizata, trimite un mesaj → clientul lasa o recenzie Google → iti creste ranking-ul local.
+  </div>
+
+  <label>Nume client</label>
+  <input type="text" id="customer-name" placeholder="z.B. Hans Müller" oninput="updatePreview()">
+
+  <label>Telefon WhatsApp (cu prefix tara)</label>
+  <input type="tel" id="customer-phone" placeholder="+49 163 1234567" oninput="updatePreview()">
+
+  <div class="preview-box" id="preview-box"></div>
+
+  <a id="wa-btn" class="btn" style="margin-top:20px; display:none;" target="_blank">
+    Deschide WhatsApp →
+  </a>
+
+  <button class="btn btn-secondary" onclick="copyMessage()" id="copy-btn" style="display:none;">
+    Copiaza mesajul
+  </button>
+
+  <div class="review-link-box" id="link-info" style="display:none;">
+    Link recenzie Google: <a href="https://g.page/r/CYyWrOw6BeWQEBM/review" target="_blank">g.page/r/CYyWrOw6BeWQEBM/review</a>
+    <br><small>Daca link-ul nu merge, ia link-ul corect din Google Business Profile → Share → Copy Link</small>
+  </div>
+</div>
+
+<div class="card history-card">
+  <div class="history-title">Istoric trimiteri</div>
+  <div id="history-list"></div>
+</div>
+
+<div class="toast" id="toast">Copiat!</div>
+
+<script>
+const REVIEW_URL = 'https://g.page/r/CYyWrOw6BeWQEBM/review';
+const BUSINESS = 'PerfektSauberService';
+
+function buildMessage(name) {
+  const n = (name || '').trim() || 'Kunde';
+  return `Hallo ${n},
+
+vielen Dank für Ihren Auftrag bei ${BUSINESS}! 🙏
+
+Wir hoffen, dass Sie mit unserer Arbeit zufrieden waren. Falls ja, würden wir uns sehr über eine kurze Google-Bewertung freuen – das hilft uns enorm weiter:
+
+⭐ ${REVIEW_URL}
+
+Es dauert nur 1–2 Minuten und bedeutet uns sehr viel!
+
+Mit freundlichen Grüßen,
+Ihr ${BUSINESS}-Team
+Tel: +49 163 9087197`;
+}
+
+function buildWaLink(phone, message) {
+  const cleaned = phone.replace(/[\s\-\(\)]/g, '');
+  return `https://wa.me/${cleaned}?text=${encodeURIComponent(message)}`;
+}
+
+function updatePreview() {
+  const name = document.getElementById('customer-name').value;
+  const phone = document.getElementById('customer-phone').value;
+  const msg = buildMessage(name);
+
+  const preview = document.getElementById('preview-box');
+  preview.textContent = msg;
+  preview.classList.add('visible');
+
+  const waBtn = document.getElementById('wa-btn');
+  const copyBtn = document.getElementById('copy-btn');
+  const linkInfo = document.getElementById('link-info');
+
+  if (phone.trim().length > 6) {
+    waBtn.href = buildWaLink(phone, msg);
+    waBtn.style.display = 'block';
+    waBtn.onclick = () => saveToHistory(name, phone);
+  } else {
+    waBtn.style.display = 'none';
+  }
+
+  copyBtn.style.display = 'block';
+  linkInfo.style.display = 'block';
+}
+
+function copyMessage() {
+  const name = document.getElementById('customer-name').value;
+  const msg = buildMessage(name);
+  navigator.clipboard.writeText(msg).then(() => showToast('Mesaj copiat!'));
+}
+
+function saveToHistory(name, phone) {
+  const history = getHistory();
+  history.unshift({
+    name: name || 'Kunde',
+    phone,
+    date: new Date().toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
+  });
+  localStorage.setItem('review-history', JSON.stringify(history.slice(0, 20)));
+  setTimeout(renderHistory, 300);
+}
+
+function getHistory() {
+  const raw = localStorage.getItem('review-history');
+  return raw ? JSON.parse(raw) : [];
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  const history = getHistory();
+  if (history.length === 0) {
+    list.innerHTML = '<div class="empty-history">Niciun mesaj trimis inca.</div>';
+    return;
+  }
+  list.innerHTML = history.map((h, i) => `
+    <div class="history-item">
+      <div>
+        <div class="history-name">${h.name}</div>
+        <div class="history-date">${h.phone} · ${h.date}</div>
+      </div>
+      <button class="resend-btn" onclick="resend(${i})">Retrimite</button>
+    </div>
+  `).join('');
+}
+
+function resend(i) {
+  const h = getHistory()[i];
+  document.getElementById('customer-name').value = h.name;
+  document.getElementById('customer-phone').value = h.phone;
+  updatePreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+renderHistory();
+</script>
+</body>
+</html>
