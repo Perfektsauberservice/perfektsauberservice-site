@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitor Monitor | PerfektSauberService</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.monitor-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.stat-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 18px; padding: 20px 24px; }
+.stat-num { font-size: 2rem; font-weight: 900; margin: 6px 0 4px; }
+.stat-label { font-size: 0.78rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-sub { font-size: 0.82rem; color: #94a3b8; margin-top: 4px; }
+
+.section-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 18px; padding: 24px; margin-bottom: 20px; }
+.section-title { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 16px; font-weight: 700; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th { text-align: left; padding: 8px 12px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; border-bottom: 1px solid #f1f5f9; }
+td { padding: 10px 12px; border-bottom: 1px solid #f8fafc; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f8fafc; }
+
+.pos-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; font-weight: 800; padding: 3px 10px; border-radius: 999px; font-size: 0.82rem; min-width: 36px; text-align: center; }
+.pos-badge.top3 { background: #dcfce7; color: #15803d; }
+.pos-badge.top1 { background: #fef9c3; color: #a16207; }
+.pos-badge.none { background: #f1f5f9; color: #94a3b8; }
+
+.trend-up { color: #16a34a; font-weight: 700; }
+.trend-down { color: #dc2626; font-weight: 700; }
+.trend-eq { color: #94a3b8; }
+
+.pack-yes { display: inline-flex; align-items: center; gap: 4px; background: #dcfce7; color: #15803d; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+.pack-no { color: #cbd5e1; font-size: 0.82rem; }
+
+.comp-name { font-weight: 700; }
+.comp-meta { font-size: 0.78rem; color: #94a3b8; margin-top: 2px; }
+.stars { color: #f59e0b; }
+.review-new { color: #16a34a; font-size: 0.75rem; font-weight: 700; }
+.review-new-neg { color: #dc2626; font-size: 0.75rem; font-weight: 700; }
+
+.appears-pill { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 999px; padding: 2px 8px; font-size: 0.72rem; font-weight: 700; }
+
+.empty-state { text-align: center; padding: 48px 24px; color: #94a3b8; }
+.empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-title { font-weight: 700; color: #475569; margin-bottom: 8px; }
+
+.history-bar { display: flex; align-items: flex-end; gap: 3px; height: 32px; }
+.history-bar span { background: #bfdbfe; border-radius: 3px; flex: 1; min-width: 6px; }
+.history-bar span.current { background: #2563eb; }
+
+.last-updated { font-size: 0.78rem; color: #94a3b8; }
+
+.alert-banner { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 10px; padding: 12px 16px; font-size: 0.85rem; color: #92400e; margin-bottom: 16px; }
+
+@media (max-width: 860px) { .monitor-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .monitor-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+<div class="shell app" style="display:grid">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo-badge" style="width:56px;height:56px;border-radius:20px;background:linear-gradient(135deg,#17304f,#2f6bff);color:#fff;">📊</div>
+      <div>
+        <div style="font-weight:900">Competitor Monitor</div>
+        <div class="note">Agent 12 — weekly tracking</div>
+      </div>
+    </div>
+    <div class="menu">
+      <a href="index.html">⬅ Dashboard</a>
+      <a class="active" href="#overview">📊 Overview</a>
+      <a href="#keywords">🔑 Keywords</a>
+      <a href="#local-pack">📍 Local Pack</a>
+      <a href="#competitors">🏢 Competitori</a>
+    </div>
+    <div class="sidebar-card">
+      <div class="kicker">Urmatoarea rulare</div>
+      <div style="font-weight:900;margin-top:6px" id="next-run">—</div>
+      <div class="note" style="margin-top:8px">In fiecare luni la 08:00</div>
+      <div style="height:10px"></div>
+      <div class="kicker">Necesar</div>
+      <div class="note" style="margin-top:6px">Secret GitHub: <strong>SERPER_API_KEY</strong><br>Gratuit la serper.dev</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="hero" id="overview" style="margin-bottom:24px">
+      <div class="hero-main">
+        <div class="kicker" style="color:#dbeafe">SEO Tracking</div>
+        <div style="font-size:2rem;font-weight:900;line-height:1.1;margin-top:8px">Pozitii Google &amp; Competitori</div>
+        <div style="margin-top:8px;opacity:.85" class="last-updated" id="last-updated">Incarcare date...</div>
+      </div>
+    </section>
+
+    <div id="no-data" style="display:none">
+      <div class="empty-state">
+        <div class="empty-icon">📊</div>
+        <div class="empty-title">Nicio data inca</div>
+        <p>Agentul nu a rulat inca. Adauga <strong>SERPER_API_KEY</strong> in GitHub Secrets si ruleaza manual din Actions.</p>
+        <br>
+        <a class="btn btn-primary" href="https://github.com/Perfektsauberservice/perfektsauberservice-site/actions/workflows/pss-competitor-monitor.yml" target="_blank" style="text-decoration:none;display:inline-block;margin-top:8px">Ruleaza acum pe GitHub</a>
+      </div>
+    </div>
+
+    <div id="data-view" style="display:none">
+
+      <!-- Stat cards -->
+      <div class="monitor-grid" id="overview">
+        <div class="stat-card">
+          <div class="stat-label">Keywords in top 10</div>
+          <div class="stat-num" id="stat-ranked">—</div>
+          <div class="stat-sub" id="stat-ranked-sub"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">In Local Pack</div>
+          <div class="stat-num" id="stat-pack">—</div>
+          <div class="stat-sub" id="stat-pack-sub"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Competitori urmariti</div>
+          <div class="stat-num" id="stat-comp">—</div>
+          <div class="stat-sub" id="stat-comp-sub"></div>
+        </div>
+      </div>
+
+      <!-- Alerte -->
+      <div id="alerts"></div>
+
+      <!-- Keywords table -->
+      <div class="section-card" id="keywords">
+        <div class="section-title">Pozitii Keyword</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Pozitie</th>
+              <th>Trend</th>
+              <th>Local Pack</th>
+              <th>Top 3 Organic</th>
+            </tr>
+          </thead>
+          <tbody id="keywords-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Local Pack -->
+      <div class="section-card" id="local-pack">
+        <div class="section-title">Local Pack — cine apare pe harta</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>Tu apari?</th>
+              <th>Competitori in pack</th>
+            </tr>
+          </thead>
+          <tbody id="pack-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Competitors -->
+      <div class="section-card" id="competitors">
+        <div class="section-title">Competitori — recenzii &amp; rating</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Firma</th>
+              <th>Rating</th>
+              <th>Recenzii</th>
+              <th>Crestere</th>
+              <th>Apare in</th>
+            </tr>
+          </thead>
+          <tbody id="comp-tbody"></tbody>
+        </table>
+      </div>
+
+    </div><!-- /data-view -->
+  </main>
+</div>
+</div>
+
+<script>
+const DATA_URL = '../agent/state/keyword-rankings.json';
+
+function posClass(pos) {
+  if (!pos) return 'none';
+  if (pos === 1) return 'top1';
+  if (pos <= 3) return 'top3';
+  return '';
+}
+
+function trendHtml(current, prev) {
+  if (prev === null || prev === undefined || current === null) return '<span class="trend-eq">—</span>';
+  const diff = prev - current; // pozitiv = imbunatatire (pozitie mai mica)
+  if (diff > 0) return `<span class="trend-up">↑${diff}</span>`;
+  if (diff < 0) return `<span class="trend-down">↓${Math.abs(diff)}</span>`;
+  return '<span class="trend-eq">=</span>';
+}
+
+function reviewTrend(curr, prev) {
+  if (prev === null || prev === undefined || curr === null) return '';
+  const diff = curr - prev;
+  if (diff > 0) return `<span class="review-new">+${diff} nou</span>`;
+  if (diff < 0) return `<span class="review-new-neg">${diff}</span>`;
+  return '';
+}
+
+function stars(rating) {
+  if (!rating) return '—';
+  return `<span class="stars">★</span> ${rating}`;
+}
+
+function escHtml(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function nextMonday() {
+  const now = new Date();
+  const d = new Date(now);
+  d.setUTCHours(6, 0, 0, 0);
+  const day = d.getUTCDay();
+  const daysUntil = day === 1 ? 7 : (8 - day) % 7 || 7;
+  d.setUTCDate(d.getUTCDate() + daysUntil);
+  return d.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: '2-digit' }) + ' 08:00';
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(DATA_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error('fetch failed');
+    const data = await res.json();
+
+    document.getElementById('next-run').textContent = nextMonday();
+
+    if (!data.weeks || data.weeks.length === 0) {
+      document.getElementById('no-data').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('data-view').style.display = 'block';
+    const latest = data.weeks[data.weeks.length - 1];
+    renderDashboard(latest, data.weeks);
+  } catch (e) {
+    document.getElementById('no-data').style.display = 'block';
+    document.getElementById('next-run').textContent = nextMonday();
+  }
+}
+
+function renderDashboard(week, allWeeks) {
+  document.getElementById('last-updated').textContent = 'Ultima actualizare: ' + week.date;
+
+  const keywords = week.keywords || [];
+  const competitors = week.competitorList || [];
+
+  const ranked = keywords.filter(k => k.position);
+  const inPack = keywords.filter(k => k.inLocalPack);
+
+  document.getElementById('stat-ranked').textContent = `${ranked.length}/${keywords.length}`;
+  document.getElementById('stat-ranked-sub').textContent = ranked.length > 0
+    ? `Medie: #${Math.round(ranked.reduce((s,k)=>s+k.position,0)/ranked.length)}`
+    : 'Niciun keyword gasit inca';
+
+  document.getElementById('stat-pack').textContent = `${inPack.length}/${keywords.length}`;
+  document.getElementById('stat-pack-sub').textContent = inPack.length > 0
+    ? inPack.map(k => k.city).filter((v,i,a)=>a.indexOf(v)===i).join(', ')
+    : 'Nu apari inca in Local Pack';
+
+  document.getElementById('stat-comp').textContent = competitors.length;
+  document.getElementById('stat-comp-sub').textContent = competitors.length > 0
+    ? `Top: ${competitors[0].name}` : '';
+
+  // Alerte
+  const alerts = [];
+  for (const k of keywords) {
+    if (k.positionPrev !== null && k.position !== null) {
+      const drop = k.position - k.positionPrev;
+      if (drop >= 3) alerts.push(`⚠️ "${k.query}" a cazut ${drop} pozitii (#${k.positionPrev} → #${k.position})`);
+    }
+    if (k.inLocalPackPrev === true && !k.inLocalPack) {
+      alerts.push(`⚠️ Ai disparut din Local Pack pentru "${k.query}"`);
+    }
+    if (!k.inLocalPackPrev && k.inLocalPack) {
+      alerts.push(`✅ Ai intrat in Local Pack pentru "${k.query}"!`);
+    }
+  }
+  const alertsDiv = document.getElementById('alerts');
+  alertsDiv.innerHTML = alerts.map(a =>
+    `<div class="alert-banner">${a}</div>`
+  ).join('');
+
+  // Keywords table
+  const tbody = document.getElementById('keywords-tbody');
+  tbody.innerHTML = keywords.map(k => {
+    const topComp = (k.topOrganic || []).slice(0, 2).map(r =>
+      `<div style="font-size:0.75rem;color:#64748b;margin-top:2px">
+        <a href="${escHtml(r.link)}" target="_blank" style="color:#3b82f6;text-decoration:none">${escHtml(r.title.substring(0,40))}…</a>
+      </div>`
+    ).join('');
+    return `<tr>
+      <td><strong>${escHtml(k.query)}</strong></td>
+      <td><span class="pos-badge ${posClass(k.position)}">${k.position ? '#' + k.position : 'N/A'}</span></td>
+      <td>${trendHtml(k.position, k.positionPrev)}</td>
+      <td>${k.inLocalPack ? '<span class="pack-yes">✅ Da</span>' : '<span class="pack-no">—</span>'}</td>
+      <td>${topComp || '<span style="color:#cbd5e1">—</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  // Local Pack table
+  const packTbody = document.getElementById('pack-tbody');
+  packTbody.innerHTML = keywords.map(k => {
+    const comps = (k.competitors || []).map(c =>
+      `<span style="font-size:0.8rem;background:#f1f5f9;padding:2px 8px;border-radius:6px;margin-right:4px">${escHtml(c.name)}</span>`
+    ).join('');
+    return `<tr>
+      <td>${escHtml(k.query)}</td>
+      <td>${k.inLocalPack ? '<span class="pack-yes">✅ Da</span>' : '<span class="pack-no">Nu</span>'}</td>
+      <td>${comps || '<span style="color:#cbd5e1">—</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  // Competitors table
+  const compTbody = document.getElementById('comp-tbody');
+  if (competitors.length === 0) {
+    compTbody.innerHTML = '<tr><td colspan="5" style="color:#94a3b8;text-align:center;padding:24px">Nicio data inca — ruleaza agentul</td></tr>';
+  } else {
+    compTbody.innerHTML = competitors.map(c => {
+      const trend = reviewTrend(c.reviews, c.reviewsPrev);
+      return `<tr>
+        <td>
+          <div class="comp-name">${escHtml(c.name)}</div>
+          <div class="comp-meta">${c.website ? `<a href="${escHtml(c.website)}" target="_blank" style="color:#3b82f6">${escHtml(c.website.replace('https://','').replace('http://',''))}</a>` : escHtml(c.address)}</div>
+        </td>
+        <td>${stars(c.rating)}</td>
+        <td>${c.reviews !== null ? c.reviews : '—'}</td>
+        <td>${trend || '<span style="color:#cbd5e1">—</span>'}</td>
+        <td><span class="appears-pill">${c.appearsFor.length} cautari</span></td>
+      </tr>`;
+    }).join('');
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
