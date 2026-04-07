@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Baden-Baden",
-      "topic": "Was passiert mit verwertbaren Gegenständen bei der Haushaltsauflösung?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Karlsruhe",
       "topic": "Haushaltsauflösung Kosten – Was beeinflusst den Preis?"
     },
@@ -661,6 +656,12 @@
       "city": "Rastatt",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-07T23:04:09.392Z"
+    },
+    {
+      "topic": "Was passiert mit verwertbaren Gegenständen bei der Haushaltsauflösung?",
+      "city": "Baden-Baden",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-07T23:09:09.617Z"
     }
   ]
 }
