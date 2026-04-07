@@ -49,11 +49,12 @@
   status = 410
   force = true
 
-# Pagina de multumire dupa formular
+# Pagina de multumire - serveste direct fara catch-all
 [[redirects]]
-  from = "/danke"
+  from = "/danke.html"
   to = "/danke.html"
   status = 200
+  force = true
 
 # Redirect URL-uri fara .html la versiunea cu .html (fix pentru Google index)
 [[redirects]]
