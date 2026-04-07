@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Entrümpelung",
-      "city": "Gaggenau",
-      "topic": "Keller entrümpeln – Tipps und Kosten"
-    },
-    {
       "service": "Haushaltsauflösung",
       "city": "Rastatt",
       "topic": "Haushaltsauflösung planen – Schritt für Schritt"
@@ -659,6 +654,12 @@
       "city": "Karlsruhe",
       "service": "Entrümpelung",
       "completedAt": "2026-04-07T12:09:32.937Z"
+    },
+    {
+      "topic": "Keller entrümpeln – Tipps und Kosten",
+      "city": "Gaggenau",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-07T16:38:23.987Z"
     }
   ]
 }
