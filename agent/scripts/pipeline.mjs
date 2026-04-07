@@ -78,7 +78,7 @@ async function researchAgent(topic, city, service) {
   // Use tool_use (function calling) — guarantees valid JSON output
   const body = {
     model: CLAUDE_MODEL,
-    max_tokens: 4000,
+    max_tokens: 6000,
     system: `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`,
     tools: [{
       name: 'artikel_research',
@@ -173,10 +173,21 @@ async function researchAgent(topic, city, service) {
   // tool_use response — input is always valid JSON
   const research = toolBlock.input;
 
-  research.abschnitte = research.abschnitte || [];
-  research.haeufige_fragen = research.haeufige_fragen || [];
-  research.seo_keywords = research.seo_keywords || [];
-  research.bild_suchbegriffe = research.bild_suchbegriffe || ['professional cleaning', 'home organization'];
+  // Ensure arrays are actually arrays (max_tokens truncation can cause strings)
+  const ensureArray = (val) => {
+    if (Array.isArray(val)) return val;
+    if (typeof val === 'string') { try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch(e) { return []; } }
+    return [];
+  };
+  research.abschnitte = ensureArray(research.abschnitte);
+  research.haeufige_fragen = ensureArray(research.haeufige_fragen);
+  research.seo_keywords = ensureArray(research.seo_keywords);
+  research.bild_suchbegriffe = ensureArray(research.bild_suchbegriffe);
+  if (research.bild_suchbegriffe.length === 0) research.bild_suchbegriffe = ['professional cleaning', 'home organization'];
+
+  if (research.abschnitte.length === 0) {
+    throw new Error('Research Agent: abschnitte ist leer nach max_tokens Truncation. Bitte erneut versuchen.');
+  }
 
   console.log(`   ✅  Keywords: ${research.seo_keywords?.join(', ')}`);
   console.log(`   ✅  Abschnitte: ${research.abschnitte?.length}`);
