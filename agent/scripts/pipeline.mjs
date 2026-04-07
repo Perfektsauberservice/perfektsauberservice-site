@@ -78,7 +78,7 @@ async function researchAgent(topic, city, service) {
   // Use tool_use (function calling) — guarantees valid JSON output
   const body = {
     model: CLAUDE_MODEL,
-    max_tokens: 6000,
+    max_tokens: 8000,
     system: `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`,
     tools: [{
       name: 'artikel_research',
@@ -575,12 +575,29 @@ async function main() {
     process.exit(0);
   }
 
+  // Retry loop — max 3 incercari
+  let research;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      research = await researchAgent(topic, city, service);
+      break; // succes — iese din loop
+    } catch (err) {
+      if (attempt < 3) {
+        console.warn(`\n⚠️  Research esuat (incercarea ${attempt}/3): ${err.message}`);
+        console.log('   Reincerc in 5 secunde...');
+        await new Promise(r => setTimeout(r, 5000));
+      } else {
+        throw err; // toate 3 incercarile au esuat
+      }
+    }
+  }
+
   try {
     // Agent 1 (Research) — zuerst ausfuehren um Bildsuche-Begriffe zu erhalten
-    const research = await researchAgent(topic, city, service);
+    // research deja obtinut mai sus prin retry loop
 
     // Agent 2 (Images) — mit research-basierten Suchbegriffen
-    const image = await imageAgent(research.bild_suchbegriffe || [], city, service);
+    const image = await imageAgent((research.bild_suchbegriffe || []), city, service);
 
     // Agent 3 (Writing)
     const html = await writingAgent(topic, city, service, research, image, slug);
