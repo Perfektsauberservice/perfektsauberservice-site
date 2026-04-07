@@ -10,7 +10,7 @@
  *   node agent/scripts/pipeline.mjs --topic "titlu" --city "Rastatt" --service "Entrümpelung"
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -192,6 +192,36 @@ async function researchAgent(topic, city, service) {
   console.log(`   ✅  Keywords: ${research.seo_keywords?.join(', ')}`);
   console.log(`   ✅  Abschnitte: ${research.abschnitte?.length}`);
   return research;
+}
+
+// ─── Image downloader ─────────────────────────────────────────────────────────
+
+async function downloadImage(remoteUrl, service, city, topic) {
+  const dir = join(ROOT, 'images', 'blog');
+  mkdirSync(dir, { recursive: true });
+
+  // SEO filename: entruempelung-gaggenau-keller-tipps.jpg
+  const topicSlug = toSlug(topic.replace(/[?!]/g, '').trim().split(' ').slice(0, 4).join(' '));
+  const filename = `${toSlug(service)}-${toSlug(city)}-${topicSlug}.jpg`;
+  const localPath = join(dir, filename);
+  const publicPath = `/images/blog/${filename}`;
+
+  if (existsSync(localPath)) {
+    console.log(`   ℹ️  Bild bereits vorhanden: ${filename}`);
+    return publicPath;
+  }
+
+  try {
+    const res = await fetch(remoteUrl);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const buffer = Buffer.from(await res.arrayBuffer());
+    writeFileSync(localPath, buffer);
+    console.log(`   ✅  Bild gespeichert: ${filename}`);
+    return publicPath;
+  } catch (e) {
+    console.warn(`   ⚠️  Download fehlgeschlagen: ${e.message} – verwende Remote-URL`);
+    return remoteUrl;
+  }
 }
 
 // ─── Agent 2: Images ──────────────────────────────────────────────────────────
@@ -598,6 +628,13 @@ async function main() {
 
     // Agent 2 (Images) — mit research-basierten Suchbegriffen
     const image = await imageAgent((research.bild_suchbegriffe || []), city, service);
+
+    // Descarca imaginea local cu nume SEO (daca e de la Unsplash/Pexels)
+    if (image.source !== 'local') {
+      const localPath = await downloadImage(image.url, service, city, topic);
+      image.url = localPath;
+      image.urlSmall = localPath;
+    }
 
     // Agent 3 (Writing)
     const html = await writingAgent(topic, city, service, research, image, slug);
