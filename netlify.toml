@@ -49,6 +49,13 @@
   status = 410
   force = true
 
+# Pagina de multumire dupa formular
+[[redirects]]
+  from = "/danke"
+  to = "/danke.html"
+  status = 200
+  force = true
+
 # Redirect URL-uri fara .html la versiunea cu .html (fix pentru Google index)
 [[redirects]]
   from = "/:slug"
