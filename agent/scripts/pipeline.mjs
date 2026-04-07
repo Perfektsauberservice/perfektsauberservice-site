@@ -133,9 +133,9 @@ async function researchAgent(topic, city, service) {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => {
-      console.log('   [DEBUG] Timeout nach 60s - Verbindung abgebrochen');
+      console.log('   [DEBUG] Timeout nach 120s - Verbindung abgebrochen');
       controller.abort();
-    }, 60000);
+    }, 120000);
     res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
