@@ -1,0 +1,36 @@
+name: PSS Competitor Monitor
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # In fiecare luni la 08:00 ora Germaniei (UTC+2)
+  workflow_dispatch:       # Sau manual din GitHub Actions
+
+permissions:
+  contents: write
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Competitor Monitor (Agent 12)
+        env:
+          SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+        run: node agent/scripts/monitor-keywords.mjs
+
+      - name: Commit results
+        run: |
+          git config user.name "PSS Monitor Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/state/keyword-rankings.json
+          git diff --staged --quiet && echo "No changes." && exit 0
+          git commit -m "data(monitor): keyword rankings update [$(date +%Y-%m-%d)]"
+          git push
