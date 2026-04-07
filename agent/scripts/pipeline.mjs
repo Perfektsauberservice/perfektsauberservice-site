@@ -78,7 +78,7 @@ async function researchAgent(topic, city, service) {
   // Use tool_use (function calling) — guarantees valid JSON output
   const body = {
     model: CLAUDE_MODEL,
-    max_tokens: 8000,
+    max_tokens: 16000,
     system: `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`,
     tools: [{
       name: 'artikel_research',
@@ -90,7 +90,8 @@ async function researchAgent(topic, city, service) {
           meta_description: { type: 'string', description: 'Meta-Description max 155 Zeichen' },
           abschnitte: {
             type: 'array',
-            description: 'Mindestens 4 Abschnitte mit je min. 100 Wörtern',
+            description: 'Mindestens 4 Abschnitte mit je min. 150 Wörtern. PFLICHTFELD - darf NICHT leer sein!',
+            minItems: 4,
             items: {
               type: 'object',
               properties: {
@@ -186,6 +187,7 @@ async function researchAgent(topic, city, service) {
   if (research.bild_suchbegriffe.length === 0) research.bild_suchbegriffe = ['professional cleaning', 'home organization'];
 
   if (research.abschnitte.length === 0) {
+    console.error('   [DEBUG] toolBlock.input:', JSON.stringify(toolBlock.input).substring(0, 500));
     throw new Error('Research Agent: abschnitte ist leer nach max_tokens Truncation. Bitte erneut versuchen.');
   }
 
