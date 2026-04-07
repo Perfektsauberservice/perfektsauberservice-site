@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Rastatt",
-      "topic": "Haushaltsauflösung planen – Schritt für Schritt"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Baden-Baden",
       "topic": "Was passiert mit verwertbaren Gegenständen bei der Haushaltsauflösung?"
     },
@@ -660,6 +655,12 @@
       "city": "Gaggenau",
       "service": "Entrümpelung",
       "completedAt": "2026-04-07T16:38:23.987Z"
+    },
+    {
+      "topic": "Haushaltsauflösung planen – Schritt für Schritt",
+      "city": "Rastatt",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-07T23:04:09.392Z"
     }
   ]
 }
