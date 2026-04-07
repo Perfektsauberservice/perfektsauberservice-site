@@ -1,0 +1,34 @@
+name: PSS Fix City Pages
+
+on:
+  workflow_dispatch:
+  # Ruleaza si in fiecare duminica pentru articole noi din blog
+  schedule:
+    - cron: '0 6 * * 0'
+
+jobs:
+  fix-city-pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fix city pages (poze + blog links)
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: node agent/scripts/fix-city-pages.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "PSS Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add images/locations/ entruempelung-*.html
+          git diff --staged --quiet || git commit -m "fix: poze SEO + blog links pe paginile de oras"
+          git push
