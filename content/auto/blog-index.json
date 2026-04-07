@@ -1,19 +1,6 @@
 {
-  "updatedAt": "2026-04-07T12:09:32.937Z",
+  "updatedAt": "2026-04-07T14:58:24.351265Z",
   "items": [
-    {
-      "slug": "entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und",
-      "title": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
-      "seoTitle": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
-      "metaDescription": "Messie-Wohnung in Karlsruhe räumen lassen: Ablauf, Kosten & Tipps zur professionellen Entrümpelung. Diskret, schnell & fair kalkuliert.",
-      "intro": "Das sogenannte Messie-Syndrom beschreibt eine psychische Belastungssituation, bei der Betroffene Gegenstände zwanghaft horten und nicht mehr in der Lage sind, i",
-      "city": "Karlsruhe",
-      "service": "Entrümpelung",
-      "image": "https://images.pexels.com/photos/27176674/pexels-photo-27176674.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-      "publishedAt": "2026-04-07T12:09:32.937Z",
-      "url": "https://perfektsauberservice.com/blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html",
-      "htmlPath": "blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html"
-    },
     {
       "slug": "entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer",
       "title": "Beste Zeit für Entrümpelung in Rastatt – Tipps",
@@ -26,7 +13,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Beste Zeit für Entrümpelung in Rastatt – Tipps",
       "image": "/public/images/locations/rastatt-1.jpg",
-      "publishedAt": "2026-04-07T10:36:49.659214Z",
+      "publishedAt": "2026-04-07T14:58:23.542143Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html",
       "htmlPath": "blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html"
     },
@@ -42,9 +29,25 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt: Wie schnell ist ein Termin möglich?",
       "image": "/public/images/locations/rastatt-2.jpg",
-      "publishedAt": "2026-04-07T10:36:49.659214Z",
+      "publishedAt": "2026-04-07T14:58:23.542143Z",
       "url": "https://perfektsauberservice.com/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html"
+    },
+    {
+      "slug": "entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und",
+      "title": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
+      "seoTitle": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
+      "metaDescription": "Messie-Wohnung in Karlsruhe räumen lassen: Ablauf, Kosten & Tipps zur professionellen Entrümpelung. Diskret, schnell & fair kalkuliert.",
+      "intro": "Karlsruhe hat eine ausgeprägte Altbaustruktur in Stadtteilen wie der Südstadt, Weststadt, Mühlburg und Durlach – viele Gründerzeithäuser mit engen Treppenhäusern, ohne Aufzug und mit tiefen Kellern oder Dachböden, die zusätzliches Lagermaterial beherbergen. Für Container auf öffentlichem Straßenland ist beim Tiefbauamt",
+      "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
+      "service": "Entrümpelung",
+      "serviceSlug": "entruempelung",
+      "topic": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
+      "image": "/public/images/locations/karlsruhe-1.jpg",
+      "publishedAt": "2026-04-07T14:58:23.542143Z",
+      "url": "https://perfektsauberservice.com/blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html",
+      "htmlPath": "blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html"
     },
     {
       "slug": "was-kostet-eine-entruempelung-in-rastatt",
@@ -58,7 +61,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Was kostet eine Entrümpelung in Rastatt? Preise, Faktoren & Tipps",
       "image": "/public/images/locations/rastatt-3.jpg",
-      "publishedAt": "2026-04-07T10:36:49.659214Z",
+      "publishedAt": "2026-04-07T14:58:23.542143Z",
       "url": "https://perfektsauberservice.com/blog/was-kostet-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/was-kostet-eine-entruempelung-in-rastatt.html"
     },
@@ -74,7 +77,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung nach Todesfall in Baden-Baden",
       "image": "/public/images/locations/baden-baden-1.jpg",
-      "publishedAt": "2026-04-07T10:36:49.658813Z",
+      "publishedAt": "2026-04-07T14:58:23.541717Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-baden-baden-entruempelung-nach-einem-todesfall--was.html",
       "htmlPath": "blog/entruempelung-baden-baden-entruempelung-nach-einem-todesfall--was.html"
     }
