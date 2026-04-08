@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Haushaltsauflösung",
-      "city": "Gaggenau",
-      "topic": "Haushaltsauflösung selbst machen oder Firma beauftragen?"
-    },
-    {
       "service": "Wohnungsauflösung",
       "city": "Rastatt",
       "topic": "Wohnungsauflösung – Checkliste für einen reibungslosen Ablauf"
@@ -663,6 +658,12 @@
       "city": "Karlsruhe",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-08T08:46:53.357Z"
+    },
+    {
+      "topic": "Haushaltsauflösung selbst machen oder Firma beauftragen?",
+      "city": "Gaggenau",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-08T10:43:15.716Z"
     }
   ]
 }
