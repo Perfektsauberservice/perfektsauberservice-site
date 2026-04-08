@@ -2,9 +2,9 @@ name: PSS Kleinanzeigen Monitor
 
 on:
   schedule:
-    # La fiecare 30 minute intre 6:00 si 21:00 (ora server UTC = ora DE - 1h in vara, -2h in iarna)
+    # La fiecare 15 minute intre 6:00 si 21:00 (ora server UTC = ora DE - 1h in vara, -2h in iarna)
     # 05:00-20:00 UTC = 06:00-21:00 ora DE (vara)
-    - cron: '0,30 5-20 * * *'
+    - cron: '0,15,30,45 5-20 * * *'
   workflow_dispatch:
 
 jobs:

@@ -15,6 +15,10 @@ const SEARCHES = [
   { keyword: 'gewerberaeumung',        service: 'Gewerberäumung' },
   { keyword: 'wohnungsreinigung',      service: 'Wohnungsreinigung' },
   { keyword: 'umzugsreinigung',        service: 'Umzugsreinigung' },
+  { keyword: 'raeumung',               service: 'Räumung' },
+  { keyword: 'nachlassaufloesung',     service: 'Nachlassauflösung' },
+  { keyword: 'bueroaufloesung',        service: 'Büroauflösung' },
+  { keyword: 'kellerraum',             service: 'Kellerräumung' },
 ];
 
 function getRssUrl(keyword) {
