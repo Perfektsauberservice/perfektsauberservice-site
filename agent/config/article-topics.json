@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Baden-Baden",
-      "topic": "Wohnungsauflösung und Endreinigung aus einer Hand"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Karlsruhe",
       "topic": "Wohnungsübergabe nach Auflösung – Worauf achten?"
     },
@@ -665,6 +660,12 @@
       "city": "Rastatt",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-08T16:46:15.875Z"
+    },
+    {
+      "topic": "Wohnungsauflösung und Endreinigung aus einer Hand",
+      "city": "Baden-Baden",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-08T20:09:55.897Z"
     }
   ]
 }
