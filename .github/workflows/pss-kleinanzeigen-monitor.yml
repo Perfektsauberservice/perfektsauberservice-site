@@ -1,0 +1,36 @@
+name: PSS Kleinanzeigen Monitor
+
+on:
+  schedule:
+    # La fiecare 30 minute intre 6:00 si 21:00 (ora server UTC = ora DE - 1h in vara, -2h in iarna)
+    # 05:00-20:00 UTC = 06:00-21:00 ora DE (vara)
+    - cron: '0,30 5-20 * * *'
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Monitor Kleinanzeigen leads
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node agent/scripts/kleinanzeigen-monitor.mjs
+
+      - name: Salveaza ID-urile vazute
+        run: |
+          git config user.name "PSS Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/config/kleinanzeigen-seen.json
+          git diff --staged --quiet || git commit -m "chore: update kleinanzeigen seen log"
+          git push
