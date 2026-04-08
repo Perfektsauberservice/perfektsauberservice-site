@@ -167,7 +167,7 @@ async function main() {
 
   if (newCount === 0) {
     const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
-    await sendTelegram(`✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nBotul functioneaza corect si verifica din 30 in 30 de minute.`);
+    await sendTelegram(`✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nBotul functioneaza corect si verifica din 15 in 15 minute.`);
   }
 }
 
