@@ -33,4 +33,5 @@ jobs:
           git config user.email "bot@perfektsauberservice.com"
           git add agent/config/kleinanzeigen-seen.json
           git diff --staged --quiet || git commit -m "chore: update kleinanzeigen seen log"
+          git pull --rebase origin master
           git push

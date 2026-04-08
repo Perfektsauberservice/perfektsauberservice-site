@@ -2,8 +2,8 @@ name: PSS Competitor Monitor
 
 on:
   schedule:
-    - cron: '0 6 * * 1'   # In fiecare luni la 08:00 ora Germaniei (UTC+2)
-  workflow_dispatch:       # Sau manual din GitHub Actions
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
 
 permissions:
   contents: write

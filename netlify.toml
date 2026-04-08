@@ -3,6 +3,17 @@
   functions = "netlify/functions"
 
 [[redirects]]
+  from = "/danke"
+  to = "/danke/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/telegram-bot"
+  to = "/.netlify/functions/telegram-bot"
+  status = 200
+
+[[redirects]]
   from = "/api/pss-auto-content"
   to = "/.netlify/functions/pss-auto-content"
   status = 200
