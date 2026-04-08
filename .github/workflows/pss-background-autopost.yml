@@ -37,4 +37,5 @@ jobs:
           git add content/auto/blog-index.json
           git diff --cached --quiet && echo "No blog index changes to commit." && exit 0
           git commit -m "chore(blog): rebuild blog index after autopost"
+          git pull --rebase origin master
           git push

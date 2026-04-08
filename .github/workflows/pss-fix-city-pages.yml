@@ -2,7 +2,6 @@ name: PSS Fix City Pages
 
 on:
   workflow_dispatch:
-  # Ruleaza si in fiecare duminica pentru articole noi din blog
   schedule:
     - cron: '0 6 * * 0'
 
@@ -20,7 +19,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fix city pages (poze + blog links)
+      - name: Fix city pages
         env:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: node agent/scripts/fix-city-pages.mjs

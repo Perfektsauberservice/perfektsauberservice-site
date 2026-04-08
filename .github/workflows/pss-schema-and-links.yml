@@ -1,9 +1,8 @@
-name: PSS Schema + Internal Links (Agent 5 & 6)
+name: PSS Schema + Internal Links
 
 on:
   workflow_dispatch:
   schedule:
-    # Ruleaza saptamanal, duminica la 03:00 UTC
     - cron: '0 3 * * 0'
 
 permissions:
@@ -21,19 +20,20 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Agent 5 — Injecteaza Schema JSON-LD
+      - name: Agent 5 - Injecteaza Schema JSON-LD
         run: node agent/scripts/inject-schema.mjs
 
-      - name: Agent 6 — Injecteaza Link-uri Interne
+      - name: Agent 6 - Injecteaza Link-uri Interne
         run: node agent/scripts/inject-internal-links.mjs
 
-      - name: Agent 4 — Regenereaza Sitemap
+      - name: Agent 4 - Regenereaza Sitemap
         run: node agent/scripts/update-sitemap.mjs
 
-      - name: Commit & Push
+      - name: Commit and Push
         run: |
           git config user.name "PSS SEO Bot"
           git config user.email "bot@perfektsauberservice.com"
           git add -A
-          git diff --staged --quiet || git commit -m "seo: schema JSON-LD + internal links injectate automat [$(date +%Y-%m-%d)]"
+          git diff --staged --quiet || git commit -m "seo: schema JSON-LD + internal links [$(date +%Y-%m-%d)]"
+          git pull --rebase origin master
           git push
