@@ -173,11 +173,30 @@ def available_images_for_city(city_slug: str):
     candidates.sort(key=sort_key_natural)
     return [f"/public/images/locations/{p.name}" for p in candidates]
 
+def load_existing_images() -> dict:
+    """Incarca imaginile deja asignate din blog-index.json existent."""
+    if not OUT.exists():
+        return {}
+    try:
+        data = json.loads(OUT.read_text(encoding="utf-8"))
+        return {item["slug"]: item["image"] for item in data.get("items", []) if item.get("image")}
+    except Exception:
+        return {}
+
 def assign_rotating_images(items):
+    existing = load_existing_images()
+
+    # Pastreaza imaginile existente
+    for item in items:
+        if item["slug"] in existing:
+            item["image"] = existing[item["slug"]]
+
+    # Asigneaza imagini doar articolelor fara poza
     grouped = {}
     for item in items:
-        city_slug = item.get("citySlug") or ""
-        grouped.setdefault(city_slug, []).append(item)
+        if not item.get("image"):
+            city_slug = item.get("citySlug") or ""
+            grouped.setdefault(city_slug, []).append(item)
 
     for city_slug, city_items in grouped.items():
         images = available_images_for_city(city_slug)
