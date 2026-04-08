@@ -160,6 +160,11 @@ async function main() {
 
   writeFileSync(SEEN_FILE, JSON.stringify(seen, null, 2));
   console.log(`\nFinalizat. ${newCount} lead-uri noi trimise pe Telegram.`);
+
+  if (newCount === 0) {
+    const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
+    await sendTelegram(`✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nBotul functioneaza corect si verifica din 30 in 30 de minute.`);
+  }
 }
 
 main().catch(err => {
