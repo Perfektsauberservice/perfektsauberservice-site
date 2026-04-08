@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Karlsruhe",
-      "topic": "Haushaltsauflösung Kosten – Was beeinflusst den Preis?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Gaggenau",
       "topic": "Haushaltsauflösung selbst machen oder Firma beauftragen?"
     },
@@ -662,6 +657,12 @@
       "city": "Baden-Baden",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-07T23:09:09.617Z"
+    },
+    {
+      "topic": "Haushaltsauflösung Kosten – Was beeinflusst den Preis?",
+      "city": "Karlsruhe",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-08T08:46:53.357Z"
     }
   ]
 }
