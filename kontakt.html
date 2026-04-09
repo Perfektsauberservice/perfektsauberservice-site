@@ -295,5 +295,21 @@ img{max-width:100%;display:block}
   </div>
 </footer>
 
+<script>
+document.querySelector('form[name="kontakt"]').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = form.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Wird gesendet…';
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(form)).toString()
+  }).finally(function() {
+    window.location.href = '/danke/';
+  });
+});
+</script>
 </body>
 </html>
