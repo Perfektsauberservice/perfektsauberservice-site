@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Bühl",
-      "topic": "Dachboden entrümpeln – So läuft es ab"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Ettlingen",
       "topic": "Garage entrümpeln – Tipps für eine stressfreie Räumung"
     },
@@ -667,6 +662,12 @@
       "city": "Karlsruhe",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-09T08:56:34.140Z"
+    },
+    {
+      "topic": "Dachboden entrümpeln – So läuft es ab",
+      "city": "Bühl",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-09T10:46:31.270Z"
     }
   ]
 }
