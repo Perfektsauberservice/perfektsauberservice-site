@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/danke"
-  to = "/danke/index.html"
+  to = "/danke.html"
   status = 200
   force = true
 
