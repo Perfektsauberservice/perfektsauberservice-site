@@ -254,6 +254,43 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
 .ba-card-body h4 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
 .ba-card-body p { font-size: 13px; color: var(--muted); }
 
+/* HOMEPAGE BEFORE/AFTER SLIDER */
+.ba-slider-wrap {
+  position: relative; overflow: hidden; border-radius: 20px;
+  aspect-ratio: 4/3; cursor: ew-resize;
+  user-select: none; -webkit-user-select: none;
+  box-shadow: var(--shadow-lg);
+}
+.ba-slider-after { position: absolute; inset: 0; }
+.ba-slider-after img { width: 100%; height: 100%; object-fit: cover; }
+.ba-slider-before { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 50% 0 0); }
+.ba-slider-before img { width: 100%; height: 100%; object-fit: cover; }
+.ba-slider-handle {
+  position: absolute; top: 0; bottom: 0; left: 50%;
+  transform: translateX(-50%); width: 3px; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5; pointer-events: none;
+}
+.ba-slider-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+.ba-label {
+  position: absolute; bottom: 16px; z-index: 6;
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; pointer-events: none;
+}
+.ba-label-vor { left: 16px; background: rgba(239,68,68,.9); color: #fff; }
+.ba-label-nach { right: 16px; background: rgba(61,184,122,.9); color: #fff; }
+.ba-caption {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 6; background: rgba(15,32,68,.8); color: #fff;
+  padding: 5px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  white-space: nowrap; pointer-events: none; backdrop-filter: blur(8px);
+}
+
 /* ── REVIEWS ─────────────────────────────────── */
 .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .review-card {
@@ -588,33 +625,33 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
     <div class="section-header center">
       <div class="eyebrow">Vorher / Nachher</div>
       <h2>Echte Ergebnisse aus Rastatt</h2>
-      <p class="section-desc" style="margin:0 auto">Keine Stockfotos. Echte Auftraege, echte Ergebnisse.</p>
+      <p class="section-desc" style="margin:0 auto">Keine Stockfotos. Echte Auftraege, echte Ergebnisse &ndash; schieben Sie den Regler.</p>
     </div>
-    <div class="ba-grid">
-      <div class="ba-card">
-        <img src="/images/rastatt-dining-vn.png" alt="Vorher Nachher Essbereich Rastatt" loading="lazy">
-        <div class="ba-card-body">
-          <span class="ba-tag">Vorher &amp; Nachher</span>
-          <h4>Wohnzimmer / Essbereich</h4>
-          <p>Möbliert und voll gestellt &ndash; nach der Entrümpelung sauber übergeben.</p>
+
+    <!-- SLIDER TEASER -->
+    <div style="max-width:680px;margin:0 auto 40px;">
+      <div class="ba-slider-wrap" id="hp-slider">
+        <div class="ba-slider-after">
+          <img src="/images/Keller%201/1.png" alt="Kellerentrümpelung Nachher Rastatt" loading="lazy">
         </div>
-      </div>
-      <div class="ba-card">
-        <img src="/images/rastatt-bedroom-vn.png" alt="Vorher Nachher Schlafzimmer Rastatt" loading="lazy">
-        <div class="ba-card-body">
-          <span class="ba-tag">Vorher &amp; Nachher</span>
-          <h4>Schlafzimmer</h4>
-          <p>Vollständig geräumt und ordentlich für die Übergabe vorbereitet.</p>
+        <div class="ba-slider-before" id="hp-before">
+          <img src="/images/Keller%201/WhatsApp%20Image%202026-03-31%20at%2018.39.17.jpeg" alt="Kellerentrümpelung Vorher Rastatt" loading="lazy">
         </div>
-      </div>
-      <div class="ba-card">
-        <img src="/images/rastatt-living-vn.png" alt="Vorher Nachher Wohnzimmer Rastatt" loading="lazy">
-        <div class="ba-card-body">
-          <span class="ba-tag">Vorher &amp; Nachher</span>
-          <h4>Wohnzimmer</h4>
-          <p>Grosse Wohnbereiche zuverlässig entrümpelt und besenrein hinterlassen.</p>
+        <div class="ba-slider-handle" id="hp-handle">
+          <div class="ba-slider-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
+              <path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/>
+            </svg>
+          </div>
         </div>
+        <span class="ba-label ba-label-vor">Vorher</span>
+        <span class="ba-label ba-label-nach">Nachher</span>
+        <div class="ba-caption">Kellerentrümpelung &ndash; Rastatt</div>
       </div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="/galerie.html" class="btn btn-primary btn-lg">Alle Projekte ansehen &rarr;</a>
     </div>
   </div>
 </section>
@@ -850,6 +887,32 @@ window.addEventListener('scroll', function() {
     cta.style.display = 'none';
   }
 });
+
+// Homepage before/after slider
+(function() {
+  var wrap = document.getElementById('hp-slider');
+  var before = document.getElementById('hp-before');
+  var handle = document.getElementById('hp-handle');
+  if (!wrap) return;
+  var dragging = false;
+  function setPos(pct) {
+    pct = Math.max(5, Math.min(95, pct));
+    before.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+    handle.style.left = pct + '%';
+  }
+  function getPos(e) {
+    var rect = wrap.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    return (x / rect.width) * 100;
+  }
+  wrap.addEventListener('mousedown', function(e) { dragging = true; setPos(getPos(e)); e.preventDefault(); });
+  window.addEventListener('mousemove', function(e) { if (dragging) setPos(getPos(e)); });
+  window.addEventListener('mouseup', function() { dragging = false; });
+  wrap.addEventListener('touchstart', function(e) { dragging = true; setPos(getPos(e)); }, {passive: true});
+  window.addEventListener('touchmove', function(e) { if (dragging) setPos(getPos(e)); }, {passive: true});
+  window.addEventListener('touchend', function() { dragging = false; });
+  setPos(50);
+})();
 
 // Cookie
 (function() {
