@@ -59,6 +59,8 @@ function buildPostMessage(article) {
   };
   const emoji = serviceEmojis[article.service] || '✅';
 
+  const serviceHashtag = (article.service || 'Entrümpelung').replace(/\s/g, '');
+
   return `${emoji} ${article.title}
 
 ${article.metaDescription || ''}
@@ -67,7 +69,7 @@ ${article.metaDescription || ''}
 📞 Jetzt anfragen: +49 163 9087197
 💬 WhatsApp: https://wa.me/491639087197
 
-#Entrümpelung #${article.city} #PerfektSauberService #Haushaltsauflösung #Rastatt`;
+#${serviceHashtag} #${article.city} #PerfektSauberService #Entrümpelung #Rastatt`;
 }
 
 // ─── Postează pe Facebook ─────────────────────────────────────────────────────
