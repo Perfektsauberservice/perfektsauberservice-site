@@ -615,9 +615,10 @@ async function main() {
       break; // succes — iese din loop
     } catch (err) {
       if (attempt < 3) {
+        const delay = attempt === 1 ? 30000 : 60000;
         console.warn(`\n⚠️  Research esuat (incercarea ${attempt}/3): ${err.message}`);
-        console.log('   Reincerc in 5 secunde...');
-        await new Promise(r => setTimeout(r, 5000));
+        console.log(`   Reincerc in ${delay/1000} secunde...`);
+        await new Promise(r => setTimeout(r, delay));
       } else {
         throw err; // toate 3 incercarile au esuat
       }

@@ -171,6 +171,23 @@
     cursor: pointer;
   }
   .reset-btn:hover { background: #991b1b; }
+
+  .delete-btn {
+    background: transparent;
+    border: 1px solid #475569;
+    color: #64748b;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .delete-btn:hover { background: #7c2d12; border-color: #991b1b; color: #fca5a5; }
 </style>
 </head>
 <body>
@@ -345,10 +362,12 @@ function setState(state) {
 
 function updateProgress() {
   const state = getState();
-  const done = Object.values(state).filter(Boolean).length;
-  const total = directories.length;
+  const deleted = JSON.parse(localStorage.getItem('dir-deleted') || '[]');
+  const active = directories.filter(d => !deleted.includes(d.id));
+  const done = active.filter(d => state[d.id]).length;
+  const total = active.length;
   document.getElementById('progress-text').textContent = `${done} / ${total} erledigt`;
-  document.getElementById('bar-fill').style.width = `${(done/total)*100}%`;
+  document.getElementById('bar-fill').style.width = `${total > 0 ? (done/total)*100 : 0}%`;
 }
 
 function renderDirs() {
@@ -356,11 +375,12 @@ function renderDirs() {
   const list = document.getElementById('dir-list');
   list.innerHTML = '';
 
-  let filtered = directories;
-  if (activeFilter === 'offen') filtered = directories.filter(d => !state[d.id]);
-  else if (activeFilter === 'done') filtered = directories.filter(d => state[d.id]);
-  else if (activeFilter === 'wichtig') filtered = directories.filter(d => d.tags.includes('wichtig'));
-  else if (activeFilter === 'free') filtered = directories.filter(d => d.tags.includes('free'));
+  const deleted = JSON.parse(localStorage.getItem('dir-deleted') || '[]');
+  let filtered = directories.filter(d => !deleted.includes(d.id));
+  if (activeFilter === 'offen') filtered = filtered.filter(d => !state[d.id]);
+  else if (activeFilter === 'done') filtered = filtered.filter(d => state[d.id]);
+  else if (activeFilter === 'wichtig') filtered = filtered.filter(d => d.tags.includes('wichtig'));
+  else if (activeFilter === 'free') filtered = filtered.filter(d => d.tags.includes('free'));
 
   if (filtered.length === 0) {
     list.innerHTML = '<p style="color:#64748b;padding:20px;text-align:center;">Keine Einträge gefunden.</p>';
@@ -386,6 +406,7 @@ function renderDirs() {
         <div class="dir-tags">${tagHtml}</div>
       </div>
       <a href="${d.url}" target="_blank" class="open-btn">Öffnen →</a>
+      <button class="delete-btn" onclick="deleteDir(${d.id})" title="Löschen">✕</button>
     `;
     list.appendChild(card);
   });
@@ -414,9 +435,18 @@ function copyText(text) {
   });
 }
 
+function deleteDir(id) {
+  const deleted = JSON.parse(localStorage.getItem('dir-deleted') || '[]');
+  if (!deleted.includes(id)) deleted.push(id);
+  localStorage.setItem('dir-deleted', JSON.stringify(deleted));
+  updateProgress();
+  renderDirs();
+}
+
 function resetAll() {
   if (confirm('Alle Fortschritte zurücksetzen?')) {
     localStorage.removeItem('dir-done');
+    localStorage.removeItem('dir-deleted');
     updateProgress();
     renderDirs();
   }
