@@ -66,12 +66,15 @@ img { max-width: 100%; display: block; }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo img { height: 48px; width: auto; }
 .logo-text { line-height: 1.2; }
-.logo-name { font-size: 17px; font-weight: 800; color: var(--navy); }
-.logo-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
+.logo-name { font-size: 17px; font-weight: 800; color: #fff; }
+.logo-sub { font-size: 11px; color: rgba(255,255,255,.7); font-weight: 500; }
+.header.scrolled .logo-name { color: var(--navy); }
+.header.scrolled .logo-sub { color: var(--muted); }
 
 .nav { display: flex; align-items: center; gap: 32px; }
-.nav a { font-size: 14px; font-weight: 600; color: #334155; transition: color .2s; }
+.nav a { font-size: 14px; font-weight: 600; color: #fff; transition: color .2s; }
 .nav a:hover { color: var(--green); }
+.header.scrolled .nav a { color: #334155; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
