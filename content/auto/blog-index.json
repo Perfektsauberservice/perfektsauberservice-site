@@ -1,18 +1,37 @@
 {
-  "updatedAt": "2026-04-09T08:56:34.139Z",
+  "updatedAt": "2026-04-09T10:20:22.792005Z",
   "items": [
     {
       "slug": "wohnungsaufloesung-karlsruhe-wohnungsuebergabe-nach-aufloesung--worauf-achten",
       "title": "Wohnungsübergabe nach Auflösung in Karlsruhe",
       "seoTitle": "Wohnungsübergabe nach Auflösung in Karlsruhe",
       "metaDescription": "Wohnungsübergabe nach Auflösung in Karlsruhe: Checkliste, Tipps & lokale Besonderheiten. Jetzt stressfrei übergeben!",
-      "intro": "Nach einer Wohnungsauflösung in Karlsruhe beginnt für viele Betroffene die eigentliche Herausforderung: die ordnungsgemäße Übergabe der Wohnung an den Vermieter",
+      "intro": "Karlsruhe verfügt über einen vielfältigen Gebäudebestand: In der Innenstadt, der Süd- und Oststadt dominieren gründerzeitliche Altbauten mit hohen Decken, Stuckarbeiten und Parkettböden, die bei der Übergabe besondere Sorgfalt erfordern. In Stadtteilen wie Durlach, Mühlburg und Neureut finden sich zahlreiche Nachkriegs",
       "city": "Karlsruhe",
+      "citySlug": "karlsruhe",
       "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "topic": "Wohnungsübergabe nach Auflösung in Karlsruhe",
       "image": "/images/blog/wohnungsaufloesung-karlsruhe-wohnungsuebergabe-nach-aufloesung-.jpg",
-      "publishedAt": "2026-04-09T08:56:34.139Z",
+      "publishedAt": "2026-04-09T10:20:22.130499Z",
       "url": "https://perfektsauberservice.com/blog/wohnungsaufloesung-karlsruhe-wohnungsuebergabe-nach-aufloesung--worauf-achten.html",
       "htmlPath": "blog/wohnungsaufloesung-karlsruhe-wohnungsuebergabe-nach-aufloesung--worauf-achten.html"
+    },
+    {
+      "slug": "wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer-einen-reibungslosen",
+      "title": "Wohnungsauflösung Rastatt – Checkliste & Tipps",
+      "seoTitle": "Wohnungsauflösung Rastatt – Checkliste & Tipps",
+      "metaDescription": "Wohnungsauflösung in Rastatt: Schritt-für-Schritt-Checkliste, Kosten, lokale Tipps & Anbieter. Jetzt stressfrei planen!",
+      "intro": "Rastatt ist geprägt durch einen hohen Altbauanteil in der historischen Innenstadt sowie durch neuere Wohngebiete in Stadtteilen wie Niederbühl, Ottersdorf, Plittersdorf und Rauental. Viele ältere Gebäude aus den 1950er–1980er Jahren können Asbestbelastungen in Bodenbelägen oder Isolierungen aufweisen – hier ist fachger",
+      "city": "Rastatt",
+      "citySlug": "rastatt",
+      "service": "Wohnungsauflösung",
+      "serviceSlug": "wohnungsaufloesung",
+      "topic": "Wohnungsauflösung Rastatt – Checkliste & Tipps",
+      "image": "/images/blog/wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer.jpg",
+      "publishedAt": "2026-04-09T10:20:22.130499Z",
+      "url": "https://perfektsauberservice.com/blog/wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer-einen-reibungslosen.html",
+      "htmlPath": "blog/wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer-einen-reibungslosen.html"
     },
     {
       "slug": "entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer",
@@ -26,7 +45,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Beste Zeit für Entrümpelung in Rastatt – Tipps",
       "image": "/public/images/locations/rastatt-1.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html",
       "htmlPath": "blog/entruempelung-rastatt-wann-ist-der-beste-zeitpunkt-fuer.html"
     },
@@ -42,7 +61,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung Rastatt: Wie schnell ist ein Termin möglich?",
       "image": "/public/images/locations/rastatt-3.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html"
     },
@@ -58,7 +77,7 @@
       "serviceSlug": "haushaltsaufloesung",
       "topic": "Haushaltsauflösung Gaggenau: Selbst oder Firma?",
       "image": "/images/blog/haushaltsaufloesung-gaggenau-haushaltsaufloesung-selbst-machen-oder.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/haushaltsaufloesung-gaggenau-haushaltsaufloesung-selbst-machen-oder-firma-beauftragen.html",
       "htmlPath": "blog/haushaltsaufloesung-gaggenau-haushaltsaufloesung-selbst-machen-oder-firma-beauftragen.html"
     },
@@ -74,7 +93,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Keller entrümpeln in Gaggenau – Tipps & Kosten",
       "image": "/public/images/locations/gaggenau-1.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten.html",
       "htmlPath": "blog/entruempelung-gaggenau-keller-entruempeln--tipps-und-kosten.html"
     },
@@ -90,7 +109,7 @@
       "serviceSlug": "haushaltsaufloesung",
       "topic": "Haushaltsauflösung Baden-Baden: Was passiert mit Ihren Wertsachen?",
       "image": "/public/images/locations/baden-baden-2.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/haushaltsaufloesung-baden-baden-was-passiert-mit-verwertbaren-gegenstaenden-bei.html",
       "htmlPath": "blog/haushaltsaufloesung-baden-baden-was-passiert-mit-verwertbaren-gegenstaenden-bei.html"
     },
@@ -106,7 +125,7 @@
       "serviceSlug": "wohnungsaufloesung",
       "topic": "Wohnungsauflösung & Endreinigung in Baden-Baden",
       "image": "/images/blog/wohnungsaufloesung-baden-baden-wohnungsaufloesung-und-endreinigung-aus.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/wohnungsaufloesung-baden-baden-wohnungsaufloesung-und-endreinigung-aus-einer-hand.html",
       "htmlPath": "blog/wohnungsaufloesung-baden-baden-wohnungsaufloesung-und-endreinigung-aus-einer-hand.html"
     },
@@ -122,7 +141,7 @@
       "serviceSlug": "haushaltsaufloesung",
       "topic": "Haushaltsauflösung Karlsruhe – Was kostet das wirklich?",
       "image": "/images/blog/haushaltsaufloesung-karlsruhe-haushaltsaufloesung-kosten--was.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/haushaltsaufloesung-karlsruhe-haushaltsaufloesung-kosten--was-beeinflusst-den.html",
       "htmlPath": "blog/haushaltsaufloesung-karlsruhe-haushaltsaufloesung-kosten--was-beeinflusst-den.html"
     },
@@ -138,7 +157,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Messie-Wohnung räumen in Karlsruhe – Ablauf & Kosten",
       "image": "/public/images/locations/karlsruhe-1.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html",
       "htmlPath": "blog/entruempelung-karlsruhe-messie-wohnung-raeumen-lassen--ablauf-und.html"
     },
@@ -154,25 +173,9 @@
       "serviceSlug": "entruempelung",
       "topic": "Was kostet eine Entrümpelung in Rastatt? Preise, Faktoren & Tipps",
       "image": "/public/images/locations/rastatt-4.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/was-kostet-eine-entruempelung-in-rastatt.html",
       "htmlPath": "blog/was-kostet-eine-entruempelung-in-rastatt.html"
-    },
-    {
-      "slug": "wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer-einen-reibungslosen",
-      "title": "Wohnungsauflösung Rastatt – Checkliste & Tipps",
-      "seoTitle": "Wohnungsauflösung Rastatt – Checkliste & Tipps",
-      "metaDescription": "Wohnungsauflösung in Rastatt: Schritt-für-Schritt-Checkliste, Kosten, lokale Tipps & Anbieter. Jetzt stressfrei planen!",
-      "intro": "Rastatt ist geprägt durch einen hohen Altbauanteil in der historischen Innenstadt sowie durch neuere Wohngebiete in Stadtteilen wie Niederbühl, Ottersdorf, Plittersdorf und Rauental. Viele ältere Gebäude aus den 1950er–1980er Jahren können Asbestbelastungen in Bodenbelägen oder Isolierungen aufweisen – hier ist fachger",
-      "city": "Rastatt",
-      "citySlug": "rastatt",
-      "service": "Wohnungsauflösung",
-      "serviceSlug": "wohnungsaufloesung",
-      "topic": "Wohnungsauflösung Rastatt – Checkliste & Tipps",
-      "image": "/images/blog/wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
-      "url": "https://perfektsauberservice.com/blog/wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer-einen-reibungslosen.html",
-      "htmlPath": "blog/wohnungsaufloesung-rastatt-wohnungsaufloesung--checkliste-fuer-einen-reibungslosen.html"
     },
     {
       "slug": "haushaltsaufloesung-rastatt-haushaltsaufloesung-planen--schritt-fuer-schritt",
@@ -186,7 +189,7 @@
       "serviceSlug": "haushaltsaufloesung",
       "topic": "Haushaltsauflösung Rastatt – Schritt für Schritt planen",
       "image": "/public/images/locations/rastatt-2.jpg",
-      "publishedAt": "2026-04-09T05:59:49.762004Z",
+      "publishedAt": "2026-04-09T10:20:22.129499Z",
       "url": "https://perfektsauberservice.com/blog/haushaltsaufloesung-rastatt-haushaltsaufloesung-planen--schritt-fuer-schritt.html",
       "htmlPath": "blog/haushaltsaufloesung-rastatt-haushaltsaufloesung-planen--schritt-fuer-schritt.html"
     },
@@ -202,7 +205,7 @@
       "serviceSlug": "entruempelung",
       "topic": "Entrümpelung nach Todesfall in Baden-Baden",
       "image": "/public/images/locations/baden-baden-1.jpg",
-      "publishedAt": "2026-04-09T05:59:49.761723Z",
+      "publishedAt": "2026-04-09T10:20:22.129090Z",
       "url": "https://perfektsauberservice.com/blog/entruempelung-baden-baden-entruempelung-nach-einem-todesfall--was.html",
       "htmlPath": "blog/entruempelung-baden-baden-entruempelung-nach-einem-todesfall--was.html"
     }
