@@ -30,10 +30,8 @@ img { max-width: 100%; display: block; }
   --green2: #2ea068;
   --light: #f0f4f8;
   --border: #e2e8f0;
-  --text: #1a1a2e;
   --muted: #64748b;
-  --white: #ffffff;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
   --shadow: 0 4px 20px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
   --shadow-lg: 0 20px 60px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.06);
   --radius: 16px;
@@ -42,199 +40,89 @@ img { max-width: 100%; display: block; }
 .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
 /* HEADER */
-.header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  padding: 0; transition: all .3s;
-}
-.header.scrolled {
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-.header-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 24px; height: 72px;
-}
+.header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 0; transition: all .3s; }
+.header.scrolled { background: rgba(255,255,255,.97); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 72px; }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo img { height: 48px; width: auto; }
 .logo-text { line-height: 1.2; }
 .logo-name { font-size: 17px; font-weight: 800; color: var(--navy); }
 .logo-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
-
 .nav { display: flex; align-items: center; gap: 32px; }
 .nav a { font-size: 14px; font-weight: 600; color: #334155; transition: color .2s; }
 .nav a:hover, .nav a.active { color: var(--green); }
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 14px;
-  border: none; cursor: pointer; font-family: inherit; transition: all .2s; white-space: nowrap;
-}
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: all .2s; white-space: nowrap; }
 .btn-primary { background: var(--green); color: #fff; box-shadow: 0 4px 14px rgba(61,184,122,.35); }
 .btn-primary:hover { background: var(--green2); transform: translateY(-1px); }
 .btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--border); }
 .btn-outline:hover { border-color: var(--green); color: var(--green); }
+.btn-ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); }
+.btn-ghost:hover { background: rgba(255,255,255,.2); }
 .btn-sm { padding: 10px 20px; font-size: 13px; border-radius: 10px; }
-
 .mobile-nav { display: none; }
 
 /* HERO */
-.page-hero {
-  background: linear-gradient(135deg, #0a1628 0%, #0f2044 50%, #162d58 100%);
-  padding: 120px 0 60px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.page-hero::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(61,184,122,.12) 0%, transparent 60%);
-}
+.page-hero { background: linear-gradient(135deg, #0a1628 0%, #0f2044 50%, #162d58 100%); padding: 120px 0 60px; text-align: center; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(61,184,122,.12) 0%, transparent 60%); }
 .page-hero .container { position: relative; z-index: 1; }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(61,184,122,.15); border: 1px solid rgba(61,184,122,.3);
-  color: #6ee7b7; padding: 6px 14px; border-radius: 999px;
-  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  margin-bottom: 20px;
-}
-.page-hero h1 {
-  font-size: clamp(32px, 5vw, 52px); font-weight: 900; color: #fff;
-  letter-spacing: -.03em; line-height: 1.1; margin-bottom: 16px;
-}
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(61,184,122,.15); border: 1px solid rgba(61,184,122,.3); color: #6ee7b7; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 20px; }
+.page-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 900; color: #fff; letter-spacing: -.03em; line-height: 1.1; margin-bottom: 16px; }
 .page-hero h1 em { font-style: normal; color: #3db87a; }
-.page-hero p {
-  font-size: 18px; color: #94a3b8; max-width: 560px; margin: 0 auto;
-}
+.page-hero p { font-size: 18px; color: #94a3b8; max-width: 560px; margin: 0 auto; }
 
 /* FILTERS */
-.filters-wrap {
-  padding: 48px 0 32px;
-  background: #fff;
-  border-bottom: 1px solid var(--border);
-  position: sticky; top: 72px; z-index: 100;
-}
-.filters {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  justify-content: center;
-}
-.filter-btn {
-  padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600;
-  border: 2px solid var(--border); background: #fff; color: var(--muted);
-  cursor: pointer; transition: all .2s; font-family: inherit;
-}
+.filters-wrap { padding: 36px 0 28px; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 72px; z-index: 100; }
+.filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.filter-btn { padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 2px solid var(--border); background: #fff; color: var(--muted); cursor: pointer; transition: all .2s; font-family: inherit; }
 .filter-btn:hover { border-color: var(--green); color: var(--green); }
-.filter-btn.active {
-  background: var(--green); border-color: var(--green); color: #fff;
-  box-shadow: 0 4px 12px rgba(61,184,122,.3);
-}
+.filter-btn.active { background: var(--green); border-color: var(--green); color: #fff; box-shadow: 0 4px 12px rgba(61,184,122,.3); }
 
-/* GALLERY GRID */
+/* GALLERY */
 .gallery-section { padding: 60px 0 100px; background: var(--light); }
-.gallery-count {
-  text-align: center; font-size: 14px; color: var(--muted); margin-bottom: 40px; font-weight: 500;
-}
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
-  gap: 32px;
-}
+.gallery-count { text-align: center; font-size: 14px; color: var(--muted); margin-bottom: 40px; font-weight: 500; }
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); gap: 32px; }
 
 /* PROJECT CARD */
-.project-card {
-  background: #fff; border-radius: 20px; overflow: hidden;
-  box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s;
-}
+.project-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s; }
 .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-.card-type-badge {
-  position: absolute; top: 16px; left: 16px; z-index: 10;
-  padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
-  letter-spacing: .04em; text-transform: uppercase;
-  background: rgba(15,32,68,.85); color: #fff;
-  backdrop-filter: blur(8px);
-}
+/* TYPE BADGE */
+.card-type-badge { position: absolute; top: 16px; left: 16px; z-index: 10; padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #fff; backdrop-filter: blur(8px); }
 .card-type-badge.keller { background: rgba(15,32,68,.85); }
 .card-type-badge.wohnung { background: rgba(124,58,237,.85); }
 .card-type-badge.garage { background: rgba(234,88,12,.85); }
 .card-type-badge.haus { background: rgba(5,150,105,.85); }
 
 /* BEFORE/AFTER SLIDER */
-.slider-wrap {
-  position: relative; overflow: hidden;
-  aspect-ratio: 4/3; cursor: ew-resize;
-  user-select: none; -webkit-user-select: none;
-}
-.slider-after {
-  position: absolute; inset: 0;
-  background: #000;
-}
-.slider-after img {
-  width: 100%; height: 100%; object-fit: cover;
-}
-.slider-before {
-  position: absolute; inset: 0; overflow: hidden;
-  clip-path: inset(0 50% 0 0);
-  transition: clip-path 0s;
-}
-.slider-before img {
-  width: 100%; height: 100%; object-fit: cover;
-}
-.slider-handle {
-  position: absolute; top: 0; bottom: 0;
-  left: 50%; transform: translateX(-50%);
-  width: 3px; background: #fff;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 5; pointer-events: none;
-}
-.slider-handle-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: #fff; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,.3);
-}
+.slider-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; cursor: ew-resize; user-select: none; -webkit-user-select: none; }
+.slider-after { position: absolute; inset: 0; }
+.slider-after img { width: 100%; height: 100%; object-fit: cover; }
+.slider-before { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 50% 0 0); }
+.slider-before img { width: 100%; height: 100%; object-fit: cover; }
+.slider-handle { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; background: #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+.slider-handle-btn { width: 44px; height: 44px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,.3); }
 .slider-handle-btn svg { width: 20px; height: 20px; color: var(--navy); }
+.slider-label { position: absolute; bottom: 14px; z-index: 6; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; pointer-events: none; }
+.label-before { left: 14px; background: rgba(239,68,68,.9); color: #fff; }
+.label-after { right: 14px; background: rgba(61,184,122,.9); color: #fff; }
 
-.slider-label {
-  position: absolute; bottom: 14px; z-index: 6;
-  padding: 4px 12px; border-radius: 999px;
-  font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
-  pointer-events: none;
-}
-.label-before {
-  left: 14px; background: rgba(239,68,68,.9); color: #fff;
-}
-.label-after {
-  right: 14px; background: rgba(61,184,122,.9); color: #fff;
-}
+/* PAIR NAVIGATION */
+.pair-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 12px; pointer-events: none; }
+.pair-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.25); pointer-events: all; transition: all .2s; flex-shrink: 0; }
+.pair-btn:hover { background: #fff; transform: scale(1.1); }
+.pair-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
+.pair-btn svg { width: 16px; height: 16px; color: var(--navy); }
 
 /* CARD INFO */
-.card-info {
-  padding: 20px 24px 24px;
-}
-.card-title {
-  font-size: 17px; font-weight: 800; color: var(--navy);
-  letter-spacing: -.02em; margin-bottom: 4px;
-}
-.card-meta {
-  font-size: 13px; color: var(--muted); display: flex; gap: 16px; align-items: center;
-}
+.card-info { padding: 16px 20px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-info-left { }
+.card-title { font-size: 17px; font-weight: 800; color: var(--navy); letter-spacing: -.02em; margin-bottom: 2px; }
+.card-meta { font-size: 13px; color: var(--muted); display: flex; gap: 12px; align-items: center; }
 .card-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
-
-/* EMPTY STATE */
-.gallery-empty {
-  grid-column: 1 / -1; text-align: center; padding: 80px 24px;
-  color: var(--muted);
-}
-.gallery-empty svg { width: 48px; height: 48px; margin: 0 auto 16px; opacity: .3; }
-.gallery-empty p { font-size: 16px; }
+.pair-counter { font-size: 13px; font-weight: 700; color: var(--muted); background: var(--light); padding: 6px 14px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
 
 /* CTA */
-.gallery-cta {
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  padding: 64px 0; text-align: center;
-}
+.gallery-cta { background: linear-gradient(135deg, var(--navy), var(--navy2)); padding: 64px 0; text-align: center; }
 .gallery-cta h2 { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 12px; letter-spacing: -.03em; }
 .gallery-cta p { color: #94a3b8; font-size: 17px; margin-bottom: 28px; }
 
@@ -263,8 +151,6 @@ img { max-width: 100%; display: block; }
 .cookie-text { font-size: 13px; color: #94a3b8; flex: 1; }
 .cookie-text a { color: var(--green); }
 .cookie-btns { display: flex; gap: 8px; flex-shrink: 0; }
-.btn-ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); }
-.btn-ghost:hover { background: rgba(255,255,255,.2); }
 
 @media (max-width: 768px) {
   .nav { display: none; }
@@ -312,7 +198,7 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="eyebrow">Unsere Arbeit</div>
     <h1>Vorher &amp; <em>Nachher</em></h1>
-    <p>Echte Ergebnisse von echten Aufträgen – schieben Sie den Regler und sehen Sie den Unterschied.</p>
+    <p>Echte Ergebnisse von echten Aufträgen – schieben Sie den Regler und blättern Sie durch alle Fotos.</p>
   </div>
 </section>
 
@@ -334,37 +220,7 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="gallery-count" id="galleryCount">1 Projekt</div>
     <div class="gallery-grid" id="galleryGrid">
-
-      <!-- KELLER 1 -->
-      <div class="project-card" data-type="keller">
-        <div class="slider-wrap" id="slider-0">
-          <span class="card-type-badge keller">Keller</span>
-          <div class="slider-after">
-            <img src="/images/Keller%201/1.png" alt="Kellerentrümpelung Nachher" loading="lazy">
-          </div>
-          <div class="slider-before" id="before-0">
-            <img src="/images/Keller%201/WhatsApp%20Image%202026-03-31%20at%2018.39.17.jpeg" alt="Kellerentrümpelung Vorher" loading="lazy">
-          </div>
-          <div class="slider-handle" id="handle-0">
-            <div class="slider-handle-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/>
-              </svg>
-            </div>
-          </div>
-          <span class="slider-label label-before">Vorher</span>
-          <span class="slider-label label-after">Nachher</span>
-        </div>
-        <div class="card-info">
-          <div class="card-title">Kellerentrümpelung</div>
-          <div class="card-meta">
-            <span>Rastatt</span>
-            <div class="card-meta-dot"></div>
-            <span>Vollständige Räumung</span>
-          </div>
-        </div>
-      </div>
-
+      <!-- cards injected by JS -->
     </div>
   </div>
 </section>
@@ -430,28 +286,88 @@ img { max-width: 100%; display: block; }
 </div>
 
 <script>
-// Header scroll
-window.addEventListener('scroll', function() {
-  var h = document.getElementById('header');
-  var cta = document.getElementById('headerCta');
-  if (window.scrollY > 80) {
-    h.classList.add('scrolled');
-    cta.style.display = 'inline-flex';
-  } else {
-    h.classList.remove('scrolled');
-    cta.style.display = 'none';
+// ── PROJECT DATA ──────────────────────────────────────────────────────────────
+// Jedes Projekt hat mehrere Vorher/Nachher-Paare (pairs).
+// Neue Projekte einfach hier hinzufügen.
+var PROJECTS = [
+  {
+    type: 'keller',
+    title: 'Kellerentrümpelung',
+    location: 'Rastatt',
+    detail: 'Vollständige Räumung',
+    pairs: [
+      {
+        before: '/images/Keller%201/WhatsApp%20Image%202026-03-31%20at%2018.39.17.jpeg',
+        after:  '/images/Keller%201/1.png'
+      },
+      {
+        before: '/images/Keller%201/WhatsApp%20Image%202026-03-31%20at%2016.13.47.jpeg',
+        after:  '/images/Keller%201/5.png'
+      },
+      {
+        before: '/images/Keller%201/WhatsApp%20Image%202026-03-31%20at%2016.13.48.jpeg',
+        after:  '/images/Keller%201/3.png'
+      }
+    ]
   }
+  // Weitere Projekte werden hier hinzugefügt wenn neue Fotos hochgeladen werden
+];
+
+// ── BUILD CARDS ───────────────────────────────────────────────────────────────
+var grid = document.getElementById('galleryGrid');
+var countEl = document.getElementById('galleryCount');
+
+PROJECTS.forEach(function(proj, idx) {
+  var card = document.createElement('div');
+  card.className = 'project-card';
+  card.dataset.type = proj.type;
+
+  var showNav = proj.pairs.length > 1;
+
+  card.innerHTML =
+    '<div class="slider-wrap" id="sw-' + idx + '">' +
+      '<span class="card-type-badge ' + proj.type + '">' + capitalise(proj.type) + '</span>' +
+      '<div class="slider-after"><img id="img-after-' + idx + '" src="' + proj.pairs[0].after + '" alt="' + proj.title + ' Nachher" loading="lazy"></div>' +
+      '<div class="slider-before" id="sb-' + idx + '"><img id="img-before-' + idx + '" src="' + proj.pairs[0].before + '" alt="' + proj.title + ' Vorher" loading="lazy"></div>' +
+      '<div class="slider-handle" id="sh-' + idx + '"><div class="slider-handle-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/></svg></div></div>' +
+      '<span class="slider-label label-before">Vorher</span>' +
+      '<span class="slider-label label-after">Nachher</span>' +
+      (showNav ?
+        '<div class="pair-nav">' +
+          '<button class="pair-btn" id="prev-' + idx + '" disabled aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+          '<button class="pair-btn" id="next-' + idx + '" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>' +
+        '</div>'
+      : '') +
+    '</div>' +
+    '<div class="card-info">' +
+      '<div class="card-info-left">' +
+        '<div class="card-title">' + proj.title + '</div>' +
+        '<div class="card-meta"><span>' + proj.location + '</span><div class="card-meta-dot"></div><span>' + proj.detail + '</span></div>' +
+      '</div>' +
+      (showNav ? '<div class="pair-counter" id="counter-' + idx + '">1 / ' + proj.pairs.length + '</div>' : '') +
+    '</div>';
+
+  grid.appendChild(card);
+
+  // Init slider
+  initSlider(idx, proj.pairs);
 });
 
-// Cookie
-(function() {
-  if (localStorage.getItem('cookie')) document.getElementById('cookie').classList.add('hidden');
-})();
-function cookieAccept() { localStorage.setItem('cookie', '1'); document.getElementById('cookie').classList.add('hidden'); }
-function cookieDeny() { localStorage.setItem('cookie', '0'); document.getElementById('cookie').classList.add('hidden'); }
+updateCount();
 
-// BEFORE/AFTER SLIDERS
-function initSlider(sliderEl, beforeEl, handleEl) {
+function capitalise(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+// ── SLIDER LOGIC ──────────────────────────────────────────────────────────────
+function initSlider(idx, pairs) {
+  var wrap    = document.getElementById('sw-' + idx);
+  var beforeEl = document.getElementById('sb-' + idx);
+  var handleEl = document.getElementById('sh-' + idx);
+  var imgBefore = document.getElementById('img-before-' + idx);
+  var imgAfter  = document.getElementById('img-after-' + idx);
+  var prevBtn  = document.getElementById('prev-' + idx);
+  var nextBtn  = document.getElementById('next-' + idx);
+  var counter  = document.getElementById('counter-' + idx);
+  var current  = 0;
   var dragging = false;
 
   function setPos(pct) {
@@ -460,49 +376,75 @@ function initSlider(sliderEl, beforeEl, handleEl) {
     handleEl.style.left = pct + '%';
   }
 
-  function getPos(e) {
-    var rect = sliderEl.getBoundingClientRect();
+  function getPct(e) {
+    var rect = wrap.getBoundingClientRect();
     var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
     return (x / rect.width) * 100;
   }
 
-  sliderEl.addEventListener('mousedown', function(e) { dragging = true; setPos(getPos(e)); e.preventDefault(); });
-  window.addEventListener('mousemove', function(e) { if (dragging) setPos(getPos(e)); });
-  window.addEventListener('mouseup', function() { dragging = false; });
+  // Drag events — only trigger drag if not clicking nav buttons
+  wrap.addEventListener('mousedown', function(e) {
+    if (e.target.closest('.pair-btn')) return;
+    dragging = true; setPos(getPct(e)); e.preventDefault();
+  });
+  window.addEventListener('mousemove', function(e) { if (dragging) setPos(getPct(e)); });
+  window.addEventListener('mouseup',   function()  { dragging = false; });
+  wrap.addEventListener('touchstart', function(e) {
+    if (e.target.closest('.pair-btn')) return;
+    dragging = true; setPos(getPct(e));
+  }, {passive: true});
+  window.addEventListener('touchmove', function(e) { if (dragging) setPos(getPct(e)); }, {passive: true});
+  window.addEventListener('touchend',  function()  { dragging = false; });
 
-  sliderEl.addEventListener('touchstart', function(e) { dragging = true; setPos(getPos(e)); }, {passive: true});
-  window.addEventListener('touchmove', function(e) { if (dragging) setPos(getPos(e)); }, {passive: true});
-  window.addEventListener('touchend', function() { dragging = false; });
-
-  // Start at 50%
   setPos(50);
+
+  // Pair navigation
+  function goTo(n) {
+    current = n;
+    imgBefore.src = pairs[current].before;
+    imgAfter.src  = pairs[current].after;
+    setPos(50);
+    if (counter) counter.textContent = (current + 1) + ' / ' + pairs.length;
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) nextBtn.disabled = current === pairs.length - 1;
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function(e) { e.stopPropagation(); if (current > 0) goTo(current - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function(e) { e.stopPropagation(); if (current < pairs.length - 1) goTo(current + 1); });
 }
 
-document.querySelectorAll('.slider-wrap').forEach(function(wrap, i) {
-  var before = document.getElementById('before-' + i);
-  var handle = document.getElementById('handle-' + i);
-  if (before && handle) initSlider(wrap, before, handle);
-});
-
-// FILTER
-var filterBtns = document.querySelectorAll('.filter-btn');
-var cards = document.querySelectorAll('.project-card');
-var countEl = document.getElementById('galleryCount');
-
-filterBtns.forEach(function(btn) {
+// ── FILTER ────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
   btn.addEventListener('click', function() {
-    filterBtns.forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
-    var filter = btn.dataset.filter;
-    var visible = 0;
-    cards.forEach(function(card) {
-      var show = filter === 'all' || card.dataset.type === filter;
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    countEl.textContent = visible + (visible === 1 ? ' Projekt' : ' Projekte');
+    updateCount();
   });
 });
+
+function updateCount() {
+  var filter = document.querySelector('.filter-btn.active').dataset.filter;
+  var cards  = document.querySelectorAll('.project-card');
+  var visible = 0;
+  cards.forEach(function(card) {
+    var show = filter === 'all' || card.dataset.type === filter;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  countEl.textContent = visible + (visible === 1 ? ' Projekt' : ' Projekte');
+}
+
+// ── HEADER / COOKIE ───────────────────────────────────────────────────────────
+window.addEventListener('scroll', function() {
+  var h = document.getElementById('header');
+  var cta = document.getElementById('headerCta');
+  if (window.scrollY > 80) { h.classList.add('scrolled'); cta.style.display = 'inline-flex'; }
+  else { h.classList.remove('scrolled'); cta.style.display = 'none'; }
+});
+
+(function() { if (localStorage.getItem('cookie')) document.getElementById('cookie').classList.add('hidden'); })();
+function cookieAccept() { localStorage.setItem('cookie', '1'); document.getElementById('cookie').classList.add('hidden'); }
+function cookieDeny()   { localStorage.setItem('cookie', '0'); document.getElementById('cookie').classList.add('hidden'); }
 </script>
 </body>
 </html>
