@@ -11,6 +11,8 @@
 export const handler = async (event) => {
   try {
     const payload = JSON.parse(event.body);
+    console.log('DEBUG payload keys:', JSON.stringify(Object.keys(payload)));
+    console.log('DEBUG payload.payload:', JSON.stringify(payload.payload));
     const data = payload.payload || {};
 
     // Extrage datele clientului
