@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Ettlingen",
-      "topic": "Garage entrümpeln – Tipps für eine stressfreie Räumung"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Pforzheim",
       "topic": "Was darf nicht in den Sperrmüll? – Entsorgungsregeln"
     },
@@ -668,6 +663,12 @@
       "city": "Bühl",
       "service": "Entrümpelung",
       "completedAt": "2026-04-09T10:46:31.270Z"
+    },
+    {
+      "topic": "Garage entrümpeln – Tipps für eine stressfreie Räumung",
+      "city": "Ettlingen",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-09T12:11:51.456Z"
     }
   ]
 }
