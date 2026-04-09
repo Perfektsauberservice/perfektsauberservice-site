@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Haushaltsauflösung",
-      "city": "Bühl",
-      "topic": "Nachlassauflösung – Rechtliches und Praktisches"
-    },
-    {
       "service": "Entrümpelung",
       "city": "Rastatt",
       "topic": "Wie lange dauert eine Entrümpelung?"
@@ -670,6 +665,12 @@
       "city": "Pforzheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-09T16:55:10.092Z"
+    },
+    {
+      "topic": "Nachlassauflösung – Rechtliches und Praktisches",
+      "city": "Bühl",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-09T20:38:10.869Z"
     }
   ]
 }
