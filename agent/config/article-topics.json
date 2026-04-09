@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Wohnungsauflösung",
-      "city": "Karlsruhe",
-      "topic": "Wohnungsübergabe nach Auflösung – Worauf achten?"
-    },
-    {
       "service": "Entrümpelung",
       "city": "Bühl",
       "topic": "Dachboden entrümpeln – So läuft es ab"
@@ -666,6 +661,12 @@
       "city": "Baden-Baden",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-08T20:09:55.897Z"
+    },
+    {
+      "topic": "Wohnungsübergabe nach Auflösung – Worauf achten?",
+      "city": "Karlsruhe",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-09T08:56:34.140Z"
     }
   ]
 }
