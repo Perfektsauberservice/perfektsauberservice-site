@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Gernsbach",
-      "topic": "Wie finde ich eine seriöse Entrümpelungsfirma?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Muggensturm",
       "topic": "Entrümpelung vor dem Hausverkauf – Was beachten?"
     },
@@ -673,6 +668,12 @@
       "city": "Baden-Baden",
       "service": "Entrümpelung",
       "completedAt": "2026-04-10T10:36:51.730Z"
+    },
+    {
+      "topic": "Wie finde ich eine seriöse Entrümpelungsfirma?",
+      "city": "Gernsbach",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-10T12:05:41.784Z"
     }
   ]
 }
