@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Durmersheim",
-      "topic": "Sperrmüll vs. Entrümpelung – Was ist der Unterschied?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Malsch",
       "topic": "Entrümpelung bei Eigentümerwechsel – Ablauf und Kosten"
     },
@@ -675,6 +670,12 @@
       "city": "Muggensturm",
       "service": "Entrümpelung",
       "completedAt": "2026-04-10T15:39:15.298Z"
+    },
+    {
+      "topic": "Sperrmüll vs. Entrümpelung – Was ist der Unterschied?",
+      "city": "Durmersheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-10T20:00:18.996Z"
     }
   ]
 }
