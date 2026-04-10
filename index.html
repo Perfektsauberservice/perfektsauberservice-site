@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Perfekt Sauber Service","url":"https://perfektsauberservice.com","telephone":"+49 163 9087197","email":"kontact@perfektsauberservice.com","address":{"@type":"PostalAddress","streetAddress":"Reutstrasse 9","addressLocality":"Loffenau","postalCode":"76597","addressCountry":"DE"},"areaServed":["Rastatt","Baden-Baden","Gaggenau","Karlsruhe"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"47"}}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Perfekt Sauber Service","url":"https://perfektsauberservice.com","telephone":"+49 163 9087197","email":"kontakt@perfektsauberservice.com","address":{"@type":"PostalAddress","streetAddress":"Reutstrasse 9","addressLocality":"Loffenau","postalCode":"76597","addressCountry":"DE"},"areaServed":["Rastatt","Baden-Baden","Gaggenau","Karlsruhe"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"47"}}
 </script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -768,6 +768,92 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
   </div>
 </section>
 
+<!-- PREISRECHNER -->
+<section class="section section-dark" id="preisrechner">
+  <div class="container">
+    <div class="section-header center">
+      <div class="eyebrow" style="color:#3db87a">Preisrechner</div>
+      <h2 style="color:#fff">Was kostet Ihre Entrümpelung?</h2>
+      <p class="section-desc" style="margin:0 auto;color:#94a3b8">Geben Sie Ihre Angaben ein und erhalten Sie sofort eine erste Preisorientierung – unverbindlich und kostenlos.</p>
+    </div>
+    <div style="max-width:900px;margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <label style="display:block;">
+            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Ort</span>
+            <select id="hpPrCity" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;">
+              <option value="Rastatt">Rastatt</option>
+              <option value="Baden_Baden">Baden-Baden</option>
+              <option value="Gaggenau">Gaggenau</option>
+              <option value="Karlsruhe">Karlsruhe</option>
+              <option value="Buehl">Bühl</option>
+              <option value="Andere">Andere</option>
+            </select>
+          </label>
+          <label style="display:block;">
+            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Objektart</span>
+            <select id="hpPrType" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;">
+              <option value="Wohnung">Wohnung</option>
+              <option value="Haus">Haus</option>
+              <option value="Keller">Keller</option>
+              <option value="Garage">Garage</option>
+              <option value="Buero">Büro</option>
+            </select>
+          </label>
+          <label style="display:block;">
+            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Fläche (m²)</span>
+            <input id="hpPrArea" type="number" min="1" value="60" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;box-sizing:border-box;">
+          </label>
+          <label style="display:block;">
+            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Wie voll?</span>
+            <select id="hpPrFull" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;">
+              <option value="wenig">Wenig gefüllt</option>
+              <option value="normal" selected>Normal gefüllt</option>
+              <option value="voll">Voll</option>
+              <option value="sehr_voll">Sehr voll</option>
+            </select>
+          </label>
+        </div>
+        <p style="margin:16px 0 0;font-size:13px;color:#64748b;">Endpreis abhängig von Aufwand, Zugang und Sonderleistungen. Für ein exaktes Angebot — kostenlose Besichtigung.</p>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:13px;font-weight:600;color:#3db87a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Geschätzte Kosten</div>
+        <div id="hpPrPrice" style="font-size:52px;font-weight:900;color:#fff;line-height:1;margin-bottom:8px;">600 € – 770 €</div>
+        <div style="font-size:13px;color:#64748b;margin-bottom:32px;">unverbindliche Preisorientierung</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a id="hpPrWhatsapp" href="https://wa.me/491639087197" class="btn btn-primary" style="font-size:16px;padding:16px 24px;">📱 Per WhatsApp anfragen</a>
+          <a href="/preisrechner.html" class="btn btn-outline" style="font-size:15px;padding:14px 24px;color:#fff;border-color:rgba(255,255,255,0.25);">Detaillierter Preisrechner →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  const cityAdj={Rastatt:0,Baden_Baden:30,Gaggenau:20,Karlsruhe:45,Buehl:25,Andere:35};
+  const propMult={Wohnung:1.0,Haus:1.18,Keller:0.72,Garage:0.64,Buero:1.08};
+  const fullMult={wenig:0.78,normal:1.0,voll:1.32,sehr_voll:1.68};
+  function euro(v){return Math.round(v).toLocaleString("de-DE")+" €";}
+  function hpUpdate(){
+    const city=document.getElementById("hpPrCity").value;
+    const type=document.getElementById("hpPrType").value;
+    const area=parseFloat(document.getElementById("hpPrArea").value||"60");
+    const full=document.getElementById("hpPrFull").value;
+    let base=area*8.5;
+    base*=(propMult[type]||1);
+    base*=(fullMult[full]||1);
+    base+=(cityAdj[city]||0);
+    const low=Math.max(180,base*0.92);
+    const high=base*1.18;
+    document.getElementById("hpPrPrice").textContent=euro(low)+" – "+euro(high);
+    const text="Hallo, ich möchte eine Einschätzung für eine Entrümpelung.\n\nOrt: "+city.replace("_","-")+"\nObjektart: "+type+"\nFläche: "+area+" m²\nFüllstand: "+full+"\nPreisorientierung: "+euro(low)+" – "+euro(high);
+    document.getElementById("hpPrWhatsapp").href="https://wa.me/491639087197?text="+encodeURIComponent(text);
+  }
+  ["hpPrCity","hpPrType","hpPrArea","hpPrFull"].forEach(function(id){document.getElementById(id).addEventListener("input",hpUpdate);});
+  hpUpdate();
+})();
+</script>
+
 <!-- KONTAKT -->
 <section class="section section-light" id="kontakt">
   <div class="container">
@@ -781,7 +867,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
         <div class="contact-btns">
           <a href="https://wa.me/491639087197" class="btn btn-primary" rel="noopener">WhatsApp</a>
           <a href="tel:+491639087197" class="btn btn-outline">Anrufen</a>
-          <a href="mailto:kontact@perfektsauberservice.com" class="btn btn-outline">E-Mail</a>
+          <a href="mailto:kontakt@perfektsauberservice.com" class="btn btn-outline">E-Mail</a>
         </div>
         <div class="contact-detail">
           <div class="contact-detail-icon">&#128205;</div>
@@ -789,7 +875,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
         </div>
         <div class="contact-detail">
           <div class="contact-detail-icon">&#9993;</div>
-          <div><div class="contact-detail-text">kontact@perfektsauberservice.com</div><div class="contact-detail-sub">Antwort innerhalb von 24h</div></div>
+          <div><div class="contact-detail-text">kontakt@perfektsauberservice.com</div><div class="contact-detail-sub">Antwort innerhalb von 24h</div></div>
         </div>
       </div>
       <div class="contact-form">
@@ -839,7 +925,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
         <p class="footer-desc">Ihr zuverlässiger Partner für Entrümpelung, Haushaltsauflösung und Räumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe.</p>
         <div class="footer-contact">
           <a href="tel:+491639087197">+49 163 9087197</a>
-          <a href="mailto:kontact@perfektsauberservice.com">kontact@perfektsauberservice.com</a>
+          <a href="mailto:kontakt@perfektsauberservice.com">kontakt@perfektsauberservice.com</a>
         </div>
       </div>
       <div class="footer-col">
