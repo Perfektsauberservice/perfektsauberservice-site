@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Baden-Baden",
-      "topic": "Entrümpelung mit Wertanrechnung – Lohnt sich das?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Gernsbach",
       "topic": "Wie finde ich eine seriöse Entrümpelungsfirma?"
     },
@@ -672,6 +667,12 @@
       "city": "Rastatt",
       "service": "Entrümpelung",
       "completedAt": "2026-04-10T08:58:27.427Z"
+    },
+    {
+      "topic": "Entrümpelung mit Wertanrechnung – Lohnt sich das?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-10T10:36:51.730Z"
     }
   ]
 }
