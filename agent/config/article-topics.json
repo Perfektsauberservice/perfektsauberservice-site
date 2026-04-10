@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Muggensturm",
-      "topic": "Entrümpelung vor dem Hausverkauf – Was beachten?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Durmersheim",
       "topic": "Sperrmüll vs. Entrümpelung – Was ist der Unterschied?"
     },
@@ -674,6 +669,12 @@
       "city": "Gernsbach",
       "service": "Entrümpelung",
       "completedAt": "2026-04-10T12:05:41.784Z"
+    },
+    {
+      "topic": "Entrümpelung vor dem Hausverkauf – Was beachten?",
+      "city": "Muggensturm",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-10T15:39:15.298Z"
     }
   ]
 }
