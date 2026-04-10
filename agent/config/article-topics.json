@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rastatt",
-      "topic": "Wie lange dauert eine Entrümpelung?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Baden-Baden",
       "topic": "Entrümpelung mit Wertanrechnung – Lohnt sich das?"
     },
@@ -671,6 +666,12 @@
       "city": "Bühl",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-09T20:38:10.869Z"
+    },
+    {
+      "topic": "Wie lange dauert eine Entrümpelung?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-10T08:58:27.427Z"
     }
   ]
 }
