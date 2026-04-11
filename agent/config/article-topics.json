@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Kuppenheim",
-      "topic": "Entrümpelung Altbau – Besonderheiten und Herausforderungen"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Achern",
       "topic": "Entrümpelung im Winter – Tipps für die kalte Jahreszeit"
     },
@@ -678,6 +673,12 @@
       "city": "Sinzheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-11T09:11:51.803Z"
+    },
+    {
+      "topic": "Entrümpelung Altbau – Besonderheiten und Herausforderungen",
+      "city": "Kuppenheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-11T11:20:11.699Z"
     }
   ]
 }
