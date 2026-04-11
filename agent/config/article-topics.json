@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Stutensee",
-      "topic": "Wie viele Helfer braucht man für eine Entrümpelung?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Rheinstetten",
       "topic": "Entrümpelung nach Wasserschaden – So gehen Sie vor"
     },
@@ -680,6 +675,12 @@
       "city": "Achern",
       "service": "Entrümpelung",
       "completedAt": "2026-04-11T15:00:36.799Z"
+    },
+    {
+      "topic": "Wie viele Helfer braucht man für eine Entrümpelung?",
+      "city": "Stutensee",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-11T19:53:24.231Z"
     }
   ]
 }
