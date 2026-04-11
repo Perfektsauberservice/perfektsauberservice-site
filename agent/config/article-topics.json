@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Sinzheim",
-      "topic": "Wer zahlt die Entrümpelung? – Mieter oder Vermieter"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Kuppenheim",
       "topic": "Entrümpelung Altbau – Besonderheiten und Herausforderungen"
     },
@@ -677,6 +672,12 @@
       "city": "Malsch",
       "service": "Entrümpelung",
       "completedAt": "2026-04-11T07:56:34.879Z"
+    },
+    {
+      "topic": "Wer zahlt die Entrümpelung? – Mieter oder Vermieter",
+      "city": "Sinzheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-11T09:11:51.803Z"
     }
   ]
 }
