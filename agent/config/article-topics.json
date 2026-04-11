@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Malsch",
-      "topic": "Entrümpelung bei Eigentümerwechsel – Ablauf und Kosten"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Sinzheim",
       "topic": "Wer zahlt die Entrümpelung? – Mieter oder Vermieter"
     },
@@ -676,6 +671,12 @@
       "city": "Durmersheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-10T20:00:18.996Z"
+    },
+    {
+      "topic": "Entrümpelung bei Eigentümerwechsel – Ablauf und Kosten",
+      "city": "Malsch",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-11T07:56:34.879Z"
     }
   ]
 }
