@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Achern",
-      "topic": "Entrümpelung im Winter – Tipps für die kalte Jahreszeit"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Stutensee",
       "topic": "Wie viele Helfer braucht man für eine Entrümpelung?"
     },
@@ -679,6 +674,12 @@
       "city": "Kuppenheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-11T11:20:11.699Z"
+    },
+    {
+      "topic": "Entrümpelung im Winter – Tipps für die kalte Jahreszeit",
+      "city": "Achern",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-11T15:00:36.799Z"
     }
   ]
 }
