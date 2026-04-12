@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rheinstetten",
-      "topic": "Entrümpelung nach Wasserschaden – So gehen Sie vor"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Bietigheim",
       "topic": "Elektroschrott bei der Entrümpelung – Was ist zu beachten?"
     },
@@ -681,6 +676,12 @@
       "city": "Stutensee",
       "service": "Entrümpelung",
       "completedAt": "2026-04-11T19:53:24.231Z"
+    },
+    {
+      "topic": "Entrümpelung nach Wasserschaden – So gehen Sie vor",
+      "city": "Rheinstetten",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-12T08:10:12.860Z"
     }
   ]
 }
