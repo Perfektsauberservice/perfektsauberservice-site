@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Bietigheim",
-      "topic": "Elektroschrott bei der Entrümpelung – Was ist zu beachten?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Iffezheim",
       "topic": "Entrümpelung mit besenreiner Übergabe – Was bedeutet das?"
     },
@@ -682,6 +677,12 @@
       "city": "Rheinstetten",
       "service": "Entrümpelung",
       "completedAt": "2026-04-12T08:10:12.860Z"
+    },
+    {
+      "topic": "Elektroschrott bei der Entrümpelung – Was ist zu beachten?",
+      "city": "Bietigheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-12T11:50:41.035Z"
     }
   ]
 }
