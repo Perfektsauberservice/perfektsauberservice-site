@@ -154,7 +154,14 @@ async function researchAgent(topic, city, service) {
 
   const ensureArray = (val) => {
     if (Array.isArray(val)) return val;
-    if (typeof val === 'string') { try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch(e) { return []; } }
+    if (typeof val === 'string') {
+      console.log('   [DEBUG] ensureArray string preview: ' + val.substring(0, 200));
+      try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch(e) {
+        console.log('   [DEBUG] JSON.parse error: ' + e.message);
+        return [];
+      }
+    }
+    console.log('   [DEBUG] ensureArray unexpected type: ' + typeof val);
     return [];
   };
 
