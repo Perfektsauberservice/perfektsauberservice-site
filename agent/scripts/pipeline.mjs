@@ -100,6 +100,10 @@ async function claudeToolCall(systemPrompt, userPrompt, toolName, toolDescriptio
   console.log('   [DEBUG] stop_reason: ' + data.stop_reason);
   const toolBlock = data.content?.find(b => b.type === 'tool_use');
   if (!toolBlock) throw new Error('Kein tool_use Block in der Antwort.');
+  console.log('   [DEBUG] tool input keys: ' + Object.keys(toolBlock.input || {}).join(', '));
+  if (toolBlock.input?.abschnitte !== undefined) {
+    console.log('   [DEBUG] abschnitte length: ' + (toolBlock.input.abschnitte?.length ?? 'null'));
+  }
   return toolBlock.input;
 }
 
@@ -145,7 +149,7 @@ async function researchAgent(topic, city, service) {
       },
       required: ['abschnitte', 'haeufige_fragen']
     },
-    6000
+    8000
   );
 
   const ensureArray = (val) => {
