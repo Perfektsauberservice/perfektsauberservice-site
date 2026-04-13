@@ -128,8 +128,8 @@ async function researchAgent(topic, city, service) {
           items: {
             type: 'object',
             properties: {
-              h2: { type: 'string', description: 'Überschrift als Frage oder klare Aussage' },
-              inhalt: { type: 'string', description: 'Mindestens 120 Wörter nützlicher Inhalt' }
+              h2: { type: 'string', description: 'Überschrift als Frage oder klare Aussage. Keine Anführungszeichen verwenden.' },
+              inhalt: { type: 'string', description: 'Mindestens 120 Wörter nützlicher Inhalt. Keine Anführungszeichen verwenden.' }
             },
             required: ['h2', 'inhalt']
           }
@@ -155,13 +155,19 @@ async function researchAgent(topic, city, service) {
   const ensureArray = (val) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') {
-      console.log('   [DEBUG] ensureArray string preview: ' + val.substring(0, 200));
       try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch(e) {
-        console.log('   [DEBUG] JSON.parse error: ' + e.message);
-        return [];
+        // Incearca sa repare ghilimelele neescapate din interiorul valorilor JSON
+        try {
+          const fixed = val.replace(/(?<=[a-zA-ZäöüÄÖÜß\d])"(?=[a-zA-ZäöüÄÖÜß\s\d])/g, '\u201C')
+                           .replace(/(?<=[a-zA-ZäöüÄÖÜß\s\d])"(?=[a-zA-ZäöüÄÖÜß\d,.])/g, '\u201D');
+          const p2 = JSON.parse(fixed);
+          return Array.isArray(p2) ? p2 : [];
+        } catch(e2) {
+          console.log('   [DEBUG] JSON repair also failed: ' + e2.message);
+          return [];
+        }
       }
     }
-    console.log('   [DEBUG] ensureArray unexpected type: ' + typeof val);
     return [];
   };
 
