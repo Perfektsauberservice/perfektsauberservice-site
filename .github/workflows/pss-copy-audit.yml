@@ -28,6 +28,7 @@ jobs:
           if [ -f agent/state/copy-audit-report.json ]; then
             git add agent/state/copy-audit-report.json
             git diff --cached --quiet || git commit -m "chore(audit): update copy audit report"
+            git pull --rebase origin master
             git push
           else
             echo "copy-audit-report.json not found, skipping commit"

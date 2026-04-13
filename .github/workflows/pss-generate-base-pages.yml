@@ -27,4 +27,5 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git add *.html agent/state/base-pages-plan.json
           git diff --cached --quiet || git commit -m "chore(base-pages): generate city service pages"
+          git pull --rebase origin master
           git push

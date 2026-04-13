@@ -72,128 +72,135 @@ async function callClaude(systemPrompt, userPrompt, maxTokens = 3000) {
 
 // ─── Agent 1: Research ────────────────────────────────────────────────────────
 
+async function claudeToolCall(systemPrompt, userPrompt, toolName, toolDescription, inputSchema, maxTokens = 8000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 120000);
+  let res;
+  try {
+    res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({
+        model: CLAUDE_MODEL,
+        max_tokens: maxTokens,
+        system: systemPrompt,
+        tools: [{ name: toolName, description: toolDescription, input_schema: inputSchema }],
+        tool_choice: { type: 'tool', name: toolName },
+        messages: [{ role: 'user', content: userPrompt }]
+      }),
+      signal: controller.signal
+    });
+  } catch (e) { throw new Error('Network error: ' + e.message); }
+  finally { clearTimeout(timeout); }
+
+  console.log('   [DEBUG] HTTP Status: ' + res.status);
+  if (!res.ok) { const err = await res.text(); throw new Error('API Error ' + res.status + ': ' + err); }
+
+  const data = await res.json();
+  console.log('   [DEBUG] stop_reason: ' + data.stop_reason);
+  const toolBlock = data.content?.find(b => b.type === 'tool_use');
+  if (!toolBlock) throw new Error('Kein tool_use Block in der Antwort.');
+  return toolBlock.input;
+}
+
 async function researchAgent(topic, city, service) {
   console.log(`\n🔍  [Agent 1 – Research] ${service} · ${city} · "${topic}"`);
 
-  // Use tool_use (function calling) — guarantees valid JSON output
-  const body = {
-    model: CLAUDE_MODEL,
-    max_tokens: 16000,
-    system: `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`,
-    tools: [{
-      name: 'artikel_research',
-      description: 'Strukturierte Recherche für einen deutschen SEO-Blogartikel über Entrümpelung/Haushaltsauflösung',
-      input_schema: {
-        type: 'object',
-        properties: {
-          titel: { type: 'string', description: 'SEO-Titel max 65 Zeichen' },
-          meta_description: { type: 'string', description: 'Meta-Description max 155 Zeichen' },
-          abschnitte: {
-            type: 'array',
-            description: 'Mindestens 4 Abschnitte mit je min. 150 Wörtern. PFLICHTFELD - darf NICHT leer sein!',
-            minItems: 4,
-            items: {
-              type: 'object',
-              properties: {
-                h2: { type: 'string', description: 'Überschrift als Frage oder klare Aussage' },
-                inhalt: { type: 'string', description: 'Mindestens 100 Wörter nützlicher Inhalt' }
-              },
-              required: ['h2', 'inhalt']
-            }
-          },
-          preishinweise: { type: 'string', description: 'Realistische Preisspanne für die Stadt, 2-3 Sätze' },
-          lokale_besonderheiten: { type: 'string', description: 'Stadtspezifische Infos zu Infrastruktur und Gebäuden' },
-          haeufige_fragen: {
-            type: 'array',
-            description: '4 häufige Fragen der Zielgruppe mit Antworten',
-            items: {
-              type: 'object',
-              properties: {
-                frage: { type: 'string' },
-                antwort: { type: 'string', description: '2-4 Sätze direkte Antwort' }
-              },
-              required: ['frage', 'antwort']
-            }
-          },
-          seo_keywords: { type: 'array', items: { type: 'string' }, description: '5 relevante Keywords' },
-          bild_suchbegriffe: { type: 'array', items: { type: 'string' }, description: '3 englische Suchbegriffe für Unsplash/Pexels' },
-          artikel_winkel: { type: 'string', description: 'Was macht diesen Artikel einzigartig?' }
+  const system = `Du bist ein lokaler SEO-Experte für Entrümpelung und Haushaltsauflösung in ${city}, Baden-Württemberg. Antworte auf Deutsch.`;
+
+  // ── Cerere 1: doar abschnitte + haeufige_fragen (continut lung) ──────────
+  console.log('   [DEBUG] Cerere 1/2: abschnitte + haeufige_fragen...');
+  const contentData = await claudeToolCall(
+    system,
+    `Schreibe ausführliche Inhalte für einen Blogartikel:\n\nThema: "${topic}"\nStadt: ${city}\nDienstleistung: ${service}\n\nErstelle genau 4 ausführliche Abschnitte (je mindestens 120 Wörter) und 4 häufige Fragen mit Antworten.`,
+    'artikel_inhalt',
+    'Erstellt die Hauptinhalte (Abschnitte und FAQ) für einen SEO-Blogartikel',
+    {
+      type: 'object',
+      properties: {
+        abschnitte: {
+          type: 'array',
+          description: '4 Abschnitte mit je mindestens 120 Wörtern',
+          items: {
+            type: 'object',
+            properties: {
+              h2: { type: 'string', description: 'Überschrift als Frage oder klare Aussage' },
+              inhalt: { type: 'string', description: 'Mindestens 120 Wörter nützlicher Inhalt' }
+            },
+            required: ['h2', 'inhalt']
+          }
         },
-        required: ['titel', 'meta_description', 'abschnitte', 'preishinweise', 'lokale_besonderheiten', 'haeufige_fragen', 'seo_keywords', 'bild_suchbegriffe', 'artikel_winkel']
-      }
-    }],
-    tool_choice: { type: 'tool', name: 'artikel_research' },
-    messages: [{
-      role: 'user',
-      content: `Recherchiere dieses Thema für einen Blogartikel:\n\nThema: "${topic}"\nStadt: ${city}\nDienstleistung: ${service}\n\nMindestens 4 Abschnitte mit echten, nützlichen Informationen für Bewohner in ${city}.`
-    }]
-  };
-
-  console.log('   [DEBUG] Calling Anthropic API...');
-  let res;
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => {
-      console.log('   [DEBUG] Timeout nach 120s - Verbindung abgebrochen');
-      controller.abort();
-    }, 120000);
-    res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        haeufige_fragen: {
+          type: 'array',
+          description: '4 häufige Fragen mit Antworten',
+          items: {
+            type: 'object',
+            properties: {
+              frage: { type: 'string' },
+              antwort: { type: 'string', description: '2-3 Sätze direkte Antwort' }
+            },
+            required: ['frage', 'antwort']
+          }
+        }
       },
-      body: JSON.stringify(body),
-      signal: controller.signal
-    });
-    clearTimeout(timeout);
-  } catch (fetchErr) {
-    throw new Error('Network/Fetch error: ' + fetchErr.message + ' | type: ' + fetchErr.name);
-  }
-  console.log('   [DEBUG] HTTP Status: ' + res.status);
+      required: ['abschnitte', 'haeufige_fragen']
+    },
+    6000
+  );
 
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error('Research Agent API Error ' + res.status + ': ' + err);
-  }
-
-  const data = await res.json();
-  console.log('   [DEBUG] stop_reason: ' + data.stop_reason + ', type: ' + data.content?.[0]?.type);
-
-  if (!data.content || data.content.length === 0) {
-    throw new Error(`Research Agent: Leere API-Antwort. stop_reason=${data.stop_reason}`);
-  }
-
-  const toolBlock = data.content.find(b => b.type === 'tool_use');
-  if (!toolBlock) {
-    console.error('   API Antwort:', JSON.stringify(data).substring(0, 500));
-    throw new Error('Research Agent: Kein tool_use Block in der Antwort.');
-  }
-
-  // tool_use response — input is always valid JSON
-  const research = toolBlock.input;
-
-  // Ensure arrays are actually arrays (max_tokens truncation can cause strings)
   const ensureArray = (val) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') { try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch(e) { return []; } }
     return [];
   };
-  research.abschnitte = ensureArray(research.abschnitte);
-  research.haeufige_fragen = ensureArray(research.haeufige_fragen);
-  research.seo_keywords = ensureArray(research.seo_keywords);
-  research.bild_suchbegriffe = ensureArray(research.bild_suchbegriffe);
-  if (research.bild_suchbegriffe.length === 0) research.bild_suchbegriffe = ['professional cleaning', 'home organization'];
 
-  if (research.abschnitte.length === 0) {
-    console.error('   [DEBUG] toolBlock.input:', JSON.stringify(toolBlock.input).substring(0, 500));
-    throw new Error('Research Agent: abschnitte ist leer nach max_tokens Truncation. Bitte erneut versuchen.');
+  const abschnitte = ensureArray(contentData.abschnitte);
+  const haeufige_fragen = ensureArray(contentData.haeufige_fragen);
+
+  if (abschnitte.length === 0) {
+    throw new Error('Research Agent: abschnitte ist leer. Bitte manuell neu starten.');
   }
+  console.log(`   ✅  Abschnitte: ${abschnitte.length}, FAQ: ${haeufige_fragen.length}`);
 
-  console.log(`   ✅  Keywords: ${research.seo_keywords?.join(', ')}`);
-  console.log(`   ✅  Abschnitte: ${research.abschnitte?.length}`);
-  return research;
+  // ── Cerere 2: metadata scurta ─────────────────────────────────────────────
+  console.log('   [DEBUG] Cerere 2/2: metadata...');
+  const metaData = await claudeToolCall(
+    system,
+    `Erstelle kurze SEO-Metadaten für einen Blogartikel:\n\nThema: "${topic}"\nStadt: ${city}\nDienstleistung: ${service}`,
+    'artikel_meta',
+    'Erstellt SEO-Metadaten für einen Blogartikel',
+    {
+      type: 'object',
+      properties: {
+        titel: { type: 'string', description: 'SEO-Titel max 65 Zeichen' },
+        meta_description: { type: 'string', description: 'Meta-Description max 155 Zeichen' },
+        preishinweise: { type: 'string', description: 'Realistische Preisspanne für die Stadt, 2-3 Sätze' },
+        lokale_besonderheiten: { type: 'string', description: 'Stadtspezifische Infos zu Infrastruktur und Gebäuden, 2-3 Sätze' },
+        seo_keywords: { type: 'array', items: { type: 'string' }, description: '5 relevante Keywords' },
+        bild_suchbegriffe: { type: 'array', items: { type: 'string' }, description: '3 englische Suchbegriffe für Unsplash/Pexels' },
+        artikel_winkel: { type: 'string', description: 'Was macht diesen Artikel einzigartig? 1-2 Sätze' }
+      },
+      required: ['titel', 'meta_description', 'preishinweise', 'lokale_besonderheiten', 'seo_keywords', 'bild_suchbegriffe', 'artikel_winkel']
+    },
+    2000
+  );
+
+  const seo_keywords = ensureArray(metaData.seo_keywords);
+  const bild_suchbegriffe = ensureArray(metaData.bild_suchbegriffe);
+
+  console.log(`   ✅  Keywords: ${seo_keywords.join(', ')}`);
+
+  return {
+    titel: metaData.titel || `${service} ${city}`,
+    meta_description: metaData.meta_description || '',
+    abschnitte,
+    haeufige_fragen,
+    preishinweise: metaData.preishinweise || '',
+    lokale_besonderheiten: metaData.lokale_besonderheiten || '',
+    seo_keywords,
+    bild_suchbegriffe: bild_suchbegriffe.length > 0 ? bild_suchbegriffe : ['professional cleaning', 'home organization'],
+    artikel_winkel: metaData.artikel_winkel || ''
+  };
 }
 
 // ─── Image downloader ─────────────────────────────────────────────────────────
