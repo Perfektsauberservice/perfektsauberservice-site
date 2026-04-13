@@ -27,4 +27,5 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git add agent/state/topic-plan.json agent/state/autopost-queue.json agent/staging/
           git diff --cached --quiet || git commit -m "chore(auto): generate and queue daily articles"
+          git pull --rebase origin master
           git push
