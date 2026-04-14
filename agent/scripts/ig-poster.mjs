@@ -1,14 +1,14 @@
 /**
- * Agent 13 — Instagram Auto-Poster
+ * Agent 13 — Instagram Auto-Poster (Vorher/Nachher Carousel)
  *
- * Postează automat articole noi pe contul Instagram perfektsauberservice.
- * Citește ultimul articol din blog-index.json și îl postează dacă nu a fost deja postat.
+ * Postează automat proiecte reale (Vorher + Nachher) pe Instagram.
+ * Ciclează prin toate perechile din projects.json. Când toate sunt postate, resetează.
  *
  * Utilizare:
  *   node agent/scripts/ig-poster.mjs
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,97 +23,97 @@ if (!IG_ACCESS_TOKEN) {
   process.exit(1);
 }
 
-// ─── Imagini fallback (rotatie) ───────────────────────────────────────────────
-
-const FALLBACK_IMAGES = [
-  'https://perfektsauberservice.com/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-1.webp',
-  'https://perfektsauberservice.com/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-2.webp',
-  'https://perfektsauberservice.com/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp',
-  'https://perfektsauberservice.com/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-1.webp',
-  'https://perfektsauberservice.com/images/wohnung-rastatt/wohnungsaufloesung-rastatt-nachher-1.webp',
-];
-
-function getImageForPost(index) {
-  return FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
-}
-
-// ─── Stare postări deja publicate ────────────────────────────────────────────
+// ─── Stare postări ────────────────────────────────────────────────────────────
 
 const POSTED_LOG = join(ROOT, 'agent', 'config', 'ig-posted.json');
 
 function getPostedLog() {
   try {
     return JSON.parse(readFileSync(POSTED_LOG, 'utf8'));
-  } catch (e) {
+  } catch {
     return { posted: [] };
   }
 }
 
-function markPosted(slug) {
+function markPosted(id) {
   const log = getPostedLog();
-  log.posted.push({ slug, postedAt: new Date().toISOString() });
+  log.posted.push({ id, postedAt: new Date().toISOString() });
   writeFileSync(POSTED_LOG, JSON.stringify(log, null, 2));
 }
 
-function alreadyPosted(slug) {
-  const log = getPostedLog();
-  return log.posted.some(p => p.slug === slug);
+function alreadyPosted(id) {
+  return getPostedLog().posted.some(p => p.id === id);
 }
 
-// ─── Generează textul postării ────────────────────────────────────────────────
+function resetPostedLog() {
+  writeFileSync(POSTED_LOG, JSON.stringify({ posted: [] }, null, 2));
+  console.log('🔄 Log resetat — ciclu nou început.');
+}
 
-function buildCaption(article) {
+// ─── Caption ─────────────────────────────────────────────────────────────────
+
+function buildCaption(pair) {
   const serviceEmojis = {
-    'Entrümpelung': '🏠',
-    'Haushaltsauflösung': '📦',
+    'Kellerentrümpelung': '🏚️',
     'Wohnungsauflösung': '🔑',
+    'Haushaltsauflösung': '📦',
     'Gewerberäumung': '🏢',
-    'Endreinigung': '✨',
-    'Fensterreinigung': '🪟',
   };
-  const emoji = serviceEmojis[article.service] || '✅';
-  const serviceHashtag = (article.service || 'Entrümpelung').replace(/\s/g, '');
+  const emoji = serviceEmojis[pair.service] || '✅';
+  const cityTag = pair.city.replace(/[-\s]/g, '');
+  const serviceTag = pair.service.replace(/[äöüÄÖÜß\s]/g, s =>
+    ({ ä:'ae', ö:'oe', ü:'ue', Ä:'Ae', Ö:'Oe', Ü:'Ue', ß:'ss', ' ':'' }[s] || s)
+  );
 
-  return `${emoji} ${article.title}
+  return `${emoji} Vorher & Nachher | ${pair.service} in ${pair.city}
 
-${article.metaDescription || ''}
+Wischen Sie nach links, um die Verwandlung zu sehen! ➡️
 
-📍 ${article.city} & Umgebung
-📞 Jetzt anfragen: +49 163 9087197
+Von einem überfüllten Raum zu einem sauberen, befreiten Ergebnis — alles in einem Tag. Professionell, schnell und zuverlässig.
+
+📍 ${pair.city} & Umgebung
+📞 +49 163 9087197
 💬 WhatsApp: https://wa.me/491639087197
-🌐 ${article.url || 'https://perfektsauberservice.com'}
+🌐 perfektsauberservice.com
 
-#${serviceHashtag} #${(article.city || '').replace(/\s/g, '')} #PerfektSauberService #Entrümpelung #Rastatt #Haushaltsauflösung #Baden #Karlsruhe`;
+#VorherNachher #${serviceTag} #${cityTag} #PerfektSauberService #Entrümpelung #Haushaltsaufloesung #Rastatt #BadenBaden #Karlsruhe #Gaggenau #Aufräumen #Kelleraufloesung`;
 }
 
 // ─── Instagram Graph API ──────────────────────────────────────────────────────
 
-async function createMediaContainer(imageUrl, caption) {
-  const url = `https://graph.facebook.com/v25.0/${IG_USER_ID}/media`;
-
-  const res = await fetch(url, {
+async function createSingleItem(imageUrl) {
+  const res = await fetch(`https://graph.facebook.com/v25.0/${IG_USER_ID}/media`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       image_url: imageUrl,
+      is_carousel_item: true,
+      access_token: IG_ACCESS_TOKEN,
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok || data.error) throw new Error(`Item Fehler: ${JSON.stringify(data.error || data)}`);
+  return data.id;
+}
+
+async function createCarousel(itemIds, caption) {
+  const res = await fetch(`https://graph.facebook.com/v25.0/${IG_USER_ID}/media`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      media_type: 'CAROUSEL',
+      children: itemIds.join(','),
       caption,
       access_token: IG_ACCESS_TOKEN,
     }),
   });
-
   const data = await res.json();
-
-  if (!res.ok || data.error) {
-    throw new Error(`Container Fehler: ${JSON.stringify(data.error || data)}`);
-  }
-
+  if (!res.ok || data.error) throw new Error(`Carousel Fehler: ${JSON.stringify(data.error || data)}`);
   return data.id;
 }
 
 async function publishMedia(creationId) {
-  const url = `https://graph.facebook.com/v25.0/${IG_USER_ID}/media_publish`;
-
-  const res = await fetch(url, {
+  const res = await fetch(`https://graph.facebook.com/v25.0/${IG_USER_ID}/media_publish`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -121,13 +121,8 @@ async function publishMedia(creationId) {
       access_token: IG_ACCESS_TOKEN,
     }),
   });
-
   const data = await res.json();
-
-  if (!res.ok || data.error) {
-    throw new Error(`Publish Fehler: ${JSON.stringify(data.error || data)}`);
-  }
-
+  if (!res.ok || data.error) throw new Error(`Publish Fehler: ${JSON.stringify(data.error || data)}`);
   return data;
 }
 
@@ -136,50 +131,48 @@ async function publishMedia(creationId) {
 async function main() {
   console.log('📸 PSS Instagram Poster gestartet\n');
 
-  const indexPath = join(ROOT, 'content', 'auto', 'blog-index.json');
-  if (!existsSync(indexPath)) {
-    console.error('[FEHLER] blog-index.json nicht gefunden.');
-    process.exit(1);
+  const projectsPath = join(ROOT, 'agent', 'config', 'projects.json');
+  const { pairs } = JSON.parse(readFileSync(projectsPath, 'utf8'));
+
+  // Gaseste primul nepostat
+  let pair = pairs.find(p => !alreadyPosted(p.id));
+
+  // Daca toate sunt postate → reseteaza si incepe de la capat
+  if (!pair) {
+    resetPostedLog();
+    pair = pairs[0];
   }
 
-  const data = JSON.parse(readFileSync(indexPath, 'utf8'));
-  const articles = data.items || [];
+  console.log(`📝 Poste: ${pair.service} in ${pair.city} (${pair.id})`);
 
-  if (articles.length === 0) {
-    console.log('ℹ️  Keine Artikel im Index.');
-    process.exit(0);
-  }
+  const caption = buildCaption(pair);
 
-  // Găsește primul articol nepostat (cel mai nou mai întâi)
-  const toPostIndex = articles.findIndex(a => !alreadyPosted(a.slug));
+  // 1. Creaza item Vorher
+  console.log('⏳ Upload Vorher...');
+  const vorherItemId = await createSingleItem(pair.vorher);
+  console.log(`   → Vorher ID: ${vorherItemId}`);
 
-  if (toPostIndex === -1) {
-    console.log('ℹ️  Alle Artikel wurden bereits gepostet.');
-    process.exit(0);
-  }
+  await new Promise(r => setTimeout(r, 3000));
 
-  const toPost = articles[toPostIndex];
-  console.log(`📝 Poste: "${toPost.title}" (${toPost.city})`);
+  // 2. Creaza item Nachher
+  console.log('⏳ Upload Nachher...');
+  const nachherItemId = await createSingleItem(pair.nachher);
+  console.log(`   → Nachher ID: ${nachherItemId}`);
 
-  const caption = buildCaption(toPost);
-  const imageUrl = getImageForPost(toPostIndex);
+  await new Promise(r => setTimeout(r, 3000));
 
-  console.log('   → Image:', imageUrl);
-  console.log('   → Caption preview:', caption.substring(0, 80) + '...');
+  // 3. Creaza carousel
+  console.log('⏳ Creez carousel...');
+  const carouselId = await createCarousel([vorherItemId, nachherItemId], caption);
+  console.log(`   → Carousel ID: ${carouselId}`);
 
-  // 1. Creează container
-  console.log('\n⏳ Creez media container...');
-  const creationId = await createMediaContainer(imageUrl, caption);
-  console.log(`   → Creation ID: ${creationId}`);
-
-  // Asteapta 5 secunde (recomandat de Meta)
   await new Promise(r => setTimeout(r, 5000));
 
-  // 2. Publică
+  // 4. Publica
   console.log('⏳ Publică...');
-  const result = await publishMedia(creationId);
+  const result = await publishMedia(carouselId);
 
-  markPosted(toPost.slug);
+  markPosted(pair.id);
 
   console.log(`\n✅ Erfolgreich auf Instagram gepostet! ID: ${result.id}`);
 }

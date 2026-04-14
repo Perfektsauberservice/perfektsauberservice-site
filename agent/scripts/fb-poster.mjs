@@ -1,14 +1,14 @@
 /**
- * Agent 10 — Facebook Page Auto-Poster
+ * Agent 10 — Facebook Page Auto-Poster (Vorher/Nachher)
  *
- * Postează automat articole noi pe pagina de Facebook a Perfekt Sauber Service.
- * Citește ultimul articol din blog-index.json și îl postează dacă nu a fost deja postat.
+ * Postează automat proiecte reale (Vorher + Nachher) pe pagina de Facebook.
+ * Ciclează prin toate perechile din projects.json. Când toate sunt postate, resetează.
  *
  * Utilizare:
  *   node agent/scripts/fb-poster.mjs
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,78 +23,74 @@ if (!FB_PAGE_ACCESS_TOKEN || !FB_PAGE_ID) {
   process.exit(1);
 }
 
-// ─── Stare postări deja publicate ────────────────────────────────────────────
+// ─── Stare postări ────────────────────────────────────────────────────────────
 
 const POSTED_LOG = join(ROOT, 'agent', 'config', 'fb-posted.json');
 
 function getPostedLog() {
   try {
     return JSON.parse(readFileSync(POSTED_LOG, 'utf8'));
-  } catch (e) {
+  } catch {
     return { posted: [] };
   }
 }
 
-function markPosted(slug) {
+function markPosted(id) {
   const log = getPostedLog();
-  log.posted.push({ slug, postedAt: new Date().toISOString() });
+  log.posted.push({ id, postedAt: new Date().toISOString() });
   writeFileSync(POSTED_LOG, JSON.stringify(log, null, 2));
 }
 
-function alreadyPosted(slug) {
-  const log = getPostedLog();
-  return log.posted.some(p => p.slug === slug);
+function alreadyPosted(id) {
+  return getPostedLog().posted.some(p => p.id === id);
 }
 
-// ─── Generează textul postării ────────────────────────────────────────────────
+function resetPostedLog() {
+  writeFileSync(POSTED_LOG, JSON.stringify({ posted: [] }, null, 2));
+  console.log('🔄 Log resetat — ciclu nou început.');
+}
 
-function buildPostMessage(article) {
+// ─── Caption ─────────────────────────────────────────────────────────────────
+
+function buildCaption(pair) {
   const serviceEmojis = {
-    'Entrümpelung': '🏠',
-    'Haushaltsauflösung': '📦',
+    'Kellerentrümpelung': '🏚️',
     'Wohnungsauflösung': '🔑',
+    'Haushaltsauflösung': '📦',
     'Gewerberäumung': '🏢',
-    'Endreinigung': '✨',
-    'Fensterreinigung': '🪟',
   };
-  const emoji = serviceEmojis[article.service] || '✅';
+  const emoji = serviceEmojis[pair.service] || '✅';
+  const cityTag = pair.city.replace(/[-\s]/g, '');
+  const serviceTag = pair.service.replace(/[äöüÄÖÜß\s]/g, s =>
+    ({ ä:'ae', ö:'oe', ü:'ue', Ä:'Ae', Ö:'Oe', Ü:'Ue', ß:'ss', ' ':'' }[s] || s)
+  );
 
-  const serviceHashtag = (article.service || 'Entrümpelung').replace(/\s/g, '');
+  return `${emoji} Vorher & Nachher | ${pair.service} in ${pair.city}
 
-  return `${emoji} ${article.title}
+Von einem überfüllten Raum zu einem sauberen, befreiten Ergebnis — alles in einem Tag. Professionell, schnell und zuverlässig.
 
-${article.metaDescription || ''}
-
-📍 ${article.city} & Umgebung
-📞 Jetzt anfragen: +49 163 9087197
+📍 ${pair.city} & Umgebung
+📞 +49 163 9087197
 💬 WhatsApp: https://wa.me/491639087197
+🌐 https://perfektsauberservice.com
 
-#${serviceHashtag} #${article.city} #PerfektSauberService #Entrümpelung #Rastatt`;
+#VorherNachher #${serviceTag} #${cityTag} #PerfektSauberService #Entrümpelung #Rastatt #BadenBaden #Karlsruhe #Gaggenau`;
 }
 
-// ─── Postează pe Facebook ─────────────────────────────────────────────────────
+// ─── Facebook Graph API ───────────────────────────────────────────────────────
 
-async function postToFacebook(message, link) {
-  const url = `https://graph.facebook.com/v25.0/${FB_PAGE_ID}/feed`;
-
-  const body = {
-    message,
-    link,
-    access_token: FB_PAGE_ACCESS_TOKEN,
-  };
-
-  const res = await fetch(url, {
+async function postPhoto(imageUrl, caption) {
+  const res = await fetch(`https://graph.facebook.com/v25.0/${FB_PAGE_ID}/photos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify({
+      url: imageUrl,
+      caption,
+      access_token: FB_PAGE_ACCESS_TOKEN,
+    }),
   });
-
   const data = await res.json();
-
-  if (!res.ok || data.error) {
-    throw new Error(`Facebook API Fehler: ${JSON.stringify(data.error || data)}`);
-  }
-
+  if (!res.ok || data.error) throw new Error(`Facebook API Fehler: ${JSON.stringify(data.error || data)}`);
   return data;
 }
 
@@ -103,42 +99,29 @@ async function postToFacebook(message, link) {
 async function main() {
   console.log('📘 PSS Facebook Poster gestartet\n');
 
-  const indexPath = join(ROOT, 'content', 'auto', 'blog-index.json');
-  if (!existsSync(indexPath)) {
-    console.error('[FEHLER] blog-index.json nicht gefunden.');
-    process.exit(1);
+  const projectsPath = join(ROOT, 'agent', 'config', 'projects.json');
+  const { pairs } = JSON.parse(readFileSync(projectsPath, 'utf8'));
+
+  // Gaseste primul nepostat
+  let pair = pairs.find(p => !alreadyPosted(p.id));
+
+  // Daca toate sunt postate → reseteaza si incepe de la capat
+  if (!pair) {
+    resetPostedLog();
+    pair = pairs[0];
   }
 
-  const data = JSON.parse(readFileSync(indexPath, 'utf8'));
-  const articles = data.items || [];
+  console.log(`📝 Poste: ${pair.service} in ${pair.city} (${pair.id})`);
 
-  if (articles.length === 0) {
-    console.log('ℹ️  Keine Artikel im Index.');
-    process.exit(0);
-  }
+  const caption = buildCaption(pair);
 
-  // Găsește primul articol nepostat (cel mai nou mai întâi)
-  const toPost = articles.find(a => !alreadyPosted(a.slug));
+  // Posteaza imaginea Nachher cu caption
+  console.log('⏳ Postez poza Nachher pe Facebook...');
+  const result = await postPhoto(pair.nachher, caption);
 
-  if (!toPost) {
-    console.log('ℹ️  Alle Artikel wurden bereits gepostet.');
-    process.exit(0);
-  }
+  markPosted(pair.id);
 
-  console.log(`📝 Poste: "${toPost.title}" (${toPost.city})`);
-
-  const message = buildPostMessage(toPost);
-  const link = toPost.url;
-
-  console.log('   → Message preview:', message.substring(0, 100) + '...');
-  console.log('   → Link:', link);
-
-  const result = await postToFacebook(message, link);
-
-  markPosted(toPost.slug);
-
-  console.log(`\n✅ Erfolgreich gepostet! Post ID: ${result.id}`);
-  console.log(`   URL: https://www.facebook.com/${result.id}`);
+  console.log(`\n✅ Erfolgreich auf Facebook gepostet! Post ID: ${result.id}`);
 }
 
 main().catch(err => {
