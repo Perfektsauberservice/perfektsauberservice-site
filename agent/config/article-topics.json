@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Iffezheim",
-      "topic": "Entrümpelung mit besenreiner Übergabe – Was bedeutet das?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Rheinmünster",
       "topic": "Günstig entrümpeln – Worauf sollte man achten?"
     },
@@ -683,6 +678,12 @@
       "city": "Bietigheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-12T11:50:41.035Z"
+    },
+    {
+      "topic": "Entrümpelung mit besenreiner Übergabe – Was bedeutet das?",
+      "city": "Iffezheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-14T06:03:20.159Z"
     }
   ]
 }
