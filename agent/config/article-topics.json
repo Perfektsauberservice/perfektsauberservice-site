@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Forbach",
-      "topic": "Entrümpelung ländlicher Anwesen – Besonderheiten"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Weisenbach",
       "topic": "Schnelle Entrümpelung bei Zeitmangel – Ist das möglich?"
     },
@@ -685,6 +680,12 @@
       "city": "Rheinmünster",
       "service": "Entrümpelung",
       "completedAt": "2026-04-14T10:00:14.012Z"
+    },
+    {
+      "topic": "Entrümpelung ländlicher Anwesen – Besonderheiten",
+      "city": "Forbach",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-14T10:52:16.858Z"
     }
   ]
 }
