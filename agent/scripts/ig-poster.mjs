@@ -82,8 +82,7 @@ Von einem überfüllten Raum zu einem sauberen, befreiten Ergebnis — alles in 
 // ─── Instagram Graph API ──────────────────────────────────────────────────────
 
 function toJpegUrl(imageUrl) {
-  const encoded = imageUrl.replace('https://', '');
-  return `https://images.weserv.nl/?url=${encoded}&output=jpg&w=1080`;
+  return imageUrl.replace('.webp', '.jpg');
 }
 
 async function createSingleItem(imageUrl) {
