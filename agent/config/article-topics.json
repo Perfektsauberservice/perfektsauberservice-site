@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rheinmünster",
-      "topic": "Günstig entrümpeln – Worauf sollte man achten?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Forbach",
       "topic": "Entrümpelung ländlicher Anwesen – Besonderheiten"
     },
@@ -684,6 +679,12 @@
       "city": "Iffezheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-14T06:03:20.159Z"
+    },
+    {
+      "topic": "Günstig entrümpeln – Worauf sollte man achten?",
+      "city": "Rheinmünster",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-14T10:00:14.012Z"
     }
   ]
 }
