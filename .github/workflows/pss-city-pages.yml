@@ -1,0 +1,32 @@
+name: PSS City Pages Generator
+
+on:
+  schedule:
+    - cron: '0 5 * * 1'  # Luni la 05:00 UTC
+  workflow_dispatch:
+
+jobs:
+  generate-pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate missing city pages
+        run: node agent/scripts/generate-city-pages.mjs
+
+      - name: Commit generated pages
+        run: |
+          git config user.name "PSS Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add *.html
+          git diff --staged --quiet || git commit -m "feat: generate missing city service pages"
+          git pull --rebase origin master
+          git push

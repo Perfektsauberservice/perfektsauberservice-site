@@ -12,7 +12,7 @@
 <meta property="og:description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt und Umgebung.">
 <meta property="og:url" content="https://perfektsauberservice.com/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://perfektsauberservice.com/images/locations/seite-bild-seo.jpg">
+<meta property="og:image" content="https://perfektsauberservice.com/images/locations/seite-bild-seo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -103,7 +103,7 @@ img { max-width: 100%; display: block; }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: url('/images/locations/seite-bild-seo.jpg');
+  background-image: url('/images/locations/seite-bild-seo.webp');
   background-size: cover; background-position: center;
   opacity: .18;
 }
@@ -507,7 +507,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
       </div>
       <div class="hero-card">
         <div class="hero-card-img">
-          <img src="/images/echipa.jpg" alt="Perfekt Sauber Service Team" loading="eager">
+          <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager">
         </div>
         <div class="hero-card-title">Warum Perfekt Sauber Service?</div>
         <div class="hero-card-items">
@@ -635,10 +635,10 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
     <div style="max-width:680px;margin:0 auto 40px;">
       <div class="ba-slider-wrap" id="hp-slider">
         <div class="ba-slider-after">
-          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.jpg" alt="Wohnungsauflösung Nachher Gaggenau" loading="lazy">
+          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp" alt="Wohnungsauflösung Nachher Gaggenau" loading="lazy">
         </div>
         <div class="ba-slider-before" id="hp-before">
-          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.jpg" alt="Wohnungsauflösung Vorher Gaggenau" loading="lazy">
+          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.webp" alt="Wohnungsauflösung Vorher Gaggenau" loading="lazy">
         </div>
         <div class="ba-slider-handle" id="hp-handle">
           <div class="ba-slider-btn">
@@ -796,6 +796,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
               <option value="Wohnung">Wohnung</option>
               <option value="Haus">Haus</option>
               <option value="Keller">Keller</option>
+              <option value="Dachboden">Dachboden</option>
               <option value="Garage">Garage</option>
               <option value="Buero">Büro</option>
             </select>
@@ -831,17 +832,27 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
 <script>
 (function(){
   const cityAdj={Rastatt:0,Baden_Baden:30,Gaggenau:20,Karlsruhe:45,Buehl:25,Andere:35};
-  const propMult={Wohnung:1.0,Haus:1.18,Keller:0.72,Garage:0.64,Buero:1.08};
-  const fullMult={wenig:0.78,normal:1.0,voll:1.32,sehr_voll:1.68};
+  const rates={
+    Wohnung:{wenig:22,normal:30,voll:41,sehr_voll:52},
+    Haus:{wenig:25,normal:34,voll:47,sehr_voll:59},
+    Keller:{wenig:19,normal:30,voll:41,sehr_voll:57},
+    Dachboden:{wenig:25,normal:35,voll:52,sehr_voll:68},
+    Buero:{wenig:24,normal:33,voll:45,sehr_voll:57}
+  };
+  const garageRates={wenig:133,normal:198,voll:263,sehr_voll:413};
   function euro(v){return Math.round(v).toLocaleString("de-DE")+" €";}
   function hpUpdate(){
     const city=document.getElementById("hpPrCity").value;
     const type=document.getElementById("hpPrType").value;
     const area=parseFloat(document.getElementById("hpPrArea").value||"60");
     const full=document.getElementById("hpPrFull").value;
-    let base=area*8.5;
-    base*=(propMult[type]||1);
-    base*=(fullMult[full]||1);
+    let base;
+    if(type==="Garage"){
+      base=garageRates[full]||garageRates.normal;
+    } else {
+      const r=rates[type]||rates.Wohnung;
+      base=area*(r[full]||r.normal);
+    }
     base+=(cityAdj[city]||0);
     const low=Math.max(180,base*0.92);
     const high=base*1.18;

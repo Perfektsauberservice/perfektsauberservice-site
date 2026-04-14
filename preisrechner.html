@@ -8,7 +8,7 @@
 <meta property="og:description" content="Unverbindliche Preisorientierung für Entrümpelung in Rastatt, Baden-Baden, Gaggenau und Umgebung.">
 <meta property="og:url" content="https://perfektsauberservice.com/preisrechner.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://perfektsauberservice.com/images/echipa.jpg">
+<meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
 <meta property="og:locale" content="de_DE">
 <meta name="description" content="Unverbindliche Preisorientierung für Entrümpelung in Rastatt, Baden-Baden, Gaggenau und Umgebung.">
 <style>
@@ -116,8 +116,6 @@ textarea{min-height:110px;resize:vertical}
             Büros und besenreine Übergaben.
           </div>
 
-    <img class="hero-img" src="/images/locations/seite-bild-seo.jpg" alt="Relevantes Bild zur Seite ">
-
         </div>
       </div>
     </div>
@@ -147,6 +145,7 @@ textarea{min-height:110px;resize:vertical}
             <option value="Wohnung">Wohnung</option>
             <option value="Haus">Haus</option>
             <option value="Keller">Keller</option>
+            <option value="Dachboden">Dachboden</option>
             <option value="Garage">Garage</option>
             <option value="Buero">Büro</option>
           </select>
@@ -255,31 +254,46 @@ textarea{min-height:110px;resize:vertical}
 </div>
 
 <script>
+// City surcharges in euros — Laura's market positioning (Rastatt = home base)
 const cityAdjustments = {
-  Rastatt: 0,
-  Baden_Baden: 30,
-  Gaggenau: 20,
-  Karlsruhe: 45,
-  Buehl: 25,
-  Kuppenheim: 15,
-  Gernsbach: 20,
-  Andere: 35
+  Rastatt: 0,        // home base, no surcharge
+  Baden_Baden: 30,   // +30€ (distance/prestige)
+  Gaggenau: 20,      // +20€
+  Karlsruhe: 45,     // +45€ (farthest city)
+  Buehl: 25,         // +25€
+  Kuppenheim: 15,    // +15€ (close to Rastatt)
+  Gernsbach: 20,     // +20€
+  Andere: 35         // +35€ (unknown location)
 };
 
-const propertyMultipliers = {
-  Wohnung: 1.0,
-  Haus: 1.18,
-  Keller: 0.72,
-  Garage: 0.64,
-  Büro: 1.08
+// Direct rates per m² by property type and fullness level
+// Source: Sachsen Auflösungen Preisrichtwert 2023 + ~8% inflation (2023→2026)
+const ratesPerM2 = {
+  Wohnung:   { wenig: 25, normal: 33, voll: 44, sehr_voll: 55 }, // PDF: 18/25/35/45 €/m² +8% inflatie +3€
+  Haus:      { wenig: 28, normal: 37, voll: 50, sehr_voll: 62 }, // not in PDF → Wohnung ×1.15 +3€
+  Keller:    { wenig: 22, normal: 33, voll: 44, sehr_voll: 60 }, // PDF: 15/25/35/50 €/m² +8% inflatie +3€
+  Dachboden: { wenig: 28, normal: 38, voll: 55, sehr_voll: 71 }, // PDF: 20/30/45/60 €/m² +8% inflatie +3€
+  Buero:     { wenig: 27, normal: 36, voll: 48, sehr_voll: 60 }  // not in PDF → Wohnung ×1.1 +3€
 };
 
-const fullnessMultipliers = {
-  wenig: 0.78,
-  normal: 1.0,
-  voll: 1.32,
-  sehr_voll: 1.68
+// Garage uses fixed prices (not per m²) — PDF: 120/180/240/380 € + 8% inflation + 3€
+const garageRates = {
+  wenig: 136,     // PDF 120 €
+  normal: 201,    // PDF 180 €
+  voll: 266,      // PDF 240 €
+  sehr_voll: 416  // PDF 380 €
 };
+
+// Floor surcharge % (without elevator, from 2.OG — EG and 1.OG have no surcharge)
+// Source: Sachsen Auflösungen — "Etagenzuschlag ab 2.OG ohne nutzbaren Fahrstuhl"
+const floorSurchargePct = [
+  0,     // EG (floor 0)   — no surcharge
+  0,     // 1.OG (floor 1) — no surcharge
+  0.05,  // 2.OG (floor 2) — +5%
+  0.10,  // 3.OG (floor 3) — +10%
+  0.15,  // 4.OG (floor 4) — +15%
+  0.20   // 5.OG+ (floor 5+) — +20%
+];
 
 function euro(value){
   return Math.round(value).toLocaleString("de-DE") + " €";
@@ -296,18 +310,31 @@ function update(){
   const cleaning = document.getElementById("cleaning").value;
   const express = document.getElementById("express").value;
 
-  let base = area * 8.5;
-  base *= propertyMultipliers[propertyType] || 1;
-  base *= fullnessMultipliers[fullness] || 1;
-  base += cityAdjustments[city] || 0;
-  base += floor * (elevator === "nein" ? 35 : 10);
+  // Calculate base price
+  let base;
+  if (propertyType === "Garage") {
+    base = garageRates[fullness] || garageRates.normal; // fixed price, area irrelevant
+  } else {
+    const rates = ratesPerM2[propertyType] || ratesPerM2.Wohnung;
+    base = area * (rates[fullness] || rates.normal);    // €/m² × m²
+  }
 
-  if(heavyItems === "ja") base += 90;
-  if(cleaning === "ja") base += 80;
-  if(express === "ja") base += 120;
+  base += cityAdjustments[city] || 0;  // add city surcharge
 
-  const low = Math.max(180, base * 0.92);
-  const high = base * 1.18;
+  // Floor surcharge: % of base without elevator (from 2.OG), small flat fee with elevator
+  if (elevator === "nein") {
+    const pct = floorSurchargePct[Math.min(floor, 5)] || 0.20;
+    base *= (1 + pct);
+  } else {
+    base += floor * 8; // +8€/floor with elevator (logistics only)
+  }
+
+  if(heavyItems === "ja") base += 95;   // +95€ for heavy items (piano, safe, etc.)
+  if(cleaning === "ja")   base += 85;   // +85€ for broom-clean handover
+  if(express === "ja")    base += 130;  // +130€ for urgent appointment
+
+  const low  = Math.max(180, base * 0.92);  // lower bound: base −8%, minimum 180€
+  const high = base * 1.18;                 // upper bound: base +18%
 
   document.getElementById("heroPrice").textContent = euro(low) + " – " + euro(high);
   document.getElementById("sumProperty").textContent = propertyType;
