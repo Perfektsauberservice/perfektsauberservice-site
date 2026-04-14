@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Weisenbach",
-      "topic": "Schnelle Entrümpelung bei Zeitmangel – Ist das möglich?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Loffenau",
       "topic": "Kleine Entrümpelung – Lohnt sich eine Firma?"
     },
@@ -686,6 +681,12 @@
       "city": "Forbach",
       "service": "Entrümpelung",
       "completedAt": "2026-04-14T10:52:16.858Z"
+    },
+    {
+      "topic": "Schnelle Entrümpelung bei Zeitmangel – Ist das möglich?",
+      "city": "Weisenbach",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-14T15:04:18.027Z"
     }
   ]
 }
