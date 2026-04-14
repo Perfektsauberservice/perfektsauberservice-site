@@ -81,12 +81,18 @@ Von einem überfüllten Raum zu einem sauberen, befreiten Ergebnis — alles in 
 
 // ─── Instagram Graph API ──────────────────────────────────────────────────────
 
+function toJpegUrl(imageUrl) {
+  const encoded = imageUrl.replace('https://', '');
+  return `https://images.weserv.nl/?url=${encoded}&output=jpg&w=1080`;
+}
+
 async function createSingleItem(imageUrl) {
+  const jpegUrl = toJpegUrl(imageUrl);
   const res = await fetch(`https://graph.facebook.com/v25.0/${IG_USER_ID}/media`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      image_url: imageUrl,
+      image_url: jpegUrl,
       is_carousel_item: true,
       access_token: IG_ACCESS_TOKEN,
     }),
