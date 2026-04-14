@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Hügelsheim",
-      "topic": "Entrümpelung für Senioren – Diskret und einfühlsam"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Steinmauern",
       "topic": "Was passiert mit alten Möbeln bei der Entrümpelung?"
     },
@@ -688,6 +683,12 @@
       "city": "Loffenau",
       "service": "Entrümpelung",
       "completedAt": "2026-04-14T16:47:45.604Z"
+    },
+    {
+      "topic": "Entrümpelung für Senioren – Diskret und einfühlsam",
+      "city": "Hügelsheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-14T21:10:33.645Z"
     }
   ]
 }
