@@ -152,18 +152,37 @@ async function researchAgent(topic, city, service) {
     8000
   );
 
+  const repairJSON = (str) => {
+    let result = '';
+    let inString = false;
+    let escape = false;
+    for (let i = 0; i < str.length; i++) {
+      const ch = str[i];
+      if (escape) { result += ch; escape = false; continue; }
+      if (ch === '\\') { result += ch; escape = true; continue; }
+      if (ch === '"') {
+        if (!inString) { inString = true; result += ch; continue; }
+        // Check if this quote closes the string (next meaningful char is JSON structural)
+        const rest = str.slice(i + 1);
+        if (/^\s*[:,\}\]]/.test(rest)) { inString = false; result += ch; }
+        else { result += '\\"'; }
+        continue;
+      }
+      result += ch;
+    }
+    return result;
+  };
+
   const ensureArray = (val) => {
     if (Array.isArray(val)) return val;
     if (typeof val === 'string') {
       try { const p = JSON.parse(val); return Array.isArray(p) ? p : []; } catch(e) {
-        // Incearca sa repare ghilimelele neescapate din interiorul valorilor JSON
         try {
-          const fixed = val.replace(/(?<=[a-zA-ZäöüÄÖÜß\d])"(?=[a-zA-ZäöüÄÖÜß\s\d])/g, '\u201C')
-                           .replace(/(?<=[a-zA-ZäöüÄÖÜß\s\d])"(?=[a-zA-ZäöüÄÖÜß\d,.])/g, '\u201D');
-          const p2 = JSON.parse(fixed);
-          return Array.isArray(p2) ? p2 : [];
+          const p2 = JSON.parse(repairJSON(val));
+          if (Array.isArray(p2)) { console.log('   [DEBUG] JSON reparat cu succes'); return p2; }
+          return [];
         } catch(e2) {
-          console.log('   [DEBUG] JSON repair also failed: ' + e2.message);
+          console.log('   [DEBUG] JSON repair failed: ' + e2.message);
           return [];
         }
       }
