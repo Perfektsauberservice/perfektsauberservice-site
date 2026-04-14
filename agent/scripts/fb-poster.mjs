@@ -79,19 +79,29 @@ Von einem überfüllten Raum zu einem sauberen, befreiten Ergebnis — alles in 
 
 // ─── Facebook Graph API ───────────────────────────────────────────────────────
 
-async function postPhoto(imageUrl, caption) {
-  const res = await fetch(`https://graph.facebook.com/v25.0/${FB_PAGE_ID}/photos`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      url: imageUrl,
-      caption,
-      access_token: FB_PAGE_ACCESS_TOKEN,
-    }),
-  });
-  const data = await res.json();
-  if (!res.ok || data.error) throw new Error(`Facebook API Fehler: ${JSON.stringify(data.error || data)}`);
-  return data;
+async function postPhoto(imageUrl, caption, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const res = await fetch(`https://graph.facebook.com/v25.0/${FB_PAGE_ID}/photos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url: imageUrl,
+        caption,
+        access_token: FB_PAGE_ACCESS_TOKEN,
+      }),
+    });
+    const data = await res.json();
+    if (res.ok && !data.error) return data;
+
+    const err = data.error || data;
+    const isTransient = err.is_transient === true;
+    if (isTransient && attempt < retries) {
+      console.log(`   ⚠️  Transient error (attempt ${attempt}/${retries}), retry in 5s...`);
+      await new Promise(r => setTimeout(r, 5000));
+      continue;
+    }
+    throw new Error(`Facebook API Fehler: ${JSON.stringify(err)}`);
+  }
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
