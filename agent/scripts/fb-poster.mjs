@@ -115,9 +115,9 @@ async function main() {
 
   const caption = buildCaption(pair);
 
-  // Posteaza imaginea Nachher cu caption
+  // Posteaza imaginea Nachher cu caption (jpg in loc de webp)
   console.log('⏳ Postez poza Nachher pe Facebook...');
-  const result = await postPhoto(pair.nachher, caption);
+  const result = await postPhoto(pair.nachher.replace('.webp', '.jpg'), caption);
 
   markPosted(pair.id);
 
