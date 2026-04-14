@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Loffenau",
-      "topic": "Kleine Entrümpelung – Lohnt sich eine Firma?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Hügelsheim",
       "topic": "Entrümpelung für Senioren – Diskret und einfühlsam"
     },
@@ -687,6 +682,12 @@
       "city": "Weisenbach",
       "service": "Entrümpelung",
       "completedAt": "2026-04-14T15:04:18.027Z"
+    },
+    {
+      "topic": "Kleine Entrümpelung – Lohnt sich eine Firma?",
+      "city": "Loffenau",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-14T16:47:45.604Z"
     }
   ]
 }
