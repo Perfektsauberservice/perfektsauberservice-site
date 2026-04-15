@@ -21,6 +21,8 @@ const ROOT = join(__dirname, '..', '..');
 const STATE_PATH = join(ROOT, 'agent', 'state', 'keyword-rankings.json');
 
 const SERPER_API_KEY = process.env.SERPER_API_KEY;
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const OWN_DOMAIN = 'perfektsauberservice.com';
 const OWN_NAME_FRAGMENT = 'perfekt sauber';
 
@@ -40,6 +42,59 @@ const KEYWORDS = [
   { query: 'Kellerentrümpelung Rastatt',    city: 'Rastatt',      service: 'Kellerentrümpelung' },
   { query: 'Gewerberäumung Rastatt',        city: 'Rastatt',      service: 'Gewerberäumung' },
 ];
+
+// ─── Telegram ─────────────────────────────────────────────────────────────────
+
+async function sendTelegram(text) {
+  if (!TELEGRAM_BOT_TOKEN) return;
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: 'HTML' }),
+    });
+    if (!res.ok) console.warn('Telegram warning:', await res.text());
+  } catch (err) {
+    console.warn('Telegram error:', err.message);
+  }
+}
+
+function buildTelegramReport(weekData) {
+  const { date, keywords, competitorList } = weekData;
+  const ranked = keywords.filter(k => k.position);
+  const inPack = keywords.filter(k => k.inLocalPack);
+
+  let msg = `📊 <b>Raport saptamanal PSS — ${date}</b>\n\n`;
+
+  msg += `Pozitii gasite: <b>${ranked.length}/${keywords.length}</b>\n`;
+  msg += `In Local Pack: <b>${inPack.length}/${keywords.length}</b>\n\n`;
+
+  msg += `<b>Keyword Rankings:</b>\n`;
+  for (const k of keywords) {
+    const pos = k.position ? `#${k.position}` : 'N/A';
+    const prev = k.positionPrev;
+    let trend = '';
+    if (prev !== null && k.position !== null) {
+      const diff = prev - k.position;
+      trend = diff > 0 ? ` ↑${diff}` : diff < 0 ? ` ↓${Math.abs(diff)}` : ' =';
+    }
+    const pack = k.inLocalPack ? ' ✅' : '';
+    msg += `  ${pos}${trend} — ${k.query}${pack}\n`;
+  }
+
+  if (competitorList && competitorList.length > 0) {
+    msg += `\n<b>Top Competitori (Local Pack):</b>\n`;
+    for (const c of competitorList.slice(0, 5)) {
+      const rating = c.rating !== null ? `★${c.rating}` : '';
+      const reviews = c.reviews !== null ? `${c.reviews} rec.` : '';
+      const newRev = c.reviewsPrev !== null && c.reviews !== null && c.reviews !== c.reviewsPrev
+        ? ` (+${c.reviews - c.reviewsPrev} nou)` : '';
+      msg += `  <b>${c.name}</b> — ${rating} ${reviews}${newRev} (${c.appearsFor.length} cautari)\n`;
+    }
+  }
+
+  return msg;
+}
 
 // ─── Serper API ───────────────────────────────────────────────────────────────
 
@@ -278,6 +333,11 @@ async function main() {
   }
 
   console.log('\n✅  Salvat in agent/state/keyword-rankings.json');
+
+  // ── Trimite raport pe Telegram ────────────────────────────────────────────
+  const telegramMsg = buildTelegramReport(weekData);
+  await sendTelegram(telegramMsg);
+  if (TELEGRAM_BOT_TOKEN) console.log('✅  Raport trimis pe Telegram.');
 }
 
 main().catch(err => {
