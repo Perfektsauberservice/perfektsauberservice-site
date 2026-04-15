@@ -288,9 +288,7 @@ h3{font-size:24px;line-height:1.25;margin:18px 0 8px}
           <a class="btn btn-blue" href="/preisrechner.html">Preis grob einschätzen</a>
         </div>
       </div>
-      <div>
-        <img class="hero-img" src="/images/locations/seite-bild-seo.webp" alt="${service.name} ${city}">
-      </div>
+      <div></div>
     </div>
   </section>
 
