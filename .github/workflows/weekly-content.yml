@@ -25,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
 
     steps:
       - name: Checkout repo
@@ -61,3 +62,15 @@ jobs:
           git diff --staged --quiet || git commit -m "content: neuer Artikel generiert [$(date +%Y-%m-%d)]"
           git pull --rebase origin master
           git push
+
+      - name: Trigger FB Blog Poster (posteaza articolul nou pe Facebook)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'pss-fb-blog-poster.yml',
+              ref: 'master'
+            });
+            console.log('FB Blog Poster declansat!');
