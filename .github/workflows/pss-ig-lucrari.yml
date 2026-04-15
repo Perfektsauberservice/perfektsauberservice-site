@@ -1,0 +1,37 @@
+name: PSS Instagram Lucrari Poster
+
+on:
+  schedule:
+    - cron: '0 6,8,9,11,12,14,16,18,20,21 * * *'
+  workflow_dispatch:
+
+jobs:
+  post-lucrari:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Post lucrare to Instagram + Facebook
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: node agent/scripts/ig-lucrari-poster.mjs
+
+      - name: Commit state
+        run: |
+          git config user.name "PSS Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/state/lucrari-posted.json
+          git diff --staged --quiet && echo "Nimic de commituit." && exit 0
+          git commit -m "chore: update lucrari-posted log"
+          git pull --rebase origin master
+          git push
