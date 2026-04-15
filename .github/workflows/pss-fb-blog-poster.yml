@@ -1,0 +1,38 @@
+name: FB Blog Poster
+
+on:
+  # Ruleaza din ora in ora — posteaza cate un articol pana ajunge la zi
+  schedule:
+    - cron: '0 * * * *'   # fiecare ora exacta
+  # Declansat automat de weekly-content.yml dupa fiecare articol nou
+  workflow_dispatch:
+
+jobs:
+  post-blog-article:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Post one blog article to Facebook
+        env:
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: node agent/scripts/fb-blog-poster.mjs
+
+      - name: Save posted state
+        run: |
+          git config user.name "PSS Content Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/config/fb-blog-posted.json
+          git diff --staged --quiet || git commit -m "fb-blog: articol postat [$(date +%Y-%m-%d %H:%M)]"
+          git pull --rebase origin master
+          git push
