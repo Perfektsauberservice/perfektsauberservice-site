@@ -140,6 +140,30 @@ const SERVICES = [
     ctaText: (city) => `Wenn Sie eine Nachlassauflösung in ${city} benötigen, stehen wir Ihnen mit Rat und Tat zur Seite. Kontaktieren Sie uns.`,
   },
   {
+    slug: 'hausmeisterservice',
+    name: 'Hausmeisterservice',
+    title: (city) => `Hausmeisterservice ${city} | Perfekt Sauber Service`,
+    desc: (city) => `Hausmeisterservice in ${city}: Treppenhausreinigung, Winterdienst, Grünpflege und Kleinreparaturen. Zuverlässig, termingerecht und fair berechnet.`,
+    heroText: (city) => `Wir übernehmen regelmäßige Hausmeisterdienste in ${city} – von der Treppenhausreinigung über den Winterdienst bis zur Grünpflege und kleinen Reparaturen.`,
+    sections: (city) => [
+      { h: `Was Hausmeisterservice in ${city} umfasst`, p: `Ein zuverlässiger Hausmeisterservice in ${city} deckt alle wiederkehrenden Aufgaben rund um Gebäude, Außenanlagen und Gemeinschaftsbereiche ab. Ob Mehrfamilienhaus, Wohnanlage oder Gewerbeobjekt – wir sorgen dafür, dass alles gepflegt, sauber und funktionsfähig bleibt.` },
+      { h: `Warum ein professioneller Hausmeister in ${city} sinnvoll ist`, p: `Eigentümer und Hausverwaltungen in ${city} profitieren von einem festen Ansprechpartner für alle anfallenden Aufgaben. Das spart Zeit, verhindert Schäden durch verspätete Reaktion und sorgt für ein gepflegtes Erscheinungsbild des Objekts.` },
+      { h: `Unser Ablauf für den Hausmeisterservice in ${city}`, p: `Nach einem ersten Gespräch über das Objekt und die gewünschten Leistungen erstellen wir ein maßgeschneidertes Angebot. Die Dienste werden regelmäßig und verlässlich durchgeführt – mit kurzen Rückmeldungen bei Auffälligkeiten.` },
+    ],
+    cards: [
+      { t: 'Treppenhausreinigung', p: `Regelmäßige Reinigung von Treppenhäusern, Fluren und Gemeinschaftsbereichen – sauber, ordentlich und zuverlässig nach Plan.` },
+      { t: 'Winterdienst', p: `Schneeräumen und Streuen auf Gehwegen, Einfahrten und Flächen rund ums Gebäude – schnell und verkehrssicher.` },
+      { t: 'Grünpflege', p: `Rasenmähen, Heckenschnitt, Laubentfernung und Pflege von Außenanlagen – damit das Grundstück gepflegt aussieht.` },
+      { t: 'Kleinreparaturen', p: `Leuchtmittel wechseln, Türen einstellen, Kleinschäden beheben – schnelle Erledigung ohne aufwendige Beauftragung.` },
+    ],
+    faqs: (city) => [
+      { q: `Für welche Objekte bietet ihr Hausmeisterservice in ${city} an?`, a: `Wir arbeiten für Mehrfamilienhäuser, Wohnanlagen, Gewerbeimmobilien und Einzeleigentümer in ${city}.` },
+      { q: `Kann der Hausmeisterservice in ${city} individuell zusammengestellt werden?`, a: `Ja. Sie wählen, welche Leistungen regelmäßig oder nur bei Bedarf erbracht werden sollen.` },
+      { q: `Wie schnell kann der Winterdienst in ${city} eingesetzt werden?`, a: `Im Rahmen eines bestehenden Vertrags sind wir bei Schneefall zeitnah vor Ort. Sprechen Sie uns an, damit wir rechtzeitig planen können.` },
+    ],
+    ctaText: (city) => `Benötigen Sie einen zuverlässigen Hausmeisterservice in ${city}? Kontaktieren Sie uns für ein unverbindliches Angebot – gerne mit einer kurzen Beschreibung des Objekts.`,
+  },
+  {
     slug: 'messi-wohnung',
     name: 'Messi-Wohnung Entrümpelung',
     title: (city) => `Messi-Wohnung Entrümpelung ${city} | Perfekt Sauber Service`,
