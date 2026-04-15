@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Elchesheim-Illingen",
-      "topic": "Entrümpelung ohne Aufzug – Kosten und Ablauf"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Au am Rhein",
       "topic": "Entrümpelung im Frühjahr – Warum das die beste Zeit ist"
     },
@@ -691,6 +686,12 @@
       "city": "Oetigheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-15T10:46:22.121Z"
+    },
+    {
+      "topic": "Entrümpelung ohne Aufzug – Kosten und Ablauf",
+      "city": "Elchesheim-Illingen",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-15T14:56:54.632Z"
     }
   ]
 }
