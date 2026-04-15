@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Au am Rhein",
-      "topic": "Entrümpelung im Frühjahr – Warum das die beste Zeit ist"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Bad Herrenalb",
       "topic": "Entrümpelung Ferienhaus – Saisonale Räumung leicht gemacht"
     },
@@ -692,6 +687,12 @@
       "city": "Elchesheim-Illingen",
       "service": "Entrümpelung",
       "completedAt": "2026-04-15T14:56:54.632Z"
+    },
+    {
+      "topic": "Entrümpelung im Frühjahr – Warum das die beste Zeit ist",
+      "city": "Au am Rhein",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-15T16:41:38.858Z"
     }
   ]
 }
