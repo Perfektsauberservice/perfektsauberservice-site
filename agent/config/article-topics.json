@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Steinmauern",
-      "topic": "Was passiert mit alten Möbeln bei der Entrümpelung?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Oetigheim",
       "topic": "Entrümpelung nach Scheidung – Neutrale Hilfe gefragt"
     },
@@ -689,6 +684,12 @@
       "city": "Hügelsheim",
       "service": "Entrümpelung",
       "completedAt": "2026-04-14T21:10:33.645Z"
+    },
+    {
+      "topic": "Was passiert mit alten Möbeln bei der Entrümpelung?",
+      "city": "Steinmauern",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-15T10:01:58.460Z"
     }
   ]
 }
