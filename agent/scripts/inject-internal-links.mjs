@@ -110,13 +110,13 @@ ${allLinks.map(l => `      <a href="${l.href}">${l.label}</a>`).join('\n')}
 
 console.log(`✅ Pagini oras: ${cityUpdated} actualizate cu link-uri interne, ${citySkipped} sarite`);
 
-// ── Articole blog ──────────────────────────────────────────────────────────
-
+// ── Articole blog — SARITE COMPLET ─────────────────────────────────────────
+// pipeline.mjs adauga link-uri interne la creare. Nu se modifica automat.
 const blogDir = join(ROOT, 'blog');
 let blogUpdated = 0, blogSkipped = 0;
-
 let blogFiles = [];
-try { blogFiles = readdirSync(blogDir).filter(f => f.endsWith('.html')); } catch {}
+// blog/ protejat — nu se proceseaza automat
+blogFiles = [];
 
 for (const file of blogFiles) {
   const filePath = join(blogDir, file);

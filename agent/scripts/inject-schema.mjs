@@ -252,12 +252,12 @@ for (const file of rootFiles) {
 
 console.log(`\n✅ Pagini oras/serviciu: ${processed} actualizate, ${skipped} sarite, ${errors} erori`);
 
-// Articole blog
+// Articole blog — SARITE COMPLET
+// pipeline.mjs adauga schema la creare. Nu se modifica automat.
 const blogDir = join(ROOT, 'blog');
 let blogProcessed = 0;
-
-let blogFiles = [];
-try { blogFiles = readdirSync(blogDir).filter(f => f.endsWith('.html')); } catch {}
+// blog/ protejat — nu se proceseaza automat
+const blogFiles = [];
 
 for (const file of blogFiles) {
   const filePath = join(blogDir, file);
