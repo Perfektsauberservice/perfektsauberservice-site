@@ -1,8 +1,9 @@
 name: PSS Instagram Auto-Poster
 
 on:
-  schedule:
-    - cron: '0 6,8,9,11,12,14,16,18,20,21 * * *'
+  # PAUZA temporara — se reactiveaza dupa postarea celor 16 lucrari
+  # schedule:
+  #   - cron: '0 6,8,9,11,12,14,16,18,20,21 * * *'
   workflow_dispatch:
 
 jobs:
