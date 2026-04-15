@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Oetigheim",
-      "topic": "Entrümpelung nach Scheidung – Neutrale Hilfe gefragt"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Elchesheim-Illingen",
       "topic": "Entrümpelung ohne Aufzug – Kosten und Ablauf"
     },
@@ -690,6 +685,12 @@
       "city": "Steinmauern",
       "service": "Entrümpelung",
       "completedAt": "2026-04-15T10:01:58.460Z"
+    },
+    {
+      "topic": "Entrümpelung nach Scheidung – Neutrale Hilfe gefragt",
+      "city": "Oetigheim",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-15T10:46:22.121Z"
     }
   ]
 }
