@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Bischweier",
-      "topic": "Entrümpelung mit Sondermüll – Fachgerechte Entsorgung"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Karlsruhe",
       "topic": "Großraumwohnung entrümpeln – Planung und Kosten"
     },
@@ -695,6 +690,12 @@
       "city": "Bad Wildbad",
       "service": "Entrümpelung",
       "completedAt": "2026-04-16T10:01:25.261Z"
+    },
+    {
+      "topic": "Entrümpelung mit Sondermüll – Fachgerechte Entsorgung",
+      "city": "Bischweier",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-16T10:49:54.613Z"
     }
   ]
 }
