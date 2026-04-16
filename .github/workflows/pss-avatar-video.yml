@@ -1,0 +1,44 @@
+name: PSS Avatar Video Poster
+
+on:
+  schedule:
+    # O data pe zi la 09:00 Germania (07:00 UTC)
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  post-avatar-video:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Git pull
+        run: git pull --rebase origin master
+
+      - name: Run Avatar Video Poster
+        env:
+          DID_API_KEY: ${{ secrets.DID_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+        run: node agent/scripts/avatar-video-poster.mjs
+
+      - name: Commit state
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add agent/state/avatar-video-state.json || true
+          git diff --staged --quiet || git commit -m "Avatar video state update"
+          git push origin master || true
