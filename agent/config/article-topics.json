@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Baden-Baden",
-      "topic": "Entrümpelung Luxuswohnung – Besondere Anforderungen"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Rastatt",
       "topic": "Entrümpelung Reihenhaus – Typischer Ablauf"
     },
@@ -697,6 +692,12 @@
       "city": "Karlsruhe",
       "service": "Entrümpelung",
       "completedAt": "2026-04-16T15:16:15.935Z"
+    },
+    {
+      "topic": "Entrümpelung Luxuswohnung – Besondere Anforderungen",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-16T17:54:57.452Z"
     }
   ]
 }
