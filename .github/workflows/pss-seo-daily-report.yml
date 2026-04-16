@@ -25,6 +25,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          OPR_API_KEY: ${{ secrets.OPR_API_KEY }}
         run: node agent/scripts/seo-daily-report.mjs
 
       - name: Save state

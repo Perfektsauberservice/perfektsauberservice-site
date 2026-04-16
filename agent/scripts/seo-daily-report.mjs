@@ -25,6 +25,7 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
 const GSC_SERVICE_ACCOUNT = process.env.GSC_SERVICE_ACCOUNT_JSON; // continutul fisierului JSON
 const PAGESPEED_API_KEY  = process.env.PAGESPEED_API_KEY || ''; // optional, merge si fara
+const OPR_API_KEY        = process.env.OPR_API_KEY || '';
 
 const SITE_URL = 'https://perfektsauberservice.com';
 
@@ -224,6 +225,29 @@ async function getKeywordSuggestions(seeds) {
   return [...all];
 }
 
+// ─── Open PageRank — Backlink-uri ────────────────────────────────────────────
+
+async function getBacklinks(domain) {
+  if (!OPR_API_KEY) return null;
+  try {
+    const res = await fetch(`https://openpagerank.com/api/v1.0/getPageRank?domains[0]=${encodeURIComponent(domain)}`, {
+      headers: { 'API-OPR': OPR_API_KEY },
+      signal: AbortSignal.timeout(8000),
+    });
+    const data = await res.json();
+    const entry = data?.response?.[0];
+    if (!entry || entry.status_code !== 200) return null;
+    return {
+      rank: entry.page_rank_decimal ?? 0,
+      rankInt: entry.page_rank_integer ?? 0,
+      position: entry.rank ?? null, // pozitie globala
+    };
+  } catch (err) {
+    console.log('OPR skip:', err.message);
+    return null;
+  }
+}
+
 // ─── Site Audit ───────────────────────────────────────────────────────────────
 
 async function auditOwnSite() {
@@ -245,7 +269,7 @@ async function auditOwnSite() {
 
 // ─── Format mesaj Telegram ────────────────────────────────────────────────────
 
-function buildReport({ gsc, pageSpeed, audit, prevState, blogCount, keywordSuggestions }) {
+function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions }) {
   const today = new Date().toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
 
   let msg = `<b>📊 SEO Tageszericht — ${today}</b>\n`;
@@ -300,6 +324,18 @@ function buildReport({ gsc, pageSpeed, audit, prevState, blogCount, keywordSugge
   const prevBlog = prevState.blogCount || 0;
   if (blogCount > prevBlog) msg += `• +${blogCount - prevBlog} articole noi ieri\n`;
   msg += '\n';
+
+  // ─ Backlink-uri
+  if (backlinks) {
+    const prevRank = prevState.oprRank ?? null;
+    const rankDiff = prevRank !== null ? (backlinks.rank - prevRank).toFixed(2) : null;
+    const diffStr = rankDiff !== null ? (rankDiff >= 0 ? ` (+${rankDiff})` : ` (${rankDiff})`) : '';
+    const rankEmoji = backlinks.rank >= 3 ? '✅' : backlinks.rank >= 1 ? '🔶' : '🔴';
+    msg += `<b>🔗 Autoritate Domeniu (Open PageRank)</b>\n`;
+    msg += `${rankEmoji} Domain Rank: <b>${backlinks.rank}/10</b>${diffStr}\n`;
+    if (backlinks.position) msg += `• Pozitie globala: #${backlinks.position.toLocaleString('de-DE')}\n`;
+    msg += '\n';
+  }
 
   // ─ Site Audit
   if (audit && !audit.error) {
@@ -382,16 +418,18 @@ async function main() {
     console.log('PageSpeed OK — performance:', pageSpeed.performance);
   }
 
-  // 4. Keyword suggestions (Google Autocomplete) + Site audit — in paralel
-  console.log('Fetching keyword suggestions & auditing site...');
-  const [keywordSuggestions, audit] = await Promise.all([
+  // 4. Keyword suggestions + Site audit + Backlinks — in paralel
+  console.log('Fetching keyword suggestions, backlinks & auditing site...');
+  const [keywordSuggestions, audit, backlinks] = await Promise.all([
     getKeywordSuggestions(AUTOCOMPLETE_SEEDS),
     auditOwnSite(),
+    getBacklinks('perfektsauberservice.com'),
   ]);
-  console.log('Keyword suggestions:', keywordSuggestions.length, '| Audit done');
+  console.log('Keyword suggestions:', keywordSuggestions.length, '| Audit done | Backlinks:', backlinks?.rank ?? 'N/A');
+  if (backlinks) newState.oprRank = backlinks.rank;
 
   // 5. Build & send report
-  const report = buildReport({ gsc, pageSpeed, audit, prevState, blogCount, keywordSuggestions });
+  const report = buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions });
   console.log('\nRaport generat. Trimit pe Telegram...');
   await sendTelegram(report);
   console.log('Trimis!');
