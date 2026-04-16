@@ -1,0 +1,37 @@
+name: SEO Daily Report
+
+on:
+  schedule:
+    - cron: '0 5 * * *'   # 07:00 Germania (UTC+2)
+  workflow_dispatch:        # rulare manuala pentru test
+
+jobs:
+  seo-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run SEO Daily Report
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: node agent/scripts/seo-daily-report.mjs
+
+      - name: Save state
+        run: |
+          git config user.name "PSS SEO Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/state/seo-report-state.json
+          git diff --staged --quiet || git commit -m "seo-report: state actualizat [$(date +%Y-%m-%d)]"
+          git pull --rebase origin master
+          git push
