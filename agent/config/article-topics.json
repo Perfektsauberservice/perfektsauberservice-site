@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Bad Wildbad",
-      "topic": "Entrümpelung nach Haushaltsauflösung – Was kommt danach?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Bischweier",
       "topic": "Entrümpelung mit Sondermüll – Fachgerechte Entsorgung"
     },
@@ -694,6 +689,12 @@
       "city": "Bad Herrenalb",
       "service": "Entrümpelung",
       "completedAt": "2026-04-15T20:33:14.278Z"
+    },
+    {
+      "topic": "Entrümpelung nach Haushaltsauflösung – Was kommt danach?",
+      "city": "Bad Wildbad",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-16T10:01:25.261Z"
     }
   ]
 }
