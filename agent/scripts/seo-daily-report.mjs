@@ -3,9 +3,9 @@
  *
  * Trimite zilnic pe Telegram un raport complet:
  * - Pozitii Google (GSC API) — click-uri, impresii, pozitii cuvinte cheie
- * - Backlink-uri (GSC API)
+ * - Oportunitati GSC — keywords cu impresii mari si CTR mic
+ * - Idei cuvinte cheie noi (Google Autocomplete)
  * - Viteza site (PageSpeed Insights API)
- * - Concurenti — pagini noi detectate, titluri, structura
  * - Audit tehnic site propriu
  *
  * Rulare: node agent/scripts/seo-daily-report.mjs
@@ -26,28 +26,16 @@ const TELEGRAM_CHAT_ID   = process.env.TELEGRAM_CHAT_ID;
 const GSC_SERVICE_ACCOUNT = process.env.GSC_SERVICE_ACCOUNT_JSON; // continutul fisierului JSON
 const PAGESPEED_API_KEY  = process.env.PAGESPEED_API_KEY || ''; // optional, merge si fara
 
-const SITE_URL    = 'https://perfektsauberservice.com';
-const SITE_DOMAIN = 'perfektsauberservice.com';
+const SITE_URL = 'https://perfektsauberservice.com';
 
-// Concurenti de monitorizat
-const COMPETITORS = [
-  { name: 'Rödermark', url: 'https://www.roedermark-entruempelung.de' },
-  { name: 'Sperrmüll24', url: 'https://www.sperrmuell24.de' },
-  { name: 'Haushaltsaufloesung Rastatt', url: 'https://www.haushaltsaufloesungen-rastatt.de' },
-];
-
-// Cuvinte cheie de urmarit
-const KEYWORDS = [
+// Cuvinte cheie seed pentru Google Autocomplete
+const AUTOCOMPLETE_SEEDS = [
   'entrümpelung rastatt',
-  'haushaltsauflösung rastatt',
   'entrümpelung baden-baden',
-  'entrümpelung karlsruhe',
+  'haushaltsauflösung rastatt',
   'kellerentrümpelung rastatt',
   'wohnungsauflösung rastatt',
-  'entrümpelung gaggenau',
-  'entrümpelung ettlingen',
-  'entrümpelung bühl',
-  'entrümpelung gernsbach',
+  'entrümpelung karlsruhe',
 ];
 
 // State pentru comparatie zi precedenta
@@ -182,12 +170,6 @@ async function getGSCData(accessToken) {
   });
   const yesterdayData = await yesterdayRes.json();
 
-  // Backlink-uri via links API
-  const backlinksRes = await fetch(
-    `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE_URL + '/')}/sitemaps`,
-    { headers }
-  );
-
   return {
     keywords: keywordsData.rows || [],
     totals28: totalsData.rows?.[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 },
@@ -217,39 +199,29 @@ async function getPageSpeed(url) {
   }
 }
 
-// ─── Competitor Monitor ───────────────────────────────────────────────────────
+// ─── Google Autocomplete ──────────────────────────────────────────────────────
 
-async function monitorCompetitor(comp) {
-  try {
-    const res = await fetch(comp.url, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SEO-Monitor/1.0)' },
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!res.ok) return { name: comp.name, error: `HTTP ${res.status}` };
-    const html = await res.text();
-
-    // Extrage titlu
-    const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
-    const title = titleMatch ? titleMatch[1].trim() : '?';
-
-    // Numara pagini din sitemap daca exista
-    let pageCount = null;
+async function getKeywordSuggestions(seeds) {
+  const all = new Set();
+  for (const seed of seeds) {
     try {
-      const sitemapRes = await fetch(comp.url + '/sitemap.xml', { signal: AbortSignal.timeout(5000) });
-      if (sitemapRes.ok) {
-        const sitemap = await sitemapRes.text();
-        pageCount = (sitemap.match(/<loc>/g) || []).length;
+      const url = `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(seed)}&hl=de&gl=de`;
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0' },
+        signal: AbortSignal.timeout(6000),
+      });
+      const data = await res.json();
+      if (Array.isArray(data) && Array.isArray(data[1])) {
+        for (const s of data[1].slice(0, 5)) {
+          // Exclude seed-ul exact, pastreaza variantele noi
+          if (s !== seed) all.add(s);
+        }
       }
-    } catch {}
-
-    // Detecteaza schimbari in H1
-    const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/i);
-    const h1 = h1Match ? h1Match[1].trim() : '?';
-
-    return { name: comp.name, title, h1, pageCount, url: comp.url };
-  } catch (err) {
-    return { name: comp.name, error: err.message };
+    } catch (err) {
+      console.log(`Autocomplete skip "${seed}":`, err.message);
+    }
   }
+  return [...all];
 }
 
 // ─── Site Audit ───────────────────────────────────────────────────────────────
@@ -273,7 +245,7 @@ async function auditOwnSite() {
 
 // ─── Format mesaj Telegram ────────────────────────────────────────────────────
 
-function buildReport({ gsc, pageSpeed, competitors, audit, prevState, blogCount }) {
+function buildReport({ gsc, pageSpeed, audit, prevState, blogCount, keywordSuggestions }) {
   const today = new Date().toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
 
   let msg = `<b>📊 SEO Tageszericht — ${today}</b>\n`;
@@ -339,18 +311,31 @@ function buildReport({ gsc, pageSpeed, competitors, audit, prevState, blogCount 
     msg += `• Linkuri interne: ${audit.internalLinks}\n\n`;
   }
 
-  // ─ Concurenti
-  msg += `<b>👀 Concurenti</b>\n`;
-  for (const comp of competitors) {
-    if (comp.error) {
-      msg += `• ${comp.name}: ⚠️ ${comp.error}\n`;
-    } else {
-      const pages = comp.pageCount ? ` (${comp.pageCount} pag.)` : '';
-      msg += `• <b>${comp.name}</b>${pages}\n`;
-      msg += `  H1: <i>${comp.h1?.slice(0, 60) || '?'}</i>\n`;
+  // ─ Oportunitati GSC (impresii mari, CTR mic = pagina 2-3, merita optimizat)
+  if (gsc && gsc.keywords.length > 0) {
+    const opportunities = gsc.keywords
+      .filter(kw => kw.impressions >= 5 && kw.ctr < 0.05 && kw.position <= 40)
+      .sort((a, b) => b.impressions - a.impressions)
+      .slice(0, 5);
+    if (opportunities.length > 0) {
+      msg += `<b>🎯 Oportunitati (impresii mari, fara click-uri)</b>\n`;
+      msg += `<i>Aceste cuvinte apar des in Google dar nu primesc click-uri — optimizeaza titlul/descrierea paginii:</i>\n`;
+      for (const kw of opportunities) {
+        msg += `• <i>${kw.keys[0]}</i> — poz. <b>${kw.position.toFixed(0)}</b>, ${kw.impressions} impresii\n`;
+      }
+      msg += '\n';
     }
   }
-  msg += '\n';
+
+  // ─ Idei noi de cuvinte cheie (Google Autocomplete)
+  if (keywordSuggestions && keywordSuggestions.length > 0) {
+    msg += `<b>💡 Idei cuvinte cheie noi (Google Autocomplete)</b>\n`;
+    msg += `<i>Ce cauta oamenii pe Google — potential articole blog sau pagini noi:</i>\n`;
+    for (const kw of keywordSuggestions.slice(0, 12)) {
+      msg += `• ${kw}\n`;
+    }
+    msg += '\n';
+  }
 
   // ─ Footer
   msg += `<i>Urmatorul raport maine la 07:00</i>`;
@@ -397,18 +382,16 @@ async function main() {
     console.log('PageSpeed OK — performance:', pageSpeed.performance);
   }
 
-  // 4. Competitors
-  console.log('Monitoring competitors...');
-  const competitors = await Promise.all(COMPETITORS.map(monitorCompetitor));
-  console.log('Competitors done');
+  // 4. Keyword suggestions (Google Autocomplete) + Site audit — in paralel
+  console.log('Fetching keyword suggestions & auditing site...');
+  const [keywordSuggestions, audit] = await Promise.all([
+    getKeywordSuggestions(AUTOCOMPLETE_SEEDS),
+    auditOwnSite(),
+  ]);
+  console.log('Keyword suggestions:', keywordSuggestions.length, '| Audit done');
 
-  // 5. Site audit
-  console.log('Auditing own site...');
-  const audit = await auditOwnSite();
-  console.log('Audit done');
-
-  // 6. Build & send report
-  const report = buildReport({ gsc, pageSpeed, competitors, audit, prevState, blogCount });
+  // 5. Build & send report
+  const report = buildReport({ gsc, pageSpeed, audit, prevState, blogCount, keywordSuggestions });
   console.log('\nRaport generat. Trimit pe Telegram...');
   await sendTelegram(report);
   console.log('Trimis!');
