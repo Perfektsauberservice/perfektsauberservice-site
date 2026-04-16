@@ -164,54 +164,100 @@ async function uploadAudioToDID(audioPath) {
   return data.url;
 }
 
+// ─── D-ID: gaseste presenter disponibil ──────────────────────────────────────
+
+async function getDIDPresenter() {
+  console.log('🔍 Caut presenter disponibil D-ID...');
+
+  const resp = await fetch('https://api.d-id.com/clips/presenters?limit=5', {
+    headers: { 'Authorization': `Basic ${DID_API_KEY}` },
+  });
+
+  if (resp.ok) {
+    const data = await resp.json();
+    const presenter = data.presenters?.[0];
+    if (presenter) {
+      console.log(`   Presenter gasit: ${presenter.name || presenter.id}`);
+      return { type: 'clips', presenterId: presenter.id, driverId: presenter.driver_id };
+    }
+  }
+
+  // Fallback: folosim talks API cu o imagine publica simpla
+  console.log('   Folosesc talks API cu imagine proprie...');
+  return { type: 'talks', imageUrl: 'https://www.perfektsauberservice.com/images/echipa.webp' };
+}
+
 // ─── D-ID: creeaza talk ───────────────────────────────────────────────────────
 
 async function createDIDTalk(audioUrl) {
   console.log('🎬 Creez talk D-ID...');
 
-  const body = {
-    // Presenter stock D-ID (disponibil in free trial)
-    source_url: 'https://create-images-results.d-id.com/DefaultPresenters/Noelle_f/image.jpeg',
-    script: {
-      type: 'audio',
-      audio_url: audioUrl,
-    },
-    config: {
-      result_format: 'mp4',
-      fluent: true,
-      pad_audio: 0.5,
-    },
-  };
+  const presenter = await getDIDPresenter();
 
-  const resp = await fetch('https://api.d-id.com/talks', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Basic ${DID_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  let resp;
+
+  if (presenter.type === 'clips') {
+    // Clips API (V4 Expressive Avatars)
+    const body = {
+      presenter_id: presenter.presenterId,
+      script: {
+        type: 'audio',
+        audio_url: audioUrl,
+      },
+      config: { result_format: 'mp4' },
+    };
+    if (presenter.driverId) body.driver_id = presenter.driverId;
+
+    resp = await fetch('https://api.d-id.com/clips', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${DID_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+  } else {
+    // Talks API (V2 Photo Avatars) cu poza de pe site
+    const body = {
+      source_url: presenter.imageUrl,
+      script: {
+        type: 'audio',
+        audio_url: audioUrl,
+      },
+      config: { result_format: 'mp4', fluent: true, pad_audio: 0.5 },
+    };
+
+    resp = await fetch('https://api.d-id.com/talks', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Basic ${DID_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+  }
 
   if (!resp.ok) {
     const err = await resp.text();
-    throw new Error(`D-ID talk create error ${resp.status}: ${err}`);
+    throw new Error(`D-ID ${presenter.type} create error ${resp.status}: ${err}`);
   }
 
   const data = await resp.json();
-  console.log(`   ✅ Talk ID: ${data.id}`);
-  return data.id;
+  console.log(`   ✅ ${presenter.type} ID: ${data.id}`);
+  return { id: data.id, type: presenter.type };
 }
 
 // ─── D-ID: asteapta video ─────────────────────────────────────────────────────
 
-async function waitForDIDTalk(talkId, maxWaitMs = 120000) {
+async function waitForDIDTalk({ id, type }, maxWaitMs = 120000) {
   console.log('⏳ Astept generarea video D-ID...');
   const start = Date.now();
+  const endpoint = type === 'clips' ? 'clips' : 'talks';
 
   while (Date.now() - start < maxWaitMs) {
     await new Promise(r => setTimeout(r, 4000));
 
-    const resp = await fetch(`https://api.d-id.com/talks/${talkId}`, {
+    const resp = await fetch(`https://api.d-id.com/${endpoint}/${id}`, {
       headers: { 'Authorization': `Basic ${DID_API_KEY}` },
     });
 
@@ -223,11 +269,11 @@ async function waitForDIDTalk(talkId, maxWaitMs = 120000) {
       return data.result_url;
     }
     if (data.status === 'error') {
-      throw new Error(`D-ID talk failed: ${JSON.stringify(data.error)}`);
+      throw new Error(`D-ID ${type} failed: ${JSON.stringify(data.error)}`);
     }
   }
 
-  throw new Error('D-ID talk timeout (>2 min)');
+  throw new Error('D-ID video timeout (>2 min)');
 }
 
 // ─── Instagram Reel ───────────────────────────────────────────────────────────
