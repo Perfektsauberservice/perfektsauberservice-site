@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Karlsruhe",
-      "topic": "Großraumwohnung entrümpeln – Planung und Kosten"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Baden-Baden",
       "topic": "Entrümpelung Luxuswohnung – Besondere Anforderungen"
     },
@@ -696,6 +691,12 @@
       "city": "Bischweier",
       "service": "Entrümpelung",
       "completedAt": "2026-04-16T10:49:54.613Z"
+    },
+    {
+      "topic": "Großraumwohnung entrümpeln – Planung und Kosten",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-16T15:16:15.935Z"
     }
   ]
 }
