@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rastatt",
-      "topic": "Entrümpelung Reihenhaus – Typischer Ablauf"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Gaggenau",
       "topic": "Entrümpelung bei Räumungsklage – Was ist zu tun?"
     },
@@ -698,6 +693,12 @@
       "city": "Baden-Baden",
       "service": "Entrümpelung",
       "completedAt": "2026-04-16T17:54:57.452Z"
+    },
+    {
+      "topic": "Entrümpelung Reihenhaus – Typischer Ablauf",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-16T20:36:08.843Z"
     }
   ]
 }
