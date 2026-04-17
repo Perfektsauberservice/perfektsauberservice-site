@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Ettlingen",
-      "topic": "Haushaltsauflösung Checkliste – Nichts vergessen"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Pforzheim",
       "topic": "Haushaltsauflösung Sommer vs. Winter – Unterschiede"
     },
@@ -701,6 +696,12 @@
       "city": "Gernsbach",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-17T10:40:54.180Z"
+    },
+    {
+      "topic": "Haushaltsauflösung Checkliste – Nichts vergessen",
+      "city": "Ettlingen",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-17T12:12:35.375Z"
     }
   ]
 }
