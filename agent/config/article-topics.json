@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Achern",
-      "topic": "Haushaltsauflösung bei Erbschaft – Wer ist zuständig?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Stutensee",
       "topic": "Antike Möbel bei Haushaltsauflösung – Was ist wertvoll?"
     },
@@ -703,6 +698,12 @@
       "city": "Pforzheim",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-17T16:17:25.796Z"
+    },
+    {
+      "topic": "Haushaltsauflösung bei Erbschaft – Wer ist zuständig?",
+      "city": "Achern",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-17T20:10:52.009Z"
     }
   ]
 }
