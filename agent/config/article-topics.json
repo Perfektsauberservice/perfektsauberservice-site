@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Entrümpelung",
-      "city": "Gaggenau",
-      "topic": "Entrümpelung bei Räumungsklage – Was ist zu tun?"
-    },
-    {
       "service": "Haushaltsauflösung",
       "city": "Gernsbach",
       "topic": "Haushaltsauflösung bei Umzug ins Pflegeheim"
@@ -699,6 +694,12 @@
       "city": "Rastatt",
       "service": "Entrümpelung",
       "completedAt": "2026-04-16T20:36:08.843Z"
+    },
+    {
+      "topic": "Entrümpelung bei Räumungsklage – Was ist zu tun?",
+      "city": "Gaggenau",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-17T09:58:37.735Z"
     }
   ]
 }
