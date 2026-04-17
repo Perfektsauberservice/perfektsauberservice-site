@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Pforzheim",
-      "topic": "Haushaltsauflösung Sommer vs. Winter – Unterschiede"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Achern",
       "topic": "Haushaltsauflösung bei Erbschaft – Wer ist zuständig?"
     },
@@ -702,6 +697,12 @@
       "city": "Ettlingen",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-17T12:12:35.375Z"
+    },
+    {
+      "topic": "Haushaltsauflösung Sommer vs. Winter – Unterschiede",
+      "city": "Pforzheim",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-17T16:17:25.796Z"
     }
   ]
 }
