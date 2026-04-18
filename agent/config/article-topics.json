@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Durmersheim",
-      "topic": "Haushaltsauflösung Kosten senken – Praktische Tipps"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Sinzheim",
       "topic": "Bücher und Bibliotheken bei der Haushaltsauflösung"
     },
@@ -707,6 +702,12 @@
       "city": "Muggensturm",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-18T11:52:07.720Z"
+    },
+    {
+      "topic": "Haushaltsauflösung Kosten senken – Praktische Tipps",
+      "city": "Durmersheim",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-18T15:09:09.411Z"
     }
   ]
 }
