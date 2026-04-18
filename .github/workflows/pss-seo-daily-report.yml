@@ -2,7 +2,7 @@ name: SEO Daily Report
 
 on:
   schedule:
-    - cron: '0 5 * * *'   # 07:00 Germania (UTC+2)
+    - cron: '30 5 * * *'  # 07:30 Germania (UTC+2)
   workflow_dispatch:        # rulare manuala pentru test
 
 jobs:
