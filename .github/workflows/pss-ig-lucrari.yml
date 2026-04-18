@@ -2,7 +2,7 @@ name: PSS Instagram Lucrari Poster
 
 on:
   schedule:
-    - cron: '0 6,8,9,11,12,14,16,18,20,21 * * *'
+    - cron: '0 6,10,16 * * *'  # 08:00, 12:00, 18:00 Germania
   workflow_dispatch:
 
 jobs:

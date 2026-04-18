@@ -1,6 +1,8 @@
 name: PSS Daily Generate
 
 on:
+  schedule:
+    - cron: '0 6 * * 1'  # Luni 08:00 Germania (UTC+2)
   workflow_dispatch:
 
 permissions:
