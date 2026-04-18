@@ -1,6 +1,7 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+  command = "node generate-blog.js"
 
 [[redirects]]
   from = "/api/telegram-bot"
@@ -50,7 +51,18 @@
 
 [[redirects]]
   from = "/portfolio"
-  to = "/410.html"
-  status = 410
+  to = "/portfolio.html"
+  status = 200
+
+[[redirects]]
+  from = "/galerie"
+  to = "/portfolio"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/galerie.html"
+  to = "/portfolio"
+  status = 301
   force = true
 

@@ -208,6 +208,14 @@ async function createDIDTalk(audioUrl) {
     };
     if (presenter.driverId) body.driver_id = presenter.driverId;
 
+    // Adauga background profesional (elimina green screen)
+    body.config = {
+      result_format: 'mp4',
+      background: {
+        color: '#1a3c5e',  // albastru inchis PSS
+      },
+    };
+
     resp = await fetch('https://api.d-id.com/clips', {
       method: 'POST',
       headers: {
