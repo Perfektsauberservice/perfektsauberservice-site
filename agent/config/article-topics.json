@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Stutensee",
-      "topic": "Antike Möbel bei Haushaltsauflösung – Was ist wertvoll?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Rheinstetten",
       "topic": "Haushaltsauflösung mit Wertanrechnung – So funktioniert es"
     },
@@ -704,6 +699,12 @@
       "city": "Achern",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-17T20:10:52.009Z"
+    },
+    {
+      "topic": "Antike Möbel bei Haushaltsauflösung – Was ist wertvoll?",
+      "city": "Stutensee",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-18T08:06:15.638Z"
     }
   ]
 }
