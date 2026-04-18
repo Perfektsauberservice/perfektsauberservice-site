@@ -61,7 +61,6 @@ function buildCaption(article) {
   };
   const emoji = serviceEmojis[article.service] || '✅';
 
-  // Hashtags aus City + Service
   const cityTag = '#' + article.city.replace(/[-\s]/g, '');
   const serviceRaw = (article.service || 'Entruempelung')
     .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue')
@@ -69,16 +68,18 @@ function buildCaption(article) {
     .replace(/ß/g,'ss').replace(/\s/g,'');
   const serviceTag = '#' + serviceRaw;
 
+  const desc = article.metaDescription
+    ? article.metaDescription.slice(0, 200) + (article.metaDescription.length > 200 ? '…' : '')
+    : '';
+
   return `${emoji} ${article.title}
 
-${article.metaDescription}
+${desc}
 
 📍 ${article.city} & Umgebung
-📞 Jetzt kostenlos anfragen: +49 163 9087197
-💬 WhatsApp: https://wa.me/491639087197
-🌐 Mehr lesen: ${article.url}
+🌐 ${article.url}
 
-${serviceTag} ${cityTag} #PerfektSauberService #Entrümpelung #Rastatt #BadenBaden #Karlsruhe #Gaggenau #Haushaltsaufloesung`;
+${serviceTag} ${cityTag} #PerfektSauberService #Entrümpelung`;
 }
 
 // ─── Facebook API ─────────────────────────────────────────────────────────────
