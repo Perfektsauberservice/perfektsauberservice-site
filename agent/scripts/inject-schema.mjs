@@ -39,7 +39,7 @@ const BUSINESS = {
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-    opens: '07:00',
+    opens: '08:00',
     closes: '20:00',
   },
 };
