@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Muggensturm",
-      "topic": "Wie schnell kann eine Haushaltsauflösung durchgeführt werden?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Durmersheim",
       "topic": "Haushaltsauflösung Kosten senken – Praktische Tipps"
     },
@@ -706,6 +701,12 @@
       "city": "Rheinstetten",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-18T09:35:50.581Z"
+    },
+    {
+      "topic": "Wie schnell kann eine Haushaltsauflösung durchgeführt werden?",
+      "city": "Muggensturm",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-18T11:52:07.720Z"
     }
   ]
 }
