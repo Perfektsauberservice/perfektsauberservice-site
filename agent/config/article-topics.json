@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Sinzheim",
-      "topic": "Bücher und Bibliotheken bei der Haushaltsauflösung"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Kuppenheim",
       "topic": "Haushaltsauflösung emotional bewältigen – Tipps für Angehörige"
     },
@@ -708,6 +703,12 @@
       "city": "Durmersheim",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-18T15:09:09.411Z"
+    },
+    {
+      "topic": "Bücher und Bibliotheken bei der Haushaltsauflösung",
+      "city": "Sinzheim",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-19T08:15:51.503Z"
     }
   ]
 }
