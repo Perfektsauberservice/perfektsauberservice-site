@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Kuppenheim",
-      "topic": "Haushaltsauflösung emotional bewältigen – Tipps für Angehörige"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Bietigheim",
       "topic": "Was gehört in einen Haushaltsauflösungsvertrag?"
     },
@@ -709,6 +704,12 @@
       "city": "Sinzheim",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-19T08:15:51.503Z"
+    },
+    {
+      "topic": "Haushaltsauflösung emotional bewältigen – Tipps für Angehörige",
+      "city": "Kuppenheim",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-19T10:11:08.868Z"
     }
   ]
 }
