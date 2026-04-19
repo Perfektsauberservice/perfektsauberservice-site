@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Baden-Baden",
-      "topic": "Haushaltsauflösung diskret – Wenn Privatsphäre wichtig ist"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Rastatt",
       "topic": "Haushaltsauflösung in 48 Stunden – Geht das?"
     },
@@ -712,6 +707,12 @@
       "city": "Karlsruhe",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-19T15:09:14.087Z"
+    },
+    {
+      "topic": "Haushaltsauflösung diskret – Wenn Privatsphäre wichtig ist",
+      "city": "Baden-Baden",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-19T19:57:23.819Z"
     }
   ]
 }
