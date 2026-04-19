@@ -2,21 +2,21 @@
   "pairs": [
     {
       "id": "keller-rastatt-1",
-      "service": "Kellerentrümpelung",
+      "service": "Garagenräumung",
       "city": "Rastatt",
       "vorher": "https://perfektsauberservice.com/images/keller-1/kellerentruempelung-rastatt-vorher-1.webp",
       "nachher": "https://perfektsauberservice.com/images/keller-1/kellerentruempelung-rastatt-nachher-1.webp"
     },
     {
       "id": "keller-rastatt-2",
-      "service": "Kellerentrümpelung",
+      "service": "Garagenräumung",
       "city": "Rastatt",
       "vorher": "https://perfektsauberservice.com/images/keller-1/kellerentruempelung-rastatt-vorher-2.webp",
       "nachher": "https://perfektsauberservice.com/images/keller-1/kellerentruempelung-rastatt-nachher-5.webp"
     },
     {
       "id": "keller-rastatt-3",
-      "service": "Kellerentrümpelung",
+      "service": "Garagenräumung",
       "city": "Rastatt",
       "vorher": "https://perfektsauberservice.com/images/keller-1/kellerentruempelung-rastatt-vorher-3.webp",
       "nachher": "https://perfektsauberservice.com/images/keller-1/kellerentruempelung-rastatt-nachher-3.webp"
