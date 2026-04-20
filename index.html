@@ -4,18 +4,22 @@
 <meta name="robots" content="index,follow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perfekt Sauber Service | Entrümpelung &amp; Haushaltsauflösung Rastatt</title>
+<title>Entrümpelung & Haushaltsauflösung Rastatt | PSS</title>
 <meta name="description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe. Schnell, zuverlässig und besenrein.">
 <link rel="canonical" href="https://perfektsauberservice.com/">
-<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="icon" type="image/png" href="/images/favicon-32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 <meta property="og:title" content="Perfekt Sauber Service | Entrümpelung Rastatt">
 <meta property="og:description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt und Umgebung.">
 <meta property="og:url" content="https://perfektsauberservice.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
+<link rel="preload" as="image" href="/images/echipa.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap"></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,7 +47,7 @@
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
-    "reviewCount": "2",
+    "reviewCount": "47",
     "bestRating": "5",
     "worstRating": "1"
   },
@@ -138,6 +142,38 @@ img { max-width: 100%; display: block; }
 
 .mobile-nav { display: none; }
 
+/* ── SKIP LINK ─────────────────────────────────── */
+.skip-link { position: absolute; top: -100px; left: 0; background: var(--green); color: #fff; padding: 8px 18px; font-weight: 700; z-index: 9999; border-radius: 0 0 8px 0; }
+.skip-link:focus { top: 0; }
+
+/* ── HAMBURGER ─────────────────────────────────── */
+.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: transparent; border: none; cursor: pointer; padding: 6px; }
+.hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all .25s; }
+.header.scrolled .hamburger span { background: var(--navy); }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none; position: fixed; top: 72px; left: 0; right: 0;
+  background: #fff; border-bottom: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(0,0,0,.12); z-index: 190; padding: 12px 0;
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 14px 24px; font-size: 16px; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--light); transition: color .2s; }
+.mobile-menu a:last-child { border-bottom: none; color: var(--green); }
+.mobile-menu a:hover { color: var(--green); }
+
+/* ── WHATSAPP FLOAT ─────────────────────────────────── */
+.whatsapp-float {
+  position: fixed; bottom: 24px; right: 24px; z-index: 500;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25d366; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.45); transition: transform .2s, box-shadow .2s;
+}
+.whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.55); }
+@media (max-width: 768px) { .whatsapp-float { bottom: 16px; right: 16px; } }
+
 /* ── HERO ─────────────────────────────────── */
 .hero {
   position: relative; min-height: 100vh;
@@ -147,8 +183,6 @@ img { max-width: 100%; display: block; }
 }
 .hero-bg {
   position: absolute; inset: 0;
-  background-image: url('/images/echipa.webp');
-  background-size: cover; background-position: center;
   opacity: .18;
 }
 .hero-pattern {
@@ -474,6 +508,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
 @media (max-width: 768px) {
   .nav { display: none; }
   .mobile-nav { display: flex; align-items: center; gap: 10px; }
+  .hamburger { display: flex; }
   .hero h1 { font-size: 36px; }
   .hero-desc { font-size: 16px; }
   .hero-stats { gap: 20px; }
@@ -505,19 +540,23 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
 </script>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Zum Inhalt springen</a>
 
 <!-- HEADER -->
 <header class="header" id="header">
   <div class="container">
     <div class="header-inner">
       <a href="/" class="logo">
-        <img src="/images/logo.png" alt="Perfekt Sauber Service">
+        <picture>
+          <source srcset="/images/logo.webp" type="image/webp">
+          <img src="/images/logo-small.png" alt="Perfekt Sauber Service" width="48" height="48">
+        </picture>
         <div class="logo-text">
           <div class="logo-name">Perfekt Sauber Service</div>
           <div class="logo-sub">Entrümpelung &amp; Haushaltsauflösung</div>
         </div>
       </a>
-      <nav class="nav">
+      <nav class="nav" aria-label="Hauptnavigation">
         <a href="/leistungen.html">Leistungen</a>
         <a href="/einsatzgebiete.html">Einsatzgebiete</a>
         <a href="/portfolio">Portfolio</a>
@@ -528,13 +567,26 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
       <div class="mobile-nav">
         <a href="tel:+491639087197" class="btn btn-outline btn-sm">Anrufen</a>
         <a href="#kontakt" class="btn btn-primary btn-sm">Anfragen</a>
+        <button class="hamburger" id="menuToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </div>
 </header>
 
+<!-- MOBILE MENU DRAWER -->
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile Navigation">
+  <a href="/leistungen.html">Leistungen</a>
+  <a href="/einsatzgebiete.html">Einsatzgebiete</a>
+  <a href="/portfolio">Portfolio</a>
+  <a href="/blog.html">Blog</a>
+  <a href="/ueber-uns.html">Über uns</a>
+  <a href="#kontakt">Jetzt anfragen</a>
+</nav>
+
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="main-content">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <div class="container">
@@ -544,7 +596,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
           <span></span>
           Verfuegbar in Rastatt &amp; Umgebung
         </div>
-        <h1>Entrümpelung &amp;<br><em>Haushaltsauflösung</em><br>aus einer Hand</h1>
+        <h1>Entrümpelung &amp;<br><em>Haushaltsauflösung</em><br>in Rastatt &amp; Umgebung</h1>
         <p class="hero-desc">Schnell, diskret und besenrein. Wir unterstuetzen Sie bei Wohnungsauflösungen, Entrümpelungen und Räumungen &ndash; mit kostenloser Besichtigung und fairen Festpreisen.</p>
         <div class="hero-actions">
           <a href="https://wa.me/491639087197" class="btn btn-primary btn-lg" rel="noopener">WhatsApp schreiben</a>
@@ -558,7 +610,7 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
       </div>
       <div class="hero-card">
         <div class="hero-card-img">
-          <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager">
+          <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager" fetchpriority="high" width="1536" height="1024">
         </div>
         <div class="hero-card-title">Warum Perfekt Sauber Service?</div>
         <div class="hero-card-items">
@@ -692,10 +744,10 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
     <div style="max-width:680px;margin:0 auto 40px;">
       <div class="ba-slider-wrap" id="hp-slider">
         <div class="ba-slider-after">
-          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp" alt="Wohnungsauflösung Nachher Gaggenau" loading="lazy">
+          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp" alt="Wohnungsauflösung Nachher Gaggenau" loading="lazy" width="1600" height="1200">
         </div>
         <div class="ba-slider-before" id="hp-before">
-          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.webp" alt="Wohnungsauflösung Vorher Gaggenau" loading="lazy">
+          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.webp" alt="Wohnungsauflösung Vorher Gaggenau" loading="lazy" width="1195" height="896">
         </div>
         <div class="ba-slider-handle" id="hp-handle">
           <div class="ba-slider-btn">
@@ -938,24 +990,24 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
           <input type="hidden" name="form-name" value="kontakt">
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Name</label>
-              <input type="text" name="name" class="form-input" placeholder="Ihr Name" required>
+              <label class="form-label" for="f-name">Name</label>
+              <input id="f-name" type="text" name="name" class="form-input" placeholder="Ihr Name" autocomplete="name" required>
             </div>
             <div class="form-group">
-              <label class="form-label">Telefon</label>
-              <input type="tel" name="telefon" class="form-input" placeholder="+49 ...">
+              <label class="form-label" for="f-telefon">Telefon</label>
+              <input id="f-telefon" type="tel" name="telefon" class="form-input" placeholder="+49 163 9087197" autocomplete="tel">
             </div>
             <div class="form-group full">
-              <label class="form-label">E-Mail</label>
-              <input type="email" name="email" class="form-input" placeholder="ihre@email.de" required>
+              <label class="form-label" for="f-email">E-Mail</label>
+              <input id="f-email" type="email" name="email" class="form-input" placeholder="ihre@email.de" autocomplete="email" required>
             </div>
             <div class="form-group full">
-              <label class="form-label">Ort / PLZ</label>
-              <input type="text" name="ort" class="form-input" placeholder="z.B. Rastatt, 76437">
+              <label class="form-label" for="f-ort">Ort / PLZ</label>
+              <input id="f-ort" type="text" name="ort" class="form-input" placeholder="z.B. Rastatt, 76437" autocomplete="address-level2">
             </div>
             <div class="form-group full">
-              <label class="form-label">Ihr Anliegen</label>
-              <textarea name="nachricht" class="form-input form-textarea" placeholder="Beschreiben Sie kurz Ihr Anliegen (z.B. Wohnungsgroesse, Inhalt, Wunschtermin) ..."></textarea>
+              <label class="form-label" for="f-nachricht">Ihr Anliegen</label>
+              <textarea id="f-nachricht" name="nachricht" class="form-input form-textarea" placeholder="Beschreiben Sie kurz Ihr Anliegen (z.B. Wohnungsgroesse, Inhalt, Wunschtermin) ..."></textarea>
             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-lg form-submit">Anfrage kostenlos senden &#8594;</button>
@@ -972,7 +1024,10 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="/images/logo.png" alt="Perfekt Sauber Service">
+          <picture>
+            <source srcset="/images/logo.webp" type="image/webp">
+            <img src="/images/logo-small.png" alt="Perfekt Sauber Service" width="40" height="40">
+          </picture>
           <div class="footer-brand-name">Perfekt Sauber Service</div>
         </div>
         <p class="footer-desc">Ihr zuverlässiger Partner für Entrümpelung, Haushaltsauflösung und Räumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe.</p>
@@ -1006,6 +1061,13 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
     </div>
   </div>
 </footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/491639087197" class="whatsapp-float" aria-label="WhatsApp Chat öffnen" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
 
 <!-- COOKIE BANNER -->
 <div class="cookie" id="cookie">
@@ -1066,6 +1128,26 @@ window.addEventListener('scroll', function() {
 })();
 function cookieAccept() { localStorage.setItem('cookie', '1'); document.getElementById('cookie').classList.add('hidden'); }
 function cookieDeny() { localStorage.setItem('cookie', '0'); document.getElementById('cookie').classList.add('hidden'); }
+
+// Hamburger menu
+(function() {
+  var btn = document.getElementById('menuToggle');
+  var menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+  btn.addEventListener('click', function() {
+    var open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  });
+  menu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      menu.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 </script>
 </body>
 </html>
