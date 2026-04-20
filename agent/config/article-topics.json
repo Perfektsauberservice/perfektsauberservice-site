@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Haushaltsauflösung",
-      "city": "Bühl",
-      "topic": "Haushaltsauflösung Schritt für Schritt – Der komplette Leitfaden"
-    },
-    {
       "service": "Wohnungsauflösung",
       "city": "Gaggenau",
       "topic": "Wohnungsauflösung nach Tod – Fristen und Pflichten"
@@ -715,6 +710,12 @@
       "city": "Gaggenau",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-20T11:54:41.181Z"
+    },
+    {
+      "topic": "Haushaltsauflösung Schritt für Schritt – Der komplette Leitfaden",
+      "city": "Bühl",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-20T15:06:32.644Z"
     }
   ]
 }
