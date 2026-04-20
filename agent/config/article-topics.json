@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Bühl",
-      "topic": "Wohnungsauflösung Mietwohnung – Worauf Mieter achten müssen"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Ettlingen",
       "topic": "Wohnungsauflösung Kosten sparen – So geht's"
     },
@@ -717,6 +712,12 @@
       "city": "Gaggenau",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-20T16:49:12.633Z"
+    },
+    {
+      "topic": "Wohnungsauflösung Mietwohnung – Worauf Mieter achten müssen",
+      "city": "Bühl",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-20T20:12:04.414Z"
     }
   ]
 }
