@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Rastatt",
-      "topic": "Haushaltsauflösung in 48 Stunden – Geht das?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Gaggenau",
       "topic": "Gartengeräte und Außenmöbel bei der Haushaltsauflösung"
     },
@@ -713,6 +708,12 @@
       "city": "Baden-Baden",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-19T19:57:23.819Z"
+    },
+    {
+      "topic": "Haushaltsauflösung in 48 Stunden – Geht das?",
+      "city": "Rastatt",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-20T11:00:33.989Z"
     }
   ]
 }
