@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Gaggenau",
-      "topic": "Wohnungsauflösung nach Tod – Fristen und Pflichten"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Bühl",
       "topic": "Wohnungsauflösung Mietwohnung – Worauf Mieter achten müssen"
     },
@@ -716,6 +711,12 @@
       "city": "Bühl",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-20T15:06:32.644Z"
+    },
+    {
+      "topic": "Wohnungsauflösung nach Tod – Fristen und Pflichten",
+      "city": "Gaggenau",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-20T16:49:12.633Z"
     }
   ]
 }
