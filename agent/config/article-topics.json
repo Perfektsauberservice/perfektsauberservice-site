@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Gaggenau",
-      "topic": "Gartengeräte und Außenmöbel bei der Haushaltsauflösung"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Bühl",
       "topic": "Haushaltsauflösung Schritt für Schritt – Der komplette Leitfaden"
     },
@@ -714,6 +709,12 @@
       "city": "Rastatt",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-20T11:00:33.989Z"
+    },
+    {
+      "topic": "Gartengeräte und Außenmöbel bei der Haushaltsauflösung",
+      "city": "Gaggenau",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-20T11:54:41.181Z"
     }
   ]
 }
