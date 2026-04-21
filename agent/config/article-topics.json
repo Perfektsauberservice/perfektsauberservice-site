@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Pforzheim",
-      "topic": "Wohnungsauflösung beim Auszug – Alles auf einmal erledigen"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Gernsbach",
       "topic": "Möbel verkaufen oder entsorgen? – Tipps bei Wohnungsauflösung"
     },
@@ -719,6 +714,12 @@
       "city": "Ettlingen",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-21T10:06:26.530Z"
+    },
+    {
+      "topic": "Wohnungsauflösung beim Auszug – Alles auf einmal erledigen",
+      "city": "Pforzheim",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-21T10:55:38.227Z"
     }
   ]
 }
