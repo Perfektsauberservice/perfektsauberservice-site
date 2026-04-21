@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Muggensturm",
-      "topic": "Wohnungsauflösung Studentenwohnung – Schnell und günstig"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Achern",
       "topic": "Wohnungsauflösung mit Renovierung kombinieren"
     },
@@ -721,6 +716,12 @@
       "city": "Gernsbach",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-21T15:01:26.066Z"
+    },
+    {
+      "topic": "Wohnungsauflösung Studentenwohnung – Schnell und günstig",
+      "city": "Muggensturm",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-21T16:39:11.851Z"
     }
   ]
 }
