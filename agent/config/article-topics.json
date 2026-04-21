@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Gernsbach",
-      "topic": "Möbel verkaufen oder entsorgen? – Tipps bei Wohnungsauflösung"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Muggensturm",
       "topic": "Wohnungsauflösung Studentenwohnung – Schnell und günstig"
     },
@@ -720,6 +715,12 @@
       "city": "Pforzheim",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-21T10:55:38.227Z"
+    },
+    {
+      "topic": "Möbel verkaufen oder entsorgen? – Tipps bei Wohnungsauflösung",
+      "city": "Gernsbach",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-21T15:01:26.066Z"
     }
   ]
 }
