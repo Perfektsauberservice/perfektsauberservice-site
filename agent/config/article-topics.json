@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Ettlingen",
-      "topic": "Wohnungsauflösung Kosten sparen – So geht's"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Pforzheim",
       "topic": "Wohnungsauflösung beim Auszug – Alles auf einmal erledigen"
     },
@@ -718,6 +713,12 @@
       "city": "Bühl",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-20T20:12:04.414Z"
+    },
+    {
+      "topic": "Wohnungsauflösung Kosten sparen – So geht's",
+      "city": "Ettlingen",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-21T10:06:26.530Z"
     }
   ]
 }
