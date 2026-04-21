@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Achern",
-      "topic": "Wohnungsauflösung mit Renovierung kombinieren"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Stutensee",
       "topic": "Wohnungsauflösung bei Zwangsräumung – Ablauf und Kosten"
     },
@@ -722,6 +717,12 @@
       "city": "Muggensturm",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-21T16:39:11.851Z"
+    },
+    {
+      "topic": "Wohnungsauflösung mit Renovierung kombinieren",
+      "city": "Achern",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-21T20:38:07.881Z"
     }
   ]
 }
