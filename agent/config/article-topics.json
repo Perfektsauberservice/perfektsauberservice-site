@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Karlsruhe",
-      "topic": "Wohnungsauflösung Großstadt – Besonderheiten und Parkprobleme"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Rastatt",
       "topic": "Wohnungsauflösung und Kautionsrückgabe – Was hängt zusammen?"
     },
@@ -726,6 +721,12 @@
       "city": "Sinzheim",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-22T15:01:23.333Z"
+    },
+    {
+      "topic": "Wohnungsauflösung Großstadt – Besonderheiten und Parkprobleme",
+      "city": "Karlsruhe",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-22T16:41:03.573Z"
     }
   ]
 }
