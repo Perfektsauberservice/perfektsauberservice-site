@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Rheinstetten",
-      "topic": "Wohnungsauflösung im Erdgeschoss vs. Dachgeschoss"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Sinzheim",
       "topic": "Was bleibt in der Wohnung? – Was muss weg bei Auflösung?"
     },
@@ -724,6 +719,12 @@
       "city": "Stutensee",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-22T10:06:43.718Z"
+    },
+    {
+      "topic": "Wohnungsauflösung im Erdgeschoss vs. Dachgeschoss",
+      "city": "Rheinstetten",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-22T10:53:40.863Z"
     }
   ]
 }
