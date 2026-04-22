@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Wohnungsauflösung",
-      "city": "Rastatt",
-      "topic": "Wohnungsauflösung und Kautionsrückgabe – Was hängt zusammen?"
-    },
-    {
       "service": "Gewerberäumung",
       "city": "Rastatt",
       "topic": "Gewerberäumung – Was ist zu beachten?"
@@ -727,6 +722,12 @@
       "city": "Karlsruhe",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-22T16:41:03.573Z"
+    },
+    {
+      "topic": "Wohnungsauflösung und Kautionsrückgabe – Was hängt zusammen?",
+      "city": "Rastatt",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-22T21:12:20.311Z"
     }
   ]
 }
