@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Sinzheim",
-      "topic": "Was bleibt in der Wohnung? – Was muss weg bei Auflösung?"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Karlsruhe",
       "topic": "Wohnungsauflösung Großstadt – Besonderheiten und Parkprobleme"
     },
@@ -725,6 +720,12 @@
       "city": "Rheinstetten",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-22T10:53:40.863Z"
+    },
+    {
+      "topic": "Was bleibt in der Wohnung? – Was muss weg bei Auflösung?",
+      "city": "Sinzheim",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-22T15:01:23.333Z"
     }
   ]
 }
