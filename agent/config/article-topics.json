@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Stutensee",
-      "topic": "Wohnungsauflösung bei Zwangsräumung – Ablauf und Kosten"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Rheinstetten",
       "topic": "Wohnungsauflösung im Erdgeschoss vs. Dachgeschoss"
     },
@@ -723,6 +718,12 @@
       "city": "Achern",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-21T20:38:07.881Z"
+    },
+    {
+      "topic": "Wohnungsauflösung bei Zwangsräumung – Ablauf und Kosten",
+      "city": "Stutensee",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-22T10:06:43.718Z"
     }
   ]
 }
