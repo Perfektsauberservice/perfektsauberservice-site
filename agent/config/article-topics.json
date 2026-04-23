@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Gaggenau",
-      "topic": "Ladenlokal räumen lassen – Tipps für Gewerbetreibende"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Bühl",
       "topic": "Gewerberäumung Lager und Halle – Kosten und Ablauf"
     },
@@ -731,6 +726,12 @@
       "city": "Baden-Baden",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-23T16:19:33.656Z"
+    },
+    {
+      "topic": "Ladenlokal räumen lassen – Tipps für Gewerbetreibende",
+      "city": "Gaggenau",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-23T17:56:42.982Z"
     }
   ]
 }
