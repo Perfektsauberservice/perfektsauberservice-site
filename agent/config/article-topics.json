@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Karlsruhe",
-      "topic": "Büroauflösung – Ablauf und Kosten in Karlsruhe"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Baden-Baden",
       "topic": "Gewerberäumung nach Insolvenz – Wer ist verantwortlich?"
     },
@@ -729,6 +724,12 @@
       "city": "Rastatt",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-23T10:10:53.208Z"
+    },
+    {
+      "topic": "Büroauflösung – Ablauf und Kosten in Karlsruhe",
+      "city": "Karlsruhe",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-23T10:58:52.536Z"
     }
   ]
 }
