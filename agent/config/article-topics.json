@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Bühl",
-      "topic": "Gewerberäumung Lager und Halle – Kosten und Ablauf"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Ettlingen",
       "topic": "Gewerberäumung Gastronomie – Küche und Mobiliar entsorgen"
     },
@@ -732,6 +727,12 @@
       "city": "Gaggenau",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-23T17:56:42.982Z"
+    },
+    {
+      "topic": "Gewerberäumung Lager und Halle – Kosten und Ablauf",
+      "city": "Bühl",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-23T21:10:20.866Z"
     }
   ]
 }
