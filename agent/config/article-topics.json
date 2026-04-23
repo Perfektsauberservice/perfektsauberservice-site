@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Baden-Baden",
-      "topic": "Gewerberäumung nach Insolvenz – Wer ist verantwortlich?"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Gaggenau",
       "topic": "Ladenlokal räumen lassen – Tipps für Gewerbetreibende"
     },
@@ -730,6 +725,12 @@
       "city": "Karlsruhe",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-23T10:58:52.536Z"
+    },
+    {
+      "topic": "Gewerberäumung nach Insolvenz – Wer ist verantwortlich?",
+      "city": "Baden-Baden",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-23T16:19:33.656Z"
     }
   ]
 }
