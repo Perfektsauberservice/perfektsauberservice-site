@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Rastatt",
-      "topic": "Gewerberäumung – Was ist zu beachten?"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Karlsruhe",
       "topic": "Büroauflösung – Ablauf und Kosten in Karlsruhe"
     },
@@ -728,6 +723,12 @@
       "city": "Rastatt",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-22T21:12:20.311Z"
+    },
+    {
+      "topic": "Gewerberäumung – Was ist zu beachten?",
+      "city": "Rastatt",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-23T10:10:53.208Z"
     }
   ]
 }
