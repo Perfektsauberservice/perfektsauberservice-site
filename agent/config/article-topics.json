@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Karlsruhe",
-      "topic": "IT-Schrott bei Gewerberäumung – Datenschutz beachten"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Rastatt",
       "topic": "Gewerberäumung über Nacht – Ist das möglich?"
     },
@@ -735,6 +730,12 @@
       "city": "Pforzheim",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-24T10:56:49.788Z"
+    },
+    {
+      "topic": "IT-Schrott bei Gewerberäumung – Datenschutz beachten",
+      "city": "Karlsruhe",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-24T14:55:44.643Z"
     }
   ]
 }
