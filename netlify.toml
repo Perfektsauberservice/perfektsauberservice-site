@@ -180,10 +180,9 @@
   status = 301
   force = true
 
-# === GLOBAL: orice .html forteaza redirect 301 spre varianta pretty URL ===
-# Consolideaza semnalul SEO - impiedica Google sa indexeze ambele variante
-[[redirects]]
-  from = "/*.html"
-  to = "/:splat"
-  status = 301
-  force = true
+# === GLOBAL: .html -> pretty URL via Edge Function ===
+# Netlify redirects engine nu permite splat capture + suffix stripping
+# Vezi netlify/edge-functions/strip-html.js pentru implementare
+[[edge_functions]]
+  function = "strip-html"
+  path = "/*"
