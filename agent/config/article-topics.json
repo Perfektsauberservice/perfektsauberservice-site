@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Rastatt",
-      "topic": "Gewerberäumung über Nacht – Ist das möglich?"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Baden-Baden",
       "topic": "Hotelzimmer und Pensionen räumen lassen"
     },
@@ -736,6 +731,12 @@
       "city": "Karlsruhe",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-24T14:55:44.643Z"
+    },
+    {
+      "topic": "Gewerberäumung über Nacht – Ist das möglich?",
+      "city": "Rastatt",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-24T16:15:10.732Z"
     }
   ]
 }
