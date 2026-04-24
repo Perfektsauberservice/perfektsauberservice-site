@@ -9,6 +9,16 @@ const DAILY_STATE_PATH = 'agent/state/publication-state.json';
 const BLOG_INDEX_PATH = 'content/auto/blog-index.json';
 const BLOG_PUBLIC_DIR = 'blog';
 
+const ALLOWED_CITY_SLUGS = new Set([
+  'rastatt', 'baden-baden', 'karlsruhe', 'pforzheim',
+  'gaggenau', 'ettlingen', 'rheinstetten', 'stutensee', 'buehl', 'achern',
+  'sinzheim', 'gernsbach', 'muggensturm',
+  'elchesheim-illingen', 'steinmauern', 'weisenbach', 'bad-herrenalb',
+  'bad-wildbad', 'oetigheim', 'au-am-rhein', 'bietigheim', 'bischweier',
+  'durmersheim', 'forbach', 'huegelsheim', 'iffezheim', 'kuppenheim',
+  'loffenau', 'malsch', 'rheinmuenster',
+]);
+
 const slugify = (value) => String(value || '')
   .toLowerCase()
   .normalize('NFD')
@@ -352,6 +362,14 @@ export default async (req) => {
 
     const city = cities.find((item) => item.slug === body.city || item.name.toLowerCase() === String(body.city || '').toLowerCase()) || cities[0];
     const service = services.find((item) => item.slug === body.service || item.name.toLowerCase() === String(body.service || '').toLowerCase()) || services[0];
+
+    if (!ALLOWED_CITY_SLUGS.has(city.slug)) {
+      return json({
+        ok: false,
+        error: `City slug '${city.slug}' is not in the approved whitelist. Allowed: ${[...ALLOWED_CITY_SLUGS].join(', ')}`,
+        blocked: true
+      }, 400);
+    }
 
     const dailyState = await getDailyState();
     if (dailyState.count >= DAILY_LIMIT) {
