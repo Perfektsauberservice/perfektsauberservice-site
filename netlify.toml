@@ -97,3 +97,113 @@
   status = 301
   force = true
 
+# --- Consolidare districte in orasul principal (301) ---
+[[redirects]]
+  from = "/haushaltsaufloesung-obertsrot.html"
+  to = "/haushaltsaufloesung-gernsbach.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-obertsrot"
+  to = "/haushaltsaufloesung-gernsbach.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-sandweier.html"
+  to = "/haushaltsaufloesung-baden-baden.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-sandweier"
+  to = "/haushaltsaufloesung-baden-baden.html"
+  status = 301
+  force = true
+
+# --- Ghost cities / in afara razei: 410 Gone (scoatere rapida din index) ---
+[[redirects]]
+  from = "/haushaltsaufloesung-bodersweier.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-bodersweier"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-ottersweier.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-ottersweier"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-grossweiler.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-grossweiler"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-hildmansfeld.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-hildmansfeld"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-mainstetten.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-mainstetten"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-nonnenmuess.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-nonnenmuess"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-waldprechtsweier.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-waldprechtsweier"
+  to = "/410.html"
+  status = 410
+  force = true
+
