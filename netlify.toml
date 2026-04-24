@@ -22,6 +22,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# === API functions (internal proxy) ===
 [[redirects]]
   from = "/api/telegram-bot"
   to = "/.netlify/functions/telegram-bot"
@@ -32,6 +33,7 @@
   to = "/.netlify/functions/pss-auto-content"
   status = 200
 
+# === Dashboard (internal, not SEO-indexed) ===
 [[redirects]]
   from = "/dashboard/agent"
   to = "/dashboard/agent.html"
@@ -42,20 +44,7 @@
   to = "/dashboard/index.html"
   status = 200
 
-[[redirects]]
-  from = "/blog"
-  to = "/blog.html"
-  status = 200
-
-[[redirects]]
-  from = "/impressum"
-  to = "/impressum.html"
-  status = 200
-
-[[redirects]]
-  from = "/datenschutz"
-  to = "/datenschutz.html"
-  status = 200
+# === 410 Gone: pagini retrase definitiv ===
 [[redirects]]
   from = "/service-page/fensterreinigung"
   to = "/410.html"
@@ -68,11 +57,92 @@
   status = 410
   force = true
 
+# === 410 Gone: 9 ghost cities sterse ===
 [[redirects]]
-  from = "/portfolio"
-  to = "/portfolio.html"
-  status = 200
+  from = "/haushaltsaufloesung-bodersweier"
+  to = "/410.html"
+  status = 410
+  force = true
 
+[[redirects]]
+  from = "/haushaltsaufloesung-bodersweier.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-ottersweier"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-ottersweier.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-grossweiler"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-grossweiler.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-hildmansfeld"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-hildmansfeld.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-mainstetten"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-mainstetten.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-nonnenmuess"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-nonnenmuess.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-waldprechtsweier"
+  to = "/410.html"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-waldprechtsweier.html"
+  to = "/410.html"
+  status = 410
+  force = true
+
+# === Galerie -> Portfolio (legacy) ===
 [[redirects]]
   from = "/galerie"
   to = "/portfolio"
@@ -85,125 +155,35 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/preisrechner"
-  to = "/preisrechner.html"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/entruempelung-elchesheim-illingen"
-  to = "/entruempelung-elchesheim-illingen.html"
-  status = 301
-  force = true
-
-# --- Consolidare districte in orasul principal (301) ---
-[[redirects]]
-  from = "/haushaltsaufloesung-obertsrot.html"
-  to = "/haushaltsaufloesung-gernsbach.html"
-  status = 301
-  force = true
-
+# === Consolidare districte: Obertsrot -> Gernsbach, Sandweier -> Baden-Baden ===
 [[redirects]]
   from = "/haushaltsaufloesung-obertsrot"
-  to = "/haushaltsaufloesung-gernsbach.html"
+  to = "/haushaltsaufloesung-gernsbach"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/haushaltsaufloesung-sandweier.html"
-  to = "/haushaltsaufloesung-baden-baden.html"
+  from = "/haushaltsaufloesung-obertsrot.html"
+  to = "/haushaltsaufloesung-gernsbach"
   status = 301
   force = true
 
 [[redirects]]
   from = "/haushaltsaufloesung-sandweier"
-  to = "/haushaltsaufloesung-baden-baden.html"
+  to = "/haushaltsaufloesung-baden-baden"
   status = 301
   force = true
 
-# --- Ghost cities / in afara razei: 410 Gone (scoatere rapida din index) ---
 [[redirects]]
-  from = "/haushaltsaufloesung-bodersweier.html"
-  to = "/410.html"
-  status = 410
+  from = "/haushaltsaufloesung-sandweier.html"
+  to = "/haushaltsaufloesung-baden-baden"
+  status = 301
   force = true
 
+# === GLOBAL: orice .html forteaza redirect 301 spre varianta pretty URL ===
+# Consolideaza semnalul SEO - impiedica Google sa indexeze ambele variante
 [[redirects]]
-  from = "/haushaltsaufloesung-bodersweier"
-  to = "/410.html"
-  status = 410
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
   force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-ottersweier.html"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-ottersweier"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-grossweiler.html"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-grossweiler"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-hildmansfeld.html"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-hildmansfeld"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-mainstetten.html"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-mainstetten"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-nonnenmuess.html"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-nonnenmuess"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-waldprechtsweier.html"
-  to = "/410.html"
-  status = 410
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-waldprechtsweier"
-  to = "/410.html"
-  status = 410
-  force = true
-
