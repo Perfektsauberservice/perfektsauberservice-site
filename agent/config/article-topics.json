@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Gewerberäumung",
-      "city": "Baden-Baden",
-      "topic": "Hotelzimmer und Pensionen räumen lassen"
-    },
-    {
       "service": "Entrümpelung",
       "city": "Rastatt",
       "topic": "Keller entrümpeln vor Wintereinbruch – Checkliste"
@@ -737,6 +732,12 @@
       "city": "Rastatt",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-24T16:15:10.732Z"
+    },
+    {
+      "topic": "Hotelzimmer und Pensionen räumen lassen",
+      "city": "Baden-Baden",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-24T20:11:13.944Z"
     }
   ]
 }
