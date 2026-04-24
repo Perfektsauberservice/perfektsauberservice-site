@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Pforzheim",
-      "topic": "Praxisauflösung – Arzt und Zahnarzt Praxis räumen"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Karlsruhe",
       "topic": "IT-Schrott bei Gewerberäumung – Datenschutz beachten"
     },
@@ -734,6 +729,12 @@
       "city": "Ettlingen",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-24T10:13:25.688Z"
+    },
+    {
+      "topic": "Praxisauflösung – Arzt und Zahnarzt Praxis räumen",
+      "city": "Pforzheim",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-24T10:56:49.788Z"
     }
   ]
 }
