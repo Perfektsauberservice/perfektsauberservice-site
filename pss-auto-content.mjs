@@ -19,6 +19,15 @@ const ALLOWED_CITY_SLUGS = new Set([
   'loffenau', 'malsch', 'rheinmuenster',
 ]);
 
+// === Quality guard rails ===
+const MIN_WORD_COUNT = 800;
+const MIN_SECTIONS = 4;
+const MIN_FAQ_ITEMS = 4;
+const MIN_CITY_MENTIONS = 3;
+const FREQUENCY_CAP_DAYS = 7;
+const FREQUENCY_CAP_PER_CITY_SERVICE = 1;
+const SIMILAR_SLUG_THRESHOLD = 0.7;
+
 const slugify = (value) => String(value || '')
   .toLowerCase()
   .normalize('NFD')
@@ -70,6 +79,102 @@ function extractJson(text) {
   throw new Error('OpenAI response was not valid JSON');
 }
 
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  const m = a.length, n = b.length;
+  if (!m) return n;
+  if (!n) return m;
+  let prev = Array.from({ length: n + 1 }, (_, i) => i);
+  for (let i = 1; i <= m; i++) {
+    const curr = [i];
+    for (let j = 1; j <= n; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      curr.push(Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost));
+    }
+    prev = curr;
+  }
+  return prev[n];
+}
+
+function slugSimilarity(a, b) {
+  if (a === b) return 1;
+  const maxLen = Math.max(a.length, b.length);
+  if (!maxLen) return 1;
+  return 1 - levenshtein(a, b) / maxLen;
+}
+
+function countWords(value) {
+  return String(value || '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+}
+
+function articleWordCount(article) {
+  let total = countWords(article.intro);
+  for (const section of article.sections || []) {
+    total += countWords(section.heading);
+    total += countWords(section.html);
+  }
+  for (const item of article.faq || []) {
+    total += countWords(item.question);
+    total += countWords(item.answer);
+  }
+  return total;
+}
+
+function countCityMentions(article, cityName) {
+  const haystack = [
+    article.title, article.intro,
+    ...(article.sections || []).flatMap(s => [s.heading, s.html]),
+    ...(article.faq || []).flatMap(f => [f.question, f.answer])
+  ].join(' ').toLowerCase();
+  const needle = String(cityName || '').toLowerCase();
+  if (!needle) return 0;
+  return haystack.split(needle).length - 1;
+}
+
+function frequencyCapBlocks(blogIndex, citySlug, serviceSlug) {
+  const cutoff = Date.now() - FREQUENCY_CAP_DAYS * 24 * 60 * 60 * 1000;
+  const recent = (blogIndex.items || []).filter(item => {
+    if (item.citySlug !== citySlug) return false;
+    if (item.serviceSlug !== serviceSlug) return false;
+    const t = Date.parse(item.publishedAt);
+    return Number.isFinite(t) && t >= cutoff;
+  });
+  return recent.length >= FREQUENCY_CAP_PER_CITY_SERVICE ? recent.length : 0;
+}
+
+function findSimilarSlug(blogIndex, candidateSlug) {
+  const items = blogIndex.items || [];
+  for (const item of items) {
+    if (!item.slug) continue;
+    const sim = slugSimilarity(item.slug, candidateSlug);
+    if (sim >= SIMILAR_SLUG_THRESHOLD) {
+      return { slug: item.slug, similarity: Number(sim.toFixed(3)) };
+    }
+  }
+  return null;
+}
+
+function validateArticleQuality(article, city) {
+  const failures = [];
+  const wordCount = articleWordCount(article);
+  if (wordCount < MIN_WORD_COUNT) {
+    failures.push({ check: 'word_count', actual: wordCount, min: MIN_WORD_COUNT });
+  }
+  const sectionCount = (article.sections || []).length;
+  if (sectionCount < MIN_SECTIONS) {
+    failures.push({ check: 'sections', actual: sectionCount, min: MIN_SECTIONS });
+  }
+  const faqCount = (article.faq || []).length;
+  if (faqCount < MIN_FAQ_ITEMS) {
+    failures.push({ check: 'faq', actual: faqCount, min: MIN_FAQ_ITEMS });
+  }
+  const cityMentions = countCityMentions(article, city.name);
+  if (cityMentions < MIN_CITY_MENTIONS) {
+    failures.push({ check: 'city_mentions', actual: cityMentions, min: MIN_CITY_MENTIONS });
+  }
+  return { wordCount, sectionCount, faqCount, cityMentions, failures };
+}
+
 function pickNextTopic({ city, service, publishedToday, blogIndex }) {
   const usedSlugs = new Set((blogIndex.items || []).map(item => item.slug));
   const usedTopicsToday = new Set((publishedToday || []).map(item => `${item.city}|${item.service}|${item.topic}`));
@@ -88,7 +193,7 @@ function pickNextTopic({ city, service, publishedToday, blogIndex }) {
 
 async function openAIArticle({ city, service, topic, promptRules }) {
   const model = process.env.OPENAI_MODEL || 'gpt-5.4-mini';
-  const userPrompt = `Create one German local service article as strict JSON.\n\nCity: ${city.name}\nService: ${service.name}\nTopic: ${topic}\nHero image: ${city.heroImage}\nService page: ${city.servicePage}\nCTA: ${service.cta}\n\nReturn valid JSON with this schema only:\n{\n  "title": string,\n  "slug": string,\n  "seoTitle": string,\n  "metaDescription": string,\n  "intro": string,\n  "sections": [{"heading": string, "html": string}],\n  "faq": [{"question": string, "answer": string}],\n  "cta": string,\n  "needs_review": boolean\n}\n\nReturn ONLY valid JSON. No markdown fences. No explanation.`;
+  const userPrompt = `Create one German local service article as strict JSON.\n\nCity: ${city.name}\nService: ${service.name}\nTopic: ${topic}\nHero image: ${city.heroImage}\nService page: ${city.servicePage}\nCTA: ${service.cta}\n\nQUALITY REQUIREMENTS (strict):\n- Total article length >= 800 words (intro + all sections + FAQ combined).\n- Exactly 4-6 sections (one heading + rich html paragraph each). Each section body 100-180 words.\n- Exactly 4-6 FAQ items with substantive answers (30-80 words each).\n- Mention "${city.name}" at least 3 times naturally across the article.\n- Include at least 2 concrete local signals specific to ${city.name} (e.g. Landkreis, Stadtteil, PLZ range, Wertstoffhof, Amtsgericht, local street types, typical building stock).\n- Avoid generic filler. Avoid repeating the same phrasing across sections. Do not copy-paste the topic in every heading.\n- Slug must be unique, kebab-case, 4-8 words max, without the city repeated 3+ times.\n\nReturn valid JSON with this schema only:\n{\n  "title": string,\n  "slug": string,\n  "seoTitle": string,\n  "metaDescription": string,\n  "intro": string,\n  "sections": [{"heading": string, "html": string}],\n  "faq": [{"question": string, "answer": string}],\n  "cta": string,\n  "needs_review": boolean\n}\n\nReturn ONLY valid JSON. No markdown fences. No explanation.`;
 
   const res = await fetch('https://api.openai.com/v1/responses', {
     method: 'POST',
@@ -382,9 +487,60 @@ export default async (req) => {
     }
 
     const blogIndex = await getBlogIndex();
+
+    // === Stratul 1: pre-generation guard rails ===
+    const frequencyBlock = frequencyCapBlocks(blogIndex, city.slug, service.slug);
+    if (frequencyBlock && !body.forceOverride) {
+      return json({
+        ok: false,
+        error: `Frequency cap: ${frequencyBlock} article(s) already published for ${city.name} / ${service.name} in last ${FREQUENCY_CAP_DAYS} days (cap: ${FREQUENCY_CAP_PER_CITY_SERVICE}). Try another city/service or wait.`,
+        blocked: true,
+        reason: 'frequency_cap',
+        city: city.slug,
+        service: service.slug
+      }, 429);
+    }
+
     const topic = body.topic || pickNextTopic({ city, service, publishedToday: dailyState.items, blogIndex });
 
     const article = await openAIArticle({ city, service, topic, promptRules });
+
+    // === Stratul 1b: post-generation slug deduplication ===
+    const similar = findSimilarSlug(blogIndex, article.slug);
+    if (similar && !body.forceOverride) {
+      return json({
+        ok: false,
+        error: `Slug '${article.slug}' too similar to existing '${similar.slug}' (similarity ${similar.similarity} >= ${SIMILAR_SLUG_THRESHOLD}). Article rejected to avoid duplicate.`,
+        blocked: true,
+        reason: 'duplicate_slug',
+        candidate: article.slug,
+        existing: similar.slug,
+        similarity: similar.similarity
+      }, 409);
+    }
+
+    // === Stratul 2: quality gate ===
+    const quality = validateArticleQuality(article, city);
+    if (quality.failures.length && !body.forceOverride) {
+      return json({
+        ok: false,
+        error: `Quality gate failed: ${quality.failures.map(f => `${f.check}=${f.actual}(min ${f.min})`).join(', ')}. Article not published.`,
+        blocked: true,
+        reason: 'quality_gate',
+        failures: quality.failures,
+        stats: {
+          wordCount: quality.wordCount,
+          sections: quality.sectionCount,
+          faq: quality.faqCount,
+          cityMentions: quality.cityMentions
+        },
+        preview: {
+          title: article.title,
+          slug: article.slug
+        }
+      }, 422);
+    }
+
     const html = articleHtml({ article, city, service });
     const markdown = markdownArticle({ article, city, service });
 
