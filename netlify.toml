@@ -85,3 +85,15 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/preisrechner"
+  to = "/preisrechner.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/entruempelung-elchesheim-illingen"
+  to = "/entruempelung-elchesheim-illingen.html"
+  status = 301
+  force = true
+
