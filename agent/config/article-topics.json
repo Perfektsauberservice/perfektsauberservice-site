@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Gewerberäumung",
-      "city": "Ettlingen",
-      "topic": "Gewerberäumung Gastronomie – Küche und Mobiliar entsorgen"
-    },
-    {
-      "service": "Gewerberäumung",
       "city": "Pforzheim",
       "topic": "Praxisauflösung – Arzt und Zahnarzt Praxis räumen"
     },
@@ -733,6 +728,12 @@
       "city": "Bühl",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-23T21:10:20.866Z"
+    },
+    {
+      "topic": "Gewerberäumung Gastronomie – Küche und Mobiliar entsorgen",
+      "city": "Ettlingen",
+      "service": "Gewerberäumung",
+      "completedAt": "2026-04-24T10:13:25.688Z"
     }
   ]
 }
