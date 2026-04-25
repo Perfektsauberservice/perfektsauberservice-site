@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Entrümpelung",
-      "city": "Baden-Baden",
-      "topic": "Entrümpelung Denkmalschutz-Gebäude – Was ist erlaubt?"
-    },
-    {
       "service": "Haushaltsauflösung",
       "city": "Rastatt",
       "topic": "Haushaltsauflösung organisieren – Tipps für Erben"
@@ -740,6 +735,12 @@
       "city": "Karlsruhe",
       "service": "Entrümpelung",
       "completedAt": "2026-04-25T09:39:33.704Z"
+    },
+    {
+      "topic": "Entrümpelung Denkmalschutz-Gebäude – Was ist erlaubt?",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-25T11:58:10.969Z"
     }
   ]
 }
