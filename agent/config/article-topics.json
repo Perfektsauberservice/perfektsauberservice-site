@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Rastatt",
-      "topic": "Haushaltsauflösung organisieren – Tipps für Erben"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Karlsruhe",
       "topic": "Schmuck und Wertsachen bei Haushaltsauflösung – Was tun?"
     },
@@ -741,6 +736,12 @@
       "city": "Baden-Baden",
       "service": "Entrümpelung",
       "completedAt": "2026-04-25T11:58:10.969Z"
+    },
+    {
+      "topic": "Haushaltsauflösung organisieren – Tipps für Erben",
+      "city": "Rastatt",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-25T15:27:44.993Z"
     }
   ]
 }
