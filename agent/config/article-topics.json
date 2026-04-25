@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Karlsruhe",
-      "topic": "Schmuck und Wertsachen bei Haushaltsauflösung – Was tun?"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Baden-Baden",
       "topic": "Haushaltsauflösung Schätzung – Wann lohnt sich ein Gutachter?"
     },
@@ -742,6 +737,12 @@
       "city": "Rastatt",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-25T15:27:44.993Z"
+    },
+    {
+      "topic": "Schmuck und Wertsachen bei Haushaltsauflösung – Was tun?",
+      "city": "Karlsruhe",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-25T19:58:14.585Z"
     }
   ]
 }
