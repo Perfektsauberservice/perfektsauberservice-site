@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Karlsruhe",
-      "topic": "Entrümpelung nach Brandschaden – Spezielle Herausforderungen"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Baden-Baden",
       "topic": "Entrümpelung Denkmalschutz-Gebäude – Was ist erlaubt?"
     },
@@ -739,6 +734,12 @@
       "city": "Rastatt",
       "service": "Entrümpelung",
       "completedAt": "2026-04-25T08:13:55.147Z"
+    },
+    {
+      "topic": "Entrümpelung nach Brandschaden – Spezielle Herausforderungen",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-25T09:39:33.704Z"
     }
   ]
 }
