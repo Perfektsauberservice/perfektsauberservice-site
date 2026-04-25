@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rastatt",
-      "topic": "Keller entrümpeln vor Wintereinbruch – Checkliste"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Karlsruhe",
       "topic": "Entrümpelung nach Brandschaden – Spezielle Herausforderungen"
     },
@@ -738,6 +733,12 @@
       "city": "Baden-Baden",
       "service": "Gewerberäumung",
       "completedAt": "2026-04-24T20:11:13.944Z"
+    },
+    {
+      "topic": "Keller entrümpeln vor Wintereinbruch – Checkliste",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-25T08:13:55.147Z"
     }
   ]
 }
