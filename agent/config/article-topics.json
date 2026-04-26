@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Rastatt",
-      "topic": "Wohnungsauflösung im Winter – Besonderheiten"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Karlsruhe",
       "topic": "Wohnungsauflösung Altbau vs. Neubau – Unterschiede"
     },
@@ -744,6 +739,12 @@
       "city": "Baden-Baden",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-26T08:45:35.731Z"
+    },
+    {
+      "topic": "Wohnungsauflösung im Winter – Besonderheiten",
+      "city": "Rastatt",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-26T10:07:27.392Z"
     }
   ]
 }
