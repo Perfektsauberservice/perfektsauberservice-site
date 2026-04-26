@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Wohnungsauflösung",
-      "city": "Karlsruhe",
-      "topic": "Wohnungsauflösung Altbau vs. Neubau – Unterschiede"
-    },
-    {
-      "service": "Wohnungsauflösung",
       "city": "Baden-Baden",
       "topic": "Wohnungsauflösung mit Hausmeisterservice kombinieren"
     },
@@ -745,6 +740,12 @@
       "city": "Rastatt",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-26T10:07:27.392Z"
+    },
+    {
+      "topic": "Wohnungsauflösung Altbau vs. Neubau – Unterschiede",
+      "city": "Karlsruhe",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-26T12:00:36.764Z"
     }
   ]
 }
