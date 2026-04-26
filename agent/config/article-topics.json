@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rastatt",
-      "topic": "5 Fehler bei der Entrümpelung – Und wie man sie vermeidet"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Karlsruhe",
       "topic": "Entrümpelung Kosten steuerlich absetzen – Geht das?"
     },
@@ -747,6 +742,12 @@
       "city": "Baden-Baden",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-26T15:30:10.226Z"
+    },
+    {
+      "topic": "5 Fehler bei der Entrümpelung – Und wie man sie vermeidet",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-26T20:02:06.165Z"
     }
   ]
 }
