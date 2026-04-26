@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Haushaltsauflösung",
-      "city": "Baden-Baden",
-      "topic": "Haushaltsauflösung Schätzung – Wann lohnt sich ein Gutachter?"
-    },
-    {
       "service": "Wohnungsauflösung",
       "city": "Rastatt",
       "topic": "Wohnungsauflösung im Winter – Besonderheiten"
@@ -743,6 +738,12 @@
       "city": "Karlsruhe",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-25T19:58:14.585Z"
+    },
+    {
+      "topic": "Haushaltsauflösung Schätzung – Wann lohnt sich ein Gutachter?",
+      "city": "Baden-Baden",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-26T08:45:35.731Z"
     }
   ]
 }
