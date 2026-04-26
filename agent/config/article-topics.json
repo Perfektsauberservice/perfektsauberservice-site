@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Wohnungsauflösung",
-      "city": "Baden-Baden",
-      "topic": "Wohnungsauflösung mit Hausmeisterservice kombinieren"
-    },
-    {
       "service": "Entrümpelung",
       "city": "Rastatt",
       "topic": "5 Fehler bei der Entrümpelung – Und wie man sie vermeidet"
@@ -746,6 +741,12 @@
       "city": "Karlsruhe",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-26T12:00:36.764Z"
+    },
+    {
+      "topic": "Wohnungsauflösung mit Hausmeisterservice kombinieren",
+      "city": "Baden-Baden",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-26T15:30:10.226Z"
     }
   ]
 }
