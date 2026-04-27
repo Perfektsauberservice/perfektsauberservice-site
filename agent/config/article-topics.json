@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Haushaltsauflösung",
-      "city": "Baden-Baden",
-      "topic": "Haushalt auflösen bei Umzug ins Ausland"
-    },
-    {
-      "service": "Haushaltsauflösung",
       "city": "Gaggenau",
       "topic": "Hausrat spenden statt entsorgen – Optionen in der Region"
     },
@@ -752,6 +747,12 @@
       "city": "Karlsruhe",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-27T17:51:30.914Z"
+    },
+    {
+      "topic": "Haushalt auflösen bei Umzug ins Ausland",
+      "city": "Baden-Baden",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-27T21:38:10.338Z"
     }
   ]
 }
