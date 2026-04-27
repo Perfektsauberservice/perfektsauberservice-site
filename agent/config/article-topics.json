@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Karlsruhe",
-      "topic": "Entrümpelung Kosten steuerlich absetzen – Geht das?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Baden-Baden",
       "topic": "Entrümpelung nach Hochwasser – Schnelle Hilfe gefragt"
     },
@@ -748,6 +743,12 @@
       "city": "Rastatt",
       "service": "Entrümpelung",
       "completedAt": "2026-04-26T20:02:06.165Z"
+    },
+    {
+      "topic": "Entrümpelung Kosten steuerlich absetzen – Geht das?",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-27T11:28:18.083Z"
     }
   ]
 }
