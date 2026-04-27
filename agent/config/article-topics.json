@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Entrümpelung",
-      "city": "Gaggenau",
-      "topic": "Wie wähle ich das richtige Entrümpelungsunternehmen?"
-    },
-    {
       "service": "Haushaltsauflösung",
       "city": "Karlsruhe",
       "topic": "Haushaltsauflösung Senioren – Behutsam und respektvoll"
@@ -750,6 +745,12 @@
       "city": "Baden-Baden",
       "service": "Entrümpelung",
       "completedAt": "2026-04-27T12:12:13.329Z"
+    },
+    {
+      "topic": "Wie wähle ich das richtige Entrümpelungsunternehmen?",
+      "city": "Gaggenau",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-27T16:01:09.056Z"
     }
   ]
 }
