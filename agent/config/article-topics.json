@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Karlsruhe",
-      "topic": "Entrümpelung Wochenende – Gibt es Notfallservices?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Baden-Baden",
       "topic": "Entrümpelung Erfahrungen – Worauf Kunden achten"
     },
@@ -757,6 +752,12 @@
       "city": "Rastatt",
       "service": "Entrümpelung",
       "completedAt": "2026-04-28T18:10:47.629Z"
+    },
+    {
+      "topic": "Entrümpelung Wochenende – Gibt es Notfallservices?",
+      "city": "Karlsruhe",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-28T21:41:25.929Z"
     }
   ]
 }
