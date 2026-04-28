@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Wohnungsauflösung",
-      "city": "Ettlingen",
-      "topic": "Wohnungsauflösung Zeitplan – Wie viel Zeit einplanen?"
-    },
-    {
       "service": "Entrümpelung",
       "city": "Rastatt",
       "topic": "Sperrmülltermin verpasst – Was tun?"
@@ -755,6 +750,12 @@
       "city": "Bühl",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-28T12:17:40.603Z"
+    },
+    {
+      "topic": "Wohnungsauflösung Zeitplan – Wie viel Zeit einplanen?",
+      "city": "Ettlingen",
+      "service": "Wohnungsauflösung",
+      "completedAt": "2026-04-28T16:29:19.682Z"
     }
   ]
 }
