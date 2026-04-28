@@ -2,11 +2,6 @@
   "queue": [
     {
       "service": "Entrümpelung",
-      "city": "Rastatt",
-      "topic": "Sperrmülltermin verpasst – Was tun?"
-    },
-    {
-      "service": "Entrümpelung",
       "city": "Karlsruhe",
       "topic": "Entrümpelung Wochenende – Gibt es Notfallservices?"
     },
@@ -756,6 +751,12 @@
       "city": "Ettlingen",
       "service": "Wohnungsauflösung",
       "completedAt": "2026-04-28T16:29:19.682Z"
+    },
+    {
+      "topic": "Sperrmülltermin verpasst – Was tun?",
+      "city": "Rastatt",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-28T18:10:47.629Z"
     }
   ]
 }
