@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Haushaltsauflösung",
-      "city": "Gaggenau",
-      "topic": "Hausrat spenden statt entsorgen – Optionen in der Region"
-    },
-    {
       "service": "Wohnungsauflösung",
       "city": "Bühl",
       "topic": "Wohnungsauflösung und Schönheitsreparaturen – Was gehört dazu?"
@@ -753,6 +748,12 @@
       "city": "Baden-Baden",
       "service": "Haushaltsauflösung",
       "completedAt": "2026-04-27T21:38:10.338Z"
+    },
+    {
+      "topic": "Hausrat spenden statt entsorgen – Optionen in der Region",
+      "city": "Gaggenau",
+      "service": "Haushaltsauflösung",
+      "completedAt": "2026-04-28T11:27:54.545Z"
     }
   ]
 }
