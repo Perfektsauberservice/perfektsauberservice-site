@@ -2,9 +2,10 @@ name: PSS Kleinanzeigen Monitor
 
 on:
   schedule:
-    # La fiecare ora intre 6:00 si 21:00 (ora server UTC = ora DE - 1h in vara)
-    # 05:00-20:00 UTC = 06:00-21:00 ora DE (vara)
-    - cron: '0 5-20 * * *'
+    # La fiecare 30 minute intre 06:00 si 21:59 ora DE (vara). UTC = DE - 2h in vara, -1h in iarna.
+    # 04:00-20:59 UTC acopera ~06:00-21:59 DE vara si ~05:00-21:59 DE iarna.
+    # Nota: GitHub Actions cron este best-effort; intervalul real poate varia (+5-15 min).
+    - cron: '*/30 4-20 * * *'
   workflow_dispatch:
 
 jobs:
