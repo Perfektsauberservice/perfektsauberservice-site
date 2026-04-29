@@ -5,59 +5,100 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const SEEN_FILE = resolve('agent/config/kleinanzeigen-seen.json');
 
-// Servicii de monitorizat pe Kleinanzeigen (50km in jurul Rastatt)
+// PLZ-uri considerate "in zona Rastatt 50km" (76xxx + 77xxx + 75xxx margine)
+const PLZ_RE = /^(75|76|77)\d{3}$/;
+
+// Servicii de monitorizat — (cuvant cheie URL) + (cum e scris cu umlaut) + label
 const SEARCHES = [
-  { keyword: 'entruempelung',          service: 'Entrümpelung' },
-  { keyword: 'haushaltsaufloesung',    service: 'Haushaltsauflösung' },
-  { keyword: 'wohnungsaufloesung',     service: 'Wohnungsauflösung' },
-  { keyword: 'kellerentruempelung',    service: 'Kellerentrümpelung' },
-  { keyword: 'dachbodenentruempelung', service: 'Dachbodenentrümpelung' },
-  { keyword: 'gewerberaeumung',        service: 'Gewerberäumung' },
-  { keyword: 'wohnungsreinigung',      service: 'Wohnungsreinigung' },
-  { keyword: 'umzugsreinigung',        service: 'Umzugsreinigung' },
-  { keyword: 'raeumung',               service: 'Räumung' },
-  { keyword: 'nachlassaufloesung',     service: 'Nachlassauflösung' },
-  { keyword: 'bueroaufloesung',        service: 'Büroauflösung' },
-  { keyword: 'kellerraum',             service: 'Kellerräumung' },
+  { url: 'entruempelung',          match: 'entrumpelung',          service: 'Entrümpelung' },
+  { url: 'haushaltsaufloesung',    match: 'haushaltsauflosung',    service: 'Haushaltsauflösung' },
+  { url: 'wohnungsaufloesung',     match: 'wohnungsauflosung',     service: 'Wohnungsauflösung' },
+  { url: 'kellerentruempelung',    match: 'kellerentrumpelung',    service: 'Kellerentrümpelung' },
+  { url: 'dachbodenentruempelung', match: 'dachbodenentrumpelung', service: 'Dachbodenentrümpelung' },
+  { url: 'gewerberaeumung',        match: 'gewerberaumung',        service: 'Gewerberäumung' },
+  { url: 'wohnungsreinigung',      match: 'wohnungsreinigung',     service: 'Wohnungsreinigung' },
+  { url: 'umzugsreinigung',        match: 'umzugsreinigung',       service: 'Umzugsreinigung' },
+  { url: 'raeumung',               match: 'raumung',               service: 'Räumung' },
+  { url: 'nachlassaufloesung',     match: 'nachlassauflosung',     service: 'Nachlassauflösung' },
+  { url: 'bueroaufloesung',        match: 'buroauflosung',         service: 'Büroauflösung' },
+  { url: 'messi',                  match: 'messi',                 service: 'Messi-Wohnung' },
 ];
 
-function getRssUrl(keyword) {
+function getSearchUrl(keyword) {
   // s-anzeige:gesuch = doar anunturi "Suche" (oameni care cauta servicii)
-  return `https://www.kleinanzeigen.de/s-anzeige:gesuch/${keyword}/rastatt/r50/k0.rss`;
+  return `https://www.kleinanzeigen.de/s-anzeige:gesuch/${keyword}/rastatt/r50/k0`;
 }
 
-function parseRssItems(xml) {
+// Normalizeaza pentru matching: lowercase + umlaut/ß -> ae/oe/ue/ss
+function normalize(s) {
+  return s
+    .toLowerCase()
+    .replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u')
+    .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u')
+    .replace(/ß/g, 'ss');
+}
+
+function decodeEntities(s) {
+  return s
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ');
+}
+
+function stripTags(html) {
+  return decodeEntities(html.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+}
+
+function extract(re, text) {
+  const m = re.exec(text);
+  return m ? m[1].trim() : '';
+}
+
+function parseListItems(html) {
+  // Fiecare anunt e un <li class="ad-listitem ..."> care contine <article class="aditem" data-adid="..." data-href="...">
   const items = [];
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-  let match;
-  while ((match = itemRegex.exec(xml)) !== null) {
-    const itemXml = match[1];
-    const title = extractTag(itemXml, 'title');
-    const link  = extractTag(itemXml, 'link');
-    const desc  = extractTag(itemXml, 'description');
-    const pub   = extractTag(itemXml, 'pubDate');
-    const id    = link.split('/').filter(Boolean).pop() || link;
-    if (title && link) items.push({ title, link, description: desc, pubDate: pub, id });
+  const liRe = /<li class="ad-listitem([^"]*)"[^>]*>([\s\S]*?)<\/li>/g;
+  let m;
+  while ((m = liRe.exec(html)) !== null) {
+    const liClasses = m[1];
+    const liInner = m[2];
+
+    const isTopAd = /\bis-topad\b/.test(liClasses);
+    if (isTopAd) continue;
+
+    const adidM = /<article[^>]*data-adid="(\d+)"[^>]*data-href="([^"]+)"/.exec(liInner);
+    if (!adidM) continue;
+    const id = adidM[1];
+    const href = adidM[2];
+
+    const locRaw = extract(/aditem-main--top--left">([\s\S]*?)<\/div>/, liInner);
+    const locText = stripTags(locRaw);
+    const plzM = /\b(\d{5})\b/.exec(locText);
+    const plz = plzM ? plzM[1] : '';
+
+    const titleRaw = extract(/<h2 class="text-module-begin">([\s\S]*?)<\/h2>/, liInner);
+    const title = stripTags(titleRaw);
+
+    const descRaw = extract(/aditem-main--middle--description">([\s\S]*?)<\/p>/, liInner);
+    const description = stripTags(descRaw);
+
+    const dateRaw = extract(/aditem-main--top--right">([\s\S]*?)<\/div>/, liInner);
+    const dateText = stripTags(dateRaw);
+
+    items.push({
+      id,
+      link: `https://www.kleinanzeigen.de${href}`,
+      title,
+      description,
+      location: locText,
+      plz,
+      dateText
+    });
   }
   return items;
 }
 
-function extractTag(xml, tag) {
-  const cdata = new RegExp(`<${tag}><\\!\\[CDATA\\[([\\s\\S]*?)\\]\\]><\\/${tag}>`).exec(xml);
-  if (cdata) return cdata[1].trim();
-  const plain = new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`).exec(xml);
-  return plain ? plain[1].trim() : '';
-}
-
-function stripHtml(html) {
-  return html
-    .replace(/<[^>]+>/g, '')
-    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ').trim();
-}
-
 async function sendTelegram(text) {
+  if (!TELEGRAM_BOT_TOKEN) return false;
   const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
   const res = await fetch(url, {
     method: 'POST',
@@ -75,7 +116,7 @@ async function sendTelegram(text) {
 }
 
 function buildMessage(item, service) {
-  const desc = stripHtml(item.description).slice(0, 200);
+  const desc = item.description.slice(0, 240);
   const template =
 `Guten Tag,
 
@@ -92,13 +133,28 @@ Laura – Perfekt Sauber Service
     `🔔 <b>NOU lead Kleinanzeigen!</b>`,
     ``,
     `📋 <b>${item.title}</b>`,
+    item.location ? `📍 ${item.location}` : '',
+    item.dateText ? `🕒 ${item.dateText}` : '',
     desc ? `💬 ${desc}` : '',
     ``,
     `✍️ <b>Copiaza mesajul de mai jos si trimite-l:</b>`,
     `<code>${template}</code>`,
     ``,
     `🔗 <a href="${item.link}">Deschide anuntul pe Kleinanzeigen</a>`
-  ].filter(l => l !== null).join('\n');
+  ].filter(l => l !== '').join('\n');
+}
+
+async function fetchHtml(url) {
+  const res = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8'
+    },
+    signal: AbortSignal.timeout(20000)
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.text();
 }
 
 async function main() {
@@ -107,67 +163,111 @@ async function main() {
     process.exit(1);
   }
 
-  // Incarca ID-urile vazute
-  let seen = {};
+  let state = {};
   if (existsSync(SEEN_FILE)) {
-    try { seen = JSON.parse(readFileSync(SEEN_FILE, 'utf8')); } catch {}
+    try { state = JSON.parse(readFileSync(SEEN_FILE, 'utf8')); } catch {}
   }
+  if (!state._meta) state._meta = {};
 
   let newCount = 0;
+  let totalScanned = 0;
+  let totalRelevant = 0;
+  const errors = [];
 
   for (const search of SEARCHES) {
-    const url = getRssUrl(search.keyword);
+    const url = getSearchUrl(search.url);
     console.log(`Verific: ${url}`);
 
+    let html;
     try {
-      const res = await fetch(url, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
-        signal: AbortSignal.timeout(15000)
-      });
+      html = await fetchHtml(url);
+    } catch (err) {
+      const msg = `${search.url}: ${err.message}`;
+      console.error(`  Eroare: ${msg}`);
+      errors.push(msg);
+      await new Promise(r => setTimeout(r, 2000));
+      continue;
+    }
 
-      if (!res.ok) {
-        console.log(`  HTTP ${res.status} — skip`);
+    const items = parseListItems(html);
+    totalScanned += items.length;
+
+    const matchToken = normalize(search.match);
+    const relevant = items.filter(it => {
+      if (!PLZ_RE.test(it.plz)) return false;
+      const hay = normalize(`${it.title} ${it.description}`);
+      return hay.includes(matchToken);
+    });
+    totalRelevant += relevant.length;
+
+    console.log(`  ${items.length} anunturi pe pagina, ${relevant.length} relevante (PLZ + keyword)`);
+
+    for (const item of relevant) {
+      if (state[item.id]) {
+        console.log(`  VAZUT: ${item.title}`);
         continue;
       }
 
-      const xml = await res.text();
-      const items = parseRssItems(xml);
-      console.log(`  Gasit ${items.length} anunturi pentru "${search.keyword}"`);
-
-      for (const item of items) {
-        if (seen[item.id]) {
-          console.log(`  VAZUT: ${item.title}`);
-          continue;
-        }
-
-        seen[item.id] = { seenAt: new Date().toISOString(), keyword: search.keyword };
-        const msg = buildMessage(item, search.service);
-        const ok = await sendTelegram(msg);
-        if (ok) {
-          newCount++;
-          console.log(`  NOU trimis: ${item.title}`);
-        }
-
-        // Pauza intre mesaje sa nu supraincarcam Telegram
-        await new Promise(r => setTimeout(r, 1500));
+      state[item.id] = {
+        seenAt: new Date().toISOString(),
+        keyword: search.url,
+        title: item.title,
+        plz: item.plz
+      };
+      const ok = await sendTelegram(buildMessage(item, search.service));
+      if (ok) {
+        newCount++;
+        console.log(`  NOU trimis: ${item.title} (${item.plz})`);
       }
-    } catch (err) {
-      console.error(`  Eroare pentru "${search.keyword}": ${err.message}`);
+
+      await new Promise(r => setTimeout(r, 1500));
+    }
+
+    // Pauza scurta intre keyword-uri ca sa nu fim agresivi
+    await new Promise(r => setTimeout(r, 1200));
+  }
+
+  // Curata intrari mai vechi de 30 zile
+  const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  for (const id of Object.keys(state)) {
+    if (id === '_meta') continue;
+    if (state[id].seenAt && state[id].seenAt < cutoff) delete state[id];
+  }
+
+  writeFileSync(SEEN_FILE, JSON.stringify(state, null, 2));
+  console.log(`\nFinalizat. Scanat ${totalScanned} anunturi, ${totalRelevant} relevante, ${newCount} lead-uri noi trimise. ${errors.length} erori.`);
+
+  // Erori -> raporteaza pe Telegram (oricand apar)
+  if (errors.length > 0) {
+    const lastErr = state._meta.lastErrorAt || '';
+    const now = new Date().toISOString();
+    // Anti-spam: max o data la 6h
+    const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
+    if (lastErr < sixHoursAgo) {
+      const ok = await sendTelegram(
+        `⚠️ <b>Kleinanzeigen monitor — erori</b>\n\n${errors.map(e => `• ${e}`).join('\n')}\n\nDaca toate erorile sunt HTTP 500/403, posibil layout schimbat sau IP blocat.`
+      );
+      if (ok) {
+        state._meta.lastErrorAt = now;
+        writeFileSync(SEEN_FILE, JSON.stringify(state, null, 2));
+      }
     }
   }
 
-  // Sterge intrari mai vechi de 30 zile
-  const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-  for (const id of Object.keys(seen)) {
-    if (seen[id].seenAt < cutoff) delete seen[id];
-  }
-
-  writeFileSync(SEEN_FILE, JSON.stringify(seen, null, 2));
-  console.log(`\nFinalizat. ${newCount} lead-uri noi trimise pe Telegram.`);
-
-  if (newCount === 0) {
-    const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
-    await sendTelegram(`✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nBotul functioneaza corect si verifica din 15 in 15 minute.`);
+  // Heartbeat — doar daca >12h de la ultima confirmare (anti-spam la rulari frecvente)
+  if (newCount === 0 && errors.length === 0) {
+    const last = state._meta.lastHeartbeatAt || '';
+    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
+    if (last < twelveHoursAgo) {
+      const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
+      const ok = await sendTelegram(
+        `✅ Kleinanzeigen monitor activ (${now})\n\nNiciun lead nou in ultimele ~12h pentru zona Rastatt 50km. Scanat ${totalScanned} anunturi, ${totalRelevant} relevante (deja vazute).`
+      );
+      if (ok) {
+        state._meta.lastHeartbeatAt = new Date().toISOString();
+        writeFileSync(SEEN_FILE, JSON.stringify(state, null, 2));
+      }
+    }
   }
 }
 
