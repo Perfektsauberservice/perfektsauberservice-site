@@ -8,20 +8,33 @@ const SEEN_FILE = resolve('agent/config/kleinanzeigen-seen.json');
 // PLZ-uri considerate "in zona Rastatt 50km" (76xxx + 77xxx + 75xxx margine)
 const PLZ_RE = /^(75|76|77)\d{3}$/;
 
-// Servicii de monitorizat — (cuvant cheie URL) + (cum e scris cu umlaut) + label
+// Servicii de monitorizat — (cuvant cheie URL) + (token normalizat pentru match) + label
+// Toata nisa: Entrumpelung/Auflosung/Raumung + Reinigung (broad+specific) + Hausmeister.
+// Match-ul foloseste 'normalize()' (lowercase + ä/ö/ü/ae/oe/ue/ß -> a/o/u/ss).
 const SEARCHES = [
+  // Entrümpelung / Auflösung / Räumung
   { url: 'entruempelung',          match: 'entrumpelung',          service: 'Entrümpelung' },
   { url: 'haushaltsaufloesung',    match: 'haushaltsauflosung',    service: 'Haushaltsauflösung' },
   { url: 'wohnungsaufloesung',     match: 'wohnungsauflosung',     service: 'Wohnungsauflösung' },
   { url: 'kellerentruempelung',    match: 'kellerentrumpelung',    service: 'Kellerentrümpelung' },
   { url: 'dachbodenentruempelung', match: 'dachbodenentrumpelung', service: 'Dachbodenentrümpelung' },
+  { url: 'garagenentruempelung',   match: 'garagenentrumpelung',   service: 'Garagenentrümpelung' },
   { url: 'gewerberaeumung',        match: 'gewerberaumung',        service: 'Gewerberäumung' },
-  { url: 'wohnungsreinigung',      match: 'wohnungsreinigung',     service: 'Wohnungsreinigung' },
-  { url: 'umzugsreinigung',        match: 'umzugsreinigung',       service: 'Umzugsreinigung' },
   { url: 'raeumung',               match: 'raumung',               service: 'Räumung' },
   { url: 'nachlassaufloesung',     match: 'nachlassauflosung',     service: 'Nachlassauflösung' },
   { url: 'bueroaufloesung',        match: 'buroauflosung',         service: 'Büroauflösung' },
   { url: 'messi',                  match: 'messi',                 service: 'Messi-Wohnung' },
+
+  // Reinigung — broad + variante specifice frecvente in Kleinanzeigen "Gesuche"
+  { url: 'reinigung',              match: 'reinigung',             service: 'Reinigung' },
+  { url: 'putzhilfe',              match: 'putzhilfe',             service: 'Putzhilfe / Reinigung' },
+  { url: 'putzfrau',               match: 'putzfrau',              service: 'Putzhilfe / Reinigung' },
+  { url: 'haushaltshilfe',         match: 'haushaltshilfe',        service: 'Haushaltshilfe / Reinigung' },
+  { url: 'endreinigung',           match: 'endreinigung',          service: 'Endreinigung' },
+  { url: 'gebaeudereinigung',      match: 'gebaudereinigung',      service: 'Gebäudereinigung' },
+
+  // Hausmeisterservice
+  { url: 'hausmeister',            match: 'hausmeister',           service: 'Hausmeisterservice' },
 ];
 
 function getSearchUrl(keyword) {
@@ -120,7 +133,7 @@ function buildMessage(item, service) {
   const template =
 `Guten Tag,
 
-wir haben Ihre Anzeige gesehen und würden Ihnen gerne ein kostenloses Angebot unterbreiten. Wir sind ein lokales Unternehmen aus der Region und führen ${service}en schnell, zuverlässig und zu fairen Preisen durch.
+wir haben Ihre Anzeige gesehen und würden Ihnen gerne ein kostenloses Angebot unterbreiten. Wir sind ein lokales Unternehmen aus der Region und übernehmen Aufträge im Bereich ${service} schnell, zuverlässig und zu fairen Preisen.
 
 Wann wäre ein kurzes Telefonat möglich?
 
