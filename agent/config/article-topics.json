@@ -1,11 +1,6 @@
 {
   "queue": [
     {
-      "service": "Entrümpelung",
-      "city": "Baden-Baden",
-      "topic": "Entrümpelung Erfahrungen – Worauf Kunden achten"
-    },
-    {
       "service": "Haushaltsauflösung",
       "city": "Rastatt",
       "topic": "Haushaltsauflösung Angebote vergleichen – So geht's richtig"
@@ -758,6 +753,12 @@
       "city": "Karlsruhe",
       "service": "Entrümpelung",
       "completedAt": "2026-04-28T21:41:25.929Z"
+    },
+    {
+      "topic": "Entrümpelung Erfahrungen – Worauf Kunden achten",
+      "city": "Baden-Baden",
+      "service": "Entrümpelung",
+      "completedAt": "2026-04-29T07:20:23.013Z"
     }
   ]
 }
