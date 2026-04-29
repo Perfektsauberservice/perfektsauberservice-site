@@ -180,6 +180,19 @@
   status = 301
   force = true
 
+# === Consolidare duplicat: haushaltsaufloesung-rastatt-ablauf (canonical cannibalization) ===
+[[redirects]]
+  from = "/haushaltsaufloesung-rastatt-ablauf"
+  to = "/haushaltsaufloesung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-rastatt-ablauf.html"
+  to = "/haushaltsaufloesung-rastatt"
+  status = 301
+  force = true
+
 # === GLOBAL: .html -> pretty URL via Edge Function ===
 # Netlify redirects engine nu permite splat capture + suffix stripping
 # Vezi netlify/edge-functions/strip-html.js pentru implementare
