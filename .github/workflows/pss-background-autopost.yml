@@ -3,8 +3,9 @@ name: PSS Background Auto-publish
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *'
+  # PAUZAT 2026-04-29: oprit pana refacem paginile.
+  # schedule:
+  #   - cron: '0 * * * *'
 
 permissions:
   contents: write

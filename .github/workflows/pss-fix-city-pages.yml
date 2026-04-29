@@ -2,8 +2,9 @@ name: PSS Fix City Pages
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * 0'
+  # PAUZAT 2026-04-29: oprit pana refacem paginile (suprascria paginile rescrise manual).
+  # schedule:
+  #   - cron: '0 6 * * 0'
 
 jobs:
   fix-city-pages:

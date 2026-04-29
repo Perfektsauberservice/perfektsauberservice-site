@@ -1,9 +1,9 @@
 name: FB Blog Poster
 
 on:
-  # Ruleaza din ora in ora — posteaza cate un articol pana ajunge la zi
-  schedule:
-    - cron: '0 * * * *'   # fiecare ora exacta
+  # PAUZAT 2026-04-29: 97/97 articole deja postate. Reactivare doar cand reluam generarea de blog.
+  # schedule:
+  #   - cron: '0 * * * *'   # fiecare ora exacta
   # Declansat automat de weekly-content.yml dupa fiecare articol nou
   workflow_dispatch:
 

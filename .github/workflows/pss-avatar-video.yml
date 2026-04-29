@@ -1,9 +1,10 @@
 name: PSS Avatar Video Poster
 
 on:
-  schedule:
-    # O data pe zi la 09:00 Germania (07:00 UTC)
-    - cron: '0 7 * * *'
+  # PAUZAT 2026-04-29: oprit pana refacem paginile (generator AI continuu).
+  # schedule:
+  #   # O data pe zi la 09:00 Germania (07:00 UTC)
+  #   - cron: '0 7 * * *'
   workflow_dispatch:
 
 jobs:

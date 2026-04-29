@@ -1,8 +1,9 @@
 name: PSS Instagram Lucrari Poster
 
 on:
-  schedule:
-    - cron: '0 6,10,16 * * *'  # 08:00, 12:00, 18:00 Germania
+  # PAUZAT 2026-04-29: 16/16 lucrari deja postate (epuizat). Adauga poze noi in images/lucrari/ si reactiveaza.
+  # schedule:
+  #   - cron: '0 6,10,16 * * *'  # 08:00, 12:00, 18:00 Germania
   workflow_dispatch:
 
 jobs:
@@ -31,7 +32,6 @@ jobs:
           git config user.name "PSS Bot"
           git config user.email "bot@perfektsauberservice.com"
           git add agent/state/lucrari-posted.json
-          git diff --staged --quiet && echo "Nimic de commituit." && exit 0
-          git commit -m "chore: update lucrari-posted log"
+          git diff --staged --quiet || git commit -m "chore: update lucrari-posted log"
           git pull --rebase origin master
           git push

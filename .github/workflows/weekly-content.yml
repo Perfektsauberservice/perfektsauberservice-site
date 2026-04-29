@@ -1,13 +1,15 @@
 name: Daily Content Pipeline
 
 on:
-  schedule:
-    # 5 articole pe zi: 07:00, 09:00, 12:00, 15:00, 20:00 ora Germaniei (UTC+2 vara)
-    - cron: '0 5 * * *'   # 07:00 Germania
-    - cron: '0 7 * * *'   # 09:00 Germania
-    - cron: '0 10 * * *'  # 12:00 Germania
-    - cron: '0 13 * * *'  # 15:00 Germania
-    - cron: '0 18 * * *'  # 20:00 Germania
+  # PAUZAT 2026-04-29: oprit pana refacem paginile (calitate > cantitate).
+  # Pentru a reactiva: decomenteaza schedule blocul de mai jos.
+  # schedule:
+  #   # 5 articole pe zi: 07:00, 09:00, 12:00, 15:00, 20:00 ora Germaniei (UTC+2 vara)
+  #   - cron: '0 5 * * *'   # 07:00 Germania
+  #   - cron: '0 7 * * *'   # 09:00 Germania
+  #   - cron: '0 10 * * *'  # 12:00 Germania
+  #   - cron: '0 13 * * *'  # 15:00 Germania
+  #   - cron: '0 18 * * *'  # 20:00 Germania
   workflow_dispatch:
     inputs:
       topic:
