@@ -1,8 +1,9 @@
 name: PSS City Pages Generator
 
 on:
-  schedule:
-    - cron: '0 5 * * 1'  # Luni la 05:00 UTC
+  # PAUZAT 2026-04-29: oprit pana refacem paginile.
+  # schedule:
+  #   - cron: '0 5 * * 1'  # Luni la 05:00 UTC
   workflow_dispatch:
 
 jobs:

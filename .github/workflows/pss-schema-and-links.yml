@@ -2,8 +2,9 @@ name: PSS Schema + Internal Links
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 3 * * 0'
+  # PAUZAT 2026-04-29: oprit pana refacem paginile (modifica schema in paginile pe care le rescriem).
+  # schedule:
+  #   - cron: '0 3 * * 0'
 
 permissions:
   contents: write
