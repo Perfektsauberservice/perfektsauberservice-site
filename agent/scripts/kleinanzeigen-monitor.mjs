@@ -267,20 +267,12 @@ async function main() {
     }
   }
 
-  // Heartbeat — doar daca >12h de la ultima confirmare (anti-spam la rulari frecvente)
+  // Heartbeat — la fiecare rulare daca nu sunt leaduri / erori (confirma ca botul e activ)
   if (newCount === 0 && errors.length === 0) {
-    const last = state._meta.lastHeartbeatAt || '';
-    const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString();
-    if (last < twelveHoursAgo) {
-      const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
-      const ok = await sendTelegram(
-        `✅ Kleinanzeigen monitor activ (${now})\n\nNiciun lead nou in ultimele ~12h pentru zona Rastatt 50km. Scanat ${totalScanned} anunturi, ${totalRelevant} relevante (deja vazute).`
-      );
-      if (ok) {
-        state._meta.lastHeartbeatAt = new Date().toISOString();
-        writeFileSync(SEEN_FILE, JSON.stringify(state, null, 2));
-      }
-    }
+    const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
+    await sendTelegram(
+      `✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nScanat ${totalScanned} anunturi pe ${SEARCHES.length} cuvinte cheie. Botul ruleaza din 30 in 30 minute.`
+    );
   }
 }
 
