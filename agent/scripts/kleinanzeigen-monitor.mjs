@@ -38,8 +38,9 @@ const SEARCHES = [
 ];
 
 function getSearchUrl(keyword) {
-  // s-anzeige:gesuch = doar anunturi "Suche" (oameni care cauta servicii)
-  return `https://www.kleinanzeigen.de/s-anzeige:gesuch/${keyword}/rastatt/r50/k0`;
+  // l8193 = location ID Kleinanzeigen pentru Rastatt; r50 = raza 50km.
+  // Fara location ID anuntele se intorc din toata Germania (filtrul "rastatt" in URL e ignorat).
+  return `https://www.kleinanzeigen.de/s-rastatt/anzeige:gesuch/${keyword}/k0l8193r50`;
 }
 
 // Normalizeaza pentru matching: lowercase + umlaut/ß -> ae/oe/ue/ss
