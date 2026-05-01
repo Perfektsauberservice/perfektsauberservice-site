@@ -2,6 +2,10 @@
   publish = "."
   functions = "netlify/functions"
   command = "node generate-blog.js"
+  # Skip build daca commit-ul modifica DOAR fisiere de stare (loguri auto-postare).
+  # Exit 0 (skip) cand toate fisierele schimbate sunt sub agent/config/ sau agent/state/.
+  # Reduce ~60-70% din deploys (chore: update fb/ig/kleinanzeigen logs + seo-report state nu schimba site-ul live).
+  ignore = '[ -z "$(git diff --name-only HEAD^ HEAD | grep -vE ^agent/(config|state)/)" ]'
 
 [[headers]]
   for = "/*"
