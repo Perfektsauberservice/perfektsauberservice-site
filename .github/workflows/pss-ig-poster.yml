@@ -2,7 +2,7 @@ name: PSS Instagram Auto-Poster
 
 on:
   schedule:
-    - cron: '0 7,9,12,15,18 * * *'  # 09:00, 11:00, 14:00, 17:00, 20:00 Germania
+    - cron: '0 9 * * *'  # 11:00 Germania (vara) / 10:00 (iarna) — 1 postare/zi pentru a evita Meta anti-spam flag
   workflow_dispatch:
 
 jobs:
