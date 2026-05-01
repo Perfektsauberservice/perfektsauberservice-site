@@ -193,6 +193,1319 @@
   status = 301
   force = true
 
+
+# === 301 redirects: missing service pages in small clusters -> city hub (fix GSC 404s) ===
+# Auto-generated 2026-05-01 — for each small-city cluster, services not built redirect to
+# entruempelung-<city> (city hub). Consolidates SEO signal; resolves 84 GSC "Not found" errors.
+[[redirects]]
+  from = "/bueroaufloesung-elchesheim-illingen"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-elchesheim-illingen.html"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-elchesheim-illingen"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-elchesheim-illingen.html"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-elchesheim-illingen"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-elchesheim-illingen.html"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-elchesheim-illingen"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-elchesheim-illingen.html"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-steinmauern"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-steinmauern.html"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-steinmauern"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-steinmauern.html"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-steinmauern"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-steinmauern.html"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-steinmauern"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-steinmauern.html"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-steinmauern"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-steinmauern.html"
+  to = "/entruempelung-steinmauern"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-weisenbach"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-weisenbach.html"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-weisenbach"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-weisenbach.html"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-weisenbach"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-weisenbach.html"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-weisenbach"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-weisenbach.html"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-weisenbach"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-weisenbach.html"
+  to = "/entruempelung-weisenbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bad-herrenalb"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bad-herrenalb.html"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-bad-herrenalb"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-bad-herrenalb.html"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bad-herrenalb"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bad-herrenalb.html"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bad-herrenalb"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bad-herrenalb.html"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bad-herrenalb"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bad-herrenalb.html"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bad-herrenalb"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bad-herrenalb.html"
+  to = "/entruempelung-bad-herrenalb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bischweier"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-bischweier.html"
+  to = "/entruempelung-bischweier"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-forbach"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-forbach.html"
+  to = "/entruempelung-forbach"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-huegelsheim"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-huegelsheim.html"
+  to = "/entruempelung-huegelsheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-iffezheim"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-iffezheim.html"
+  to = "/entruempelung-iffezheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-kuppenheim"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-kuppenheim.html"
+  to = "/entruempelung-kuppenheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-loffenau"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-loffenau.html"
+  to = "/entruempelung-loffenau"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-oetigheim"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-oetigheim.html"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-oetigheim"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-oetigheim.html"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-oetigheim"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-oetigheim.html"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-oetigheim"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-oetigheim.html"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-oetigheim"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-oetigheim.html"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-oetigheim"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-oetigheim.html"
+  to = "/entruempelung-oetigheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/bueroaufloesung-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/nachlassaufloesung-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kellerentruempelung-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/garagenentruempelung-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dachbodenentruempelung-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/messi-wohnung-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-rheinmuenster"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hausmeisterservice-rheinmuenster.html"
+  to = "/entruempelung-rheinmuenster"
+  status = 301
+  force = true
+
+# === Legacy /auto/ blog URL Google cached (single observed case) ===
+[[redirects]]
+  from = "/auto/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt"
+  to = "/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/auto/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt.html"
+  to = "/blog/wie-schnell-bekommt-man-einen-termin-fuer-eine-entruempelung-in-rastatt"
+  status = 301
+  force = true
+
 # === GLOBAL: .html -> pretty URL via Edge Function ===
 # Netlify redirects engine nu permite splat capture + suffix stripping
 # Vezi netlify/edge-functions/strip-html.js pentru implementare
