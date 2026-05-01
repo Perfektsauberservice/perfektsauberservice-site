@@ -198,6 +198,20 @@
   force = true
 
 
+# === Consolidare orfan thin: entrumpelung-durmersheim-kosten -> entruempelung-durmersheim ===
+# Pagina avea 50 cuvinte (orfan generat de bot, typo `entrumpelung` fără 'e'), șters fișierul.
+[[redirects]]
+  from = "/entrumpelung-durmersheim-kosten"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/entrumpelung-durmersheim-kosten.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+
 # === 301 redirects: missing service pages in small clusters -> city hub (fix GSC 404s) ===
 # Auto-generated 2026-05-01 — for each small-city cluster, services not built redirect to
 # entruempelung-<city> (city hub). Consolidates SEO signal; resolves 84 GSC "Not found" errors.
