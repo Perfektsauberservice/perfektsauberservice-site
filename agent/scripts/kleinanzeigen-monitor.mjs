@@ -37,6 +37,56 @@ const SEARCHES = [
   { url: 'hausmeister',            match: 'hausmeister',           service: 'Hausmeisterservice' },
 ];
 
+// === FILTRE LEAD-URI (exclude job postings + concurenti) ===
+
+// Nivel 1: categorii Kleinanzeigen Stellenangebote (job postings).
+// URL anunt: /s-anzeige/title/3394078820-109-8750 — 109/107/110 = Job. Exclude.
+const JOB_CATEGORY_RE = /-(?:107|109|110)-\d+/;
+
+// Nivel 2: cuvinte-cheie care indica job posting in titlu (substring post-normalize).
+const JOB_KEYWORDS = [
+  '(m/w/d)', 'minijob', 'vollzeit', 'teilzeit', 'voll-/teilzeit',
+  'stellenangebot', 'stellenausschreibung', 'bewerbung', 'bewerben',
+  'mitarbeiter', 'niederlassung', 'gehalt', 'lohn', 'anstellung',
+  'sucht tatigkeit', 'sucht stelle', // persoana cauta JOB (post normalize: ä→a)
+];
+
+// Nivel 3: cuvinte-cheie care indica concurent (companie ofera servicii).
+// Note: post-normalize, deci toate fara ä/ö/ü/ß.
+const COMPETITOR_KEYWORDS = [
+  'wir bieten', 'wir ubernehmen',
+  'unser service', 'wir packen an',
+  'unsere dienste', 'unsere dienstleistungen',
+  'bieten ihnen', 'bieten wir',
+  'festpreis', 'kostenloses angebot',
+  'service gmbh', 'service ug', 'unser team',
+  // Phrase-uri tipice "company-to-customer" (sales tone).
+  'ihr zuverlassiger', 'ihr ansprechpartner', 'ansprechpartner fur',
+  'wir helfen ihnen', 'wir sind ein', 'wir sind eine', 'sie brauchen',
+];
+
+function classifyAd(item) {
+  // Nivel 1 — categoria URL = job posting
+  if (JOB_CATEGORY_RE.test(item.link)) {
+    return { skip: true, reason: 'job_url' };
+  }
+  // Nivel 2 — titlu cu pattern de job posting
+  const titleNorm = normalize(item.title);
+  for (const kw of JOB_KEYWORDS) {
+    if (titleNorm.includes(kw)) {
+      return { skip: true, reason: 'job_kw' };
+    }
+  }
+  // Nivel 3 — titlu/descriere cu pattern concurent (companie ofera)
+  const hayNorm = normalize(`${item.title} ${item.description}`);
+  for (const kw of COMPETITOR_KEYWORDS) {
+    if (hayNorm.includes(kw)) {
+      return { skip: true, reason: 'concurent' };
+    }
+  }
+  return { skip: false };
+}
+
 function getSearchUrl(keyword) {
   // l8193 = location ID Kleinanzeigen pentru Rastatt; r50 = raza 50km.
   // Fara location ID anuntele se intorc din toata Germania (filtrul "rastatt" in URL e ignorat).
@@ -187,6 +237,7 @@ async function main() {
   let totalScanned = 0;
   let totalRelevant = 0;
   const errors = [];
+  const filteredCounts = { job_url: 0, job_kw: 0, concurent: 0 };
 
   for (const search of SEARCHES) {
     const url = getSearchUrl(search.url);
@@ -210,7 +261,15 @@ async function main() {
     const relevant = items.filter(it => {
       if (!PLZ_RE.test(it.plz)) return false;
       const hay = normalize(`${it.title} ${it.description}`);
-      return hay.includes(matchToken);
+      if (!hay.includes(matchToken)) return false;
+
+      // Nivel 1+2+3: exclude job postings si concurenti.
+      const cls = classifyAd(it);
+      if (cls.skip) {
+        filteredCounts[cls.reason]++;
+        return false;
+      }
+      return true;
     });
     totalRelevant += relevant.length;
 
@@ -249,7 +308,9 @@ async function main() {
   }
 
   writeFileSync(SEEN_FILE, JSON.stringify(state, null, 2));
-  console.log(`\nFinalizat. Scanat ${totalScanned} anunturi, ${totalRelevant} relevante, ${newCount} lead-uri noi trimise. ${errors.length} erori.`);
+  const totalFiltered = filteredCounts.job_url + filteredCounts.job_kw + filteredCounts.concurent;
+  console.log(`\nFinalizat. Scanat ${totalScanned} anunturi, ${totalRelevant} relevante, ${newCount} lead-uri noi trimise.`);
+  console.log(`Filtrate ca irelevante: ${totalFiltered} (job_url=${filteredCounts.job_url}, job_kw=${filteredCounts.job_kw}, concurent=${filteredCounts.concurent}). ${errors.length} erori.`);
 
   // Erori -> raporteaza pe Telegram (oricand apar)
   if (errors.length > 0) {
@@ -271,8 +332,11 @@ async function main() {
   // Heartbeat — la fiecare rulare daca nu sunt leaduri / erori (confirma ca botul e activ)
   if (newCount === 0 && errors.length === 0) {
     const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
+    const filterLine = totalFiltered > 0
+      ? `\n🔍 Filtrate ca irelevante: ${totalFiltered} (job_url=${filteredCounts.job_url}, job_kw=${filteredCounts.job_kw}, concurent=${filteredCounts.concurent})`
+      : '';
     await sendTelegram(
-      `✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nScanat ${totalScanned} anunturi pe ${SEARCHES.length} cuvinte cheie. Botul ruleaza din 30 in 30 minute.`
+      `✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nScanat ${totalScanned} anunturi pe ${SEARCHES.length} cuvinte cheie.${filterLine}\nBotul ruleaza din 30 in 30 minute.`
     );
   }
 }
