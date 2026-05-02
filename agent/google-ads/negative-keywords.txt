@@ -1,0 +1,188 @@
+# Negative Keywords — Account Level
+# Apply via: Tools → Negative keyword lists → Create list "PSS Master Negatives" → Apply to all campaigns
+# Total: ~140 negatives organized in 7 categories
+
+# ─────────────────────────────────────────
+# 1. JOB SEEKERS (~25 % of wasted clicks if missing)
+# ─────────────────────────────────────────
++job
++jobs
++stelle
++stellen
++stellenangebot
++stellenangebote
++ausbildung
++azubi
++azubis
++lehrstelle
++praktikum
++praktikant
++gehalt
++verdienst
++lohn
++minijob
++aushilfe
++aushilfsjob
++nebenjob
++450 euro
++520 euro
++520-euro-job
++arbeit gesucht
++suche arbeit
++suche stelle
++karriere
++bewerbung
++lebenslauf
++vorstellungsgespräch
++selbstständig machen
++selbstständig werden
++gewerbe anmelden
+
+# ─────────────────────────────────────────
+# 2. DIY / SELF-HELP (info searchers, not buyers)
+# ─────────────────────────────────────────
++selber
++selbst
++anleitung
++anleitungen
++tipps
++tricks
++ratgeber
++wikipedia
++youtube
++forum
++reddit
++gutefrage
++hausmittel
++wie geht
++wie macht man
++was hilft
++welche
++was ist
++definition
++erklärung
++bedeutung
+
+# ─────────────────────────────────────────
+# 3. ANKAUF / WERTSCHÄTZUNG (people selling, not buying clearance)
+# ─────────────────────────────────────────
++ankauf
++ankaufen
++verkaufen
++verkauf
++gebraucht verkaufen
++kleiderschrank verkaufen
++möbel verkaufen
++möbelankauf
++wertschätzung
++gutachter
++gutachten
++wert ermitteln
++was ist wert
++wieviel wert
++ebay kleinanzeigen
++kleinanzeigen
+
+# ─────────────────────────────────────────
+# 4. CONTAINER / MASCHINE / MIETEN (different service)
+# ─────────────────────────────────────────
++container mieten
++container kaufen
++abrollcontainer
++absetzcontainer
++müllcontainer mieten
++sperrmüll abholen
++sperrmüll anmelden
++sperrmüll kostenlos
++sperrmüll termin
++wertstoffhof
++recyclinghof
++abfallkalender
++gelber sack
++restmüll
++biomüll
++maschine kaufen
++gerät kaufen
++reinigungsmaschine
++kärcher kaufen
++staubsauger kaufen
++industriestaubsauger
+
+# ─────────────────────────────────────────
+# 5. KOSTENLOS / FREE / DIY-CHEAP
+# ─────────────────────────────────────────
++kostenlos
++gratis
++umsonst
++free
++geschenkt
++verschenken
++zu verschenken
+
+# ─────────────────────────────────────────
+# 6. WRONG SERVICE / WRONG INTENT
+# ─────────────────────────────────────────
++ausbildung gebäudereiniger
++studium
++kurs
++seminar
++schulung
++zertifikat
++messie hilfe psychologisch
++messie syndrom selbsthilfe
++entrümpeln psychologisch
++hortung therapie
++versicherung übernimmt
++jobcenter zahlt
++sozialamt zahlt
++harz 4
++bürgergeld
++hartz4
+
+# ─────────────────────────────────────────
+# 7. LOCATIONS OUTSIDE SERVICE AREA
+# ─────────────────────────────────────────
++berlin
++hamburg
++münchen
++köln
++frankfurt
++stuttgart
++düsseldorf
++leipzig
++dortmund
++essen
++bremen
++hannover
++nürnberg
++dresden
++bonn
++mannheim
++heidelberg
++freiburg
++offenburg
++strasbourg
++strassburg
++ortenau
++villingen-schwenningen
++pforzheim umgebung
++schweiz
++österreich
++wien
+
+# ─────────────────────────────────────────
+# 8. CAMPAIGN-LEVEL NEGATIVES (apply per campaign, not master list)
+# ─────────────────────────────────────────
+# For [Search] Entrümpelung campaign — negate Reinigung intent:
+# +endreinigung
+# +büroreinigung
+# +unterhaltsreinigung
+# +fensterreinigung
+# +teppichreinigung
+# +gebäudereinigung
+
+# For [Search] Endreinigung campaign — negate Entrümpelung intent:
+# +entrümpelung
+# +haushaltsauflösung
+# +räumung
+# +entsorgen
