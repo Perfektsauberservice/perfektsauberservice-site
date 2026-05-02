@@ -1,0 +1,11 @@
+Campaign,Ad Group,Status,Default Max CPC,Notes
+[Search] Entrümpelung — Rastatt-Region,AG1 Entrümpelung Rastatt,Paused,1.50,Standort vor Ort — pin in headlines
+[Search] Entrümpelung — Rastatt-Region,AG2 Entrümpelung Baden-Baden,Paused,1.40,Premium audience — emphasize discretion
+[Search] Entrümpelung — Rastatt-Region,AG3 Entrümpelung Karlsruhe-Süd,Paused,1.30,Larger market — focus on Festpreis differentiation
+[Search] Entrümpelung — Rastatt-Region,AG4 Entrümpelung Region,Paused,1.20,Smaller cities (Gaggenau Bühl Ettlingen Muggensturm Kuppenheim) — combined
+[Search] Haushaltsauflösung — Region,AG5 Haushaltsauflösung Region,Paused,1.60,Higher emotional intent — pin würdevoll/diskret in copy
+[Search] Endreinigung — Rastatt-Region (Phase 1.5),AG6 Endreinigung Rastatt,Paused,1.20,Wait until /endreinigung-rastatt is live + indexed
+[Search] Endreinigung — Rastatt-Region (Phase 1.5),AG7 Endreinigung Baden-Baden,Paused,1.10,Wait until /endreinigung-baden-baden is live + indexed
+[Search] Endreinigung — Rastatt-Region (Phase 1.5),AG8 Endreinigung Karlsruhe,Paused,1.10,Wait until /endreinigung-karlsruhe is live + indexed
+[Search] Büroreinigung B2B — Region (Phase 1.5),AG9 Büroreinigung Region,Paused,1.40,B2B — longer cycle. Wait until /bueroreinigung-* live
+[Search] Büroreinigung B2B — Region (Phase 1.5),AG10 Unterhaltsreinigung Region,Paused,1.30,B2B recurring — Wait until /unterhaltsreinigung-region live
