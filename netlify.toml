@@ -26,6 +26,11 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
 # === API functions (internal proxy) ===
 [[redirects]]
   from = "/api/telegram-bot"
