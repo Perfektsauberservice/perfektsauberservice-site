@@ -176,6 +176,11 @@ export function renderHomepage(oldIndexPath = 'index.html') {
   tpl = tpl.replace('src="/images/cibersite/01-vor.jpeg"', 'src="/images/hero-vor.jpeg"');
   tpl = tpl.replace('src="/images/cibersite/01-nach.png"', 'src="/images/hero-nach.png"');
 
+  // 2b. Hero is above the fold — drop the .reveal opacity:0 init class so the
+  //     photos stay visible even if IntersectionObserver fires late or fails.
+  tpl = tpl.replace('<div class="hero-img reveal">', '<div class="hero-img">');
+  tpl = tpl.replace(/<div class="reveal">\s*\n\s*<span class="eyebrow">/, '<div>\n    <span class="eyebrow">');
+
   // 3. Nav links: cibersite uses #anchors; we want them to point to real pages
   tpl = tpl.replace(/<a href="#leistungen">Leistungen<\/a>/, '<a href="/leistungen">Leistungen</a>');
   tpl = tpl.replace(/<a href="#galerie">Galerie<\/a>/, '<a href="/portfolio">Galerie</a>');
