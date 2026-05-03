@@ -1,0 +1,37 @@
+name: GSC Delta Tracker
+
+on:
+  schedule:
+    - cron: '45 5 * * *'  # 07:45 Germania (UTC+2) — după pss-seo-daily-report (05:30)
+  workflow_dispatch:        # rulare manuala pentru test
+
+jobs:
+  delta-tracker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run GSC Delta Tracker
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: node agent/scripts/gsc-delta-tracker.mjs
+
+      - name: Commit snapshot
+        run: |
+          git config user.name "GSC Delta Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/gsc-snapshots/*.json
+          git diff --staged --quiet || git commit -m "gsc-tracker: snapshot $(date +%Y-%m-%d)"
+          git pull --rebase origin master
+          git push
