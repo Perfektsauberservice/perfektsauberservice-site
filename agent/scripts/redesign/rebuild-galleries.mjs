@@ -1,77 +1,83 @@
-// Rebuild gallery sections on all city pages using splitscreen composites
-// (real vorher/nachher photos with built-in VORHER|NACHHER overlay labels).
+// Rebuild gallery sections on all city + hub pages as INTERACTIVE
+// Vorher/Nachher comparison sliders (drag the handle to reveal nachher).
 //
-// Per-city splitscreen inventory in images/splitscreen/:
-//   keller-rastatt:    3   (basement Rastatt — incl. one garage)
-//   keller-badenbaden: 9   (basement Baden-Baden)
-//   wohnung-rastatt:   4   (apartment Rastatt)
-//   wohnung-badenbaden:1   (apartment Baden-Baden)
-//   wohnung-ettlingen: 11  (apartment Ettlingen)
-//   wohnung-karlsruhe: 5   (apartment Karlsruhe)
-//   wohnung-gaggenau:  5   (apartment Gaggenau)
+// Each slider uses two real photos (a vorher.webp + nachher.webp pair) from
+// images/<folder>/. NO splitscreen composites, NO lucrari fillers.
+//
+// Per-city availability of paired photos in images/:
+//   keller-1            (Rastatt, basement):    4 pairs
+//   keller-badenbaden:                          9 pairs
+//   wohnung-rastatt:                            4 pairs
+//   wohnung-badenbaden:                         1 pair
+//   wohnung-ettlingen:                          11 pairs
+//   wohnung-karlsruhe:                          5 pairs
+//   wohnung-gaggenau:                           5 pairs
 //
 // Strategy:
-//  • Cities WITH local splitscreens (rastatt, baden-baden, ettlingen, karlsruhe,
-//    gaggenau): use LOCAL ones; gallery title stays "Beispiele aus unseren Räumungen
-//    in [Stadt]".
-//  • Cities WITHOUT local splitscreens (achern, buehl, pforzheim, ...): use a
-//    curated regional pool (Mittelbaden mix); gallery title changes to "Beispiele
-//    aus der Region (Mittelbaden / Karlsruhe)" and the description states the
-//    photos are from neighbouring jobs, not the city itself.
-//
-// The service prefix (entruempelung, wohnungsaufloesung, kellerentruempelung,
-// garagenentruempelung, dachbodenentruempelung, haushaltsaufloesung,
-// nachlassaufloesung, gewerberaeumung, bueroaufloesung, bueroreinigung,
-// fensterreinigung, grundreinigung, endreinigung, unterhaltsreinigung,
-// hausmeisterservice, messi-wohnung) decides which subset of the local pool
-// is preferred (keller vs. wohnung).
+//  • Cities WITH local pairs: use up to 6 local sliders, prioritising the kind
+//    that matches the page service (keller for keller/dachboden/garage pages,
+//    wohnung for wohnung/haushalts/etc.).
+//  • Cities WITHOUT local pairs: 6 sliders from a curated regional pool;
+//    gallery title becomes "Beispiele aus der Region" with a Datenschutz note.
 
 import fs from 'node:fs';
 import path from 'node:path';
 
 const REPO = 'C:/Users/laral/Documents/proiect 1 claude code/perfektsauberservice-site-main';
 
-// Per-city splitscreen counts
-const LOCAL = {
-  'rastatt':     { keller: 3, wohnung: 4 },
-  'baden-baden': { keller: 9, wohnung: 1, slug: 'badenbaden' },
-  'ettlingen':   { wohnung: 11 },
-  'karlsruhe':   { wohnung: 5 },
-  'gaggenau':    { wohnung: 5 },
+// Folder catalog: { folder, prefix used in filenames, count of pairs, kind }
+const FOLDERS = {
+  'keller-rastatt':      { folder: 'keller-1',          prefix: 'kellerentruempelung-rastatt',     count: 4, kind: 'Keller' },
+  'keller-badenbaden':   { folder: 'keller-badenbaden', prefix: 'kellerentruempelung-badenbaden',  count: 9, kind: 'Keller' },
+  'wohnung-rastatt':     { folder: 'wohnung-rastatt',   prefix: 'wohnungsaufloesung-rastatt',      count: 4, kind: 'Wohnung' },
+  'wohnung-badenbaden':  { folder: 'wohnung-badenbaden',prefix: 'wohnungsaufloesung-badenbaden',   count: 1, kind: 'Wohnung' },
+  'wohnung-ettlingen':   { folder: 'wohnung-ettlingen', prefix: 'wohnungsaufloesung-ettlingen',    count: 11, kind: 'Wohnung' },
+  'wohnung-karlsruhe':   { folder: 'wohnung-karlsruhe', prefix: 'wohnungsaufloesung-karlsruhe',    count: 5, kind: 'Wohnung' },
+  'wohnung-gaggenau':    { folder: 'wohnung-gaggenau',  prefix: 'wohnungsaufloesung-gaggenau',     count: 5, kind: 'Wohnung' },
 };
 
-// Regional pool: a curated 6-card mix from across the region for cities with
-// no local photos. Hand-picked variety: 2 keller + 4 wohnung from different cities.
-const REGIONAL = [
-  { folder: 'wohnung-ettlingen',   n: 1 },
-  { folder: 'wohnung-rastatt',     n: 1 },
-  { folder: 'keller-rastatt',      n: 1 },
-  { folder: 'wohnung-karlsruhe',   n: 1 },
-  { folder: 'wohnung-gaggenau',    n: 1 },
-  { folder: 'keller-badenbaden',   n: 1 },
+// Per-city local availability
+const LOCAL_KEYS = {
+  'rastatt':     ['wohnung-rastatt', 'keller-rastatt'],
+  'baden-baden': ['wohnung-badenbaden', 'keller-badenbaden'],
+  'ettlingen':   ['wohnung-ettlingen'],
+  'karlsruhe':   ['wohnung-karlsruhe'],
+  'gaggenau':    ['wohnung-gaggenau'],
+};
+
+// Service → preferred kind ordering
+const SERVICE_PREF = {
+  'kellerentruempelung':   ['Keller', 'Wohnung'],
+  'dachbodenentruempelung':['Keller', 'Wohnung'],
+  'garagenentruempelung':  ['Keller', 'Wohnung'],
+  'wohnungsaufloesung':    ['Wohnung'],
+  'haushaltsaufloesung':   ['Wohnung', 'Keller'],
+  'nachlassaufloesung':    ['Wohnung', 'Keller'],
+  'messi-wohnung':         ['Wohnung'],
+  'entruempelung':         ['Wohnung', 'Keller'],
+  'gewerberaeumung':       ['Wohnung', 'Keller'],
+  'bueroaufloesung':       ['Wohnung'],
+  'bueroreinigung':        ['Wohnung'],
+  'fensterreinigung':      ['Wohnung'],
+  'grundreinigung':        ['Wohnung'],
+  'endreinigung':          ['Wohnung'],
+  'unterhaltsreinigung':   ['Wohnung'],
+  'hausmeisterservice':    ['Wohnung'],
+  'reinigung':             ['Wohnung'],
+};
+
+// Regional pool — 6 hand-picked variety sliders for cities without local pairs
+const REGIONAL_POOL = [
+  { key: 'wohnung-ettlingen',  n: 1 },
+  { key: 'wohnung-rastatt',    n: 1 },
+  { key: 'keller-rastatt',     n: 1 },
+  { key: 'wohnung-karlsruhe',  n: 1 },
+  { key: 'wohnung-gaggenau',   n: 1 },
+  { key: 'keller-badenbaden',  n: 1 },
 ];
 
-// Service → preferred subset. Default: take whatever is local.
-const SERVICE_PREF = {
-  'kellerentruempelung': ['keller'],
-  'dachbodenentruempelung': ['keller'],
-  'garagenentruempelung': ['keller'],         // keller-rastatt-3 is actually a garage
-  'wohnungsaufloesung': ['wohnung'],
-  'haushaltsaufloesung': ['wohnung', 'keller'],
-  'nachlassaufloesung': ['wohnung', 'keller'],
-  'messi-wohnung': ['wohnung'],
-  'entruempelung': ['wohnung', 'keller'],
-  'gewerberaeumung': ['wohnung', 'keller'],
-  'bueroaufloesung': ['wohnung'],
-  'bueroreinigung': ['wohnung'],
-  'fensterreinigung': ['wohnung'],
-  'grundreinigung': ['wohnung'],
-  'endreinigung': ['wohnung'],
-  'unterhaltsreinigung': ['wohnung'],
-  'hausmeisterservice': ['wohnung'],
-};
+const MAX_LOCAL_SLIDERS = 6;
 
-// Cities pages exist for (used to extract city from filename)
 const ALL_CITIES = [
   'achern','au-am-rhein','bad-herrenalb','bad-wildbad','baden-baden','bietigheim',
   'bischweier','buehl','durmersheim','elchesheim-illingen','ettlingen','forbach',
@@ -94,111 +100,148 @@ const CITY_LABEL = {
   'steinmauern': 'Steinmauern', 'stutensee': 'Stutensee', 'weisenbach': 'Weisenbach',
 };
 
+const HUB_PAGES = new Set([
+  'bueroreinigung.html','endreinigung.html','fensterreinigung.html','grundreinigung.html',
+  'hausmeisterservice.html','reinigung.html','unterhaltsreinigung.html','unterhaltsreinigung-region.html',
+]);
+
 function parseFilename(file) {
-  const base = path.basename(file, '.html');
-  // Sort by length desc so 'karlsruhe-durlach' matches before 'karlsruhe'
+  const baseName = path.basename(file);
+  const baseNoExt = baseName.replace(/\.html$/, '');
+  if (HUB_PAGES.has(baseName)) return { service: baseNoExt, city: null };
   const cities = [...ALL_CITIES].sort((a, b) => b.length - a.length);
   for (const c of cities) {
-    if (base.endsWith('-' + c)) {
-      const service = base.slice(0, -('-' + c).length);
-      return { service, city: c };
+    if (baseNoExt.endsWith('-' + c)) {
+      return { service: baseNoExt.slice(0, -('-' + c).length), city: c };
     }
   }
   return null;
 }
 
-function buildCards(items, cityLabel, isLocal) {
-  return items.map((it, i) => {
-    const num = String(i + 1).padStart(2, '0');
-    const src = `/images/splitscreen/${it.folder}-${it.n}-splitscreen.webp`;
-    // For local pages: claim the city. For regional pool: stay generic so we don't
-    // misrepresent a Rastatt photo as being from e.g. Achern.
-    const alt = isLocal
-      ? `${cityLabel} — ${it.kind} Vorher und Nachher Beispiel ${i + 1}`
-      : `Räumung im Raum Mittelbaden — ${it.kind} Vorher und Nachher Beispiel ${i + 1}`;
-    return `    <div class="gal-card">
-      <img src="${src}" alt="${alt}" loading="lazy"/>
-      <span class="num">№ ${num}</span>
-    </div>`;
-  }).join('\n');
-}
+function pickPairs(city, service) {
+  const pref = SERVICE_PREF[service] || ['Wohnung', 'Keller'];
+  const locals = city ? (LOCAL_KEYS[city] || []) : [];
 
-function pickItems(city, service) {
-  const local = city ? LOCAL[city] : null;
-  const pref = SERVICE_PREF[service] || ['wohnung', 'keller'];
-
-  if (local) {
-    const items = [];
-    const slug = local.slug || city;
-    // Iterate preferred kinds in order, exhaust each
-    for (const kind of pref) {
-      const count = local[kind] || 0;
-      for (let i = 1; i <= count; i++) {
-        items.push({ folder: `${kind}-${slug}`, n: i, kind: kind === 'keller' ? 'Keller' : 'Wohnung' });
+  if (locals.length > 0) {
+    // Order locals by preferred kind
+    const ordered = [];
+    for (const wantKind of pref) {
+      for (const key of locals) {
+        if (FOLDERS[key].kind === wantKind) ordered.push(key);
       }
     }
-    // Also add any kind not in pref so we use everything available
-    for (const kind of Object.keys(local)) {
-      if (kind === 'slug') continue;
-      if (pref.includes(kind)) continue;
-      const count = local[kind];
-      for (let i = 1; i <= count; i++) {
-        items.push({ folder: `${kind}-${slug}`, n: i, kind: kind === 'keller' ? 'Keller' : 'Wohnung' });
+    // Add any locals not yet included
+    for (const key of locals) if (!ordered.includes(key)) ordered.push(key);
+
+    const items = [];
+    for (const key of ordered) {
+      const f = FOLDERS[key];
+      for (let n = 1; n <= f.count && items.length < MAX_LOCAL_SLIDERS; n++) {
+        items.push({ key, n });
       }
+      if (items.length >= MAX_LOCAL_SLIDERS) break;
     }
     return { items, isLocal: true };
   }
-
-  // No local — use regional pool
-  const items = REGIONAL.map(r => ({ ...r, kind: r.folder.startsWith('keller') ? 'Keller' : 'Wohnung' }));
-  return { items, isLocal: false };
+  return { items: REGIONAL_POOL.slice(), isLocal: false };
 }
 
-function buildGalleryHtml(items, isLocal, cityLabel) {
+function buildSlider(item, idx, label, isLocal) {
+  const f = FOLDERS[item.key];
+  const v = `/images/${f.folder}/${f.prefix}-vorher-${item.n}.webp`;
+  const a = `/images/${f.folder}/${f.prefix}-nachher-${item.n}.webp`;
+  const subj = isLocal && label ? `${label} — ${f.kind}` : `Räumung im Raum Mittelbaden — ${f.kind}`;
+  const altV = `${subj} — Vorher`;
+  const altA = `${subj} — Nachher`;
+  const num = String(idx + 1).padStart(2, '0');
+  return `    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="${a}" alt="${altA}" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="${v}" alt="${altV}" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ ${num}</span>
+    </figure>`;
+}
+
+function buildGallerySection(city, service) {
+  const cityLabel = city ? (CITY_LABEL[city] || city) : null;
+  const { items, isLocal } = pickPairs(city, service);
+
   const heading = isLocal
     ? `<em>Beispiele</em> aus unseren Räumungen in ${cityLabel}`
     : `<em>Beispiele</em> aus der Region`;
   const desc = isLocal
-    ? `Bilder aus realen Aufträgen in ${cityLabel} und direkter Umgebung — Vorher und Nachher direkt vom Einsatzort.`
+    ? `Bilder aus realen Aufträgen in ${cityLabel} und direkter Umgebung. <strong>Ziehen Sie den Schieberegler</strong>, um Vorher und Nachher zu vergleichen.`
     : (cityLabel
-        ? `Bilder aus realen Aufträgen im Raum Mittelbaden / Karlsruhe. Aus Datenschutzgründen veröffentlichen wir Fotos aus benachbarten Einsätzen statt aus jedem Ort selbst.`
-        : `Bilder aus realen Aufträgen im Raum Mittelbaden / Karlsruhe — Vorher und Nachher direkt vom Einsatzort.`);
+        ? `Bilder aus realen Aufträgen im Raum Mittelbaden / Karlsruhe. Aus Datenschutzgründen veröffentlichen wir Fotos aus benachbarten Einsätzen statt aus jedem Ort selbst. <strong>Ziehen Sie den Schieberegler</strong>, um Vorher und Nachher zu vergleichen.`
+        : `Bilder aus realen Aufträgen im Raum Mittelbaden / Karlsruhe. <strong>Ziehen Sie den Schieberegler</strong>, um Vorher und Nachher zu vergleichen.`);
   const note = `Alle Bilder stammen aus echten Aufträgen — keine Stockfotos. Eigene Fotos können wir auf Anfrage und mit Einverständnis der Auftraggeber für Referenzzwecke teilen.`;
+
+  const cards = items.map((it, i) => buildSlider(it, i, cityLabel, isLocal)).join('\n');
 
   return `<section class="sec">
     <div class="sec-mark">Galerie</div>
     <h2 class="sec-h">${heading}</h2>
     <p class="sec-p">${desc}</p>
-    <div class="gal-grid">
-${buildCards(items, cityLabel, isLocal)}
+    <div class="vn-grid">
+${cards}
     </div>
     <p class="gal-note">${note}</p>
   </section>`;
 }
 
-// Hub pages without a city: treat as regional
-const HUB_PAGES = new Set([
-  'bueroreinigung.html', 'endreinigung.html', 'fensterreinigung.html',
-  'grundreinigung.html', 'hausmeisterservice.html', 'reinigung.html',
-  'unterhaltsreinigung.html', 'unterhaltsreinigung-region.html',
-]);
+const VN_CSS = `
+.vn-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px;}
+@media(max-width:720px){.vn-grid{grid-template-columns:1fr;}}
+.vn-card{position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden; margin:0; user-select:none; touch-action:pan-y; cursor:ew-resize; background:var(--bg-2,#1a2030); box-shadow:0 10px 24px -10px rgba(26,32,48,.22);}
+.vn-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;}
+.vn-before{clip-path:inset(0 calc(100% - var(--vn-pos,50%)) 0 0); transition:clip-path .04s linear;}
+.vn-handle{position:absolute; top:0; bottom:0; left:var(--vn-pos,50%); width:3px; background:#fff; transform:translateX(-50%); pointer-events:none; box-shadow:0 0 8px rgba(0,0,0,.4);}
+.vn-knob{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; background:#fff; color:#1a2030; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; box-shadow:0 4px 12px rgba(0,0,0,.3);}
+.vn-tag{position:absolute; padding:5px 11px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; pointer-events:none;}
+.vn-tag-l{top:12px; left:12px; background:rgba(255,255,255,.92); color:var(--ink,#1a2030);}
+.vn-tag-r{top:12px; right:12px; background:var(--green,#2bbf6e); color:#fff;}
+.vn-num{position:absolute; bottom:10px; right:12px; padding:4px 10px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.6rem; letter-spacing:.14em; background:rgba(0,0,0,.55); color:#fff; pointer-events:none;}
+`;
+
+const VN_JS = `
+(function(){
+  function init(card){
+    if(card.dataset.vnReady) return; card.dataset.vnReady='1';
+    var setPos = function(clientX){
+      var r = card.getBoundingClientRect();
+      var pct = ((clientX - r.left) / r.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      card.style.setProperty('--vn-pos', pct + '%');
+    };
+    var dragging = false;
+    var down = function(e){ dragging = true; var x = (e.touches?e.touches[0].clientX:e.clientX); setPos(x); e.preventDefault && e.preventDefault(); };
+    var move = function(e){ if(!dragging) return; var x = (e.touches?e.touches[0].clientX:e.clientX); setPos(x); };
+    var up = function(){ dragging = false; };
+    card.addEventListener('mousedown', down);
+    card.addEventListener('touchstart', down, {passive:false});
+    window.addEventListener('mousemove', move);
+    window.addEventListener('touchmove', move, {passive:true});
+    window.addEventListener('mouseup', up);
+    window.addEventListener('touchend', up);
+    // Optional hover preview on desktop
+    card.addEventListener('mouseenter', function(){ if(!dragging) card.style.setProperty('--vn-pos','50%'); });
+  }
+  function ready(){ document.querySelectorAll('[data-vn]').forEach(init); }
+  if(document.readyState!=='loading') ready();
+  else document.addEventListener('DOMContentLoaded', ready);
+})();
+`;
 
 function fixPage(file) {
-  const baseName = path.basename(file);
-  let meta = parseFilename(file);
-  if (!meta && HUB_PAGES.has(baseName)) {
-    meta = { service: baseName.replace('.html', ''), city: null };
-  }
-  if (!meta) return { changed: false, reason: 'no city match' };
+  const meta = parseFilename(file);
+  if (!meta) return { changed: false, reason: 'no city/hub match' };
 
   let html = fs.readFileSync(file, 'utf8');
-  // Find the gallery section. It begins with `<section ...>` containing
-  // `<div class="sec-mark">Galerie</div>` and ends with `</section>`.
-  const startMarker = /<section class="sec">\s*<div class="sec-mark">Galerie<\/div>/;
-  const startMatch = html.match(startMarker);
+  const startMatch = html.match(/<section class="sec">\s*<div class="sec-mark">Galerie<\/div>/);
   if (!startMatch) return { changed: false, reason: 'no gallery section' };
 
-  // Find matching </section>. Use index + brute scan.
   const start = startMatch.index;
   const after = html.slice(start);
   const endIdx = after.indexOf('</section>');
@@ -206,17 +249,33 @@ function fixPage(file) {
   const sectionEnd = start + endIdx + '</section>'.length;
   const oldSection = html.slice(start, sectionEnd);
 
-  const cityLabel = meta.city ? (CITY_LABEL[meta.city] || meta.city) : null;
-  const { items, isLocal } = pickItems(meta.city, meta.service);
-  if (items.length === 0) return { changed: false, reason: 'no items' };
-
-  const newSection = buildGalleryHtml(items, isLocal, cityLabel);
-
-  if (oldSection === newSection) return { changed: false, reason: 'identical' };
+  const newSection = buildGallerySection(meta.city, meta.service);
+  if (oldSection === newSection && html.includes('.vn-grid{')) return { changed: false, reason: 'no-op' };
 
   html = html.slice(0, start) + newSection + html.slice(sectionEnd);
+
+  // Inject CSS into the first <style> block (idempotent — replace if present)
+  if (html.includes('/* vn-slider css */')) {
+    html = html.replace(/\/\* vn-slider css \*\/[\s\S]*?\/\* \/vn-slider css \*\//,
+      `/* vn-slider css */${VN_CSS}/* /vn-slider css */`);
+  } else {
+    html = html.replace(/(<style[^>]*>)/, `$1/* vn-slider css */${VN_CSS}/* /vn-slider css */`);
+  }
+
+  // Strip any older one-off badges/CSS we injected before (vn-tag with ↔)
+  html = html.replace(/\.vn-tag\{position:absolute;[^}]+\}\s*/g, '');
+
+  // Inject JS just before </body>, idempotent
+  if (html.includes('/* vn-slider js */')) {
+    html = html.replace(/\/\* vn-slider js \*\/[\s\S]*?\/\* \/vn-slider js \*\//,
+      `/* vn-slider js */${VN_JS}/* /vn-slider js */`);
+  } else {
+    html = html.replace(/(<\/body>)/i,
+      `<script>/* vn-slider js */${VN_JS}/* /vn-slider js */</script>$1`);
+  }
+
   fs.writeFileSync(file, html);
-  return { changed: true, isLocal, items: items.length, city: meta.city, service: meta.service };
+  return { changed: true, items: pickPairs(meta.city, meta.service).items.length, isLocal: pickPairs(meta.city, meta.service).isLocal };
 }
 
 function listHtml(dir) {
@@ -227,7 +286,7 @@ function listHtml(dir) {
 
 const files = listHtml(REPO);
 const stats = { changed: 0, local: 0, regional: 0, skipped: 0 };
-const skipped = [];
+const skipReasons = {};
 for (const f of files) {
   const r = fixPage(f);
   if (r.changed) {
@@ -236,12 +295,8 @@ for (const f of files) {
     else stats.regional++;
   } else {
     stats.skipped++;
-    skipped.push(`${path.basename(f)}: ${r.reason}`);
+    skipReasons[r.reason] = (skipReasons[r.reason] || 0) + 1;
   }
 }
-console.log(`Updated ${stats.changed} pages (${stats.local} local-photos, ${stats.regional} regional-pool)`);
-console.log(`Skipped ${stats.skipped}`);
-if (skipped.length && skipped.length < 50) {
-  console.log('Skipped files:');
-  for (const s of skipped) console.log('  ' + s);
-}
+console.log(`Updated ${stats.changed} pages (${stats.local} local, ${stats.regional} regional)`);
+console.log(`Skipped ${stats.skipped}:`, skipReasons);
