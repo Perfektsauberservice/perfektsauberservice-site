@@ -423,7 +423,19 @@ async function main() {
   console.log(`Facebook: ${fbId || 'skip/eroare'}`);
 }
 
+// Coduri Meta tranziente (anti-spam, rate-limit) — workflow-ul nu trebuie să eșueze pe ele.
+const TRANSIENT_META_CODES = [
+  '"code":4', '"code":17', '"code":32',
+  '"error_subcode":2207051', '"error_subcode":2207026',
+];
+
 main().catch(err => {
-  console.error('❌ Eroare fatala:', err.message);
+  const msg = err.message || '';
+  if (TRANSIENT_META_CODES.some(code => msg.includes(code))) {
+    console.warn(`⚠️ Meta block tranzitoriu detectat — sare runul fără fail.`);
+    console.warn(`   Detalii: ${msg}`);
+    process.exit(0);
+  }
+  console.error('❌ Eroare fatala:', msg);
   process.exit(1);
 });

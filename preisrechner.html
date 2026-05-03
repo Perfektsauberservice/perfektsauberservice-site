@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="index,follow">
-<title>Entrümpelung Preisrechner | Perfekt Sauber Service</title>
-<meta name="description" content="Unverbindliche Preisorientierung für Entrümpelung in Rastatt, Baden-Baden, Gaggenau und Umgebung.">
-<meta property="og:title" content="Entrümpelung Preisrechner | Perfekt Sauber Service">
-<meta property="og:description" content="Unverbindliche Preisorientierung für Entrümpelung in Rastatt, Baden-Baden, Gaggenau und Umgebung.">
+<title>Preisrechner | Festpreis sofort schätzen | Perfekt Sauber Service</title>
+<meta name="description" content="Kostenloser Preisrechner für Wohnungsauflösung, Entrümpelung, Bauendreinigung, Grundreinigung und Malerarbeiten. Schiebe die Regler — sofortige Schätzung nach echter Preisrichtwert-Tabelle.">
+<meta property="og:title" content="Preisrechner | Festpreis sofort schätzen | Perfekt Sauber Service">
+<meta property="og:description" content="Kostenloser Preisrechner für Wohnungsauflösung, Entrümpelung, Bauendreinigung, Grundreinigung und Malerarbeiten. Schiebe die Regler — sofortige Schätzung nach echter Preisrichtwert-Tabelle.">
 <meta property="og:url" content="https://perfektsauberservice.com/preisrechner">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
@@ -258,7 +258,34 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 #cookieBanner .acc{background:var(--green); color:#fff;}
 #cookieBanner .dec{border:1px solid var(--line); color:var(--ink);}
 </style>
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Perfekt Sauber Service Preisrechner",
+  "url": "https://perfektsauberservice.com/preisrechner",
+  "description": "Kostenloser Preisrechner für Wohnungsauflösung, Entrümpelung, Bauendreinigung, Grundreinigung und Malerarbeiten. Schiebe die Regler — sofortige Schätzung nach echter Preisrichtwert-Tabelle.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Perfekt Sauber Service",
+    "telephone": "+49 163 9087197",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Reutstraße 9",
+      "addressLocality": "Loffenau",
+      "postalCode": "76597",
+      "addressCountry": "DE"
+    }
+  }
+}
+</script>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF"></script>
 <script>
@@ -267,6 +294,21 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   gtag('js', new Date());
   gtag('config', 'G-BMC32KSYKF');
 </script>
+<style>
+@media(max-width:980px){
+  .calc-section > .reveal{
+    display:block !important;
+    grid-template-columns:1fr !important;
+    gap:32px !important;
+  }
+  .calc-section > .reveal > div{
+    position:static !important;
+    margin-bottom:24px;
+  }
+  .calc-section > .reveal > div:last-child{margin-bottom:0;}
+  .calc-section{padding:60px 20px !important;}
+}
+</style>
 </head>
 <body>
 <nav class="nav">
@@ -285,32 +327,306 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
-<section class="hero">
+<nav class="crumb"><a href="/">Startseite</a><span class="sep">›</span><span>Preisrechner</span></nav>
+<section class="hero" style="padding-bottom:40px;">
   <div>
-    
-    <h1 class="h1"><em>Entrümpelung</em> Preisrechner für Rastatt &amp; Umgebung</h1>
-    
+    <span class="eyebrow">Festpreis · Sofort-Schätzung · Vor-Ort-Termin kostenlos</span>
+    <h1 class="h1">Preis-<em>Rechner</em>.<br/>Festpreis nach <b>Begehung</b>.</h1>
+    <p class="deck">Detaillierte Schätzung nach echter Preisrichtwert-Tabelle. Schieben Sie die Regler — Sie sehen sofort jede Position. Den verbindlichen Festpreis erhalten Sie nach kostenloser Vor-Ort-Besichtigung.</p>
     <div class="cta-row">
-      <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
+      <a href="#rechner" class="btn btn-pri">Jetzt rechnen ↓</a>
       <a href="https://wa.me/491639087197" class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
-      <a href="/preisrechner" class="btn btn-sec">Preis berechnen</a>
+      <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
     </div>
-    
   </div>
-  
+  <div class="hero-img">
+    <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager"/>
+    <div class="badge"><strong>Kostenlos</strong><span>Schätzen</span></div>
+  </div>
 </section>
-<div class="strip">
-  <div class="strip-row">
-    <span><b>Familiengeführt</b> · seit 2023</span>
-    <span><b>Festpreis-Garantie</b> · schriftlich</span>
-    <span><span class="star">★★★★★</span> <b>5,0</b> Google</span>
-    <span><b>DSGVO-konform</b> · Diskret</span>
-    <span><b>Vollständig versichert</b></span>
+
+<section class="calc-section" id="rechner" style="padding:120px 48px; max-width:1440px; margin:0 auto;">
+  <div class="reveal" style="display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:start;">
+    <div style="position:sticky; top:90px;">
+      <div class="ch-mark">Preis-Rechner</div>
+      <h2 class="ch-h">Was kostet das <em>ungefähr</em>?</h2>
+      <p class="ch-p">Detaillierte Schätzung nach echter Preisrichtwert-Tabelle. Schieben Sie die Regler — Sie sehen sofort jede Position. Den verbindlichen Festpreis erhalten Sie nach kostenloser Vor-Ort-Besichtigung.</p>
+      <div style="background:var(--bg-2); border:1px solid var(--line); border-radius:14px; padding:32px; margin-top:24px;">
+        <div style="font-family:'Geist Mono',monospace; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Geschätzte Gesamtkosten (netto)</div>
+        <div id="calcPrice" style="font-family:'Fraunces',serif; font-weight:300; font-size:clamp(3rem,7vw,5rem); line-height:1; color:var(--blue); letter-spacing:-0.03em;">— €</div>
+        <div id="calcRange" style="font-family:'Geist Mono',monospace; font-size:.78rem; letter-spacing:.06em; color:var(--muted); margin-top:10px;">Schätzbereich: — €</div>
+
+        <div id="calcBreakdown" style="margin-top:22px; padding-top:18px; border-top:1px solid var(--line); font-family:'Geist Mono',monospace; font-size:.78rem; line-height:1.7;"></div>
+
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-size:.78rem; color:var(--muted); line-height:1.5;">* Nettopreis ohne MwSt. Endpreis nach kostenloser Vor-Ort-Besichtigung. Bei Wertanrechnung (z.B. verkäufliche Möbel) Reduktion möglich.</div>
+        <a href="#kontakt" class="btn btn-pri" style="margin-top:20px; width:100%; justify-content:center;">Verbindliches Angebot anfragen →</a>
+      </div>
+    </div>
+
+    <div style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:36px; box-shadow:0 20px 50px -25px rgba(26,32,48,.18);">
+
+      <!-- Service mode -->
+      <div class="calc-row" style="margin-bottom:34px;">
+        <label class="calc-lbl"><span>Leistung</span></label>
+        <select id="calcType" class="calc-select">
+          <option value="wohnung">Wohnungsauflösung (privat)</option>
+          <option value="firmen">Firmen-Beräumung (gewerblich)</option>
+          <option value="bauend">Bauendreinigung / Endreinigung</option>
+          <option value="feinreinigung">Feinreinigung (RW)</option>
+          <option value="malerarbeiten">Malerarbeiten (Renovierung)</option>
+          <option value="tapeten">Tapeten ablösen</option>
+          <option value="entruempelung">Entrümpelung (Keller / Dachboden / Garage)</option>
+        </select>
+      </div>
+
+      <!-- WOHNUNG block -->
+      <div data-mode="wohnung" class="calc-block">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche</span><span id="wfVal" class="calc-val">60 m²</span></label>
+          <input type="range" id="wfSize" min="20" max="300" value="60" step="5" class="calc-range"/>
+          <div class="calc-mm"><span>20 m²</span><span>300 m²</span></div>
+        </div>
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Füllgrad Wohnung</span><span id="wfFillVal" class="calc-val">Normal</span></label>
+          <input type="range" id="wfFill" min="1" max="4" value="2" step="1" class="calc-range"/>
+          <div class="calc-mm"><span>Leicht</span><span>Normal</span><span>Stark</span><span>Komplett</span></div>
+        </div>
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Etage (ohne Fahrstuhl)</span><span id="wfFloorVal" class="calc-val">EG / 1. OG</span></label>
+          <input type="range" id="wfFloor" min="0" max="4" value="0" step="1" class="calc-range"/>
+          <div class="calc-mm"><span>EG</span><span>2.</span><span>3.</span><span>4.</span><span>5. OG</span></div>
+        </div>
+
+        <details style="margin-bottom:24px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+          <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Zusatzräume (Keller / Dachboden / Garage)</summary>
+          <div style="margin-top:18px;">
+            <div class="calc-row" style="margin-bottom:18px;">
+              <label class="calc-lbl"><span>Keller</span><span id="kfVal" class="calc-val">0 m²</span></label>
+              <input type="range" id="kfSize" min="0" max="80" value="0" step="2" class="calc-range"/>
+              <select id="kfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+                <option value="0">— kein Keller —</option>
+                <option value="1">Leicht gefüllt (17 €/m²)</option>
+                <option value="2" selected>Normal gefüllt (27 €/m²)</option>
+                <option value="3">Stark gefüllt (37 €/m²)</option>
+                <option value="4">Komplett zugestellt (52 €/m²)</option>
+              </select>
+            </div>
+            <div class="calc-row" style="margin-bottom:18px;">
+              <label class="calc-lbl"><span>Dachboden</span><span id="dfVal" class="calc-val">0 m²</span></label>
+              <input type="range" id="dfSize" min="0" max="100" value="0" step="2" class="calc-range"/>
+              <select id="dfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+                <option value="0">— kein Dachboden —</option>
+                <option value="1">Leicht gefüllt (22 €/m²)</option>
+                <option value="2" selected>Normal gefüllt (32 €/m²)</option>
+                <option value="3">Stark gefüllt (47 €/m²)</option>
+                <option value="4">Komplett zugestellt (62 €/m²)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label class="calc-lbl"><span>Garage / Stellfläche</span></label>
+              <select id="garage" class="calc-select" style="font-size:.9rem; padding:10px;">
+                <option value="0">— keine Garage —</option>
+                <option value="122">Leicht gefüllt — 122 €</option>
+                <option value="182">Normal gefüllt — 182 €</option>
+                <option value="242">Stark gefüllt — 242 €</option>
+                <option value="382">Komplett zugestellt — 382 €</option>
+                <option value="482">Zugestellt &amp; vermüllt — 482 €</option>
+              </select>
+            </div>
+          </div>
+        </details>
+
+        <details style="margin-bottom:18px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+          <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Zusatzleistungen (Demontage)</summary>
+          <div style="margin-top:18px; display:grid; gap:12px;">
+            <label class="calc-chk"><input type="checkbox" id="addDecken"/><span>Deckenplatten / Styropor entfernen <em>(7,90 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addPaneele"/><span>Paneele / Vertäfelung <em>(9,80 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addTeppich"/><span>Teppich / Bodenbelag / PVC / Laminat <em>(9,80 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addFliesen"/><span>Fliesen an Wandflächen <em>(17,80 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addAnbau"/><span>Anbauten entfernen (Haken/Lampen/Gardinen) <em>(3 €/m² WF)</em></span></label>
+          </div>
+        </details>
+      </div>
+
+      <!-- FIRMEN block -->
+      <div data-mode="firmen" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Raumwert (Größe)</span></label>
+          <select id="firmenRW" class="calc-select">
+            <option value="652">RW 1 — ca. 25–35 m² (652 €)</option>
+            <option value="952" selected>RW 2 — ca. 35–50 m² (952 €)</option>
+            <option value="1152">RW 3 — ca. 50–70 m² (1.152 €)</option>
+            <option value="1352">RW 4 — ca. 70–90 m² (1.352 €)</option>
+            <option value="1552">RW 5 — ca. 90–120 m² (1.552 €)</option>
+          </select>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted); line-height:1.5;">Inkl. Beräumung, Entsorgung, Personal, Abtransport · Mieteigentum</div>
+        </div>
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Gemeinschaftsflächen / Verkehrsbereiche</span><span id="firmenGFVal" class="calc-val">0 m²</span></label>
+          <input type="range" id="firmenGF" min="0" max="200" value="0" step="5" class="calc-range"/>
+          <div class="calc-mm"><span>0</span><span>200 m²</span></div>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Bis 0,5 m³: 42 €/m² · Über 0,5 m³: 82 €/m²</div>
+        </div>
+        <div class="calc-row" style="margin-bottom:18px;">
+          <label class="calc-lbl"><span>Volumen pro m² Gemeinschaftsfläche</span></label>
+          <select id="firmenVolume" class="calc-select">
+            <option value="42">Bis 0,5 m³ (42 €/m²)</option>
+            <option value="82" selected>Bis 1,0 m³ (82 €/m²)</option>
+          </select>
+        </div>
+        <details style="margin-bottom:18px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+          <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Büromöbel-Demontage</summary>
+          <div style="margin-top:18px; display:grid; gap:10px; font-size:.85rem;">
+            <label class="calc-num"><span>Drehstühle (17 €)</span><input type="number" id="bDreh" min="0" value="0"/></label>
+            <label class="calc-num"><span>Besucherstühle (12 €)</span><input type="number" id="bBesuch" min="0" value="0"/></label>
+            <label class="calc-num"><span>Schreibtische (27 €)</span><input type="number" id="bSchreib" min="0" value="0"/></label>
+            <label class="calc-num"><span>Schrank klein (≤1,20 m) (22 €)</span><input type="number" id="bSchKlein" min="0" value="0"/></label>
+            <label class="calc-num"><span>Schrank groß (≥2,20 m) (32 €)</span><input type="number" id="bSchGross" min="0" value="0"/></label>
+            <label class="calc-num"><span>Bürocontainer (20 €)</span><input type="number" id="bCont" min="0" value="0"/></label>
+            <label class="calc-num"><span>Computer / TFT (12 €)</span><input type="number" id="bComp" min="0" value="0"/></label>
+          </div>
+          <div style="margin-top:14px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">＋ Fahrtpauschale 21,90 € bei Aufträgen unter 50 €</div>
+        </details>
+      </div>
+
+      <!-- BAUEND / Endreinigung -->
+      <div data-mode="bauend" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="bauendRW" class="calc-select">
+            <option value="242">RW 1 — ca. 25–35 m² (242 €)</option>
+            <option value="342" selected>RW 2 — ca. 35–50 m² (342 €)</option>
+            <option value="382">RW 3 — ca. 50–70 m² (382 €)</option>
+            <option value="422">RW 4 — ca. 70–90 m² (422 €)</option>
+            <option value="452">RW 5 — ca. 90–120 m² (452 €)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- FEINREINIGUNG -->
+      <div data-mode="feinreinigung" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="feinRW" class="calc-select">
+            <option value="182">RW 1 — ca. 25–35 m² (182 €)</option>
+            <option value="282" selected>RW 2 — ca. 35–50 m² (282 €)</option>
+            <option value="342">RW 3 — ca. 50–70 m² (342 €)</option>
+            <option value="382">RW 4 — ca. 70–90 m² (382 €)</option>
+            <option value="452">RW 5 — ca. 90–120 m² (452 €)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- MALERARBEITEN -->
+      <div data-mode="malerarbeiten" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="malerRW" class="calc-select">
+            <option value="382">RW 1 — ca. 25–35 m² (382 €)</option>
+            <option value="682" selected>RW 2 — ca. 35–50 m² (682 €)</option>
+            <option value="722">RW 3 — ca. 50–70 m² (722 €)</option>
+            <option value="842">RW 4 — ca. 70–90 m² (842 €)</option>
+            <option value="982">RW 5 — ca. 90–120 m² (982 €)</option>
+          </select>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Komplette Renovierung inkl. Material &amp; Nebenleistungen</div>
+        </div>
+      </div>
+
+      <!-- TAPETEN -->
+      <div data-mode="tapeten" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="tapRW" class="calc-select">
+            <option value="452">RW 1 — ca. 25–35 m² (452 €)</option>
+            <option value="652" selected>RW 2 — ca. 35–50 m² (652 €)</option>
+            <option value="852">RW 3 — ca. 50–70 m² (852 €)</option>
+            <option value="952">RW 4 — ca. 70–90 m² (952 €)</option>
+            <option value="1252">RW 5 — ca. 90–120 m² (1.252 €)</option>
+          </select>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Inkl. Abtransport &amp; Entsorgung</div>
+        </div>
+      </div>
+
+      <!-- ENTRUEMPELUNG (only) -->
+      <div data-mode="entruempelung" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:24px;">
+          <label class="calc-lbl"><span>Keller</span><span id="eKfVal" class="calc-val">0 m²</span></label>
+          <input type="range" id="eKfSize" min="0" max="100" value="0" step="2" class="calc-range"/>
+          <select id="eKfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+            <option value="0">— kein Keller —</option>
+            <option value="1">Leicht (17 €/m²)</option>
+            <option value="2" selected>Normal (27 €/m²)</option>
+            <option value="3">Stark (37 €/m²)</option>
+            <option value="4">Komplett (52 €/m²)</option>
+          </select>
+        </div>
+        <div class="calc-row" style="margin-bottom:24px;">
+          <label class="calc-lbl"><span>Dachboden</span><span id="eDfVal" class="calc-val">0 m²</span></label>
+          <input type="range" id="eDfSize" min="0" max="120" value="0" step="2" class="calc-range"/>
+          <select id="eDfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+            <option value="0">— kein Dachboden —</option>
+            <option value="1">Leicht (22 €/m²)</option>
+            <option value="2" selected>Normal (32 €/m²)</option>
+            <option value="3">Stark (47 €/m²)</option>
+            <option value="4">Komplett (62 €/m²)</option>
+          </select>
+        </div>
+        <div class="calc-row">
+          <label class="calc-lbl"><span>Garage / Stellfläche</span></label>
+          <select id="eGarage" class="calc-select">
+            <option value="0">— keine Garage —</option>
+            <option value="122">Leicht — 122 €</option>
+            <option value="182">Normal — 182 €</option>
+            <option value="242">Stark — 242 €</option>
+            <option value="382">Komplett — 382 €</option>
+            <option value="482">Vermüllt — 482 €</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sicherheitspakete (always visible) -->
+      <details style="margin-top:18px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+        <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Sicherheitspakete (Sauber &amp; Sicher)</summary>
+        <div style="margin-top:18px; display:grid; gap:10px; font-size:.85rem;">
+          <label class="calc-chk"><input type="checkbox" id="secLuester"/><span>Lüsterklemmen anbringen <em>(17 €/Stk)</em></span></label>
+          <label class="calc-chk"><input type="checkbox" id="secEck"/><span>Eckventilkappen montieren <em>(12 €/Stk)</em></span></label>
+          <label class="calc-chk"><input type="checkbox" id="secAbfluss"/><span>Abflusskappen anbringen <em>(7 €/Stk)</em></span></label>
+          <label class="calc-chk"><input type="checkbox" id="secFilter"/><span>Filterwechsel Entlüftung <em>(12 €/Stk)</em></span></label>
+        </div>
+      </details>
+
+      <div class="calc-row" style="margin-top:24px;">
+        <label class="calc-chk"><input type="checkbox" id="calcWeekend"/><span>Wochenend-/Feiertagstermin <em>(+10%)</em></span></label>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
+<style>
+.calc-lbl{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); margin-bottom:12px;}
+.calc-val{color:var(--green); font-weight:500; text-transform:none; letter-spacing:.04em;}
+.calc-select{width:100%; padding:14px; border:1px solid var(--line); border-radius:8px; font-family:'Inter',sans-serif; font-size:.95rem; background:#fff;}
+.calc-range{width:100%; accent-color:var(--green);}
+.calc-mm{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.62rem; color:var(--muted); margin-top:6px;}
+.calc-chk{display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-family:'Inter',sans-serif; font-size:.88rem; line-height:1.4;}
+.calc-chk input[type="checkbox"]{accent-color:var(--green); width:18px; height:18px; flex-shrink:0; margin-top:2px;}
+.calc-chk em{font-style:normal; color:var(--muted); font-family:'Geist Mono',monospace; font-size:.78rem;}
+.calc-num{display:flex; justify-content:space-between; align-items:center; gap:12px;}
+.calc-num input{width:64px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:'Geist Mono',monospace; text-align:right;}
+.calc-row details summary::-webkit-details-marker{display:none;}
+#calcBreakdown .row{display:flex; justify-content:space-between; gap:12px; color:var(--muted);}
+#calcBreakdown .row span:last-child{color:var(--ink); font-weight:500;}
+#calcBreakdown .sum{margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); display:flex; justify-content:space-between; color:var(--ink);}
+</style>
 
+<style>
+@media(max-width:980px){
+  .calc-section > .reveal{grid-template-columns:1fr !important; gap:32px !important;}
+  .calc-section{padding:80px 24px !important;}
+}
+</style>
 
+<section class="srv-section" id="leistungen">
 
 <section class="contact" id="kontakt">
   <div class="contact-wrap">
@@ -342,6 +658,190 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <button class="dec" id="cookieDecline">Nur notwendige</button>
   </div>
 </div>
+<script>
+// ===== Price calculator (Sachsen-Auflösung 2023 + 2 €) =====
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => new Intl.NumberFormat('de-DE').format(Math.round(n));
+
+  // Wohnung €/m² by fill grade (1..4) — base 18/25/35/45 + 2
+  const WF_RATE   = {1:20, 2:27, 3:37, 4:47};
+  const WF_LBL    = {1:'Leicht', 2:'Normal', 3:'Stark', 4:'Komplett'};
+  // Etagenzuschlag % from 2.OG (idx 0=EG/1.OG, 1=2.OG, 2=3.OG, 3=4.OG, 4=5.OG)
+  const FLOOR_PCT = [0, 0.05, 0.10, 0.15, 0.20];
+  const FLOOR_LBL = ['EG / 1. OG','2. OG','3. OG','4. OG','5. OG'];
+  // Keller €/m² (15/25/35/50 + 2)
+  const KF_RATE   = {1:17, 2:27, 3:37, 4:52};
+  // Dachboden €/m² (20/30/45/60 + 2)
+  const DF_RATE   = {1:22, 2:32, 3:47, 4:62};
+
+  function calc(){
+    const mode = $('calcType').value;
+    let total = 0;
+    const lines = [];
+
+    if (mode === 'wohnung'){
+      const wf = +$('wfSize').value;
+      const fill = +$('wfFill').value;
+      const floor = +$('wfFloor').value;
+      const wfBase = WF_RATE[fill] * wf;
+      lines.push(['Wohnung ' + wf + ' m² · ' + WF_LBL[fill], wfBase]);
+      const etage = wfBase * FLOOR_PCT[floor];
+      if (etage > 0) lines.push(['Etagenzuschlag ' + FLOOR_LBL[floor] + ' (' + Math.round(FLOOR_PCT[floor]*100) + '%)', etage]);
+      total += wfBase + etage;
+
+      // Keller
+      const kfSize = +$('kfSize').value;
+      const kfFill = +$('kfFill').value;
+      if (kfSize > 0 && kfFill > 0){
+        const v = KF_RATE[kfFill] * kfSize;
+        lines.push(['Keller ' + kfSize + ' m²', v]);
+        total += v;
+      }
+      // Dachboden
+      const dfSize = +$('dfSize').value;
+      const dfFill = +$('dfFill').value;
+      if (dfSize > 0 && dfFill > 0){
+        const v = DF_RATE[dfFill] * dfSize;
+        lines.push(['Dachboden ' + dfSize + ' m²', v]);
+        total += v;
+      }
+      // Garage
+      const gar = +$('garage').value;
+      if (gar > 0){ lines.push(['Garage / Stellfläche', gar]); total += gar; }
+
+      // Zusatzleistungen (per m² WF unless noted)
+      if ($('addDecken').checked){ const v = 7.90 * wf; lines.push(['Deckenplatten/Styropor (' + wf + ' m²)', v]); total += v; }
+      if ($('addPaneele').checked){ const v = 9.80 * wf; lines.push(['Paneele/Vertäfelung (' + wf + ' m²)', v]); total += v; }
+      if ($('addTeppich').checked){ const v = 9.80 * wf; lines.push(['Bodenbelag entfernen (' + wf + ' m²)', v]); total += v; }
+      if ($('addFliesen').checked){ const v = 17.80 * wf; lines.push(['Fliesen Wand (' + wf + ' m²)', v]); total += v; }
+      if ($('addAnbau').checked){ const v = 3 * wf; lines.push(['Anbauten entfernen (' + wf + ' m²)', v]); total += v; }
+
+      // Update labels
+      $('wfVal').textContent = wf + ' m²';
+      $('wfFillVal').textContent = WF_LBL[fill];
+      $('wfFloorVal').textContent = FLOOR_LBL[floor];
+      $('kfVal').textContent = kfSize + ' m²';
+      $('dfVal').textContent = dfSize + ' m²';
+    }
+    else if (mode === 'firmen'){
+      const rw = +$('firmenRW').value;
+      lines.push([$('firmenRW').selectedOptions[0].text.split(' (')[0], rw]);
+      total += rw;
+
+      const gf = +$('firmenGF').value;
+      const vol = +$('firmenVolume').value;
+      if (gf > 0){
+        const v = vol * gf;
+        lines.push(['Gemeinschaftsfläche ' + gf + ' m² (' + vol + ' €/m²)', v]);
+        total += v;
+      }
+      $('firmenGFVal').textContent = gf + ' m²';
+
+      // Büromöbel
+      const moebel = [
+        ['Drehstuhl', 'bDreh', 17],
+        ['Besucherstuhl', 'bBesuch', 12],
+        ['Schreibtisch', 'bSchreib', 27],
+        ['Schrank klein', 'bSchKlein', 22],
+        ['Schrank groß', 'bSchGross', 32],
+        ['Bürocontainer', 'bCont', 20],
+        ['Computer/TFT', 'bComp', 12]
+      ];
+      let moebelTotal = 0;
+      moebel.forEach(([lbl, id, rate]) => {
+        const n = +$(id).value || 0;
+        if (n > 0){ moebelTotal += rate * n; }
+      });
+      if (moebelTotal > 0){
+        lines.push(['Büromöbel-Demontage', moebelTotal]);
+        total += moebelTotal;
+        // Fahrtpauschale if under 50€
+        if (moebelTotal < 50){
+          lines.push(['Fahrtpauschale (< 50 € Auftrag)', 21.90]);
+          total += 21.90;
+        }
+      }
+    }
+    else if (mode === 'bauend'){
+      const v = +$('bauendRW').value;
+      lines.push([$('bauendRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'feinreinigung'){
+      const v = +$('feinRW').value;
+      lines.push([$('feinRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'malerarbeiten'){
+      const v = +$('malerRW').value;
+      lines.push([$('malerRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'tapeten'){
+      const v = +$('tapRW').value;
+      lines.push([$('tapRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'entruempelung'){
+      const ks = +$('eKfSize').value, kf = +$('eKfFill').value;
+      if (ks > 0 && kf > 0){ const v = KF_RATE[kf] * ks; lines.push(['Keller ' + ks + ' m²', v]); total += v; }
+      const ds = +$('eDfSize').value, df = +$('eDfFill').value;
+      if (ds > 0 && df > 0){ const v = DF_RATE[df] * ds; lines.push(['Dachboden ' + ds + ' m²', v]); total += v; }
+      const g = +$('eGarage').value;
+      if (g > 0){ lines.push(['Garage', g]); total += g; }
+      $('eKfVal').textContent = ks + ' m²';
+      $('eDfVal').textContent = ds + ' m²';
+    }
+
+    // Sicherheitspakete (always available)
+    if ($('secLuester')?.checked){ lines.push(['Lüsterklemmen anbringen', 17]); total += 17; }
+    if ($('secEck')?.checked){ lines.push(['Eckventilkappen', 12]); total += 12; }
+    if ($('secAbfluss')?.checked){ lines.push(['Abflusskappen', 7]); total += 7; }
+    if ($('secFilter')?.checked){ lines.push(['Filterwechsel Entlüftung', 12]); total += 12; }
+
+    // Weekend
+    if ($('calcWeekend').checked && total > 0){
+      const v = total * 0.10;
+      lines.push(['Wochenend-Zuschlag (+10%)', v]);
+      total += v;
+    }
+
+    const lo = total * 0.90;
+    const hi = total * 1.15;
+
+    $('calcPrice').textContent = total > 0 ? fmt(total) + ' €' : '— €';
+    $('calcRange').textContent = total > 0 ? 'Schätzbereich: ' + fmt(lo) + ' – ' + fmt(hi) + ' €' : 'Schätzbereich: — €';
+
+    // Breakdown
+    const bd = $('calcBreakdown');
+    if (lines.length === 0){
+      bd.innerHTML = '<div style="color:var(--muted); font-size:.78rem;">Wählen Sie eine Leistung und konfigurieren Sie die Optionen rechts.</div>';
+    } else {
+      bd.innerHTML = lines.map(([l, v]) =>
+        '<div class="row"><span>' + l + '</span><span>' + fmt(v) + ' €</span></div>'
+      ).join('') + '<div class="sum"><span>Gesamt netto</span><span>' + fmt(total) + ' €</span></div>';
+    }
+  }
+
+  function showMode(){
+    const mode = $('calcType').value;
+    document.querySelectorAll('.calc-block').forEach(el => {
+      el.style.display = el.dataset.mode === mode ? 'block' : 'none';
+    });
+    calc();
+  }
+
+  // Wire all inputs inside #rechner
+  document.querySelectorAll('#rechner input, #rechner select').forEach(el => {
+    el.addEventListener('input', calc);
+    el.addEventListener('change', calc);
+  });
+  $('calcType').addEventListener('change', showMode);
+  showMode();
+})();
+
+</script>
 <script>
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();

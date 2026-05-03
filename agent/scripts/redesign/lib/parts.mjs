@@ -20,7 +20,7 @@ export const NAV = `<nav class="nav">
 
 export const STRIP = `<div class="strip">
   <div class="strip-row">
-    <span><b>Familiengeführt</b> · seit 2023</span>
+    <span><b>Familiengeführt</b> · seit 2025</span>
     <span><b>Festpreis-Garantie</b> · schriftlich</span>
     <span><span class="star">★★★★★</span> <b>5,0</b> Google</span>
     <span><b>DSGVO-konform</b> · Diskret</span>

@@ -1,0 +1,28 @@
+name: PSS Ad Refresh Reminder
+
+on:
+  schedule:
+    # Luni si Joi la 07:30 UTC.
+    # Asta inseamna 09:30 ora DE in vara (CEST = UTC+2)
+    # si 08:30 ora DE in iarna (CET = UTC+1).
+    # GitHub Actions cron este best-effort; intervalul real poate varia (+5-15 min).
+    - cron: '30 7 * * 1,4'
+  workflow_dispatch:
+
+jobs:
+  reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Send refresh reminder
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node agent/scripts/ad-refresh-reminder.mjs
