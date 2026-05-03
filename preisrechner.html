@@ -30,7 +30,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   --bg:#fbf7f0;
   --bg-2:#f3ede0;
   --ink:#1a2030;
-  --muted:#5a6173;
+  --muted:#4a5160;
   --line:#e5dccb;
   --blue:#1d6dd6;
   --green:#5aa83a;
@@ -313,7 +313,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <body>
 <nav class="nav">
   <a href="/" class="nav-brand">
-    <img src="/images/logo.webp" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
+    <img src="/images/logo.webp" width="200" height="200" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
     <span style="display:flex; flex-direction:column; line-height:1;">
       <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
       <span class="sub">Service · Rastatt</span>
@@ -340,7 +340,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     </div>
   </div>
   <div class="hero-img">
-    <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager"/>
+    <img src="/images/echipa.webp" width="1536" height="1024" alt="Perfekt Sauber Service Team" loading="eager"/>
     <div class="badge"><strong>Kostenlos</strong><span>Schätzen</span></div>
   </div>
 </section>
@@ -367,7 +367,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 
       <!-- Service mode -->
       <div class="calc-row" style="margin-bottom:34px;">
-        <label class="calc-lbl"><span>Leistung</span></label>
+        <label class="calc-lbl" for="calcType"><span>Leistung</span></label>
         <select id="calcType" class="calc-select">
           <option value="wohnung">Wohnungsauflösung (privat)</option>
           <option value="firmen">Firmen-Beräumung (gewerblich)</option>
@@ -382,17 +382,17 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- WOHNUNG block -->
       <div data-mode="wohnung" class="calc-block">
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Wohnfläche</span><span id="wfVal" class="calc-val">60 m²</span></label>
+          <label class="calc-lbl" for="wfSize"><span>Wohnfläche</span><span id="wfVal" class="calc-val">60 m²</span></label>
           <input type="range" id="wfSize" min="20" max="300" value="60" step="5" class="calc-range"/>
           <div class="calc-mm"><span>20 m²</span><span>300 m²</span></div>
         </div>
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Füllgrad Wohnung</span><span id="wfFillVal" class="calc-val">Normal</span></label>
+          <label class="calc-lbl" for="wfFill"><span>Füllgrad Wohnung</span><span id="wfFillVal" class="calc-val">Normal</span></label>
           <input type="range" id="wfFill" min="1" max="4" value="2" step="1" class="calc-range"/>
           <div class="calc-mm"><span>Leicht</span><span>Normal</span><span>Stark</span><span>Komplett</span></div>
         </div>
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Etage (ohne Fahrstuhl)</span><span id="wfFloorVal" class="calc-val">EG / 1. OG</span></label>
+          <label class="calc-lbl" for="wfFloor"><span>Etage (ohne Fahrstuhl)</span><span id="wfFloorVal" class="calc-val">EG / 1. OG</span></label>
           <input type="range" id="wfFloor" min="0" max="4" value="0" step="1" class="calc-range"/>
           <div class="calc-mm"><span>EG</span><span>2.</span><span>3.</span><span>4.</span><span>5. OG</span></div>
         </div>
@@ -401,7 +401,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
           <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Zusatzräume (Keller / Dachboden / Garage)</summary>
           <div style="margin-top:18px;">
             <div class="calc-row" style="margin-bottom:18px;">
-              <label class="calc-lbl"><span>Keller</span><span id="kfVal" class="calc-val">0 m²</span></label>
+              <label class="calc-lbl" for="kfSize"><span>Keller</span><span id="kfVal" class="calc-val">0 m²</span></label>
               <input type="range" id="kfSize" min="0" max="80" value="0" step="2" class="calc-range"/>
               <select id="kfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
                 <option value="0">— kein Keller —</option>
@@ -412,7 +412,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
               </select>
             </div>
             <div class="calc-row" style="margin-bottom:18px;">
-              <label class="calc-lbl"><span>Dachboden</span><span id="dfVal" class="calc-val">0 m²</span></label>
+              <label class="calc-lbl" for="dfSize"><span>Dachboden</span><span id="dfVal" class="calc-val">0 m²</span></label>
               <input type="range" id="dfSize" min="0" max="100" value="0" step="2" class="calc-range"/>
               <select id="dfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
                 <option value="0">— kein Dachboden —</option>
@@ -423,7 +423,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
               </select>
             </div>
             <div class="calc-row">
-              <label class="calc-lbl"><span>Garage / Stellfläche</span></label>
+              <label class="calc-lbl" for="garage"><span>Garage / Stellfläche</span></label>
               <select id="garage" class="calc-select" style="font-size:.9rem; padding:10px;">
                 <option value="0">— keine Garage —</option>
                 <option value="122">Leicht gefüllt — 122 €</option>
@@ -451,7 +451,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- FIRMEN block -->
       <div data-mode="firmen" class="calc-block" style="display:none;">
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Raumwert (Größe)</span></label>
+          <label class="calc-lbl" for="firmenRW"><span>Raumwert (Größe)</span></label>
           <select id="firmenRW" class="calc-select">
             <option value="652">RW 1 — ca. 25–35 m² (652 €)</option>
             <option value="952" selected>RW 2 — ca. 35–50 m² (952 €)</option>
@@ -462,13 +462,13 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
           <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted); line-height:1.5;">Inkl. Beräumung, Entsorgung, Personal, Abtransport · Mieteigentum</div>
         </div>
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Gemeinschaftsflächen / Verkehrsbereiche</span><span id="firmenGFVal" class="calc-val">0 m²</span></label>
+          <label class="calc-lbl" for="firmenGF"><span>Gemeinschaftsflächen / Verkehrsbereiche</span><span id="firmenGFVal" class="calc-val">0 m²</span></label>
           <input type="range" id="firmenGF" min="0" max="200" value="0" step="5" class="calc-range"/>
           <div class="calc-mm"><span>0</span><span>200 m²</span></div>
           <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Bis 0,5 m³: 42 €/m² · Über 0,5 m³: 82 €/m²</div>
         </div>
         <div class="calc-row" style="margin-bottom:18px;">
-          <label class="calc-lbl"><span>Volumen pro m² Gemeinschaftsfläche</span></label>
+          <label class="calc-lbl" for="firmenVolume"><span>Volumen pro m² Gemeinschaftsfläche</span></label>
           <select id="firmenVolume" class="calc-select">
             <option value="42">Bis 0,5 m³ (42 €/m²)</option>
             <option value="82" selected>Bis 1,0 m³ (82 €/m²)</option>
@@ -492,7 +492,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- BAUEND / Endreinigung -->
       <div data-mode="bauend" class="calc-block" style="display:none;">
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <label class="calc-lbl" for="bauendRW"><span>Wohnfläche (Raumwert)</span></label>
           <select id="bauendRW" class="calc-select">
             <option value="242">RW 1 — ca. 25–35 m² (242 €)</option>
             <option value="342" selected>RW 2 — ca. 35–50 m² (342 €)</option>
@@ -506,7 +506,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- FEINREINIGUNG -->
       <div data-mode="feinreinigung" class="calc-block" style="display:none;">
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <label class="calc-lbl" for="feinRW"><span>Wohnfläche (Raumwert)</span></label>
           <select id="feinRW" class="calc-select">
             <option value="182">RW 1 — ca. 25–35 m² (182 €)</option>
             <option value="282" selected>RW 2 — ca. 35–50 m² (282 €)</option>
@@ -520,7 +520,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- MALERARBEITEN -->
       <div data-mode="malerarbeiten" class="calc-block" style="display:none;">
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <label class="calc-lbl" for="malerRW"><span>Wohnfläche (Raumwert)</span></label>
           <select id="malerRW" class="calc-select">
             <option value="382">RW 1 — ca. 25–35 m² (382 €)</option>
             <option value="682" selected>RW 2 — ca. 35–50 m² (682 €)</option>
@@ -535,7 +535,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- TAPETEN -->
       <div data-mode="tapeten" class="calc-block" style="display:none;">
         <div class="calc-row" style="margin-bottom:28px;">
-          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <label class="calc-lbl" for="tapRW"><span>Wohnfläche (Raumwert)</span></label>
           <select id="tapRW" class="calc-select">
             <option value="452">RW 1 — ca. 25–35 m² (452 €)</option>
             <option value="652" selected>RW 2 — ca. 35–50 m² (652 €)</option>
@@ -550,7 +550,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <!-- ENTRUEMPELUNG (only) -->
       <div data-mode="entruempelung" class="calc-block" style="display:none;">
         <div class="calc-row" style="margin-bottom:24px;">
-          <label class="calc-lbl"><span>Keller</span><span id="eKfVal" class="calc-val">0 m²</span></label>
+          <label class="calc-lbl" for="eKfSize"><span>Keller</span><span id="eKfVal" class="calc-val">0 m²</span></label>
           <input type="range" id="eKfSize" min="0" max="100" value="0" step="2" class="calc-range"/>
           <select id="eKfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
             <option value="0">— kein Keller —</option>
@@ -561,7 +561,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
           </select>
         </div>
         <div class="calc-row" style="margin-bottom:24px;">
-          <label class="calc-lbl"><span>Dachboden</span><span id="eDfVal" class="calc-val">0 m²</span></label>
+          <label class="calc-lbl" for="eDfSize"><span>Dachboden</span><span id="eDfVal" class="calc-val">0 m²</span></label>
           <input type="range" id="eDfSize" min="0" max="120" value="0" step="2" class="calc-range"/>
           <select id="eDfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
             <option value="0">— kein Dachboden —</option>
@@ -572,7 +572,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
           </select>
         </div>
         <div class="calc-row">
-          <label class="calc-lbl"><span>Garage / Stellfläche</span></label>
+          <label class="calc-lbl" for="eGarage"><span>Garage / Stellfläche</span></label>
           <select id="eGarage" class="calc-select">
             <option value="0">— keine Garage —</option>
             <option value="122">Leicht — 122 €</option>
@@ -654,11 +654,11 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div class="lab">Cookie-Hinweis</div>
   <p>Wir verwenden notwendige Cookies, damit die Website funktioniert. Optionale Analyse-Cookies helfen uns, sie zu verbessern.</p>
   <div class="row">
-    <button class="acc" id="cookieAccept">Alle akzeptieren</button>
-    <button class="dec" id="cookieDecline">Nur notwendige</button>
+    <button class="acc" id="cookieAccept" aria-label="Alle Cookies akzeptieren">Alle akzeptieren</button>
+    <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
   </div>
 </div>
-<script>
+<script type="text/x-deferred-calc" id="calcDeferred">
 // ===== Price calculator (Sachsen-Auflösung 2023 + 2 €) =====
 (function(){
   const $ = id => document.getElementById(id);
@@ -852,6 +852,29 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   document.getElementById('cookieAccept').onclick = function(){ close('all'); };
   document.getElementById('cookieDecline').onclick = function(){ close('necessary'); };
   document.getElementById('cookieReopen').onclick = function(e){ e.preventDefault(); b.style.display='block'; };
+})();
+</script>
+
+<script>
+(function(){
+  var calc = document.getElementById('calcDeferred'); if (!calc) return;
+  var fired = false;
+  function go(){
+    if (fired) return; fired = true;
+    var s = document.createElement('script');
+    s.text = calc.textContent;
+    document.body.appendChild(s);
+  }
+  var sec = document.getElementById('rechner') || document.getElementById('preisrechner') || calc.previousElementSibling;
+  if (sec && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: '600px' });
+    io.observe(sec);
+  }
+  ['click','scroll','keydown','touchstart','pointerdown'].forEach(function(ev){
+    addEventListener(ev, go, { once: true, passive: true });
+  });
+  // Safety: if neither IO nor interaction fires within 6s, run anyway
+  setTimeout(go, 6000);
 })();
 </script>
 </body>
