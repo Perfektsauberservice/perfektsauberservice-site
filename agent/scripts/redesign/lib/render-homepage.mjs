@@ -102,7 +102,10 @@ export function renderHomepage(oldIndexPath = 'index.html') {
   tpl = tpl.replace(/<meta\s+name="viewport"[^>]*\/>/, m => m + seoMeta);
 
   // 2. Image paths: img/ → /images/cibersite/
+  // (Also catches JS template literals like `img/${n}-vor.jpeg` and single-quoted strings.)
   tpl = tpl.replace(/src="img\//g, 'src="/images/cibersite/');
+  tpl = tpl.replace(/`img\//g, '`/images/cibersite/');
+  tpl = tpl.replace(/'img\//g, "'/images/cibersite/");
 
   // 3. Nav links: cibersite uses #anchors; we want them to point to real pages
   tpl = tpl.replace(/<a href="#leistungen">Leistungen<\/a>/, '<a href="/leistungen">Leistungen</a>');
@@ -137,6 +140,27 @@ export function renderHomepage(oldIndexPath = 'index.html') {
   // 7. Insert Standorte section before contact
   const standorte = buildStandorteSection();
   tpl = tpl.replace(/(<!-- ======== CONTACT ======== -->|<section class="contact")/, `${standorte}\n$1`);
+
+  // 8. Mobile fix for the price calculator: drop position:sticky and force single
+  //    column. Inline `position:sticky` on the left column overrides the existing
+  //    media query at <=980px, causing it to stick atop the right column on phones.
+  const mobileFix = `
+<style>
+@media(max-width:980px){
+  .calc-section > .reveal{
+    display:block !important;
+    grid-template-columns:1fr !important;
+    gap:32px !important;
+  }
+  .calc-section > .reveal > div{
+    position:static !important;
+    margin-bottom:24px;
+  }
+  .calc-section > .reveal > div:last-child{margin-bottom:0;}
+  .calc-section{padding:60px 20px !important;}
+}
+</style>`;
+  tpl = tpl.replace('</head>', `${mobileFix}\n</head>`);
 
   return tpl;
 }

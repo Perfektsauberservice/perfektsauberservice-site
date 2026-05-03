@@ -331,6 +331,22 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   gtag('js', new Date());
   gtag('config', 'G-BMC32KSYKF');
 </script>
+
+<style>
+@media(max-width:980px){
+  .calc-section > .reveal{
+    display:block !important;
+    grid-template-columns:1fr !important;
+    gap:32px !important;
+  }
+  .calc-section > .reveal > div{
+    position:static !important;
+    margin-bottom:24px;
+  }
+  .calc-section > .reveal > div:last-child{margin-bottom:0;}
+  .calc-section{padding:60px 20px !important;}
+}
+</style>
 </head>
 <body>
 
@@ -1059,7 +1075,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 const PAIRS = [];
 for (let i = 1; i <= 11; i++) {
   const n = String(i).padStart(2, '0');
-  PAIRS.push({ vor: `img/${n}-vor.jpeg`, nach: `img/${n}-nach.png`, n: i });
+  PAIRS.push({ vor: `/images/cibersite/${n}-vor.jpeg`, nach: `/images/cibersite/${n}-nach.png`, n: i });
 }
 const grid = document.getElementById('galGrid');
 function renderGrid(filter) {
