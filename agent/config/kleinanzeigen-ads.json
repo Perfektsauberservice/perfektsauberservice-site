@@ -1,0 +1,14 @@
+[
+  { "id": 1,  "title": "Entrümpelung Karlsruhe — Festpreis ab 290 €",                "category": "Entrümpelung",  "city": "Karlsruhe" },
+  { "id": 2,  "title": "Haushaltsauflösung Rastatt + Umgebung — schnell & fair",     "category": "Entrümpelung",  "city": "Rastatt" },
+  { "id": 3,  "title": "Wohnungsauflösung Baden-Baden — kostenlose Besichtigung",    "category": "Entrümpelung",  "city": "Baden-Baden" },
+  { "id": 4,  "title": "Keller- & Dachbodenentrümpelung — Bühl, Gaggenau",           "category": "Entrümpelung",  "city": "Bühl" },
+  { "id": 5,  "title": "Endreinigung Karlsruhe — Mietwohnungen, besenrein",          "category": "Reinigung",     "city": "Karlsruhe" },
+  { "id": 6,  "title": "Bauschlussreinigung Karlsruhe + Rastatt — abnahmefertig",    "category": "Reinigung",     "city": "Karlsruhe" },
+  { "id": 7,  "title": "Praxis- & Büroreinigung Karlsruhe — zuverlässig",            "category": "Reinigung",     "city": "Karlsruhe" },
+  { "id": 8,  "title": "Haushaltshilfe Rastatt + Baden-Baden — flexibel",            "category": "Reinigung",     "city": "Rastatt" },
+  { "id": 9,  "title": "Gebäudereinigung Gewerbe — Karlsruhe Region",                "category": "Reinigung",     "city": "Karlsruhe" },
+  { "id": 10, "title": "Hausmeisterservice Karlsruhe — Wartung & Pflege",            "category": "Hausmeister",   "city": "Karlsruhe" },
+  { "id": 11, "title": "Winterdienst & Gartenpflege Rastatt",                        "category": "Hausmeister",   "city": "Rastatt" },
+  { "id": 12, "title": "Nachlassauflösung — diskret & einfühlsam, gesamte Region",   "category": "Entrümpelung",  "city": "Loffenau" }
+]

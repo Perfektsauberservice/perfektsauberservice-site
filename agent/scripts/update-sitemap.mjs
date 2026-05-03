@@ -71,8 +71,12 @@ const today = new Date().toISOString();
 let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
 xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
+// Edge function strip-html.js convertește /xxx.html → /xxx via 301.
+// Sitemap-ul listează URL-ul canonic (fără .html) ca să nu raporteze GSC redirect-uri.
+const stripHtml = (file) => file.replace(/\.html$/, '');
+
 for (const file of rootFiles) {
-  const url = file === 'index.html' ? `${BASE_URL}/` : `${BASE_URL}/${file}`;
+  const url = file === 'index.html' ? `${BASE_URL}/` : `${BASE_URL}/${stripHtml(file)}`;
   const lastmod = getLastmod(join(ROOT, file));
   const priority = getPriority(file);
   const changefreq = getChangefreq(file, false);
@@ -85,7 +89,7 @@ for (const file of rootFiles) {
 }
 
 for (const file of blogFiles) {
-  const url = `${BASE_URL}/blog/${file}`;
+  const url = `${BASE_URL}/blog/${stripHtml(file)}`;
   const lastmod = getLastmod(join(ROOT, 'blog', file));
   xml += `  <url>\n`;
   xml += `    <loc>${url}</loc>\n`;

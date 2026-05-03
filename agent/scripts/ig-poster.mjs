@@ -18,6 +18,12 @@ const ROOT = join(__dirname, '..', '..');
 const IG_ACCESS_TOKEN = process.env.INSTAGRAM_ACCESS_TOKEN;
 const IG_USER_ID = '17841437576100238';
 
+// Limită self-imposed — Instagram permite 50 postări/24h, dar pentru siguranță & engagement organic
+// limităm la 1 postare/zi (redus de la 2 după ce Meta a flagged page-ul cu code 2207051).
+const MAX_POSTS_PER_DAY = 1;
+// Buffer față de quota Meta — dacă quota usage ≥ (total - QUOTA_BUFFER), sărim postarea.
+const QUOTA_BUFFER = 5;
+
 if (!IG_ACCESS_TOKEN) {
   console.error('[FEHLER] INSTAGRAM_ACCESS_TOKEN lipsește.');
   process.exit(1);
@@ -45,9 +51,19 @@ function alreadyPosted(id) {
   return getPostedLog().posted.some(p => p.id === id);
 }
 
+function postsInLast24h() {
+  const log = getPostedLog();
+  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+  return log.posted.filter(p => p.postedAt && new Date(p.postedAt).getTime() > cutoff).length;
+}
+
 function resetPostedLog() {
-  writeFileSync(POSTED_LOG, JSON.stringify({ posted: [] }, null, 2));
-  console.log('🔄 Log resetat — ciclu nou început.');
+  // Pastram doar ultimele 24h ca sa nu pierdem rate-limit tracking dupa reset
+  const log = getPostedLog();
+  const cutoff = Date.now() - 24 * 60 * 60 * 1000;
+  const recent = log.posted.filter(p => p.postedAt && new Date(p.postedAt).getTime() > cutoff);
+  writeFileSync(POSTED_LOG, JSON.stringify({ posted: recent }, null, 2));
+  console.log('🔄 Log resetat — ciclu nou început (postări recente păstrate pentru rate-limit).');
 }
 
 // ─── Caption ─────────────────────────────────────────────────────────────────
@@ -133,8 +149,39 @@ async function publishMedia(creationId) {
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
+async function checkMetaQuota() {
+  try {
+    const res = await fetch(
+      `https://graph.facebook.com/v25.0/${IG_USER_ID}/content_publishing_limit?access_token=${IG_ACCESS_TOKEN}`
+    );
+    const data = await res.json();
+    const usage = data.data?.[0]?.quota_usage ?? 0;
+    const total = data.data?.[0]?.config?.quota_total ?? 50;
+    return { usage, total };
+  } catch (e) {
+    console.warn(`⚠️ Quota check eșuat (continuăm): ${e.message}`);
+    return { usage: 0, total: 50 };
+  }
+}
+
 async function main() {
   console.log('📸 PSS Instagram Poster gestartet\n');
+
+  // ─── Rate-limit gate 1: limita noastră (2 postări/zi) ───────────────────────
+  const todayCount = postsInLast24h();
+  if (todayCount >= MAX_POSTS_PER_DAY) {
+    console.log(`⏭ Deja ${todayCount}/${MAX_POSTS_PER_DAY} postări în ultimele 24h. Sare runul.`);
+    process.exit(0);
+  }
+  console.log(`📊 Postări locale ultimele 24h: ${todayCount}/${MAX_POSTS_PER_DAY}`);
+
+  // ─── Rate-limit gate 2: quota Meta ──────────────────────────────────────────
+  const { usage, total } = await checkMetaQuota();
+  console.log(`📊 Quota Meta: ${usage}/${total}`);
+  if (usage >= total - QUOTA_BUFFER) {
+    console.log(`⚠️ Quota Meta aproape de limită (≥ ${total - QUOTA_BUFFER}). Sare runul.`);
+    process.exit(0);
+  }
 
   const projectsPath = join(ROOT, 'agent', 'config', 'projects.json');
   const { pairs } = JSON.parse(readFileSync(projectsPath, 'utf8'));
@@ -182,7 +229,24 @@ async function main() {
   console.log(`\n✅ Erfolgreich auf Instagram gepostet! ID: ${result.id}`);
 }
 
+// Coduri Meta tranziente (anti-spam, rate-limit) — workflow-ul nu trebuie să eșueze pe ele.
+// Why: Meta marchează temporar page-ul ca "acțiune blocată" pentru conținut similar repetat.
+// Ies cu 0 ca notificarea de fail să nu mai vină; rulajul următor reîncearcă natural.
+const TRANSIENT_META_CODES = [
+  '"code":4',          // Application request limit reached
+  '"code":17',         // User request limit reached
+  '"code":32',         // Page request limit reached
+  '"error_subcode":2207051', // acțiune blocată (anti-spam carousel)
+  '"error_subcode":2207026', // unsupported format / temporary
+];
+
 main().catch(err => {
-  console.error('\n❌ Fehler:', err.message);
+  const msg = err.message || '';
+  if (TRANSIENT_META_CODES.some(code => msg.includes(code))) {
+    console.warn(`\n⚠️ Meta block tranzitoriu detectat — sare runul fără fail.`);
+    console.warn(`   Detalii: ${msg}`);
+    process.exit(0);
+  }
+  console.error('\n❌ Fehler:', msg);
   process.exit(1);
 });

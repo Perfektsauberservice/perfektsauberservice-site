@@ -363,7 +363,7 @@ async function imageAgent(searchTerms, city, service) {
 async function writingAgent(topic, city, service, research, image, slug) {
   console.log(`\n✍️   [Agent 3 – Writing] Erstelle Artikel: ${slug}.html`);
 
-  const canonicalUrl = `${SITE}/blog/${slug}.html`;
+  const canonicalUrl = `${SITE}/blog/${slug}`;
   const servicePageUrl = `/${toSlug(service)}-${toSlug(city)}.html`;
 
   // Build FAQ JSON-LD
@@ -512,7 +512,7 @@ a{text-decoration:none;color:inherit}
 function updateSitemap(slug) {
   const sitemapPath = join(ROOT, 'sitemap.xml');
   let sitemap = readFileSync(sitemapPath, 'utf8');
-  const url = `${SITE}/blog/${slug}.html`;
+  const url = `${SITE}/blog/${slug}`;
 
   if (sitemap.includes(url)) {
     console.log(`   ℹ️  Sitemap: URL bereits vorhanden.`);
@@ -535,7 +535,7 @@ function updateBlogIndex(slug, research, image, city, service) {
     data = JSON.parse(readFileSync(indexPath, 'utf8'));
   } catch (e) {}
 
-  const url = `${SITE}/blog/${slug}.html`;
+  const url = `${SITE}/blog/${slug}`;
 
   // Skip if already in index
   if (data.items.find(i => i.url === url)) {
@@ -694,7 +694,7 @@ async function main() {
     if (markDone) markDone();
 
     console.log('\n🎉  Pipeline erfolgreich abgeschlossen!');
-    console.log(`   URL: ${SITE}/blog/${slug}.html\n`);
+    console.log(`   URL: ${SITE}/blog/${slug}\n`);
 
   } catch (err) {
     console.error('\n❌  Pipeline Fehler:', err.message);

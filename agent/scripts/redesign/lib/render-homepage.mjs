@@ -171,14 +171,21 @@ export function renderHomepage(oldIndexPath = 'index.html') {
   tpl = tpl.replace(/`img\//g, '`/images/cibersite/');
   tpl = tpl.replace(/'img\//g, "'/images/cibersite/");
 
-  // 2a. Override the hero pair with Laura's real before/after photos
-  //     (a Vitrine cabinet → empty laminated-floor room from a real Rastatt job).
-  tpl = tpl.replace('src="/images/cibersite/01-vor.jpeg"', 'src="/images/hero-vor.jpeg"');
-  tpl = tpl.replace('src="/images/cibersite/01-nach.png"', 'src="/images/hero-nach.jpg"');
+  // 2a. SIMPLIFIED HERO: replace the cibersite 2-photo split (which kept rendering
+  //     blank for the user across multiple debug attempts) with a single full
+  //     hero image stacked over a small "after" thumbnail. Bulletproof, no
+  //     position:absolute / aspect-ratio / transform combo to misbehave.
+  tpl = tpl.replace(/<div class="hero-img reveal">[\s\S]*?<\/div>\s*<\/section>/m, `<div class="hero-img">
+    <img src="/images/hero-vor.jpeg" alt="Wohnung vor der Räumung — Vitrine, Rastatt" loading="eager" style="width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; border-radius:14px; box-shadow:0 30px 60px -20px rgba(26,32,48,.25); display:block;"/>
+    <div style="position:absolute; bottom:-32px; right:-32px; width:46%; aspect-ratio:1; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -20px rgba(26,32,48,.4); border:6px solid #fff;">
+      <img src="/images/hero-nach.jpg" alt="Wohnung nach der Räumung — besenrein, Rastatt" loading="eager" style="width:100%; height:100%; object-fit:cover; display:block;"/>
+    </div>
+    <span style="position:absolute; top:18px; left:18px; padding:6px 12px; font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; background:#fff; color:#1a2030;">Vorher</span>
+    <span style="position:absolute; bottom:18px; right:18px; padding:6px 12px; font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; border-radius:999px; background:#5aa83a; color:#fff; z-index:3;">Nachher</span>
+  </div>
+</section>`);
 
-  // 2b. Hero is above the fold — drop the .reveal opacity:0 init class so the
-  //     photos stay visible even if IntersectionObserver fires late or fails.
-  tpl = tpl.replace('<div class="hero-img reveal">', '<div class="hero-img">');
+  // 2b. Hero text column also doesn't need .reveal (above the fold).
   tpl = tpl.replace(/<div class="reveal">\s*\n\s*<span class="eyebrow">/, '<div>\n    <span class="eyebrow">');
 
   // 3. Nav links: cibersite uses #anchors; we want them to point to real pages
