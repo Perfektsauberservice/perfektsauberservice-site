@@ -16,7 +16,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<style>*{box-sizing:border-box;margin:0;padding:0}
+<style>/* vn-slider css */
+.vn-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:18px;}
+@media(max-width:720px){.vn-grid{grid-template-columns:1fr;}}
+.vn-card{position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden; margin:0; user-select:none; touch-action:pan-y; cursor:ew-resize; background:var(--bg-2,#1a2030); box-shadow:0 10px 24px -10px rgba(26,32,48,.22);}
+.vn-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;}
+.vn-before{clip-path:inset(0 calc(100% - var(--vn-pos,50%)) 0 0); transition:clip-path .04s linear;}
+.vn-handle{position:absolute; top:0; bottom:0; left:var(--vn-pos,50%); width:3px; background:#fff; transform:translateX(-50%); pointer-events:none; box-shadow:0 0 8px rgba(0,0,0,.4);}
+.vn-knob{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; background:#fff; color:#1a2030; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; box-shadow:0 4px 12px rgba(0,0,0,.3);}
+.vn-tag-l{top:12px; left:12px; background:rgba(255,255,255,.92); color:var(--ink,#1a2030);}
+.vn-tag-r{top:12px; right:12px; background:var(--green,#2bbf6e); color:#fff;}
+.vn-num{position:absolute; bottom:10px; right:12px; padding:4px 10px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.6rem; letter-spacing:.14em; background:rgba(0,0,0,.55); color:#fff; pointer-events:none;}
+/* /vn-slider css */*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
   background:#fbf7f0; color:#1a2030; overflow-x:hidden;}
@@ -257,7 +268,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 #cookieBanner button{padding:10px 18px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;}
 #cookieBanner .acc{background:var(--green); color:#fff;}
 #cookieBanner .dec{border:1px solid var(--line); color:var(--ink);}
-.vn-tag{position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.6rem; letter-spacing:.14em; background:rgba(0,0,0,.6); color:#fff; pointer-events:none;}</style>
+</style>
 <script type="application/ld+json">
 [
 {"@context":"https://schema.org","@type":"Service","name":"Gewerberäumung Bietigheim","serviceType":"Gewerberäumung","description":"Komplette Gewerberäumung in Bietigheim für Lager, Werkstatt, Ladenlokal und Praxis mit Festpreis nach Besichtigung, fachgerechter Entsorgung nach KrWG und besenreiner Übergabe.","provider":{"@type":"LocalBusiness","name":"Perfekt Sauber Service","telephone":"+49 163 9087197","email":"kontakt@perfektsauberservice.com","url":"https://perfektsauberservice.com","image":"https://perfektsauberservice.com/images/echipa.webp","address":{"@type":"PostalAddress","streetAddress":"Reutstraße 9","addressLocality":"Loffenau","postalCode":"76597","addressCountry":"DE"},"priceRange":"€€","aggregateRating":{"@type":"AggregateRating","ratingValue":"5.0","reviewCount":"2","bestRating":"5","worstRating":"1"}},"areaServed":{"@type":"City","name":"Bietigheim","@id":"https://www.wikidata.org/wiki/Q254229"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"1500","priceSpecification":{"@type":"PriceSpecification","priceCurrency":"EUR","price":"1500","description":"ab 1.500 € für kleine Gewerbeflächen, Festpreis nach Besichtigung"}},"url":"https://perfektsauberservice.com/gewerberaeumung-bietigheim"},
@@ -389,32 +400,56 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <section class="sec">
     <div class="sec-mark">Galerie</div>
     <h2 class="sec-h"><em>Beispiele</em> aus der Region</h2>
-    <p class="sec-p">Bilder aus realen Aufträgen im Raum Mittelbaden / Karlsruhe. Aus Datenschutzgründen veröffentlichen wir Fotos aus benachbarten Einsätzen statt aus jedem Ort selbst.</p>
-    <div class="gal-grid">
-    <div class="gal-card">
-      <img src="/images/splitscreen/wohnung-ettlingen-1-splitscreen.webp" width="1200" height="630" alt="Räumung im Raum Mittelbaden — Wohnung Vorher und Nachher Beispiel 1" loading="lazy"/>
-      <span class="num">№ 01</span>
-    </div>
-    <div class="gal-card">
-      <img src="/images/splitscreen/wohnung-rastatt-1-splitscreen.webp" width="1200" height="630" alt="Räumung im Raum Mittelbaden — Wohnung Vorher und Nachher Beispiel 2" loading="lazy"/>
-      <span class="num">№ 02</span>
-    </div>
-    <div class="gal-card">
-      <img src="/images/splitscreen/keller-rastatt-1-splitscreen.webp" width="1200" height="630" alt="Räumung im Raum Mittelbaden — Keller Vorher und Nachher Beispiel 3" loading="lazy"/>
-      <span class="num">№ 03</span>
-    </div>
-    <div class="gal-card">
-      <img src="/images/splitscreen/wohnung-karlsruhe-1-splitscreen.webp" width="1200" height="630" alt="Räumung im Raum Mittelbaden — Wohnung Vorher und Nachher Beispiel 4" loading="lazy"/>
-      <span class="num">№ 04</span>
-    </div>
-    <div class="gal-card">
-      <img src="/images/splitscreen/wohnung-gaggenau-1-splitscreen.webp" width="1200" height="630" alt="Räumung im Raum Mittelbaden — Wohnung Vorher und Nachher Beispiel 5" loading="lazy"/>
-      <span class="num">№ 05</span>
-    </div>
-    <div class="gal-card">
-      <img src="/images/splitscreen/keller-badenbaden-1-splitscreen.webp" width="1200" height="630" alt="Räumung im Raum Mittelbaden — Keller Vorher und Nachher Beispiel 6" loading="lazy"/>
-      <span class="num">№ 06</span>
-    </div>
+    <p class="sec-p">Bilder aus realen Aufträgen im Raum Mittelbaden / Karlsruhe. Aus Datenschutzgründen veröffentlichen wir Fotos aus benachbarten Einsätzen statt aus jedem Ort selbst. <strong>Ziehen Sie den Schieberegler</strong>, um Vorher und Nachher zu vergleichen.</p>
+    <div class="vn-grid">
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Nachher" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Vorher" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ 01</span>
+    </figure>
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/wohnung-rastatt/wohnungsaufloesung-rastatt-nachher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Nachher" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/wohnung-rastatt/wohnungsaufloesung-rastatt-vorher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Vorher" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ 02</span>
+    </figure>
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/keller-1/kellerentruempelung-rastatt-nachher-1.webp" alt="Räumung im Raum Mittelbaden — Keller — Nachher" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/keller-1/kellerentruempelung-rastatt-vorher-1.webp" alt="Räumung im Raum Mittelbaden — Keller — Vorher" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ 03</span>
+    </figure>
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Nachher" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-vorher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Vorher" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ 04</span>
+    </figure>
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Nachher" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.webp" alt="Räumung im Raum Mittelbaden — Wohnung — Vorher" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ 05</span>
+    </figure>
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-1.webp" alt="Räumung im Raum Mittelbaden — Keller — Nachher" loading="lazy" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-1.webp" alt="Räumung im Raum Mittelbaden — Keller — Vorher" loading="lazy" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+      <span class="vn-num">№ 06</span>
+    </figure>
     </div>
     <p class="gal-note">Alle Bilder stammen aus echten Aufträgen — keine Stockfotos. Eigene Fotos können wir auf Anfrage und mit Einverständnis der Auftraggeber für Referenzzwecke teilen.</p>
   </section>
@@ -531,5 +566,32 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   document.getElementById('cookieReopen').onclick = function(e){ e.preventDefault(); b.style.display='block'; };
 })();
 </script>
-</body>
+<script>/* vn-slider js */
+(function(){
+  function init(card){
+    if(card.dataset.vnReady) return; card.dataset.vnReady='1';
+    var setPos = function(clientX){
+      var r = card.getBoundingClientRect();
+      var pct = ((clientX - r.left) / r.width) * 100;
+      pct = Math.max(0, Math.min(100, pct));
+      card.style.setProperty('--vn-pos', pct + '%');
+    };
+    var dragging = false;
+    var down = function(e){ dragging = true; var x = (e.touches?e.touches[0].clientX:e.clientX); setPos(x); e.preventDefault && e.preventDefault(); };
+    var move = function(e){ if(!dragging) return; var x = (e.touches?e.touches[0].clientX:e.clientX); setPos(x); };
+    var up = function(){ dragging = false; };
+    card.addEventListener('mousedown', down);
+    card.addEventListener('touchstart', down, {passive:false});
+    window.addEventListener('mousemove', move);
+    window.addEventListener('touchmove', move, {passive:true});
+    window.addEventListener('mouseup', up);
+    window.addEventListener('touchend', up);
+    // Optional hover preview on desktop
+    card.addEventListener('mouseenter', function(){ if(!dragging) card.style.setProperty('--vn-pos','50%'); });
+  }
+  function ready(){ document.querySelectorAll('[data-vn]').forEach(init); }
+  if(document.readyState!=='loading') ready();
+  else document.addEventListener('DOMContentLoaded', ready);
+})();
+/* /vn-slider js */</script></body>
 </html>
