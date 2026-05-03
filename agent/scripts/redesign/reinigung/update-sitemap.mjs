@@ -19,6 +19,8 @@ const COVERAGE = {
 const today = new Date().toISOString();
 
 const urls = [];
+// Reinigung super-hub
+urls.push({ loc: `${SITE}/reinigung`, priority: '0.9', changefreq: 'monthly' });
 // Service hubs
 for (const s of Object.keys(SERVICES)) {
   urls.push({ loc: `${SITE}/${s}`, priority: '0.9', changefreq: 'monthly' });
