@@ -193,6 +193,130 @@ export const SERVICES = {
   },
 };
 
+SERVICES.unterhaltsreinigung = {
+    slug: 'unterhaltsreinigung',
+    label: 'Unterhaltsreinigung',
+    labelDative: 'Unterhaltsreinigung',
+    metaPrefix: 'Unterhaltsreinigung',
+    intro: (city) => `Regelmäßige Unterhaltsreinigung in ${city.label} und Umgebung — die Grund-Pflege, die Treppenhäuser, Gemeinschaftsflächen, Praxen und Wohnanlagen sauber hält. Mit festem Plan, festem Personal und festem Preis pro Termin.`,
+    heroH1: (city) => `Unterhaltsreinigung ${city.label} — verlässlich, planbar, mit festem Team`,
+    heroSub: (city) => `Wöchentliche oder zweiwöchentliche Reinigung von Treppenhäusern, Gemeinschaftsflächen, Praxen und Gewerbeobjekten in ${city.label}. Festpreis pro Termin, eigenes Personal, kurze Reaktionszeiten.`,
+    eyebrow: (city) => `${city.label} & Umgebung`,
+    heroImage: '/images/lucrari/lucrare-4.jpg',
+    heroImageAlt: (city) => `Unterhaltsreinigung in ${city.label} durch Perfekt Sauber Service`,
+    priceFromEur: 32,
+    priceTable: {
+      h2: (city) => `Was kostet eine Unterhaltsreinigung in ${city.label}?`,
+      intro: (city) => `Unterhaltsreinigungen kalkulieren wir nach Fläche und Frequenz. Hier Festpreise pro Termin für ${city.label}:`,
+      headers: ['Fläche / Frequenz','Beispiel','Preis ab'],
+      rows: [
+        ['<strong>Treppenhaus</strong> (4–6 Etagen)','Mehrfamilienhaus mit 8–12 Wohneinheiten','ab 32 €/Termin'],
+        ['<strong>Wohnanlage</strong> (Gemeinschaftsflächen)','Eingangsbereich, Aufzug, Briefkästen, Müllraum','ab 65 €/Termin'],
+        ['<strong>Kleine Praxis</strong> (bis 80 m²)','2-Raum-Praxis, kleine Kanzlei','ab 75 €/Termin'],
+        ['<strong>Mittelgroßes Objekt</strong> (80–150 m²)','Größere Praxis, kleines Büro, Kosmetikstudio','ab 110 €/Termin'],
+        ['<strong>Großobjekt</strong> (150 m²+)','Etage, Verwaltung, Mehr-Räume-Praxis','Festpreis nach Begehung'],
+      ],
+      note: `<strong>Im Festpreis enthalten:</strong> Böden, Treppenhandläufe, Türgriffe, Glasflächen bis Greifhöhe, Briefkästen, Aufzug innen, Eingangsbereich, Müllraum-Pflege. Material und Geräte bringen wir mit. Vollständige Berechnung im <a href="/preisrechner">Preisrechner</a>.`,
+    },
+    services: {
+      h2: (city) => `Was wir bei einer Unterhaltsreinigung in ${city.label} machen`,
+      intro: () => `Wir folgen einem festen Plan, der die Standards der Hausverwaltungen und Eigentümergemeinschaften erfüllt. Bei Praxen und Büros nach Hygiene-Vorgaben.`,
+      cards: [
+        { title: '🏠 Treppenhäuser', desc: 'Stufen, Podeste, Handläufe, Briefkasten-Bereich, Aufzug innen, Eingangstüren — wöchentlich oder zweiwöchentlich nach Plan.' },
+        { title: '🚪 Gemeinschaftsflächen', desc: 'Müllraum, Fahrradkeller, Waschküche, Tiefgarage-Eingang, Kellergänge, Lichteinrichtung — gepflegt und ordnungsgemäß.' },
+        { title: '🪟 Glas & Fenster (innen)', desc: 'Eingangsglasflächen, Fenster der Gemeinschaftsräume bis Greifhöhe, Trennwände — entstaubt und entfettet.' },
+        { title: '🧪 Hygiene & Desinfektion', desc: 'Türgriffe, Lichtschalter, Aufzug-Tasten, häufig berührte Flächen — desinfizierend gereinigt nach Hausordnung oder Hygienevorgabe.' },
+      ],
+    },
+    usps: [
+      { num: '5,0★', title: 'Echte Bewertungen', desc: 'Verlässliche Google-Bewertungen aus der Region.' },
+      { num: 'Fix', title: 'Fester Tag, festes Team', desc: 'Sie sehen jede Woche dieselben Personen am selben Tag — keine wechselnden Teams.' },
+      { num: 'Eigen', title: 'Eigenes Personal', desc: 'Keine Subunternehmer, keine Tagesarbeiter. Eigene Mitarbeiter mit Vertrag und Ausbildung.' },
+      { num: '100%', title: 'Festpreis', desc: 'Pro Termin oder pro Monat — was vertraglich steht, ist der Preis.' },
+      { num: '24h', title: 'Reaktionszeit', desc: 'Anfragen werktags innerhalb von 24 Stunden beantwortet.' },
+      { num: '€€', title: 'MwSt-Rechnung', desc: 'Ordentliche Geschäftsrechnung mit MwSt — voll absetzbar bei Vermietung.' },
+    ],
+    steps: [
+      { title: 'Anfrage', desc: 'Per Anruf, WhatsApp oder Formular. Mit Fotos der Flächen geht es schneller.' },
+      { title: 'Begehung', desc: 'Kostenlos vor Ort, meist in 24–48 h. Wir erfassen Frequenz und Schwerpunkte.' },
+      { title: 'Reinigungsplan', desc: 'Schriftlicher Plan mit Festpreis pro Termin. Sie prüfen, wir starten.' },
+      { title: 'Reinigung', desc: 'Festes Team, fester Tag. Wir bringen Material und Geräte mit.' },
+      { title: 'Qualität', desc: 'Auf Wunsch monatliches Begehungsprotokoll. Beanstandungen bessern wir umgehend nach.' },
+    ],
+    genericFaqs: [
+      { q: () => `Was ist der Unterschied zwischen Unterhalts- und Grundreinigung?`, a: () => `Eine Unterhaltsreinigung hält den Alltagszustand sauber: gepflegte Flächen, sichtbare Reinigung, regelmäßiger Rhythmus (wöchentlich/zweiwöchentlich). Eine Grundreinigung ist die Tiefenreinigung — einmalig, gründlich, mit Spezialmitteln. In Praxis: Unterhalts hält, Grundreinigung repariert.` },
+      { q: () => `Wie oft sollte eine Wohnanlage gereinigt werden?`, a: () => `Üblich für mittelgroße Mehrfamilienhäuser ist wöchentlich für Treppenhäuser und Eingangsbereiche, zweiwöchentlich für Müllräume und Tiefgaragen-Eingänge, monatlich für seltene Bereiche (Fahrradkeller, Waschküche). Wir empfehlen den Plan nach Begehung.` },
+      { q: () => `Bekommen wir immer dasselbe Reinigungspersonal?`, a: () => `Ja. Wir teilen Ihnen ein festes Team zu — gleiche Personen, gleicher Tag, gleicher Ablauf. Bei Urlaub oder Krankheit informieren wir Sie vorab und stellen eine eingearbeitete Vertretung.` },
+      { q: () => `Ist eine Mindestlaufzeit nötig?`, a: () => `Für regelmäßige Unterhaltsreinigung empfehlen wir 3 Monate Anfangsfrist (für eingespieltes Team), danach monatliche Kündigungsfrist. Einmaltermine sind jederzeit möglich.` },
+      { q: () => `Wer haftet bei Schäden?`, a: () => `Wir sind vollständig haftpflichtversichert. Schäden werden direkt mit der Versicherung abgewickelt. Bei Vertragsabschluss führen wir ein gemeinsames Übergabeprotokoll.` },
+      { q: () => `Bringen Sie Material mit oder nutzen Sie unseres?`, a: () => `Standard: wir bringen alles mit. Wenn Sie spezielle Mittel oder umweltzertifizierte Produkte einsetzen möchten, übernehmen wir diese gerne nach Absprache.` },
+      { q: () => `Werden Verbrauchsmaterialien (Toilettenpapier, Seife) geliefert?`, a: () => `Auf Wunsch ja. Wir bieten ein optionales Verbrauchs-Paket mit monatlicher Auffüllung. Alternativ liefern Sie selbst — wir füllen kostenfrei nach.` },
+    ],
+    related: () => [],
+};
+
+SERVICES.fensterreinigung = {
+    slug: 'fensterreinigung',
+    label: 'Fensterreinigung',
+    labelDative: 'Fensterreinigung',
+    metaPrefix: 'Fensterreinigung',
+    intro: (city) => `Fensterreinigung in ${city.label} und Umgebung — innen und außen, mit Rahmen und Schienen. Für Wohnungen, Praxen, Büros und kleine Gewerbeobjekte. Festpreis pro Fenster oder pauschal — keine Stundenabrechnung.`,
+    heroH1: (city) => `Fensterreinigung ${city.label} — innen, außen, streifenfrei`,
+    heroSub: (city) => `Glasreinigung und komplette Fensterreinigung in ${city.label}: Glasflächen, Rahmen, Schienen, Lichteinfass. Ein-, zwei- oder viermal jährlich nach Plan oder einmalig.`,
+    eyebrow: (city) => `${city.label} & Umgebung`,
+    heroImage: '/images/lucrari/lucrare-6.jpg',
+    heroImageAlt: (city) => `Fensterreinigung in ${city.label} — streifenfrei innen und außen`,
+    priceFromEur: 4,
+    priceTable: {
+      h2: (city) => `Was kostet eine Fensterreinigung in ${city.label}?`,
+      intro: (city) => `Wir kalkulieren nach Fenster (klassisch) oder nach Fläche (für große Glasfassaden). Hier Festpreise für ${city.label}:`,
+      headers: ['Fenster-Typ','Beispiel','Preis ab'],
+      rows: [
+        ['<strong>Kleines Fenster</strong> (bis 1 m²)','Standard-Wohnzimmerfenster, einflügelig','ab 4 €/Fenster'],
+        ['<strong>Mittleres Fenster</strong> (1–2 m²)','Zweiflügelig oder Schiebefenster','ab 6 €/Fenster'],
+        ['<strong>Großes Fenster</strong> (2–4 m²)','Balkontür, Terrassenfenster, Schaufenster klein','ab 9 €/Fenster'],
+        ['<strong>Glasfassade</strong> (über 4 m²)','Schaufenster, Wintergarten, Glasfront','ab 8 €/m²'],
+        ['<strong>Komplette Wohnung</strong> (10–15 Fenster)','3-Zimmer-Wohnung Standard','ab 65 € pauschal'],
+      ],
+      note: `<strong>Im Festpreis enthalten:</strong> Glasflächen innen + außen, Rahmen, Schienen, Lichteinfass. Aufpreise nur bei schwer zugänglichen Fenstern (höhere Etagen ohne Balkon, Sicherungs- oder Hubsteiger-Bedarf). Vollständige Berechnung im <a href="/preisrechner">Preisrechner</a>.`,
+    },
+    services: {
+      h2: (city) => `Was wir bei einer Fensterreinigung in ${city.label} machen`,
+      intro: () => `Eine vollständige Fensterreinigung umfasst mehr als nur Glas. Wir reinigen alle Komponenten, damit es lange gut bleibt:`,
+      cards: [
+        { title: '🪟 Glasflächen innen + außen', desc: 'Streifenfrei mit professioneller Wischtechnik (kein Sprühen, keine Schlieren). Bei stark verschmutzten Fenstern auch mit Klingenschaber.' },
+        { title: '🪟 Rahmen & Falze', desc: 'Fensterrahmen außen und innen, Dichtungsgummis, Falze, Lichteinfass — entfettet und gepflegt. Verlängert die Lebensdauer der Dichtungen.' },
+        { title: '🪟 Schienen & Beschläge', desc: 'Schiebeschienen und Drehbeschläge entstaubt und gefettet auf Wunsch. Reduziert Quietschen und Verschleiß.' },
+        { title: '🪟 Innenfenster & Trennwände', desc: 'Glasflächen innen (Bad, Küche, Eingangsbereich), gläserne Trennwände, Glastüren — innen poliert.' },
+      ],
+    },
+    usps: [
+      { num: '5,0★', title: 'Echte Bewertungen', desc: 'Google-Bewertungen aus der Region — junge Firma mit hoher Sorgfalt.' },
+      { num: 'Strf', title: 'Streifenfrei garantiert', desc: 'Bei sichtbaren Streifen am selben Tag kostenlos nachgereinigt.' },
+      { num: '€/F', title: 'Preis pro Fenster', desc: 'Transparente Kalkulation. Sie wissen vor dem Termin, was es kostet.' },
+      { num: '✓', title: 'Versichert', desc: 'Vollständige Haftpflichtversicherung. Schäden werden direkt mit Versicherung geregelt.' },
+      { num: 'Plan', title: 'Regelmäßige Termine', desc: 'Auf Wunsch im 3-, 6- oder 12-Monats-Rhythmus mit Erinnerung — keine zusätzliche Buchung nötig.' },
+      { num: '€€', title: 'MwSt-Rechnung', desc: 'Bei Bedarf ordentliche Geschäftsrechnung — für Praxen, Kanzleien, Büros.' },
+    ],
+    steps: [
+      { title: 'Anfrage', desc: 'Per Anruf, WhatsApp oder Formular. Anzahl Fenster oder Fotos beschleunigen die Einschätzung.' },
+      { title: 'Festpreis', desc: 'Direkt am Telefon oder nach kurzer Begehung — wir nennen den Endpreis.' },
+      { title: 'Termin', desc: 'In der Regel innerhalb von 1 Woche. Bei kurzfristigem Bedarf auch schneller.' },
+      { title: 'Reinigung', desc: 'Wir kommen pünktlich, bringen alles mit, reinigen außen und innen. Sie müssen nicht da sein.' },
+      { title: 'Garantie', desc: 'Bei sichtbaren Streifen sofortige kostenlose Nachreinigung. 24 h Reklamationsfrist.' },
+    ],
+    genericFaqs: [
+      { q: () => `Wie oft sollte ich Fenster reinigen lassen?`, a: () => `Wohnfenster: zwei- bis viermal jährlich für sichtbar gepflegten Zustand, mindestens einmal jährlich für Werterhalt der Dichtungen. Geschäftsräume mit Kundenkontakt: monatlich oder zweimonatlich. Glasfassaden: nach Bedarf, oft saisonal.` },
+      { q: () => `Reinigen Sie auch Fenster in höheren Etagen?`, a: () => `Bis 4. OG mit Innen-Reinigung kein Problem. Außen ab 2. OG ohne Balkon klären wir die Sicherheitslage vor Ort — bei Bedarf mit Hubsteiger oder Industrieklettertechnik (Aufpreis).` },
+      { q: () => `Was passiert bei schlechtem Wetter?`, a: () => `Bei Regen verschieben wir Außen-Reinigungen ohne Aufpreis. Innen-Reinigung läuft normal weiter. Bei extremer Hitze (>30 °C) ziehen wir Termine vor (Glas trocknet zu schnell, Streifen-Risiko).` },
+      { q: () => `Wie streifenfrei wird das Ergebnis?`, a: () => `Wir verwenden professionelle Wischtechnik mit Mikrofaser-Wischer und entkalkten Reinigungsmitteln. Bei sichtbaren Streifen sofort kostenlose Nachreinigung — das ist Teil unserer Garantie.` },
+      { q: () => `Reinigen Sie auch Insektenschutzgitter?`, a: () => `Ja, gegen Aufpreis (typisch 3–6 €/Gitter). Wir nehmen sie ab, reinigen sie separat und setzen sie wieder ein. Beschädigte Gitter erkennen wir und melden vor Beschädigung.` },
+      { q: () => `Werden Rolladen und Außenjalousien gereinigt?`, a: () => `Auf Wunsch ja. Rolladen außen sind eine Sonderleistung (typisch 8–15 €/Element je nach Zustand). Innenjalousien werden im Rahmen der Glasreinigung außen abgewischt.` },
+      { q: () => `Was ist mit Kalkflecken oder hartnäckigen Verschmutzungen?`, a: () => `Erstreinigung nach längerer Vernachlässigung berechnen wir zum 1,5-fachen Preis (mehr Aufwand). Folgereinigungen dann zum Standardpreis. Bauschmutz oder Zementspritzer: separates Angebot mit Klingenschaber-Aufschlag.` },
+    ],
+    related: () => [],
+};
+
 // City-specific FAQ supplement: 1-2 questions that mention real local context
 export function cityFaqs(serviceSlug, city) {
   const faqs = [];
