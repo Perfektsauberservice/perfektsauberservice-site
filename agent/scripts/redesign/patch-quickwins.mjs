@@ -4,13 +4,21 @@
 //   3. <label class="calc-lbl"> for= association on calculator
 //   4. defer Leaflet JS until #standorte-map enters viewport (homepage only)
 //   5. width/height attrs on <img> for CLS reservation
+//   6. lazy-load calculator IIFE until first interaction
+//   7. extract deferred CSS portion to /css/site-deferred.css + async-load
 //
 // Run from repo root: node agent/scripts/redesign/patch-quickwins.mjs
 import fs from 'node:fs';
 import path from 'node:path';
 import { imageSize } from 'image-size';
+import { CSS } from './lib/css.mjs';
 
 const ROOT = process.cwd();
+const CSS_SPLIT_MARKER = '/* PRICE TABLE (editorial) */';
+const CSS_SPLIT_IDX = CSS.indexOf(CSS_SPLIT_MARKER);
+const CSS_DEFERRED_LF = CSS.slice(CSS_SPLIT_IDX);
+const CSS_DEFERRED_CRLF = CSS_DEFERRED_LF.replace(/\n/g, '\r\n');
+const ASYNC_CSS_LINK = '<link rel="preload" href="/css/site-deferred.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="/css/site-deferred.css"></noscript>';
 const sizeCache = new Map();
 function getImgSize(srcAttr) {
   if (!srcAttr || srcAttr.startsWith('http') || srcAttr.startsWith('data:')) return null;
@@ -43,7 +51,7 @@ function walk(dir, out = []) {
 }
 
 const files = walk(ROOT);
-let muted = 0, cookie = 0, calcLabels = 0, leaflet = 0, imgWH = 0, imgWHCount = 0, lazyCalc = 0;
+let muted = 0, cookie = 0, calcLabels = 0, leaflet = 0, imgWH = 0, imgWHCount = 0, lazyCalc = 0, deferCss = 0, fontsAsync = 0;
 
 for (const f of files) {
   let html = fs.readFileSync(f, 'utf8');
@@ -162,7 +170,34 @@ for (const f of files) {
   });
   if (perFile > 0) { imgWH++; imgWHCount += perFile; }
 
+  // 7. Extract deferred CSS portion → external file, replace inline with async <link>.
+  //    Idempotent: skip if /css/site-deferred.css already referenced.
+  if (!html.includes('/css/site-deferred.css')) {
+    let replaced = false;
+    if (html.includes(CSS_DEFERRED_CRLF)) {
+      html = html.replace(CSS_DEFERRED_CRLF, '');
+      replaced = true;
+    } else if (html.includes(CSS_DEFERRED_LF)) {
+      html = html.replace(CSS_DEFERRED_LF, '');
+      replaced = true;
+    }
+    if (replaced) {
+      html = html.replace('</head>', `${ASYNC_CSS_LINK}\n</head>`);
+      deferCss++;
+    }
+  }
+
+  // 8. Convert Google Fonts <link rel="stylesheet"> → non-blocking preload pattern.
+  //    URL already has `&display=swap`, so fallback font shows briefly then swaps.
+  //    Negative lookbehind: skip the link if already inside <noscript>.
+  const before8 = html;
+  html = html.replace(
+    /(?<!<noscript>)<link href="(https:\/\/fonts\.googleapis\.com\/css2\?[^"]+)" rel="stylesheet"\/?>/g,
+    (m, href) => `<link rel="preload" as="style" href="${href}" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link href="${href}" rel="stylesheet"/></noscript>`
+  );
+  if (html !== before8) fontsAsync++;
+
   if (html !== orig) fs.writeFileSync(f, html);
 }
 
-console.log(`patched: ${muted} (--muted), ${cookie} (cookie a11y), ${calcLabels} (calc labels), ${leaflet} (leaflet defer), ${lazyCalc} (lazy calc), ${imgWH} files / ${imgWHCount} imgs (width+height)`);
+console.log(`patched: ${muted} (--muted), ${cookie} (cookie a11y), ${calcLabels} (calc labels), ${leaflet} (leaflet defer), ${lazyCalc} (lazy calc), ${imgWH} files / ${imgWHCount} imgs (WH), ${deferCss} (deferred css), ${fontsAsync} (fonts async)`);
