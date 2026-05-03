@@ -174,7 +174,7 @@ export function renderHomepage(oldIndexPath = 'index.html') {
   // 2a. Override the hero pair with Laura's real before/after photos
   //     (a Vitrine cabinet → empty laminated-floor room from a real Rastatt job).
   tpl = tpl.replace('src="/images/cibersite/01-vor.jpeg"', 'src="/images/hero-vor.jpeg"');
-  tpl = tpl.replace('src="/images/cibersite/01-nach.png"', 'src="/images/hero-nach.png"');
+  tpl = tpl.replace('src="/images/cibersite/01-nach.png"', 'src="/images/hero-nach.jpg"');
 
   // 2b. Hero is above the fold — drop the .reveal opacity:0 init class so the
   //     photos stay visible even if IntersectionObserver fires late or fails.
