@@ -60,8 +60,8 @@ export const COOKIE = `<div id="cookieBanner">
   <div class="lab">Cookie-Hinweis</div>
   <p>Wir verwenden notwendige Cookies, damit die Website funktioniert. Optionale Analyse-Cookies helfen uns, sie zu verbessern.</p>
   <div class="row">
-    <button class="acc" id="cookieAccept">Alle akzeptieren</button>
-    <button class="dec" id="cookieDecline">Nur notwendige</button>
+    <button class="acc" id="cookieAccept" aria-label="Alle Cookies akzeptieren">Alle akzeptieren</button>
+    <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
   </div>
 </div>`;
 

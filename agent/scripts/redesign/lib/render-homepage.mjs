@@ -75,10 +75,22 @@ function buildStandorteSection() {
   <!-- Satellite map of the service area (Leaflet + Esri World Imagery) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <div id="standorte-map" style="height:480px; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -20px rgba(26,32,48,.25); margin-bottom:36px; background:var(--bg-2);"></div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
   (function(){
-    if (typeof L === 'undefined') return;
+    var el = document.getElementById('standorte-map');
+    if (!el) return;
+    var loaded = false;
+    function load(){
+      if (loaded) return; loaded = true;
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      s.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+      s.crossOrigin = '';
+      s.onload = init;
+      document.head.appendChild(s);
+    }
+    function init(){
+      if (typeof L === 'undefined') return;
     var data = ${mapData};
     var map = L.map('standorte-map', { scrollWheelZoom:false, zoomControl:true });
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -113,6 +125,11 @@ function buildStandorteSection() {
         }), zIndexOffset: 1000
       }).addTo(map);
     }
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { io.disconnect(); load(); } }, { rootMargin: '200px' });
+      io.observe(el);
+    } else { load(); }
   })();
   </script>
 

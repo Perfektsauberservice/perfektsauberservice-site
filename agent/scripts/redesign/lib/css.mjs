@@ -19,7 +19,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   --bg:#fbf7f0;
   --bg-2:#f3ede0;
   --ink:#1a2030;
-  --muted:#5a6173;
+  --muted:#4a5160;
   --line:#e5dccb;
   --blue:#1d6dd6;
   --green:#5aa83a;

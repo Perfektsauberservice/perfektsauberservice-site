@@ -30,7 +30,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   --bg:#fbf7f0;
   --bg-2:#f3ede0;
   --ink:#1a2030;
-  --muted:#5a6173;
+  --muted:#4a5160;
   --line:#e5dccb;
   --blue:#1d6dd6;
   --green:#5aa83a;
@@ -320,7 +320,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <body>
 <nav class="nav">
   <a href="/" class="nav-brand">
-    <img src="/images/logo.webp" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
+    <img src="/images/logo.webp" width="200" height="200" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
     <span style="display:flex; flex-direction:column; line-height:1;">
       <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
       <span class="sub">Service · Rastatt</span>
@@ -340,7 +340,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div class="container">
     <div class="header-inner">
       <a class="logo" href="/">
-        <img src="/images/logo.png" alt="Perfekt Sauber Service Logo">
+        <img src="/images/logo.png" width="1024" height="1024" alt="Perfekt Sauber Service Logo"/>
         <div class="logo-text">
           <div class="logo-name">Perfekt Sauber Service</div>
           <div class="logo-sub">Entrümpelung & Haushaltsauflösung</div>
@@ -364,7 +364,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <h1>Über Perfekt Sauber Service</h1>
     <p>Wir sind ein junges, engagiertes Team aus der Region – schnell, zuverlässig und immer besenrein.</p>
     <div class="team-photo-wrap">
-      <img src="/images/echipa.webp" alt="Team Perfekt Sauber Service – 2 Mitarbeiter in PSS-Uniform vor dem Firmenfahrzeug">
+      <img src="/images/echipa.webp" width="1536" height="1024" alt="Team Perfekt Sauber Service – 2 Mitarbeiter in PSS-Uniform vor dem Firmenfahrzeug"/>
     </div>
   </div>
 </section>
@@ -405,7 +405,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
         <p style="color:#334155;line-height:1.8">Wir sind in Rastatt zu Hause und kennen die Region – das macht unsere Arbeit schneller und effizienter.</p>
       </div>
       <div class="story-img">
-        <img src="/images/echipa.webp" alt="PSS Team bei der Arbeit">
+        <img src="/images/echipa.webp" width="1536" height="1024" alt="PSS Team bei der Arbeit"/>
       </div>
     </div>
   </div>
@@ -513,8 +513,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div class="lab">Cookie-Hinweis</div>
   <p>Wir verwenden notwendige Cookies, damit die Website funktioniert. Optionale Analyse-Cookies helfen uns, sie zu verbessern.</p>
   <div class="row">
-    <button class="acc" id="cookieAccept">Alle akzeptieren</button>
-    <button class="dec" id="cookieDecline">Nur notwendige</button>
+    <button class="acc" id="cookieAccept" aria-label="Alle Cookies akzeptieren">Alle akzeptieren</button>
+    <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
   </div>
 </div>
 <script>

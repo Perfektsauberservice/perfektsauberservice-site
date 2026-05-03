@@ -30,7 +30,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   --bg:#fbf7f0;
   --bg-2:#f3ede0;
   --ink:#1a2030;
-  --muted:#5a6173;
+  --muted:#4a5160;
   --line:#e5dccb;
   --blue:#1d6dd6;
   --green:#5aa83a;
@@ -290,7 +290,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <body>
 <nav class="nav">
   <a href="/" class="nav-brand">
-    <img src="/images/logo.webp" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
+    <img src="/images/logo.webp" width="200" height="200" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
     <span style="display:flex; flex-direction:column; line-height:1;">
       <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
       <span class="sub">Service · Rastatt</span>
@@ -318,7 +318,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <div class="trust"><div class="it"><strong>✓</strong><span>Termin in 24 h</span></div><div class="it"><strong>✓</strong><span>Kautionsrückgabe-Garantie</span></div><div class="it"><strong>✓</strong><span>Festpreis</span></div><div class="it"><strong>✓</strong><span>Versichert</span></div></div>
   </div>
   <div class="hero-img">
-    <img src="/images/echipa.webp" alt="Endreinigung Rastatt — Team von Perfekt Sauber Service" loading="eager"/>
+    <img src="/images/echipa.webp" width="1536" height="1024" alt="Endreinigung Rastatt — Team von Perfekt Sauber Service" loading="eager"/>
     <div class="badge"><strong>Vor &amp; Nach</strong><span>Rastatt</span></div>
   </div>
 </section>
@@ -485,8 +485,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div class="lab">Cookie-Hinweis</div>
   <p>Wir verwenden notwendige Cookies, damit die Website funktioniert. Optionale Analyse-Cookies helfen uns, sie zu verbessern.</p>
   <div class="row">
-    <button class="acc" id="cookieAccept">Alle akzeptieren</button>
-    <button class="dec" id="cookieDecline">Nur notwendige</button>
+    <button class="acc" id="cookieAccept" aria-label="Alle Cookies akzeptieren">Alle akzeptieren</button>
+    <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
   </div>
 </div>
 <script>
