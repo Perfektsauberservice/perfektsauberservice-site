@@ -1,25 +1,281 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Entrümpelung & Haushaltsauflösung Rastatt | PSS</title>
 <meta name="description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe. Schnell, zuverlässig und besenrein.">
-<link rel="canonical" href="https://perfektsauberservice.com/">
-<link rel="icon" type="image/png" href="/images/favicon-32.png">
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 <meta property="og:title" content="Entrümpelung & Haushaltsauflösung Rastatt | PSS">
 <meta property="og:description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt und Umgebung.">
 <meta property="og:url" content="https://perfektsauberservice.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
-<link rel="preload" as="image" href="/images/echipa.webp" fetchpriority="high">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap"></noscript>
+<meta property="og:locale" content="de_DE">
+<link rel="canonical" href="https://perfektsauberservice.com/">
+<link rel="icon" type="image/png" href="/images/favicon-32.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<title>Entrümpelung & Haushaltsauflösung Rastatt | PSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background:#fbf7f0; color:#1a2030; overflow-x:hidden;}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
+.mono{font-family:"Geist Mono",monospace}
+.serif{font-family:"Fraunces",serif}
+
+/* Brand palette — light, warm, clean */
+:root{
+  --bg:#fbf7f0;       /* warm cream */
+  --bg-2:#f3ede0;     /* deeper cream */
+  --ink:#1a2030;      /* deep navy ink */
+  --muted:#5a6173;
+  --line:#e5dccb;
+  --blue:#1d6dd6;     /* logo blue */
+  --green:#5aa83a;    /* logo green */
+  --green-dk:#3d8222;
+  --accent:#fff5d8;   /* soft sun */
+}
+
+/* ============= NAVBAR ============= */
+.nav{position:sticky; top:0; z-index:50; background:rgba(251,247,240,.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line); padding:14px 28px;
+  display:flex; justify-content:space-between; align-items:center; gap:18px;}
+.nav-brand{display:flex; align-items:center; gap:12px; font-family:"Fraunces",serif; font-size:1.15rem; letter-spacing:-0.01em;}
+.nav-brand img{height:38px; width:38px; border-radius:8px; object-fit:cover; flex-shrink:0;}
+.nav-brand b{font-weight:700; color:var(--blue);}
+.nav-brand em{font-style:normal; color:var(--green); font-weight:600;}
+.nav-brand span{color:var(--muted); font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; font-family:"Geist Mono",monospace; margin-left:6px;}
+.nav-links{display:flex; gap:24px; font-family:"Geist Mono",monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
+.nav-links a:hover{color:var(--blue);}
+.nav-cta{background:var(--green); color:#fff; padding:10px 18px; border-radius:999px;
+  font-family:"Geist Mono",monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; font-weight:500;
+  transition:all .25s;}
+.nav-cta:hover{background:var(--green-dk); transform:translateY(-1px);}
+@media(max-width:820px){.nav-links{display:none} .nav-brand span{display:none}}
+
+/* ============= HERO ============= */
+.hero{min-height:92vh; padding:60px 48px 80px; max-width:1440px; margin:0 auto;
+  display:grid; grid-template-columns:1.05fr 1fr; gap:64px; align-items:center;}
+@media(max-width:980px){.hero{grid-template-columns:1fr; padding:40px 24px 60px; gap:40px; min-height:auto;}}
+.eyebrow{display:inline-flex; align-items:center; gap:10px; font-family:"Geist Mono",monospace;
+  font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--blue); margin-bottom:28px;}
+.eyebrow::before{content:""; width:32px; height:1px; background:var(--blue);}
+.h1{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.6rem, 6.4vw, 5.2rem);
+  line-height:.96; letter-spacing:-0.025em; margin-bottom:28px; color:var(--ink);}
+.h1 em{font-style:italic; font-weight:400; color:var(--green);}
+.h1 b{font-weight:700; color:var(--blue);}
+.deck{font-size:1.1rem; line-height:1.6; color:var(--muted); max-width:48ch; margin-bottom:36px;}
+.cta-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
+.btn{padding:14px 24px; border-radius:999px; font-family:"Geist Mono",monospace;
+  font-size:.74rem; letter-spacing:.18em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:10px; transition:all .25s;}
+.btn-pri{background:var(--green); color:#fff; font-weight:500;}
+.btn-pri:hover{background:var(--green-dk); transform:translateY(-2px); box-shadow:0 12px 28px -10px rgba(61,130,34,.5);}
+.btn-sec{border:1.5px solid var(--ink); color:var(--ink);}
+.btn-sec:hover{background:var(--ink); color:var(--bg);}
+.btn-w{background:#25d366; color:#fff;}
+.btn-w:hover{background:#1ea54f;}
+.trust{display:flex; gap:36px; margin-top:52px; padding-top:28px;
+  border-top:1px solid var(--line); flex-wrap:wrap;}
+.trust .it strong{display:block; font-family:"Fraunces",serif; font-size:1.7rem; font-weight:500;
+  line-height:1; color:var(--blue);}
+.trust .it span{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin-top:6px; display:block;}
+
+/* hero img stack */
+.hero-img{position:relative; aspect-ratio:4/5; max-width:520px; margin-left:auto;}
+@media(max-width:980px){.hero-img{aspect-ratio:4/5; max-width:100%; margin:0 auto;}}
+.hero-img .photo{position:absolute; border-radius:14px; overflow:hidden; box-shadow:0 30px 60px -20px rgba(26,32,48,.25);}
+.hero-img .ph-vor{top:0; left:0; width:62%; height:62%; transform:rotate(-2deg);}
+.hero-img .ph-nach{bottom:0; right:0; width:62%; height:62%; transform:rotate(2deg); border:6px solid #fff;}
+.hero-img .ph-vor img,.hero-img .ph-nach img{width:100%; height:100%; object-fit:cover;}
+.hero-img .lbl{position:absolute; padding:6px 12px; font-family:"Geist Mono",monospace;
+  font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; border-radius:999px;}
+.hero-img .lbl-vor{top:18px; left:18px; background:#fff; color:var(--ink);}
+.hero-img .lbl-nach{bottom:18px; right:18px; background:var(--green); color:#fff;}
+.hero-img .badge{position:absolute; top:42%; left:42%; background:#fff; border-radius:50%;
+  width:96px; height:96px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-shadow:0 16px 32px -10px rgba(26,32,48,.25); transform:rotate(-8deg); z-index:3;}
+.hero-img .badge strong{font-family:"Fraunces",serif; font-style:italic; font-size:1.3rem; color:var(--green); line-height:1;}
+.hero-img .badge span{font-family:"Geist Mono",monospace; font-size:.55rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:4px;}
+
+/* ============= AUTHORITY STRIP ============= */
+.strip{background:var(--bg-2); padding:24px 48px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.strip-row{max-width:1440px; margin:0 auto; display:flex; justify-content:space-between;
+  align-items:center; gap:24px; flex-wrap:wrap; font-family:"Geist Mono",monospace;
+  font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);}
+.strip-row b{color:var(--ink); font-weight:600;}
+.strip-row .star{color:#f0b30c; letter-spacing:.05em;}
+
+/* ============= CHAPTER (story sections) ============= */
+.chapter{padding:120px 48px; max-width:1440px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;}
+@media(max-width:980px){.chapter{grid-template-columns:1fr; padding:80px 24px; gap:40px;}}
+.ch-mark{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--green); margin-bottom:18px;}
+.ch-h{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2rem, 4.6vw, 3.4rem);
+  line-height:1; letter-spacing:-0.025em; margin-bottom:24px; color:var(--ink);}
+.ch-h em{font-style:italic; color:var(--green); font-weight:400;}
+.ch-h b{font-weight:700; color:var(--blue);}
+.ch-p{color:var(--muted); font-size:1.05rem; line-height:1.7; max-width:46ch; margin-bottom:28px;}
+.ch-list{list-style:none; padding:0; margin-top:24px;}
+.ch-list li{padding:14px 0; border-bottom:1px solid var(--line); display:flex;
+  justify-content:space-between; gap:18px; font-family:"Geist Mono",monospace;
+  font-size:.78rem; letter-spacing:.06em; color:var(--ink);}
+.ch-list li span:last-child{color:var(--green); font-weight:500;}
+
+/* before/after card */
+.ba{position:relative; aspect-ratio:4/3; border-radius:14px; overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(26,32,48,.22); cursor:ew-resize; user-select:none; background:var(--bg-2);}
+.ba-side{position:absolute; inset:0;}
+.ba-side img{width:100%; height:100%; object-fit:cover; display:block;}
+.ba-vor{clip-path:inset(0 50% 0 0);}
+.ba-handle{position:absolute; top:0; bottom:0; width:3px; background:#fff; left:50%;
+  transform:translateX(-50%); pointer-events:none; box-shadow:0 0 0 1px rgba(26,32,48,.3);}
+.ba-handle::after{content:""; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:46px; height:46px; border-radius:50%; background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.25);}
+.ba-handle::before{content:"⇄"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  color:var(--ink); font-weight:700; z-index:2; font-size:1.05rem;}
+.ba-lbl{position:absolute; top:14px; padding:6px 12px; font-family:"Geist Mono",monospace;
+  font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; border-radius:999px;
+  background:rgba(255,255,255,.95); color:var(--ink);}
+.ba-lbl-l{left:14px;}
+.ba-lbl-r{right:14px; background:var(--green); color:#fff;}
+
+/* ============= GALLERY (real photos) ============= */
+.gal{padding:120px 48px; max-width:1440px; margin:0 auto;}
+@media(max-width:980px){.gal{padding:80px 24px;}}
+.gal-head{display:flex; justify-content:space-between; align-items:end; gap:24px;
+  margin-bottom:48px; padding-bottom:24px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+.gal-head h2{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.2rem,4.6vw,3.6rem);
+  line-height:1; letter-spacing:-0.025em; max-width:18ch;}
+.gal-head h2 em{font-style:italic; color:var(--green);}
+.gal-head .meta{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--muted);}
+.gal-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:32px; padding:6px;
+  background:var(--bg-2); border-radius:999px; width:fit-content;}
+.gal-tabs button{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.18em;
+  text-transform:uppercase; padding:9px 14px; border-radius:999px; color:var(--muted); transition:all .2s;}
+.gal-tabs button.on{background:#fff; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.gal-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+@media(max-width:880px){.gal-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.gal-grid{grid-template-columns:1fr;}}
+.gal-card{position:relative; aspect-ratio:4/5; border-radius:10px; overflow:hidden;
+  cursor:pointer; background:var(--bg-2); box-shadow:0 8px 20px -8px rgba(26,32,48,.18);}
+.gal-card img{width:100%; height:100%; object-fit:cover; transition:transform .5s;}
+.gal-card:hover img{transform:scale(1.04);}
+.gal-card .badge-side{position:absolute; top:12px; left:12px; padding:5px 10px; border-radius:999px;
+  font-family:"Geist Mono",monospace; font-size:.6rem; letter-spacing:.18em; text-transform:uppercase;
+  background:rgba(255,255,255,.95); color:var(--ink);}
+.gal-card.nach .badge-side{background:var(--green); color:#fff;}
+.gal-card .num{position:absolute; bottom:12px; right:12px; padding:4px 10px; border-radius:999px;
+  font-family:"Geist Mono",monospace; font-size:.6rem; letter-spacing:.14em;
+  background:rgba(0,0,0,.6); color:#fff;}
+
+/* ============= SERVICES ============= */
+.srv-section{background:var(--bg-2); padding:120px 48px; border-top:1px solid var(--line);}
+@media(max-width:980px){.srv-section{padding:80px 24px;}}
+.srv-wrap{max-width:1440px; margin:0 auto;}
+.srv-h{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.4rem,5vw,4rem);
+  line-height:1; letter-spacing:-0.025em; margin-bottom:60px; max-width:18ch;}
+.srv-h em{font-style:italic; color:var(--green);}
+.srv-list{display:grid; grid-template-columns:1fr; border-top:1px solid var(--line);}
+.srv-row{display:grid; grid-template-columns:80px 1.4fr 2fr 130px; gap:24px; padding:32px 0;
+  border-bottom:1px solid var(--line); align-items:baseline; transition:padding .3s, background .3s;}
+.srv-row:hover{padding-left:14px; background:rgba(90,168,58,.05);}
+@media(max-width:780px){.srv-row{grid-template-columns:60px 1fr 80px; gap:14px}
+  .srv-row .desc{grid-column:1 / -1; padding-top:6px}}
+.srv-num{font-family:"Geist Mono",monospace; font-size:.74rem; letter-spacing:.16em; color:var(--muted);}
+.srv-name{font-family:"Fraunces",serif; font-weight:500; font-size:clamp(1.4rem,2.6vw,2rem); letter-spacing:-0.02em;}
+.srv-name em{font-style:italic; color:var(--green); font-weight:400;}
+.srv-desc{font-size:.95rem; color:var(--muted); line-height:1.5;}
+.srv-arr{font-family:"Geist Mono",monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  text-align:right; color:var(--blue);}
+
+/* ============= QUOTE ============= */
+.quote{padding:140px 48px; text-align:center; max-width:980px; margin:0 auto;}
+@media(max-width:980px){.quote{padding:80px 24px;}}
+.quote blockquote{font-family:"Fraunces",serif; font-style:italic; font-weight:400;
+  font-size:clamp(1.7rem,3.6vw,2.6rem); line-height:1.3; letter-spacing:-0.015em; color:var(--ink);}
+.quote blockquote em{color:var(--green); font-style:normal; font-weight:500;}
+.quote .src{margin-top:32px; font-family:"Geist Mono",monospace; font-size:.7rem;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--muted);}
+
+/* ============= REVIEWS ============= */
+.rev{padding:120px 48px; max-width:1440px; margin:0 auto; border-top:1px solid var(--line);}
+@media(max-width:980px){.rev{padding:80px 24px;}}
+.rev-head{margin-bottom:48px;}
+.rev-mark{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--green); margin-bottom:14px; display:flex; align-items:center; gap:12px;}
+.rev-mark::before{content:""; width:32px; height:1px; background:var(--green);}
+.rev-head h2{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2rem,4vw,3.2rem);
+  line-height:1; letter-spacing:-0.025em;}
+.rev-head h2 em{font-style:italic; color:var(--blue);}
+.rev-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+@media(max-width:880px){.rev-grid{grid-template-columns:1fr;}}
+.rev-card{padding:32px; background:#fff; border:1px solid var(--line); border-radius:12px;}
+.rev-card .stars{color:#f0b30c; letter-spacing:.1em; margin-bottom:14px; font-size:1.05rem;}
+.rev-card p{font-family:"Fraunces",serif; font-size:1.1rem; line-height:1.55; margin-bottom:24px; color:var(--ink);}
+.rev-card .who{font-family:"Geist Mono",monospace; font-size:.68rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--muted);}
+
+/* ============= CONTACT ============= */
+.contact{background:var(--ink); color:var(--bg); padding:120px 48px;}
+@media(max-width:980px){.contact{padding:80px 24px;}}
+.contact-wrap{max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;}
+@media(max-width:880px){.contact-wrap{grid-template-columns:1fr; gap:40px;}}
+.contact h2{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.4rem,5vw,4rem);
+  line-height:1; letter-spacing:-0.025em;}
+.contact h2 em{font-style:italic; color:#9ad978;}
+.contact h2 b{font-weight:700; color:#7ab8ff;}
+.contact p{font-size:1.1rem; line-height:1.6; margin:24px 0; max-width:42ch; color:rgba(251,247,240,.75);}
+.contact-btns{display:flex; flex-direction:column; gap:14px; max-width:420px;}
+.cb{display:flex; align-items:center; justify-content:space-between; padding:20px 26px;
+  border-radius:8px; font-family:"Geist Mono",monospace; letter-spacing:.14em;
+  text-transform:uppercase; font-size:.78rem; transition:transform .2s;}
+.cb:hover{transform:translateX(6px);}
+.cb-w{background:#25d366; color:#fff;}
+.cb-p{background:var(--blue); color:#fff;}
+.cb-m{background:transparent; color:var(--bg); border:1.5px solid rgba(251,247,240,.3);}
+.cb svg{width:18px; height:18px;}
+
+/* ============= FOOTER ============= */
+.foot{background:var(--ink); color:rgba(251,247,240,.5); padding:32px 48px;
+  border-top:1px solid rgba(251,247,240,.1); display:flex; justify-content:space-between;
+  flex-wrap:wrap; gap:18px; font-family:"Geist Mono",monospace; font-size:.7rem;
+  letter-spacing:.16em; text-transform:uppercase;}
+.foot a:hover{color:var(--bg);}
+@media(max-width:780px){.foot{padding:32px 24px;}}
+
+/* ============= LIGHTBOX ============= */
+.lb{position:fixed; inset:0; background:rgba(10,15,25,.92); display:none; align-items:center;
+  justify-content:center; z-index:200; padding:24px;}
+.lb.open{display:flex;}
+.lb-img{max-width:90vw; max-height:90vh; border-radius:8px; box-shadow:0 30px 80px rgba(0,0,0,.6);}
+.lb-close{position:absolute; top:20px; right:24px; color:#fff; font-size:1.6rem; padding:8px 14px;}
+.lb-nav{position:absolute; top:50%; transform:translateY(-50%); color:#fff; font-size:2rem; padding:14px 18px; background:rgba(255,255,255,.08); border-radius:50%;}
+.lb-prev{left:18px;} .lb-next{right:18px;}
+
+/* ============= REVEAL ============= */
+.reveal{opacity:0; transform:translateY(20px); transition:opacity .8s ease, transform .8s ease;}
+.reveal.in{opacity:1; transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{transition:none; opacity:1; transform:none;}}
+
+/* mobile floating CTA */
+.fab{display:none;}
+@media(max-width:780px){
+  .fab{display:flex; position:fixed; bottom:18px; right:18px; z-index:60; gap:10px;}
+  .fab a{width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25); color:#fff;}
+  .fab .w{background:#25d366;} .fab .p{background:var(--blue);}
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -67,469 +323,6 @@
   ]
 }
 </script>
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; overflow-x: hidden; }
-a { text-decoration: none; color: inherit; }
-img { max-width: 100%; display: block; }
-
-/* VARIABLES */
-:root {
-  --navy: #0f2044;
-  --navy2: #1a3560;
-  --green: #3db87a;
-  --green2: #2ea068;
-  --light: #f0f4f8;
-  --border: #e2e8f0;
-  --text: #1a1a2e;
-  --muted: #64748b;
-  --white: #ffffff;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
-  --shadow: 0 4px 20px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.06);
-  --radius: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-}
-
-.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-
-/* ── HEADER ─────────────────────────────────── */
-.header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  padding: 0;
-  transition: all .3s;
-}
-.header.scrolled {
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-.header-inner {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 24px; height: 72px;
-}
-.logo { display: flex; align-items: center; gap: 12px; }
-.logo img { height: 48px; width: auto; }
-.logo-text { line-height: 1.2; }
-.logo-name { font-size: 17px; font-weight: 800; color: #fff; }
-.logo-sub { font-size: 11px; color: rgba(255,255,255,.7); font-weight: 500; }
-.header.scrolled .logo-name { color: var(--navy); }
-.header.scrolled .logo-sub { color: var(--muted); }
-
-.nav { display: flex; align-items: center; gap: 32px; }
-.nav a { font-size: 14px; font-weight: 600; color: #fff; transition: color .2s; }
-.nav a:hover { color: var(--green); }
-.header.scrolled .nav a { color: #334155; }
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 14px;
-  border: none; cursor: pointer; font-family: inherit; transition: all .2s; white-space: nowrap;
-}
-.btn-primary { background: var(--green); color: #fff; box-shadow: 0 4px 14px rgba(61,184,122,.35); }
-.btn-primary:hover { background: var(--green2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(61,184,122,.4); }
-.btn-white { background: #fff; color: var(--navy); box-shadow: var(--shadow); }
-.btn-white:hover { background: #f8fafc; transform: translateY(-1px); }
-.btn-ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); }
-.btn-ghost:hover { background: rgba(255,255,255,.2); }
-.btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--border); }
-.btn-outline:hover { border-color: var(--green); color: var(--green); }
-.btn-lg { padding: 16px 32px; font-size: 16px; border-radius: 14px; }
-.btn-sm { padding: 10px 20px; font-size: 13px; border-radius: 10px; }
-
-.mobile-nav { display: none; }
-
-/* ── SKIP LINK ─────────────────────────────────── */
-.skip-link { position: absolute; top: -100px; left: 0; background: var(--green); color: #fff; padding: 8px 18px; font-weight: 700; z-index: 9999; border-radius: 0 0 8px 0; }
-.skip-link:focus { top: 0; }
-
-/* ── HAMBURGER ─────────────────────────────────── */
-.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: transparent; border: none; cursor: pointer; padding: 6px; }
-.hamburger span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: all .25s; }
-.header.scrolled .hamburger span { background: var(--navy); }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-.mobile-menu {
-  display: none; position: fixed; top: 72px; left: 0; right: 0;
-  background: #fff; border-bottom: 1px solid var(--border);
-  box-shadow: 0 8px 32px rgba(0,0,0,.12); z-index: 190; padding: 12px 0;
-}
-.mobile-menu.open { display: block; }
-.mobile-menu a { display: block; padding: 14px 24px; font-size: 16px; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--light); transition: color .2s; }
-.mobile-menu a:last-child { border-bottom: none; color: var(--green); }
-.mobile-menu a:hover { color: var(--green); }
-
-/* ── WHATSAPP FLOAT ─────────────────────────────────── */
-.whatsapp-float {
-  position: fixed; bottom: 24px; right: 24px; z-index: 500;
-  width: 56px; height: 56px; border-radius: 50%;
-  background: #25d366; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,.45); transition: transform .2s, box-shadow .2s;
-}
-.whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.55); }
-@media (max-width: 768px) { .whatsapp-float { bottom: 16px; right: 16px; } }
-
-/* ── HERO ─────────────────────────────────── */
-.hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: center;
-  background: linear-gradient(135deg, #0a1628 0%, #0f2044 50%, #162d58 100%);
-  overflow: hidden; padding-top: 72px;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  opacity: .18;
-}
-.hero-pattern {
-  position: absolute; inset: 0;
-  background-image: radial-gradient(circle at 20% 50%, rgba(61,184,122,.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(26,53,96,.6) 0%, transparent 50%);
-}
-.hero-content {
-  position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
-  padding: 80px 0 80px;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(61,184,122,.15); border: 1px solid rgba(61,184,122,.3);
-  color: #6ee7b7; padding: 8px 16px; border-radius: 999px;
-  font-size: 13px; font-weight: 600; margin-bottom: 24px;
-}
-.hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: #3db87a; display: inline-block; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
-
-.hero h1 {
-  font-size: clamp(38px, 5vw, 62px); font-weight: 900; color: #fff;
-  line-height: 1.05; letter-spacing: -.03em; margin-bottom: 20px;
-}
-.hero h1 em { font-style: normal; color: #3db87a; }
-.hero-desc { font-size: 18px; color: #94a3b8; line-height: 1.7; max-width: 520px; margin-bottom: 36px; }
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
-.hero-stats { display: flex; gap: 32px; }
-.hero-stat { }
-.hero-stat-num { font-size: 28px; font-weight: 900; color: #fff; line-height: 1; }
-.hero-stat-label { font-size: 13px; color: #64748b; margin-top: 2px; }
-
-/* HERO CARD */
-.hero-card {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: var(--radius-xl);
-  padding: 28px;
-  backdrop-filter: blur(12px);
-}
-.hero-card-img {
-  border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px;
-  height: 220px;
-}
-.hero-card-img img { width: 100%; height: 100%; object-fit: cover; }
-.hero-card-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 16px; }
-.hero-card-items { display: grid; gap: 10px; }
-.hero-card-item {
-  display: flex; align-items: center; gap: 12px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
-  border-radius: 12px; padding: 12px 14px;
-}
-.hero-card-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(61,184,122,.2); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.hero-card-text { font-size: 13px; font-weight: 600; color: #e2e8f0; }
-
-/* ── TRUST BAR ─────────────────────────────────── */
-.trust-bar { background: var(--navy); padding: 20px 0; }
-.trust-items { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
-.trust-item { display: flex; align-items: center; gap: 10px; color: #94a3b8; font-size: 14px; font-weight: 600; }
-.trust-item svg { flex-shrink: 0; }
-
-/* ── SECTIONS ─────────────────────────────────── */
-.section { padding: 100px 0; }
-.section-sm { padding: 60px 0; }
-.section-dark { background: var(--navy); }
-.section-light { background: var(--light); }
-
-.section-header { margin-bottom: 56px; }
-.section-header.center { text-align: center; }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--green); margin-bottom: 12px;
-}
-.eyebrow::before { content: ''; width: 24px; height: 2px; background: var(--green); border-radius: 2px; display: inline-block; }
-h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); letter-spacing: -.03em; line-height: 1.1; margin-bottom: 16px; }
-.section-dark h2 { color: #fff; }
-.section-desc { font-size: 17px; color: var(--muted); line-height: 1.7; max-width: 600px; }
-.section-dark .section-desc { color: #94a3b8; }
-
-/* ── SERVICES ─────────────────────────────────── */
-.services-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-.service-card {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: 28px; transition: all .25s; position: relative; overflow: hidden;
-}
-.service-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--green), #34d399);
-  transform: scaleX(0); transform-origin: left; transition: transform .3s;
-}
-.service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
-.service-card:hover::before { transform: scaleX(1); }
-.service-icon {
-  width: 56px; height: 56px; border-radius: 16px;
-  background: linear-gradient(135deg, #e8f8f1, #d1f5e2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 28px; margin-bottom: 18px;
-}
-.service-card h3 { font-size: 19px; font-weight: 800; margin-bottom: 10px; color: var(--navy); letter-spacing: -.02em; }
-.service-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
-.service-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 13px; font-weight: 700; color: var(--green); }
-
-/* ── STATS ─────────────────────────────────── */
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.stat-card {
-  text-align: center; padding: 36px 24px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--radius-lg);
-}
-.stat-num { font-size: 52px; font-weight: 900; color: #fff; line-height: 1; letter-spacing: -.04em; }
-.stat-num span { color: var(--green); }
-.stat-label { font-size: 14px; color: #94a3b8; margin-top: 8px; font-weight: 500; }
-
-/* ── HOW IT WORKS ─────────────────────────────────── */
-.steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
-.steps-grid::before {
-  content: ''; position: absolute; top: 36px; left: 12.5%; right: 12.5%; height: 2px;
-  background: linear-gradient(90deg, var(--green), #34d399, var(--green));
-  z-index: 0;
-}
-.step-card { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
-.step-num {
-  width: 72px; height: 72px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  border: 3px solid var(--green);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 26px; font-weight: 900; color: #fff;
-  margin: 0 auto 20px; box-shadow: 0 0 0 6px #fff, 0 8px 24px rgba(61,184,122,.2);
-}
-.step-card h3 { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-.step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-/* ── BEFORE/AFTER ─────────────────────────────────── */
-.ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.ba-card {
-  border-radius: var(--radius-lg); overflow: hidden;
-  box-shadow: var(--shadow); border: 1px solid var(--border);
-  transition: transform .25s, box-shadow .25s;
-}
-.ba-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.ba-card img { width: 100%; height: 220px; object-fit: cover; display: block; }
-.ba-card-body { padding: 20px; background: #fff; }
-.ba-tag {
-  display: inline-block; background: #e8f8f1; color: var(--green);
-  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-  padding: 4px 10px; border-radius: 999px; margin-bottom: 8px;
-}
-.ba-card-body h4 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
-.ba-card-body p { font-size: 13px; color: var(--muted); }
-
-/* HOMEPAGE BEFORE/AFTER SLIDER */
-.ba-slider-wrap {
-  position: relative; overflow: hidden; border-radius: 20px;
-  aspect-ratio: 4/3; cursor: ew-resize;
-  user-select: none; -webkit-user-select: none;
-  box-shadow: var(--shadow-lg);
-}
-.ba-slider-after { position: absolute; inset: 0; }
-.ba-slider-after img { width: 100%; height: 100%; object-fit: cover; }
-.ba-slider-before { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 50% 0 0); }
-.ba-slider-before img { width: 100%; height: 100%; object-fit: cover; }
-.ba-slider-handle {
-  position: absolute; top: 0; bottom: 0; left: 50%;
-  transform: translateX(-50%); width: 3px; background: #fff;
-  display: flex; align-items: center; justify-content: center;
-  z-index: 5; pointer-events: none;
-}
-.ba-slider-btn {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: #fff; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,.3);
-}
-.ba-label {
-  position: absolute; bottom: 16px; z-index: 6;
-  padding: 5px 14px; border-radius: 999px;
-  font-size: 12px; font-weight: 700; letter-spacing: .05em;
-  text-transform: uppercase; pointer-events: none;
-}
-.ba-label-vor { left: 16px; background: rgba(239,68,68,.9); color: #fff; }
-.ba-label-nach { right: 16px; background: rgba(61,184,122,.9); color: #fff; }
-.ba-caption {
-  position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
-  z-index: 6; background: rgba(15,32,68,.8); color: #fff;
-  padding: 5px 16px; border-radius: 999px; font-size: 13px; font-weight: 600;
-  white-space: nowrap; pointer-events: none; backdrop-filter: blur(8px);
-}
-
-/* ── REVIEWS ─────────────────────────────────── */
-.reviews-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.review-card {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: 28px; transition: all .25s;
-}
-.review-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: transparent; }
-.review-stars { display: flex; gap: 3px; margin-bottom: 14px; }
-.review-stars svg { width: 18px; height: 18px; fill: #f59e0b; }
-.review-text { font-size: 15px; color: #334155; line-height: 1.7; font-style: italic; margin-bottom: 20px; }
-.review-author { display: flex; align-items: center; gap: 12px; }
-.review-avatar {
-  width: 44px; height: 44px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0;
-}
-.review-name { font-weight: 700; font-size: 14px; color: var(--navy); }
-.review-city { font-size: 12px; color: var(--muted); }
-.review-source { margin-left: auto; }
-.review-source-badge {
-  background: #f1f5f9; border-radius: 8px; padding: 4px 10px;
-  font-size: 11px; font-weight: 700; color: var(--muted);
-}
-
-/* ── AREA ─────────────────────────────────── */
-.area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-.area-box {
-  background: linear-gradient(135deg, var(--navy) 0%, #1a3560 100%);
-  border-radius: var(--radius-xl); padding: 44px; color: #fff;
-}
-.area-box h2 { color: #fff; margin-bottom: 14px; }
-.area-box p { color: #94a3b8; margin-bottom: 28px; font-size: 16px; }
-.area-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-.area-chip {
-  background: rgba(61,184,122,.15); border: 1px solid rgba(61,184,122,.3);
-  color: #6ee7b7; padding: 7px 14px; border-radius: 999px;
-  font-size: 13px; font-weight: 600;
-}
-.area-list { display: grid; gap: 14px; }
-.area-item {
-  display: flex; align-items: center; gap: 14px;
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 16px 20px; transition: all .2s;
-}
-.area-item:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateX(4px); }
-.area-item-icon { width: 40px; height: 40px; border-radius: 12px; background: #e8f8f1; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-.area-item-text { font-weight: 700; font-size: 15px; color: var(--navy); }
-.area-item-sub { font-size: 12px; color: var(--muted); }
-.area-item-arrow { margin-left: auto; color: var(--green); font-size: 18px; }
-
-/* ── CONTACT ─────────────────────────────────── */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-.contact-info { }
-.contact-info h2 { margin-bottom: 14px; }
-.contact-info p { font-size: 16px; color: var(--muted); margin-bottom: 28px; line-height: 1.7; }
-.contact-phone {
-  font-size: 42px; font-weight: 900; color: var(--navy); letter-spacing: -.04em;
-  line-height: 1; margin-bottom: 8px;
-}
-.contact-phone a { color: var(--navy); }
-.contact-phone a:hover { color: var(--green); }
-.contact-hours { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-.contact-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
-.contact-detail { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid var(--border); }
-.contact-detail-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.contact-detail-text { font-size: 14px; color: var(--navy); font-weight: 600; }
-.contact-detail-sub { font-size: 12px; color: var(--muted); }
-
-.contact-form {
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-xl);
-  padding: 36px; box-shadow: var(--shadow-lg);
-}
-.form-title { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 6px; letter-spacing: -.02em; }
-.form-subtitle { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group.full { grid-column: 1/-1; }
-.form-label { font-size: 12px; font-weight: 700; color: var(--navy); letter-spacing: .04em; text-transform: uppercase; }
-.form-input {
-  padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 12px;
-  font: inherit; font-size: 15px; color: var(--text); background: #fff;
-  transition: border-color .2s, box-shadow .2s; outline: none;
-}
-.form-input:focus { border-color: var(--green); box-shadow: 0 0 0 4px rgba(61,184,122,.1); }
-.form-input::placeholder { color: #94a3b8; }
-.form-textarea { min-height: 120px; resize: vertical; }
-.form-submit { width: 100%; margin-top: 8px; }
-.form-note { font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center; }
-.form-note a { color: var(--green); }
-
-/* ── FOOTER ─────────────────────────────────── */
-.footer { background: #060f1e; color: #94a3b8; padding: 64px 0 32px; }
-.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 32px; }
-.footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.footer-brand img { height: 40px; }
-.footer-brand-name { font-size: 16px; font-weight: 800; color: #fff; }
-.footer-desc { font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
-.footer-contact a { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #94a3b8; padding: 4px 0; transition: color .2s; }
-.footer-contact a:hover { color: #fff; }
-.footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #64748b; margin-bottom: 18px; }
-.footer-col a { display: block; font-size: 14px; color: #94a3b8; padding: 5px 0; transition: color .2s; }
-.footer-col a:hover { color: var(--green); }
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 13px; }
-.footer-legal { display: flex; gap: 24px; }
-.footer-legal a { color: #64748b; transition: color .2s; }
-.footer-legal a:hover { color: #fff; }
-
-/* ── COOKIE ─────────────────────────────────── */
-.cookie {
-  position: fixed; bottom: 24px; left: 24px; right: 24px; max-width: 560px;
-  background: var(--navy); border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--radius-lg); padding: 22px 24px;
-  box-shadow: 0 24px 60px rgba(0,0,0,.3); z-index: 9999;
-  display: flex; flex-direction: column; gap: 14px;
-  animation: slideUp .4s ease;
-}
-.cookie.hidden { display: none; }
-@keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-.cookie-text { font-size: 13px; color: #94a3b8; line-height: 1.6; }
-.cookie-text a { color: var(--green); text-decoration: underline; }
-.cookie-btns { display: flex; gap: 10px; }
-
-/* ── RESPONSIVE ─────────────────────────────────── */
-@media (max-width: 1024px) {
-  .hero-content { grid-template-columns: 1fr; }
-  .hero-card { display: none; }
-  .services-grid { grid-template-columns: 1fr 1fr; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .area-grid { grid-template-columns: 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 768px) {
-  .nav { display: none; }
-  .mobile-nav { display: flex; align-items: center; gap: 10px; }
-  .hamburger { display: flex; }
-  .hero h1 { font-size: 36px; }
-  .hero-desc { font-size: 16px; }
-  .hero-stats { gap: 20px; }
-  .steps-grid { grid-template-columns: 1fr 1fr; }
-  .steps-grid::before { display: none; }
-  .ba-grid { grid-template-columns: 1fr; }
-  .reviews-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .trust-items { gap: 20px; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .section { padding: 64px 0; }
-}
-@media (max-width: 480px) {
-  .services-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .steps-grid { grid-template-columns: 1fr; }
-  .hero-actions { flex-direction: column; }
-  .hero-actions .btn { width: 100%; justify-content: center; }
-  .cookie { left: 12px; right: 12px; bottom: 12px; }
-}
-</style>
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF"></script>
 <script>
@@ -540,614 +333,820 @@ h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 900; color: var(--navy); le
 </script>
 </head>
 <body>
-<a href="#main-content" class="skip-link">Zum Inhalt springen</a>
 
-<!-- HEADER -->
-<header class="header" id="header">
-  <div class="container">
-    <div class="header-inner">
-      <a href="/" class="logo">
-        <picture>
-          <source srcset="/images/logo.webp" type="image/webp">
-          <img src="/images/logo-small.png" alt="Perfekt Sauber Service" width="48" height="48">
-        </picture>
-        <div class="logo-text">
-          <div class="logo-name">Perfekt Sauber Service</div>
-          <div class="logo-sub">Entrümpelung &amp; Haushaltsauflösung</div>
-        </div>
-      </a>
-      <nav class="nav" aria-label="Hauptnavigation">
-        <a href="/leistungen">Leistungen</a>
-        <a href="/einsatzgebiete">Einsatzgebiete</a>
-        <a href="/portfolio">Portfolio</a>
-        <a href="/blog">Blog</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-      <a href="#kontakt" class="btn btn-primary" style="display:none" id="headerCta">Anfragen</a>
-      <div class="mobile-nav">
-        <a href="tel:+491639087197" class="btn btn-outline btn-sm">Anrufen</a>
-        <a href="#kontakt" class="btn btn-primary btn-sm">Anfragen</a>
-        <button class="hamburger" id="menuToggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
+<!-- ======== NAV ======== -->
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <img src="/images/cibersite/logo.jpeg" alt="Perfekt Sauber Service Logo"/>
+    <span style="display:flex; flex-direction:column; line-height:1;">
+      <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
+      <span style="font-size:.6rem; letter-spacing:.16em; margin-left:0; margin-top:3px;">Service · Rastatt</span>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="/leistungen">Leistungen</a>
+    <a href="/portfolio">Galerie</a>
+    <a href="#stimmen">Stimmen</a>
+    <a href="#kontakt">Kontakt</a>
   </div>
-</header>
-
-<!-- MOBILE MENU DRAWER -->
-<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile Navigation">
-  <a href="/leistungen">Leistungen</a>
-  <a href="/einsatzgebiete">Einsatzgebiete</a>
-  <a href="/portfolio">Portfolio</a>
-  <a href="/blog">Blog</a>
-  <a href="/ueber-uns">Über uns</a>
-  <a href="#kontakt">Jetzt anfragen</a>
+  <a href="#kontakt" class="nav-cta">Anfrage</a>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="main-content">
-  <div class="hero-bg"></div>
-  <div class="hero-pattern"></div>
-  <div class="container">
-    <div class="hero-content">
-      <div>
-        <div class="hero-badge">
-          <span></span>
-          Verfuegbar in Rastatt &amp; Umgebung
-        </div>
-        <h1>Entrümpelung &amp;<br><em>Haushaltsauflösung</em><br>in Rastatt &amp; Umgebung</h1>
-        <p class="hero-desc">Schnell, diskret und besenrein. Wir unterstuetzen Sie bei Wohnungsauflösungen, Entrümpelungen und Räumungen &ndash; mit kostenloser Besichtigung und fairen Festpreisen.</p>
-        <div class="hero-actions">
-          <a href="https://wa.me/491639087197" class="btn btn-primary btn-lg" rel="noopener">WhatsApp schreiben</a>
-          <a href="#kontakt" class="btn btn-ghost btn-lg">Kostenlos anfragen</a>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><div class="hero-stat-num">10+</div><div class="hero-stat-label">Auftraege abgeschlossen</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">5.0</div><div class="hero-stat-label">Google Bewertung</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">24h</div><div class="hero-stat-label">Rückmeldung</div></div>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-img">
-          <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager" fetchpriority="high" width="1536" height="1024">
-        </div>
-        <div class="hero-card-title">Warum Perfekt Sauber Service?</div>
-        <div class="hero-card-items">
-          <div class="hero-card-item"><div class="hero-card-icon">&#10003;</div><div class="hero-card-text">Kostenlose Besichtigung vor Ort</div></div>
-          <div class="hero-card-item"><div class="hero-card-icon">&#10003;</div><div class="hero-card-text">Faire Festpreise ohne Überraschungen</div></div>
-          <div class="hero-card-item"><div class="hero-card-icon">&#10003;</div><div class="hero-card-text">Besenreine Übergabe garantiert</div></div>
-          <div class="hero-card-item"><div class="hero-card-icon">&#10003;</div><div class="hero-card-text">Kurzfristige Termine möglich</div></div>
-        </div>
-      </div>
+<!-- ======== HERO ======== -->
+<section class="hero">
+  <div class="reveal">
+    <span class="eyebrow">Rastatt · Baden-Baden · Karlsruhe</span>
+    <h1 class="h1">Räume, die <em>atmen</em>.<br/>Übergaben, die <b>überzeugen</b>.</h1>
+    <p class="deck">Wir entrümpeln, wir reinigen, wir übergeben — diskret, schnell, und mit der Sorgfalt, die ein altes Familienhaus oder eine geerbte Wohnung verdient.</p>
+    <div class="cta-row">
+      <a href="#kontakt" class="btn btn-pri">Kostenlose Besichtigung →</a>
+      <a href="https://wa.me/491639087197" class="btn btn-w">WhatsApp</a>
     </div>
+    <div class="trust">
+      <div class="it"><strong>10+</strong><span>Aufträge</span></div>
+      <div class="it"><strong>5,0 ★</strong><span>Google</span></div>
+      <div class="it"><strong>24h</strong><span>Antwortzeit</span></div>
+      <div class="it"><strong>0 €</strong><span>Vor-Ort-Angebot</span></div>
+    </div>
+  </div>
+  <div class="hero-img reveal">
+    <div class="photo ph-vor"><img src="/images/cibersite/01-vor.jpeg" alt="Vorher"/></div>
+    <span class="lbl lbl-vor">Vorher</span>
+    <div class="badge"><strong>Vor &amp; Nach</strong><span>Rastatt</span></div>
+    <div class="photo ph-nach"><img src="/images/cibersite/01-nach.png" alt="Nachher"/></div>
+    <span class="lbl lbl-nach">Nachher</span>
   </div>
 </section>
 
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="container">
-    <div class="trust-items">
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3db87a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Kostenlose Besichtigung
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3db87a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Faire Festpreise
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3db87a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Besenreine Übergabe
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3db87a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Diskret &amp; zuverlässig
-      </div>
-      <div class="trust-item">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#3db87a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        5.0 Google Bewertung
-      </div>
-    </div>
+<!-- ======== AUTHORITY STRIP ======== -->
+<div class="strip">
+  <div class="strip-row">
+    <span><b>Familiengeführt</b> · seit 2023</span>
+    <span><b>Festpreis-Garantie</b> · schriftlich</span>
+    <span><span class="star">★★★★★</span> <b>5,0</b> Google</span>
+    <span><b>DSGVO-konform</b> · Diskret</span>
+    <span><b>Vollständig versichert</b></span>
   </div>
 </div>
 
-<!-- LEISTUNGEN -->
-<section class="section">
-  <div class="container">
-    <div class="section-header center">
-      <div class="eyebrow">Leistungen</div>
-      <h2>Was wir für Sie tun</h2>
-      <p class="section-desc" style="margin:0 auto">Vom Keller bis zur kompletten Haushaltsauflösung &ndash; wir übernehmen alles, zuverlässig und besenrein.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon">&#129529;</div>
-        <h3>Entrümpelung</h3>
-        <p>Wohnungen, Häuser, Keller, Dachböden und Garagen &ndash; wir räumen schnell und professionell.</p>
-        <a href="/entruempelung-rastatt" class="service-link">Mehr erfahren &#8594;</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">&#127968;</div>
-        <h3>Haushaltsauflösung</h3>
-        <p>Strukturierte Räumung bei kompletten Haushaltsauflösungen mit besenreiner Übergabe.</p>
-        <a href="/haushaltsaufloesung-rastatt" class="service-link">Mehr erfahren &#8594;</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">&#10024;</div>
-        <h3>Wohnungsreinigung</h3>
-        <p>Gründliche Reinigung nach der Räumung für eine saubere Übergabe an Vermieter oder Käufer.</p>
-        <a href="/leistungen" class="service-link">Mehr erfahren &#8594;</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">&#127970;</div>
-        <h3>Gewerberäumung</h3>
-        <p>Räumung von Büros, Lagern, Praxen und gewerblichen Flächen &ndash; diskret und zuverlässig.</p>
-        <a href="/leistungen" class="service-link">Mehr erfahren &#8594;</a>
-      </div>
-      <div class="service-card">
-        <div class="service-icon">&#128295;</div>
-        <h3>Hausmeisterservice</h3>
-        <p>Treppenhausreinigung, Winterdienst, Grünpflege und Kleinreparaturen &ndash; zuverlässig und termingerecht.</p>
-        <a href="/hausmeisterservice" class="service-link">Mehr erfahren &#8594;</a>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:36px">
-      <a href="/leistungen" class="btn btn-outline">Alle Leistungen ansehen</a>
-    </div>
+<!-- ======== CHAPTER I ======== -->
+<section class="chapter" id="kapitel-1">
+  <div class="reveal">
+    <div class="ch-mark">Kapitel I · Entrümpelung</div>
+    <h2 class="ch-h">Was bleibt, wenn ein Leben <em>zu Ende geht</em>.</h2>
+    <p class="ch-p">Die Wohnung der Mutter. Das Haus des Großvaters. Räume voller Erinnerungen — und voller Aufgaben. Wir kommen, wir hören zu, wir tragen weg, was Sie nicht selbst tragen müssen.</p>
+    <ul class="ch-list">
+      <li><span>Vor-Ort-Termin</span><span>kostenlos</span></li>
+      <li><span>Festpreis-Garantie</span><span>schriftlich</span></li>
+      <li><span>Entsorgung</span><span>fachgerecht</span></li>
+      <li><span>Diskretion</span><span>vertraglich</span></li>
+    </ul>
+    <a href="#kontakt" class="btn btn-sec" style="margin-top:32px;">Termin vereinbaren →</a>
+  </div>
+  <div class="ba reveal" data-ba="1">
+    <div class="ba-side"><img src="/images/cibersite/02-nach.png" alt="Nachher"/></div>
+    <div class="ba-side ba-vor"><img src="/images/cibersite/02-vor.jpeg" alt="Vorher"/></div>
+    <span class="ba-lbl ba-lbl-l">Vorher</span>
+    <span class="ba-lbl ba-lbl-r">Nachher</span>
+    <div class="ba-handle"></div>
   </div>
 </section>
 
-<!-- STATS -->
-<section class="section section-dark">
-  <div class="container">
-    <div class="section-header center">
-      <div class="eyebrow" style="color:#3db87a">Zahlen</div>
-      <h2>Vertrauen durch Erfahrung</h2>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num">200<span>+</span></div><div class="stat-label">Auftraege abgeschlossen</div></div>
-      <div class="stat-card"><div class="stat-num">5<span>.0</span></div><div class="stat-label">Google Bewertung</div></div>
-      <div class="stat-card"><div class="stat-num">24<span>h</span></div><div class="stat-label">Garantierte Rückmeldung</div></div>
-      <div class="stat-card"><div class="stat-num">100<span>%</span></div><div class="stat-label">Besenreine Übergabe</div></div>
-    </div>
+<!-- ======== CHAPTER II ======== -->
+<section class="chapter" id="kapitel-2" style="background:var(--bg-2); max-width:none; padding-left:48px; padding-right:48px;">
+  <div class="ba reveal" data-ba="2" style="order:1;">
+    <div class="ba-side"><img src="/images/cibersite/04-nach.png" alt="Nachher"/></div>
+    <div class="ba-side ba-vor"><img src="/images/cibersite/04-vor.jpeg" alt="Vorher"/></div>
+    <span class="ba-lbl ba-lbl-l">Vorher</span>
+    <span class="ba-lbl ba-lbl-r">Nachher</span>
+    <div class="ba-handle"></div>
+  </div>
+  <div class="reveal" style="order:2;">
+    <div class="ch-mark">Kapitel II · Reinigung</div>
+    <h2 class="ch-h">Sauber heißt: <em>so sauber</em>, dass es niemand mehr bemerkt.</h2>
+    <p class="ch-p">Bauendreinigung, Grundreinigung, Endreinigung vor Übergabe. Wir wissen, worauf der Vermieter, der Notar und der Käufer schauen — und wir liefern das, bevor sie es überhaupt prüfen.</p>
+    <ul class="ch-list">
+      <li><span>Bauend- &amp; Grundreinigung</span><span>Festpreis</span></li>
+      <li><span>Übergabe-Reinigung</span><span>Mietkaution-tauglich</span></li>
+      <li><span>Fenster, Sanitär, Böden</span><span>komplett</span></li>
+      <li><span>Termine</span><span>auch Wochenende</span></li>
+    </ul>
+    <a href="#kontakt" class="btn btn-sec" style="margin-top:32px;">Anfrage senden →</a>
   </div>
 </section>
 
-<!-- ABLAUF -->
-<section class="section section-light">
-  <div class="container">
-    <div class="section-header center">
-      <div class="eyebrow">Ablauf</div>
-      <h2>So einfach geht es</h2>
-      <p class="section-desc" style="margin:0 auto">Von der Anfrage bis zur besenreinen Übergabe &ndash; in vier klaren Schritten.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card"><div class="step-num">1</div><h3>Anfrage</h3><p>Per Telefon, WhatsApp oder Formular &ndash; unkompliziert und schnell.</p></div>
-      <div class="step-card"><div class="step-num">2</div><h3>Besichtigung</h3><p>Kostenlose Besichtigung vor Ort oder Einschätzung per Fotos.</p></div>
-      <div class="step-card"><div class="step-num">3</div><h3>Angebot</h3><p>Transparentes Festpreisangebot &ndash; ohne versteckte Kosten.</p></div>
-      <div class="step-card"><div class="step-num">4</div><h3>Fertig</h3><p>Zuverlässige Durchführung und besenreine Übergabe.</p></div>
-    </div>
+<!-- ======== CHAPTER III ======== -->
+<section class="chapter" id="kapitel-3">
+  <div class="reveal">
+    <div class="ch-mark">Kapitel III · Übergabe</div>
+    <h2 class="ch-h">Vom alten Schlüssel <em>zum neuen Anfang</em>.</h2>
+    <p class="ch-p">Möbel demontieren, sicher transportieren, fachgerecht entsorgen. Wir koordinieren, was an einem Übergabetag schiefgehen <em>könnte</em> — damit nichts schiefgeht.</p>
+    <ul class="ch-list">
+      <li><span>Komplettumzug</span><span>Möbel &amp; Kartons</span></li>
+      <li><span>Demontage / Aufbau</span><span>im Preis enthalten</span></li>
+      <li><span>Transportversicherung</span><span>vollständig</span></li>
+      <li><span>Reichweite</span><span>BW + angrenzend</span></li>
+    </ul>
+    <a href="#kontakt" class="btn btn-sec" style="margin-top:32px;">Termin sichern →</a>
+  </div>
+  <div class="ba reveal" data-ba="3">
+    <div class="ba-side"><img src="/images/cibersite/10-nach.png" alt="Nachher"/></div>
+    <div class="ba-side ba-vor"><img src="/images/cibersite/10-vor.jpeg" alt="Vorher"/></div>
+    <span class="ba-lbl ba-lbl-l">Vorher</span>
+    <span class="ba-lbl ba-lbl-r">Nachher</span>
+    <div class="ba-handle"></div>
   </div>
 </section>
 
-<!-- VORHER NACHHER -->
-<section class="section">
-  <div class="container">
-    <div class="section-header center">
-      <div class="eyebrow">Vorher / Nachher</div>
-      <h2>Echte Ergebnisse aus Gaggenau</h2>
-      <p class="section-desc" style="margin:0 auto">Keine Stockfotos. Echte Auftraege, echte Ergebnisse &ndash; schieben Sie den Regler.</p>
+<!-- ======== GALLERY ======== -->
+<section class="gal" id="galerie">
+  <div class="gal-head reveal">
+    <h2>Echte Aufträge. <em>Echte Räume.</em></h2>
+    <span class="meta">11 Vorher / Nachher · Rastatt &amp; Region</span>
+  </div>
+  <div class="gal-tabs reveal">
+    <button class="on" data-filter="all">Alle</button>
+    <button data-filter="vor">Nur Vorher</button>
+    <button data-filter="nach">Nur Nachher</button>
+    <button data-filter="pairs">Paarweise</button>
+  </div>
+  <div class="gal-grid" id="galGrid"></div>
+</section>
+
+<!-- ======== SERVICES ======== -->
+<!-- ======== PRICE CALCULATOR ======== -->
+<section class="calc-section" id="rechner" style="padding:120px 48px; max-width:1440px; margin:0 auto;">
+  <div class="reveal" style="display:grid; grid-template-columns:1fr 1.1fr; gap:80px; align-items:start;">
+    <div style="position:sticky; top:90px;">
+      <div class="ch-mark">Preis-Rechner</div>
+      <h2 class="ch-h">Was kostet das <em>ungefähr</em>?</h2>
+      <p class="ch-p">Detaillierte Schätzung nach echter Preisrichtwert-Tabelle. Schieben Sie die Regler — Sie sehen sofort jede Position. Den verbindlichen Festpreis erhalten Sie nach kostenloser Vor-Ort-Besichtigung.</p>
+      <div style="background:var(--bg-2); border:1px solid var(--line); border-radius:14px; padding:32px; margin-top:24px;">
+        <div style="font-family:'Geist Mono',monospace; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">Geschätzte Gesamtkosten (netto)</div>
+        <div id="calcPrice" style="font-family:'Fraunces',serif; font-weight:300; font-size:clamp(3rem,7vw,5rem); line-height:1; color:var(--blue); letter-spacing:-0.03em;">— €</div>
+        <div id="calcRange" style="font-family:'Geist Mono',monospace; font-size:.78rem; letter-spacing:.06em; color:var(--muted); margin-top:10px;">Schätzbereich: — €</div>
+
+        <div id="calcBreakdown" style="margin-top:22px; padding-top:18px; border-top:1px solid var(--line); font-family:'Geist Mono',monospace; font-size:.78rem; line-height:1.7;"></div>
+
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-size:.78rem; color:var(--muted); line-height:1.5;">* Nettopreis ohne MwSt. Endpreis nach kostenloser Vor-Ort-Besichtigung. Bei Wertanrechnung (z.B. verkäufliche Möbel) Reduktion möglich.</div>
+        <a href="#kontakt" class="btn btn-pri" style="margin-top:20px; width:100%; justify-content:center;">Verbindliches Angebot anfragen →</a>
+      </div>
     </div>
 
-    <!-- SLIDER TEASER -->
-    <div style="max-width:680px;margin:0 auto 40px;">
-      <div class="ba-slider-wrap" id="hp-slider">
-        <div class="ba-slider-after">
-          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp" alt="Wohnungsauflösung Nachher Gaggenau" loading="lazy" width="1600" height="1200">
+    <div style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:36px; box-shadow:0 20px 50px -25px rgba(26,32,48,.18);">
+
+      <!-- Service mode -->
+      <div class="calc-row" style="margin-bottom:34px;">
+        <label class="calc-lbl"><span>Leistung</span></label>
+        <select id="calcType" class="calc-select">
+          <option value="wohnung">Wohnungsauflösung (privat)</option>
+          <option value="firmen">Firmen-Beräumung (gewerblich)</option>
+          <option value="bauend">Bauendreinigung / Endreinigung</option>
+          <option value="feinreinigung">Feinreinigung (RW)</option>
+          <option value="malerarbeiten">Malerarbeiten (Renovierung)</option>
+          <option value="tapeten">Tapeten ablösen</option>
+          <option value="entruempelung">Entrümpelung (Keller / Dachboden / Garage)</option>
+        </select>
+      </div>
+
+      <!-- WOHNUNG block -->
+      <div data-mode="wohnung" class="calc-block">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche</span><span id="wfVal" class="calc-val">60 m²</span></label>
+          <input type="range" id="wfSize" min="20" max="300" value="60" step="5" class="calc-range"/>
+          <div class="calc-mm"><span>20 m²</span><span>300 m²</span></div>
         </div>
-        <div class="ba-slider-before" id="hp-before">
-          <img src="/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.webp" alt="Wohnungsauflösung Vorher Gaggenau" loading="lazy" width="1195" height="896">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Füllgrad Wohnung</span><span id="wfFillVal" class="calc-val">Normal</span></label>
+          <input type="range" id="wfFill" min="1" max="4" value="2" step="1" class="calc-range"/>
+          <div class="calc-mm"><span>Leicht</span><span>Normal</span><span>Stark</span><span>Komplett</span></div>
         </div>
-        <div class="ba-slider-handle" id="hp-handle">
-          <div class="ba-slider-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
-              <path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/>
-            </svg>
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Etage (ohne Fahrstuhl)</span><span id="wfFloorVal" class="calc-val">EG / 1. OG</span></label>
+          <input type="range" id="wfFloor" min="0" max="4" value="0" step="1" class="calc-range"/>
+          <div class="calc-mm"><span>EG</span><span>2.</span><span>3.</span><span>4.</span><span>5. OG</span></div>
+        </div>
+
+        <details style="margin-bottom:24px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+          <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Zusatzräume (Keller / Dachboden / Garage)</summary>
+          <div style="margin-top:18px;">
+            <div class="calc-row" style="margin-bottom:18px;">
+              <label class="calc-lbl"><span>Keller</span><span id="kfVal" class="calc-val">0 m²</span></label>
+              <input type="range" id="kfSize" min="0" max="80" value="0" step="2" class="calc-range"/>
+              <select id="kfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+                <option value="0">— kein Keller —</option>
+                <option value="1">Leicht gefüllt (17 €/m²)</option>
+                <option value="2" selected>Normal gefüllt (27 €/m²)</option>
+                <option value="3">Stark gefüllt (37 €/m²)</option>
+                <option value="4">Komplett zugestellt (52 €/m²)</option>
+              </select>
+            </div>
+            <div class="calc-row" style="margin-bottom:18px;">
+              <label class="calc-lbl"><span>Dachboden</span><span id="dfVal" class="calc-val">0 m²</span></label>
+              <input type="range" id="dfSize" min="0" max="100" value="0" step="2" class="calc-range"/>
+              <select id="dfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+                <option value="0">— kein Dachboden —</option>
+                <option value="1">Leicht gefüllt (22 €/m²)</option>
+                <option value="2" selected>Normal gefüllt (32 €/m²)</option>
+                <option value="3">Stark gefüllt (47 €/m²)</option>
+                <option value="4">Komplett zugestellt (62 €/m²)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label class="calc-lbl"><span>Garage / Stellfläche</span></label>
+              <select id="garage" class="calc-select" style="font-size:.9rem; padding:10px;">
+                <option value="0">— keine Garage —</option>
+                <option value="122">Leicht gefüllt — 122 €</option>
+                <option value="182">Normal gefüllt — 182 €</option>
+                <option value="242">Stark gefüllt — 242 €</option>
+                <option value="382">Komplett zugestellt — 382 €</option>
+                <option value="482">Zugestellt &amp; vermüllt — 482 €</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <span class="ba-label ba-label-vor">Vorher</span>
-        <span class="ba-label ba-label-nach">Nachher</span>
-        <div class="ba-caption">Wohnungsauflösung &ndash; Gaggenau</div>
-      </div>
-    </div>
+        </details>
 
-    <div style="text-align:center;">
-      <a href="/portfolio" class="btn btn-primary btn-lg">Alle Projekte ansehen &rarr;</a>
+        <details style="margin-bottom:18px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+          <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Zusatzleistungen (Demontage)</summary>
+          <div style="margin-top:18px; display:grid; gap:12px;">
+            <label class="calc-chk"><input type="checkbox" id="addDecken"/><span>Deckenplatten / Styropor entfernen <em>(7,90 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addPaneele"/><span>Paneele / Vertäfelung <em>(9,80 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addTeppich"/><span>Teppich / Bodenbelag / PVC / Laminat <em>(9,80 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addFliesen"/><span>Fliesen an Wandflächen <em>(17,80 €/m²)</em></span></label>
+            <label class="calc-chk"><input type="checkbox" id="addAnbau"/><span>Anbauten entfernen (Haken/Lampen/Gardinen) <em>(3 €/m² WF)</em></span></label>
+          </div>
+        </details>
+      </div>
+
+      <!-- FIRMEN block -->
+      <div data-mode="firmen" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Raumwert (Größe)</span></label>
+          <select id="firmenRW" class="calc-select">
+            <option value="652">RW 1 — ca. 25–35 m² (652 €)</option>
+            <option value="952" selected>RW 2 — ca. 35–50 m² (952 €)</option>
+            <option value="1152">RW 3 — ca. 50–70 m² (1.152 €)</option>
+            <option value="1352">RW 4 — ca. 70–90 m² (1.352 €)</option>
+            <option value="1552">RW 5 — ca. 90–120 m² (1.552 €)</option>
+          </select>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted); line-height:1.5;">Inkl. Beräumung, Entsorgung, Personal, Abtransport · Mieteigentum</div>
+        </div>
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Gemeinschaftsflächen / Verkehrsbereiche</span><span id="firmenGFVal" class="calc-val">0 m²</span></label>
+          <input type="range" id="firmenGF" min="0" max="200" value="0" step="5" class="calc-range"/>
+          <div class="calc-mm"><span>0</span><span>200 m²</span></div>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Bis 0,5 m³: 42 €/m² · Über 0,5 m³: 82 €/m²</div>
+        </div>
+        <div class="calc-row" style="margin-bottom:18px;">
+          <label class="calc-lbl"><span>Volumen pro m² Gemeinschaftsfläche</span></label>
+          <select id="firmenVolume" class="calc-select">
+            <option value="42">Bis 0,5 m³ (42 €/m²)</option>
+            <option value="82" selected>Bis 1,0 m³ (82 €/m²)</option>
+          </select>
+        </div>
+        <details style="margin-bottom:18px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+          <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Büromöbel-Demontage</summary>
+          <div style="margin-top:18px; display:grid; gap:10px; font-size:.85rem;">
+            <label class="calc-num"><span>Drehstühle (17 €)</span><input type="number" id="bDreh" min="0" value="0"/></label>
+            <label class="calc-num"><span>Besucherstühle (12 €)</span><input type="number" id="bBesuch" min="0" value="0"/></label>
+            <label class="calc-num"><span>Schreibtische (27 €)</span><input type="number" id="bSchreib" min="0" value="0"/></label>
+            <label class="calc-num"><span>Schrank klein (≤1,20 m) (22 €)</span><input type="number" id="bSchKlein" min="0" value="0"/></label>
+            <label class="calc-num"><span>Schrank groß (≥2,20 m) (32 €)</span><input type="number" id="bSchGross" min="0" value="0"/></label>
+            <label class="calc-num"><span>Bürocontainer (20 €)</span><input type="number" id="bCont" min="0" value="0"/></label>
+            <label class="calc-num"><span>Computer / TFT (12 €)</span><input type="number" id="bComp" min="0" value="0"/></label>
+          </div>
+          <div style="margin-top:14px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">＋ Fahrtpauschale 21,90 € bei Aufträgen unter 50 €</div>
+        </details>
+      </div>
+
+      <!-- BAUEND / Endreinigung -->
+      <div data-mode="bauend" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="bauendRW" class="calc-select">
+            <option value="242">RW 1 — ca. 25–35 m² (242 €)</option>
+            <option value="342" selected>RW 2 — ca. 35–50 m² (342 €)</option>
+            <option value="382">RW 3 — ca. 50–70 m² (382 €)</option>
+            <option value="422">RW 4 — ca. 70–90 m² (422 €)</option>
+            <option value="452">RW 5 — ca. 90–120 m² (452 €)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- FEINREINIGUNG -->
+      <div data-mode="feinreinigung" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="feinRW" class="calc-select">
+            <option value="182">RW 1 — ca. 25–35 m² (182 €)</option>
+            <option value="282" selected>RW 2 — ca. 35–50 m² (282 €)</option>
+            <option value="342">RW 3 — ca. 50–70 m² (342 €)</option>
+            <option value="382">RW 4 — ca. 70–90 m² (382 €)</option>
+            <option value="452">RW 5 — ca. 90–120 m² (452 €)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- MALERARBEITEN -->
+      <div data-mode="malerarbeiten" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="malerRW" class="calc-select">
+            <option value="382">RW 1 — ca. 25–35 m² (382 €)</option>
+            <option value="682" selected>RW 2 — ca. 35–50 m² (682 €)</option>
+            <option value="722">RW 3 — ca. 50–70 m² (722 €)</option>
+            <option value="842">RW 4 — ca. 70–90 m² (842 €)</option>
+            <option value="982">RW 5 — ca. 90–120 m² (982 €)</option>
+          </select>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Komplette Renovierung inkl. Material &amp; Nebenleistungen</div>
+        </div>
+      </div>
+
+      <!-- TAPETEN -->
+      <div data-mode="tapeten" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:28px;">
+          <label class="calc-lbl"><span>Wohnfläche (Raumwert)</span></label>
+          <select id="tapRW" class="calc-select">
+            <option value="452">RW 1 — ca. 25–35 m² (452 €)</option>
+            <option value="652" selected>RW 2 — ca. 35–50 m² (652 €)</option>
+            <option value="852">RW 3 — ca. 50–70 m² (852 €)</option>
+            <option value="952">RW 4 — ca. 70–90 m² (952 €)</option>
+            <option value="1252">RW 5 — ca. 90–120 m² (1.252 €)</option>
+          </select>
+          <div style="margin-top:8px; font-family:'Geist Mono',monospace; font-size:.7rem; color:var(--muted);">Inkl. Abtransport &amp; Entsorgung</div>
+        </div>
+      </div>
+
+      <!-- ENTRUEMPELUNG (only) -->
+      <div data-mode="entruempelung" class="calc-block" style="display:none;">
+        <div class="calc-row" style="margin-bottom:24px;">
+          <label class="calc-lbl"><span>Keller</span><span id="eKfVal" class="calc-val">0 m²</span></label>
+          <input type="range" id="eKfSize" min="0" max="100" value="0" step="2" class="calc-range"/>
+          <select id="eKfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+            <option value="0">— kein Keller —</option>
+            <option value="1">Leicht (17 €/m²)</option>
+            <option value="2" selected>Normal (27 €/m²)</option>
+            <option value="3">Stark (37 €/m²)</option>
+            <option value="4">Komplett (52 €/m²)</option>
+          </select>
+        </div>
+        <div class="calc-row" style="margin-bottom:24px;">
+          <label class="calc-lbl"><span>Dachboden</span><span id="eDfVal" class="calc-val">0 m²</span></label>
+          <input type="range" id="eDfSize" min="0" max="120" value="0" step="2" class="calc-range"/>
+          <select id="eDfFill" class="calc-select" style="margin-top:8px; font-size:.85rem; padding:8px;">
+            <option value="0">— kein Dachboden —</option>
+            <option value="1">Leicht (22 €/m²)</option>
+            <option value="2" selected>Normal (32 €/m²)</option>
+            <option value="3">Stark (47 €/m²)</option>
+            <option value="4">Komplett (62 €/m²)</option>
+          </select>
+        </div>
+        <div class="calc-row">
+          <label class="calc-lbl"><span>Garage / Stellfläche</span></label>
+          <select id="eGarage" class="calc-select">
+            <option value="0">— keine Garage —</option>
+            <option value="122">Leicht — 122 €</option>
+            <option value="182">Normal — 182 €</option>
+            <option value="242">Stark — 242 €</option>
+            <option value="382">Komplett — 382 €</option>
+            <option value="482">Vermüllt — 482 €</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Sicherheitspakete (always visible) -->
+      <details style="margin-top:18px; border:1px solid var(--line); border-radius:8px; padding:14px 18px;">
+        <summary style="cursor:pointer; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;">＋ Sicherheitspakete (Sauber &amp; Sicher)</summary>
+        <div style="margin-top:18px; display:grid; gap:10px; font-size:.85rem;">
+          <label class="calc-chk"><input type="checkbox" id="secLuester"/><span>Lüsterklemmen anbringen <em>(17 €/Stk)</em></span></label>
+          <label class="calc-chk"><input type="checkbox" id="secEck"/><span>Eckventilkappen montieren <em>(12 €/Stk)</em></span></label>
+          <label class="calc-chk"><input type="checkbox" id="secAbfluss"/><span>Abflusskappen anbringen <em>(7 €/Stk)</em></span></label>
+          <label class="calc-chk"><input type="checkbox" id="secFilter"/><span>Filterwechsel Entlüftung <em>(12 €/Stk)</em></span></label>
+        </div>
+      </details>
+
+      <div class="calc-row" style="margin-top:24px;">
+        <label class="calc-chk"><input type="checkbox" id="calcWeekend"/><span>Wochenend-/Feiertagstermin <em>(+10%)</em></span></label>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- BEWERTUNGEN -->
-<section class="section section-light">
-  <div class="container">
-    <div class="section-header center">
-      <div class="eyebrow">Bewertungen</div>
-      <h2>Was Kunden sagen</h2>
-      <p class="section-desc" style="margin:0 auto">Echte Rückmeldungen von echten Kunden aus Rastatt und Umgebung.</p>
-    </div>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-stars">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <p class="review-text">&bdquo;5 Sterne! Sehr freundlicher und zuverlässiger Service. Die Arbeit wurde schnell, sauber und professionell erledigt. Die Kommunikation war unkompliziert und angenehm. Ich bin sehr zufrieden und kann den Service nur weiterempfehlen.&ldquo;</p>
-        <div class="review-author">
-          <div class="review-avatar">L</div>
-          <div><div class="review-name">Larra Laura</div></div>
-          <div class="review-source"><div class="review-source-badge">Google</div></div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <p class="review-text">&bdquo;Super Service! Sehr freundlich, pünktlich und sauber gearbeitet. Bin wirklich zufrieden und werde den Service wieder nutzen.&ldquo;</p>
-        <div class="review-author">
-          <div class="review-avatar">A</div>
-          <div><div class="review-name">Alin Mitroi</div></div>
-          <div class="review-source"><div class="review-source-badge">Google</div></div>
-        </div>
-      </div>
+<style>
+.calc-lbl{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); margin-bottom:12px;}
+.calc-val{color:var(--green); font-weight:500; text-transform:none; letter-spacing:.04em;}
+.calc-select{width:100%; padding:14px; border:1px solid var(--line); border-radius:8px; font-family:'Inter',sans-serif; font-size:.95rem; background:#fff;}
+.calc-range{width:100%; accent-color:var(--green);}
+.calc-mm{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.62rem; color:var(--muted); margin-top:6px;}
+.calc-chk{display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-family:'Inter',sans-serif; font-size:.88rem; line-height:1.4;}
+.calc-chk input[type="checkbox"]{accent-color:var(--green); width:18px; height:18px; flex-shrink:0; margin-top:2px;}
+.calc-chk em{font-style:normal; color:var(--muted); font-family:'Geist Mono',monospace; font-size:.78rem;}
+.calc-num{display:flex; justify-content:space-between; align-items:center; gap:12px;}
+.calc-num input{width:64px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:'Geist Mono',monospace; text-align:right;}
+.calc-row details summary::-webkit-details-marker{display:none;}
+#calcBreakdown .row{display:flex; justify-content:space-between; gap:12px; color:var(--muted);}
+#calcBreakdown .row span:last-child{color:var(--ink); font-weight:500;}
+#calcBreakdown .sum{margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); display:flex; justify-content:space-between; color:var(--ink);}
+</style>
+
+<style>
+@media(max-width:980px){
+  .calc-section > .reveal{grid-template-columns:1fr !important; gap:32px !important;}
+  .calc-section{padding:80px 24px !important;}
+}
+</style>
+
+<section class="srv-section" id="leistungen">
+  <div class="srv-wrap">
+    <h2 class="srv-h reveal">Leistungen, im <em>Klartext</em>.</h2>
+    <div class="srv-list">
+      <a class="srv-row reveal" href="/wohnungsaufloesung-rastatt"><span class="srv-num">№ 01</span><span class="srv-name"><em>Wohnungs-</em>auflösung</span><span class="srv-desc">Komplette Räumung mit fachgerechter Entsorgung — diskret, schnell, festpreis.</span><span class="srv-arr">→ Anfrage</span></a>
+      <a class="srv-row reveal" href="/haushaltsaufloesung-rastatt"><span class="srv-num">№ 02</span><span class="srv-name"><em>Haushalts-</em>auflösung</span><span class="srv-desc">Vom Keller bis zum Dachboden — wir leeren, sortieren, übergeben.</span><span class="srv-arr">→ Anfrage</span></a>
+      <a class="srv-row reveal" href="/endreinigung-rastatt"><span class="srv-num">№ 03</span><span class="srv-name"><em>Bauend-</em>reinigung</span><span class="srv-desc">Nach Sanierung oder Neubau: einzugsfertig in einem einzigen Termin.</span><span class="srv-arr">→ Anfrage</span></a>
+      <a class="srv-row reveal" href="/unterhaltsreinigung-region"><span class="srv-num">№ 04</span><span class="srv-name"><em>Grund-</em>reinigung</span><span class="srv-desc">Tiefen-Reinigung für Wohnungen, Praxen, Büros — mit Übergabe-Protokoll.</span><span class="srv-arr">→ Anfrage</span></a>
+      <a class="srv-row reveal" href="/leistungen"><span class="srv-num">№ 05</span><span class="srv-name"><em>Umzugs-</em>service</span><span class="srv-desc">Komplettumzüge inkl. Demontage, Transport, Aufbau, Versicherung.</span><span class="srv-arr">→ Anfrage</span></a>
+      <a class="srv-row reveal" href="/entruempelung-rastatt"><span class="srv-num">№ 06</span><span class="srv-name"><em>Entrümpelung</em></span><span class="srv-desc">Keller, Garage, Speicher, Garten. Alles raus — fachgerecht entsorgt.</span><span class="srv-arr">→ Anfrage</span></a>
     </div>
   </div>
 </section>
 
-<!-- EINSATZGEBIET -->
-<section class="section">
-  <div class="container">
-    <div class="area-grid">
-      <div class="area-box">
-        <div class="eyebrow" style="color:#6ee7b7">Einsatzgebiet</div>
-        <h2>Rastatt und die gesamte Region</h2>
-        <p>Wir sind schnell vor Ort &ndash; in Rastatt und allen umliegenden Gemeinden. Kostenlose Besichtigung inklusive.</p>
-        <a href="#kontakt" class="btn btn-primary">Jetzt Kontakt aufnehmen</a>
-        <div class="area-chips">
-          <span class="area-chip">Rastatt</span>
-          <span class="area-chip">Baden-Baden</span>
-          <span class="area-chip">Gaggenau</span>
-          <span class="area-chip">Karlsruhe</span>
-          <span class="area-chip">Buehl</span>
-          <span class="area-chip">Pforzheim</span>
-          <span class="area-chip">Gernsbach</span>
-          <span class="area-chip">Ettlingen</span>
-        </div>
-      </div>
-      <div class="area-list">
-        <a href="/entruempelung-rastatt" class="area-item">
-          <div class="area-item-icon">&#129529;</div>
-          <div><div class="area-item-text">Entrümpelung Rastatt</div><div class="area-item-sub">Unsere Kernregion</div></div>
-          <div class="area-item-arrow">&#8594;</div>
-        </a>
-        <a href="/haushaltsaufloesung-rastatt" class="area-item">
-          <div class="area-item-icon">&#127968;</div>
-          <div><div class="area-item-text">Haushaltsauflösung Baden-Baden</div><div class="area-item-sub">Schnell &amp; diskret</div></div>
-          <div class="area-item-arrow">&#8594;</div>
-        </a>
-        <a href="/entruempelung-gaggenau" class="area-item">
-          <div class="area-item-icon">&#10024;</div>
-          <div><div class="area-item-text">Wohnungsreinigung Gaggenau</div><div class="area-item-sub">Besenrein übergeben</div></div>
-          <div class="area-item-arrow">&#8594;</div>
-        </a>
-        <a href="/gewerberaeumung-karlsruhe" class="area-item">
-          <div class="area-item-icon">&#127970;</div>
-          <div><div class="area-item-text">Gewerberäumung Karlsruhe</div><div class="area-item-sub">Fuer Firmen &amp; Betriebe</div></div>
-          <div class="area-item-arrow">&#8594;</div>
-        </a>
-        <a href="/einsatzgebiete" class="area-item" style="border-style:dashed">
-          <div class="area-item-icon">&#127759;</div>
-          <div><div class="area-item-text">Alle Einsatzgebiete</div><div class="area-item-sub">30+ Staedte &amp; Gemeinden</div></div>
-          <div class="area-item-arrow">&#8594;</div>
-        </a>
-      </div>
+<!-- ======== QUOTE ======== -->
+<section class="quote">
+  <blockquote class="reveal">„Sehr freundlicher und zuverlässiger Service. Die Arbeit wurde <em>schnell, sauber und professionell</em> erledigt."</blockquote>
+  <div class="src reveal">— Larra Laura · ★★★★★ Google Review</div>
+</section>
+
+<!-- ======== REVIEWS ======== -->
+<section class="rev" id="stimmen">
+  <div class="rev-head reveal">
+    <div class="rev-mark">★★★★★ · 5,0 auf Google</div>
+    <h2>Was Kund:innen <em>wirklich</em> sagen.</h2>
+  </div>
+  <div class="rev-grid">
+    <div class="rev-card reveal"><div class="stars">★★★★★</div><p>„Sehr freundlicher und zuverlässiger Service. Die Arbeit wurde schnell, sauber und professionell erledigt. Die Kommunikation war unkompliziert und angenehm. Ich bin sehr zufrieden und kann Perfekt Sauber Service auf jeden Fall weiterempfehlen."</p><div class="who">— Larra Laura · Google Review</div></div>
+    <div class="rev-card reveal"><div class="stars">★★★★★</div><p>„Super Service! Sehr freundlich, pünktlich und sauber gearbeitet. Bin wirklich zufrieden und werde den Service wieder nutzen."</p><div class="who">— Alin Mitroi · Google Review</div></div>
+    <div class="rev-card reveal" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(180deg, #fff, #f3ede0);"><div style="font-family:'Fraunces',serif; font-style:italic; font-size:3rem; color:var(--blue); line-height:1;">5,0</div><div class="stars" style="margin:8px 0 14px;">★★★★★</div><p style="font-family:'Geist Mono',monospace; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:18px;">Google Bewertungen</p><a href="https://www.google.com/search?q=perfekt+sauber+service+reviews" target="_blank" rel="noopener" class="btn btn-sec" style="font-size:.7rem; padding:10px 18px;">Auf Google ansehen →</a></div>
+  </div>
+</section>
+
+<section class="sec" id="standorte" style="max-width:1440px; margin:0 auto; padding:120px 48px;">
+  <div class="sec-mark">Standorte</div>
+  <h2 class="ch-h" style="max-width:18ch;">Wir sind dort, wo Sie <em>uns brauchen</em>.</h2>
+  <p class="ch-p" style="margin-bottom:32px;">Festpreis-Räumung, Reinigung und Übergabe in über 30 Städten in Mittelbaden, Karlsruhe und Nordschwarzwald — schauen Sie, ob wir bei Ihnen aktiv sind.</p>
+  <div style="display:flex; flex-wrap:wrap; gap:8px;"><a href="/entruempelung-rastatt" class="chip">Rastatt</a><a href="/entruempelung-baden-baden" class="chip">Baden-Baden</a><a href="/entruempelung-karlsruhe" class="chip">Karlsruhe</a><a href="/entruempelung-pforzheim" class="chip">Pforzheim</a><a href="/entruempelung-ettlingen" class="chip">Ettlingen</a><a href="/entruempelung-gaggenau" class="chip">Gaggenau</a><a href="/entruempelung-gernsbach" class="chip">Gernsbach</a><a href="/entruempelung-buehl" class="chip">Bühl</a><a href="/entruempelung-sinzheim" class="chip">Sinzheim</a><a href="/entruempelung-muggensturm" class="chip">Muggensturm</a><a href="/entruempelung-rheinstetten" class="chip">Rheinstetten</a><a href="/entruempelung-stutensee" class="chip">Stutensee</a><a href="/entruempelung-achern" class="chip">Achern</a><a href="/entruempelung-bad-wildbad" class="chip">Bad Wildbad</a><a href="/entruempelung-bad-herrenalb" class="chip">Bad Herrenalb</a><a href="/entruempelung-forbach" class="chip">Forbach</a><a href="/entruempelung-iffezheim" class="chip">Iffezheim</a><a href="/entruempelung-huegelsheim" class="chip">Hügelsheim</a><a href="/entruempelung-kuppenheim" class="chip">Kuppenheim</a><a href="/entruempelung-loffenau" class="chip">Loffenau</a><a href="/entruempelung-malsch" class="chip">Malsch</a><a href="/entruempelung-oetigheim" class="chip">Ötigheim</a><a href="/entruempelung-steinmauern" class="chip">Steinmauern</a><a href="/entruempelung-weisenbach" class="chip">Weisenbach</a><a href="/entruempelung-bietigheim" class="chip">Bietigheim</a><a href="/entruempelung-bischweier" class="chip">Bischweier</a><a href="/entruempelung-durmersheim" class="chip">Durmersheim</a><a href="/entruempelung-au-am-rhein" class="chip">Au am Rhein</a><a href="/entruempelung-elchesheim-illingen" class="chip">Elchesheim-Illingen</a><a href="/entruempelung-rheinmuenster" class="chip">Rheinmünster</a></div>
+  <style>
+    #standorte .chip{display:inline-block; background:#fff; color:var(--ink); padding:10px 18px; border-radius:999px;
+      font-family:"Geist Mono",monospace; font-size:.74rem; letter-spacing:.08em; border:1px solid var(--line); transition:all .2s;}
+    #standorte .chip:hover{border-color:var(--blue); color:var(--blue); transform:translateY(-2px);}
+  </style>
+</section>
+<!-- ======== CONTACT ======== -->
+<section class="contact" id="kontakt">
+  <div class="contact-wrap">
+    <div class="reveal">
+      <h2>Sprechen wir <em>kurz</em>?</h2>
+      <p>Eine Nachricht, ein Anruf, ein Termin. Wir antworten innerhalb von 24 Stunden — meist schneller. Vor-Ort-Termin und Angebot sind kostenlos.</p>
+    </div>
+    <div class="contact-btns reveal">
+      <a href="https://wa.me/491639087197" class="cb cb-w"><span>WhatsApp</span><span>+49 163 9087197 →</span></a>
+      <a href="tel:+491639087197" class="cb cb-p"><span>Anruf</span><span>+49 163 9087197 →</span></a>
+      <a href="mailto:kontakt@perfektsauberservice.com" class="cb cb-m"><span>E-Mail</span><span>kontakt@perfektsauberservice.com →</span></a>
     </div>
   </div>
 </section>
 
-<!-- PREISRECHNER -->
-<section class="section section-dark" id="preisrechner">
-  <div class="container">
-    <div class="section-header center">
-      <div class="eyebrow" style="color:#3db87a">Preisrechner</div>
-      <h2 style="color:#fff">Was kostet Ihre Entrümpelung?</h2>
-      <p class="section-desc" style="margin:0 auto;color:#94a3b8">Geben Sie Ihre Angaben ein und erhalten Sie sofort eine erste Preisorientierung – unverbindlich und kostenlos.</p>
-    </div>
-    <div style="max-width:900px;margin:0 auto;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
-      <div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <label style="display:block;">
-            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Ort</span>
-            <select id="hpPrCity" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;">
-              <option value="Rastatt">Rastatt</option>
-              <option value="Baden_Baden">Baden-Baden</option>
-              <option value="Gaggenau">Gaggenau</option>
-              <option value="Karlsruhe">Karlsruhe</option>
-              <option value="Buehl">Bühl</option>
-              <option value="Andere">Andere</option>
-            </select>
-          </label>
-          <label style="display:block;">
-            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Objektart</span>
-            <select id="hpPrType" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;">
-              <option value="Wohnung">Wohnung</option>
-              <option value="Haus">Haus</option>
-              <option value="Keller">Keller</option>
-              <option value="Dachboden">Dachboden</option>
-              <option value="Garage">Garage</option>
-              <option value="Buero">Büro</option>
-            </select>
-          </label>
-          <label style="display:block;">
-            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Fläche (m²)</span>
-            <input id="hpPrArea" type="number" min="1" value="60" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;box-sizing:border-box;">
-          </label>
-          <label style="display:block;">
-            <span style="display:block;font-size:13px;font-weight:600;color:#94a3b8;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;">Wie voll?</span>
-            <select id="hpPrFull" style="width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:12px;padding:12px 14px;font-family:inherit;font-size:15px;">
-              <option value="wenig">Wenig gefüllt</option>
-              <option value="normal" selected>Normal gefüllt</option>
-              <option value="voll">Voll</option>
-              <option value="sehr_voll">Sehr voll</option>
-            </select>
-          </label>
-        </div>
-        <p style="margin:16px 0 0;font-size:13px;color:#64748b;">Endpreis abhängig von Aufwand, Zugang und Sonderleistungen. Für ein exaktes Angebot — kostenlose Besichtigung.</p>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:13px;font-weight:600;color:#3db87a;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;">Geschätzte Kosten</div>
-        <div id="hpPrPrice" style="font-size:52px;font-weight:900;color:#fff;line-height:1;margin-bottom:8px;">600 € – 770 €</div>
-        <div style="font-size:13px;color:#64748b;margin-bottom:32px;">unverbindliche Preisorientierung</div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <a id="hpPrWhatsapp" href="https://wa.me/491639087197" class="btn btn-primary" style="font-size:16px;padding:16px 24px;">📱 Per WhatsApp anfragen</a>
-          <a href="/preisrechner" class="btn btn-outline" style="font-size:15px;padding:14px 24px;color:#fff;border-color:rgba(255,255,255,0.25);">Detaillierter Preisrechner →</a>
-        </div>
-      </div>
-    </div>
+<footer class="foot">
+  <span>© <span id="year">2026</span> Perfekt Sauber Service · Inh. Laura Craciun</span>
+  <span>Reutstraße 9 · 76597 Loffenau</span>
+  <span>perfektsauberservice.com · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="#" id="cookieReopen">Cookie-Einstellungen</a></span>
+</footer>
+
+<!-- ======== Cookie Banner ======== -->
+<div id="cookieBanner" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-width:560px; margin:0 auto; background:#fff; border:1px solid var(--line); border-radius:12px; padding:24px 26px; box-shadow:0 24px 60px -20px rgba(26,32,48,.35); z-index:1000; font-family:'Inter',sans-serif;">
+  <div style="font-family:'Geist Mono',monospace; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--bordeaux); margin-bottom:10px;">Cookie-Hinweis</div>
+  <h4 style="font-family:'Fraunces',serif; font-weight:400; font-size:1.3rem; margin-bottom:10px; letter-spacing:-.01em;">Wir respektieren Ihre Privatsphäre.</h4>
+  <p style="font-size:.88rem; line-height:1.55; color:var(--muted); margin-bottom:18px;">Diese Website verwendet ausschließlich <strong style="color:var(--ink);">technisch notwendige Cookies</strong>, die für den Betrieb erforderlich sind. Wir setzen <strong style="color:var(--ink);">keine Tracking- oder Werbe-Cookies</strong> ein. Mehr Infos in der <a href="/datenschutz" style="color:var(--bordeaux); text-decoration:underline;">Datenschutzerklärung</a>.</p>
+  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+    <button id="cookieAccept" style="flex:1; min-width:140px; background:var(--ink); color:var(--bg); border:0; padding:12px 20px; border-radius:8px; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; cursor:pointer;">Verstanden →</button>
+    <a href="/datenschutz" style="flex:0 0 auto; background:transparent; color:var(--ink); border:1px solid var(--line); padding:12px 20px; border-radius:8px; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; text-decoration:none; display:flex; align-items:center;">Details</a>
   </div>
-</section>
+</div>
+
 <script>
 (function(){
-  const cityAdj={Rastatt:0,Baden_Baden:30,Gaggenau:20,Karlsruhe:45,Buehl:25,Andere:35};
-  const rates={
-    Wohnung:{wenig:22,normal:30,voll:41,sehr_voll:52},
-    Haus:{wenig:25,normal:34,voll:47,sehr_voll:59},
-    Keller:{wenig:19,normal:30,voll:41,sehr_voll:57},
-    Dachboden:{wenig:25,normal:35,voll:52,sehr_voll:68},
-    Buero:{wenig:24,normal:33,voll:45,sehr_voll:57}
-  };
-  const garageRates={wenig:133,normal:198,voll:263,sehr_voll:413};
-  function euro(v){return Math.round(v).toLocaleString("de-DE")+" €";}
-  function hpUpdate(){
-    const city=document.getElementById("hpPrCity").value;
-    const type=document.getElementById("hpPrType").value;
-    const area=parseFloat(document.getElementById("hpPrArea").value||"60");
-    const full=document.getElementById("hpPrFull").value;
-    let base;
-    if(type==="Garage"){
-      base=garageRates[full]||garageRates.normal;
-    } else {
-      const r=rates[type]||rates.Wohnung;
-      base=area*(r[full]||r.normal);
-    }
-    base+=(cityAdj[city]||0);
-    const low=Math.max(180,base*0.92);
-    const high=base*1.18;
-    document.getElementById("hpPrPrice").textContent=euro(low)+" – "+euro(high);
-    const text="Hallo, ich möchte eine Einschätzung für eine Entrümpelung.\n\nOrt: "+city.replace("_","-")+"\nObjektart: "+type+"\nFläche: "+area+" m²\nFüllstand: "+full+"\nPreisorientierung: "+euro(low)+" – "+euro(high);
-    document.getElementById("hpPrWhatsapp").href="https://wa.me/491639087197?text="+encodeURIComponent(text);
+  const KEY = 'cookie_consent_v1';
+  const banner = document.getElementById('cookieBanner');
+  const btn = document.getElementById('cookieAccept');
+  const reopen = document.getElementById('cookieReopen');
+  function show(){ banner.style.display = 'block'; }
+  function hide(){ banner.style.display = 'none'; }
+  if (!localStorage.getItem(KEY)) {
+    setTimeout(show, 800);
   }
-  ["hpPrCity","hpPrType","hpPrArea","hpPrFull"].forEach(function(id){document.getElementById(id).addEventListener("input",hpUpdate);});
-  hpUpdate();
+  btn.addEventListener('click', () => {
+    localStorage.setItem(KEY, JSON.stringify({accepted:true, ts:Date.now()}));
+    hide();
+  });
+  reopen.addEventListener('click', (e) => { e.preventDefault(); show(); });
+  // Dynamic year
+  const y = new Date().getFullYear();
+  document.querySelectorAll('#year, .year').forEach(el => el.textContent = y);
 })();
 </script>
 
-<!-- KONTAKT -->
-<section class="section section-light" id="kontakt">
-  <div class="container">
-    <div class="contact-grid">
-      <div class="contact-info">
-        <div class="eyebrow">Kontakt</div>
-        <h2>Jetzt kostenlos anfragen</h2>
-        <p>Kostenlose Besichtigung, unverbindliches Festpreisangebot. Wir melden uns garantiert innerhalb von 24 Stunden.</p>
-        <div class="contact-phone"><a href="tel:+491639087197">+49 163 9087197</a></div>
-        <div class="contact-hours">Mo &ndash; Sa, 08:00–20:00 Uhr</div>
-        <div class="contact-btns">
-          <a href="https://wa.me/491639087197" class="btn btn-primary" rel="noopener">WhatsApp</a>
-          <a href="tel:+491639087197" class="btn btn-outline">Anrufen</a>
-          <a href="mailto:kontakt@perfektsauberservice.com" class="btn btn-outline">E-Mail</a>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">&#128205;</div>
-          <div><div class="contact-detail-text">Reutstrasse 9, 76597 Loffenau</div><div class="contact-detail-sub">Perfekt Sauber Service &ndash; Laura Craciun</div></div>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-detail-icon">&#9993;</div>
-          <div><div class="contact-detail-text">kontakt@perfektsauberservice.com</div><div class="contact-detail-sub">Antwort innerhalb von 24h</div></div>
-        </div>
-      </div>
-      <div class="contact-form">
-        <div class="form-title">Anfrage senden</div>
-        <div class="form-subtitle">Kostenlos &amp; unverbindlich &ndash; wir melden uns schnell bei Ihnen.</div>
-        <form name="kontakt" method="POST" data-netlify="true" action="/danke.html">
-          <input type="hidden" name="form-name" value="kontakt">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="f-name">Name</label>
-              <input id="f-name" type="text" name="name" class="form-input" placeholder="Ihr Name" autocomplete="name" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="f-telefon">Telefon</label>
-              <input id="f-telefon" type="tel" name="telefon" class="form-input" placeholder="+49 163 9087197" autocomplete="tel">
-            </div>
-            <div class="form-group full">
-              <label class="form-label" for="f-email">E-Mail</label>
-              <input id="f-email" type="email" name="email" class="form-input" placeholder="ihre@email.de" autocomplete="email" required>
-            </div>
-            <div class="form-group full">
-              <label class="form-label" for="f-ort">Ort / PLZ</label>
-              <input id="f-ort" type="text" name="ort" class="form-input" placeholder="z.B. Rastatt, 76437" autocomplete="address-level2">
-            </div>
-            <div class="form-group full">
-              <label class="form-label" for="f-nachricht">Ihr Anliegen</label>
-              <textarea id="f-nachricht" name="nachricht" class="form-input form-textarea" placeholder="Beschreiben Sie kurz Ihr Anliegen (z.B. Wohnungsgroesse, Inhalt, Wunschtermin) ..."></textarea>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg form-submit">Anfrage kostenlos senden &#8594;</button>
-          <p class="form-note">Mit dem Absenden stimmen Sie unserer <a href="/datenschutz">Datenschutzerklaerung</a> zu.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ======== Mobile floating CTA ======== -->
+<div class="fab">
+  <a class="w" href="https://wa.me/491639087197" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M.057 24l1.687-6.163A11.867 11.867 0 010 11.946C0 5.351 5.348 0 11.946 0c3.176 0 6.156 1.232 8.394 3.475a11.823 11.823 0 013.474 8.398c-.003 6.594-5.351 11.945-11.946 11.945A11.94 11.94 0 016.05 22.45L.057 24zm6.597-3.807c1.677.998 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.881.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.881-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.982z"/></svg>
+  </a>
+  <a class="p" href="tel:+491639087197" aria-label="Anrufen">
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.58l2.2-2.21c.28-.27.36-.66.25-1.02A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+  </a>
+</div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <picture>
-            <source srcset="/images/logo.webp" type="image/webp">
-            <img src="/images/logo-small.png" alt="Perfekt Sauber Service" width="40" height="40">
-          </picture>
-          <div class="footer-brand-name">Perfekt Sauber Service</div>
-        </div>
-        <p class="footer-desc">Ihr zuverlässiger Partner für Entrümpelung, Haushaltsauflösung und Räumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe.</p>
-        <div class="footer-contact">
-          <a href="tel:+491639087197">+49 163 9087197</a>
-          <a href="mailto:kontakt@perfektsauberservice.com">kontakt@perfektsauberservice.com</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Leistungen</h4>
-        <a href="/entruempelung-rastatt">Entrümpelung Rastatt</a>
-        <a href="/haushaltsaufloesung-rastatt">Haushaltsauflösung</a>
-        <a href="/garagenentruempelung-rastatt">Garagenentruempelung</a>
-        <a href="/kellerentruempelung-rastatt">Kellerentrümpelung</a>
-        <a href="/leistungen">Alle Leistungen</a>
-      </div>
-      <div class="footer-col">
-        <h4>Unternehmen</h4>
-        <a href="/einsatzgebiete">Einsatzgebiete</a>
-        <a href="/blog">Blog</a>
-        <a href="/impressum">Impressum</a>
-        <a href="/datenschutz">Datenschutzerklaerung</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>&copy; 2025 Perfekt Sauber Service &middot; Einzelunternehmen &middot; Reutstrasse 9, 76597 Loffenau</div>
-      <div class="footer-legal">
-        <a href="/impressum">Impressum</a>
-        <a href="/datenschutz">Datenschutz</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- WHATSAPP FLOAT -->
-<a href="https://wa.me/491639087197" class="whatsapp-float" aria-label="WhatsApp Chat öffnen" target="_blank" rel="noopener noreferrer">
-  <svg viewBox="0 0 24 24" width="28" height="28" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-</a>
-
-<!-- COOKIE BANNER -->
-<div class="cookie" id="cookie">
-  <p class="cookie-text">Wir verwenden Cookies für die Grundfunktionen dieser Website. Mehr Infos in der <a href="/datenschutz">Datenschutzerklaerung</a>.</p>
-  <div class="cookie-btns">
-    <button class="btn btn-ghost btn-sm" onclick="cookieDeny()">Ablehnen</button>
-    <button class="btn btn-primary btn-sm" onclick="cookieAccept()">Akzeptieren</button>
-  </div>
+<!-- ======== LIGHTBOX ======== -->
+<div class="lb" id="lb">
+  <button class="lb-close" aria-label="Schließen">✕</button>
+  <button class="lb-nav lb-prev" aria-label="Zurück">‹</button>
+  <img class="lb-img" id="lbImg" alt=""/>
+  <button class="lb-nav lb-next" aria-label="Weiter">›</button>
 </div>
 
 <script>
-// Header scroll effect
-window.addEventListener('scroll', function() {
-  var h = document.getElementById('header');
-  var cta = document.getElementById('headerCta');
-  if (window.scrollY > 80) {
-    h.classList.add('scrolled');
-    cta.style.display = 'inline-flex';
-  } else {
-    h.classList.remove('scrolled');
-    cta.style.display = 'none';
+// ===== Price calculator (Sachsen-Auflösung 2023 + 2 €) =====
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => new Intl.NumberFormat('de-DE').format(Math.round(n));
+
+  // Wohnung €/m² by fill grade (1..4) — base 18/25/35/45 + 2
+  const WF_RATE   = {1:20, 2:27, 3:37, 4:47};
+  const WF_LBL    = {1:'Leicht', 2:'Normal', 3:'Stark', 4:'Komplett'};
+  // Etagenzuschlag % from 2.OG (idx 0=EG/1.OG, 1=2.OG, 2=3.OG, 3=4.OG, 4=5.OG)
+  const FLOOR_PCT = [0, 0.05, 0.10, 0.15, 0.20];
+  const FLOOR_LBL = ['EG / 1. OG','2. OG','3. OG','4. OG','5. OG'];
+  // Keller €/m² (15/25/35/50 + 2)
+  const KF_RATE   = {1:17, 2:27, 3:37, 4:52};
+  // Dachboden €/m² (20/30/45/60 + 2)
+  const DF_RATE   = {1:22, 2:32, 3:47, 4:62};
+
+  function calc(){
+    const mode = $('calcType').value;
+    let total = 0;
+    const lines = [];
+
+    if (mode === 'wohnung'){
+      const wf = +$('wfSize').value;
+      const fill = +$('wfFill').value;
+      const floor = +$('wfFloor').value;
+      const wfBase = WF_RATE[fill] * wf;
+      lines.push(['Wohnung ' + wf + ' m² · ' + WF_LBL[fill], wfBase]);
+      const etage = wfBase * FLOOR_PCT[floor];
+      if (etage > 0) lines.push(['Etagenzuschlag ' + FLOOR_LBL[floor] + ' (' + Math.round(FLOOR_PCT[floor]*100) + '%)', etage]);
+      total += wfBase + etage;
+
+      // Keller
+      const kfSize = +$('kfSize').value;
+      const kfFill = +$('kfFill').value;
+      if (kfSize > 0 && kfFill > 0){
+        const v = KF_RATE[kfFill] * kfSize;
+        lines.push(['Keller ' + kfSize + ' m²', v]);
+        total += v;
+      }
+      // Dachboden
+      const dfSize = +$('dfSize').value;
+      const dfFill = +$('dfFill').value;
+      if (dfSize > 0 && dfFill > 0){
+        const v = DF_RATE[dfFill] * dfSize;
+        lines.push(['Dachboden ' + dfSize + ' m²', v]);
+        total += v;
+      }
+      // Garage
+      const gar = +$('garage').value;
+      if (gar > 0){ lines.push(['Garage / Stellfläche', gar]); total += gar; }
+
+      // Zusatzleistungen (per m² WF unless noted)
+      if ($('addDecken').checked){ const v = 7.90 * wf; lines.push(['Deckenplatten/Styropor (' + wf + ' m²)', v]); total += v; }
+      if ($('addPaneele').checked){ const v = 9.80 * wf; lines.push(['Paneele/Vertäfelung (' + wf + ' m²)', v]); total += v; }
+      if ($('addTeppich').checked){ const v = 9.80 * wf; lines.push(['Bodenbelag entfernen (' + wf + ' m²)', v]); total += v; }
+      if ($('addFliesen').checked){ const v = 17.80 * wf; lines.push(['Fliesen Wand (' + wf + ' m²)', v]); total += v; }
+      if ($('addAnbau').checked){ const v = 3 * wf; lines.push(['Anbauten entfernen (' + wf + ' m²)', v]); total += v; }
+
+      // Update labels
+      $('wfVal').textContent = wf + ' m²';
+      $('wfFillVal').textContent = WF_LBL[fill];
+      $('wfFloorVal').textContent = FLOOR_LBL[floor];
+      $('kfVal').textContent = kfSize + ' m²';
+      $('dfVal').textContent = dfSize + ' m²';
+    }
+    else if (mode === 'firmen'){
+      const rw = +$('firmenRW').value;
+      lines.push([$('firmenRW').selectedOptions[0].text.split(' (')[0], rw]);
+      total += rw;
+
+      const gf = +$('firmenGF').value;
+      const vol = +$('firmenVolume').value;
+      if (gf > 0){
+        const v = vol * gf;
+        lines.push(['Gemeinschaftsfläche ' + gf + ' m² (' + vol + ' €/m²)', v]);
+        total += v;
+      }
+      $('firmenGFVal').textContent = gf + ' m²';
+
+      // Büromöbel
+      const moebel = [
+        ['Drehstuhl', 'bDreh', 17],
+        ['Besucherstuhl', 'bBesuch', 12],
+        ['Schreibtisch', 'bSchreib', 27],
+        ['Schrank klein', 'bSchKlein', 22],
+        ['Schrank groß', 'bSchGross', 32],
+        ['Bürocontainer', 'bCont', 20],
+        ['Computer/TFT', 'bComp', 12]
+      ];
+      let moebelTotal = 0;
+      moebel.forEach(([lbl, id, rate]) => {
+        const n = +$(id).value || 0;
+        if (n > 0){ moebelTotal += rate * n; }
+      });
+      if (moebelTotal > 0){
+        lines.push(['Büromöbel-Demontage', moebelTotal]);
+        total += moebelTotal;
+        // Fahrtpauschale if under 50€
+        if (moebelTotal < 50){
+          lines.push(['Fahrtpauschale (< 50 € Auftrag)', 21.90]);
+          total += 21.90;
+        }
+      }
+    }
+    else if (mode === 'bauend'){
+      const v = +$('bauendRW').value;
+      lines.push([$('bauendRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'feinreinigung'){
+      const v = +$('feinRW').value;
+      lines.push([$('feinRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'malerarbeiten'){
+      const v = +$('malerRW').value;
+      lines.push([$('malerRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'tapeten'){
+      const v = +$('tapRW').value;
+      lines.push([$('tapRW').selectedOptions[0].text.split(' (')[0], v]);
+      total += v;
+    }
+    else if (mode === 'entruempelung'){
+      const ks = +$('eKfSize').value, kf = +$('eKfFill').value;
+      if (ks > 0 && kf > 0){ const v = KF_RATE[kf] * ks; lines.push(['Keller ' + ks + ' m²', v]); total += v; }
+      const ds = +$('eDfSize').value, df = +$('eDfFill').value;
+      if (ds > 0 && df > 0){ const v = DF_RATE[df] * ds; lines.push(['Dachboden ' + ds + ' m²', v]); total += v; }
+      const g = +$('eGarage').value;
+      if (g > 0){ lines.push(['Garage', g]); total += g; }
+      $('eKfVal').textContent = ks + ' m²';
+      $('eDfVal').textContent = ds + ' m²';
+    }
+
+    // Sicherheitspakete (always available)
+    if ($('secLuester')?.checked){ lines.push(['Lüsterklemmen anbringen', 17]); total += 17; }
+    if ($('secEck')?.checked){ lines.push(['Eckventilkappen', 12]); total += 12; }
+    if ($('secAbfluss')?.checked){ lines.push(['Abflusskappen', 7]); total += 7; }
+    if ($('secFilter')?.checked){ lines.push(['Filterwechsel Entlüftung', 12]); total += 12; }
+
+    // Weekend
+    if ($('calcWeekend').checked && total > 0){
+      const v = total * 0.10;
+      lines.push(['Wochenend-Zuschlag (+10%)', v]);
+      total += v;
+    }
+
+    const lo = total * 0.90;
+    const hi = total * 1.15;
+
+    $('calcPrice').textContent = total > 0 ? fmt(total) + ' €' : '— €';
+    $('calcRange').textContent = total > 0 ? 'Schätzbereich: ' + fmt(lo) + ' – ' + fmt(hi) + ' €' : 'Schätzbereich: — €';
+
+    // Breakdown
+    const bd = $('calcBreakdown');
+    if (lines.length === 0){
+      bd.innerHTML = '<div style="color:var(--muted); font-size:.78rem;">Wählen Sie eine Leistung und konfigurieren Sie die Optionen rechts.</div>';
+    } else {
+      bd.innerHTML = lines.map(([l, v]) =>
+        '<div class="row"><span>' + l + '</span><span>' + fmt(v) + ' €</span></div>'
+      ).join('') + '<div class="sum"><span>Gesamt netto</span><span>' + fmt(total) + ' €</span></div>';
+    }
   }
+
+  function showMode(){
+    const mode = $('calcType').value;
+    document.querySelectorAll('.calc-block').forEach(el => {
+      el.style.display = el.dataset.mode === mode ? 'block' : 'none';
+    });
+    calc();
+  }
+
+  // Wire all inputs inside #rechner
+  document.querySelectorAll('#rechner input, #rechner select').forEach(el => {
+    el.addEventListener('input', calc);
+    el.addEventListener('change', calc);
+  });
+  $('calcType').addEventListener('change', showMode);
+  showMode();
+})();
+
+// ===== Build gallery =====
+const PAIRS = [];
+for (let i = 1; i <= 11; i++) {
+  const n = String(i).padStart(2, '0');
+  PAIRS.push({ vor: `img/${n}-vor.jpeg`, nach: `img/${n}-nach.png`, n: i });
+}
+const grid = document.getElementById('galGrid');
+function renderGrid(filter) {
+  grid.innerHTML = '';
+  const items = [];
+  if (filter === 'pairs') {
+    PAIRS.forEach(p => {
+      items.push({ src: p.vor, side: 'vor', n: p.n });
+      items.push({ src: p.nach, side: 'nach', n: p.n });
+    });
+  } else if (filter === 'vor') {
+    PAIRS.forEach(p => items.push({ src: p.vor, side: 'vor', n: p.n }));
+  } else if (filter === 'nach') {
+    PAIRS.forEach(p => items.push({ src: p.nach, side: 'nach', n: p.n }));
+  } else {
+    // alle: alternate vor/nach for rhythm
+    PAIRS.forEach(p => {
+      items.push({ src: p.vor, side: 'vor', n: p.n });
+      items.push({ src: p.nach, side: 'nach', n: p.n });
+    });
+  }
+  items.forEach((it, idx) => {
+    const card = document.createElement('div');
+    card.className = 'gal-card ' + it.side;
+    card.dataset.idx = idx;
+    card.innerHTML = `<img src="${it.src}" loading="lazy" alt="${it.side}"/>
+      <span class="badge-side">${it.side === 'vor' ? 'Vorher' : 'Nachher'}</span>
+      <span class="num">№ ${String(it.n).padStart(2,'0')}</span>`;
+    card.addEventListener('click', () => openLb(items, idx));
+    grid.appendChild(card);
+  });
+}
+renderGrid('all');
+document.querySelectorAll('.gal-tabs button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.gal-tabs button').forEach(x => x.classList.toggle('on', x === b));
+    renderGrid(b.dataset.filter);
+  });
 });
 
-// Homepage before/after slider
-(function() {
-  var wrap = document.getElementById('hp-slider');
-  var before = document.getElementById('hp-before');
-  var handle = document.getElementById('hp-handle');
-  if (!wrap) return;
-  var dragging = false;
-  function setPos(pct) {
-    pct = Math.max(5, Math.min(95, pct));
-    before.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+// ===== Lightbox =====
+const lb = document.getElementById('lb');
+const lbImg = document.getElementById('lbImg');
+let lbItems = [], lbIdx = 0;
+function openLb(items, idx) { lbItems = items; lbIdx = idx; updateLb(); lb.classList.add('open'); }
+function updateLb() { lbImg.src = lbItems[lbIdx].src; }
+function closeLb() { lb.classList.remove('open'); }
+function nextLb() { lbIdx = (lbIdx + 1) % lbItems.length; updateLb(); }
+function prevLb() { lbIdx = (lbIdx - 1 + lbItems.length) % lbItems.length; updateLb(); }
+document.querySelector('.lb-close').addEventListener('click', closeLb);
+document.querySelector('.lb-next').addEventListener('click', nextLb);
+document.querySelector('.lb-prev').addEventListener('click', prevLb);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLb();
+  if (e.key === 'ArrowRight') nextLb();
+  if (e.key === 'ArrowLeft') prevLb();
+});
+
+// ===== Reveal =====
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ===== Before/After sliders =====
+document.querySelectorAll('[data-ba]').forEach(wrap => {
+  const vor = wrap.querySelector('.ba-vor');
+  const handle = wrap.querySelector('.ba-handle');
+  let dragging = false;
+  const setPos = (clientX) => {
+    const rect = wrap.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+    vor.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
     handle.style.left = pct + '%';
-  }
-  function getPos(e) {
-    var rect = wrap.getBoundingClientRect();
-    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    return (x / rect.width) * 100;
-  }
-  wrap.addEventListener('mousedown', function(e) { dragging = true; setPos(getPos(e)); e.preventDefault(); });
-  window.addEventListener('mousemove', function(e) { if (dragging) setPos(getPos(e)); });
-  window.addEventListener('mouseup', function() { dragging = false; });
-  wrap.addEventListener('touchstart', function(e) { dragging = true; setPos(getPos(e)); }, {passive: true});
-  window.addEventListener('touchmove', function(e) { if (dragging) setPos(getPos(e)); }, {passive: true});
-  window.addEventListener('touchend', function() { dragging = false; });
-  setPos(50);
-})();
-
-// Cookie
-(function() {
-  if (localStorage.getItem('cookie')) document.getElementById('cookie').classList.add('hidden');
-  var h = window.location.hash || '';
-  if (h.indexOf('invite_token=') !== -1 || h.indexOf('confirmation_token=') !== -1 || h.indexOf('recovery_token=') !== -1 || h.indexOf('email_change_token=') !== -1) {
-    window.location.replace('/dashboard/login.html' + h);
-  }
-})();
-function cookieAccept() { localStorage.setItem('cookie', '1'); document.getElementById('cookie').classList.add('hidden'); }
-function cookieDeny() { localStorage.setItem('cookie', '0'); document.getElementById('cookie').classList.add('hidden'); }
-
-// Hamburger menu
-(function() {
-  var btn = document.getElementById('menuToggle');
-  var menu = document.getElementById('mobileMenu');
-  if (!btn || !menu) return;
-  btn.addEventListener('click', function() {
-    var open = menu.classList.toggle('open');
-    btn.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    btn.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
-  });
-  menu.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      menu.classList.remove('open');
-      btn.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-    });
-  });
-})();
+  };
+  const start = (e) => { dragging = true; setPos(e.touches ? e.touches[0].clientX : e.clientX); };
+  const move = (e) => { if (!dragging) return; setPos(e.touches ? e.touches[0].clientX : e.clientX); };
+  const end = () => { dragging = false; };
+  wrap.addEventListener('mousedown', start);
+  wrap.addEventListener('touchstart', start, { passive: true });
+  document.addEventListener('mousemove', move);
+  document.addEventListener('touchmove', move, { passive: true });
+  document.addEventListener('mouseup', end);
+  document.addEventListener('touchend', end);
+});
 </script>
 </body>
 </html>

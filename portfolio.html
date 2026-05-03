@@ -1,168 +1,264 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta name="robots" content="index,follow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow">
 <title>Galerie – Vorher & Nachher | Perfekt Sauber Service</title>
 <meta name="description" content="Echte Ergebnisse: Sehen Sie unsere Vorher-Nachher-Fotos von Kellerentrümpelung, Wohnungsauflösung, Garagenräumung und mehr in Rastatt und Umgebung.">
-<link rel="canonical" href="https://perfektsauberservice.com/portfolio">
-<link rel="icon" type="image/png" href="/images/favicon.png">
 <meta property="og:title" content="Galerie – Vorher & Nachher | Perfekt Sauber Service">
 <meta property="og:description" content="Echte Ergebnisse von Kellerentrümpelung, Wohnungsauflösung, Garagenräumung und mehr.">
 <meta property="og:url" content="https://perfektsauberservice.com/portfolio">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; overflow-x: hidden; }
-a { text-decoration: none; color: inherit; }
-img { max-width: 100%; display: block; }
+<meta property="og:locale" content="de_DE">
+<link rel="canonical" href="https://perfektsauberservice.com/portfolio">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background:#fbf7f0; color:#1a2030; overflow-x:hidden;}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
+.mono{font-family:"Geist Mono",monospace}
+.serif{font-family:"Fraunces",serif}
 
-:root {
-  --navy: #0f2044;
-  --navy2: #1a3560;
-  --green: #3db87a;
-  --green2: #2ea068;
-  --light: #f0f4f8;
-  --border: #e2e8f0;
-  --muted: #64748b;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
-  --shadow: 0 4px 20px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg: 0 20px 60px rgba(0,0,0,.12), 0 8px 24px rgba(0,0,0,.06);
-  --radius: 16px;
+:root{
+  --bg:#fbf7f0;
+  --bg-2:#f3ede0;
+  --ink:#1a2030;
+  --muted:#5a6173;
+  --line:#e5dccb;
+  --blue:#1d6dd6;
+  --green:#5aa83a;
+  --green-dk:#3d8222;
+  --accent:#fff5d8;
+  --bordeaux:#7a2222;
 }
 
-.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+/* NAVBAR */
+.nav{position:sticky; top:0; z-index:50; background:rgba(251,247,240,.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line); padding:14px 28px;
+  display:flex; justify-content:space-between; align-items:center; gap:18px;}
+.nav-brand{display:flex; align-items:center; gap:12px; font-family:"Fraunces",serif; font-size:1.15rem; letter-spacing:-0.01em;}
+.nav-brand img{height:38px; width:38px; border-radius:8px; object-fit:cover; flex-shrink:0;}
+.nav-brand b{font-weight:700; color:var(--blue);}
+.nav-brand em{font-style:normal; color:var(--green); font-weight:600;}
+.nav-brand .sub{color:var(--muted); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; font-family:"Geist Mono",monospace; margin-top:3px;}
+.nav-links{display:flex; gap:24px; font-family:"Geist Mono",monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
+.nav-links a:hover{color:var(--blue);}
+.nav-cta{background:var(--green); color:#fff; padding:10px 18px; border-radius:999px;
+  font-family:"Geist Mono",monospace; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; font-weight:500;
+  transition:all .25s;}
+.nav-cta:hover{background:var(--green-dk); transform:translateY(-1px);}
+@media(max-width:820px){.nav-links{display:none} .nav-brand .sub{display:none}}
 
-/* HEADER */
-.header { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 0; transition: all .3s; }
-.header.scrolled { background: rgba(255,255,255,.97); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-sm); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 72px; }
-.logo { display: flex; align-items: center; gap: 12px; }
-.logo img { height: 48px; width: auto; }
-.logo-text { line-height: 1.2; }
-.logo-name { font-size: 17px; font-weight: 800; color: var(--navy); }
-.logo-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
-.nav { display: flex; align-items: center; gap: 32px; }
-.nav a { font-size: 14px; font-weight: 600; color: #334155; transition: color .2s; }
-.nav a:hover, .nav a.active { color: var(--green); }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 14px; border: none; cursor: pointer; font-family: inherit; transition: all .2s; white-space: nowrap; }
-.btn-primary { background: var(--green); color: #fff; box-shadow: 0 4px 14px rgba(61,184,122,.35); }
-.btn-primary:hover { background: var(--green2); transform: translateY(-1px); }
-.btn-outline { background: transparent; color: var(--navy); border: 2px solid var(--border); }
-.btn-outline:hover { border-color: var(--green); color: var(--green); }
-.btn-ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); }
-.btn-ghost:hover { background: rgba(255,255,255,.2); }
-.btn-sm { padding: 10px 20px; font-size: 13px; border-radius: 10px; }
-.mobile-nav { display: none; }
+/* HERO (city x service) */
+.hero{min-height:auto; padding:60px 48px 80px; max-width:1440px; margin:0 auto;
+  display:grid; grid-template-columns:1.05fr 1fr; gap:64px; align-items:center;}
+@media(max-width:980px){.hero{grid-template-columns:1fr; padding:40px 24px 60px; gap:40px;}}
+.eyebrow{display:inline-flex; align-items:center; gap:10px; font-family:"Geist Mono",monospace;
+  font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--blue); margin-bottom:28px;}
+.eyebrow::before{content:""; width:32px; height:1px; background:var(--blue);}
+.h1{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.1rem, 5.2vw, 4.4rem);
+  line-height:1.02; letter-spacing:-0.025em; margin-bottom:24px; color:var(--ink);}
+.h1 em{font-style:italic; font-weight:400; color:var(--green);}
+.h1 b{font-weight:700; color:var(--blue);}
+.deck{font-size:1.08rem; line-height:1.6; color:var(--muted); max-width:52ch; margin-bottom:32px;}
+.cta-row{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+.btn{padding:14px 22px; border-radius:999px; font-family:"Geist Mono",monospace;
+  font-size:.74rem; letter-spacing:.16em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:10px; transition:all .25s;}
+.btn-pri{background:var(--green); color:#fff; font-weight:500;}
+.btn-pri:hover{background:var(--green-dk); transform:translateY(-2px); box-shadow:0 12px 28px -10px rgba(61,130,34,.5);}
+.btn-sec{border:1.5px solid var(--ink); color:var(--ink);}
+.btn-sec:hover{background:var(--ink); color:var(--bg);}
+.btn-w{background:#25d366; color:#fff;}
+.btn-w:hover{background:#1ea54f;}
+.btn-phone{background:var(--ink); color:#fff;}
+.btn-phone:hover{background:#0a0f1a;}
+.trust{display:flex; gap:32px; margin-top:40px; padding-top:24px;
+  border-top:1px solid var(--line); flex-wrap:wrap;}
+.trust .it strong{display:block; font-family:"Fraunces",serif; font-size:1.5rem; font-weight:500;
+  line-height:1; color:var(--blue);}
+.trust .it span{font-family:"Geist Mono",monospace; font-size:.62rem; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--muted); margin-top:6px; display:block;}
 
-/* HERO */
-.page-hero { background: linear-gradient(135deg, #0a1628 0%, #0f2044 50%, #162d58 100%); padding: 120px 0 60px; text-align: center; position: relative; overflow: hidden; }
-.page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(61,184,122,.12) 0%, transparent 60%); }
-.page-hero .container { position: relative; z-index: 1; }
-.eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(61,184,122,.15); border: 1px solid rgba(61,184,122,.3); color: #6ee7b7; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 20px; }
-.page-hero h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 900; color: #fff; letter-spacing: -.03em; line-height: 1.1; margin-bottom: 16px; }
-.page-hero h1 em { font-style: normal; color: #3db87a; }
-.page-hero p { font-size: 18px; color: #94a3b8; max-width: 560px; margin: 0 auto; }
+/* hero image */
+.hero-img{position:relative; aspect-ratio:4/5; max-width:480px; margin-left:auto; width:100%;}
+@media(max-width:980px){.hero-img{margin:0 auto;}}
+.hero-img > img{width:100%; height:100%; object-fit:cover; border-radius:14px; box-shadow:0 30px 60px -20px rgba(26,32,48,.25);}
+.hero-img .badge{position:absolute; bottom:-22px; right:-22px; background:#fff; border-radius:50%;
+  width:96px; height:96px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-shadow:0 16px 32px -10px rgba(26,32,48,.25); transform:rotate(-8deg); z-index:3;}
+.hero-img .badge strong{font-family:"Fraunces",serif; font-style:italic; font-size:1.05rem; color:var(--green); line-height:1; text-align:center; padding:0 8px;}
+.hero-img .badge span{font-family:"Geist Mono",monospace; font-size:.5rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:4px;}
+@media(max-width:520px){.hero-img .badge{width:78px; height:78px;} .hero-img .badge strong{font-size:.85rem;}}
 
-/* FILTERS */
-.filters-wrap { padding: 36px 0 28px; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 72px; z-index: 100; }
-.filters { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
-.filter-btn { padding: 10px 22px; border-radius: 999px; font-size: 14px; font-weight: 600; border: 2px solid var(--border); background: #fff; color: var(--muted); cursor: pointer; transition: all .2s; font-family: inherit; }
-.filter-btn:hover { border-color: var(--green); color: var(--green); }
-.filter-btn.active { background: var(--green); border-color: var(--green); color: #fff; box-shadow: 0 4px 12px rgba(61,184,122,.3); }
+/* AUTHORITY STRIP */
+.strip{background:var(--bg-2); padding:24px 48px; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.strip-row{max-width:1440px; margin:0 auto; display:flex; justify-content:space-between;
+  align-items:center; gap:24px; flex-wrap:wrap; font-family:"Geist Mono",monospace;
+  font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
+.strip-row b{color:var(--ink); font-weight:600;}
+.strip-row .star{color:#f0b30c; letter-spacing:.05em;}
+
+/* BREADCRUMB */
+.crumb{max-width:1440px; margin:0 auto; padding:24px 48px 0; font-family:"Geist Mono",monospace;
+  font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
+.crumb a{color:var(--blue);} .crumb a:hover{text-decoration:underline;}
+.crumb .sep{margin:0 10px; color:var(--line);}
+@media(max-width:980px){.crumb{padding:16px 24px 0;}}
+
+/* SECTION (generic editorial section) */
+.sec{padding:90px 48px; max-width:1440px; margin:0 auto;}
+@media(max-width:980px){.sec{padding:60px 24px;}}
+.sec.alt{background:var(--bg-2); max-width:none; padding-left:48px; padding-right:48px;}
+@media(max-width:980px){.sec.alt{padding-left:24px; padding-right:24px;}}
+.sec-mark{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--green); margin-bottom:18px; display:flex; align-items:center; gap:12px;}
+.sec-mark::before{content:""; width:32px; height:1px; background:var(--green);}
+.sec-h{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(1.9rem,4vw,3.2rem);
+  line-height:1.05; letter-spacing:-0.025em; margin-bottom:20px; color:var(--ink); max-width:24ch;}
+.sec-h em{font-style:italic; color:var(--green); font-weight:400;}
+.sec-h b{font-weight:700; color:var(--blue);}
+.sec-p{color:var(--muted); font-size:1.05rem; line-height:1.7; max-width:62ch; margin-bottom:36px;}
+
+/* PRICE TABLE (editorial) */
+.price-edit{display:grid; grid-template-columns:1fr; border-top:1px solid var(--line); margin-top:24px;}
+.price-row{display:grid; grid-template-columns:1.4fr 2fr 130px; gap:24px; padding:24px 0;
+  border-bottom:1px solid var(--line); align-items:baseline;}
+@media(max-width:780px){.price-row{grid-template-columns:1fr 100px; gap:14px}
+  .price-row .ex{grid-column:1 / -1; padding-top:6px}}
+.price-name{font-family:"Fraunces",serif; font-weight:500; font-size:1.2rem; letter-spacing:-0.015em;}
+.price-name em{font-style:italic; color:var(--green); font-weight:400; font-size:.85em; margin-left:6px; display:block; margin-top:2px;}
+.price-ex{font-size:.95rem; color:var(--muted); line-height:1.5;}
+.price-val{font-family:"Geist Mono",monospace; font-size:1rem; letter-spacing:.04em; text-align:right; color:var(--blue); font-weight:500;}
+.price-note{margin-top:24px; padding:18px 22px; background:var(--accent); border-radius:8px;
+  font-size:.92rem; line-height:1.6; color:var(--ink);}
+.price-note a{color:var(--blue); text-decoration:underline; text-underline-offset:3px;}
+
+/* SERVICES CARDS (editorial) */
+.cards{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-top:24px;}
+@media(max-width:780px){.cards{grid-template-columns:1fr;}}
+.card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:28px 26px;}
+.card .ic{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green); margin-bottom:14px;}
+.card h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.35rem; letter-spacing:-0.015em; margin-bottom:10px; color:var(--ink);}
+.card h3 em{font-style:italic; color:var(--green);}
+.card p{color:var(--muted); font-size:.95rem; line-height:1.6;}
 
 /* GALLERY */
-.gallery-section { padding: 60px 0 100px; background: var(--light); }
-.gallery-count { text-align: center; font-size: 14px; color: var(--muted); margin-bottom: 40px; font-weight: 500; }
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); gap: 32px; }
+.gal-tabs{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:24px; padding:6px;
+  background:var(--bg-2); border-radius:999px; width:fit-content;}
+.gal-tabs button{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.18em;
+  text-transform:uppercase; padding:9px 14px; border-radius:999px; color:var(--muted); transition:all .2s;}
+.gal-tabs button.on{background:#fff; color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.gal-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+@media(max-width:880px){.gal-grid{grid-template-columns:repeat(2,1fr);}}
+.gal-card{position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden;
+  cursor:pointer; background:var(--bg-2); box-shadow:0 8px 20px -8px rgba(26,32,48,.18);}
+.gal-card img{width:100%; height:100%; object-fit:cover; transition:transform .5s;}
+.gal-card:hover img{transform:scale(1.04);}
+.gal-card .num{position:absolute; bottom:10px; right:10px; padding:4px 10px; border-radius:999px;
+  font-family:"Geist Mono",monospace; font-size:.6rem; letter-spacing:.14em;
+  background:rgba(0,0,0,.6); color:#fff;}
+.gal-note{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.14em; color:var(--muted); margin-top:18px; font-style:italic;}
 
-/* PROJECT CARD */
-.project-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s; }
-.project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+/* STEPS (editorial 5-step) */
+.steps{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:24px;}
+@media(max-width:880px){.steps{grid-template-columns:repeat(2,1fr);}}
+.step{padding:24px 18px; background:#fff; border:1px solid var(--line); border-radius:12px;}
+.step-n{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green); margin-bottom:12px;}
+.step h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.15rem; margin-bottom:8px; color:var(--ink);}
+.step p{font-size:.88rem; color:var(--muted); line-height:1.55;}
 
-/* TYPE BADGE */
-.card-type-badge { position: absolute; top: 16px; left: 16px; z-index: 10; padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #fff; backdrop-filter: blur(8px); }
-.card-type-badge.keller { background: rgba(15,32,68,.85); }
-.card-type-badge.wohnung { background: rgba(124,58,237,.85); }
-.card-type-badge.garage { background: rgba(234,88,12,.85); }
-.card-type-badge.haus { background: rgba(5,150,105,.85); }
+/* USPs */
+.usps{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px;}
+@media(max-width:880px){.usps{grid-template-columns:1fr;}}
+.usp{padding:28px 24px; background:#fff; border:1px solid var(--line); border-radius:12px;}
+.usp .num{font-family:"Fraunces",serif; font-style:italic; font-size:2rem; font-weight:400; color:var(--blue); line-height:1; margin-bottom:12px;}
+.usp h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.1rem; margin-bottom:8px; color:var(--ink);}
+.usp p{font-size:.9rem; color:var(--muted); line-height:1.55;}
 
-/* BEFORE/AFTER SLIDER */
-.slider-wrap { position: relative; overflow: hidden; aspect-ratio: 4/3; cursor: ew-resize; user-select: none; -webkit-user-select: none; }
-.slider-after { position: absolute; inset: 0; }
-.slider-after img { width: 100%; height: 100%; object-fit: cover; }
-.slider-before { position: absolute; inset: 0; overflow: hidden; clip-path: inset(0 50% 0 0); }
-.slider-before img { width: 100%; height: 100%; object-fit: cover; }
-.slider-handle { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; background: #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
-.slider-handle-btn { width: 44px; height: 44px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,.3); }
-.slider-handle-btn svg { width: 20px; height: 20px; color: var(--navy); }
-.slider-label { position: absolute; bottom: 14px; z-index: 6; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; pointer-events: none; }
-.label-before { left: 14px; background: rgba(239,68,68,.9); color: #fff; }
-.label-after { right: 14px; background: rgba(61,184,122,.9); color: #fff; }
+/* DISTRICTS */
+.dist{display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;}
+.dist .chip{display:inline-block; background:#fff; color:var(--ink); padding:9px 16px; border-radius:999px;
+  font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.1em; border:1px solid var(--line);}
+.dist .chip:hover{border-color:var(--blue); color:var(--blue);}
+.umland{margin-top:32px;}
+.umland h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.25rem; margin-bottom:10px; color:var(--ink);}
+.umland p{font-size:.98rem; color:var(--muted); line-height:1.65;}
 
-/* PAIR NAVIGATION */
-.pair-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 12px; pointer-events: none; }
-.pair-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.9); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,.25); pointer-events: all; transition: all .2s; flex-shrink: 0; }
-.pair-btn:hover { background: #fff; transform: scale(1.1); }
-.pair-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
-.pair-btn svg { width: 16px; height: 16px; color: var(--navy); }
+/* FAQ */
+.faq{margin-top:24px; border-top:1px solid var(--line);}
+.faq details{border-bottom:1px solid var(--line); padding:0;}
+.faq details summary{padding:24px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
+  font-family:"Fraunces",serif; font-weight:500; font-size:1.15rem; color:var(--ink); list-style:none;}
+.faq details summary::-webkit-details-marker{display:none;}
+.faq details summary::after{content:"＋"; font-family:"Geist Mono",monospace; font-size:1.3rem; color:var(--green); transition:transform .3s; flex-shrink:0;}
+.faq details[open] summary::after{content:"−";}
+.faq details .ans{padding:0 0 24px; color:var(--muted); font-size:1rem; line-height:1.7; max-width:78ch;}
 
-/* CARD INFO */
-.card-info { padding: 16px 20px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.card-info-left { }
-.card-title { font-size: 17px; font-weight: 800; color: var(--navy); letter-spacing: -.02em; margin-bottom: 2px; }
-.card-meta { font-size: 13px; color: var(--muted); display: flex; gap: 12px; align-items: center; }
-.card-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
-.pair-counter { font-size: 13px; font-weight: 700; color: var(--muted); background: var(--light); padding: 6px 14px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+/* RELATED */
+.rel-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:18px;}
+@media(max-width:780px){.rel-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.rel-grid{grid-template-columns:1fr;}}
+.rel-grid a{display:block; padding:18px 22px; background:#fff; border:1px solid var(--line); border-radius:10px;
+  font-family:"Geist Mono",monospace; font-size:.78rem; letter-spacing:.06em; color:var(--ink); transition:all .2s;}
+.rel-grid a:hover{border-color:var(--blue); color:var(--blue); transform:translateY(-2px);}
+.rel-h{font-family:"Fraunces",serif; font-weight:500; font-size:1.25rem; margin:36px 0 0; color:var(--ink);}
 
-/* CTA */
-.gallery-cta { background: linear-gradient(135deg, var(--navy), var(--navy2)); padding: 64px 0; text-align: center; }
-.gallery-cta h2 { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 12px; letter-spacing: -.03em; }
-.gallery-cta p { color: #94a3b8; font-size: 17px; margin-bottom: 28px; }
+/* CONTACT */
+.contact{background:var(--ink); color:var(--bg); padding:90px 48px;}
+@media(max-width:980px){.contact{padding:60px 24px;}}
+.contact-wrap{max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
+@media(max-width:880px){.contact-wrap{grid-template-columns:1fr; gap:32px;}}
+.contact h2{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2rem,4.4vw,3.4rem);
+  line-height:1.05; letter-spacing:-0.025em;}
+.contact h2 em{font-style:italic; color:#9ad978;}
+.contact h2 b{font-weight:700; color:#7ab8ff;}
+.contact p{font-size:1.05rem; line-height:1.65; margin:20px 0; max-width:48ch; color:rgba(251,247,240,.75);}
+.contact-btns{display:flex; flex-direction:column; gap:12px; max-width:440px;}
+.cb{display:flex; align-items:center; justify-content:space-between; padding:18px 24px;
+  border-radius:8px; font-family:"Geist Mono",monospace; letter-spacing:.14em;
+  text-transform:uppercase; font-size:.74rem; transition:transform .2s;}
+.cb:hover{transform:translateX(6px);}
+.cb-w{background:#25d366; color:#fff;}
+.cb-p{background:var(--blue); color:#fff;}
+.cb-m{background:transparent; color:var(--bg); border:1.5px solid rgba(251,247,240,.3);}
 
 /* FOOTER */
-.footer { background: #0a1628; padding: 60px 0 32px; }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
-.footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-.footer-brand img { height: 40px; }
-.footer-brand-name { font-size: 16px; font-weight: 800; color: #fff; }
-.footer-desc { font-size: 14px; color: #64748b; line-height: 1.7; margin-bottom: 20px; }
-.footer-contact { display: flex; flex-direction: column; gap: 6px; }
-.footer-contact a { font-size: 14px; color: #94a3b8; transition: color .2s; }
-.footer-contact a:hover { color: var(--green); }
-.footer-col h4 { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 16px; }
-.footer-col { display: flex; flex-direction: column; gap: 10px; }
-.footer-col a { font-size: 14px; color: #64748b; transition: color .2s; }
-.footer-col a:hover { color: var(--green); }
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 13px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.08); color: #475569; }
-.footer-legal { display: flex; gap: 24px; }
-.footer-legal a { color: #64748b; transition: color .2s; }
-.footer-legal a:hover { color: #fff; }
+.foot{background:var(--ink); color:rgba(251,247,240,.5); padding:32px 48px;
+  border-top:1px solid rgba(251,247,240,.1); display:flex; justify-content:space-between;
+  flex-wrap:wrap; gap:18px; font-family:"Geist Mono",monospace; font-size:.66rem;
+  letter-spacing:.14em; text-transform:uppercase;}
+.foot a:hover{color:var(--bg);}
+@media(max-width:780px){.foot{padding:32px 24px;}}
 
-/* COOKIE */
-.cookie { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: var(--navy); color: #fff; padding: 16px 24px; border-radius: 16px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 16px; max-width: 560px; width: calc(100% - 40px); }
-.cookie.hidden { display: none; }
-.cookie-text { font-size: 13px; color: #94a3b8; flex: 1; }
-.cookie-text a { color: var(--green); }
-.cookie-btns { display: flex; gap: 8px; flex-shrink: 0; }
+/* MOBILE FAB */
+.fab{display:none;}
+@media(max-width:780px){
+  .fab{display:flex; position:fixed; bottom:18px; right:18px; z-index:60; gap:10px;}
+  .fab a{width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.25); color:#fff; font-size:1.4rem;}
+  .fab .w{background:#25d366;} .fab .p{background:var(--blue);}
+}
 
-@media (max-width: 768px) {
-  .nav { display: none; }
-  .mobile-nav { display: flex; align-items: center; gap: 10px; }
-  .gallery-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-cta h2 { font-size: 26px; }
-}
-@media (max-width: 480px) {
-  .footer-grid { grid-template-columns: 1fr; }
-}
+/* COOKIE BANNER */
+#cookieBanner{display:none; position:fixed; bottom:20px; left:20px; right:20px; max-width:560px; margin:0 auto;
+  background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px 24px;
+  box-shadow:0 24px 60px -20px rgba(26,32,48,.35); z-index:1000; font-family:"Inter",sans-serif;}
+#cookieBanner .lab{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--bordeaux); margin-bottom:8px;}
+#cookieBanner p{font-size:.9rem; line-height:1.55; margin-bottom:14px; color:var(--muted);}
+#cookieBanner .row{display:flex; gap:8px; flex-wrap:wrap;}
+#cookieBanner button{padding:10px 18px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;}
+#cookieBanner .acc{background:var(--green); color:#fff;}
+#cookieBanner .dec{border:1px solid var(--line); color:var(--ink);}
 </style>
+
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF"></script>
 <script>
@@ -173,447 +269,90 @@ img { max-width: 100%; display: block; }
 </script>
 </head>
 <body>
-
-<!-- HEADER -->
-<header class="header" id="header">
-  <div class="container">
-    <div class="header-inner">
-      <a href="/" class="logo">
-        <img src="/images/logo.png" alt="Perfekt Sauber Service">
-        <div class="logo-text">
-          <div class="logo-name">Perfekt Sauber Service</div>
-          <div class="logo-sub">Entrümpelung &amp; Räumung</div>
-        </div>
-      </a>
-      <nav class="nav">
-        <a href="/leistungen">Leistungen</a>
-        <a href="/einsatzgebiete">Einsatzgebiete</a>
-        <a href="/galerie" class="active">Portfolio</a>
-        <a href="/blog">Blog</a>
-        <a href="/kontakt">Kontakt</a>
-      </nav>
-      <a href="/kontakt" class="btn btn-primary" style="display:none" id="headerCta">Anfragen</a>
-      <div class="mobile-nav">
-        <a href="tel:+491639087197" class="btn btn-outline btn-sm">Anrufen</a>
-        <a href="/kontakt" class="btn btn-primary btn-sm">Anfragen</a>
-      </div>
+<nav class="nav">
+  <a href="/" class="nav-brand">
+    <img src="/images/logo.webp" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
+    <span style="display:flex; flex-direction:column; line-height:1;">
+      <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
+      <span class="sub">Service · Rastatt</span>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="/leistungen">Leistungen</a>
+    <a href="/einsatzgebiete">Einsatzgebiete</a>
+    <a href="/portfolio">Galerie</a>
+    <a href="/preisrechner">Preis-Rechner</a>
+  </div>
+  <a href="/kontakt" class="nav-cta">Anfrage</a>
+</nav>
+<section class="hero">
+  <div>
+    
+    <h1 class="h1"></h1>
+    
+    <div class="cta-row">
+      <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
+      <a href="https://wa.me/491639087197" class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
+      <a href="/preisrechner" class="btn btn-sec">Preis berechnen</a>
     </div>
+    
   </div>
-</header>
-
-<!-- HERO -->
-<section class="page-hero">
-  <div class="container">
-    <div class="eyebrow">Unsere Arbeit</div>
-    <h1>Vorher &amp; <em>Nachher</em></h1>
-    <p>Echte Ergebnisse von echten Aufträgen – schieben Sie den Regler und blättern Sie durch alle Fotos.</p>
-  </div>
+  
 </section>
-
-<!-- FILTERS -->
-<div class="filters-wrap">
-  <div class="container">
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">Alle Projekte</button>
-      <button class="filter-btn" data-filter="keller">Keller</button>
-      <button class="filter-btn" data-filter="wohnung">Wohnung</button>
-      <button class="filter-btn" data-filter="garage">Garage</button>
-      <button class="filter-btn" data-filter="haus">Haus</button>
-    </div>
+<div class="strip">
+  <div class="strip-row">
+    <span><b>Familiengeführt</b> · seit 2023</span>
+    <span><b>Festpreis-Garantie</b> · schriftlich</span>
+    <span><span class="star">★★★★★</span> <b>5,0</b> Google</span>
+    <span><b>DSGVO-konform</b> · Diskret</span>
+    <span><b>Vollständig versichert</b></span>
   </div>
 </div>
 
-<!-- GALLERY -->
-<section class="gallery-section">
-  <div class="container">
-    <div class="gallery-count" id="galleryCount">1 Projekt</div>
-    <div class="gallery-grid" id="galleryGrid">
-      <!-- cards injected by JS -->
+
+
+
+<section class="contact" id="kontakt">
+  <div class="contact-wrap">
+    <div>
+      <h2>Sprechen wir <em>kurz</em>?</h2>
+      <p>Eine Nachricht, ein Anruf, ein Termin. Wir antworten innerhalb von 24 Stunden — meist schneller. Vor-Ort-Termin und Angebot sind <b>kostenlos</b>.</p>
+    </div>
+    <div class="contact-btns">
+      <a href="https://wa.me/491639087197?text=Hallo%2C%20ich%20m%C3%B6chte%20eine%20Anfrage%20f%C3%BCr%20eine%20R%C3%A4umung%20stellen." class="cb cb-w"><span>WhatsApp</span><span>+49 163 9087197 →</span></a>
+      <a href="tel:+491639087197" class="cb cb-p"><span>Anruf</span><span>+49 163 9087197 →</span></a>
+      <a href="mailto:kontakt@perfektsauberservice.com" class="cb cb-m"><span>E-Mail</span><span>kontakt@perfektsauberservice.com →</span></a>
     </div>
   </div>
 </section>
-
-<!-- CTA -->
-<section class="gallery-cta">
-  <div class="container">
-    <h2>Ihr Objekt könnte das Nächste sein</h2>
-    <p>Kostenlose Besichtigung – unverbindliches Angebot innerhalb von 24 Stunden.</p>
-    <a href="/kontakt" class="btn btn-primary" style="padding:16px 36px;font-size:16px;">Jetzt kostenlos anfragen</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <img src="/images/logo.png" alt="Perfekt Sauber Service">
-          <div class="footer-brand-name">Perfekt Sauber Service</div>
-        </div>
-        <p class="footer-desc">Ihr zuverlässiger Partner für Entrümpelung, Haushaltsauflösung und Räumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe.</p>
-        <div class="footer-contact">
-          <a href="tel:+491639087197">+49 163 9087197</a>
-          <a href="mailto:kontakt@perfektsauberservice.com">kontakt@perfektsauberservice.com</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Leistungen</h4>
-        <a href="/entruempelung-rastatt">Entrümpelung Rastatt</a>
-        <a href="/haushaltsaufloesung-rastatt">Haushaltsauflösung</a>
-        <a href="/garagenentruempelung-rastatt">Garagenentruempelung</a>
-        <a href="/kellerentruempelung-rastatt">Kellerentrümpelung</a>
-        <a href="/leistungen">Alle Leistungen</a>
-      </div>
-      <div class="footer-col">
-        <h4>Unternehmen</h4>
-        <a href="/einsatzgebiete">Einsatzgebiete</a>
-        <a href="/galerie">Galerie</a>
-        <a href="/blog">Blog</a>
-        <a href="/impressum">Impressum</a>
-        <a href="/datenschutz">Datenschutzerklaerung</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div>&copy; 2025 Perfekt Sauber Service &middot; Einzelunternehmen &middot; Reutstrasse 9, 76597 Loffenau</div>
-      <div class="footer-legal">
-        <a href="/impressum">Impressum</a>
-        <a href="/datenschutz">Datenschutz</a>
-      </div>
-    </div>
-  </div>
+<footer class="foot">
+  <span>© <span id="year">2026</span> Perfekt Sauber Service · Inh. Laura Craciun</span>
+  <span>Reutstraße 9 · 76597 Loffenau</span>
+  <span>perfektsauberservice.com · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="#" id="cookieReopen">Cookies</a></span>
 </footer>
-
-<!-- COOKIE -->
-<div class="cookie" id="cookie">
-  <p class="cookie-text">Wir verwenden Cookies für die Grundfunktionen dieser Website. Mehr Infos in der <a href="/datenschutz">Datenschutzerklaerung</a>.</p>
-  <div class="cookie-btns">
-    <button class="btn btn-ghost btn-sm" onclick="cookieDeny()">Ablehnen</button>
-    <button class="btn btn-primary btn-sm" onclick="cookieAccept()">Akzeptieren</button>
+<div class="fab">
+  <a class="w" href="https://wa.me/491639087197" aria-label="WhatsApp">✆</a>
+  <a class="p" href="tel:+491639087197" aria-label="Anruf">☎</a>
+</div>
+<div id="cookieBanner">
+  <div class="lab">Cookie-Hinweis</div>
+  <p>Wir verwenden notwendige Cookies, damit die Website funktioniert. Optionale Analyse-Cookies helfen uns, sie zu verbessern.</p>
+  <div class="row">
+    <button class="acc" id="cookieAccept">Alle akzeptieren</button>
+    <button class="dec" id="cookieDecline">Nur notwendige</button>
   </div>
 </div>
-
 <script>
-// ── PROJECT DATA ──────────────────────────────────────────────────────────────
-// Jedes Projekt hat mehrere Vorher/Nachher-Paare (pairs).
-// Neue Projekte einfach hier hinzufügen.
-var PROJECTS = [
-  {
-    type: 'garage',
-    title: 'Garagenräumung',
-    location: 'Rastatt',
-    detail: 'Vollständige Garagenräumung',
-    pairs: [
-      {
-        before: '/images/keller-1/kellerentruempelung-rastatt-vorher-1.webp',
-        after:  '/images/keller-1/kellerentruempelung-rastatt-nachher-1.webp'
-      },
-      {
-        before: '/images/keller-1/kellerentruempelung-rastatt-vorher-2.webp',
-        after:  '/images/keller-1/kellerentruempelung-rastatt-nachher-5.webp'
-      },
-      {
-        before: '/images/keller-1/kellerentruempelung-rastatt-vorher-3.webp',
-        after:  '/images/keller-1/kellerentruempelung-rastatt-nachher-3.webp'
-      }
-    ]
-  }
-  ,
-  {
-    type: 'wohnung',
-    title: 'Wohnungsauflösung',
-    location: 'Baden-Baden',
-    detail: 'Schrankwand komplett geräumt',
-    pairs: [
-      {
-        before: '/images/wohnung-badenbaden/wohnungsaufloesung-badenbaden-vorher-1.webp',
-        after:  '/images/wohnung-badenbaden/wohnungsaufloesung-badenbaden-nachher-1.webp'
-      }
-    ]
-  }
-  ,
-  {
-    type: 'wohnung',
-    title: 'Wohnungsauflösung',
-    location: 'Gaggenau',
-    detail: 'Komplette Wohnungsräumung',
-    pairs: [
-      {
-        before: '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-1.webp',
-        after:  '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-1.webp'
-      },
-      {
-        before: '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-2.webp',
-        after:  '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-2.webp'
-      },
-      {
-        before: '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-3.webp',
-        after:  '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-3.webp'
-      },
-      {
-        before: '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-4.webp',
-        after:  '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-4.webp'
-      },
-      {
-        before: '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-vorher-5.webp',
-        after:  '/images/wohnung-gaggenau/wohnungsaufloesung-gaggenau-nachher-5.webp'
-      }
-    ]
-  }
-  ,
-  {
-    type: 'wohnung',
-    title: 'Wohnungsauflösung',
-    location: 'Karlsruhe',
-    detail: 'Komplette Räumung im 2. OG',
-    pairs: [
-      {
-        before: '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-vorher-1.webp',
-        after:  '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-1.webp'
-      },
-      {
-        before: '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-vorher-2.webp',
-        after:  '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-2.webp'
-      },
-      {
-        before: '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-vorher-3.webp',
-        after:  '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-3.webp'
-      },
-      {
-        before: '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-vorher-4.webp',
-        after:  '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-4.webp'
-      },
-      {
-        before: '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-vorher-5.webp',
-        after:  '/images/wohnung-karlsruhe/wohnungsaufloesung-karlsruhe-nachher-5.webp'
-      }
-    ]
-  }
-  ,
-  {
-    type: 'wohnung',
-    title: 'Wohnungsauflösung',
-    location: 'Rastatt',
-    detail: 'Komplette Wohnungsräumung',
-    pairs: [
-      {
-        before: '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-vorher-1.webp',
-        after:  '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-nachher-1.webp'
-      },
-      {
-        before: '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-vorher-2.webp',
-        after:  '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-nachher-2.webp'
-      },
-      {
-        before: '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-vorher-3.webp',
-        after:  '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-nachher-3.webp'
-      },
-      {
-        before: '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-vorher-4.webp',
-        after:  '/images/wohnung-rastatt/wohnungsaufloesung-rastatt-nachher-4.webp'
-      }
-    ]
-  }
-  ,
-  {
-    type: 'keller',
-    title: 'Kellerentrümpelung',
-    location: 'Baden-Baden',
-    detail: 'Vollständige Räumung',
-    pairs: [
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-1.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-1.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-2.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-2.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-3.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-3.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-4.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-4.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-5.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-5.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-6.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-6.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-7.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-7.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-8.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-8.webp'
-      },
-      {
-        before: '/images/keller-badenbaden/kellerentruempelung-badenbaden-vorher-9.webp',
-        after:  '/images/keller-badenbaden/kellerentruempelung-badenbaden-nachher-9.webp'
-      }
-    ]
-  }
-  ,
-  {
-    type: 'wohnung',
-    title: 'Wohnungsauflösung',
-    location: 'Ettlingen',
-    detail: 'Komplette Wohnungsräumung – 4-Zimmer-Wohnung',
-    pairs: [
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-1.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-1.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-2.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-2.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-3.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-3.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-4.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-4.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-5.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-5.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-6.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-6.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-7.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-7.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-8.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-8.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-9.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-9.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-10.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-10.webp' },
-      { before: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-vorher-11.webp', after: '/images/wohnung-ettlingen/wohnungsaufloesung-ettlingen-nachher-11.webp' }
-    ]
-  }
-  // Weitere Projekte werden hier hinzugefügt wenn neue Fotos hochgeladen werden
-];
-
-// ── BUILD CARDS ───────────────────────────────────────────────────────────────
-var grid = document.getElementById('galleryGrid');
-var countEl = document.getElementById('galleryCount');
-
-PROJECTS.forEach(function(proj, idx) {
-  var card = document.createElement('div');
-  card.className = 'project-card';
-  card.dataset.type = proj.type;
-
-  var showNav = proj.pairs.length > 1;
-
-  card.innerHTML =
-    '<div class="slider-wrap" id="sw-' + idx + '">' +
-      '<span class="card-type-badge ' + proj.type + '">' + capitalise(proj.type) + '</span>' +
-      '<div class="slider-after"><img id="img-after-' + idx + '" src="' + proj.pairs[0].after + '" alt="' + proj.title + ' Nachher" loading="lazy"></div>' +
-      '<div class="slider-before" id="sb-' + idx + '"><img id="img-before-' + idx + '" src="' + proj.pairs[0].before + '" alt="' + proj.title + ' Vorher" loading="lazy"></div>' +
-      '<div class="slider-handle" id="sh-' + idx + '"><div class="slider-handle-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/></svg></div></div>' +
-      '<span class="slider-label label-before">Vorher</span>' +
-      '<span class="slider-label label-after">Nachher</span>' +
-      (showNav ?
-        '<div class="pair-nav">' +
-          '<button class="pair-btn" id="prev-' + idx + '" disabled aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>' +
-          '<button class="pair-btn" id="next-' + idx + '" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>' +
-        '</div>'
-      : '') +
-    '</div>' +
-    '<div class="card-info">' +
-      '<div class="card-info-left">' +
-        '<div class="card-title">' + proj.title + '</div>' +
-        '<div class="card-meta"><span>' + proj.location + '</span><div class="card-meta-dot"></div><span>' + proj.detail + '</span></div>' +
-      '</div>' +
-      (showNav ? '<div class="pair-counter" id="counter-' + idx + '">1 / ' + proj.pairs.length + '</div>' : '') +
-    '</div>';
-
-  grid.appendChild(card);
-
-  // Init slider
-  initSlider(idx, proj.pairs);
-});
-
-updateCount();
-
-function capitalise(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-// ── SLIDER LOGIC ──────────────────────────────────────────────────────────────
-function initSlider(idx, pairs) {
-  var wrap    = document.getElementById('sw-' + idx);
-  var beforeEl = document.getElementById('sb-' + idx);
-  var handleEl = document.getElementById('sh-' + idx);
-  var imgBefore = document.getElementById('img-before-' + idx);
-  var imgAfter  = document.getElementById('img-after-' + idx);
-  var prevBtn  = document.getElementById('prev-' + idx);
-  var nextBtn  = document.getElementById('next-' + idx);
-  var counter  = document.getElementById('counter-' + idx);
-  var current  = 0;
-  var dragging = false;
-
-  function setPos(pct) {
-    pct = Math.max(5, Math.min(95, pct));
-    beforeEl.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
-    handleEl.style.left = pct + '%';
-  }
-
-  function getPct(e) {
-    var rect = wrap.getBoundingClientRect();
-    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    return (x / rect.width) * 100;
-  }
-
-  // Drag events — only trigger drag if not clicking nav buttons
-  wrap.addEventListener('mousedown', function(e) {
-    if (e.target.closest('.pair-btn')) return;
-    dragging = true; setPos(getPct(e)); e.preventDefault();
-  });
-  window.addEventListener('mousemove', function(e) { if (dragging) setPos(getPct(e)); });
-  window.addEventListener('mouseup',   function()  { dragging = false; });
-  wrap.addEventListener('touchstart', function(e) {
-    if (e.target.closest('.pair-btn')) return;
-    dragging = true; setPos(getPct(e));
-  }, {passive: true});
-  window.addEventListener('touchmove', function(e) { if (dragging) setPos(getPct(e)); }, {passive: true});
-  window.addEventListener('touchend',  function()  { dragging = false; });
-
-  setPos(50);
-
-  // Pair navigation
-  function goTo(n) {
-    current = n;
-    imgBefore.src = pairs[current].before;
-    imgAfter.src  = pairs[current].after;
-    setPos(50);
-    if (counter) counter.textContent = (current + 1) + ' / ' + pairs.length;
-    if (prevBtn) prevBtn.disabled = current === 0;
-    if (nextBtn) nextBtn.disabled = current === pairs.length - 1;
-  }
-
-  if (prevBtn) prevBtn.addEventListener('click', function(e) { e.stopPropagation(); if (current > 0) goTo(current - 1); });
-  if (nextBtn) nextBtn.addEventListener('click', function(e) { e.stopPropagation(); if (current < pairs.length - 1) goTo(current + 1); });
-}
-
-// ── FILTER ────────────────────────────────────────────────────────────────────
-document.querySelectorAll('.filter-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    updateCount();
-  });
-});
-
-function updateCount() {
-  var filter = document.querySelector('.filter-btn.active').dataset.filter;
-  var cards  = document.querySelectorAll('.project-card');
-  var visible = 0;
-  cards.forEach(function(card) {
-    var show = filter === 'all' || card.dataset.type === filter;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
-  });
-  countEl.textContent = visible + (visible === 1 ? ' Projekt' : ' Projekte');
-}
-
-// ── HEADER / COOKIE ───────────────────────────────────────────────────────────
-window.addEventListener('scroll', function() {
-  var h = document.getElementById('header');
-  var cta = document.getElementById('headerCta');
-  if (window.scrollY > 80) { h.classList.add('scrolled'); cta.style.display = 'inline-flex'; }
-  else { h.classList.remove('scrolled'); cta.style.display = 'none'; }
-});
-
-(function() { if (localStorage.getItem('cookie')) document.getElementById('cookie').classList.add('hidden'); })();
-function cookieAccept() { localStorage.setItem('cookie', '1'); document.getElementById('cookie').classList.add('hidden'); }
-function cookieDeny()   { localStorage.setItem('cookie', '0'); document.getElementById('cookie').classList.add('hidden'); }
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // cookie banner
+  var b = document.getElementById('cookieBanner');
+  if (!localStorage.getItem('psCookieChoice')) { setTimeout(function(){ b.style.display='block'; }, 1200); }
+  function close(c){ localStorage.setItem('psCookieChoice', c); b.style.display='none'; }
+  document.getElementById('cookieAccept').onclick = function(){ close('all'); };
+  document.getElementById('cookieDecline').onclick = function(){ close('necessary'); };
+  document.getElementById('cookieReopen').onclick = function(e){ e.preventDefault(); b.style.display='block'; };
+})();
 </script>
 </body>
 </html>
