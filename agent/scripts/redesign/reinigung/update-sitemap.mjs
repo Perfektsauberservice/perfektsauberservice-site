@@ -12,6 +12,8 @@ const COVERAGE = {
   bueroreinigung: ['achern','buehl','ettlingen','gaggenau','gernsbach','karlsruhe','muggensturm','pforzheim','rheinstetten','sinzheim','stutensee'],
   endreinigung:   ['achern','buehl','ettlingen','gaggenau','gernsbach','muggensturm','pforzheim','rheinstetten','sinzheim','stutensee'],
   grundreinigung: ALL_TIER1_CITIES,
+  unterhaltsreinigung: ALL_TIER1_CITIES,
+  fensterreinigung:    ALL_TIER1_CITIES,
 };
 
 const today = new Date().toISOString();

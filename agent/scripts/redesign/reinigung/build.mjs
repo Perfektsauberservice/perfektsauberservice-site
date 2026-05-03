@@ -366,12 +366,21 @@ if (process.argv[1]?.endsWith('build.mjs')) {
     // 3 service hubs
     for (const s of Object.keys(SERVICES)) targets.push({ kind: 'hub', service: s });
     // City × service
-    const COVERAGE = {
+    const tier = process.argv.includes('--tier2') ? 2 : 1;
+    const COVERAGE_T1 = {
       bueroreinigung: ['achern','buehl','ettlingen','gaggenau','gernsbach','karlsruhe','muggensturm','pforzheim','rheinstetten','sinzheim','stutensee'],
       endreinigung:   ['achern','buehl','ettlingen','gaggenau','gernsbach','muggensturm','pforzheim','rheinstetten','sinzheim','stutensee'],
       grundreinigung: ALL_TIER1_CITIES,
     };
-    for (const [s, cities] of Object.entries(COVERAGE)) {
+    const COVERAGE_T2 = {
+      unterhaltsreinigung: ALL_TIER1_CITIES,
+      fensterreinigung:    ALL_TIER1_CITIES,
+    };
+    const coverage = tier === 2 ? COVERAGE_T2 : COVERAGE_T1;
+    // Hubs only for the tier we're building
+    targets.length = 0;
+    for (const s of Object.keys(coverage)) targets.push({ kind: 'hub', service: s });
+    for (const [s, cities] of Object.entries(coverage)) {
       for (const c of cities) targets.push({ kind: 'page', service: s, city: c });
     }
   }
