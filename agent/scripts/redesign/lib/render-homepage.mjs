@@ -171,6 +171,11 @@ export function renderHomepage(oldIndexPath = 'index.html') {
   tpl = tpl.replace(/`img\//g, '`/images/cibersite/');
   tpl = tpl.replace(/'img\//g, "'/images/cibersite/");
 
+  // 2a. Override the hero pair with Laura's real before/after photos
+  //     (a Vitrine cabinet → empty laminated-floor room from a real Rastatt job).
+  tpl = tpl.replace('src="/images/cibersite/01-vor.jpeg"', 'src="/images/hero-vor.jpeg"');
+  tpl = tpl.replace('src="/images/cibersite/01-nach.png"', 'src="/images/hero-nach.png"');
+
   // 3. Nav links: cibersite uses #anchors; we want them to point to real pages
   tpl = tpl.replace(/<a href="#leistungen">Leistungen<\/a>/, '<a href="/leistungen">Leistungen</a>');
   tpl = tpl.replace(/<a href="#galerie">Galerie<\/a>/, '<a href="/portfolio">Galerie</a>');
