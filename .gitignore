@@ -4,3 +4,6 @@
 .netlify
 node_modules/
 *.pack
+
+# Redesign migration scratch dir
+_preview/
