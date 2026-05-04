@@ -2,7 +2,7 @@
 // All SEO assets (head meta, JSON-LD, internal links, page slug) are preserved.
 
 import { CSS, FONTS_HEAD } from './css.mjs';
-import { NAV, STRIP, FOOTER, FAB, COOKIE, SCRIPTS, GA4, contactSection } from './parts.mjs';
+import { NAV, STRIP, FOOTER, FAB, COOKIE, SCRIPTS, GA4, contactSection, leadFormSection } from './parts.mjs';
 
 // Convert WhatsApp encoded text back to readable string for service label inference
 function inferServiceLabel(d) {
@@ -268,6 +268,7 @@ ${renderCrumb(d)}
 ${renderHero(d)}
 ${STRIP}
 ${sectionsHtml}
+${leadFormSection(city, serviceLabel)}
 ${contactSection(city, serviceLabel, ctaWaDecoded)}
 ${FOOTER}
 ${FAB}
