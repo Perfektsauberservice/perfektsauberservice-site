@@ -374,7 +374,6 @@ if (process.argv[1]?.endsWith('build.mjs')) {
     };
     const COVERAGE_T2 = {
       unterhaltsreinigung: ALL_TIER1_CITIES,
-      fensterreinigung:    ALL_TIER1_CITIES,
     };
     const coverage = tier === 2 ? COVERAGE_T2 : COVERAGE_T1;
     // Hubs only for the tier we're building
