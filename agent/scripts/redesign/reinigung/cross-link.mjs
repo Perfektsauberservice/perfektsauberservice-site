@@ -8,13 +8,12 @@
 
 import fs from 'node:fs';
 
-const REINIGUNG = ['bueroreinigung','endreinigung','grundreinigung','unterhaltsreinigung','fensterreinigung'];
+const REINIGUNG = ['bueroreinigung','endreinigung','grundreinigung','unterhaltsreinigung'];
 const REINIGUNG_LABELS = {
   bueroreinigung: 'Büroreinigung',
   endreinigung: 'Endreinigung',
   grundreinigung: 'Grundreinigung',
   unterhaltsreinigung: 'Unterhaltsreinigung',
-  fensterreinigung: 'Fensterreinigung',
 };
 
 // Old-service prefixes that should get Reinigung cross-links

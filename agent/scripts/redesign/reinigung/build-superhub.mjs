@@ -1,5 +1,5 @@
-// Build /reinigung — the super-hub for all 5 cleaning services.
-// One landing page that aggregates Buero/End/Grund/Unterhalts/Fenster.
+// Build /reinigung — the super-hub for all 4 cleaning services.
+// One landing page that aggregates Buero/End/Grund/Unterhalts.
 
 import fs from 'node:fs';
 import { renderCityService } from '../lib/render-city-service.mjs';
@@ -24,7 +24,7 @@ function build() {
     {
       '@context':'https://schema.org', '@type':'Service',
       name: 'Reinigungsservice', serviceType: 'Reinigung',
-      description: 'Büroreinigung, Endreinigung, Grundreinigung, Unterhaltsreinigung und Fensterreinigung in Mittelbaden, Karlsruhe und Umgebung. Festpreis nach Begehung, eigenes Personal, vollständig versichert.',
+      description: 'Büroreinigung, Endreinigung, Grundreinigung und Unterhaltsreinigung in Mittelbaden, Karlsruhe und Umgebung. Festpreis nach Begehung, eigenes Personal, vollständig versichert.',
       provider,
       areaServed: ALL_TIER1_CITIES.map(c => CITIES[c].label),
       url,
@@ -32,7 +32,7 @@ function build() {
     {
       '@context':'https://schema.org', '@type':'FAQPage',
       mainEntity: [
-        { '@type':'Question', name:'Welche Reinigungsleistungen bieten Sie an?', acceptedAnswer:{ '@type':'Answer', text:'Wir bieten fünf Hauptleistungen: Büroreinigung (regelmäßig), Endreinigung (Auszug/Übergabe), Grundreinigung (einmalige Tiefenreinigung), Unterhaltsreinigung (Treppenhäuser/Gemeinschaftsflächen) und Fensterreinigung (innen + außen). Alle mit Festpreis nach Begehung, eigenem Personal und vollständiger Versicherung.' } },
+        { '@type':'Question', name:'Welche Reinigungsleistungen bieten Sie an?', acceptedAnswer:{ '@type':'Answer', text:'Wir bieten vier Hauptleistungen: Büroreinigung (regelmäßig), Endreinigung (Auszug/Übergabe), Grundreinigung (einmalige Tiefenreinigung) und Unterhaltsreinigung (Treppenhäuser/Gemeinschaftsflächen). Alle mit Festpreis nach Begehung, eigenem Personal und vollständiger Versicherung.' } },
         { '@type':'Question', name:'Was ist der Unterschied zwischen Unterhalts- und Grundreinigung?', acceptedAnswer:{ '@type':'Answer', text:'Eine Unterhaltsreinigung hält den Alltagszustand sauber — sie passiert regelmäßig (wöchentlich, zweiwöchentlich) und behandelt sichtbare Flächen. Eine Grundreinigung geht in die Tiefe: hinter Möbeln, in Schränken, an Heizkörper-Rückseiten, Fugen. Empfohlen einmal jährlich oder vor speziellen Anlässen.' } },
         { '@type':'Question', name:'In welchen Städten reinigen Sie?', acceptedAnswer:{ '@type':'Answer', text:'Wir bedienen 13 Städte in Mittelbaden und Umgebung: Rastatt, Baden-Baden, Karlsruhe, Pforzheim, Ettlingen, Gaggenau, Gernsbach, Bühl, Sinzheim, Muggensturm, Stutensee, Rheinstetten und Achern. Auch in den umliegenden Gemeinden auf Anfrage.' } },
         { '@type':'Question', name:'Wie schnell ist ein Termin verfügbar?', acceptedAnswer:{ '@type':'Answer', text:'In der Regel innerhalb von 48 Stunden. Bei einmaligen Reinigungen oft am gleichen Tag möglich. Regelmäßige Verträge nach kurzer Begehung — wir starten meist innerhalb einer Woche.' } },
@@ -61,7 +61,6 @@ function build() {
     endreinigung: ['achern','baden-baden','buehl','ettlingen','gaggenau','gernsbach','karlsruhe','muggensturm','pforzheim','rastatt','rheinstetten','sinzheim','stutensee'],
     grundreinigung: ALL_TIER1_CITIES,
     unterhaltsreinigung: ALL_TIER1_CITIES,
-    fensterreinigung: ALL_TIER1_CITIES,
   };
 
   const cityServiceLinks = [];
@@ -74,7 +73,7 @@ function build() {
   const sections = [
     {
       kind: 'cards',
-      h2: 'Fünf Reinigungsleistungen — eine Hand',
+      h2: 'Vier Reinigungsleistungen — eine Hand',
       intro: 'Vom regelmäßigen Bürodienst bis zur einmaligen Tiefen-Reinigung: alle Leistungen aus einer Hand, mit festem Personal, festem Preis und vollständiger Versicherung.',
       cards: serviceCards,
     },
@@ -107,7 +106,7 @@ function build() {
       kind: 'faq',
       h2: 'Häufige Fragen zu unseren Reinigungsleistungen',
       faqs: [
-        { q: 'Welche Reinigungsleistungen bieten Sie an?', a: 'Wir bieten fünf Hauptleistungen: Büroreinigung (regelmäßig), Endreinigung (Auszug/Übergabe), Grundreinigung (einmalige Tiefenreinigung), Unterhaltsreinigung (Treppenhäuser/Gemeinschaftsflächen) und Fensterreinigung (innen + außen). Alle mit Festpreis nach Begehung, eigenem Personal und vollständiger Versicherung.' },
+        { q: 'Welche Reinigungsleistungen bieten Sie an?', a: 'Wir bieten vier Hauptleistungen: Büroreinigung (regelmäßig), Endreinigung (Auszug/Übergabe), Grundreinigung (einmalige Tiefenreinigung) und Unterhaltsreinigung (Treppenhäuser/Gemeinschaftsflächen). Alle mit Festpreis nach Begehung, eigenem Personal und vollständiger Versicherung.' },
         { q: 'Was ist der Unterschied zwischen Unterhalts- und Grundreinigung?', a: 'Eine Unterhaltsreinigung hält den Alltagszustand sauber — sie passiert regelmäßig (wöchentlich, zweiwöchentlich) und behandelt sichtbare Flächen. Eine Grundreinigung geht in die Tiefe: hinter Möbeln, in Schränken, an Heizkörper-Rückseiten, Fugen. Empfohlen einmal jährlich oder vor speziellen Anlässen.' },
         { q: 'In welchen Städten reinigen Sie?', a: 'Wir bedienen 13 Städte in Mittelbaden und Umgebung: Rastatt, Baden-Baden, Karlsruhe, Pforzheim, Ettlingen, Gaggenau, Gernsbach, Bühl, Sinzheim, Muggensturm, Stutensee, Rheinstetten und Achern. Auch in den umliegenden Gemeinden auf Anfrage.' },
         { q: 'Wie schnell ist ein Termin verfügbar?', a: 'In der Regel innerhalb von 48 Stunden. Bei einmaligen Reinigungen oft am gleichen Tag möglich. Regelmäßige Verträge nach kurzer Begehung — wir starten meist innerhalb einer Woche.' },
@@ -121,7 +120,7 @@ function build() {
 
   const data = {
     title: 'Reinigung in Mittelbaden, Karlsruhe & Umgebung | Perfekt Sauber Service',
-    metaDescription: 'Büroreinigung, Endreinigung, Grundreinigung, Unterhaltsreinigung und Fensterreinigung in 13 Städten — Festpreis, eigenes Personal, versichert. Jetzt 0163 9087197 anrufen.',
+    metaDescription: 'Büroreinigung, Endreinigung, Grundreinigung und Unterhaltsreinigung in 13 Städten — Festpreis, eigenes Personal, versichert. Jetzt 0163 9087197 anrufen.',
     ogTitle: 'Reinigung in Mittelbaden, Karlsruhe & Umgebung | Perfekt Sauber Service',
     ogDescription: 'Fünf Reinigungsleistungen aus einer Hand — Festpreis, eigenes Personal, vollständig versichert.',
     ogUrl: url,
@@ -132,7 +131,7 @@ function build() {
 
     eyebrow: 'Reinigung · Mittelbaden · Karlsruhe · Nordschwarzwald',
     h1: 'Reinigung — sauber, planbar, mit Festpreis',
-    sub: 'Fünf Reinigungsleistungen aus einer Hand: Büro-, End-, Grund-, Unterhalts- und Fensterreinigung in Rastatt, Baden-Baden, Karlsruhe, Pforzheim und der gesamten Region. Festpreis nach Begehung, eigenes Personal, vollständig versichert.',
+    sub: 'Vier Reinigungsleistungen aus einer Hand: Büro-, End-, Grund- und Unterhaltsreinigung in Rastatt, Baden-Baden, Karlsruhe, Pforzheim und der gesamten Region. Festpreis nach Begehung, eigenes Personal, vollständig versichert.',
     heroImg: '/images/lucrari/lucrare-3.jpg',
     heroImgAlt: 'Reinigungsteam von Perfekt Sauber Service in der Region Mittelbaden',
     waText: encodeURIComponent('Hallo, ich möchte eine Reinigungsanfrage stellen.'),

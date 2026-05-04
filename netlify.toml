@@ -53,6 +53,150 @@
   to = "/dashboard/index.html"
   status = 200
 
+# === 301 Permanent Redirects: Fensterreinigung -> Grundreinigung ===
+# PSS nu mai oferă Fensterreinigung ca serviciu separat (2026-05-04).
+# Redirect către cea mai apropiată variantă (Grundreinigung), per oraș.
+[[redirects]]
+  from = "/fensterreinigung"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-achern"
+  to = "/grundreinigung-achern"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-achern.html"
+  to = "/grundreinigung-achern"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-baden-baden"
+  to = "/grundreinigung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-baden-baden.html"
+  to = "/grundreinigung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-buehl"
+  to = "/grundreinigung-buehl"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-buehl.html"
+  to = "/grundreinigung-buehl"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-ettlingen"
+  to = "/grundreinigung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-ettlingen.html"
+  to = "/grundreinigung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-gaggenau"
+  to = "/grundreinigung-gaggenau"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-gaggenau.html"
+  to = "/grundreinigung-gaggenau"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-gernsbach"
+  to = "/grundreinigung-gernsbach"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-gernsbach.html"
+  to = "/grundreinigung-gernsbach"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-karlsruhe"
+  to = "/grundreinigung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-karlsruhe.html"
+  to = "/grundreinigung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-muggensturm"
+  to = "/grundreinigung-muggensturm"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-muggensturm.html"
+  to = "/grundreinigung-muggensturm"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-pforzheim"
+  to = "/grundreinigung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-pforzheim.html"
+  to = "/grundreinigung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-rastatt"
+  to = "/grundreinigung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-rastatt.html"
+  to = "/grundreinigung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-rheinstetten"
+  to = "/grundreinigung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-rheinstetten.html"
+  to = "/grundreinigung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-sinzheim"
+  to = "/grundreinigung-sinzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-sinzheim.html"
+  to = "/grundreinigung-sinzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-stutensee"
+  to = "/grundreinigung-stutensee"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/fensterreinigung-stutensee.html"
+  to = "/grundreinigung-stutensee"
+  status = 301
+  force = true
+
 # === 410 Gone: pagini retrase definitiv ===
 [[redirects]]
   from = "/service-page/fensterreinigung"
