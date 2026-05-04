@@ -5,13 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfekt Sauber Dashboard Login</title>
   <link rel="stylesheet" href="styles.css" />
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF"></script>
+<!-- Google Analytics 4 (deferred to browser idle for perf) -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-BMC32KSYKF');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+(function(){
+  var loaded = false;
+  function loadGA(){
+    if (loaded) return; loaded = true;
+    gtag('js', new Date());
+    gtag('config', 'G-BMC32KSYKF');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
+    document.head.appendChild(s);
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(loadGA, { timeout: 4000 });
+  else setTimeout(loadGA, 2500);
+})();
 </script>
 </head>
 <body>
