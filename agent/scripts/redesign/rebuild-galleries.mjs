@@ -57,7 +57,6 @@ const SERVICE_KIND = {
   'gewerberaeumung':       ['Wohnung'],
   'bueroaufloesung':       ['Wohnung'],
   'bueroreinigung':        ['Wohnung'],
-  'fensterreinigung':      ['Wohnung'],
   'grundreinigung':        ['Wohnung'],
   'endreinigung':          ['Wohnung'],
   'unterhaltsreinigung':   ['Wohnung'],
@@ -106,7 +105,7 @@ const CITY_LABEL = {
 };
 
 const HUB_PAGES = new Set([
-  'bueroreinigung.html','endreinigung.html','fensterreinigung.html','grundreinigung.html',
+  'bueroreinigung.html','endreinigung.html','grundreinigung.html',
   'hausmeisterservice.html','reinigung.html','unterhaltsreinigung.html','unterhaltsreinigung-region.html',
 ]);
 
