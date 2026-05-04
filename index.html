@@ -275,7 +275,56 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     box-shadow:0 8px 20px rgba(0,0,0,.25); color:#fff;}
   .fab .w{background:#25d366;} .fab .p{background:var(--blue);}
 }
-</style>
+
+/* === merged === */
+
+@media(max-width:980px){
+  .calc-section > .reveal{
+    display:block !important;
+    grid-template-columns:1fr !important;
+    gap:32px !important;
+  }
+  .calc-section > .reveal > div{
+    position:static !important;
+    margin-bottom:24px;
+  }
+  .calc-section > .reveal > div:last-child{margin-bottom:0;}
+  .calc-section{padding:60px 20px !important;}
+}
+
+/* === merged === */
+
+.calc-lbl{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); margin-bottom:12px;}
+.calc-val{color:var(--green); font-weight:500; text-transform:none; letter-spacing:.04em;}
+.calc-select{width:100%; padding:14px; border:1px solid var(--line); border-radius:8px; font-family:'Inter',sans-serif; font-size:.95rem; background:#fff;}
+.calc-range{width:100%; accent-color:var(--green);}
+.calc-mm{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.62rem; color:var(--muted); margin-top:6px;}
+.calc-chk{display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-family:'Inter',sans-serif; font-size:.88rem; line-height:1.4;}
+.calc-chk input[type="checkbox"]{accent-color:var(--green); width:18px; height:18px; flex-shrink:0; margin-top:2px;}
+.calc-chk em{font-style:normal; color:var(--muted); font-family:'Geist Mono',monospace; font-size:.78rem;}
+.calc-num{display:flex; justify-content:space-between; align-items:center; gap:12px;}
+.calc-num input{width:64px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:'Geist Mono',monospace; text-align:right;}
+.calc-row details summary::-webkit-details-marker{display:none;}
+#calcBreakdown .row{display:flex; justify-content:space-between; gap:12px; color:var(--muted);}
+#calcBreakdown .row span:last-child{color:var(--ink); font-weight:500;}
+#calcBreakdown .sum{margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); display:flex; justify-content:space-between; color:var(--ink);}
+
+/* === merged === */
+
+@media(max-width:980px){
+  .calc-section > .reveal{grid-template-columns:1fr !important; gap:32px !important;}
+  .calc-section{padding:80px 24px !important;}
+}
+
+/* === merged === */
+
+    #standorte .chip{display:inline-block; background:#fff; color:var(--ink); padding:10px 18px; border-radius:999px;
+      font-family:"Geist Mono",monospace; font-size:.74rem; letter-spacing:.08em; border:1px solid var(--line); transition:all .2s;}
+    #standorte .chip:hover{border-color:var(--blue); color:var(--blue); transform:translateY(-2px);}
+    #standorte-map .leaflet-popup-content-wrapper{border-radius:8px;}
+    #standorte-map .leaflet-popup-content{margin:14px 18px;line-height:1.5;}
+    #standorte-map .leaflet-control-attribution{font-size:9px;opacity:.7;}
+  </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -324,30 +373,27 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   ]
 }
 </script>
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF"></script>
+<!-- Google Analytics 4 (deferred to browser idle for perf) -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-BMC32KSYKF');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+(function(){
+  var loaded = false;
+  function loadGA(){
+    if (loaded) return; loaded = true;
+    gtag('js', new Date());
+    gtag('config', 'G-BMC32KSYKF');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
+    document.head.appendChild(s);
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(loadGA, { timeout: 4000 });
+  else setTimeout(loadGA, 2500);
+})();
 </script>
 
-<style>
-@media(max-width:980px){
-  .calc-section > .reveal{
-    display:block !important;
-    grid-template-columns:1fr !important;
-    gap:32px !important;
-  }
-  .calc-section > .reveal > div{
-    position:static !important;
-    margin-bottom:24px;
-  }
-  .calc-section > .reveal > div:last-child{margin-bottom:0;}
-  .calc-section{padding:60px 20px !important;}
-}
-</style>
+
 </head>
 <body>
 
@@ -750,29 +796,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   </div>
 </section>
 
-<style>
-.calc-lbl{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); margin-bottom:12px;}
-.calc-val{color:var(--green); font-weight:500; text-transform:none; letter-spacing:.04em;}
-.calc-select{width:100%; padding:14px; border:1px solid var(--line); border-radius:8px; font-family:'Inter',sans-serif; font-size:.95rem; background:#fff;}
-.calc-range{width:100%; accent-color:var(--green);}
-.calc-mm{display:flex; justify-content:space-between; font-family:'Geist Mono',monospace; font-size:.62rem; color:var(--muted); margin-top:6px;}
-.calc-chk{display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-family:'Inter',sans-serif; font-size:.88rem; line-height:1.4;}
-.calc-chk input[type="checkbox"]{accent-color:var(--green); width:18px; height:18px; flex-shrink:0; margin-top:2px;}
-.calc-chk em{font-style:normal; color:var(--muted); font-family:'Geist Mono',monospace; font-size:.78rem;}
-.calc-num{display:flex; justify-content:space-between; align-items:center; gap:12px;}
-.calc-num input{width:64px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; font-family:'Geist Mono',monospace; text-align:right;}
-.calc-row details summary::-webkit-details-marker{display:none;}
-#calcBreakdown .row{display:flex; justify-content:space-between; gap:12px; color:var(--muted);}
-#calcBreakdown .row span:last-child{color:var(--ink); font-weight:500;}
-#calcBreakdown .sum{margin-top:8px; padding-top:8px; border-top:1px dashed var(--line); display:flex; justify-content:space-between; color:var(--ink);}
-</style>
 
-<style>
-@media(max-width:980px){
-  .calc-section > .reveal{grid-template-columns:1fr !important; gap:32px !important;}
-  .calc-section{padding:80px 24px !important;}
-}
-</style>
+
+
 
 <section class="srv-section" id="leistungen">
   <div class="srv-wrap">
@@ -873,14 +899,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   })();
   </script>
   <div style="display:flex; flex-wrap:wrap; gap:8px;"><a href="/entruempelung-rastatt" class="chip">Rastatt</a><a href="/entruempelung-baden-baden" class="chip">Baden-Baden</a><a href="/entruempelung-karlsruhe" class="chip">Karlsruhe</a><a href="/entruempelung-pforzheim" class="chip">Pforzheim</a><a href="/entruempelung-ettlingen" class="chip">Ettlingen</a><a href="/entruempelung-gaggenau" class="chip">Gaggenau</a><a href="/entruempelung-gernsbach" class="chip">Gernsbach</a><a href="/entruempelung-buehl" class="chip">Bühl</a><a href="/entruempelung-sinzheim" class="chip">Sinzheim</a><a href="/entruempelung-muggensturm" class="chip">Muggensturm</a><a href="/entruempelung-rheinstetten" class="chip">Rheinstetten</a><a href="/entruempelung-stutensee" class="chip">Stutensee</a><a href="/entruempelung-achern" class="chip">Achern</a><a href="/entruempelung-bad-wildbad" class="chip">Bad Wildbad</a><a href="/entruempelung-bad-herrenalb" class="chip">Bad Herrenalb</a><a href="/entruempelung-forbach" class="chip">Forbach</a><a href="/entruempelung-iffezheim" class="chip">Iffezheim</a><a href="/entruempelung-huegelsheim" class="chip">Hügelsheim</a><a href="/entruempelung-kuppenheim" class="chip">Kuppenheim</a><a href="/entruempelung-loffenau" class="chip">Loffenau</a><a href="/entruempelung-malsch" class="chip">Malsch</a><a href="/entruempelung-oetigheim" class="chip">Ötigheim</a><a href="/entruempelung-steinmauern" class="chip">Steinmauern</a><a href="/entruempelung-weisenbach" class="chip">Weisenbach</a><a href="/entruempelung-bietigheim" class="chip">Bietigheim</a><a href="/entruempelung-bischweier" class="chip">Bischweier</a><a href="/entruempelung-durmersheim" class="chip">Durmersheim</a><a href="/entruempelung-au-am-rhein" class="chip">Au am Rhein</a><a href="/entruempelung-elchesheim-illingen" class="chip">Elchesheim-Illingen</a><a href="/entruempelung-rheinmuenster" class="chip">Rheinmünster</a></div>
-  <style>
-    #standorte .chip{display:inline-block; background:#fff; color:var(--ink); padding:10px 18px; border-radius:999px;
-      font-family:"Geist Mono",monospace; font-size:.74rem; letter-spacing:.08em; border:1px solid var(--line); transition:all .2s;}
-    #standorte .chip:hover{border-color:var(--blue); color:var(--blue); transform:translateY(-2px);}
-    #standorte-map .leaflet-popup-content-wrapper{border-radius:8px;}
-    #standorte-map .leaflet-popup-content{margin:14px 18px;line-height:1.5;}
-    #standorte-map .leaflet-control-attribution{font-size:9px;opacity:.7;}
-  </style>
+  
 </section>
 <!-- ======== CONTACT ======== -->
 <section class="contact" id="kontakt">

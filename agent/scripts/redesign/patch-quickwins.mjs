@@ -19,6 +19,30 @@ const CSS_SPLIT_IDX = CSS.indexOf(CSS_SPLIT_MARKER);
 const CSS_DEFERRED_LF = CSS.slice(CSS_SPLIT_IDX);
 const CSS_DEFERRED_CRLF = CSS_DEFERRED_LF.replace(/\n/g, '\r\n');
 const ASYNC_CSS_LINK = '<link rel="preload" href="/css/site-deferred.css" as="style" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="/css/site-deferred.css"></noscript>';
+
+// GA4 deferred-load pattern — defines gtag() shim immediately (so SCRIPTS click
+// trackers work) but loads the GA library on requestIdleCallback (or 2.5s
+// fallback). Page_view event fires once lib loads. Trades ~3s analytics
+// latency for huge LCP/Mobile Perf gain.
+const GA4_DEFERRED = `<!-- Google Analytics 4 (deferred to browser idle for perf) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+(function(){
+  var loaded = false;
+  function loadGA(){
+    if (loaded) return; loaded = true;
+    gtag('js', new Date());
+    gtag('config', 'G-BMC32KSYKF');
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
+    document.head.appendChild(s);
+  }
+  if ('requestIdleCallback' in window) requestIdleCallback(loadGA, { timeout: 4000 });
+  else setTimeout(loadGA, 2500);
+})();
+</script>`;
 const sizeCache = new Map();
 function getImgSize(srcAttr) {
   if (!srcAttr || srcAttr.startsWith('http') || srcAttr.startsWith('data:')) return null;
@@ -51,7 +75,7 @@ function walk(dir, out = []) {
 }
 
 const files = walk(ROOT);
-let muted = 0, cookie = 0, calcLabels = 0, leaflet = 0, imgWH = 0, imgWHCount = 0, lazyCalc = 0, deferCss = 0, fontsAsync = 0;
+let muted = 0, cookie = 0, calcLabels = 0, leaflet = 0, imgWH = 0, imgWHCount = 0, lazyCalc = 0, deferCss = 0, fontsAsync = 0, ga4Defer = 0;
 
 for (const f of files) {
   let html = fs.readFileSync(f, 'utf8');
@@ -187,6 +211,23 @@ for (const f of files) {
     }
   }
 
+  // 9. Defer GA4 library load until requestIdleCallback (or 2.5s fallback).
+  //    Idempotent: skip if already deferred (marker: "deferred to browser idle").
+  if (!html.includes('deferred to browser idle')) {
+    const before9 = html;
+    // Match the standard GA4 block we ship:
+    //   <!-- Google Analytics 4 -->
+    //   <script async src="...gtag/js?id=G-BMC32KSYKF"></script>
+    //   <script>
+    //   window.dataLayer = ...; function gtag(){...}; gtag('js', ...); gtag('config', ...);
+    //   </script>
+    html = html.replace(
+      /<!-- Google Analytics 4 -->\s*<script async src="https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-BMC32KSYKF"><\/script>\s*<script>\s*window\.dataLayer = window\.dataLayer \|\| \[\];\s*function gtag\(\)\{dataLayer\.push\(arguments\);\}\s*gtag\('js', new Date\(\)\);\s*gtag\('config', 'G-BMC32KSYKF'\);\s*<\/script>/,
+      GA4_DEFERRED
+    );
+    if (html !== before9) ga4Defer++;
+  }
+
   // 8. Convert Google Fonts <link rel="stylesheet"> → non-blocking preload pattern.
   //    URL already has `&display=swap`, so fallback font shows briefly then swaps.
   //    Negative lookbehind: skip the link if already inside <noscript>.
@@ -200,4 +241,4 @@ for (const f of files) {
   if (html !== orig) fs.writeFileSync(f, html);
 }
 
-console.log(`patched: ${muted} (--muted), ${cookie} (cookie a11y), ${calcLabels} (calc labels), ${leaflet} (leaflet defer), ${lazyCalc} (lazy calc), ${imgWH} files / ${imgWHCount} imgs (WH), ${deferCss} (deferred css), ${fontsAsync} (fonts async)`);
+console.log(`patched: ${muted} (--muted), ${cookie} (cookie a11y), ${calcLabels} (calc labels), ${leaflet} (leaflet defer), ${lazyCalc} (lazy calc), ${imgWH}f/${imgWHCount}i (WH), ${deferCss} (def css), ${fontsAsync} (fonts), ${ga4Defer} (GA4 defer)`);
