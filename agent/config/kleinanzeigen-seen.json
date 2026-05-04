@@ -533,6 +533,12 @@
     "title": "Ich bin Putzfrau",
     "plz": "76437"
   },
+  "3385325903": {
+    "seenAt": "2026-05-04T15:29:36.409Z",
+    "keyword": "reinigung",
+    "title": "Steinreinigung Terrassenreinigung Pflasterstein Reinigung",
+    "plz": "77933"
+  },
   "3385518049": {
     "seenAt": "2026-05-01T09:00:04.784Z",
     "keyword": "putzfrau",
@@ -1744,6 +1750,24 @@
     "keyword": "haushaltsaufloesung",
     "title": "Haushaltsauflösungen",
     "plz": "75015"
+  },
+  "3399561713": {
+    "seenAt": "2026-05-04T15:29:38.352Z",
+    "keyword": "reinigung",
+    "title": "Dachreinigung",
+    "plz": "77855"
+  },
+  "3399645366": {
+    "seenAt": "2026-05-04T15:29:46.609Z",
+    "keyword": "haushaltshilfe",
+    "title": "Suche Putz-/Haushaltshilfe Wörth am Rhein",
+    "plz": "76744"
+  },
+  "3399661266": {
+    "seenAt": "2026-05-04T15:29:44.788Z",
+    "keyword": "haushaltshilfe",
+    "title": "Haushaltshilfe gesucht",
+    "plz": "77749"
   },
   "_meta": {
     "lastHeartbeatAt": "2026-04-29T13:44:25.058Z"
