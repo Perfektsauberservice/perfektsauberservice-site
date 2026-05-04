@@ -45,17 +45,16 @@ const LOCAL_KEYS = {
   'gaggenau':    ['wohnung-gaggenau'],
 };
 
-// Service → preferred kind ordering
-const SERVICE_PREF = {
-  'kellerentruempelung':   ['Keller', 'Wohnung'],
-  'dachbodenentruempelung':['Keller', 'Wohnung'],
-  'garagenentruempelung':  ['Keller', 'Wohnung'],
+// Service → which kinds are allowed. STRICT means we will NEVER mix in
+// other kinds (e.g., a wohnungsaufloesung page never gets a keller slider).
+// 'Wohnung' = lived-in rooms, 'Keller' = basement / storage / garage.
+const SERVICE_KIND = {
+  // wohnung-only services — apartment / household scope
   'wohnungsaufloesung':    ['Wohnung'],
-  'haushaltsaufloesung':   ['Wohnung', 'Keller'],
-  'nachlassaufloesung':    ['Wohnung', 'Keller'],
+  'haushaltsaufloesung':   ['Wohnung'],
+  'nachlassaufloesung':    ['Wohnung'],
   'messi-wohnung':         ['Wohnung'],
-  'entruempelung':         ['Wohnung', 'Keller'],
-  'gewerberaeumung':       ['Wohnung', 'Keller'],
+  'gewerberaeumung':       ['Wohnung'],
   'bueroaufloesung':       ['Wohnung'],
   'bueroreinigung':        ['Wohnung'],
   'fensterreinigung':      ['Wohnung'],
@@ -64,6 +63,12 @@ const SERVICE_PREF = {
   'unterhaltsreinigung':   ['Wohnung'],
   'hausmeisterservice':    ['Wohnung'],
   'reinigung':             ['Wohnung'],
+  // keller-only services — storage / cellar / garage / attic scope
+  'kellerentruempelung':   ['Keller'],
+  'dachbodenentruempelung':['Keller'],
+  'garagenentruempelung':  ['Keller'],
+  // general clearance — both kinds OK (any room of the property)
+  'entruempelung':         ['Wohnung', 'Keller'],
 };
 
 // Regional pool — 6 hand-picked variety sliders for cities without local pairs
@@ -118,39 +123,87 @@ function parseFilename(file) {
   return null;
 }
 
-function pickPairs(city, service) {
-  const pref = SERVICE_PREF[service] || ['Wohnung', 'Keller'];
-  const locals = city ? (LOCAL_KEYS[city] || []) : [];
-
-  if (locals.length > 0) {
-    // Order locals by preferred kind
-    const ordered = [];
-    for (const wantKind of pref) {
-      for (const key of locals) {
-        if (FOLDERS[key].kind === wantKind) ordered.push(key);
+function buildRegionalPool(allowedKinds, excludeCity) {
+  // Returns up to 6 items of allowed kind from any source folder, excluding
+  // sources tied to excludeCity (so a regional Achern page doesn't show
+  // achern-specific photos that don't exist anyway, but more importantly so
+  // a hybrid Baden-Baden wohnung page doesn't pad with another Baden-Baden
+  // wohnung pair already counted).
+  const out = [];
+  const slug = excludeCity ? (LOCAL_KEYS[excludeCity] || []) : [];
+  for (const kind of allowedKinds) {
+    const sources = Object.keys(FOLDERS).filter(key =>
+      FOLDERS[key].kind === kind && !slug.includes(key)
+    );
+    // Pick 2 from each source for variety
+    for (const key of sources) {
+      for (let n = 1; n <= Math.min(FOLDERS[key].count, 2) && out.length < 6; n++) {
+        out.push({ key, n, kind });
       }
+      if (out.length >= 6) break;
     }
-    // Add any locals not yet included
-    for (const key of locals) if (!ordered.includes(key)) ordered.push(key);
-
-    const items = [];
-    for (const key of ordered) {
-      const f = FOLDERS[key];
-      for (let n = 1; n <= f.count && items.length < MAX_LOCAL_SLIDERS; n++) {
-        items.push({ key, n });
-      }
-      if (items.length >= MAX_LOCAL_SLIDERS) break;
-    }
-    return { items, isLocal: true };
+    if (out.length >= 6) break;
   }
-  return { items: REGIONAL_POOL.slice(), isLocal: false };
+  return out;
 }
 
-function buildSlider(item, idx, label, isLocal) {
+function pickPairs(city, service) {
+  const allowedKinds = SERVICE_KIND[service] || ['Wohnung'];
+  const locals = city ? (LOCAL_KEYS[city] || []) : [];
+
+  // Gather strictly allowed-kind locals, in kind preference order
+  const localItems = [];
+  for (const kind of allowedKinds) {
+    for (const key of locals) {
+      if (FOLDERS[key].kind !== kind) continue;
+      for (let n = 1; n <= FOLDERS[key].count && localItems.length < MAX_LOCAL_SLIDERS; n++) {
+        localItems.push({ key, n, kind });
+      }
+    }
+    if (localItems.length >= MAX_LOCAL_SLIDERS) break;
+  }
+
+  // Decide framing
+  if (localItems.length >= 3) {
+    // Enough local — fully local gallery
+    return { items: localItems, mode: 'local' };
+  }
+  if (localItems.length > 0) {
+    // Hybrid: 1-2 local + pad with regional same-kind
+    const regional = buildRegionalPool(allowedKinds, city);
+    const seen = new Set(localItems.map(i => i.key + '/' + i.n));
+    const padded = localItems.concat(regional.filter(p => !seen.has(p.key + '/' + p.n))).slice(0, 6);
+    return { items: padded, mode: 'hybrid', localCount: localItems.length };
+  }
+  // No matching local — fully regional with disclaimer
+  return { items: buildRegionalPool(allowedKinds, city), mode: 'regional' };
+}
+
+function buildSlider(item, idx, cityLabel, mode) {
   const f = FOLDERS[item.key];
   const v = `/images/${f.folder}/${f.prefix}-vorher-${item.n}.webp`;
   const a = `/images/${f.folder}/${f.prefix}-nachher-${item.n}.webp`;
-  const subj = isLocal && label ? `${label} — ${f.kind}` : `Räumung im Raum Mittelbaden — ${f.kind}`;
+  // Per-item subject reflects truth: local items can claim the city, regional
+  // items must NOT claim the page's city — they describe the source city.
+  let subj;
+  if (mode === 'local') {
+    subj = `${cityLabel} — ${f.kind}`;
+  } else if (mode === 'hybrid') {
+    // first localCount items are local, rest are regional
+    const itemCity = item.key.endsWith('-rastatt') ? 'Rastatt'
+      : item.key.endsWith('-badenbaden') ? 'Baden-Baden'
+      : item.key.endsWith('-ettlingen') ? 'Ettlingen'
+      : item.key.endsWith('-karlsruhe') ? 'Karlsruhe'
+      : item.key.endsWith('-gaggenau') ? 'Gaggenau' : 'Region';
+    subj = `${itemCity} — ${f.kind}`;
+  } else {
+    const itemCity = item.key.endsWith('-rastatt') ? 'Rastatt'
+      : item.key.endsWith('-badenbaden') ? 'Baden-Baden'
+      : item.key.endsWith('-ettlingen') ? 'Ettlingen'
+      : item.key.endsWith('-karlsruhe') ? 'Karlsruhe'
+      : item.key.endsWith('-gaggenau') ? 'Gaggenau' : 'Region';
+    subj = `${itemCity} — ${f.kind}`;
+  }
   const altV = `${subj} — Vorher`;
   const altA = `${subj} — Nachher`;
   const num = String(idx + 1).padStart(2, '0');
