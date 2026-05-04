@@ -23,7 +23,7 @@ const SEARCHES = [
   { url: 'raeumung',               match: 'raumung',               service: 'Räumung' },
   { url: 'nachlassaufloesung',     match: 'nachlassauflosung',     service: 'Nachlassauflösung' },
   { url: 'bueroaufloesung',        match: 'buroauflosung',         service: 'Büroauflösung' },
-  { url: 'messi',                  match: 'messi',                 service: 'Messi-Wohnung' },
+  { url: 'messie',                 match: 'messie',                service: 'Messie-Wohnung' },
 
   // Reinigung — broad + variante specifice frecvente in Kleinanzeigen "Gesuche"
   { url: 'reinigung',              match: 'reinigung',             service: 'Reinigung' },
@@ -51,19 +51,35 @@ const JOB_KEYWORDS = [
   'sucht tatigkeit', 'sucht stelle', // persoana cauta JOB (post normalize: ä→a)
 ];
 
-// Nivel 3: cuvinte-cheie care indica concurent (companie ofera servicii).
+// Nivel 3: cuvinte-cheie care indica concurent (companie SAU persoana ofera servicii).
 // Note: post-normalize, deci toate fara ä/ö/ü/ß.
 const COMPETITOR_KEYWORDS = [
+  // Plural (companie)
   'wir bieten', 'wir ubernehmen',
   'unser service', 'wir packen an',
   'unsere dienste', 'unsere dienstleistungen',
   'bieten ihnen', 'bieten wir',
   'festpreis', 'kostenloses angebot',
   'service gmbh', 'service ug', 'unser team',
-  // Phrase-uri tipice "company-to-customer" (sales tone).
+  // Singular (persoana individuala care se ofera ca cleaner/Hausmeister)
+  'ich biete', 'biete ich', 'biete an', 'biete ihnen',
+  'ich heisse', 'mein name ist',
+  'umgebung an', 'und umgebung an',
+  // Forme legale companie
+  ' gmbh', ' ug ', ' ug,', ' ug.', ' e.k.', ' e.k ',
+  // Phrase-uri "company/cleaner-to-customer" (sales tone).
   'ihr zuverlassiger', 'ihr ansprechpartner', 'ansprechpartner fur',
   'wir helfen ihnen', 'wir sind ein', 'wir sind eine', 'sie brauchen',
+  'kontaktieren sie uns', 'rufen sie uns', 'rufen sie mich',
+  'ihrer wohnung', 'ihrer praxis', 'ihrer arzt', 'ihrer firma',
+  'team der ', 'team von ', 'das gesamte team',
+  // Titluri tipice de oferta (NU cerere)
+  'professionelle reinigung', 'professionelle entrumpelung',
 ];
+
+// Nivel 4: pattern-uri in TITLU care indica oferta (cleaner se ofera, NU client cere).
+// Aplicat post-normalize. Exemple: "Reinigungskraft in Bruchsal", "Putzfrau bietet sich an".
+const TITLE_OFFER_RE = /^(reinigungskraft|putzfrau|putzhilfe|haushaltshilfe|hausmeister)\s+(in|fur|bietet|sucht|aus)\s/;
 
 function classifyAd(item) {
   // Nivel 1 — categoria URL = job posting
@@ -77,12 +93,16 @@ function classifyAd(item) {
       return { skip: true, reason: 'job_kw' };
     }
   }
-  // Nivel 3 — titlu/descriere cu pattern concurent (companie ofera)
+  // Nivel 3 — titlu/descriere cu pattern concurent (companie/persoana ofera)
   const hayNorm = normalize(`${item.title} ${item.description}`);
   for (const kw of COMPETITOR_KEYWORDS) {
     if (hayNorm.includes(kw)) {
       return { skip: true, reason: 'concurent' };
     }
+  }
+  // Nivel 4 — titlu cu pattern tipic de oferta (Reinigungskraft in X, Putzfrau bietet, etc.)
+  if (TITLE_OFFER_RE.test(titleNorm)) {
+    return { skip: true, reason: 'concurent' };
   }
   return { skip: false };
 }
