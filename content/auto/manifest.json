@@ -49,20 +49,6 @@
     "heroImage": "images/city/rastatt-bg.png"
   },
   {
-    "topic": "Fensterreinigung in Rastatt: Preise, Dauer, Ablauf",
-    "city": "Rastatt",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-rastatt-fensterreinigung-in-rastatt-preise-dauer-ablauf.md",
-    "heroImage": "images/city/rastatt-bg.png"
-  },
-  {
-    "topic": "Wie oft sollte man Fenster in Rastatt reinigen lassen?",
-    "city": "Rastatt",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-rastatt-wie-oft-sollte-man-fenster-in-rastatt-reinigen-lassen.md",
-    "heroImage": "images/city/rastatt-bg.png"
-  },
-  {
     "topic": "Was kostet eine Entrümpelung in Baden-Baden?",
     "city": "Baden-Baden",
     "service": "Entrümpelung",
@@ -109,20 +95,6 @@
     "city": "Baden-Baden",
     "service": "Endreinigung",
     "file": "content/auto/endreinigung-baden-baden-was-kostet-eine-endreinigung-in-baden-baden.md",
-    "heroImage": "images/city/baden-baden-bg.png"
-  },
-  {
-    "topic": "Fensterreinigung in Baden-Baden: Preise, Dauer, Ablauf",
-    "city": "Baden-Baden",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-baden-baden-fensterreinigung-in-baden-baden-preise-dauer-ablauf.md",
-    "heroImage": "images/city/baden-baden-bg.png"
-  },
-  {
-    "topic": "Wie oft sollte man Fenster in Baden-Baden reinigen lassen?",
-    "city": "Baden-Baden",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-baden-baden-wie-oft-sollte-man-fenster-in-baden-baden-reinigen-lassen.md",
     "heroImage": "images/city/baden-baden-bg.png"
   },
   {
@@ -175,20 +147,6 @@
     "heroImage": "images/city/gaggenau-bg.png"
   },
   {
-    "topic": "Fensterreinigung in Gaggenau: Preise, Dauer, Ablauf",
-    "city": "Gaggenau",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-gaggenau-fensterreinigung-in-gaggenau-preise-dauer-ablauf.md",
-    "heroImage": "images/city/gaggenau-bg.png"
-  },
-  {
-    "topic": "Wie oft sollte man Fenster in Gaggenau reinigen lassen?",
-    "city": "Gaggenau",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-gaggenau-wie-oft-sollte-man-fenster-in-gaggenau-reinigen-lassen.md",
-    "heroImage": "images/city/gaggenau-bg.png"
-  },
-  {
     "topic": "Was kostet eine Entrümpelung in Karlsruhe?",
     "city": "Karlsruhe",
     "service": "Entrümpelung",
@@ -235,20 +193,6 @@
     "city": "Karlsruhe",
     "service": "Endreinigung",
     "file": "content/auto/endreinigung-karlsruhe-was-kostet-eine-endreinigung-in-karlsruhe.md",
-    "heroImage": "images/city/karlsruhe-bg.png"
-  },
-  {
-    "topic": "Fensterreinigung in Karlsruhe: Preise, Dauer, Ablauf",
-    "city": "Karlsruhe",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-karlsruhe-fensterreinigung-in-karlsruhe-preise-dauer-ablauf.md",
-    "heroImage": "images/city/karlsruhe-bg.png"
-  },
-  {
-    "topic": "Wie oft sollte man Fenster in Karlsruhe reinigen lassen?",
-    "city": "Karlsruhe",
-    "service": "Fensterreinigung",
-    "file": "content/auto/fensterreinigung-karlsruhe-wie-oft-sollte-man-fenster-in-karlsruhe-reinigen-lassen.md",
     "heroImage": "images/city/karlsruhe-bg.png"
   }
 ]
