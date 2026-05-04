@@ -186,3 +186,70 @@
 # +haushaltsauflösung
 # +räumung
 # +entsorgen
+
+# ─────────────────────────────────────────
+# 9. KONKURRENZ KLARNAMEN (Flo Video #7563568833626213654 — boost performance up to 50%)
+# ─────────────────────────────────────────
+# Adaugi numele EXACTE ale concurenților locali ca să eviți să plătești click-uri
+# pe oameni care îi caută pe ei și ajung pe ad-ul tău din greșeală.
+#
+# Cum scrap-uiezi rapid:
+# 1. Instalează Chrome extension "Instant Data Scraper" (Pokeball icon)
+# 2. Google Maps → caută "Reinigungsfirma Rastatt" / "Entrümpelung Karlsruhe"
+# 3. Scroll la fundul listei (până "You've reached the end")
+# 4. Click Instant Data Scraper → "Try another table" → bifează "Name"
+# 5. Export CSV → copiază numele în secțiunea de mai jos
+#
+# Exemple confirmate (din scan-urile tale GMB Everywhere 2026-05-04):
++klarheit gebäudereinigung
++klarheit reinigung
++bodnar dienstleistung
++bodnar gernsbach
+
+# TODO LAURA: Adaugă aici 30-50 de Klarnamen din 3 căutări:
+# - "Reinigungsfirma Rastatt"
+# - "Entrümpelung Karlsruhe"
+# - "Gebäudereinigung Baden-Baden"
+#
+# IMPORTANT: NU adăuga generice ("Gebäudereinigung", "Reinigung") — doar numele EXACTE
+# (ex. "Putzteufel Schmidt", "Klarheit Reinigung", "Müller Gebäudereinigung").
+
+# ─────────────────────────────────────────
+# 10. PRICE-COMPARISON / INFORMATIONAL (Flo Video #7559300678494096662 — esențial)
+# ─────────────────────────────────────────
+# Aceștia sunt people care compară prețuri / informează — NU cumpără.
+# Flo zice direct: "die kaufen nicht. also wir wollen Leute die kaufen."
++kosten pro quadratmeter
++preis pro quadratmeter
++qm preis
++pro qm
++kosten pro qm
++preisvergleich
++vergleich
++vergleichen
++vergleichsportal
++günstigster anbieter
++billigster anbieter
++billigste firma
++kostenrechner
++kosten rechner
++rechner kostenlos
++berechnen kostenlos
++kosten sparen
++kosten senken
++kosten reduzieren
++spartipps
++spar tipps
++kosten tipps
++entrümpelung kosten kalkulieren
++haushaltsauflösung kosten kalkulieren
++gebäudereinigung kosten kalkulieren
++reinigung preise vergleichen
++entrümpelung preisvergleich
++wieviel kostet
++wie teuer
++grobe kosten
++richtwert
++orientierungswert
++pauschalpreis vergleich
++festpreis vergleich
