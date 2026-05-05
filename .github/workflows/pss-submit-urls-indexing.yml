@@ -1,0 +1,51 @@
+name: Submit URLs to Google Indexing API
+
+# Manual-only — rulează dintr-un push major (rewrite, fix template etc.)
+# pentru a accelera reindexarea Google de la 3-7 zile la ~24h.
+# Folosește serviciul Indexing API (quota: 200 URL/zi).
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Mod: priority (8 URL sat afectate) | all-city (toate paginile city, max 200)'
+        required: true
+        default: 'priority'
+        type: choice
+        options:
+          - priority
+          - all-city
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Submit URLs to Indexing API
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ "${{ inputs.mode }}" = "all-city" ]; then
+            node agent/scripts/submit-urls-indexing.mjs --all-city
+          else
+            node agent/scripts/submit-urls-indexing.mjs
+          fi
+
+      - name: Commit log
+        run: |
+          git config user.name "Indexing Submit Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add agent/indexing-logs/*.json 2>/dev/null || true
+          git diff --staged --quiet || git commit -m "indexing-submit: log $(date +%Y-%m-%d) (${{ inputs.mode }})"
+          git pull --rebase origin master 2>/dev/null || true
+          git push 2>/dev/null || true
