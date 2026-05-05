@@ -65,6 +65,8 @@ const COMPETITOR_KEYWORDS = [
   'ich biete', 'biete ich', 'biete an', 'biete ihnen',
   'ich heisse', 'mein name ist',
   'umgebung an', 'und umgebung an',
+  'gerne wurde ich', 'wurde ich sie', 'wurde ich ihnen',
+  'ich konnte ihnen', 'ich kann ihnen',
   // Forme legale companie
   ' gmbh', ' ug ', ' ug,', ' ug.', ' e.k.', ' e.k ',
   // Phrase-uri "company/cleaner-to-customer" (sales tone).
@@ -75,11 +77,19 @@ const COMPETITOR_KEYWORDS = [
   'team der ', 'team von ', 'das gesamte team',
   // Titluri tipice de oferta (NU cerere)
   'professionelle reinigung', 'professionelle entrumpelung',
+  'vom profi', 'aussenflachen',
+  // Sale events (cineva VINDE articole, nu cere servicii)
+  'flohmarkt', 'garagenflohmarkt', 'wir machen einen',
 ];
 
 // Nivel 4: pattern-uri in TITLU care indica oferta (cleaner se ofera, NU client cere).
-// Aplicat post-normalize. Exemple: "Reinigungskraft in Bruchsal", "Putzfrau bietet sich an".
-const TITLE_OFFER_RE = /^(reinigungskraft|putzfrau|putzhilfe|haushaltshilfe|hausmeister)\s+(in|fur|bietet|sucht|aus)\s/;
+// Aplicat post-normalize. Exemple: "Reinigungskraft in Bruchsal", "Putzfrau bietet sich an",
+// "Reinigungskraft oder Hilfe im Alltag" (persoana se ofera).
+const TITLE_OFFER_RE = /^(reinigungskraft|putzfrau|putzhilfe|haushaltshilfe|hausmeister)\s+(in|fur|bietet|sucht|aus|oder|im|bei)\s/;
+
+// Nivel 5: regex pentru germana compusa "Professionelle Xreinigung" (Pflaster-, Stein-, Boden- etc.)
+// Filtrul COMPETITOR_KEYWORDS prinde doar "professionelle reinigung" cu spatiu.
+const COMPOUND_OFFER_RE = /\bprofessionelle?\s+\w*reinigung\b/;
 
 function classifyAd(item) {
   // Nivel 1 — categoria URL = job posting
@@ -102,6 +112,10 @@ function classifyAd(item) {
   }
   // Nivel 4 — titlu cu pattern tipic de oferta (Reinigungskraft in X, Putzfrau bietet, etc.)
   if (TITLE_OFFER_RE.test(titleNorm)) {
+    return { skip: true, reason: 'concurent' };
+  }
+  // Nivel 5 — germana compusa "Professionelle Pflasterreinigung/Steinreinigung/etc."
+  if (COMPOUND_OFFER_RE.test(hayNorm)) {
     return { skip: true, reason: 'concurent' };
   }
   return { skip: false };
