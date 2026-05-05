@@ -25,12 +25,12 @@ const STATIC_CSS = `
 @media(max-width:720px){.static{padding:48px 20px 40px;}}
 .static .back{display:inline-block; margin-bottom:36px; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--blue);}
 .static .back:hover{text-decoration:underline;}
-.static h1{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.4rem,5vw,3.8rem); line-height:1.05; letter-spacing:-0.025em; margin-bottom:48px; color:var(--ink);}
+.static h1{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(2.4rem,5vw,3.8rem); line-height:1.05; letter-spacing:-0.025em; margin-bottom:48px; color:var(--ink);}
 .static h1 em{font-style:italic; color:var(--green);}
 .static .card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:32px 36px; margin-bottom:18px; box-shadow:0 8px 20px -10px rgba(26,32,48,.08);}
 @media(max-width:720px){.static .card{padding:24px 22px;}}
-.static .card h2{font-family:"Fraunces",serif; font-weight:500; font-size:1.35rem; margin-bottom:16px; color:var(--ink); letter-spacing:-0.01em;}
-.static .card h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.1rem; margin:18px 0 8px; color:var(--ink);}
+.static .card h2{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.35rem; margin-bottom:16px; color:var(--ink); letter-spacing:-0.01em;}
+.static .card h3{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.1rem; margin:18px 0 8px; color:var(--ink);}
 .static .card p, .static .card li, .static .card address{font-family:"Inter",sans-serif; font-size:1rem; line-height:1.7; color:var(--ink); margin-bottom:10px;}
 .static .card address{font-style:normal;}
 .static .card ul, .static .card ol{padding-left:22px; margin:10px 0;}
@@ -38,7 +38,7 @@ const STATIC_CSS = `
 .static .card a:hover{color:var(--green-dk);}
 .static .card strong{color:var(--ink);}
 .static-cta{margin-top:48px; padding:36px; background:var(--bg-2); border-radius:14px; text-align:center;}
-.static-cta h2{font-family:"Fraunces",serif; font-weight:300; font-size:1.6rem; margin-bottom:14px; color:var(--ink);}
+.static-cta h2{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:1.6rem; margin-bottom:14px; color:var(--ink);}
 .static-cta a{margin-top:12px;}
 `;
 

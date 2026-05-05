@@ -5,7 +5,7 @@ export const NAV = `<nav class="nav">
   <a href="/" class="nav-brand">
     <img src="/images/logo.webp" alt="Perfekt Sauber Service Logo" onerror="this.src='/images/echipa.webp'"/>
     <span style="display:flex; flex-direction:column; line-height:1;">
-      <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
+      <span style="font-family:'Fraunces','Fraunces Fallback',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
       <span class="sub">Service · Rastatt</span>
     </span>
   </a>
