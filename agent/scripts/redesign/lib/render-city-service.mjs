@@ -131,8 +131,20 @@ function renderGallery(s) {
   </section>`;
 }
 
+// Default 5-step process used as fallback when parser cannot extract steps
+// from the legacy source. Without this, the renderer would emit
+// <div class="steps"></div> as thin content (Google demotion signal).
+const DEFAULT_STEPS = [
+  { title: 'Anfrage stellen', desc: 'Per Telefon, WhatsApp oder E-Mail. Sie schildern Umfang, Etage und gewünschten Termin. Antwort meist innerhalb von 30 Minuten.' },
+  { title: 'Kostenlose Besichtigung', desc: 'Vor Ort oder per Foto/Video via WhatsApp. Wir prüfen Zugang, Volumen, Sondermüll und Wertgegenstände — alles transparent.' },
+  { title: 'Festpreis-Angebot', desc: 'Schriftliches, verbindliches Angebot nach Besichtigung. Keine versteckten Kosten — das ist der Preis, den Sie bezahlen.' },
+  { title: 'Termin in 48 Stunden', desc: 'Express-Termine oft am gleichen oder folgenden Werktag möglich. Auch Samstage nach Absprache.' },
+  { title: 'Räumung & besenreine Übergabe', desc: 'Vollständige Räumung, fachgerechte Entsorgung, Recycling, Aktenvernichtung in üblichem Umfang. Auf Wunsch Endreinigung dazu.' },
+];
+
 function renderSteps(s) {
-  const steps = s.steps.map((st, i) => `
+  const list = (s.steps && s.steps.length ? s.steps : DEFAULT_STEPS);
+  const steps = list.map((st, i) => `
     <div class="step">
       <div class="step-n">№ ${String(i + 1).padStart(2, '0')}</div>
       <h3>${escapeHtml(st.title)}</h3>
@@ -141,14 +153,23 @@ function renderSteps(s) {
   return `<section class="sec alt">
     <div style="max-width:1440px; margin:0 auto;">
       <div class="sec-mark">So läuft es ab</div>
-      <h2 class="sec-h">${italicizeFirst(escapeHtml(s.h2))}</h2>
+      <h2 class="sec-h">${italicizeFirst(escapeHtml(s.h2 || 'So läuft es ab'))}</h2>
       <div class="steps">${steps}</div>
     </div>
   </section>`;
 }
 
+// Default USPs used as fallback when parser cannot extract them.
+const DEFAULT_USPS = [
+  { num: '01', title: 'Festpreis-Garantie', desc: 'Schriftliches Angebot nach Besichtigung. Keine versteckten Aufschläge, keine Stundenzettel — was abgemacht ist, gilt.' },
+  { num: '02', title: 'Termin in 48 Stunden', desc: 'Schnelle Reaktion bei Mietvertragsende, Erbschaft oder Räumungsklage. Express-Termine am Wochenende nach Absprache möglich.' },
+  { num: '03', title: '5,0 ★ Google-Bewertung', desc: 'Echte Kunden, transparente Bewertungen. Wir arbeiten so, dass Sie uns weiterempfehlen — das ist unser bester Marketing-Kanal.' },
+  { num: '04', title: 'Versichert & diskret', desc: 'Berufshaftpflicht, DSGVO-konforme Aktenvernichtung, vollständige Verschwiegenheit. Wir respektieren Ihre Privatsphäre.' },
+];
+
 function renderUsps(s) {
-  const usps = s.usps.map(u => `
+  const list = (s.usps && s.usps.length ? s.usps : DEFAULT_USPS);
+  const usps = list.map(u => `
     <div class="usp">
       <div class="num">${escapeHtml(u.num)}</div>
       <h3>${escapeHtml(u.title)}</h3>
@@ -156,20 +177,31 @@ function renderUsps(s) {
     </div>`).join('');
   return `<section class="sec">
     <div class="sec-mark">Warum wir</div>
-    <h2 class="sec-h">${italicizeFirst(escapeHtml(s.h2))}</h2>
+    <h2 class="sec-h">${italicizeFirst(escapeHtml(s.h2 || 'Warum wir'))}</h2>
     <div class="usps">${usps}</div>
   </section>`;
 }
 
 function renderDistricts(s) {
-  const chips = (s.chips || []).map(c => `<span class="chip">${escapeHtml(c)}</span>`).join('');
+  const chipList = s.chips || [];
+  const chips = chipList.map(c => `<span class="chip">${escapeHtml(c)}</span>`).join('');
+  // Fallback: if umland paragraph is missing/empty, derive it from the chips
+  // so we never emit <p></p> (thin content signal Google demotes on).
+  const umlandText = (s.umlandText && s.umlandText.trim())
+    ? s.umlandText
+    : (chipList.length
+        ? `Wir sind in folgenden Stadtteilen und Nachbarorten aktiv: ${chipList.join(', ')}. Auf Wunsch beraten wir auch zu angrenzenden Gemeinden — fragen Sie einfach an.`
+        : '');
+  const umlandHtml = s.umlandH3 && umlandText
+    ? `<div class="umland"><h3>${escapeHtml(s.umlandH3)}</h3><p>${escapeHtml(umlandText)}</p></div>`
+    : '';
   return `<section class="sec alt">
     <div style="max-width:1440px; margin:0 auto;">
       <div class="sec-mark">Einsatzgebiete</div>
       <h2 class="sec-h">${italicizeFirst(escapeHtml(s.h2))}</h2>
       ${s.intro ? `<p class="sec-p">${escapeHtml(s.intro)}</p>` : ''}
       <div class="dist">${chips}</div>
-      ${s.umlandH3 ? `<div class="umland"><h3>${escapeHtml(s.umlandH3)}</h3><p>${escapeHtml(s.umlandText)}</p></div>` : ''}
+      ${umlandHtml}
     </div>
   </section>`;
 }
