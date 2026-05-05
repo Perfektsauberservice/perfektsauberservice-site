@@ -151,7 +151,7 @@ function renderMiniCards(cards) {
     <h2 class="sec-h">Auch <em>verfügbar</em>.</h2>
     <div class="rel-grid">${cards.map(c => `
       <a href="${escapeHtml(c.href || '#')}">
-        <strong style="display:block; font-family:'Fraunces',serif; font-size:1rem; font-weight:500; margin-bottom:6px; color:var(--ink); letter-spacing:-0.01em;">${escapeHtml(c.title)}</strong>
+        <strong style="display:block; font-family:'Fraunces','Fraunces Fallback',serif; font-size:1rem; font-weight:500; margin-bottom:6px; color:var(--ink); letter-spacing:-0.01em;">${escapeHtml(c.title)}</strong>
         ${c.desc ? `<span style="display:block; font-family:'Inter',sans-serif; font-size:.85rem; line-height:1.5; color:var(--muted); text-transform:none; letter-spacing:0;">${escapeHtml(c.desc)}</span>` : ''}
       </a>`).join('')}</div>
   </section>`;

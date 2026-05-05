@@ -31,18 +31,18 @@ const BLOG_CSS = `
 .art-hero-wrap{max-width:880px; margin:0 auto;}
 .art-badge{display:inline-block; padding:8px 16px; border-radius:999px; background:#fff; border:1px solid var(--line);
   font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); margin-bottom:24px;}
-.art-h1{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2rem,4.6vw,3.6rem); line-height:1.05; letter-spacing:-0.025em; color:var(--ink); margin-bottom:24px;}
+.art-h1{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(2rem,4.6vw,3.6rem); line-height:1.05; letter-spacing:-0.025em; color:var(--ink); margin-bottom:24px;}
 .art-h1 em{font-style:italic; color:var(--green);}
-.art-lead{font-family:"Fraunces",serif; font-style:italic; font-weight:400; font-size:1.15rem; line-height:1.6; color:var(--muted); max-width:65ch;}
+.art-lead{font-family:"Fraunces","Fraunces Fallback",serif; font-style:italic; font-weight:400; font-size:1.15rem; line-height:1.6; color:var(--muted); max-width:65ch;}
 .art-meta{margin-top:24px; font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
 .art-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:28px;}
 
 .art{max-width:780px; margin:0 auto; padding:64px 28px 60px;}
 @media(max-width:720px){.art{padding:48px 20px 40px;}}
 .art-section{margin-bottom:44px;}
-.art-section h2{font-family:"Fraunces",serif; font-weight:500; font-size:clamp(1.5rem,2.6vw,2rem); line-height:1.2; letter-spacing:-0.02em; color:var(--ink); margin-bottom:18px;}
+.art-section h2{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:clamp(1.5rem,2.6vw,2rem); line-height:1.2; letter-spacing:-0.02em; color:var(--ink); margin-bottom:18px;}
 .art-section h2 em{font-style:italic; color:var(--green);}
-.art-section h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.2rem; margin:24px 0 10px; color:var(--ink);}
+.art-section h3{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.2rem; margin:24px 0 10px; color:var(--ink);}
 .art-section p{font-family:"Inter",sans-serif; font-size:1.05rem; line-height:1.75; color:var(--ink); margin-bottom:16px;}
 .art-section ul{padding-left:24px; margin-bottom:16px;}
 .art-section li{font-size:1.02rem; line-height:1.7; color:var(--ink); margin-bottom:8px;}
@@ -55,7 +55,7 @@ const BLOG_CSS = `
 .art-credit a{color:var(--muted); text-decoration:underline;}
 
 .art-related{max-width:880px; margin:0 auto 80px; padding:0 28px;}
-.art-related h2{font-family:"Fraunces",serif; font-weight:500; font-size:1.4rem; margin-bottom:20px; color:var(--ink);}
+.art-related h2{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.4rem; margin-bottom:20px; color:var(--ink);}
 .art-related .links{display:flex; flex-wrap:wrap; gap:8px;}
 .art-related .links a{display:inline-block; padding:9px 16px; border-radius:999px; background:#fff; border:1px solid var(--line);
   font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.1em; color:var(--ink);}

@@ -76,7 +76,7 @@ function renderHero(d) {
     ${trustHtml}
   </div>
   <div class="hero-img">
-    <img src="${escapeAttr(d.heroImg || '/images/echipa.webp')}" alt="${escapeAttr(d.heroImgAlt || d.h1)}" loading="eager"/>
+    <img src="${escapeAttr(d.heroImg || '/images/echipa-800.webp')}" alt="${escapeAttr(d.heroImgAlt || d.h1)}" loading="eager"/>
     <div class="badge"><strong>Vor &amp; Nach</strong><span>${escapeHtml(city || 'Region')}</span></div>
   </div>
 </section>`;

@@ -5,15 +5,20 @@ export const FONTS_HEAD = `<link rel="preconnect" href="https://fonts.googleapis
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>`;
 
-export const CSS = `*{box-sizing:border-box;margin:0;padding:0}
+export const CSS = `.skip-link{position:absolute;top:-40px;left:0;background:#1a2030;color:#fff;padding:8px 16px;z-index:100;text-decoration:none;font-family:"Geist Mono",monospace;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;}
+.skip-link:focus{top:0;}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #1d6dd6;outline-offset:2px;}
+@font-face{font-family:'Fraunces Fallback';src:local('Times New Roman'),local('Times'),local('Liberation Serif');size-adjust:102.41%;ascent-override:95.06%;descent-override:26.82%;line-gap-override:0%;}
+@font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica');size-adjust:107.06%;ascent-override:90.49%;descent-override:22.51%;line-gap-override:0%;}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+body{font-family:"Inter","Inter Fallback",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
   background:#fbf7f0; color:#1a2030; overflow-x:hidden;}
 img,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .mono{font-family:"Geist Mono",monospace}
-.serif{font-family:"Fraunces",serif}
+.serif{font-family:"Fraunces","Fraunces Fallback",serif}
 
 :root{
   --bg:#fbf7f0;
@@ -32,7 +37,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .nav{position:sticky; top:0; z-index:50; background:rgba(251,247,240,.92); backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line); padding:14px 28px;
   display:flex; justify-content:space-between; align-items:center; gap:18px;}
-.nav-brand{display:flex; align-items:center; gap:12px; font-family:"Fraunces",serif; font-size:1.15rem; letter-spacing:-0.01em;}
+.nav-brand{display:flex; align-items:center; gap:12px; font-family:"Fraunces","Fraunces Fallback",serif; font-size:1.15rem; letter-spacing:-0.01em;}
 .nav-brand img{height:38px; width:38px; border-radius:8px; object-fit:cover; flex-shrink:0;}
 .nav-brand b{font-weight:700; color:var(--blue);}
 .nav-brand em{font-style:normal; color:var(--green); font-weight:600;}
@@ -52,7 +57,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .eyebrow{display:inline-flex; align-items:center; gap:10px; font-family:"Geist Mono",monospace;
   font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--blue); margin-bottom:28px;}
 .eyebrow::before{content:""; width:32px; height:1px; background:var(--blue);}
-.h1{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2.1rem, 5.2vw, 4.4rem);
+.h1{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(2.1rem, 5.2vw, 4.4rem);
   line-height:1.02; letter-spacing:-0.025em; margin-bottom:24px; color:var(--ink);}
 .h1 em{font-style:italic; font-weight:400; color:var(--green);}
 .h1 b{font-weight:700; color:var(--blue);}
@@ -71,7 +76,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .btn-phone:hover{background:#0a0f1a;}
 .trust{display:flex; gap:32px; margin-top:40px; padding-top:24px;
   border-top:1px solid var(--line); flex-wrap:wrap;}
-.trust .it strong{display:block; font-family:"Fraunces",serif; font-size:1.5rem; font-weight:500;
+.trust .it strong{display:block; font-family:"Fraunces","Fraunces Fallback",serif; font-size:1.5rem; font-weight:500;
   line-height:1; color:var(--blue);}
 .trust .it span{font-family:"Geist Mono",monospace; font-size:.62rem; letter-spacing:.16em;
   text-transform:uppercase; color:var(--muted); margin-top:6px; display:block;}
@@ -83,7 +88,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .hero-img .badge{position:absolute; bottom:-22px; right:-22px; background:#fff; border-radius:50%;
   width:96px; height:96px; display:flex; flex-direction:column; align-items:center; justify-content:center;
   box-shadow:0 16px 32px -10px rgba(26,32,48,.25); transform:rotate(-8deg); z-index:3;}
-.hero-img .badge strong{font-family:"Fraunces",serif; font-style:italic; font-size:1.05rem; color:var(--green); line-height:1; text-align:center; padding:0 8px;}
+.hero-img .badge strong{font-family:"Fraunces","Fraunces Fallback",serif; font-style:italic; font-size:1.05rem; color:var(--green); line-height:1; text-align:center; padding:0 8px;}
 .hero-img .badge span{font-family:"Geist Mono",monospace; font-size:.5rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:4px;}
 @media(max-width:520px){.hero-img .badge{width:78px; height:78px;} .hero-img .badge strong{font-size:.85rem;}}
 
@@ -110,7 +115,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .sec-mark{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.22em;
   text-transform:uppercase; color:var(--green); margin-bottom:18px; display:flex; align-items:center; gap:12px;}
 .sec-mark::before{content:""; width:32px; height:1px; background:var(--green);}
-.sec-h{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(1.9rem,4vw,3.2rem);
+.sec-h{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(1.9rem,4vw,3.2rem);
   line-height:1.05; letter-spacing:-0.025em; margin-bottom:20px; color:var(--ink); max-width:24ch;}
 .sec-h em{font-style:italic; color:var(--green); font-weight:400;}
 .sec-h b{font-weight:700; color:var(--blue);}
@@ -122,7 +127,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   border-bottom:1px solid var(--line); align-items:baseline;}
 @media(max-width:780px){.price-row{grid-template-columns:1fr 100px; gap:14px}
   .price-row .ex{grid-column:1 / -1; padding-top:6px}}
-.price-name{font-family:"Fraunces",serif; font-weight:500; font-size:1.2rem; letter-spacing:-0.015em;}
+.price-name{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.2rem; letter-spacing:-0.015em;}
 .price-name em{font-style:italic; color:var(--green); font-weight:400; font-size:.85em; margin-left:6px; display:block; margin-top:2px;}
 .price-ex{font-size:.95rem; color:var(--muted); line-height:1.5;}
 .price-val{font-family:"Geist Mono",monospace; font-size:1rem; letter-spacing:.04em; text-align:right; color:var(--blue); font-weight:500;}
@@ -135,7 +140,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 @media(max-width:780px){.cards{grid-template-columns:1fr;}}
 .card{background:#fff; border:1px solid var(--line); border-radius:12px; padding:28px 26px;}
 .card .ic{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green); margin-bottom:14px;}
-.card h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.35rem; letter-spacing:-0.015em; margin-bottom:10px; color:var(--ink);}
+.card h3{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.35rem; letter-spacing:-0.015em; margin-bottom:10px; color:var(--ink);}
 .card h3 em{font-style:italic; color:var(--green);}
 .card p{color:var(--muted); font-size:.95rem; line-height:1.6;}
 
@@ -161,15 +166,15 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 @media(max-width:880px){.steps{grid-template-columns:repeat(2,1fr);}}
 .step{padding:24px 18px; background:#fff; border:1px solid var(--line); border-radius:12px;}
 .step-n{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green); margin-bottom:12px;}
-.step h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.15rem; margin-bottom:8px; color:var(--ink);}
+.step h3{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.15rem; margin-bottom:8px; color:var(--ink);}
 .step p{font-size:.88rem; color:var(--muted); line-height:1.55;}
 
 /* USPs */
 .usps{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px;}
 @media(max-width:880px){.usps{grid-template-columns:1fr;}}
 .usp{padding:28px 24px; background:#fff; border:1px solid var(--line); border-radius:12px;}
-.usp .num{font-family:"Fraunces",serif; font-style:italic; font-size:2rem; font-weight:400; color:var(--blue); line-height:1; margin-bottom:12px;}
-.usp h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.1rem; margin-bottom:8px; color:var(--ink);}
+.usp .num{font-family:"Fraunces","Fraunces Fallback",serif; font-style:italic; font-size:2rem; font-weight:400; color:var(--blue); line-height:1; margin-bottom:12px;}
+.usp h3{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.1rem; margin-bottom:8px; color:var(--ink);}
 .usp p{font-size:.9rem; color:var(--muted); line-height:1.55;}
 
 /* DISTRICTS */
@@ -178,14 +183,14 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.1em; border:1px solid var(--line);}
 .dist .chip:hover{border-color:var(--blue); color:var(--blue);}
 .umland{margin-top:32px;}
-.umland h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.25rem; margin-bottom:10px; color:var(--ink);}
+.umland h3{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.25rem; margin-bottom:10px; color:var(--ink);}
 .umland p{font-size:.98rem; color:var(--muted); line-height:1.65;}
 
 /* FAQ */
 .faq{margin-top:24px; border-top:1px solid var(--line);}
 .faq details{border-bottom:1px solid var(--line); padding:0;}
 .faq details summary{padding:24px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:flex-start; gap:24px;
-  font-family:"Fraunces",serif; font-weight:500; font-size:1.15rem; color:var(--ink); list-style:none;}
+  font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.15rem; color:var(--ink); list-style:none;}
 .faq details summary::-webkit-details-marker{display:none;}
 .faq details summary::after{content:"＋"; font-family:"Geist Mono",monospace; font-size:1.3rem; color:var(--green); transition:transform .3s; flex-shrink:0;}
 .faq details[open] summary::after{content:"−";}
@@ -198,14 +203,14 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .rel-grid a{display:block; padding:18px 22px; background:#fff; border:1px solid var(--line); border-radius:10px;
   font-family:"Geist Mono",monospace; font-size:.78rem; letter-spacing:.06em; color:var(--ink); transition:all .2s;}
 .rel-grid a:hover{border-color:var(--blue); color:var(--blue); transform:translateY(-2px);}
-.rel-h{font-family:"Fraunces",serif; font-weight:500; font-size:1.25rem; margin:36px 0 0; color:var(--ink);}
+.rel-h{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:500; font-size:1.25rem; margin:36px 0 0; color:var(--ink);}
 
 /* CONTACT */
 .contact{background:var(--ink); color:var(--bg); padding:90px 48px;}
 @media(max-width:980px){.contact{padding:60px 24px;}}
 .contact-wrap{max-width:1440px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;}
 @media(max-width:880px){.contact-wrap{grid-template-columns:1fr; gap:32px;}}
-.contact h2{font-family:"Fraunces",serif; font-weight:300; font-size:clamp(2rem,4.4vw,3.4rem);
+.contact h2{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(2rem,4.4vw,3.4rem);
   line-height:1.05; letter-spacing:-0.025em;}
 .contact h2 em{font-style:italic; color:#9ad978;}
 .contact h2 b{font-weight:700; color:#7ab8ff;}

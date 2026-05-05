@@ -106,7 +106,7 @@ ${NAV}
     </div>
   </div>
   <div class="hero-img">
-    <img src="/images/echipa.webp" alt="Perfekt Sauber Service Team" loading="eager"/>
+    <img src="/images/echipa-800.webp" width="800" height="533" alt="Perfekt Sauber Service Team" loading="eager"/>
     <div class="badge"><strong>Kostenlos</strong><span>Schätzen</span></div>
   </div>
 </section>
