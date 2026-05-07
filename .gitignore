@@ -10,3 +10,16 @@ _preview/
 
 # WebP conversion tool (downloaded locally)
 agent/tools/libwebp/
+
+# Outreach data (B2B email lists) — keep local; if repo ever goes public, this stays out
+outreach/
+
+# Old image backups (binary bloat — restore from git history if needed)
+**/_backup_*/
+
+# Auto-generated audit reports (regenerated on demand by audit scripts)
+seo_audit_report.txt
+
+# Auto-generated blog fragments (produced by generate-blog.js at every Netlify build)
+content/auto/blog-cards.html
+content/auto/blog-auto.html
