@@ -1,5 +1,7 @@
 # Google Ads — Perfekt Sauber Service
 
+> ⚠️ **Status real (2026-05-07): Plan B activ.** Setup-ul live în Google Ads NU coincide cu blueprint-ul de mai jos. Citește **[STATUS-REAL.md](STATUS-REAL.md)** pentru ce e *de fapt* live azi (Reinigung_Search + Entrumpelung_Search la €17/zi total, PMax eliminat).
+
 ## Plan integrat Faza 1 + Faza 1.5
 
 | Fază | Servicii | Buget zilnic | Buget lunar | Start |
