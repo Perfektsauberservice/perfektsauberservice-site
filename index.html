@@ -10,6 +10,10 @@
 <meta property="og:url" content="https://perfektsauberservice.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Entrümpelung & Haushaltsauflösung Rastatt | PSS">
+<meta name="twitter:description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt und Umgebung.">
+<meta name="twitter:image" content="https://perfektsauberservice.com/images/echipa.webp">
 <meta property="og:locale" content="de_DE">
 <link rel="canonical" href="https://perfektsauberservice.com/">
 <link rel="icon" type="image/png" href="/images/favicon-32.png">
@@ -327,7 +331,19 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     #standorte-map .leaflet-popup-content-wrapper{border-radius:8px;}
     #standorte-map .leaflet-popup-content{margin:14px 18px;line-height:1.5;}
     #standorte-map .leaflet-control-attribution{font-size:9px;opacity:.7;}
-  </style>
+  
+.nav-toggle{display:none; background:none; border:0; padding:8px; cursor:pointer; color:var(--ink); margin-left:auto;}
+.nav-toggle svg{display:block; width:26px; height:26px;}
+.nav-toggle:focus-visible{outline:2px solid var(--blue); outline-offset:2px; border-radius:4px;}
+@media(max-width:820px){
+  .nav-toggle{display:inline-flex;}
+  .nav-links{display:none; position:absolute; top:100%; left:0; right:0; background:var(--bg, #fbf7f0); flex-direction:column; gap:0; padding:14px 28px 20px; border-bottom:1px solid var(--line, #e5dccb); box-shadow:0 16px 32px -16px rgba(26,32,48,.18);}
+  .nav-links.open{display:flex;}
+  .nav-links a{padding:12px 0; border-bottom:1px solid var(--line, #e5dccb);}
+  .nav-links a:last-child{border-bottom:0;}
+  .nav{position:relative;}
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -409,13 +425,14 @@ window.psLoadGA = function(){
 <!-- ======== NAV ======== -->
 <nav class="nav">
   <a href="#" class="nav-brand">
-    <img src="/images/cibersite/logo.jpeg" width="1024" height="1024" alt="Perfekt Sauber Service Logo"/>
+    <img src="/images/logo.webp" width="200" height="200" alt="Perfekt Sauber Service Logo" loading="eager" decoding="async"/>
     <span style="display:flex; flex-direction:column; line-height:1;">
       <span style="font-family:'Fraunces',serif; font-size:1.15rem; letter-spacing:-0.01em; color:var(--ink); text-transform:none; font-weight:500;"><b>Perfekt</b> <em>Sauber</em></span>
       <span style="font-size:.6rem; letter-spacing:.16em; margin-left:0; margin-top:3px;">Service · Rastatt</span>
     </span>
   </a>
-  <div class="nav-links">
+  <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <div class="nav-links" id="navLinks">
     <a href="/leistungen">Leistungen</a>
     <a href="/portfolio">Galerie</a>
     <a href="#stimmen">Stimmen</a>
@@ -1299,5 +1316,16 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
   setTimeout(go, 6000);
 })();
 </script>
+<script>(function(){
+  var btn = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!btn || !links) return;
+  btn.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  // Close menu on link click
+  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }); });
+})();</script>
 </body>
 </html>

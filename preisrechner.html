@@ -11,6 +11,10 @@
 <meta property="og:url" content="https://perfektsauberservice.com/preisrechner">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Preisrechner | Festpreis sofort schätzen | Perfekt Sauber Service">
+<meta name="twitter:description" content="Kostenloser Preisrechner für Wohnungsauflösung, Entrümpelung, Bauendreinigung, Grundreinigung und Malerarbeiten. Schiebe die Regler — sofortige Schätzung nach echter Preisrichtwert-Tabelle.">
+<meta name="twitter:image" content="https://perfektsauberservice.com/images/echipa.webp">
 <meta property="og:locale" content="de_DE">
 <link rel="canonical" href="https://perfektsauberservice.com/preisrechner">
 <link rel="preload" href="/fonts/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="/fonts/fonts.css"/></noscript>
@@ -130,6 +134,18 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .sec-h b{font-weight:700; color:var(--blue);}
 .sec-p{color:var(--muted); font-size:1.05rem; line-height:1.7; max-width:62ch; margin-bottom:36px;}
 
+
+.nav-toggle{display:none; background:none; border:0; padding:8px; cursor:pointer; color:var(--ink); margin-left:auto;}
+.nav-toggle svg{display:block; width:26px; height:26px;}
+.nav-toggle:focus-visible{outline:2px solid var(--blue); outline-offset:2px; border-radius:4px;}
+@media(max-width:820px){
+  .nav-toggle{display:inline-flex;}
+  .nav-links{display:none; position:absolute; top:100%; left:0; right:0; background:var(--bg, #fbf7f0); flex-direction:column; gap:0; padding:14px 28px 20px; border-bottom:1px solid var(--line, #e5dccb); box-shadow:0 16px 32px -16px rgba(26,32,48,.18);}
+  .nav-links.open{display:flex;}
+  .nav-links a{padding:12px 0; border-bottom:1px solid var(--line, #e5dccb);}
+  .nav-links a:last-child{border-bottom:0;}
+  .nav{position:relative;}
+}
 </style>
 <script type="application/ld+json">
 {
@@ -210,7 +226,8 @@ window.psLoadGA = function(){
       <span class="sub">Service · Rastatt</span>
     </span>
   </a>
-  <div class="nav-links">
+  <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <div class="nav-links" id="navLinks">
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
@@ -251,7 +268,29 @@ window.psLoadGA = function(){
         <div id="calcBreakdown" style="margin-top:22px; padding-top:18px; border-top:1px solid var(--line); font-family:'Geist Mono',monospace; font-size:.78rem; line-height:1.7;"></div>
 
         <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-size:.78rem; color:var(--muted); line-height:1.5;">* Nettopreis ohne MwSt. Endpreis nach kostenloser Vor-Ort-Besichtigung. Bei Wertanrechnung (z.B. verkäufliche Möbel) Reduktion möglich.</div>
-        <a href="#kontakt" class="btn btn-pri" style="margin-top:20px; width:100%; justify-content:center;">Verbindliches Angebot anfragen →</a>
+
+        <form name="preisrechner-lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" style="margin-top:22px; padding-top:18px; border-top:1px solid var(--line);">
+          <input type="hidden" name="form-name" value="preisrechner-lead">
+          <input type="hidden" name="calculated_price" id="calcPriceHidden" value="">
+          <input type="hidden" name="calculated_breakdown" id="calcBreakdownHidden" value="">
+          <p style="font-family:'Geist Mono',monospace; font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:var(--green); margin-bottom:12px;">▸ Angebot per E-Mail erhalten</p>
+          <p style="font-size:.86rem; line-height:1.55; color:var(--muted); margin-bottom:14px;">Wir senden Ihnen die berechnete Schätzung schriftlich zu und melden uns für einen kostenlosen Vor-Ort-Termin.</p>
+          <p style="display:none;"><label>Lassen Sie dieses Feld leer: <input name="bot-field"></label></p>
+          <label style="display:block; font-family:'Geist Mono',monospace; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;" for="prEmail">E-Mail *</label>
+          <input type="email" name="email" id="prEmail" required placeholder="ihre@email.de" style="width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; font-family:Inter,sans-serif; font-size:1rem; margin-bottom:14px;">
+          <label style="display:block; font-family:'Geist Mono',monospace; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px;" for="prPhone">Telefon / WhatsApp <span style="color:var(--muted); font-weight:400;">(optional, schnellere Antwort)</span></label>
+          <input type="tel" name="phone" id="prPhone" placeholder="+49 ..." style="width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; font-family:Inter,sans-serif; font-size:1rem; margin-bottom:14px;">
+          <label style="display:flex; gap:10px; font-size:.82rem; color:var(--muted); margin-bottom:6px; line-height:1.45; cursor:pointer;">
+            <input type="checkbox" name="agb_widerruf_accepted" required style="margin-top:3px; flex-shrink:0;">
+            <span>Ich habe die <a href="/widerrufsbelehrung" target="_blank" style="color:var(--blue); text-decoration:underline;">Widerrufsbelehrung</a> und die <a href="/agb" target="_blank" style="color:var(--blue); text-decoration:underline;">AGB</a> gelesen und akzeptiere sie. *</span>
+          </label>
+          <label style="display:flex; gap:10px; font-size:.82rem; color:var(--muted); margin-bottom:14px; line-height:1.45; cursor:pointer;">
+            <input type="checkbox" name="datenschutz_accepted" required style="margin-top:3px; flex-shrink:0;">
+            <span>Ich habe die <a href="/datenschutz" target="_blank" style="color:var(--blue); text-decoration:underline;">Datenschutzerklärung</a> zur Kenntnis genommen und stimme der Verarbeitung meiner Daten zur Bearbeitung der Anfrage zu. *</span>
+          </label>
+          <button type="submit" class="btn btn-pri" style="width:100%; justify-content:center;">Angebot zuschicken →</button>
+          <p style="font-size:.74rem; color:var(--muted); margin-top:10px; text-align:center;">Antwort innerhalb 24 h · Vor-Ort-Termin kostenlos</p>
+        </form>
       </div>
     </div>
 
@@ -777,6 +816,32 @@ window.psLoadGA = function(){
   });
   // Safety: if neither IO nor interaction fires within 6s, run anyway
   setTimeout(go, 6000);
+})();
+</script>
+<script>(function(){
+  var btn = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!btn || !links) return;
+  btn.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  // Close menu on link click
+  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }); });
+})();</script>
+<script>
+// Preisrechner lead form: copy calculated price/breakdown into hidden fields on submit
+(function(){
+  var form = document.querySelector('form[name="preisrechner-lead"]');
+  if (!form) return;
+  form.addEventListener('submit', function(){
+    var priceEl = document.getElementById('calcPrice');
+    var breakdownEl = document.getElementById('calcBreakdown');
+    var hiddenPrice = document.getElementById('calcPriceHidden');
+    var hiddenBreak = document.getElementById('calcBreakdownHidden');
+    if (priceEl && hiddenPrice) hiddenPrice.value = priceEl.textContent.trim();
+    if (breakdownEl && hiddenBreak) hiddenBreak.value = breakdownEl.textContent.replace(/\s+/g,' ').trim().slice(0, 1000);
+  });
 })();
 </script>
 </body>
