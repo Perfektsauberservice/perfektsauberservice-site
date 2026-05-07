@@ -1,7 +1,7 @@
-# Status REAL Google Ads — 2026-05-07
+# Status REAL Google Ads — 2026-05-07 (SNAPSHOT ISTORIC)
 
-> **Citește acest fișier ÎNAINTE de README.md sau ACTIVARE-AZI.md.**
-> Planul original Flo (Faza 1 + 1.5) a divergat de realitate. Acest fișier documentează ce e *de fapt* live azi.
+> ⚠️ **ARHIVAT 2026-05-08.** Acest fișier e snapshot din 2026-05-07. Pentru starea curentă citește **`STATE.md`** (sursa de adevăr nouă).
+> Păstrat ca istoric — documentează decizia Plan B din 7 mai (de ce am divergat de planul original Flo).
 
 ---
 
