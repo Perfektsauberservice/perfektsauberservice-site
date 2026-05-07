@@ -1,0 +1,15 @@
+{
+  "name": "pss-outreach-drafts",
+  "version": "1.0.0",
+  "description": "IMAP draft saver pentru outreach Bestatter — salvează emailuri în Drafts pe mailbox.org",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "drafts": "node save-drafts-mailbox.mjs",
+    "drafts:dry": "node save-drafts-mailbox.mjs --dry-run"
+  },
+  "dependencies": {
+    "imapflow": "^1.0.180",
+    "nodemailer": "^6.9.16"
+  }
+}

@@ -309,6 +309,12 @@ function buildArticleHtml(payload) {
         <p><a class="btn btn-dark" href="/${escapeHtml(writer.supportsPage)}">${escapeHtml(leadConversion.ctaBottom)}</a></p>
       </aside>
     </div>
+    <footer style="margin:32px 0 16px; padding:20px 0; border-top:1px solid #dde5f0; color:#5d697a; font-size:14px; text-align:center;">
+      <a href="/impressum" style="color:#21466f; font-weight:700; margin:0 8px; text-decoration:none;">Impressum</a> ·
+      <a href="/datenschutz" style="color:#21466f; font-weight:700; margin:0 8px; text-decoration:none;">Datenschutz</a> ·
+      <a href="/agb" style="color:#21466f; font-weight:700; margin:0 8px; text-decoration:none;">AGB</a> ·
+      <a href="/widerrufsbelehrung" style="color:#21466f; font-weight:700; margin:0 8px; text-decoration:none;">Widerruf</a>
+    </footer>
   </div>
 </body>
 </html>`;

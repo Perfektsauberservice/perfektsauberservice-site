@@ -14,9 +14,7 @@
 <meta property="og:locale" content="de_DE">
 <meta name="article:published_time" content="2026-04-23">
 <link rel="canonical" href="https://perfektsauberservice.com/blog/gewerberaeumung-karlsruhe-bueroaufloesung--ablauf-und-kosten-in">
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/></noscript>
+<link rel="preload" href="/fonts/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="/fonts/fonts.css"/></noscript>
 <style>.skip-link{position:absolute;top:-40px;left:0;background:#1a2030;color:#fff;padding:8px 16px;z-index:100;text-decoration:none;font-family:"Geist Mono",monospace;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;}
 .skip-link:focus{top:0;}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #1d6dd6;outline-offset:2px;}
@@ -209,23 +207,27 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   ]
 }
 </script>
-<!-- Google Analytics 4 (deferred to browser idle for perf) -->
+<!-- Google Analytics 4 (consent-gated, DSGVO/TTDSG compliant — only loads if user opted in) -->
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+window.psLoadGA = function(){
+  if (window.psGALoaded) return; window.psGALoaded = true;
+  gtag('js', new Date());
+  gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
+  document.head.appendChild(s);
+};
 (function(){
-  var loaded = false;
-  function loadGA(){
-    if (loaded) return; loaded = true;
-    gtag('js', new Date());
-    gtag('config', 'G-BMC32KSYKF');
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
-    document.head.appendChild(s);
-  }
-  if ('requestIdleCallback' in window) requestIdleCallback(loadGA, { timeout: 4000 });
-  else setTimeout(loadGA, 2500);
+  try {
+    var c = localStorage.getItem('psCookieChoice');
+    if (c === 'all') {
+      if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
+      else setTimeout(window.psLoadGA, 2500);
+    }
+  } catch(e) {}
 })();
 </script>
 <link rel="preload" href="/css/site-deferred.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/site-deferred.css"></noscript>
@@ -341,7 +343,7 @@ function gtag(){dataLayer.push(arguments);}
 <footer class="foot">
   <span>© <span id="year">2026</span> Perfekt Sauber Service · Inh. Laura Craciun</span>
   <span><a href="https://www.google.com/maps?cid=10440757061765338764" target="_blank" rel="noopener" aria-label="Auf Google Maps ansehen" style="color:inherit;text-decoration:none;border-bottom:1px dotted currentColor;">Reutstraße 9 · 76597 Loffenau</a></span>
-  <span>perfektsauberservice.com · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="#" id="cookieReopen">Cookies</a></span>
+  <span>perfektsauberservice.com · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="/agb">AGB</a> · <a href="/widerrufsbelehrung">Widerruf</a> · <a href="#" id="cookieReopen">Cookies</a></span>
 </footer>
 <div class="fab">
   <a class="w" href="https://wa.me/491639087197" aria-label="WhatsApp">✆</a>
@@ -349,7 +351,7 @@ function gtag(){dataLayer.push(arguments);}
 </div>
 <div id="cookieBanner">
   <div class="lab">Cookie-Hinweis</div>
-  <p>Wir verwenden notwendige Cookies, damit die Website funktioniert. Optionale Analyse-Cookies helfen uns, sie zu verbessern.</p>
+  <p>Wir nutzen notwendige Cookies für den Betrieb der Website sowie – nur mit Ihrer Einwilligung – Google Analytics 4 zur Verbesserung der Website (anonymisierte Nutzungsstatistik). Details in der <a href="/datenschutz">Datenschutzerklärung</a>.</p>
   <div class="row">
     <button class="acc" id="cookieAccept" aria-label="Alle Cookies akzeptieren">Alle akzeptieren</button>
     <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
@@ -362,7 +364,7 @@ function gtag(){dataLayer.push(arguments);}
   var b = document.getElementById('cookieBanner');
   if (!localStorage.getItem('psCookieChoice')) { setTimeout(function(){ b.style.display='block'; }, 1200); }
   function close(c){ localStorage.setItem('psCookieChoice', c); b.style.display='none'; }
-  document.getElementById('cookieAccept').onclick = function(){ close('all'); };
+  document.getElementById('cookieAccept').onclick = function(){ close('all'); if (typeof window.psLoadGA === 'function') window.psLoadGA(); };
   document.getElementById('cookieDecline').onclick = function(){ close('necessary'); };
   document.getElementById('cookieReopen').onclick = function(e){ e.preventDefault(); b.style.display='block'; };
   // GA4 conversion event tracking
