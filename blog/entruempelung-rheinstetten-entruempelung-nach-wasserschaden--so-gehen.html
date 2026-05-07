@@ -223,29 +223,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   ]
 }
 </script>
-<!-- Google Analytics 4 (consent-gated, DSGVO/TTDSG compliant — only loads if user opted in) -->
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-window.psLoadGA = function(){
-  if (window.psGALoaded) return; window.psGALoaded = true;
-  gtag('js', new Date());
-  gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
-  document.head.appendChild(s);
-};
-(function(){
-  try {
-    var c = localStorage.getItem('psCookieChoice');
-    if (c === 'all') {
-      if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
-      else setTimeout(window.psLoadGA, 2500);
-    }
-  } catch(e) {}
-})();
-</script>
+
 <link rel="preload" href="/css/site-deferred.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/site-deferred.css"></noscript>
 </head>
 <body>
@@ -407,5 +385,28 @@ window.psLoadGA = function(){
   // Close menu on link click
   links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }); });
 })();</script>
+<!-- Google Analytics 4 (consent-gated, DSGVO/TTDSG compliant — only loads if user opted in) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.psLoadGA = function(){
+  if (window.psGALoaded) return; window.psGALoaded = true;
+  gtag('js', new Date());
+  gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
+  document.head.appendChild(s);
+};
+(function(){
+  try {
+    var c = localStorage.getItem('psCookieChoice');
+    if (c === 'all') {
+      if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
+      else setTimeout(window.psLoadGA, 2500);
+    }
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
