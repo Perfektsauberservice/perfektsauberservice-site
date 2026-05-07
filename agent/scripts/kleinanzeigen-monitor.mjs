@@ -113,6 +113,18 @@ const COMPOUND_OFFER_RE = /\bprofessionelle?\s+\w*reinigung\b/;
 // Treppenhausreinigung, Putzfrau"). Nimeni nu CERE 2+ tipuri de curatenie deodata — e meniu de oferta.
 const SERVICE_LIST_RE = /(reinigung|service|hausmeister|putz\w*),\s*\w*(reinigung|service|hausmeister|putz\w*)/;
 
+// Nivel 8: cuvinte care indica un PRODUS fizic vandut (nu un serviciu cerut).
+// Ex: "Fliesenreinigungsaufsatz für Hochdruckreiniger" — produs ce contine "reinigung" prin compunere.
+// Toate post-normalize (a/o/u/ss).
+const PRODUCT_KEYWORDS = [
+  'aufsatz',             // accesoriu fizic (Aufsatz für ...)
+  'hochdruckreiniger',   // Karcher etc. — aparat
+  'reinigungsmaschine', 'reinigungsgerat', 'reinigungsroboter',
+  'staubsauger',
+  'zu verkaufen', 'zum verkauf',
+  'ovp',                 // Originalverpackung — produs nou ambalat
+];
+
 function classifyAd(item) {
   // Nivel 1 — categoria URL = job posting
   if (JOB_CATEGORY_RE.test(item.link)) {
@@ -150,6 +162,12 @@ function classifyAd(item) {
   // altfel e ofertă (categoria contine 95% oferte de la firme/persoane).
   if (SERVICES_CATEGORY_RE.test(item.link) && !hasRequest) {
     return { skip: true, reason: 'concurent' };
+  }
+  // Nivel 8 — produs fizic vandut (Aufsatz, Hochdruckreiniger, OVP, etc.) — nu serviciu cerut.
+  for (const kw of PRODUCT_KEYWORDS) {
+    if (hayNorm.includes(kw)) {
+      return { skip: true, reason: 'product' };
+    }
   }
   return { skip: false };
 }
@@ -304,7 +322,7 @@ async function main() {
   let totalScanned = 0;
   let totalRelevant = 0;
   const errors = [];
-  const filteredCounts = { job_url: 0, job_kw: 0, concurent: 0 };
+  const filteredCounts = { job_url: 0, job_kw: 0, concurent: 0, product: 0 };
 
   for (const search of SEARCHES) {
     const url = getSearchUrl(search.url);
@@ -375,9 +393,9 @@ async function main() {
   }
 
   writeFileSync(SEEN_FILE, JSON.stringify(state, null, 2));
-  const totalFiltered = filteredCounts.job_url + filteredCounts.job_kw + filteredCounts.concurent;
+  const totalFiltered = filteredCounts.job_url + filteredCounts.job_kw + filteredCounts.concurent + filteredCounts.product;
   console.log(`\nFinalizat. Scanat ${totalScanned} anunturi, ${totalRelevant} relevante, ${newCount} lead-uri noi trimise.`);
-  console.log(`Filtrate ca irelevante: ${totalFiltered} (job_url=${filteredCounts.job_url}, job_kw=${filteredCounts.job_kw}, concurent=${filteredCounts.concurent}). ${errors.length} erori.`);
+  console.log(`Filtrate ca irelevante: ${totalFiltered} (job_url=${filteredCounts.job_url}, job_kw=${filteredCounts.job_kw}, concurent=${filteredCounts.concurent}, product=${filteredCounts.product}). ${errors.length} erori.`);
 
   // Erori -> raporteaza pe Telegram (oricand apar)
   if (errors.length > 0) {
@@ -400,7 +418,7 @@ async function main() {
   if (newCount === 0 && errors.length === 0) {
     const now = new Date().toLocaleString('ro-RO', { timeZone: 'Europe/Berlin' });
     const filterLine = totalFiltered > 0
-      ? `\n🔍 Filtrate ca irelevante: ${totalFiltered} (job_url=${filteredCounts.job_url}, job_kw=${filteredCounts.job_kw}, concurent=${filteredCounts.concurent})`
+      ? `\n🔍 Filtrate ca irelevante: ${totalFiltered} (job_url=${filteredCounts.job_url}, job_kw=${filteredCounts.job_kw}, concurent=${filteredCounts.concurent}, product=${filteredCounts.product})`
       : '';
     await sendTelegram(
       `✅ Kleinanzeigen verificat la ${now}\n\nNiciun anunt nou gasit in zona Rastatt 50km.\nScanat ${totalScanned} anunturi pe ${SEARCHES.length} cuvinte cheie.${filterLine}\nBotul ruleaza din 30 in 30 minute.`
