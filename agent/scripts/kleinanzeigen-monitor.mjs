@@ -80,7 +80,25 @@ const COMPETITOR_KEYWORDS = [
   'vom profi', 'aussenflachen',
   // Sale events (cineva VINDE articole, nu cere servicii)
   'flohmarkt', 'garagenflohmarkt', 'wir machen einen',
+  // Sales pitch tone (oferta de servicii catre clienti)
+  'reinigungsfirma', 'an alle ', 'sie suchen',
+  'zuverlassig', 'faire preise', 'fairen preisen', 'fairen preis',
+  // Servicii adiacente Entrümpelung (oferte de la concurenti specializati)
+  'fotodokumentation', 'zustandsbericht', 'zustandsberichte',
+  'nachlasse', 'problemwohnungen', 'problemimmobilien',
 ];
+
+// Nivel 3b: cuvinte de CERERE — folosite pentru categoria 239 (Dienstleistungen),
+// unde 95% din anunturi sunt oferte. Daca anuntul nu contine niciun cuvant de cerere,
+// e exclus. Lista include forme normalizate (ä→a, ö→o, ü→u, ß→ss).
+const REQUEST_KEYWORDS = [
+  'suche', 'gesucht', 'benotige', 'brauche', 'bin auf der suche',
+  'wer kann', 'wer hilft', 'wer macht', 'wer ubernimmt',
+  'hilfe gesucht', 'angewiesen', 'wurde mich freuen',
+];
+
+// Categoria URL 239 = Dienstleistungen (predominant oferte).
+const SERVICES_CATEGORY_RE = /-239-\d+/;
 
 // Nivel 4: pattern-uri in TITLU care indica oferta (cleaner se ofera, NU client cere).
 // Aplicat post-normalize. Exemple: "Reinigungskraft in Bruchsal", "Putzfrau bietet sich an",
@@ -90,6 +108,10 @@ const TITLE_OFFER_RE = /^(reinigungskraft|putzfrau|putzhilfe|haushaltshilfe|haus
 // Nivel 5: regex pentru germana compusa "Professionelle Xreinigung" (Pflaster-, Stein-, Boden- etc.)
 // Filtrul COMPETITOR_KEYWORDS prinde doar "professionelle reinigung" cu spatiu.
 const COMPOUND_OFFER_RE = /\bprofessionelle?\s+\w*reinigung\b/;
+
+// Nivel 6: titluri-lista de servicii separate prin virgula (ex: "Büroreinigung, Praxisreinigung,
+// Treppenhausreinigung, Putzfrau"). Nimeni nu CERE 2+ tipuri de curatenie deodata — e meniu de oferta.
+const SERVICE_LIST_RE = /(reinigung|service|hausmeister|putz\w*),\s*\w*(reinigung|service|hausmeister|putz\w*)/;
 
 function classifyAd(item) {
   // Nivel 1 — categoria URL = job posting
@@ -116,6 +138,17 @@ function classifyAd(item) {
   }
   // Nivel 5 — germana compusa "Professionelle Pflasterreinigung/Steinreinigung/etc."
   if (COMPOUND_OFFER_RE.test(hayNorm)) {
+    return { skip: true, reason: 'concurent' };
+  }
+  // Nivel 6 — titluri-lista cu 2+ servicii separate prin virgula = meniu de oferta.
+  // Doar daca nu apare un cuvant de cerere (anti-false-positive).
+  const hasRequest = REQUEST_KEYWORDS.some(kw => hayNorm.includes(kw));
+  if (SERVICE_LIST_RE.test(titleNorm) && !hasRequest) {
+    return { skip: true, reason: 'concurent' };
+  }
+  // Nivel 7 — categoria 239 (Dienstleistungen): cere prezenta unui cuvant de cerere,
+  // altfel e ofertă (categoria contine 95% oferte de la firme/persoane).
+  if (SERVICES_CATEGORY_RE.test(item.link) && !hasRequest) {
     return { skip: true, reason: 'concurent' };
   }
   return { skip: false };
