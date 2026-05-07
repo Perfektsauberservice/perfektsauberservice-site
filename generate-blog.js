@@ -1,7 +1,26 @@
+/*
+ * generate-blog.js — produces a blog-cards fragment from blog-index.json.
+ *
+ * SAFETY (2026-05-07): script no longer overwrites blog.html.
+ *   blog.html is maintained manually with the full site template (legal
+ *   footer with AGB/Widerruf, GA4 consent gate, self-hosted fonts). Auto-
+ *   overwriting it on every Netlify deploy would undo the DSGVO/TTDSG
+ *   compliance fixes.
+ *
+ *   Two outputs:
+ *   - content/auto/blog-cards.html  : reusable fragment (cards only)
+ *   - content/auto/blog-auto.html   : full standalone preview (legacy template)
+ *
+ *   To surface the auto-blog list on blog.html, paste the fragment between
+ *   <!-- AUTO-BLOG-CARDS-START --> and <!-- AUTO-BLOG-CARDS-END --> markers,
+ *   or set up an include via your build pipeline.
+ */
 const fs = require('fs');
 const path = require('path');
 
 const indexPath = path.join(__dirname, 'content/auto/blog-index.json');
+const cardsPath = path.join(__dirname, 'content/auto/blog-cards.html');
+const blogAutoPath = path.join(__dirname, 'content/auto/blog-auto.html');
 const blogPath = path.join(__dirname, 'blog.html');
 
 function escapeHtml(str = '') {
@@ -75,5 +94,27 @@ const html = `<!doctype html>
 </body>
 </html>`;
 
-fs.writeFileSync(blogPath, html, 'utf8');
-console.log(`blog.html regenerat: ${items.length} articole, actualizat ${data.updatedAt}`);
+// Write standalone preview (legacy auto template) — NOT served as blog.html.
+fs.writeFileSync(blogAutoPath, html, 'utf8');
+// Write reusable cards fragment.
+fs.writeFileSync(cardsPath, cardsHtml, 'utf8');
+
+// Try to patch blog.html in-place if it has the marker pair; otherwise leave it
+// alone (manual blog.html template stays intact).
+try {
+  if (fs.existsSync(blogPath)) {
+    const blog = fs.readFileSync(blogPath, 'utf8');
+    const marker = /<!--\s*AUTO-BLOG-CARDS-START\s*-->[\s\S]*?<!--\s*AUTO-BLOG-CARDS-END\s*-->/;
+    if (marker.test(blog)) {
+      const patched = blog.replace(marker, `<!-- AUTO-BLOG-CARDS-START -->\n${cardsHtml}\n<!-- AUTO-BLOG-CARDS-END -->`);
+      fs.writeFileSync(blogPath, patched, 'utf8');
+      console.log(`blog.html: cards block patched in-place (${items.length} items)`);
+    } else {
+      console.log(`blog.html: no <!-- AUTO-BLOG-CARDS-START/END --> markers — left untouched`);
+    }
+  }
+} catch (err) {
+  console.warn(`blog.html patch skipped: ${err.message}`);
+}
+
+console.log(`Generated: blog-cards.html (fragment) + blog-auto.html (standalone). ${items.length} items, updated ${data.updatedAt}`);

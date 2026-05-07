@@ -31,6 +31,26 @@
   [headers.values]
     Cache-Control = "public, max-age=86400, must-revalidate"
 
+# === Block direct access to internal automation/template paths ===
+# Folders agent/, master/, outreach/ contain scripts, configs, and HTML templates
+# that should never be served as public pages (DSGVO: avoid leaking template
+# files with external Google Fonts CDN references etc.).
+[[redirects]]
+  from = "/agent/*"
+  to = "/410.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/master/*"
+  to = "/410.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/outreach/*"
+  to = "/410.html"
+  status = 404
+  force = true
+
 # === API functions (internal proxy) ===
 [[redirects]]
   from = "/api/telegram-bot"
