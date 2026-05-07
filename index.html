@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="index,follow">
 <meta name="description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe. Schnell, zuverlässig und besenrein.">
-<meta property="og:title" content="Entrümpelung & Haushaltsauflösung Rastatt | PSS">
+<meta property="og:title" content="Entrümpelung & Haushaltsauflösung Rastatt | Perfekt Sauber Service">
 <meta property="og:description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe. Schnell, zuverlässig und besenrein.">
 <meta property="og:url" content="https://perfektsauberservice.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://perfektsauberservice.com/images/echipa.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Entrümpelung & Haushaltsauflösung Rastatt | PSS">
+<meta name="twitter:title" content="Entrümpelung & Haushaltsauflösung Rastatt | Perfekt Sauber Service">
 <meta name="twitter:description" content="Entrümpelung, Haushaltsauflösung und Gewerberäumung in Rastatt, Baden-Baden, Gaggenau und Karlsruhe. Schnell, zuverlässig und besenrein.">
 <meta name="twitter:image" content="https://perfektsauberservice.com/images/echipa.webp">
 <meta property="og:locale" content="de_DE">
 <link rel="canonical" href="https://perfektsauberservice.com/">
 <link rel="icon" type="image/png" href="/images/favicon-32.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<title>Entrümpelung & Haushaltsauflösung Rastatt | PSS</title>
+<title>Entrümpelung & Haushaltsauflösung Rastatt | Perfekt Sauber Service</title>
 <link rel="preload" href="/fonts/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="/fonts/fonts.css"/></noscript>
 <style>.skip-link{position:absolute;top:-40px;left:0;background:#1a2030;color:#fff;padding:8px 16px;z-index:100;text-decoration:none;font-family:"Geist Mono",monospace;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;}
 .skip-link:focus{top:0;}
@@ -1208,8 +1208,10 @@ function renderGrid(filter) {
     const card = document.createElement('div');
     card.className = 'gal-card ' + it.side;
     card.dataset.idx = idx;
-    card.innerHTML = `<img src="${it.src}" loading="lazy" alt="${it.side}"/>
-      <span class="badge-side">${it.side === 'vor' ? 'Vorher' : 'Nachher'}</span>
+    const sideLabel = it.side === 'vor' ? 'Vorher' : 'Nachher';
+    const altText = `Entrümpelung & Räumung im Raum Rastatt — Projekt №${String(it.n).padStart(2,'0')} — ${sideLabel} (Perfekt Sauber Service)`;
+    card.innerHTML = `<img src="${it.src}" loading="lazy" alt="${altText}"/>
+      <span class="badge-side">${sideLabel}</span>
       <span class="num">№ ${String(it.n).padStart(2,'0')}</span>`;
     card.addEventListener('click', () => openLb(items, idx));
     grid.appendChild(card);
@@ -1228,7 +1230,11 @@ const lb = document.getElementById('lb');
 const lbImg = document.getElementById('lbImg');
 let lbItems = [], lbIdx = 0;
 function openLb(items, idx) { lbItems = items; lbIdx = idx; updateLb(); lb.classList.add('open'); }
-function updateLb() { lbImg.src = lbItems[lbIdx].src; }
+function updateLb() {
+  const cur = lbItems[lbIdx];
+  lbImg.src = cur.src;
+  lbImg.alt = `Entrümpelung & Räumung im Raum Rastatt — Projekt №${String(cur.n).padStart(2,'0')} — ${cur.side === 'vor' ? 'Vorher' : 'Nachher'}`;
+}
 function closeLb() { lb.classList.remove('open'); }
 function nextLb() { lbIdx = (lbIdx + 1) % lbItems.length; updateLb(); }
 function prevLb() { lbIdx = (lbIdx - 1 + lbItems.length) % lbItems.length; updateLb(); }
