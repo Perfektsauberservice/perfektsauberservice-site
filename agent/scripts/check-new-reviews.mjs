@@ -27,7 +27,7 @@ const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau Reutstraße 9';
+const SEARCH_QUERY = 'Perfekt Sauber Service Rastatt';
 const GMB_URL = 'https://www.google.com/maps?cid=10440757061765338764';
 
 if (!API_KEY) {
