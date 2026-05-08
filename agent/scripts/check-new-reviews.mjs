@@ -27,8 +27,17 @@ const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service Rastatt';
-const GMB_URL = 'https://www.google.com/maps?cid=10440757061765338764';
+const SEARCH_QUERY = 'Perfekt Sauber Service';
+// Coordonatele GMB Loffenau (din URL Maps verificat manual 2026-05-08)
+const LOCATION_BIAS = {
+  circle: {
+    center: { latitude: 48.8746857, longitude: 8.3247404 },
+    radius: 50000,
+  },
+};
+// Link DIRECT la dashboard-ul GMB pentru a raspunde la review-uri.
+// Dupa login (kontakt@perfektsauberservice.com), Google duce automat la review-urile firmei.
+const GMB_REPLY_URL = 'https://business.google.com/reviews';
 
 if (!API_KEY) {
   console.error('ERROR: GOOGLE_PLACES_API_KEY missing.');
@@ -48,7 +57,7 @@ async function fetchReviews() {
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.reviews',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY }),
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationBias: LOCATION_BIAS }),
   });
   if (!res.ok) {
     throw new Error(`Places API ${res.status}: ${await res.text()}`);
@@ -89,7 +98,8 @@ function buildAlert(review) {
   const reviewText = (review.text?.text || review.originalText?.text || '').slice(0, 700);
   const escapedText = htmlEscape(reviewText);
   const draft = htmlEscape(generateDraft(review));
-  const reviewUrl = review.googleMapsUri || GMB_URL;
+  // Link de raspuns: GMB admin (login proprietar). Daca e mesaj generic, foloseste pagina GMB admin generala.
+  const reviewUrl = GMB_REPLY_URL;
 
   const lines = [
     `🌟 <b>NOU review pe Google!</b>`,
