@@ -1,33 +1,18 @@
 name: PSS GMB Reviews Auto-Update
 
-# Fetcheaza zilnic Google Places API si actualizeaza review count + rating
-# in toate paginile HTML din site daca s-a schimbat.
-#
-# Necesita secret repo: GOOGLE_PLACES_API_KEY
-# Tier free Google Places API: 10K calls/luna. Acest workflow foloseste ~30/luna.
-
 on:
   schedule:
-    # Zilnic la 06:00 Berlin (05:00 UTC) — dupa ce Google a procesat review-urile noptii
     - cron: '0 5 * * *'
-  workflow_dispatch:  # Permite trigger manual din GitHub Actions UI
-
-permissions:
-  contents: write
-
-concurrency:
-  group: gmb-reviews-update
-  cancel-in-progress: false
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -47,7 +32,6 @@ jobs:
             git add -A
             git commit -m "auto: update GMB review count + rating from Google Places API"
             git push
-            echo "Changes pushed."
           else
             echo "No changes to commit."
           fi
