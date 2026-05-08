@@ -17,11 +17,13 @@ import { resolve, dirname } from 'path';
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
 const SEARCH_QUERY = 'Perfekt Sauber Service';
-// Coordonatele GMB Loffenau (din URL Maps verificat manual 2026-05-08)
-const LOCATION_BIAS = {
+// locationRestriction (FILTRU STRICT, nu bias) — doar firme din 5km de Loffenau.
+// Coordonatele GMB Reutstraße 9 din URL Maps verificat 2026-05-08.
+// 5km exclude Rastatt (~12km), Karlsruhe (~30km), Heilbronn (~80km).
+const LOCATION_RESTRICTION = {
   circle: {
     center: { latitude: 48.8746857, longitude: 8.3247404 },
-    radius: 50000, // 50km — acopera Rastatt, Karlsruhe, Baden-Baden
+    radius: 5000,
   },
 };
 
@@ -39,7 +41,7 @@ async function findPlace() {
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationBias: LOCATION_BIAS }),
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationRestriction: LOCATION_RESTRICTION }),
   });
   if (!res.ok) {
     const txt = await res.text();
