@@ -17,13 +17,13 @@ import { resolve, dirname } from 'path';
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
 const SEARCH_QUERY = 'Perfekt Sauber Service';
-// locationRestriction (FILTRU STRICT, nu bias) — doar firme din 5km de Loffenau.
-// Coordonatele GMB Reutstraße 9 din URL Maps verificat 2026-05-08.
-// 5km exclude Rastatt (~12km), Karlsruhe (~30km), Heilbronn (~80km).
+// locationRestriction (FILTRU STRICT) — Places API New accepta DOAR rectangle (nu circle).
+// Dreptunghi ~10km lat x ~10km lng centrat pe Reutstraße 9 Loffenau (48.8746857, 8.3247404).
+// Exclude Rastatt (~12km), Karlsruhe (~30km), Heilbronn (~80km).
 const LOCATION_RESTRICTION = {
-  circle: {
-    center: { latitude: 48.8746857, longitude: 8.3247404 },
-    radius: 5000,
+  rectangle: {
+    low:  { latitude: 48.830, longitude: 8.255 },
+    high: { latitude: 48.920, longitude: 8.395 },
   },
 };
 
