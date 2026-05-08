@@ -16,7 +16,14 @@ import { resolve, dirname } from 'path';
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service Rastatt';
+const SEARCH_QUERY = 'Perfekt Sauber Service';
+// Coordonatele GMB Loffenau (din URL Maps verificat manual 2026-05-08)
+const LOCATION_BIAS = {
+  circle: {
+    center: { latitude: 48.8746857, longitude: 8.3247404 },
+    radius: 50000, // 50km — acopera Rastatt, Karlsruhe, Baden-Baden
+  },
+};
 
 if (!API_KEY) {
   console.error('ERROR: GOOGLE_PLACES_API_KEY env missing.');
@@ -32,7 +39,7 @@ async function findPlace() {
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY }),
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationBias: LOCATION_BIAS }),
   });
   if (!res.ok) {
     const txt = await res.text();
