@@ -28,11 +28,12 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
 const SEARCH_QUERY = 'Perfekt Sauber Service';
-// locationRestriction (FILTRU STRICT) — 5km Loffenau, exclude orice alta firma cu nume similar din regiune.
+// locationRestriction (FILTRU STRICT) — Places API New accepta DOAR rectangle.
+// Dreptunghi ~10km lat x ~10km lng centrat pe Reutstraße 9 Loffenau.
 const LOCATION_RESTRICTION = {
-  circle: {
-    center: { latitude: 48.8746857, longitude: 8.3247404 },
-    radius: 5000,
+  rectangle: {
+    low:  { latitude: 48.830, longitude: 8.255 },
+    high: { latitude: 48.920, longitude: 8.395 },
   },
 };
 // Link DIRECT la dashboard-ul GMB pentru a raspunde la review-uri.
