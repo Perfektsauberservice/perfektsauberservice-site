@@ -16,7 +16,7 @@ import { resolve, dirname } from 'path';
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau Reutstraße 9';
+const SEARCH_QUERY = 'Perfekt Sauber Service Rastatt';
 
 if (!API_KEY) {
   console.error('ERROR: GOOGLE_PLACES_API_KEY env missing.');
