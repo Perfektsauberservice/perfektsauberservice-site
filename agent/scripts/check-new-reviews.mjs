@@ -28,13 +28,6 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
 const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau';
-// Dreptunghi mic in jurul Reutstraße 9 Loffenau (48.8746857, 8.3247404), ~3km lat x ~3km lng.
-const LOCATION_RESTRICTION = {
-  rectangle: {
-    low:  { latitude: 48.860, longitude: 8.300 },
-    high: { latitude: 48.890, longitude: 8.345 },
-  },
-};
 const EXPECTED_NAME_REGEX = /^perfekt\s*sauber\s*service$/i;
 // Link DIRECT la dashboard-ul GMB pentru a raspunde la review-uri.
 // Dupa login (kontakt@perfektsauberservice.com), Google duce automat la review-urile firmei.
@@ -58,24 +51,23 @@ async function fetchReviews() {
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.rating,places.reviews',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationRestriction: LOCATION_RESTRICTION }),
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, pageSize: 20 }),
   });
   if (!res.ok) {
     throw new Error(`Places API ${res.status}: ${await res.text()}`);
   }
   const data = await res.json();
-  const place = data.places?.[0];
-  if (!place) return [];
-
-  // Validare nume — refuza alert daca place-ul nu e Perfekt Sauber Service
-  const placeName = place.displayName?.text || '';
-  if (!EXPECTED_NAME_REGEX.test(placeName)) {
-    console.error(`REFUZ ALERT: API a returnat "${placeName}" — asteptam "Perfekt Sauber Service".`);
-    console.error(`Address: ${place.formattedAddress}`);
+  const places = data.places || [];
+  // Iterare: aleg primul cu nume EXACT "Perfekt Sauber Service"
+  const match = places.find(p => EXPECTED_NAME_REGEX.test(p.displayName?.text || ''));
+  if (!match) {
+    console.error(`REFUZ ALERT: niciun place cu nume EXACT "Perfekt Sauber Service" in ${places.length} rezultate API.`);
+    for (const p of places) {
+      console.error(`  - returned: "${p.displayName?.text}" @ ${p.formattedAddress}`);
+    }
     process.exit(1);
   }
-
-  return place.reviews || [];
+  return match.reviews || [];
 }
 
 function htmlEscape(s) {

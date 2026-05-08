@@ -17,17 +17,10 @@ import { resolve, dirname } from 'path';
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
 const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau';
-// Dreptunghi mic in jurul Reutstraße 9 Loffenau (48.8746857, 8.3247404).
-// ~3km lat x ~3km lng. API uneori nu respecta strict locationRestriction —
-// avem si validare nume mai jos.
-const LOCATION_RESTRICTION = {
-  rectangle: {
-    low:  { latitude: 48.860, longitude: 8.300 },
-    high: { latitude: 48.890, longitude: 8.345 },
-  },
-};
-// Validare stricta — daca place-ul returnat nu se cheama EXACT "Perfekt Sauber Service",
-// refuza sa face update (evita patch cu firme similar denumite din zona).
+// Validare stricta — alege din rezultate doar placeul cu nume EXACT "Perfekt Sauber Service".
+// (Place-urile similare ca "PerfektSauber Gebäudereinigung", "Perfekt Sauber Zauber" etc. sunt excluse.)
+// Service Area Businesses nu sunt strict filtrate de locationRestriction —
+// foloseste-te de iteratia prin rezultate cu validare nume.
 const EXPECTED_NAME_REGEX = /^perfekt\s*sauber\s*service$/i;
 
 if (!API_KEY) {
@@ -44,17 +37,24 @@ async function findPlace() {
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationRestriction: LOCATION_RESTRICTION }),
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, pageSize: 20 }),
   });
   if (!res.ok) {
     const txt = await res.text();
     throw new Error(`Places API error ${res.status}: ${txt}`);
   }
   const data = await res.json();
-  if (!data.places || data.places.length === 0) {
-    throw new Error(`No place found for query: ${SEARCH_QUERY}`);
+  const places = data.places || [];
+  console.log(`API returned ${places.length} candidates:`);
+  for (const p of places) {
+    console.log(`  - "${p.displayName?.text}" @ ${p.formattedAddress} (${p.userRatingCount || 0} reviews)`);
   }
-  return data.places[0];
+  // Iterare: aleg primul cu nume EXACT "Perfekt Sauber Service"
+  const match = places.find(p => EXPECTED_NAME_REGEX.test(p.displayName?.text || ''));
+  if (!match) {
+    throw new Error(`No place named EXACT "Perfekt Sauber Service" in ${places.length} results. Probabil SAB invisible to API search. Switch to Place ID lookup needed.`);
+  }
+  return match;
 }
 
 function loadState() {
@@ -101,16 +101,6 @@ function patchAllHtml(newCount, newRatingDecimal, newRatingComma) {
 
 async function main() {
   const place = await findPlace();
-
-  // Validare nume — refuza update daca place-ul returnat NU e Perfekt Sauber Service.
-  const placeName = place.displayName?.text || '';
-  if (!EXPECTED_NAME_REGEX.test(placeName)) {
-    console.error(`REFUZ UPDATE: API a returnat "${placeName}" — asteptam "Perfekt Sauber Service".`);
-    console.error(`Address: ${place.formattedAddress}`);
-    console.error('Probabil rectangle-ul nu a fost aplicat strict de API. Manual fix needed.');
-    process.exit(1);
-  }
-
   const newCount = place.userRatingCount || 0;
   const newRatingNumber = place.rating || 5.0;
   const newRatingDecimal = newRatingNumber.toFixed(1); // "5.0"
