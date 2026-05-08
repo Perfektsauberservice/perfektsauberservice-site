@@ -28,11 +28,11 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
 const SEARCH_QUERY = 'Perfekt Sauber Service';
-// Coordonatele GMB Loffenau (din URL Maps verificat manual 2026-05-08)
-const LOCATION_BIAS = {
+// locationRestriction (FILTRU STRICT) — 5km Loffenau, exclude orice alta firma cu nume similar din regiune.
+const LOCATION_RESTRICTION = {
   circle: {
     center: { latitude: 48.8746857, longitude: 8.3247404 },
-    radius: 50000,
+    radius: 5000,
   },
 };
 // Link DIRECT la dashboard-ul GMB pentru a raspunde la review-uri.
@@ -57,7 +57,7 @@ async function fetchReviews() {
       'X-Goog-Api-Key': API_KEY,
       'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.reviews',
     },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationBias: LOCATION_BIAS }),
+    body: JSON.stringify({ textQuery: SEARCH_QUERY, locationRestriction: LOCATION_RESTRICTION }),
   });
   if (!res.ok) {
     throw new Error(`Places API ${res.status}: ${await res.text()}`);
