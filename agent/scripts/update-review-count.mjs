@@ -16,11 +16,12 @@ import { resolve, dirname } from 'path';
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau';
-// Validare stricta — alege din rezultate doar placeul cu nume EXACT "Perfekt Sauber Service".
-// (Place-urile similare ca "PerfektSauber Gebäudereinigung", "Perfekt Sauber Zauber" etc. sunt excluse.)
-// Service Area Businesses nu sunt strict filtrate de locationRestriction —
-// foloseste-te de iteratia prin rezultate cu validare nume.
+
+// CID-ul GMB Perfekt Sauber Service (extras din URL Maps verificat manual 2026-05-08).
+// CID = Customer ID (decimal) = 10440757061765338764, hex = 0x90e5053aecac968c.
+// Folosim Places API LEGACY care suporta cid lookup — Places API New nu suporta.
+// SAB (Service Area Business) e invizibil la search, dar accesibil prin cid direct.
+const PLACE_CID = '10440757061765338764';
 const EXPECTED_NAME_REGEX = /^perfekt\s*sauber\s*service$/i;
 
 if (!API_KEY) {
@@ -29,32 +30,33 @@ if (!API_KEY) {
 }
 
 async function findPlace() {
-  const url = 'https://places.googleapis.com/v1/places:searchText';
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Goog-Api-Key': API_KEY,
-      'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.userRatingCount,places.formattedAddress',
-    },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, pageSize: 20 }),
-  });
+  // Places API Legacy - place details by CID
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?cid=${PLACE_CID}&fields=name,rating,user_ratings_total,formatted_address,place_id,reviews&key=${API_KEY}&language=de`;
+  const res = await fetch(url);
   if (!res.ok) {
-    const txt = await res.text();
-    throw new Error(`Places API error ${res.status}: ${txt}`);
+    throw new Error(`Places API Legacy error ${res.status}: ${await res.text()}`);
   }
   const data = await res.json();
-  const places = data.places || [];
-  console.log(`API returned ${places.length} candidates:`);
-  for (const p of places) {
-    console.log(`  - "${p.displayName?.text}" @ ${p.formattedAddress} (${p.userRatingCount || 0} reviews)`);
+  if (data.status !== 'OK') {
+    throw new Error(`Places API Legacy status=${data.status}: ${data.error_message || ''}`);
   }
-  // Iterare: aleg primul cu nume EXACT "Perfekt Sauber Service"
-  const match = places.find(p => EXPECTED_NAME_REGEX.test(p.displayName?.text || ''));
-  if (!match) {
-    throw new Error(`No place named EXACT "Perfekt Sauber Service" in ${places.length} results. Probabil SAB invisible to API search. Switch to Place ID lookup needed.`);
+  const place = data.result;
+  console.log(`Found: "${place.name}" @ ${place.formatted_address}`);
+  console.log(`  Rating: ${place.rating} | Reviews: ${place.user_ratings_total}`);
+  console.log(`  Modern Place ID: ${place.place_id}`);
+
+  if (!EXPECTED_NAME_REGEX.test(place.name || '')) {
+    throw new Error(`Wrong place returned: "${place.name}". Expected "Perfekt Sauber Service".`);
   }
-  return match;
+
+  // Returnam in formatul folosit de cod (compatibil cu schema veche)
+  return {
+    displayName: { text: place.name },
+    formattedAddress: place.formatted_address,
+    rating: place.rating,
+    userRatingCount: place.user_ratings_total,
+    id: place.place_id,
+  };
 }
 
 function loadState() {
