@@ -27,7 +27,8 @@ const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau';
+// CID-ul GMB (vezi update-review-count.mjs pentru detalii)
+const PLACE_CID = '10440757061765338764';
 const EXPECTED_NAME_REGEX = /^perfekt\s*sauber\s*service$/i;
 // Link DIRECT la dashboard-ul GMB pentru a raspunde la review-uri.
 // Dupa login (kontakt@perfektsauberservice.com), Google duce automat la review-urile firmei.
@@ -43,31 +44,28 @@ if (!TELEGRAM_BOT_TOKEN) {
 }
 
 async function fetchReviews() {
-  const url = 'https://places.googleapis.com/v1/places:searchText';
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Goog-Api-Key': API_KEY,
-      'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.rating,places.reviews',
-    },
-    body: JSON.stringify({ textQuery: SEARCH_QUERY, pageSize: 20 }),
-  });
-  if (!res.ok) {
-    throw new Error(`Places API ${res.status}: ${await res.text()}`);
-  }
+  // Places API Legacy - place details by CID (SAB invisible la search, accesibil prin cid).
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?cid=${PLACE_CID}&fields=name,reviews,rating&key=${API_KEY}&language=de`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Places API Legacy ${res.status}`);
   const data = await res.json();
-  const places = data.places || [];
-  // Iterare: aleg primul cu nume EXACT "Perfekt Sauber Service"
-  const match = places.find(p => EXPECTED_NAME_REGEX.test(p.displayName?.text || ''));
-  if (!match) {
-    console.error(`REFUZ ALERT: niciun place cu nume EXACT "Perfekt Sauber Service" in ${places.length} rezultate API.`);
-    for (const p of places) {
-      console.error(`  - returned: "${p.displayName?.text}" @ ${p.formattedAddress}`);
-    }
+  if (data.status !== 'OK') throw new Error(`Places API Legacy status=${data.status}`);
+
+  const place = data.result;
+  if (!EXPECTED_NAME_REGEX.test(place.name || '')) {
+    console.error(`REFUZ ALERT: API a returnat "${place.name}" — asteptam "Perfekt Sauber Service".`);
     process.exit(1);
   }
-  return match.reviews || [];
+
+  // Adaptez formatul legacy la cel folosit de buildAlert (compatibil cu API New)
+  const reviews = (place.reviews || []).map(r => ({
+    name: `legacy-review-${r.time}-${r.author_name}`, // ID unic pentru deduplication state
+    rating: r.rating,
+    text: { text: r.text },
+    authorAttribution: { displayName: r.author_name },
+    googleMapsUri: r.author_url,
+  }));
+  return reviews;
 }
 
 function htmlEscape(s) {
