@@ -16,16 +16,19 @@ import { resolve, dirname } from 'path';
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const STATE_FILE = resolve('agent/state/gmb-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service';
-// locationRestriction (FILTRU STRICT) — Places API New accepta DOAR rectangle (nu circle).
-// Dreptunghi ~10km lat x ~10km lng centrat pe Reutstraße 9 Loffenau (48.8746857, 8.3247404).
-// Exclude Rastatt (~12km), Karlsruhe (~30km), Heilbronn (~80km).
+const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau';
+// Dreptunghi mic in jurul Reutstraße 9 Loffenau (48.8746857, 8.3247404).
+// ~3km lat x ~3km lng. API uneori nu respecta strict locationRestriction —
+// avem si validare nume mai jos.
 const LOCATION_RESTRICTION = {
   rectangle: {
-    low:  { latitude: 48.830, longitude: 8.255 },
-    high: { latitude: 48.920, longitude: 8.395 },
+    low:  { latitude: 48.860, longitude: 8.300 },
+    high: { latitude: 48.890, longitude: 8.345 },
   },
 };
+// Validare stricta — daca place-ul returnat nu se cheama EXACT "Perfekt Sauber Service",
+// refuza sa face update (evita patch cu firme similar denumite din zona).
+const EXPECTED_NAME_REGEX = /^perfekt\s*sauber\s*service$/i;
 
 if (!API_KEY) {
   console.error('ERROR: GOOGLE_PLACES_API_KEY env missing.');
@@ -98,6 +101,16 @@ function patchAllHtml(newCount, newRatingDecimal, newRatingComma) {
 
 async function main() {
   const place = await findPlace();
+
+  // Validare nume — refuza update daca place-ul returnat NU e Perfekt Sauber Service.
+  const placeName = place.displayName?.text || '';
+  if (!EXPECTED_NAME_REGEX.test(placeName)) {
+    console.error(`REFUZ UPDATE: API a returnat "${placeName}" — asteptam "Perfekt Sauber Service".`);
+    console.error(`Address: ${place.formattedAddress}`);
+    console.error('Probabil rectangle-ul nu a fost aplicat strict de API. Manual fix needed.');
+    process.exit(1);
+  }
+
   const newCount = place.userRatingCount || 0;
   const newRatingNumber = place.rating || 5.0;
   const newRatingDecimal = newRatingNumber.toFixed(1); // "5.0"

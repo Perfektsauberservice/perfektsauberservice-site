@@ -27,15 +27,15 @@ const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '648944715';
 const STATE_FILE = resolve('agent/state/known-reviews.json');
-const SEARCH_QUERY = 'Perfekt Sauber Service';
-// locationRestriction (FILTRU STRICT) — Places API New accepta DOAR rectangle.
-// Dreptunghi ~10km lat x ~10km lng centrat pe Reutstraße 9 Loffenau.
+const SEARCH_QUERY = 'Perfekt Sauber Service Loffenau';
+// Dreptunghi mic in jurul Reutstraße 9 Loffenau (48.8746857, 8.3247404), ~3km lat x ~3km lng.
 const LOCATION_RESTRICTION = {
   rectangle: {
-    low:  { latitude: 48.830, longitude: 8.255 },
-    high: { latitude: 48.920, longitude: 8.395 },
+    low:  { latitude: 48.860, longitude: 8.300 },
+    high: { latitude: 48.890, longitude: 8.345 },
   },
 };
+const EXPECTED_NAME_REGEX = /^perfekt\s*sauber\s*service$/i;
 // Link DIRECT la dashboard-ul GMB pentru a raspunde la review-uri.
 // Dupa login (kontakt@perfektsauberservice.com), Google duce automat la review-urile firmei.
 const GMB_REPLY_URL = 'https://business.google.com/reviews';
@@ -56,7 +56,7 @@ async function fetchReviews() {
     headers: {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': API_KEY,
-      'X-Goog-FieldMask': 'places.id,places.displayName,places.rating,places.reviews',
+      'X-Goog-FieldMask': 'places.id,places.displayName,places.formattedAddress,places.rating,places.reviews',
     },
     body: JSON.stringify({ textQuery: SEARCH_QUERY, locationRestriction: LOCATION_RESTRICTION }),
   });
@@ -64,7 +64,18 @@ async function fetchReviews() {
     throw new Error(`Places API ${res.status}: ${await res.text()}`);
   }
   const data = await res.json();
-  return data.places?.[0]?.reviews || [];
+  const place = data.places?.[0];
+  if (!place) return [];
+
+  // Validare nume — refuza alert daca place-ul nu e Perfekt Sauber Service
+  const placeName = place.displayName?.text || '';
+  if (!EXPECTED_NAME_REGEX.test(placeName)) {
+    console.error(`REFUZ ALERT: API a returnat "${placeName}" — asteptam "Perfekt Sauber Service".`);
+    console.error(`Address: ${place.formattedAddress}`);
+    process.exit(1);
+  }
+
+  return place.reviews || [];
 }
 
 function htmlEscape(s) {
