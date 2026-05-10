@@ -1,175 +1,154 @@
-# 📋 Citation Listings Checklist — Perfekt Sauber Service
+# 📋 External Factors Strategy — Perfekt Sauber Service
 
-**Scop:** Înregistrare la 15+ directoare DE pentru a urca External Factors Seobility de la 42% → 55%+ în 30 zile.
-**Efort total:** ~2-3h într-o sesiune (sau 30 min/zi timp de o săptămână).
-**Impact așteptat:** +15-20 backlinks dofollow noi, +15-20 referring domains, score SEO +5-7 puncte.
+**Scop:** Crește scor Seobility "External factors" 42% → ~58-60% în 90 zile.
+**Filozofie:** Skip listele lungi de directoare (testat anterior, jumătate URL-uri moarte). Concentrare pe **3 leveriere reale** + 3 directoare verificate.
 
----
-
-## 🔑 NAP Template — copy-paste consistent peste tot
-
-> **REGULA DE AUR:** Numele, adresa, telefonul TREBUIE să fie identice peste tot, până la virgulă. Inconsistențele dăunează ranking-ului local Google.
-
-### Block standard (copiezi în fiecare director)
-
-```
-Firma:        Perfekt Sauber Service
-Inhaberin:    Laura Craciun
-Adresa:       Reutstraße 9, 76597 Loffenau
-Telefon:      +49 163 9087197
-WhatsApp:     +49 163 9087197
-Email:        kontakt@perfektsauberservice.com
-Website:      https://perfektsauberservice.com
-Öffnungszeiten: Mo–Sa 08:00–20:00
-Servicearea: Rastatt, Baden-Baden, Gaggenau, Karlsruhe, Loffenau (Umkreis 30 km)
-```
-
-### Beschreibung kurz (50-150 cuvinte)
-
-```
-Perfekt Sauber Service ist Ihr verlässlicher Partner für Entrümpelung,
-Haushaltsauflösung und Gewerberäumung in Rastatt, Baden-Baden, Gaggenau
-und Karlsruhe. Wir übernehmen Wohnungsauflösungen nach Trauerfällen,
-Bauend- und Übergabe-Reinigungen sowie komplette Räumungen — diskret,
-schnell und mit Festpreis-Garantie. Inhaberin Laura Craciun führt das
-Unternehmen aus Loffenau persönlich. Vor-Ort-Termin kostenlos, Festpreis
-schriftlich, vollständig versichert. 5,0 Sterne bei Google.
-```
-
-### Keywords / Categorii (selectezi când sunt opțiuni)
-
-- Entrümpelung
-- Haushaltsauflösung
-- Gewerberäumung
-- Reinigungsdienst / Gebäudereinigung
-- Endreinigung / Übergabe-Reinigung
-- Räumungsdienst
-- Wohnungsauflösung
+> **Audit URL live efectuat 2026-05-10.** Acest fișier înlocuiește versiunea anterioară cu lista de 25 directoare (decommissioned).
 
 ---
 
-## ✅ TIER 1 — Must-Have (top 8 directoare cu DA cel mai mare)
+## 🔵 PARTEA A — 3 directoare verified (efort total: ~1h)
 
-| # | Director | DA | URL signup | Timp | Status | Notă |
-|---|---|---|---|---|---|---|
-| 1 | **Gelbeseiten.de** | 80+ | https://eintrag.gelbeseiten.de | 15 min | ☐ | THE big one. Verificare prin telefon. |
-| 2 | **DasOertliche.de** | 75+ | https://eintrag.dasoertliche.de | 10 min | ☐ | Verifică dacă deja există entry vechi |
-| 3 | **11880.com** | 70+ | https://www.11880.com/eintrag-erstellen | 10 min | ☐ | |
-| 4 | **MeineStadt.de** | 65+ | https://eintrag.meinestadt.de | 10 min | ☐ | Local-focus, perfect Rastatt-Karlsruhe |
-| 5 | **Cylex.de** | 60+ | https://www.cylex.de/firma-eintragen | 10 min | ☐ | |
-| 6 | **Bing Places** | 95 | https://www.bingplaces.com | 5 min | ☐ | Import direct din Google Business Profile |
-| 7 | **Apple Maps Connect** | 95 | https://mapsconnect.apple.com | 10 min | ☐ | Apple ID necesar |
-| 8 | **Branchenbuch.de** | 55+ | https://www.branchenbuch.de/eintragen | 10 min | ☐ | |
+> **Doar acestea.** Restul sunt fie URL-uri moarte (`eintrag.gelbeseiten.de` ECONNREFUSED), fie wrong body (IHK e pentru Industrie/Handel — Entrümpelung e Handwerk → **HWK e corectul**).
 
-**Subtotal:** ~80 min, +8 backlinks DA mare.
+### 1. HWK Karlsruhe — Handwerkersuche ⭐ (cea mai relevantă)
 
----
+- **URL:** https://www.hwk-karlsruhe.de
+- **De ce contează:** PSS e Handwerk. HWK Karlsruhe are jurisdicție Loffenau (76597). Listing public în "Handwerkersuche" + DA mare + autoritate locală instituțională.
+- **Cost:** Membership obligatorie pentru Handwerk-uri reglementate (Eintragung Handwerksrolle). Verifică telefon la **0721 1600-0** dacă ești deja înregistrată.
+- **Action:** Sună 0721 1600-0 → confirmă membership status → cere link la profilul public Handwerkersuche.
+- **Status:** ☐
 
-## ✅ TIER 2 — Nice-to-Have (volum + diversitate IPs)
+### 2. Gelbeseiten Grundeintrag (DOAR Basic, NU Starteintrag!)
 
-| # | Director | DA | URL signup | Timp | Status |
-|---|---|---|---|---|---|
-| 9 | Yalwa.de | 50+ | https://www.yalwa.de | 8 min | ☐ |
-| 10 | Hotfrog.de | 45+ | https://www.hotfrog.de | 8 min | ☐ |
-| 11 | Tupalo.de | 45 | https://tupalo.de | 8 min | ☐ |
-| 12 | Stadtbranchenbuch.com | 45 | https://www.stadtbranchenbuch.com | 8 min | ☐ |
-| 13 | Yelp.de | 70+ | https://biz.yelp.de | 10 min | ☐ |
-| 14 | Wlw.de (B2B) | 60 | https://www.wlw.de | 12 min | ☐ |
-| 15 | Foursquare DE | 55 | https://foursquare.com/business | 8 min | ☐ |
+- **URL signup:** https://www.gelbeseiten.de/starteintrag (azi avea bug "Fehler beim Starten der Applikation" — retry peste câteva zile)
+- **Backup:** Sună regional Gelbeseiten Verlag direct (info pe gelbeseiten.de)
+- **⚠️ Trap:** "Starteintrag" pare gratuit dar e **3 luni trial → €29.90/lună după**. Alege strict **"Grundeintrag"** (Basic) care e free permanent, doar text basic.
+- **Cost:** Grundeintrag = €0 permanent. Premium = pay (skip).
+- **Action:** Așteaptă 3-5 zile, retry signup. Completează MINIMAL doar Grundeintrag.
+- **Status:** ☐
 
-**Subtotal:** ~60 min, +7 backlinks medium DA.
+### 3. Bing Places + Apple Business Connect — via GMB import (15 min combined)
 
----
+- **Realitate:** Niciun signup manual practic. Ambele importă din Google Business Profile.
+- **Bing Places:** https://www.bingplaces.com → "Import from Google" → autorizezi → 5 min
+- **Apple Business Connect:** https://businessconnect.apple.com → Apple ID → Claim location → 10 min
+- **Cost:** Free
+- **Status:** Bing ☐ | Apple ☐
 
-## 🎯 TIER 3 — Branche-Specific (Entrümpelung/Reinigung)
-
-| # | Director | URL | Timp | Status | Notă |
-|---|---|---|---|---|---|
-| 16 | Entruempelung24.de | https://www.entruempelung24.de | 15 min | ☐ | Categorie principală |
-| 17 | Entruempelung-vergleich.de | https://www.entruempelung-vergleich.de | 15 min | ☐ | Lead-gen platform, evtl. plătit |
-| 18 | Aroundhome.de | https://www.aroundhome.de | 20 min | ☐ | Lead network — verifică dacă merită |
-| 19 | MyHammer.de | https://www.my-hammer.de | 15 min | ☐ | Bid-platform, dar dofollow profile |
-| 20 | Handwerk.com Brancheneintrag | https://www.handwerk.com | 10 min | ☐ | |
-
-**Subtotal:** ~75 min. Niche relevance > DA aici.
+**Subtotal Partea A:** ~1h, +3-5 backlinks DA mare. **Realisticly:** ~+2-3 puncte pe scor SEO (directoarele = diminished returns în 2026).
 
 ---
 
-## 📍 TIER 4 — Local Karlsruhe-Rastatt (high local relevance)
+## 🔥 PARTEA B — Cele 3 leveriere reale (cele care chiar mută acul)
 
-| # | Director | URL | Status |
-|---|---|---|---|
-| 21 | KA-City.de (Karlsruhe local) | https://www.ka-city.de | ☐ |
-| 22 | Stadtwiki Karlsruhe | https://ka.stadtwiki.net | ☐ |
-| 23 | Rastatt.de Branchenbuch | https://www.rastatt.de/wirtschaft | ☐ |
-| 24 | IHK Karlsruhe Firmenverzeichnis | https://www.karlsruhe.ihk.de | ☐ | (gratuit pentru membri IHK) |
-| 25 | Handwerkskammer Karlsruhe | https://www.hwk-karlsruhe.de | ☐ | (verifică dacă ești înregistrată) |
+### B.1 Push Google Reviews (cel mai mare ROI pentru SEO local)
 
-**Subtotal:** ~40 min. Aceștia dau cei mai relevanți signali geografici pentru Google Local.
+**State:** 4 reviews / 5.0
+**Target 30 zile:** 12+ reviews
+**Target 90 zile:** 25+ reviews
 
----
+**De ce contează:** Pentru un local biz în 2026, reviews Google sunt **direct factor de ranking** și signal pentru External factors (semnale sociale + autoritate). 1 review nou = mai mult decât 5 directoare.
 
-## 📋 Workflow recomandat — sesiune unică 2.5h
+**Tactică:** SMS/WhatsApp/Email follow-up post-job + QR code pe factură + (opțional) thank-you gift €10.
 
-### Înainte de a începe (5 min)
-1. Deschide acest fișier într-un tab
-2. Deschide gestor de parole / notebook ca să tracking user/parolă pentru fiecare site
-3. Pregătește în memorie/copy-paste:
-   - NAP block ↑
-   - Beschreibung kurz ↑
-   - Logo PNG (ai în `/images/logo.webp` — convertește la PNG dacă cerut: `agent/scripts/...`)
+**Generez deliverables când zici:** "fă template-uri review push"
 
-### Ordinea de atac
-1. **Bing + Apple Maps primul** (15 min) — sunt rapide și au DA enorm
-2. **Tier 1 cele 6 rămase** (60 min) — make-or-break, fă-le toate
-3. **Pauză 10 min**
-4. **Tier 2 (45 min)** — bulk through
-5. **Tier 3 + 4** — etalează în zilele următoare dacă obosit
-
-### După fiecare înregistrare:
-- ✅ Bifează în acest fișier (`☐` → `✅`)
-- 📅 Notează data în coloana Status: `✅ 2026-05-12`
-- 🔗 Salvează link-ul profilului tău pentru a verifica indexare ulterior
+**Status:** ☐ Awaiting review push templates
 
 ---
 
-## 🔍 Verificare după 7 zile
+### B.2 Press locală — 1 mențiune cu link = +6-10 puncte SEO
 
-1. Re-rulează [Seobility check](https://www.seobility.net/en/seocheck/check?url=https%3A%2F%2Fperfektsauberservice.com%2F) → "External factors" trebuie să crească 42% → ~55%
-2. Verifică în Google Search Console → Links → Top linking sites (poate dura 2-4 săptămâni să apară toate)
-3. Caută pe Google: `"Perfekt Sauber Service" -site:perfektsauberservice.com` — ar trebui să vezi 15+ rezultate noi
+**De ce contează:** 1 backlink dofollow de la Badisches Tagblatt (DA 60+) e **echivalent ~20 directoare**. Plus traffic real, plus credibility.
 
----
+**Unghi pitch:** *"Migrantin gründet Handwerksbetrieb in Loffenau — Empathie statt Verkaufsdruck als Marktstrategie."* Storia ta personală (Inh. Laura Craciun, română, antreprenoare în Handwerk Rastatt) e jurnalistic interesantă.
 
-## ⚠️ Greșeli de evitat
+**Targets:**
+- **Badisches Tagblatt** (Rastatt local) — primul target
+- **BNN Badische Neueste Nachrichten** (Karlsruhe regional)
+- **ka-news.de** (online local Karlsruhe)
+- **Lokalmatador.de** (BW lifestyle)
 
-- **NAP inconsistent** — chiar și `Reutstr. 9` vs `Reutstraße 9` poate fi o problemă. Stick to `Reutstraße 9` cu Eszett.
-- **Categorii prea multe** — alege 1-2 principale per director. Spam category = penalizare.
-- **Auto-submit servicii (BrightLocal, Yext)** — pentru un buget mic și pentru un singur loc, manual e mai bun. Yext costă €500+/an.
-- **Backlinks plătiți de la directoare obscure** — dăunează. Stick to lista asta.
+**Generez deliverables când zici:** "fă press pitch"
 
----
-
-## 📊 Tracking final (completează după sesiune)
-
-| Metric | Înainte (2026-05-10) | După 7 zile | După 30 zile |
-|---|---|---|---|
-| Backlinks (Seobility) | 14 | ___ | ___ |
-| Referring domains | 14 | ___ | ___ |
-| IPs unice | 5 | ___ | ___ |
-| External factors score | 42% | ___ | ___ |
-| Google Reviews | 4 | ___ | ___ |
-| Pe-page score total | 78% | ___ | ___ |
+**Status:** ☐ Awaiting press pitch templates
 
 ---
 
-## 🎯 Next Steps (după ce termini Tier 1+2)
+### B.3 Parteneri industry — link exchange organic
 
-Întoarce-te la conversație și cere:
-- **"Generează template-uri review push (Tier 2.1)"** — SMS/WhatsApp DE follow-up post-job
-- **"Generează email-uri parteneri locali (Tier 2.2)"** — 4 template-uri pentru Bestattungsinstitut/Erbrecht-Anwalt/Makler/Hausverwaltung
-- **"Generează press pitch (Tier 2.3)"** — pentru Badisches Tagblatt/BNN/ka-news/Lokalmatador
+**Targets ranked by relevance:**
+
+| Tip firmă | De ce | Approach |
+|---|---|---|
+| **Bestattungsinstitute Rastatt-Karlsruhe** | Familii post-deces → Haushaltsauflösung naturală | Pitch parteneriat referral, link "trusted partners" reciproc |
+| **Erbrecht-Anwälte BW** | Legalize moștenire → Haushaltsauflösung | Aceeași |
+| **Immobilienmakler Rastatt-Loffenau** | Vând case care trebuie golite | + revenue share |
+| **Hausverwaltungen** | Property turnover | "Übergabe-Reinigung" partner |
+
+**Țintă:** 3-5 parteneri = 3-5 backlinks dofollow naturale.
+
+**Generez deliverables când zici:** "fă email-uri parteneri"
+
+**Status:** ☐ Awaiting partner outreach templates
 
 ---
 
-_Document creat: 2026-05-10. Sursa de adevăr live = acest fișier. Update după fiecare sesiune._
+## 🎯 PARTEA C — Long-term (luna 3+, ongoing)
+
+### C.1 B2B side-business = self-link factory ⭐
+
+Memoria 2026-05-08 identificat top 3 prospects pentru side-business marketing/SEO:
+1. **Auto Service Burkart** (Bad Rotenfels) — 5/5 probabilitate accept
+2. **Kurz Restaurierungen** (Rastatt) — 4/5
+3. **Setzer Umzüge** (Rastatt) — 4/5
+
+**Logica dublu-câștig:** Construiești site-ul pentru ei → în footer pui *"Webdesign by Perfekt Sauber Service"* + link spre PSS → revenue €1.500-3.000 setup + backlink dofollow gratuit.
+
+**3 clienți B2B = 3 backlinks dofollow + revenue €4.500-9.000 pe partea de side-business.** Cea mai elegantă tactică pentru tine specific.
+
+### C.2 Manual content (NU AI-templated)
+
+Per memorie 2026-05-07: **"Do NOT propose AI-generated Stadtteil content"**. În schimb: 1 articol/lună, manual, real local insight pe top 5 Stadtteile din GSC.
+
+---
+
+## 📊 Tracking (completează pe parcurs)
+
+| Metric | 2026-05-10 (start) | 30 zile | 60 zile | 90 zile |
+|---|---|---|---|---|
+| Backlinks (Seobility) | 14 | ___ | ___ | ___ |
+| Referring domains | 14 | ___ | ___ | ___ |
+| IPs unice | 5 | ___ | ___ | ___ |
+| External factors score | 42% | ___ | ___ | ___ |
+| Google Reviews | 4 | ___ | ___ | ___ |
+| Page score total | 78% | ___ | ___ | ___ |
+
+---
+
+## ⚠️ Greșeli din lista veche de evitat
+
+- ❌ **Yelp.de, Foursquare, Aroundhome, MyHammer** — fie respingeri pe SAB-style, fie nofollow, fie pay-to-rank
+- ❌ **Yext, BrightLocal, Moz Local** — €500+/an, ROI prost pentru un singur loc
+- ❌ **eintrag.gelbeseiten.de** — URL mort confirm 2026-05-10 (ECONNREFUSED)
+- ❌ **IHK Karlsruhe** — wrong body. Entrümpelung e Handwerk → doar HWK
+- ❌ **Aggregator-uri scrape sites** (Hotfrog, Tupalo, Cylex etc.) — apar dar nu dau backlink controlabil
+- ❌ **Niche Entrümpelung directories** (entruempelung24.de, entrumpelung-vergleich.de) — sunt lead-platforms care îți iau bani, nu dau backlinks dofollow utile
+
+---
+
+## 🚀 Next steps
+
+În ordinea recomandată:
+1. **Fă Partea A** (1h within next 2 zile) → +1-2 puncte SEO instant
+2. **Cere "fă template-uri review push"** → 4 → 12 reviews în 30 zile (+5-7 puncte SEO)
+3. **Cere "fă press pitch"** → 1 răspuns pozitiv = backlink DA 60+ (+6-10 puncte)
+4. **Cere "fă email-uri parteneri"** → 3-5 backlinks dofollow (+5-8 puncte)
+5. **Long-term:** B2B side-business cu Burkart/Kurz/Setzer
+
+**Estimare cumulată realistă:** 42% → ~58-60% în 90 zile. (NU 65-70% cum am promis inițial — am ajustat după feedback-ul tău.)
+
+---
+
+_Document creat: 2026-05-10. Înlocuiește versiunea anterioară cu 25 directoare. Sursa de adevăr live = acest fișier._
