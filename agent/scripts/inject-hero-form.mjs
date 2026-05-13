@@ -16,6 +16,7 @@ import { resolve } from 'node:path';
 const ROOT = resolve(import.meta.dirname, '..', '..');
 
 const PAGES = [
+  // Top 10 (first wave)
   ['entruempelung-rastatt.html',          'Hero · Entrümpelung · Rastatt'],
   ['entruempelung-karlsruhe.html',        'Hero · Entrümpelung · Karlsruhe'],
   ['entruempelung-baden-baden.html',      'Hero · Entrümpelung · Baden-Baden'],
@@ -26,6 +27,44 @@ const PAGES = [
   ['haushaltsaufloesung-rastatt.html',    'Hero · Haushaltsauflösung · Rastatt'],
   ['haushaltsaufloesung-karlsruhe.html',  'Hero · Haushaltsauflösung · Karlsruhe'],
   ['haushaltsaufloesung-gaggenau.html',   'Hero · Haushaltsauflösung · Gaggenau'],
+  // Cluster B extended Entrümpelung
+  ['entruempelung-achern.html',              'Hero · Entrümpelung · Achern'],
+  ['entruempelung-au-am-rhein.html',         'Hero · Entrümpelung · Au am Rhein'],
+  ['entruempelung-bad-herrenalb.html',       'Hero · Entrümpelung · Bad Herrenalb'],
+  ['entruempelung-bad-wildbad.html',         'Hero · Entrümpelung · Bad Wildbad'],
+  ['entruempelung-bietigheim.html',          'Hero · Entrümpelung · Bietigheim'],
+  ['entruempelung-bischweier.html',          'Hero · Entrümpelung · Bischweier'],
+  ['entruempelung-durmersheim.html',         'Hero · Entrümpelung · Durmersheim'],
+  ['entruempelung-elchesheim-illingen.html', 'Hero · Entrümpelung · Elchesheim-Illingen'],
+  ['entruempelung-forbach.html',             'Hero · Entrümpelung · Forbach'],
+  ['entruempelung-gernsbach.html',           'Hero · Entrümpelung · Gernsbach'],
+  ['entruempelung-huegelsheim.html',         'Hero · Entrümpelung · Hügelsheim'],
+  ['entruempelung-iffezheim.html',           'Hero · Entrümpelung · Iffezheim'],
+  ['entruempelung-kuppenheim.html',          'Hero · Entrümpelung · Kuppenheim'],
+  ['entruempelung-malsch.html',              'Hero · Entrümpelung · Malsch'],
+  ['entruempelung-muggensturm.html',         'Hero · Entrümpelung · Muggensturm'],
+  ['entruempelung-oetigheim.html',           'Hero · Entrümpelung · Ötigheim'],
+  ['entruempelung-pforzheim.html',           'Hero · Entrümpelung · Pforzheim'],
+  ['entruempelung-rheinmuenster.html',       'Hero · Entrümpelung · Rheinmünster'],
+  ['entruempelung-rheinstetten.html',        'Hero · Entrümpelung · Rheinstetten'],
+  ['entruempelung-sinzheim.html',            'Hero · Entrümpelung · Sinzheim'],
+  ['entruempelung-steinmauern.html',         'Hero · Entrümpelung · Steinmauern'],
+  ['entruempelung-stutensee.html',           'Hero · Entrümpelung · Stutensee'],
+  ['entruempelung-weisenbach.html',          'Hero · Entrümpelung · Weisenbach'],
+  // Cluster B extended Haushaltsauflösung
+  ['haushaltsaufloesung-achern.html',       'Hero · Haushaltsauflösung · Achern'],
+  ['haushaltsaufloesung-baden-baden.html',  'Hero · Haushaltsauflösung · Baden-Baden'],
+  ['haushaltsaufloesung-buehl.html',        'Hero · Haushaltsauflösung · Bühl'],
+  ['haushaltsaufloesung-ettlingen.html',    'Hero · Haushaltsauflösung · Ettlingen'],
+  ['haushaltsaufloesung-loffenau.html',     'Hero · Haushaltsauflösung · Loffenau'],
+  ['haushaltsaufloesung-pforzheim.html',    'Hero · Haushaltsauflösung · Pforzheim'],
+  // Cluster B extended Wohnungsauflösung
+  ['wohnungsaufloesung-rastatt.html',       'Hero · Wohnungsauflösung · Rastatt'],
+  ['wohnungsaufloesung-karlsruhe.html',     'Hero · Wohnungsauflösung · Karlsruhe'],
+  ['wohnungsaufloesung-baden-baden.html',   'Hero · Wohnungsauflösung · Baden-Baden'],
+  ['wohnungsaufloesung-gaggenau.html',      'Hero · Wohnungsauflösung · Gaggenau'],
+  ['wohnungsaufloesung-buehl.html',         'Hero · Wohnungsauflösung · Bühl'],
+  ['wohnungsaufloesung-loffenau.html',      'Hero · Wohnungsauflösung · Loffenau'],
 ];
 
 function formMarkup(seite) {
