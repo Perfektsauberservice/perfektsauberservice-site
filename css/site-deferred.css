@@ -109,6 +109,29 @@
 .foot a:hover{color:var(--bg);}
 @media(max-width:780px){.foot{padding:32px 24px;}}
 
+/* HERO INLINE LEAD CAPTURE FORM */
+.hero-form{background:#fff; border:1px solid var(--line,#e5dccb); border-radius:14px;
+  padding:18px; margin:0 0 28px; max-width:480px;
+  box-shadow:0 12px 32px -16px rgba(26,32,48,.18); position:relative;}
+.hero-form .hp{position:absolute; left:-9999px;}
+.hf-row{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;}
+@media(max-width:520px){.hf-row{grid-template-columns:1fr;}}
+.hf-field{display:flex; flex-direction:column; gap:4px;}
+.hf-field>span{font-family:"Geist Mono",monospace; font-size:.6rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted,#4a5160);}
+.hf-field input{padding:10px 12px; border:1.5px solid var(--line,#e5dccb);
+  border-radius:8px; background:#fff; font:inherit; color:var(--ink,#1a2030);
+  transition:border-color .2s;}
+.hf-field input:focus{border-color:var(--green,#5aa83a); outline:none;}
+.hf-consent{display:flex; gap:8px; font-size:.74rem; color:var(--muted,#4a5160);
+  margin:6px 0 10px; line-height:1.4; align-items:flex-start; cursor:pointer;}
+.hf-consent input{margin-top:2px; flex-shrink:0;}
+.hf-consent a{color:var(--blue,#1d6dd6); text-decoration:underline;}
+.hf-submit{width:100%; justify-content:center; margin-top:4px;}
+.hf-mini{font-size:.66rem; letter-spacing:.06em;
+  color:var(--muted,#4a5160); margin-top:8px; text-align:center;
+  font-family:"Geist Mono",monospace;}
+
 /* MOBILE FAB */
 .fab{display:none;}
 @media(max-width:780px){
@@ -128,3 +151,11 @@
 #cookieBanner button{padding:10px 18px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;}
 #cookieBanner .acc{background:var(--green); color:#fff;}
 #cookieBanner .dec{border:1px solid var(--line); color:var(--ink);}
+
+/* REGION LINKS */
+.region-links{max-width:1200px; margin:0 auto; padding:32px 24px 16px; border-top:1px solid var(--line,#e5dccb);}
+.region-links-title{font-family:"Geist Mono",monospace; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted,#4a5160); margin:0 0 14px; font-weight:500;}
+.region-links-list{list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:8px 14px;}
+.region-links-list li{margin:0;}
+.region-links-list a{color:var(--blue,#1d6dd6); text-decoration:none; font-size:.92rem; border-bottom:1px dotted transparent; transition:border-color .15s;}
+.region-links-list a:hover{border-bottom-color:var(--blue,#1d6dd6);}
