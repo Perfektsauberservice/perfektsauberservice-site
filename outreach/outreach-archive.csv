@@ -1,6 +1,5 @@
 Category,Firm,Email,SourceFile,ID
 "Anwalt Erbrecht","Anwaltskanzlei Riedel","mail@kanzlei-riedel.de","erbrecht-emails-data.json",7
-"Anwalt Erbrecht","Fachanwaltskanzlei Liesegang","mail@fakanzlei-liesegang.de","erbrecht-emails-data.json",4
 "Anwalt Erbrecht","Kanzlei Dr. Hosser","anwalt@dr-hosser.de","erbrecht-emails-data.json",1
 "Anwalt Erbrecht","Kanzlei Kirbach","info@kanzlei-kirbach.de","erbrecht-emails-data.json",5
 "Anwalt Erbrecht","Kanzlei77 Achern","achern@kanzlei77.de","erbrecht-emails-data.json",11
@@ -98,7 +97,6 @@ Category,Firm,Email,SourceFile,ID
 "Immobilien/HV","SEEGER & RUSSWURM Immobilien (Ettlingen)","welcome@seeger-russwurm.de","immobilien-emails-data.json",30
 "Immobilien/HV","Seeger Vermögensverwaltung (Stutensee-Blankenloch)","info@seeger-gruppe.de","immobilien-emails-data.json",53
 "Immobilien/HV","Thomas Bohner Immobilien (Pforzheim)","info@thomasbohner.de","immobilien-emails-data.json",14
-"Immobilien/HV","VB pur Immobilien (Baden-Baden)","info@vbpur-immobilien.de","immobilien-emails-data.json",17
 "Immobilien/HV","Werner & David Lorenz Immobilien (Gaggenau)","mail@lorenz-immobilien.net","immobilien-emails-data.json",27
 "Immobilien/HV","weststadtmakler.de — Burkard (Karlsruhe)","info@weststadtmakler.de","immobilien-emails-data.json",3
 "Pflegedienst/Seniorenheim","5 STERNE Ambulanter Pflegedienst Baden-Baden","Info@5sterne-pflege.com","pflegedienste-emails-data.json",5
