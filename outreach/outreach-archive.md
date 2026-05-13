@@ -2,15 +2,14 @@
 
 Generat: 2026-05-06
 
-**Total active:** 115 adrese (după excludere refuzuri)
-**Excluse din arhivă (refuzuri):** 4
+**Total active:** 113 adrese (după excludere refuzuri)
+**Excluse din arhivă (refuzuri):** 6
 
-## Anwalt Erbrecht (11)
+## Anwalt Erbrecht (10)
 
 | Firmă | Email |
 |---|---|
 | Anwaltskanzlei Riedel | mail@kanzlei-riedel.de |
-| Fachanwaltskanzlei Liesegang | mail@fakanzlei-liesegang.de |
 | Kanzlei Dr. Hosser | anwalt@dr-hosser.de |
 | Kanzlei Kirbach | info@kanzlei-kirbach.de |
 | Kanzlei77 Achern | achern@kanzlei77.de |
@@ -57,7 +56,7 @@ Generat: 2026-05-06
 | SG Bestattungen | kontakt@sg-bestattungen.de |
 | Trauerhilfe Stier OHG | service@trauerhilfe-stier.de |
 
-## Immobilien/HV (60)
+## Immobilien/HV (59)
 
 | Firmă | Email |
 |---|---|
@@ -118,7 +117,6 @@ Generat: 2026-05-06
 | SEEGER & RUSSWURM Immobilien (Ettlingen) | welcome@seeger-russwurm.de |
 | Seeger Vermögensverwaltung (Stutensee-Blankenloch) | info@seeger-gruppe.de |
 | Thomas Bohner Immobilien (Pforzheim) | info@thomasbohner.de |
-| VB pur Immobilien (Baden-Baden) | info@vbpur-immobilien.de |
 | Werner & David Lorenz Immobilien (Gaggenau) | mail@lorenz-immobilien.net |
 | weststadtmakler.de — Burkard (Karlsruhe) | info@weststadtmakler.de |
 
@@ -148,3 +146,5 @@ Generat: 2026-05-06
 | info@immokoch.de | Koch Immobilien (Rheinstetten) | ❌ Pascal Koch refuzat 2026-05-04 (au deja parteneri) |
 | info@immowessi.de | ImmoWessi (Ettlingen) | ❌ Sascha Wessnitzer refuzat 2026-05-06 |
 | info@hv-fidelitas.de | Hausverwaltung Fidelitas (Rheinstetten) | 📂 Soft no Martina Paul 2026-05-04 (Vormerkung) |
+| verena.knobloch@vbpur-immobilien.de | VB pur Immobilien (Baden-Baden) | ❌ Verena Knobloch refuzat 2026-05-13 |
+| mail@fakanzlei-liesegang.de | Fachanwaltskanzlei Liesegang | ❌ refuzat 2026-05-13 |
