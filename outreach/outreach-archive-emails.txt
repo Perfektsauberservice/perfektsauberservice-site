@@ -1,5 +1,4 @@
 mail@kanzlei-riedel.de
-mail@fakanzlei-liesegang.de
 anwalt@dr-hosser.de
 info@kanzlei-kirbach.de
 achern@kanzlei77.de
@@ -97,7 +96,6 @@ jc.schweitzer@freenet.de
 welcome@seeger-russwurm.de
 info@seeger-gruppe.de
 info@thomasbohner.de
-info@vbpur-immobilien.de
 mail@lorenz-immobilien.net
 info@weststadtmakler.de
 Info@5sterne-pflege.com

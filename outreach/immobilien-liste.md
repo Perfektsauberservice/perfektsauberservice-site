@@ -41,7 +41,7 @@ Listă firme imobiliare din zona PSS (13 orașe) pentru parteneriat **Wohnungsau
 |---|------|-----|---------|-------|--------|--------|------------------------|
 | 1 | Arkade Immobilien GmbH | Makler | 07221 373080 | info@arkade-immobilien.com | 4.6 (14) | ✅ 2026-05-06 | GF Dieter Mächtel seit 2007, hochwertige Immobilien „Am Festspielhaus" — **ACCEPTĂ parteneriat** |
 | 2 | Immobilien Gerd Jancke GmbH | Makler | 07221 276977 | info@jancke-gmbh.de | 5.0 (11) | 📧 2026-05-04 | 14× in Folge FOCUS „TOP-Immobilienmakler Baden-Baden" |
-| 3 | VB pur Immobilien BB | Makler | 0721 98749-0 | info@vbpur-immobilien.de | k.A. | 📧 2026-05-04 | Volksbank-pur-Tochter mit lokalem Standort BB |
+| 3 | VB pur Immobilien BB | Makler | 0721 98749-0 | info@vbpur-immobilien.de | k.A. | ❌ 2026-05-13 | Volksbank-pur-Tochter mit lokalem Standort BB — Verena Knobloch refuzat |
 | 4 | MV Hausverwaltung | HV | 07221 2764740 | info@mv-hausverwaltung.com | k.A. | 📧 2026-05-04 | Gegründet 2024, VDIV-BW, USP: Jahresabrechnung in 6 Mon. |
 | 5 | Drabich Hausverwaltung GmbH | HV | 07221 9732751 | kontakt@drabichhausverwaltung.de | k.A. | 📧 2026-05-04 | Pia von Drabich-Waechter, IHK §26 WEG; deckt BB/Sinzheim/Rastatt/Bühl |
 
