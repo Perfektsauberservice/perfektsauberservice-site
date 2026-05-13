@@ -208,6 +208,21 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <span class="eyebrow">Steinmauern &amp; UmgebungSteinmauern-Nähe</span>
     <h1 class="h1">Entrümpelung <em>Steinmauern</em><br/><b>Festpreis, 48h-Termin, kostenlose Besichtigung</b></h1>
     <p class="deck">Eine Entrümpelung in Steinmauern kostet ab 150 € Festpreis und ist innerhalb von 48 Stunden terminierbar. Wir entrümpeln Keller, Wohnung, Haus und Garage – besenrein, mit Schutt-Entsorgung inklusive. Kostenlose Besichtigung vor Ort.</p>
+    <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="hero-form">
+      <input type="hidden" name="form-name" value="lead">
+      <input type="hidden" name="seite" value="Hero · Entrümpelung · Steinmauern">
+      <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
+      <div class="hf-row">
+        <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
+        <label class="hf-field"><span>Telefon</span><input type="tel" name="telefon" autocomplete="tel" required placeholder="+49…"></label>
+      </div>
+      <label class="hf-consent">
+        <input type="checkbox" name="agb_widerruf_accepted" required>
+        <span>Ich akzeptiere die <a href="/agb">AGB</a> und das <a href="/widerruf">Widerrufsrecht</a>.</span>
+      </label>
+      <button type="submit" class="btn btn-pri hf-submit">Festpreis anfragen →</button>
+      <p class="hf-mini">Antwort in 24 h · kostenlose Besichtigung · kein Werbeversand</p>
+    </form>
     <div class="cta-row">
       <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
       <a href="https://wa.me/491639087197?text=Hallo%2C%20ich%20m%C3%B6chte%20eine%20Entr%C3%BCmpelung%20in%20Steinmauern%20anfragen." class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
@@ -465,6 +480,15 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     </div>
   </div>
 </section>
+<section class="region-links" aria-label="Entrümpelung in der Region">
+    <h2 class="region-links-title">Entrümpelung in der Region</h2>
+    <ul class="region-links-list">
+      <li><a href="/entruempelung-rastatt">Entrümpelung Rastatt</a></li>
+      <li><a href="/entruempelung-iffezheim">Entrümpelung Iffezheim</a></li>
+      <li><a href="/entruempelung-oetigheim">Entrümpelung Ötigheim</a></li>
+      <li><a href="/entruempelung-karlsruhe">Entrümpelung Karlsruhe</a></li>
+    </ul>
+  </section>
 </main>
 <footer class="foot">
   <span>© <span id="year">2026</span> Perfekt Sauber Service · Inh. Laura Craciun</span>
