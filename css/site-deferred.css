@@ -159,3 +159,16 @@
 .region-links-list li{margin:0;}
 .region-links-list a{color:var(--blue,#1d6dd6); text-decoration:none; font-size:.92rem; border-bottom:1px dotted transparent; transition:border-color .15s;}
 .region-links-list a:hover{border-bottom-color:var(--blue,#1d6dd6);}
+
+
+/* CROSS-SERVICE LINKS */
+.cross-services{max-width:1200px; margin:0 auto; padding:28px 24px; border-top:1px solid var(--line,#e5dccb);}
+.cross-services-title{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:400; font-size:1.4rem; color:var(--ink,#1a2030); margin:0 0 8px;}
+.cross-services-sub{font-size:.95rem; color:var(--muted,#4a5160); margin:0 0 14px; max-width:60ch;}
+.cross-services-list{list-style:none; padding:0; margin:0; display:flex; flex-wrap:wrap; gap:10px 16px;}
+.cross-services-list li{margin:0;}
+.cross-services-list a{display:inline-flex; align-items:center; padding:10px 16px;
+  background:var(--bg-2,#f3ede0); border:1px solid var(--line,#e5dccb); border-radius:999px;
+  color:var(--ink,#1a2030); font-size:.92rem; transition:all .2s;}
+.cross-services-list a:hover{background:var(--green,#5aa83a); color:#fff; border-color:var(--green,#5aa83a);}
+
