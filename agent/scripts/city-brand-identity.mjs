@@ -18,7 +18,23 @@ const SERVICE_PREFIXES = [
   'entruempelung-', 'haushaltsaufloesung-', 'wohnungsaufloesung-',
   'bueroaufloesung-', 'bueroreinigung-', 'endreinigung-',
   'unterhaltsreinigung-', 'grundreinigung-', 'bauschlussreinigung-',
+  // Additional sub-clearance services
+  'dachbodenentruempelung-', 'garagenentruempelung-', 'kellerentruempelung-',
+  'gewerberaeumung-', 'hausmeisterservice-', 'nachlassaufloesung-',
+  'messi-',
 ];
+
+// Non-city pages keep neutral identity = "Loffenau" (actual HQ).
+const NEUTRAL_PAGES = new Set([
+  'index.html', '410.html', 'agb.html', 'blog.html', 'danke.html',
+  'datenschutz.html', 'einsatzgebiete.html', 'impressum.html',
+  'kontakt.html', 'leistungen.html', 'portfolio.html',
+  'preise.html', 'preisrechner.html', 'ueber-uns.html',
+  'widerrufsbelehrung.html', 'mascot.html',
+  // Generic service hubs (no city)
+  'bueroreinigung.html', 'endreinigung.html', 'grundreinigung.html',
+  'hausmeisterservice.html',
+]);
 
 const SLUG_TO_DISPLAY = {
   'baden-baden': 'Baden-Baden',
@@ -75,8 +91,30 @@ const allFiles = (await readdir(ROOT)).filter(f => f.endsWith('.html')).sort();
 let totalNavUpdates = 0;
 let totalAuthorityUpdates = 0;
 let totalFiles = 0;
+let totalNeutralUpdates = 0;
 
 for (const file of allFiles) {
+  // Neutral pages: set subtitle to "Loffenau" (HQ) — no city authority badge.
+  if (NEUTRAL_PAGES.has(file)) {
+    const path = `${ROOT}/${file}`;
+    let html = await readFile(path, 'utf8');
+    const before = html;
+    html = html.replace(
+      /<span class="sub">Service · [^<]+<\/span>/g,
+      '<span class="sub">Service · Loffenau</span>'
+    );
+    // Some pages use inline-style subtitle (homepage)
+    html = html.replace(
+      /<span style="font-size:\.6rem; letter-spacing:\.16em; margin-left:0; margin-top:3px;">Service · [^<]+<\/span>/g,
+      '<span style="font-size:.6rem; letter-spacing:.16em; margin-left:0; margin-top:3px;">Service · Loffenau</span>'
+    );
+    if (html !== before) {
+      await writeFile(path, html, 'utf8');
+      totalNeutralUpdates++;
+    }
+    continue;
+  }
+
   const info = parseFile(file);
   if (!info) continue;
   const city = slugToDisplay(info.slug);
@@ -109,6 +147,7 @@ for (const file of allFiles) {
   }
 }
 
-console.log(`Files modified: ${totalFiles}`);
-console.log(`Nav subtitle updates: ${totalNavUpdates}`);
+console.log(`City pages modified: ${totalFiles}`);
+console.log(`Nav subtitle updates (city): ${totalNavUpdates}`);
 console.log(`Authority signal additions (strip): ${totalAuthorityUpdates}`);
+console.log(`Neutral pages updated (HQ Loffenau): ${totalNeutralUpdates}`);
