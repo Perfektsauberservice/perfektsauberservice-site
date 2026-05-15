@@ -344,6 +344,39 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     var open = links.classList.toggle('open');
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
-})();</script>
+})();
+// GA4 conversion event tracking — phone, whatsapp, email clicks
+document.addEventListener('click', function(e){
+  var a = e.target && e.target.closest && e.target.closest('a');
+  if (!a || typeof gtag !== 'function') return;
+  var href = a.getAttribute('href') || '';
+  if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
+  else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
+  else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+});
+</script>
+<!-- Google Analytics 4 (consent-gated, DSGVO/TTDSG compliant — only loads if user opted in) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+window.psLoadGA = function(){
+  if (window.psGALoaded) return; window.psGALoaded = true;
+  gtag('js', new Date());
+  gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
+  document.head.appendChild(s);
+};
+(function(){
+  try {
+    var c = localStorage.getItem('psCookieChoice');
+    if (c === 'all') {
+      if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
+      else setTimeout(window.psLoadGA, 2500);
+    }
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
