@@ -4,7 +4,7 @@
 // Rastatt company. Fix: per-page subtitle that matches the city in
 // the URL slug.
 //
-// Additionally, add a one-line "Erfahrung in [Stadt] seit 2023"
+// Additionally, add a one-line "Erfahrung in [Stadt] seit 2025"
 // authority signal in the strip section if missing.
 //
 // Run from repo root: node agent/scripts/city-brand-identity.mjs
@@ -98,7 +98,7 @@ for (const file of allFiles) {
     const before = html;
     html = html.replace(
       /(<div class="strip-row">)\s*(<span>)/,
-      `$1\n    <span><b>Lokal in ${city}</b> · seit 2023</span>\n    $2`
+      `$1\n    <span><b>Lokal in ${city}</b> · seit 2025</span>\n    $2`
     );
     if (html !== before) totalAuthorityUpdates++;
   }
