@@ -8,7 +8,7 @@ const ROOT = path.resolve(__dirname, '..', '..');
 
 const ID_ANCHOR = /"@id":\s*"https:\/\/www\.google\.com\/maps\?cid=10440757061765338764#organization"/g;
 
-const CREDENTIALS_FIELDS = ',"foundingDate":"2023","founder":{"@type":"Person","name":"Laura Craciun","jobTitle":"Inhaberin"},"hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"license","name":"Gewerbeanmeldung gemäß Gewerbeordnung"}';
+const CREDENTIALS_FIELDS = ',"foundingDate":"2025","founder":{"@type":"Person","name":"Laura Craciun","jobTitle":"Inhaberin"},"hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"license","name":"Gewerbeanmeldung gemäß Gewerbeordnung"}';
 
 async function listHtmlFiles(dir) {
   const out = [];
@@ -29,7 +29,7 @@ async function processFile(file) {
   const src = await fs.readFile(file, 'utf8');
   if (!ID_ANCHOR.test(src)) return { file, status: 'no-anchor', count: 0 };
   ID_ANCHOR.lastIndex = 0;
-  if (src.includes('"foundingDate":"2023"') && src.includes('"hasCredential"')) {
+  if (src.includes('"foundingDate":"2025"') && src.includes('"hasCredential"')) {
     return { file, status: 'already-injected', count: 0 };
   }
   let count = 0;
