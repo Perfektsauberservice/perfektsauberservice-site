@@ -309,7 +309,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://www.google.com/maps?cid=10440757061765338764#organization",
+  "@id": "https://www.google.com/maps?cid=10440757061765338764#organization","foundingDate":"2023","founder":{"@type":"Person","name":"Laura Craciun","jobTitle":"Inhaberin"},"hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"license","name":"Gewerbeanmeldung gemäß Gewerbeordnung"},
   "name": "Perfekt Sauber Service",
   "url": "https://perfektsauberservice.com",
   "telephone": "+49 163 9087197",
@@ -342,6 +342,21 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     "reviewCount":"5",
     "bestRating": "5",
     "worstRating": "1"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Räumungs- und Reinigungsdienste — Festpreise",
+    "itemListElement": [
+      {"@type":"Offer","name":"Entrümpelung","price":"150","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"150","priceCurrency":"EUR","description":"ab 150 € Festpreis"},"url":"https://perfektsauberservice.com/leistungen#entruempelung"},
+      {"@type":"Offer","name":"Haushaltsauflösung","price":"1000","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"1000","priceCurrency":"EUR","description":"ab 1.000 € Festpreis"},"url":"https://perfektsauberservice.com/haushaltsaufloesung"},
+      {"@type":"Offer","name":"Wohnungsauflösung","price":"1000","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"1000","priceCurrency":"EUR","description":"ab 1.000 € Festpreis"}},
+      {"@type":"Offer","name":"Endreinigung","price":"199","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"199","priceCurrency":"EUR","description":"ab 199 € Festpreis"},"url":"https://perfektsauberservice.com/endreinigung"},
+      {"@type":"Offer","name":"Bauschlussreinigung","price":"250","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"250","priceCurrency":"EUR","description":"ab 250 € Festpreis"},"url":"https://perfektsauberservice.com/bauschlussreinigung"},
+      {"@type":"Offer","name":"Büroreinigung","price":"35","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"35","priceCurrency":"EUR","description":"ab 35 € pro Termin"},"url":"https://perfektsauberservice.com/bueroreinigung"},
+      {"@type":"Offer","name":"Grundreinigung","price":"282","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"282","priceCurrency":"EUR","description":"ab 282 € Festpreis"},"url":"https://perfektsauberservice.com/grundreinigung"},
+      {"@type":"Offer","name":"Büroauflösung","price":"800","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"800","priceCurrency":"EUR","description":"ab 800 € Festpreis"}},
+      {"@type":"Offer","name":"Unterhaltsreinigung","price":"32","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"32","priceCurrency":"EUR","description":"ab 32 € pro Termin"},"url":"https://perfektsauberservice.com/unterhaltsreinigung"}
+    ]
   },
   "review": [
     {
@@ -422,9 +437,73 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <span><b>Festpreis-Garantie</b> · schriftlich</span>
     <span><span class="star">★★★★★</span> <b>5,0</b> Google · 5 Rezensionen</span>
     <span><b>DSGVO-konform</b> · Diskret</span>
-    <span><b>Vollständig versichert</b></span>
+    <span><b>MwSt-Rechnung</b></span>
   </div>
 </div>
+
+<!-- ======== OFFER CATALOG MATRIX ======== -->
+<section class="reveal" style="padding:64px 48px 32px; max-width:1200px; margin:0 auto;" aria-labelledby="preise-h2">
+  <div class="ch-mark" style="text-align:center; justify-content:center; margin-bottom:14px;">Alle Festpreise auf einen Blick</div>
+  <h2 id="preise-h2" class="ch-h" style="text-align:center; max-width:30ch; margin:0 auto 28px;">Neun Leistungen — <em>klare Festpreise</em>, schriftlich nach Besichtigung.</h2>
+  <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px;" class="offer-matrix">
+    <a href="/leistungen#entruempelung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Entrümpelung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 150 € Festpreis</div>
+    </a>
+    <a href="/haushaltsaufloesung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Haushaltsauflösung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 1.000 € Festpreis</div>
+    </a>
+    <a href="/leistungen#wohnung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Wohnungsauflösung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 1.000 € Festpreis</div>
+    </a>
+    <a href="/endreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Endreinigung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 199 € Festpreis</div>
+    </a>
+    <a href="/bauschlussreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Bauschlussreinigung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 250 € Festpreis</div>
+    </a>
+    <a href="/bueroreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Büroreinigung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 35 € pro Termin</div>
+    </a>
+    <a href="/grundreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Grundreinigung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 282 € Festpreis</div>
+    </a>
+    <a href="/unterhaltsreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Unterhaltsreinigung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 32 € pro Termin</div>
+    </a>
+    <a href="/leistungen#bueroaufloesung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
+      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Büroauflösung</div>
+      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 800 € Festpreis</div>
+    </a>
+  </div>
+  <div style="text-align:center; margin-top:28px;">
+    <a href="/preise" style="font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.18em; text-transform:uppercase; color:var(--blue, #1d6dd6); border-bottom:1px dotted currentColor; padding-bottom:2px;">Alle Preise &amp; Beispielrechnungen ansehen →</a>
+  </div>
+  <style>
+    @media (max-width: 820px) {
+      .offer-matrix { grid-template-columns: 1fr 1fr !important; }
+    }
+    @media (max-width: 520px) {
+      .offer-matrix { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</section>
 
 <!-- ======== FOUNDER POSITIONING ======== -->
 <section style="padding:72px 48px; max-width:1100px; margin:0 auto; text-align:center;" class="reveal">
