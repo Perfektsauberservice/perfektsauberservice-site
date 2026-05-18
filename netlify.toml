@@ -1705,6 +1705,16 @@
   status = 301
   force = true
 
+# === 410 Gone: wildcard pentru restul /auto/* (URL-uri vechi care nu mai există) ===
+# GSC Coverage 2026-05-18: 3+ URL-uri /auto/ raportate ca 404. 410 = semnal mai clar către
+# Google să le scoată din index (1-2 săpt vs 6-12 luni cu 404 default Netlify).
+# Specific redirects de mai sus iau prioritate (top-down evaluation).
+[[redirects]]
+  from = "/auto/*"
+  to = "/410.html"
+  status = 410
+  force = true
+
 # === GLOBAL: .html -> pretty URL via Edge Function ===
 # Netlify redirects engine nu permite splat capture + suffix stripping
 # Vezi netlify/edge-functions/strip-html.js pentru implementare
