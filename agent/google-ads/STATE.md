@@ -9,7 +9,7 @@
 
 ## 🔴 VOLATIL — verifică în UI înainte de a acționa
 
-**Last verified:** 2026-05-08 01:37 EEST (utilizator + Claude, post-wizard conversion)
+**Last verified:** 2026-06-05 (Consent Mode v2 deploy — fix tracking conversii pierdute). Performanță 30z (May 5–Jun 4): 317 clicks · €414.84 · 3 conv. Entrümpelung €232.54/0 conv (cauză: tracking, NU cerere — user confirmă apeluri reale). NU schimba bidding strategy până nu se adună conversii reale post-fix (~2 săpt).
 
 ### Campanii ENABLED
 
@@ -62,7 +62,7 @@
 ### Site (LIVE, verificat)
 
 - GA4 events `phone_click` / `whatsapp_click` / `email_click` wired pe handler-ul global din [index.html:967-977](../../index.html#L967-L977) și pe paginile de campanie
-- Consent gate REAL ([index.html:1314-1336](../../index.html#L1314-L1336)): GA4 se încarcă DOAR după click „Alle akzeptieren"
+- **Consent Mode v2 (2026-06-05):** GA4 se încarcă pe TOATE cele 457 pagini cu consimțământ default `denied` (cookieless pings → conversion modeling). La „Alle akzeptieren" → `psGrantConsent()` trece pe `granted`. ÎNAINTE: GA4 se încărca DOAR după accept → pierdea conversiile celor ~50%+ care sună direct fără accept (Entrümpelung arăta fals 0 conversii deși existau lead-uri reale confirmate de user). danke.html: `form_submit` (25€) acum nu se mai pierde.
 - Hero photos Reinigung fixate 2026-05-07 (commit `051f7025`):
   - endreinigung-{rastatt, baden-baden, karlsruhe} → cleaning-endreinigung-800.webp
   - bueroreinigung-rastatt → cleaning-bueroreinigung-800.webp
