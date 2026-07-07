@@ -1,8 +1,8 @@
 name: SEO Daily Report
 
 on:
-  schedule:
-    - cron: '30 5 * * *'  # 07:30 Germania (UTC+2)
+  # schedule: # PAUZAT 2026-07-07 de Claude, la cererea proprietarului (stop automatizari scriere)
+    # - cron: '30 5 * * *'  # 07:30 Germania (UTC+2)
   workflow_dispatch:        # rulare manuala pentru test
 
 jobs:
