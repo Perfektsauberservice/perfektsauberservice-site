@@ -1,9 +1,11 @@
 name: PSS GMB Reviews Update
 
 on:
-  schedule:
-    - cron: '15 6 * * *'  # 08:15 Germania (UTC+2) - dupa celelalte joburi de dimineata
-  workflow_dispatch:        # rulare manuala pentru test
+  # PAUZAT 2026-07-07: necesita Google Cloud Billing activ pe proiect, proprietarul a decis sa nu plateasca.
+  # Actualizarea recenziilor se face manual, la cerere (vezi conversatie 2026-07-07).
+  # schedule:
+  #   - cron: '15 6 * * *'
+  workflow_dispatch:        # ramane disponibil pentru rulare manuala daca se activeaza billing-ul
 
 jobs:
   update-reviews:
