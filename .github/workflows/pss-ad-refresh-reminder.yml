@@ -1,12 +1,8 @@
 name: PSS Ad Refresh Reminder
 
 on:
-  schedule:
-    # Luni si Joi la 07:30 UTC.
-    # Asta inseamna 09:30 ora DE in vara (CEST = UTC+2)
-    # si 08:30 ora DE in iarna (CET = UTC+1).
-    # GitHub Actions cron este best-effort; intervalul real poate varia (+5-15 min).
-    - cron: '30 7 * * 1,4'
+  # schedule: # PAUZAT 2026-07-07 de Claude, la cererea proprietarului (stop automatizari scriere)
+    # - cron: '30 7 * * 1,4'
   workflow_dispatch:
 
 jobs:
