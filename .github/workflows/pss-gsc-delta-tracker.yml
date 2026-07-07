@@ -1,8 +1,8 @@
 name: GSC Delta Tracker
 
 on:
-  # schedule: # PAUZAT 2026-07-07 de Claude, la cererea proprietarului (stop automatizari scriere)
-    # - cron: '45 5 * * *'  # 07:45 Germania (UTC+2)
+  schedule:
+    - cron: '45 5 * * *'  # 07:45 Germania (UTC+2)
   workflow_dispatch:        # rulare manuala pentru test
 
 jobs:
