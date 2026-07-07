@@ -101,7 +101,23 @@ function patchAllHtml(newCount, newRatingDecimal, newRatingComma) {
   return patched;
 }
 
+// Debounce: refuza sa ruleze din nou daca ultima rulare a fost recenta.
+// Protectie impotriva rularilor repetate/paralele (manuale, agent, sau workflow
+// declansat de mai multe ori) care ar putea genera commit-uri duplicate si
+// apeluri inutile catre Places API (cost). Vezi incidentul 2026-07-07 (~260
+// commit-uri identice "update review count 6 -> 7" intr-o ora).
+const MIN_INTERVAL_MS = 10 * 60 * 1000; // 10 minute
+
 async function main() {
+  const preCheckState = loadState();
+  if (preCheckState.updatedAt) {
+    const elapsedMs = Date.now() - new Date(preCheckState.updatedAt).getTime();
+    if (elapsedMs < MIN_INTERVAL_MS) {
+      console.log(`Debounce: ultima rulare acum ${Math.round(elapsedMs / 1000)}s. Necesare ${MIN_INTERVAL_MS / 1000}s intre rulari. Exit fara apel API.`);
+      return;
+    }
+  }
+
   const place = await findPlace();
   const newCount = place.userRatingCount || 0;
   const newRatingNumber = place.rating || 5.0;
@@ -112,7 +128,7 @@ async function main() {
   console.log(`Address: ${place.formattedAddress || '?'}`);
   console.log(`Rating: ${newRatingNumber} | Reviews: ${newCount}`);
 
-  const oldState = loadState();
+  const oldState = preCheckState;
   if (oldState.reviewCount === newCount && oldState.ratingDecimal === newRatingDecimal) {
     console.log('No change vs. previous state. Exit.');
     return;
