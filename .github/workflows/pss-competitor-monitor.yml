@@ -1,8 +1,8 @@
 name: PSS Competitor Monitor
 
 on:
-  # schedule: # PAUZAT 2026-07-07 de Claude, la cererea proprietarului (stop automatizari scriere)
-    # - cron: '0 6 * * 1'
+  schedule:
+    - cron: '0 6 * * 1'
   workflow_dispatch:
 
 permissions:
