@@ -1854,6 +1854,772 @@
   status = 301
   force = true
 
+
+# === Consolidare pagini fara trafic (0 afisari GSC in 3 mai - 5 iun 2026) ===
+# Analiza pe date reale Search Console: pagini de sub-servicii per oras fara
+# nicio afisare in cea mai sanatoasa luna dinaintea prabusirii de ranking.
+# Consolidate in hub-uri relevante pentru a opri canibalizarea de cuvinte-cheie.
+[[redirects]]
+  from = "/bauschlussreinigung-baden-baden"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-baden-baden.html"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-buehl"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-buehl.html"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-gernsbach"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-gernsbach.html"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-muggensturm"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-muggensturm.html"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-rheinstetten"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-rheinstetten.html"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-sinzheim"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bauschlussreinigung-sinzheim.html"
+  to = "/reinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroaufloesung-baden-baden"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroaufloesung-baden-baden.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroaufloesung-rheinstetten"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroaufloesung-rheinstetten.html"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroaufloesung-stutensee"
+  to = "/entruempelung-stutensee"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroaufloesung-stutensee.html"
+  to = "/entruempelung-stutensee"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-baden-baden"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-baden-baden.html"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-buehl"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-buehl.html"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-gernsbach"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-gernsbach.html"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-muggensturm"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-muggensturm.html"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-sinzheim"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-sinzheim.html"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-stutensee"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/bueroreinigung-stutensee.html"
+  to = "/bueroreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-achern"
+  to = "/entruempelung-achern"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-achern.html"
+  to = "/entruempelung-achern"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-ettlingen"
+  to = "/entruempelung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-ettlingen.html"
+  to = "/entruempelung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-karlsruhe"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-karlsruhe.html"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-rheinstetten"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-rheinstetten.html"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-sinzheim"
+  to = "/entruempelung-sinzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-sinzheim.html"
+  to = "/entruempelung-sinzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-buehl"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-buehl.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-ettlingen"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-ettlingen.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-gaggenau"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-gaggenau.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-gernsbach"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-gernsbach.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-karlsruhe"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-karlsruhe.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-muggensturm"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-muggensturm.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-rheinstetten"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-rheinstetten.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-sinzheim"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-sinzheim.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-stutensee"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/endreinigung-stutensee.html"
+  to = "/endreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/garagenentruempelung-achern"
+  to = "/entruempelung-achern"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/garagenentruempelung-achern.html"
+  to = "/entruempelung-achern"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/garagenentruempelung-pforzheim"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/garagenentruempelung-pforzheim.html"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/gewerberaeumung-rheinstetten"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/gewerberaeumung-rheinstetten.html"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-buehl"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-buehl.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-gernsbach"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-gernsbach.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-muggensturm"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-muggensturm.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-pforzheim"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-pforzheim.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-rheinstetten"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-rheinstetten.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-sinzheim"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-sinzheim.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-stutensee"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/grundreinigung-stutensee.html"
+  to = "/grundreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-bietigheim"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-bietigheim.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/hausmeisterservice-baden-baden"
+  to = "/hausmeisterservice"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/hausmeisterservice-baden-baden.html"
+  to = "/hausmeisterservice"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/hausmeisterservice-sinzheim"
+  to = "/hausmeisterservice"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/hausmeisterservice-sinzheim.html"
+  to = "/hausmeisterservice"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/kellerentruempelung-baden-baden"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/kellerentruempelung-baden-baden.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/kellerentruempelung-gernsbach"
+  to = "/entruempelung-gernsbach"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/kellerentruempelung-gernsbach.html"
+  to = "/entruempelung-gernsbach"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/kellerentruempelung-rheinstetten"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/kellerentruempelung-rheinstetten.html"
+  to = "/entruempelung-rheinstetten"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-buehl"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-buehl.html"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-gernsbach"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-gernsbach.html"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-muggensturm"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-muggensturm.html"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-rheinstetten"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-rheinstetten.html"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-sinzheim"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-sinzheim.html"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-stutensee"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/unterhaltsreinigung-stutensee.html"
+  to = "/unterhaltsreinigung"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/wohnungsaufloesung-pforzheim"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/wohnungsaufloesung-pforzheim.html"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-entruempelung-denkmalschutz-gebaeude--was-ist-erlaubt"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-entruempelung-denkmalschutz-gebaeude--was-ist-erlaubt.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-entruempelung-nach-hochwasser--schnelle-hilfe"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-entruempelung-nach-hochwasser--schnelle-hilfe.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-luxuswohnung-besondere-anforderungen"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-luxuswohnung-besondere-anforderungen.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-bietigheim-elektroschrott-bei-der-entruempelung--was"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-bietigheim-elektroschrott-bei-der-entruempelung--was.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-gaggenau-raeumungsklage-was-ist-zu-tun"
+  to = "/entruempelung-gaggenau"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-gaggenau-raeumungsklage-was-ist-zu-tun.html"
+  to = "/entruempelung-gaggenau"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-rastatt-reihenhaus-typischer-ablauf"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-rastatt-reihenhaus-typischer-ablauf.html"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-gaggenau-ladenlokal-raeumen-lassen--tipps-fuer"
+  to = "/entruempelung-gaggenau"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-gaggenau-ladenlokal-raeumen-lassen--tipps-fuer.html"
+  to = "/entruempelung-gaggenau"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-karlsruhe-bueroaufloesung--ablauf-und-kosten-in"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-karlsruhe-bueroaufloesung--ablauf-und-kosten-in.html"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-pforzheim-praxisaufloesung--arzt-und-zahnarzt-praxis"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-pforzheim-praxisaufloesung--arzt-und-zahnarzt-praxis.html"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-rastatt-gewerberaeumung--was-ist-zu-beachten"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/gewerberaeumung-rastatt-gewerberaeumung--was-ist-zu-beachten.html"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-baden-baden-was-passiert-mit-verwertbaren-gegenstaenden-bei"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-baden-baden-was-passiert-mit-verwertbaren-gegenstaenden-bei.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-bietigheim-was-gehoert-in-einen-haushaltsaufloesungsvertrag"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-bietigheim-was-gehoert-in-einen-haushaltsaufloesungsvertrag.html"
+  to = "/entruempelung-bietigheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-ettlingen-haushaltsaufloesung-checkliste--nichts-vergessen"
+  to = "/entruempelung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-ettlingen-haushaltsaufloesung-checkliste--nichts-vergessen.html"
+  to = "/entruempelung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-karlsruhe-schmuck-und-wertsachen-bei-haushaltsaufloesung-"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-karlsruhe-schmuck-und-wertsachen-bei-haushaltsaufloesung-.html"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-pforzheim-haushaltsaufloesung-sommer-vs-winter--unterschiede"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/haushaltsaufloesung-pforzheim-haushaltsaufloesung-sommer-vs-winter--unterschiede.html"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-baden-baden-wohnungsaufloesung-mit-hausmeisterservice-kombinieren"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-baden-baden-wohnungsaufloesung-mit-hausmeisterservice-kombinieren.html"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-ettlingen-wohnungsaufloesung-zeitplan--wie-viel-zeit"
+  to = "/entruempelung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-ettlingen-wohnungsaufloesung-zeitplan--wie-viel-zeit.html"
+  to = "/entruempelung-ettlingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-gernsbach-moebel-verkaufen-oder-entsorgen--tipps"
+  to = "/entruempelung-gernsbach"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-gernsbach-moebel-verkaufen-oder-entsorgen--tipps.html"
+  to = "/entruempelung-gernsbach"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-karlsruhe-wohnungsaufloesung-altbau-vs-neubau--unterschiede"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-karlsruhe-wohnungsaufloesung-altbau-vs-neubau--unterschiede.html"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-karlsruhe-wohnungsaufloesung-grossstadt--besonderheiten-und-parkprobleme"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-karlsruhe-wohnungsaufloesung-grossstadt--besonderheiten-und-parkprobleme.html"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-karlsruhe-wohnungsuebergabe-nach-aufloesung--worauf-achten"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-karlsruhe-wohnungsuebergabe-nach-aufloesung--worauf-achten.html"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-pforzheim-wohnungsaufloesung-beim-auszug--alles-auf"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-pforzheim-wohnungsaufloesung-beim-auszug--alles-auf.html"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-rastatt-wohnungsaufloesung-im-winter--besonderheiten"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-rastatt-wohnungsaufloesung-im-winter--besonderheiten.html"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-sinzheim-was-bleibt-in-der-wohnung-"
+  to = "/entruempelung-sinzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/wohnungsaufloesung-sinzheim-was-bleibt-in-der-wohnung-.html"
+  to = "/entruempelung-sinzheim"
+  status = 301
+  force = true
+
 # === GLOBAL: .html -> pretty URL via Edge Function ===
 # Netlify redirects engine nu permite splat capture + suffix stripping
 # Vezi netlify/edge-functions/strip-html.js pentru implementare
