@@ -1,8 +1,8 @@
 name: PSS Ad Refresh Reminder
 
 on:
-  # schedule: # PAUZAT 2026-07-07 de Claude, la cererea proprietarului (stop automatizari scriere)
-    # - cron: '30 7 * * 1,4'
+  schedule:
+    - cron: '30 7 * * 1,4'
   workflow_dispatch:
 
 jobs:
