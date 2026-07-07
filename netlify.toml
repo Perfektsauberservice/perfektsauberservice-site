@@ -1732,6 +1732,128 @@
   status = 301
   force = true
 
+# === Cleanup round 2: district pages + blog duplicates (2026-07-07) ===
+[[redirects]]
+  from = "/entruempelung-karlsruhe-knielingen"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-pforzheim-nordstadt"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-rastatt-rauental"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-oststadt"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-rastatt-entruempelung-reihenhaus--typischer-ablauf"
+  to = "/blog/entruempelung-rastatt-reihenhaus-typischer-ablauf"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-nordstadt"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-rastatt-niederbuehl"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-weststadt"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-baden-baden-steinbach"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-baden-baden-entruempelung-luxuswohnung--besondere-anforderungen"
+  to = "/blog/entruempelung-baden-baden-luxuswohnung-besondere-anforderungen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-hagsfeld"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-suedstadt"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-durlach"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-rastatt-wintersdorf"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-rastatt-plittersdorf"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-baden-baden-oos"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-pforzheim-broetzingen"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-pforzheim-buckenberg"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/blog/entruempelung-gaggenau-entruempelung-bei-raeumungsklage--was-ist"
+  to = "/blog/entruempelung-gaggenau-raeumungsklage-was-ist-zu-tun"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-pforzheim-innenstadt"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-rastatt-ottersdorf"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-karlsruhe-muehlburg"
+  to = "/entruempelung-karlsruhe"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-pforzheim-eutingen"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-pforzheim-dillweissenstein"
+  to = "/entruempelung-pforzheim"
+  status = 301
+  force = true
+
 # === GLOBAL: .html -> pretty URL via Edge Function ===
 # Netlify redirects engine nu permite splat capture + suffix stripping
 # Vezi netlify/edge-functions/strip-html.js pentru implementare
