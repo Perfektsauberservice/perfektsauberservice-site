@@ -1,0 +1,35 @@
+name: PSS GMB Reviews Update
+
+on:
+  schedule:
+    - cron: '15 6 * * *'  # 08:15 Germania (UTC+2) - dupa celelalte joburi de dimineata
+  workflow_dispatch:        # rulare manuala pentru test
+
+jobs:
+  update-reviews:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run GMB Reviews Update
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+        run: node agent/scripts/update-review-count.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "PSS GMB Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "chore: sync review count/rating from Google Business Profile [$(date +%Y-%m-%d)]"
+          git pull --rebase origin master
+          git push
