@@ -1715,6 +1715,23 @@
   status = 410
   force = true
 
+# === Cleanup duplicate/templated district pages (2026-07-07, cerere proprietar) ===
+[[redirects]]
+  from = "/entruempelung-baden-baden-innenstadt"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-baden-baden-lichtental"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/entruempelung-baden-baden-geroldsau"
+  to = "/entruempelung-baden-baden"
+  status = 301
+  force = true
+
 # === GLOBAL: .html -> pretty URL via Edge Function ===
 # Netlify redirects engine nu permite splat capture + suffix stripping
 # Vezi netlify/edge-functions/strip-html.js pentru implementare
