@@ -7,6 +7,13 @@ on:
   #   - cron: '15 6 * * *'
   workflow_dispatch:        # ramane disponibil pentru rulare manuala daca se activeaza billing-ul
 
+# Previne rulari suprapuse (ex. mai multe workflow_dispatch aproape simultane):
+# o rulare noua asteapta sa se termine cea curenta in loc sa porneasca in paralel,
+# eliminand riscul de commit-uri duplicate/race conditions intre rulari concurente.
+concurrency:
+  group: pss-gmb-reviews-update
+  cancel-in-progress: false
+
 jobs:
   update-reviews:
     runs-on: ubuntu-latest
