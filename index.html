@@ -304,24 +304,31 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   .nav-links a:last-child{border-bottom:0;}
   .nav{position:relative;}
 }
+.faq{margin-top:24px; border-top:1px solid var(--line);}
+.faq details{border-bottom:1px solid var(--line); padding:0;}
+.faq details summary{padding:24px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:flex-start; gap:24px; font-weight:500; font-size:1.05rem; line-height:1.4; list-style:none;}
+.faq details summary::-webkit-details-marker{display:none;}
+.faq details summary::after{content:"＋"; font-family:"Geist Mono",monospace; font-size:1.3rem; color:var(--green); transition:transform .3s; flex-shrink:0;}
+.faq details[open] summary::after{content:"−";}
+.faq details .ans{padding:0 0 24px; color:var(--muted); font-size:1rem; line-height:1.7; max-width:78ch;}
 </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://www.google.com/maps?cid=10440757061765338764#organization","foundingDate":"2025","founder":{"@type":"Person","name":"Laura Craciun","jobTitle":"Inhaberin"},"hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"license","name":"Gewerbeanmeldung gemäß Gewerbeordnung"},
+  "@id": "https://www.google.com/maps?cid=10440757061765338764#organization",
   "name": "Perfekt Sauber Service",
   "url": "https://perfektsauberservice.com",
   "telephone": "+49 163 9087197",
   "email": "kontakt@perfektsauberservice.com",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Reutstraße 9",
+    "streetAddress": "Reutstrasse 9",
     "addressLocality": "Loffenau",
     "postalCode": "76597",
     "addressCountry": "DE"
-  },"geo":{"@type":"GeoCoordinates","latitude":48.77141,"longitude":8.39035},
-  "areaServed": ["Rastatt","Baden-Baden","Karlsruhe","Pforzheim","Ettlingen","Gaggenau","Gernsbach","Bühl","Sinzheim","Muggensturm","Rheinstetten","Stutensee","Achern","Bad Wildbad","Bad Herrenalb","Forbach","Iffezheim","Hügelsheim","Kuppenheim","Loffenau","Malsch","Ötigheim","Steinmauern","Weisenbach","Bietigheim","Bischweier","Durmersheim","Au am Rhein","Elchesheim-Illingen","Rheinmünster"],
+  },
+  "areaServed": ["Rastatt","Baden-Baden","Gaggenau","Karlsruhe"],
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
@@ -330,65 +337,14 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       "closes": "20:00"
     }
   ],
-  "sameAs": [
-    "https://www.google.com/maps?cid=10440757061765338764",
-    "https://www.kleinanzeigen.de/pro/PerfektSauberService",
-    "https://www.instagram.com/perfektsauberservice",
-    "https://www.facebook.com/share/18ioBeB6fa/"
-  ],
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue":"5.0",
-    "reviewCount":"8",
+    "reviewCount":"4",
     "bestRating": "5",
     "worstRating": "1"
   },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Räumungs- und Reinigungsdienste — Festpreise",
-    "itemListElement": [
-      {"@type":"Offer","name":"Entrümpelung","price":"150","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"150","priceCurrency":"EUR","description":"ab 150 € Festpreis"},"url":"https://perfektsauberservice.com/leistungen#entruempelung"},
-      {"@type":"Offer","name":"Haushaltsauflösung","price":"690","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"690","priceCurrency":"EUR","description":"ab 690 € Festpreis"},"url":"https://perfektsauberservice.com/haushaltsaufloesung-rastatt"},
-      {"@type":"Offer","name":"Wohnungsauflösung","price":"690","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"690","priceCurrency":"EUR","description":"ab 690 € Festpreis"},"url":"https://perfektsauberservice.com/wohnungsaufloesung-rastatt"},
-      {"@type":"Offer","name":"Endreinigung","price":"199","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"199","priceCurrency":"EUR","description":"ab 199 € Festpreis"},"url":"https://perfektsauberservice.com/endreinigung"},
-      {"@type":"Offer","name":"Bauschlussreinigung","price":"250","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"250","priceCurrency":"EUR","description":"ab 250 € Festpreis"},"url":"https://perfektsauberservice.com/bauschlussreinigung-rastatt"},
-      {"@type":"Offer","name":"Büroreinigung","price":"35","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"35","priceCurrency":"EUR","description":"ab 35 € pro Termin"},"url":"https://perfektsauberservice.com/bueroreinigung"},
-      {"@type":"Offer","name":"Grundreinigung","price":"282","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"282","priceCurrency":"EUR","description":"ab 282 € Festpreis"},"url":"https://perfektsauberservice.com/grundreinigung"},
-      {"@type":"Offer","name":"Büroauflösung","price":"800","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"800","priceCurrency":"EUR","description":"ab 800 € Festpreis"},"url":"https://perfektsauberservice.com/bueroaufloesung-rastatt"},
-      {"@type":"Offer","name":"Unterhaltsreinigung","price":"32","priceCurrency":"EUR","priceSpecification":{"@type":"PriceSpecification","price":"32","priceCurrency":"EUR","description":"ab 32 € pro Termin"},"url":"https://perfektsauberservice.com/unterhaltsreinigung"}
-    ]
-  },
   "review": [
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Lisa Forster" },
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-      "reviewBody": "Super Preis-/Leistungsverhältnis, freundlich und zuverlässig."
-    },
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Jenny Dellit" },
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-      "reviewBody": "Sehr spontane Zusage, sogar am Wochenende. Die Arbeit wurde schnell, sehr günstig und zu vollster Zufriedenheit erledigt. Werde diesen Service auch in Zukunft wieder nutzen. Sehr zu empfehlen!"
-    },
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Holly Fox" },
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-      "reviewBody": "Sehr zufrieden! Schnelle und professionelle Entrümpelung, alles sauber hinterlassen. Klare Empfehlung!"
-    },
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Radu Vlad" },
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-      "reviewBody": "Sehr gute Entrümpelung! Alles wurde sauber und zuverlässig erledigt. Die Räume wurden nach der Arbeit ordentlich gereinigt hinterlassen. Klare Empfehlung!"
-    },
-    {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "Laura Lungu" },
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-      "reviewBody": "Absolut professionell, schnell und zuverlässig! Ich habe die Firma Perfekt Sauber Service für eine komplette Entrümpelung beauftragt und bin mehr als zufrieden. Was für mich nach einer unlösbaren Aufgabe aussah, hat das Team in kürzester Zeit perfekt erledigt. Schnelle Abwicklung: Von der ersten Anfrage bis zur Durchführung verging kaum Zeit. Besenreine Übergabe: Die Räume wurden nach der Entrümpelung nicht nur leer, sondern komplett besenrein hinterlassen. Faire Preisgestaltung: Das Angebot war transparent und fair, keine versteckten Kosten. Freundliches Team: Die Mitarbeiter waren sehr höflich, pünktlich und diskret. Ich werde den Service definitiv wieder in Anspruch nehmen und kann die Firma jedem nur wärmstens ans Herz legen!"
-    },
     {
       "@type": "Review",
       "author": { "@type": "Person", "name": "Larra Laura" },
@@ -400,12 +356,62 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       "author": { "@type": "Person", "name": "Alin Mitroi" },
       "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
       "reviewBody": "Super Service! Sehr freundlich, pünktlich und sauber gearbeitet. Bin wirklich zufrieden und werde den Service wieder nutzen."
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Welche Leistungen bietet Perfekt Sauber Service an?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Perfekt Sauber Service bietet Unterhaltsreinigung, Treppenhausreinigung, Büroreinigung, Endreinigung (Auszugsreinigung), Grundreinigung, Bauschlussreinigung sowie Entrümpelung und Haushaltsauflösung. Einsatzgebiete: Baden-Baden, Rastatt, Karlsruhe, Bühl, Gaggenau, Gernsbach, Ettlingen, Pforzheim, Sinzheim, Achern und Umgebung."
+      }
     },
     {
-      "@type": "Review",
-      "author": { "@type": "Person", "name": "N. Walter" },
-      "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-      "reviewBody": "Sehr netter Kontakt, schnelle Zusage und sofort für den nächsten Tag Termin bekommen, besser geht nicht!"
+      "@type": "Question",
+      "name": "Was kostet eine Treppenhausreinigung in Baden-Baden oder Rastatt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die Treppenhausreinigung beginnt ab 39 € pro Termin — für ein Treppenhaus mit 3–4 Etagen und Gemeinschaftsflur. Regelmäßige Verträge (wöchentlich oder zweiwöchentlich) sind günstiger als Einzeltermine. Festpreis nach kurzer Besichtigung oder Beschreibung — kostenlos und unverbindlich."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hilft Perfekt Sauber Service bei der Wohnungsübergabe damit ich die Kaution zurückbekomme?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja. Unsere Endreinigung ist speziell auf die besenreine und begehungsfertige Übergabe ausgerichtet. Wir reinigen Küche, Bäder, Böden, Fenster innen, Heizkörper, Türzargen und Lichtschalter — alles was Vermieter bei der Abnahme prüfen. Viele Kunden berichten, dass sie die volle Kaution zurückbekommen haben."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "In welchen Städten ist Perfekt Sauber Service tätig?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wir reinigen und entrümpeln in Baden-Baden, Rastatt, Karlsruhe, Bühl, Gaggenau, Gernsbach, Ettlingen, Pforzheim, Sinzheim, Muggensturm, Stutensee, Rheinstetten, Achern und den umliegenden Gemeinden wie Loffenau, Kuppenheim, Iffezheim, Durmersheim, Malsch und weiteren."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was kostet eine Entrümpelung in Rastatt oder Baden-Baden?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Der Preis für eine Entrümpelung richtet sich nach Volumen und Inhalt. Kellerentrümpelung ab 150 €, Wohnungsentrümpelung ab 250 €. Verwertbare Gegenstände werden angerechnet — in manchen Fällen kann die Entrümpelung kostenneutral sein. Kostenloses Angebot nach Besichtigung oder Fotobeschreibung, meist innerhalb von 24 Stunden."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie schnell bekomme ich einen Reinigungstermin?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In der Regel innerhalb von 48 Stunden — werktags oft am nächsten Tag. Für dringende Übergaben oder kurzfristige Auszüge gibt es Express-Termine. Einfach anrufen oder per WhatsApp schreiben: 0163 9087197."
+      }
     }
   ]
 }
@@ -451,7 +457,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     </div>
     <div class="trust">
       <div class="it"><strong>10+</strong><span>Aufträge</span></div>
-      <div class="it"><strong>5,0 ★</strong><span>Google · 8 Rezensionen</span></div>
+      <div class="it"><strong>5,0 ★</strong><span>Google · 4 Rezensionen</span></div>
       <div class="it"><strong>24h</strong><span>Antwortzeit</span></div>
       <div class="it"><strong>0 €</strong><span>Vor-Ort-Angebot</span></div>
     </div>
@@ -471,75 +477,11 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div class="strip-row">
     <span><b>Zufriedenheits-Garantie</b> · kostenfrei nachbessern</span>
     <span><b>Festpreis-Garantie</b> · schriftlich</span>
-    <span><span class="star">★★★★★</span> <b>5,0</b> Google · 8 Rezensionen</span>
+    <span><span class="star">★★★★★</span> <b>5,0</b> Google · 4 Rezensionen</span>
     <span><b>DSGVO-konform</b> · Diskret</span>
-    <span><b>MwSt-Rechnung</b></span>
+    <span><b>Vollständig versichert</b></span>
   </div>
 </div>
-
-<!-- ======== OFFER CATALOG MATRIX ======== -->
-<section class="reveal" style="padding:64px 48px 32px; max-width:1200px; margin:0 auto;" aria-labelledby="preise-h2">
-  <div class="ch-mark" style="text-align:center; justify-content:center; margin-bottom:14px;">Alle Festpreise auf einen Blick</div>
-  <h2 id="preise-h2" class="ch-h" style="text-align:center; max-width:30ch; margin:0 auto 28px;">Neun Leistungen — <em>klare Festpreise</em>, schriftlich nach Besichtigung.</h2>
-  <div style="display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:14px;" class="offer-matrix">
-    <a href="/leistungen#entruempelung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Entrümpelung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 150 € Festpreis</div>
-    </a>
-    <a href="/haushaltsaufloesung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Haushaltsauflösung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 690 € Festpreis</div>
-    </a>
-    <a href="/leistungen#wohnung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Wohnungsauflösung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 690 € Festpreis</div>
-    </a>
-    <a href="/endreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Endreinigung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 199 € Festpreis</div>
-    </a>
-    <a href="/bauschlussreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Bauschlussreinigung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 250 € Festpreis</div>
-    </a>
-    <a href="/bueroreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Büroreinigung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 35 € pro Termin</div>
-    </a>
-    <a href="/grundreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Grundreinigung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 282 € Festpreis</div>
-    </a>
-    <a href="/unterhaltsreinigung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Reinigung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Unterhaltsreinigung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 32 € pro Termin</div>
-    </a>
-    <a href="/leistungen#bueroaufloesung" style="display:block; padding:22px 20px; background:#fff; border:1px solid var(--line, #e5dccb); border-radius:14px; text-decoration:none; color:inherit; transition:transform .18s ease, box-shadow .18s ease;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 16px 32px -16px rgba(26,32,48,.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div style="font-family:'Geist Mono',monospace; font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--green, #5aa83a); margin-bottom:6px;">Räumung</div>
-      <div style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:500; margin-bottom:4px;">Büroauflösung</div>
-      <div style="font-family:'Geist Mono',monospace; font-size:.84rem; color:var(--blue, #1d6dd6); letter-spacing:.02em;">ab 800 € Festpreis</div>
-    </a>
-  </div>
-  <div style="text-align:center; margin-top:28px;">
-    <a href="/preise" style="font-family:'Geist Mono',monospace; font-size:.74rem; letter-spacing:.18em; text-transform:uppercase; color:var(--blue, #1d6dd6); border-bottom:1px dotted currentColor; padding-bottom:2px;">Alle Preise &amp; Beispielrechnungen ansehen →</a>
-  </div>
-  <style>
-    @media (max-width: 820px) {
-      .offer-matrix { grid-template-columns: 1fr 1fr !important; }
-    }
-    @media (max-width: 520px) {
-      .offer-matrix { grid-template-columns: 1fr !important; }
-    }
-  </style>
-</section>
 
 <!-- ======== FOUNDER POSITIONING ======== -->
 <section style="padding:72px 48px; max-width:1100px; margin:0 auto; text-align:center;" class="reveal">
@@ -903,13 +845,13 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <!-- ======== REVIEWS ======== -->
 <section class="rev" id="stimmen">
   <div class="rev-head reveal">
-    <div class="rev-mark">★★★★★ · 5,0 auf Google · 8 Rezensionen</div>
+    <div class="rev-mark">★★★★★ · 5,0 auf Google · 4 Rezensionen · 4 Rezensionen</div>
     <h2>Was Kund:innen <em>wirklich</em> sagen.</h2>
   </div>
   <div class="rev-grid">
     <div class="rev-card reveal"><div class="stars">★★★★★</div><p>„Sehr freundlicher und zuverlässiger Service. Die Arbeit wurde schnell, sauber und professionell erledigt. Die Kommunikation war unkompliziert und angenehm. Ich bin sehr zufrieden und kann Perfekt Sauber Service auf jeden Fall weiterempfehlen."</p><div class="who">— Larra Laura · Google Review</div></div>
     <div class="rev-card reveal"><div class="stars">★★★★★</div><p>„Super Service! Sehr freundlich, pünktlich und sauber gearbeitet. Bin wirklich zufrieden und werde den Service wieder nutzen."</p><div class="who">— Alin Mitroi · Google Review</div></div>
-    <div class="rev-card reveal" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(180deg, #fff, #f3ede0);"><div style="font-family:'Fraunces',serif; font-style:italic; font-size:3rem; color:var(--blue); line-height:1;">5,0</div><div class="stars" style="margin:8px 0 14px;">★★★★★</div><p style="font-family:'Geist Mono',monospace; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:18px;">Google Bewertungen</p><a href="https://g.page/r/CYyWrOw6BeWQEBM/review" target="_blank" rel="noopener" class="btn btn-sec" style="font-size:.7rem; padding:10px 18px;">Auf Google ansehen →</a></div>
+    <div class="rev-card reveal" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background:linear-gradient(180deg, #fff, #f3ede0);"><div style="font-family:'Fraunces',serif; font-style:italic; font-size:3rem; color:var(--blue); line-height:1;">5,0</div><div class="stars" style="margin:8px 0 14px;">★★★★★</div><p style="font-family:'Geist Mono',monospace; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:18px;">Google Bewertungen</p><a href="https://www.google.com/search?q=perfekt+sauber+service+reviews" target="_blank" rel="noopener" class="btn btn-sec" style="font-size:.7rem; padding:10px 18px;">Auf Google ansehen →</a></div>
   </div>
 </section>
 
@@ -981,6 +923,38 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div style="display:flex; flex-wrap:wrap; gap:8px;"><a href="/entruempelung-rastatt" class="chip">Rastatt</a><a href="/entruempelung-baden-baden" class="chip">Baden-Baden</a><a href="/entruempelung-karlsruhe" class="chip">Karlsruhe</a><a href="/entruempelung-pforzheim" class="chip">Pforzheim</a><a href="/entruempelung-ettlingen" class="chip">Ettlingen</a><a href="/entruempelung-gaggenau" class="chip">Gaggenau</a><a href="/entruempelung-gernsbach" class="chip">Gernsbach</a><a href="/entruempelung-buehl" class="chip">Bühl</a><a href="/entruempelung-sinzheim" class="chip">Sinzheim</a><a href="/entruempelung-muggensturm" class="chip">Muggensturm</a><a href="/entruempelung-rheinstetten" class="chip">Rheinstetten</a><a href="/entruempelung-stutensee" class="chip">Stutensee</a><a href="/entruempelung-achern" class="chip">Achern</a><a href="/entruempelung-bad-wildbad" class="chip">Bad Wildbad</a><a href="/entruempelung-bad-herrenalb" class="chip">Bad Herrenalb</a><a href="/entruempelung-forbach" class="chip">Forbach</a><a href="/entruempelung-iffezheim" class="chip">Iffezheim</a><a href="/entruempelung-huegelsheim" class="chip">Hügelsheim</a><a href="/entruempelung-kuppenheim" class="chip">Kuppenheim</a><a href="/entruempelung-loffenau" class="chip">Loffenau</a><a href="/entruempelung-malsch" class="chip">Malsch</a><a href="/entruempelung-oetigheim" class="chip">Ötigheim</a><a href="/entruempelung-steinmauern" class="chip">Steinmauern</a><a href="/entruempelung-weisenbach" class="chip">Weisenbach</a><a href="/entruempelung-bietigheim" class="chip">Bietigheim</a><a href="/entruempelung-bischweier" class="chip">Bischweier</a><a href="/entruempelung-durmersheim" class="chip">Durmersheim</a><a href="/entruempelung-au-am-rhein" class="chip">Au am Rhein</a><a href="/entruempelung-elchesheim-illingen" class="chip">Elchesheim-Illingen</a><a href="/entruempelung-rheinmuenster" class="chip">Rheinmünster</a></div>
   
 </section>
+<!-- ======== FAQ ======== -->
+<section class="sec" id="faq">
+  <div class="sec-mark">Häufige Fragen</div>
+  <h2 class="sec-h"><em>Häufige</em> Fragen zu Reinigung &amp; Entrümpelung</h2>
+  <div class="faq">
+    <details open>
+      <summary>Welche Leistungen bietet Perfekt Sauber Service an?</summary>
+      <div class="ans">Unterhaltsreinigung, Treppenhausreinigung, Büroreinigung, Endreinigung (Auszugsreinigung), Grundreinigung, Bauschlussreinigung sowie Entrümpelung und Haushaltsauflösung. Einsatzgebiete: Baden-Baden, Rastatt, Karlsruhe, Bühl, Gaggenau, Gernsbach, Ettlingen, Pforzheim, Sinzheim, Achern und Umgebung.</div>
+    </details>
+    <details>
+      <summary>Was kostet eine Treppenhausreinigung in Baden-Baden oder Rastatt?</summary>
+      <div class="ans">Die Treppenhausreinigung beginnt ab 39 € pro Termin — für ein Treppenhaus mit 3–4 Etagen und Gemeinschaftsflur. Regelmäßige Verträge (wöchentlich oder zweiwöchentlich) sind günstiger als Einzeltermine. Festpreis nach kurzer Besichtigung oder Beschreibung — kostenlos und unverbindlich.</div>
+    </details>
+    <details>
+      <summary>Hilft Perfekt Sauber Service bei der Wohnungsübergabe, damit ich die Kaution zurückbekomme?</summary>
+      <div class="ans">Ja. Unsere Endreinigung ist auf die besenreine und begehungsfertige Übergabe ausgerichtet. Wir reinigen Küche, Bäder, Böden, Fenster innen, Heizkörper, Türzargen und Lichtschalter — alles was Vermieter bei der Abnahme prüfen. Viele Kunden berichten, dass sie die volle Kaution zurückbekommen haben.</div>
+    </details>
+    <details>
+      <summary>In welchen Städten sind Sie tätig?</summary>
+      <div class="ans">Wir reinigen und entrümpeln in Baden-Baden, Rastatt, Karlsruhe, Bühl, Gaggenau, Gernsbach, Ettlingen, Pforzheim, Sinzheim, Muggensturm, Stutensee, Rheinstetten, Achern und den umliegenden Gemeinden wie Loffenau, Kuppenheim, Iffezheim, Durmersheim, Malsch und weiteren.</div>
+    </details>
+    <details>
+      <summary>Was kostet eine Entrümpelung in Rastatt oder Baden-Baden?</summary>
+      <div class="ans">Der Preis richtet sich nach Volumen und Inhalt. Kellerentrümpelung ab 150 €, Wohnungsentrümpelung ab 250 €. Verwertbare Gegenstände werden angerechnet — in manchen Fällen kann die Entrümpelung kostenneutral sein. Kostenloses Angebot nach Besichtigung oder Fotobeschreibung, meist innerhalb von 24 Stunden.</div>
+    </details>
+    <details>
+      <summary>Wie schnell bekomme ich einen Reinigungstermin?</summary>
+      <div class="ans">In der Regel innerhalb von 48 Stunden — werktags oft am nächsten Tag. Für dringende Übergaben oder kurzfristige Auszüge gibt es Express-Termine. Einfach anrufen oder per WhatsApp schreiben: 0163 9087197.</div>
+    </details>
+  </div>
+</section>
+
 <!-- ======== CONTACT ======== -->
 <section class="contact" id="kontakt">
   <div class="contact-wrap">
@@ -1029,7 +1003,6 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   }
   btnAccept.addEventListener('click', () => {
     localStorage.setItem(KEY, 'all');
-    if (typeof window.psGrantConsent === 'function') window.psGrantConsent();
     if (typeof window.psLoadGA === 'function') window.psLoadGA();
     hide();
   });
@@ -1308,44 +1281,28 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
   // Close menu on link click
   links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }); });
 })();</script>
-<!-- Google Analytics 4 (Consent Mode Advanced, DSGVO/TTDSG — se incarca mereu, consimtamant denied default, pinguri fara cookie inainte de accept) -->
+<!-- Google Analytics 4 (consent-gated, DSGVO/TTDSG compliant — only loads if user opted in) -->
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
-// Consent Mode v2 — default denied (kein Cookie/Storage vor Opt-in; cookieless pings ermoeglichen Conversion-Modellierung)
-gtag('consent', 'default', {
-  ad_storage: 'denied', ad_user_data: 'denied',
-  ad_personalization: 'denied', analytics_storage: 'denied',
-  wait_for_update: 500
-});
-// Consent Mode Advanced: pinguri fara cookie pentru modelare + atribuire gclid fara cookies
-gtag('set', 'ads_data_redaction', true);
-gtag('set', 'url_passthrough', true);
 window.psLoadGA = function(){
   if (window.psGALoaded) return; window.psGALoaded = true;
   gtag('js', new Date());
   gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
-  gtag('config', 'AW-18036757035');
-  gtag('config', 'AW-18036757035/LLZLCLHMmM8cEKukzJhD', { 'phone_conversion_number': '0163 9087197' });
   var s = document.createElement('script');
   s.async = true;
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
   document.head.appendChild(s);
 };
-window.psGrantConsent = function(){
-  gtag('consent', 'update', {
-    ad_storage: 'granted', ad_user_data: 'granted',
-    ad_personalization: 'granted', analytics_storage: 'granted'
-  });
-};
 (function(){
   try {
-    if (localStorage.getItem('psCookieChoice') === 'all') window.psGrantConsent();
+    var c = localStorage.getItem('psCookieChoice');
+    if (c === 'all') {
+      if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
+      else setTimeout(window.psLoadGA, 2500);
+    }
   } catch(e) {}
-  if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
-  else setTimeout(window.psLoadGA, 2500);
 })();
 </script>
 </body>
 </html>
-
