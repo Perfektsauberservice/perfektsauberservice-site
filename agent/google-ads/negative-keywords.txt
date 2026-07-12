@@ -253,3 +253,56 @@
 +orientierungswert
 +pauschalpreis vergleich
 +festpreis vergleich
+
+# ─────────────────────────────────────────
+# 8. SUBCONTRACTORS / B2B COLD CALLS (added 2026-05-15)
+# Other cleaning firms calling to offer/request subcontracts via our ads
+# ─────────────────────────────────────────
++subunternehmer
++subunternehmen
++sub-unternehmer
++subunternehmer gesucht
++nachunternehmer
++nachunternehmer gesucht
++kooperationspartner
++kooperationspartner gesucht
++kooperation gesucht
++partnerfirma
++partnerfirma gesucht
++geschäftspartner gesucht
++reinigungsfirma sucht
++reinigungsfirma gesucht
++putzfirma sucht
++putzfirma gesucht
++reinigungsdienst sucht
++gebäudereiniger sucht
++entrümpelungsfirma sucht
++entrümpler gesucht
++dienstleister gesucht
++anbieter gesucht
++auftragnehmer gesucht
++auftrag vergeben
++auftrag zu vergeben
++aufträge zu vergeben
++aufträge vergeben
++ausschreibung
++ausschreibungen
++rahmenvertrag
++rahmenverträge
++großauftrag
++großaufträge
++vertrieb
++vertriebspartner
++franchise
++franchisepartner
++lizenznehmer
++leadgenerierung
++leads kaufen
++kundenakquise
++neukundengewinnung
++seo agentur
++marketing agentur
++werbeagentur
++branchenbuch
++branchenverzeichnis
++eintrag verzeichnis
