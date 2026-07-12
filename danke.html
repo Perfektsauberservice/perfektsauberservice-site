@@ -270,6 +270,8 @@ window.psLoadGA = function(){
   if (window.psGALoaded) return; window.psGALoaded = true;
   gtag('js', new Date());
   gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
+  gtag('config', 'AW-18036757035');
+  gtag('config', 'AW-18036757035/LLZLCLHMmM8cEKukzJhD', { 'phone_conversion_number': '0163 9087197' });
   // /danke page is reachable only via Netlify form-submit redirect (noindex,nofollow,
   // not linked internally). Page-load fires the GA4 lead-capture event.
   gtag('event', 'form_submit', { form_name: 'lead', page_path: location.pathname, value: 25, currency: 'EUR' });

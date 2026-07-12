@@ -1308,7 +1308,7 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
   // Close menu on link click
   links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }); });
 })();</script>
-<!-- Google Analytics 4 (consent-gated, DSGVO/TTDSG compliant — only loads if user opted in) -->
+<!-- Google Analytics 4 (Consent Mode Advanced, DSGVO/TTDSG — se incarca mereu, consimtamant denied default, pinguri fara cookie inainte de accept) -->
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -1318,10 +1318,15 @@ gtag('consent', 'default', {
   ad_personalization: 'denied', analytics_storage: 'denied',
   wait_for_update: 500
 });
+// Consent Mode Advanced: pinguri fara cookie pentru modelare + atribuire gclid fara cookies
+gtag('set', 'ads_data_redaction', true);
+gtag('set', 'url_passthrough', true);
 window.psLoadGA = function(){
   if (window.psGALoaded) return; window.psGALoaded = true;
   gtag('js', new Date());
   gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
+  gtag('config', 'AW-18036757035');
+  gtag('config', 'AW-18036757035/LLZLCLHMmM8cEKukzJhD', { 'phone_conversion_number': '0163 9087197' });
   var s = document.createElement('script');
   s.async = true;
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
