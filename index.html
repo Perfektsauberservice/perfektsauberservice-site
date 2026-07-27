@@ -964,7 +964,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     </div>
     <div class="contact-btns reveal">
       <a href="https://wa.me/491639087197" class="cb cb-w"><span>WhatsApp</span><span>+49 163 9087197 →</span></a>
-      <a href="tel:+491639087197" class="cb cb-p"><span>Anruf</span><span>+49 163 9087197 →</span></a>
+      <a href="tel:+491639087197" class="cb cb-p"><span>Anruf</span><span>0163 9087197 →</span></a>
       <a href="mailto:kontakt@perfektsauberservice.com" class="cb cb-m"><span>E-Mail</span><span>kontakt@perfektsauberservice.com →</span></a>
     </div>
   </div>
@@ -1003,6 +1003,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   }
   btnAccept.addEventListener('click', () => {
     localStorage.setItem(KEY, 'all');
+    if (typeof window.psGrantConsent === 'function') window.psGrantConsent();
     if (typeof window.psLoadGA === 'function') window.psLoadGA();
     hide();
   });
@@ -1285,23 +1286,35 @@ document.querySelectorAll('[data-ba]').forEach(wrap => {
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+// Consent Mode v2 — default denied (kein Cookie/Storage vor Opt-in; cookieless pings ermoeglichen Conversion-Modellierung)
+gtag('consent', 'default', {
+  ad_storage: 'denied', ad_user_data: 'denied',
+  ad_personalization: 'denied', analytics_storage: 'denied',
+  wait_for_update: 500
+});
 window.psLoadGA = function(){
   if (window.psGALoaded) return; window.psGALoaded = true;
   gtag('js', new Date());
   gtag('config', 'G-BMC32KSYKF', { anonymize_ip: true });
+  gtag('config', 'AW-18036757035');
+  gtag('config', 'AW-18036757035/LLZLCLHMmM8cEKukzJhD', { 'phone_conversion_number': '0163 9087197' });
   var s = document.createElement('script');
   s.async = true;
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
   document.head.appendChild(s);
 };
+window.psGrantConsent = function(){
+  gtag('consent', 'update', {
+    ad_storage: 'granted', ad_user_data: 'granted',
+    ad_personalization: 'granted', analytics_storage: 'granted'
+  });
+};
 (function(){
   try {
-    var c = localStorage.getItem('psCookieChoice');
-    if (c === 'all') {
-      if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
-      else setTimeout(window.psLoadGA, 2500);
-    }
+    if (localStorage.getItem('psCookieChoice') === 'all') window.psGrantConsent();
   } catch(e) {}
+  if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
+  else setTimeout(window.psLoadGA, 2500);
 })();
 </script>
 </body>
