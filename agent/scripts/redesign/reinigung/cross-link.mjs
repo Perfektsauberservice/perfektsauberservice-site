@@ -48,7 +48,7 @@ function cityLabelFromHtml(html, fallback) {
   // E.g. H1 "Büroauflösung Karlsruhe und Umgebung — ..."
   const m = html.match(/<h1[^>]*class="h1"[^>]*>([\s\S]*?)<\/h1>/);
   if (!m) return fallback;
-  const t = m[1].replace(/<[^>]+>/g, '').trim();
+  const t = m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   // Take 2nd word as the city (works for "Büroauflösung Karlsruhe...")
   const parts = t.split(/\s+/);
   // Prefer multi-word city names (Bad Wildbad, Au am Rhein, Baden-Baden)
