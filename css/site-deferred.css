@@ -138,8 +138,8 @@
 
 /* MOBILE FAB */
 .fab{display:none;}
-@media(max-width:780px){
-  .fab{display:flex; position:fixed; bottom:18px; right:18px; z-index:60; gap:10px;}
+@media(max-width:1024px){
+  .fab{display:flex; position:fixed; bottom:18px; right:18px; z-index:1001; gap:10px;}
   .fab a{width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center;
     box-shadow:0 8px 20px rgba(0,0,0,.25); color:#fff; font-size:1.4rem;}
   .fab .w{background:#25d366;} .fab .p{background:var(--blue);}
