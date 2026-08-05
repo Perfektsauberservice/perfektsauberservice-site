@@ -128,12 +128,12 @@
   force = true
 [[redirects]]
   from = "/fensterreinigung-buehl"
-  to = "/grundreinigung-buehl"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-buehl.html"
-  to = "/grundreinigung-buehl"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
@@ -158,12 +158,12 @@
   force = true
 [[redirects]]
   from = "/fensterreinigung-gernsbach"
-  to = "/grundreinigung-gernsbach"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-gernsbach.html"
-  to = "/grundreinigung-gernsbach"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
@@ -178,22 +178,22 @@
   force = true
 [[redirects]]
   from = "/fensterreinigung-muggensturm"
-  to = "/grundreinigung-muggensturm"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-muggensturm.html"
-  to = "/grundreinigung-muggensturm"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-pforzheim"
-  to = "/grundreinigung-pforzheim"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-pforzheim.html"
-  to = "/grundreinigung-pforzheim"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
@@ -208,32 +208,32 @@
   force = true
 [[redirects]]
   from = "/fensterreinigung-rheinstetten"
-  to = "/grundreinigung-rheinstetten"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-rheinstetten.html"
-  to = "/grundreinigung-rheinstetten"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-sinzheim"
-  to = "/grundreinigung-sinzheim"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-sinzheim.html"
-  to = "/grundreinigung-sinzheim"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-stutensee"
-  to = "/grundreinigung-stutensee"
+  to = "/grundreinigung"
   status = 301
   force = true
 [[redirects]]
   from = "/fensterreinigung-stutensee.html"
-  to = "/grundreinigung-stutensee"
+  to = "/grundreinigung"
   status = 301
   force = true
 
@@ -1763,7 +1763,7 @@
   force = true
 [[redirects]]
   from = "/blog/entruempelung-rastatt-entruempelung-reihenhaus--typischer-ablauf"
-  to = "/blog/entruempelung-rastatt-reihenhaus-typischer-ablauf"
+  to = "/entruempelung-rastatt"
   status = 301
   force = true
 [[redirects]]
@@ -1788,7 +1788,7 @@
   force = true
 [[redirects]]
   from = "/blog/entruempelung-baden-baden-entruempelung-luxuswohnung--besondere-anforderungen"
-  to = "/blog/entruempelung-baden-baden-luxuswohnung-besondere-anforderungen"
+  to = "/entruempelung-baden-baden"
   status = 301
   force = true
 [[redirects]]
@@ -1833,7 +1833,7 @@
   force = true
 [[redirects]]
   from = "/blog/entruempelung-gaggenau-entruempelung-bei-raeumungsklage--was-ist"
-  to = "/blog/entruempelung-gaggenau-raeumungsklage-was-ist-zu-tun"
+  to = "/entruempelung-gaggenau"
   status = 301
   force = true
 [[redirects]]
