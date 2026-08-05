@@ -1,3 +1,6 @@
+/* GLOBAL: prevent mobile horizontal scroll (html is the actual scroll root on many mobile browsers, not just body) */
+html{overflow-x:hidden;}
+
 /* PRICE TABLE (editorial) */
 .price-edit{display:grid; grid-template-columns:1fr; border-top:1px solid var(--line); margin-top:24px;}
 .price-row{display:grid; grid-template-columns:1.4fr 2fr 130px; gap:24px; padding:24px 0;
