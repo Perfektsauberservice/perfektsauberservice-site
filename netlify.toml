@@ -361,6 +361,55 @@
   status = 301
   force = true
 
+# === Consolidare: Bietigheim (Baden) -> Rastatt (semnal GSC neglijabil, ~5km distanță) ===
+[[redirects]]
+  from = "/entruempelung-bietigheim"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/entruempelung-bietigheim.html"
+  to = "/entruempelung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/gewerberaeumung-bietigheim"
+  to = "/gewerberaeumung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/gewerberaeumung-bietigheim.html"
+  to = "/gewerberaeumung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wohnungsaufloesung-bietigheim"
+  to = "/wohnungsaufloesung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wohnungsaufloesung-bietigheim.html"
+  to = "/wohnungsaufloesung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-bietigheim"
+  to = "/haushaltsaufloesung-rastatt"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-bietigheim.html"
+  to = "/haushaltsaufloesung-rastatt"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/haushaltsaufloesung-sandweier"
   to = "/haushaltsaufloesung-baden-baden"
