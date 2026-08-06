@@ -2007,16 +2007,6 @@
   status = 301
   force = true
 [[redirects]]
-  from = "/bueroreinigung-baden-baden"
-  to = "/bueroreinigung"
-  status = 301
-  force = true
-[[redirects]]
-  from = "/bueroreinigung-baden-baden.html"
-  to = "/bueroreinigung"
-  status = 301
-  force = true
-[[redirects]]
   from = "/bueroreinigung-buehl"
   to = "/bueroreinigung"
   status = 301
