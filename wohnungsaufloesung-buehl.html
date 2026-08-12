@@ -198,7 +198,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
-    <a href="/preisrechner">Preis-Rechner</a>
+    
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
@@ -212,7 +212,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
         <div class="cta-row">
       <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
       <a href="https://wa.me/491639087197?text=Hallo%2C%20ich%20m%C3%B6chte%20eine%20Wohnungsaufl%C3%B6sung%20in%20Bühl%20anfragen." class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
-      <a href="/preisrechner" class="btn btn-sec">Preis berechnen</a>
+      
     </div>
 <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="hero-form">
       <input type="hidden" name="form-name" value="lead">
@@ -280,7 +280,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <div class="price-ex">Bad, Küche, Fenster, Böden komplett — Vermieterstandard</div>
       <div class="price-val">+85 € bis +250 €</div>
     </div></div>
-    <div class="price-note"><strong>Im Festpreis enthalten:</strong> Komplette Räumung, Demontage, Abtransport, fachgerechte Entsorgung nach Bühler Vorgaben, besenreine Grundübergabe. <strong>Anfahrt nach Bühl ist eingerechnet.</strong> <strong>Kautions-sicher:</strong> Auf Wunsch Übergabeprotokoll mit Fotos. <strong>Wertanrechnung:</strong> Möbel in gutem Zustand mindern Endpreis. Detail im <a href="/preisrechner">Preisrechner</a>.</div>
+    <div class="price-note"><strong>Im Festpreis enthalten:</strong> Komplette Räumung, Demontage, Abtransport, fachgerechte Entsorgung nach Bühler Vorgaben, besenreine Grundübergabe. <strong>Anfahrt nach Bühl ist eingerechnet.</strong> <strong>Kautions-sicher:</strong> Auf Wunsch Übergabeprotokoll mit Fotos. <strong>Wertanrechnung:</strong> Möbel in gutem Zustand mindern Endpreis.</div>
   </section>
 <section class="sec alt">
     <div style="max-width:1440px; margin:0 auto;">
@@ -537,9 +537,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     var a = e.target && e.target.closest && e.target.closest('a');
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
   });
 })();
 </script>

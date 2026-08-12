@@ -188,7 +188,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
-    <a href="/preisrechner">Preis-Rechner</a>
+    
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
@@ -211,7 +211,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     E-Mail: kontakt@perfektsauberservice.com</p>
 
     <p><strong>Wie erfassen wir Ihre Daten?</strong><br>
-    Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen – z. B. durch Eingabe im Preisrechner oder Kontaktaufnahme per WhatsApp oder E-Mail. Andere Daten werden automatisch beim Besuch der Website durch unsere IT-Systeme erfasst (technische Daten wie Browser und Betriebssystem).</p>
+    Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen – z. B. durch das Kontaktformular oder Kontaktaufnahme per WhatsApp oder E-Mail. Andere Daten werden automatisch beim Besuch der Website durch unsere IT-Systeme erfasst (technische Daten wie Browser und Betriebssystem).</p>
 
     <p><strong>Wofür nutzen wir Ihre Daten?</strong><br>
     Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Beantwortung Ihrer Anfragen und zur Angebotserstellung verwendet werden.</p>
@@ -250,10 +250,10 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   <div class="card">
     <h2>4. Datenerfassung auf dieser Website</h2>
 
-    <h3>Kontaktformular / Preisrechner</h3>
-    <p>Wenn Sie uns per Preisrechner oder E-Mail Anfragen übermitteln, werden Ihre Angaben inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+    <h3>Kontaktformular</h3>
+    <p>Wenn Sie uns per Kontaktformular oder E-Mail Anfragen übermitteln, werden Ihre Angaben inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
     <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO).</p>
-    <p>Die von Ihnen im Preisrechner eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
+    <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
 
     <h3>WhatsApp</h3>
     <p>Für die Kontaktaufnahme per WhatsApp nutzen wir den Dienst der WhatsApp Ireland Limited, 4 Grand Canal Square, Grand Canal Harbour, Dublin 2, Irland. Bitte beachten Sie die Datenschutzrichtlinie von WhatsApp: <a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">https://www.whatsapp.com/legal/privacy-policy-eea</a></p>
@@ -329,9 +329,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     var a = e.target && e.target.closest && e.target.closest('a');
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
   });
 })();
 </script>

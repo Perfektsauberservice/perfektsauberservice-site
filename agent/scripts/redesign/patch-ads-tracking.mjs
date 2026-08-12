@@ -17,9 +17,9 @@ const INJECT = `
     var a = e.target && e.target.closest && e.target.closest('a');
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
   });`;
 
 function listHtml(dir) {

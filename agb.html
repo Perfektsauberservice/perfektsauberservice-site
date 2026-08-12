@@ -131,7 +131,7 @@ footer.foot a:hover{text-decoration:underline;}
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
-    <a href="/preisrechner">Preis-Rechner</a>
+    
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
@@ -158,7 +158,7 @@ footer.foot a:hover{text-decoration:underline;}
 
   <div class="card">
     <h2>§ 2 Vertragsschluss</h2>
-    <p>(1) Anfragen über das Kontaktformular, den Preisrechner, per E-Mail, Telefon oder WhatsApp stellen eine unverbindliche Anfrage des Auftraggebers dar.</p>
+    <p>(1) Anfragen über das Kontaktformular, per E-Mail, Telefon oder WhatsApp stellen eine unverbindliche Anfrage des Auftraggebers dar.</p>
     <p>(2) Der Auftragnehmer erstellt nach Anfrage – in der Regel nach kostenloser Vor-Ort-Besichtigung – ein konkretes Angebot. Das Angebot ist, sofern nicht anders gekennzeichnet, <strong>14 Tage</strong> ab Ausstellung gültig.</p>
     <p>(3) Der Vertrag kommt zustande, sobald der Auftraggeber das Angebot ausdrücklich (schriftlich, per E-Mail, WhatsApp-Bestätigung oder durch Unterschrift auf einem Auftragsformular) annimmt.</p>
     <p>(4) Die Vertragssprache ist Deutsch. Der Vertragstext wird vom Auftragnehmer in Form des Angebots gespeichert.</p>
@@ -285,9 +285,9 @@ footer.foot a:hover{text-decoration:underline;}
     var a = e.target && e.target.closest && e.target.closest('a');
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
   });
 })();
 </script>

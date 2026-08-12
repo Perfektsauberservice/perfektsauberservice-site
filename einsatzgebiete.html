@@ -197,7 +197,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       "name": "Kann ich vorab den Preis grob einschätzen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Ja. Für eine erste Orientierung können Sie den Preisrechner nutzen oder uns direkt Fotos per WhatsApp senden."
+        "text": "Ja. Für eine erste Orientierung senden Sie uns direkt Fotos per WhatsApp."
       }
     }
   ]
@@ -256,7 +256,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
-    <a href="/preisrechner">Preis-Rechner</a>
+    
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
@@ -269,7 +269,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <div class="cta-row">
       <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
       <a href="https://wa.me/491639087197" class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
-      <a href="/preisrechner" class="btn btn-sec">Preis berechnen</a>
+      
     </div>
     
   </div>
@@ -395,15 +395,14 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 
       <div class="faq-item">
         <strong>Kann ich vorab den Preis grob einschätzen?</strong>
-        <p>Ja. Für eine erste Orientierung können Sie den Preisrechner nutzen oder uns direkt Fotos per WhatsApp senden.</p>
+        <p>Ja. Für eine erste Orientierung senden Sie uns direkt Fotos per WhatsApp.</p>
       </div></div>
   </section>
 <section class="sec">
     <h2 class="sec-h">Sie <em>sind</em> unsicher, ob Ihr Ort dazugehört?</h2>
-    <div style="font-size:1.05rem; line-height:1.7; color:var(--muted); max-width:62ch;"><p>Wenn Sie schnell wissen möchten, ob wir auch in Ihrem Ort oder im direkten Umland im Einsatz sind, schreiben Sie uns kurz per WhatsApp oder nutzen Sie den Preisrechner für eine erste Orientierung.</p>
+    <div style="font-size:1.05rem; line-height:1.7; color:var(--muted); max-width:62ch;"><p>Wenn Sie schnell wissen möchten, ob wir auch in Ihrem Ort oder im direkten Umland im Einsatz sind, schreiben Sie uns kurz per WhatsApp für eine erste Orientierung.</p>
       <div class="btn-row">
         <a class="btn btn-green" href="https://wa.me/491639087197" target="_blank" rel="noreferrer">WhatsApp öffnen</a>
-        <a class="btn btn-light" href="/preisrechner">Preisrechner</a>
       </div></div>
   </section>
 <section class="contact" id="kontakt">
@@ -452,9 +451,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     var a = e.target && e.target.closest && e.target.closest('a');
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
   });
 })();
 </script>

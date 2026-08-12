@@ -246,7 +246,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
-    <a href="/preisrechner">Preis-Rechner</a>
+    
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
@@ -259,7 +259,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <div class="art-meta">Veröffentlicht: 2026-04-20</div>
     <div class="art-actions">
       <a href="https://wa.me/491639087197" class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
-      <a href="/preisrechner" class="btn btn-sec">Preisrechner</a>
+      
       <a href="/haushaltsaufloesung-gaggenau" class="btn btn-sec">Zur Stadtseite</a>
     </div>
   </div>
@@ -288,7 +288,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <section class="art-section">
     <h2>Was kostet das in Gaggenau?</h2>
     <div><p>Eine Haushaltsauflösung in Gaggenau kostet je nach Umfang zwischen 300 und 1.500 €. Gartengeräte und Außenmöbel in gutem Zustand können den Preis durch Wiederverkauf deutlich senken. Manche Anbieter verrechnen den Erlös direkt mit den Auftragskosten.</p></div>
-    <div class="art-notice">💡 Nutzen Sie unseren <a href="/preisrechner" style="color:inherit;text-decoration:underline">kostenlosen Preisrechner</a> für eine erste Einschätzung – ohne Verpflichtung.</div>
+    <div class="art-notice">💡 Schicken Sie uns ein paar Fotos per <a href="https://wa.me/491639087197" target="_blank" rel="noreferrer" style="color:inherit;text-decoration:underline">WhatsApp</a> für eine erste kostenlose Einschätzung – ohne Verpflichtung.</div>
   </section>
 <section class="art-section">
       <h2>Häufige Fragen</h2>
@@ -312,11 +312,11 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     </section>
 <section class="art-section" style="background:var(--bg-2); padding:32px 28px; border-radius:14px; text-align:center;">
       <h2>Jetzt kostenlos anfragen</h2>
-      <div><p style="font-size:1.05rem; line-height:1.7;">Für ein unverbindliches Angebot in Gaggenau einfach Kontakt aufnehmen – per WhatsApp, Telefon oder Preisrechner.</p></div>
+      <div><p style="font-size:1.05rem; line-height:1.7;">Für ein unverbindliches Angebot in Gaggenau einfach Kontakt aufnehmen – per WhatsApp, Telefon.</p></div>
       <div class="art-actions" style="justify-content:center; margin-top:20px;">
         <a href="https://wa.me/491639087197" class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp</a>
         <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
-        <a href="/preisrechner" class="btn btn-sec">Preisrechner</a>
+        
       </div>
     </section>
 <p class="art-credit">Foto: <a href="https://www.pexels.com/@pamanjoe" target="_blank" rel="noopener">el jusuf</a> auf <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a></p>
@@ -368,9 +368,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     var a = e.target && e.target.closest && e.target.closest('a');
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
-    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
-    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+    if (href.indexOf('tel:') === 0) gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
+    else if (href.indexOf('mailto:') === 0) gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
   });
 })();
 </script>

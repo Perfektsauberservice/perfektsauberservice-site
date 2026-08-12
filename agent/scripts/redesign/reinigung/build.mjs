@@ -37,7 +37,7 @@ function buildSchema(service, city, slug, faqs) {
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '5.0',
-      reviewCount: '2',
+      reviewCount: '9',
       bestRating: '5',
       worstRating: '1',
     },
@@ -260,7 +260,7 @@ export function buildServiceHubPage(serviceSlug) {
     '@type': 'LocalBusiness', name: 'Perfekt Sauber Service',
     telephone: PHONE, email: EMAIL, url: SITE, image: `${SITE}/images/echipa.webp`,
     address: { '@type':'PostalAddress', streetAddress:'Reutstraße 9', addressLocality:'Loffenau', postalCode:'76597', addressCountry:'DE' },
-    priceRange:'€€', aggregateRating:{ '@type':'AggregateRating', ratingValue:'5.0', reviewCount:'2', bestRating:'5', worstRating:'1' },
+    priceRange:'€€', aggregateRating:{ '@type':'AggregateRating', ratingValue:'5.0', reviewCount:'9', bestRating:'5', worstRating:'1' },
   };
 
   const jsonLd = JSON.stringify([

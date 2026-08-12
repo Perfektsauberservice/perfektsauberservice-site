@@ -297,7 +297,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <a href="/leistungen">Leistungen</a>
     <a href="/einsatzgebiete">Einsatzgebiete</a>
     <a href="/portfolio">Galerie</a>
-    <a href="/preisrechner">Preis-Rechner</a>
+    
   </div>
   <a href="/kontakt" class="nav-cta">Anfrage</a>
 </nav>
@@ -311,7 +311,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <div class="cta-row">
       <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
       <a href="https://wa.me/491639087197?text=Hallo%2C%20ich%20m%C3%B6chte%20eine%20Reinigungsanfrage%20stellen." class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
-      <a href="/preisrechner" class="btn btn-sec">Preis berechnen</a>
+      
     </div>
     <div class="trust"><div class="it"><strong>✓</strong><span>Termin in 48 h</span></div><div class="it"><strong>✓</strong><span>Festpreis-Garantie</span></div><div class="it"><strong>✓</strong><span>Eigenes Personal</span></div><div class="it"><strong>✓</strong><span>Ordnungsgemäße Rechnung</span></div></div>
   </div>
@@ -543,11 +543,11 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     if (!a || typeof gtag !== 'function') return;
     var href = a.getAttribute('href') || '';
     if (href.indexOf('tel:') === 0) {
-      gtag('event', 'phone_click', {link_url: href, page_path: location.pathname});
+      gtag('event', 'phone_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
     } else if (href.indexOf('wa.me') > -1 || href.indexOf('api.whatsapp') > -1) {
-      gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname});
+      gtag('event', 'whatsapp_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
     } else if (href.indexOf('mailto:') === 0) {
-      gtag('event', 'email_click', {link_url: href, page_path: location.pathname});
+      gtag('event', 'email_click', {link_url: href, page_path: location.pathname, transport_type: 'beacon'});
     }
   });
 })();
