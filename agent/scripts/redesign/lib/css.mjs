@@ -244,11 +244,18 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 /* COOKIE BANNER */
 #cookieBanner{display:none; position:fixed; bottom:20px; left:20px; right:20px; max-width:560px; margin:0 auto;
   background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px 24px;
-  box-shadow:0 24px 60px -20px rgba(26,32,48,.35); z-index:1000; font-family:"Inter",sans-serif;}
+  box-shadow:0 24px 60px -20px rgba(26,32,48,.35); z-index:1000; font-family:"Inter",sans-serif;
+  max-height:38vh; overflow-y:auto; box-sizing:border-box;}
 #cookieBanner .lab{font-family:"Geist Mono",monospace; font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--bordeaux); margin-bottom:8px;}
 #cookieBanner p{font-size:.9rem; line-height:1.55; margin-bottom:14px; color:var(--muted);}
 #cookieBanner .row{display:flex; gap:8px; flex-wrap:wrap;}
 #cookieBanner button{padding:10px 18px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;}
 #cookieBanner .acc{background:var(--green); color:#fff;}
 #cookieBanner .dec{border:1px solid var(--line); color:var(--ink);}
+@media(max-width:600px){
+  #cookieBanner{bottom:10px; left:10px; right:10px; padding:14px 16px; max-height:34vh;}
+  #cookieBanner .lab{margin-bottom:5px; font-size:.6rem;}
+  #cookieBanner p{font-size:.78rem; line-height:1.4; margin-bottom:10px;}
+  #cookieBanner .row button{flex:1; padding:9px 12px; font-size:.64rem;}
+}
 `;
