@@ -1,0 +1,11 @@
+name: ZZTEST issues trigger diagnostic
+
+on:
+  issues:
+    types: [opened, closed]
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "fired for issue ${{ github.event.issue.number }}, action ${{ github.event.action }}"
