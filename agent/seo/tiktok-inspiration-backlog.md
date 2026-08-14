@@ -234,7 +234,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 
 | Gap | Prioritate estimată | Status |
 |---|---|---|
-| GBP Profile strength 100% | 🔴 Mare (leagă de Maps Pack blocat) | Neînceput |
+| GBP Profile strength 100% | 🔴 Mare (leagă de Maps Pack blocat) | ☑ Majoritar completat 2026-08-14 — categorie, descriere, opening date, Instagram, service area fix, recycling attributes; procent exact "strength" neconfirmat |
 | GMB Everywhere (research categorii concurenți) | 🟡 Medie | Neînceput |
 | Citations-checklist.md (HWK, Gelbeseiten, Bing, Apple) | 🟡 Medie | Planificat, neexecutat |
 | `site:` audit concurenți locali (topicuri/pagini lipsă) | 🟡 Medie | Neînceput — pot rula direct cu WebSearch |
@@ -247,7 +247,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Cannibalizare Entrümpelung vs Haushaltsauflösung (orașe mici) | — | ☑ Consolidat 2026-08-14 — 6 orașe (Durmersheim, Bad Wildbad, Muggensturm, Malsch, Au am Rhein, Elchesheim-Illingen): redirect 301 haushaltsaufloesung-X → entruempelung-X, cross-links fixate, sitemap actualizat |
 | Cannibalizare Entrümpelung vs Haushaltsauflösung (orașe mari: Rastatt/Karlsruhe/Baden-Baden/Pforzheim/Gaggenau) | 🟡 Medie (proiect separat, diferențiere de conținut, nu redirect) | Neînceput |
 | Pagină Glosar + internal linking + backlinks țintite | 🟡 Medie | Neînceput |
-| Descrieri servicii GBP optimizate cu AI (sub 300 car.) | 🔴 Mare (completează gap #1) | Neînceput |
+| Descrieri servicii GBP optimizate cu AI (sub 300 car.) | 🔴 Mare (completează gap #1) | ☑ Executat 2026-08-14 — 9 descrieri servicii scrise și publicate |
 | GSC pagină → conținut lipsă via Claude (CSV query-uri) | 🟡 Medie | Neînceput |
 | Google Ads Transparency Center (copy reclame concurenți) | 🟡 Medie | Neînceput |
 | Ahrefs Backlink Checker (surse backlink concurenți) | 🟡 Medie | Neînceput |
