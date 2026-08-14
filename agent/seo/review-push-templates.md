@@ -1,6 +1,6 @@
 # 📝 Google Reviews Push — Template-uri & Workflow
 
-**Scop:** Push 4 → 12+ recenzii Google în 30 zile, 25+ în 90 zile.
+**Scop:** Push 4 → 12+ recenzii Google în 30 zile, 25+ în 90 zile. **Update 2026-08-14:** la 10 recenzii (5,0★) — progres real dar mai lent decât proiectat, țintă revizuită 20+ în 90 zile de la această dată.
 **De ce:** Pentru un local biz în 2026, reviews Google sunt **direct factor de ranking**. 1 review nou ≈ 5 directoare ca impact SEO local. Plus credibility, plus CTR în SERP.
 
 ---
@@ -16,20 +16,20 @@
 5. **Lipește-l aici jos pentru referință permanentă:**
 
 ```
-GOOGLE REVIEW SHORT URL: __________________________________
+GOOGLE REVIEW SHORT URL: https://g.page/r/CYyWrOw6BeWQEBM/review
 ```
 
 > ⚠️ Acest URL apare doar în GMB dashboard. Eu nu îl pot fetch automat (memorie 2026-05-08: SAB invisible în Places API). Trebuie să-l obții manual o dată, apoi îl folosim peste tot.
 
 ### Pasul 2: Generează QR code pentru factură
 
-Folosește serviciul gratuit `api.qrserver.com`:
+Link direct, gata de deschis în browser și salvat ca PNG:
 
 ```
-https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=YOUR_REVIEW_URL_HERE
+https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fg.page%2Fr%2FCYyWrOw6BeWQEBM%2Freview
 ```
 
-Înlocuiește `YOUR_REVIEW_URL_HERE` cu URL-ul din Pasul 1 (URL-encoded). Salvează imaginea PNG. Imprimă pe **fiecare** Rechnung + handover sheet, dimensiune ~3×3cm, jos pe pagină cu textul: *"Bewertung in 60 Sekunden →"*
+Salvează imaginea PNG. Imprimă pe **fiecare** Rechnung + handover sheet, dimensiune ~3×3cm, jos pe pagină cu textul: *"Bewertung in 60 Sekunden →"*
 
 ---
 
@@ -62,7 +62,7 @@ Sie überzeugt hat, würde uns eine kurze Google-Bewertung sehr
 helfen. Andere Familien in einer ähnlichen Situation finden
 uns dadurch leichter.
 
-Direkt-Link: [GOOGLE_REVIEW_URL]
+Direkt-Link: https://g.page/r/CYyWrOw6BeWQEBM/review
 
 Ohne Druck — wenn die Zeit gerade nicht passt, ist das auch
 völlig in Ordnung.
@@ -91,7 +91,7 @@ Wenn Sie mit unserer Arbeit zufrieden waren, würden wir uns
 sehr über eine kurze Google-Bewertung freuen. Sie hilft
 anderen, uns zu finden — und uns, weiter besser zu werden.
 
-Direkt: [GOOGLE_REVIEW_URL]
+Direkt: https://g.page/r/CYyWrOw6BeWQEBM/review
 
 Herzlichen Dank!
 Laura · Perfekt Sauber Service
@@ -121,7 +121,7 @@ derselben Aufgabe stehen wie Sie damals — sie finden uns
 dadurch leichter und wissen, dass sie es mit jemandem zu tun
 haben, dem Diskretion und Sorgfalt wirklich wichtig sind.
 
-→ [GOOGLE_REVIEW_URL]
+→ https://g.page/r/CYyWrOw6BeWQEBM/review
 
 Falls die Zeit gerade nicht passt: kein Problem. Sollten Sie
 in Zukunft Fragen zu Erbschaftsthemen, Räumungen oder
@@ -153,7 +153,7 @@ Handwerksbetrieb in Loffenau und wachsen vor allem über
 Mundpropaganda und Bewertungen.
 
 Ein paar Sätze reichen schon, dauert keine 2 Minuten:
-→ [GOOGLE_REVIEW_URL]
+→ https://g.page/r/CYyWrOw6BeWQEBM/review
 
 Falls Sie eine Frage haben, einen weiteren Termin brauchen
 oder etwas nicht passt — melden Sie sich gerne direkt bei
@@ -197,7 +197,7 @@ falls meine Nachricht von letzter Woche untergegangen ist
 — keine Sorge, das ist ganz normal nach so einem hektischen
 Tag. Hier nochmal der Link, falls Sie eine Minute übrig haben:
 
-[GOOGLE_REVIEW_URL]
+https://g.page/r/CYyWrOw6BeWQEBM/review
 
 Wenn nicht, alles gut. Wir freuen uns, wann immer Sie uns
 wieder brauchen.
