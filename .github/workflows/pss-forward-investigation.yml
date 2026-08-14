@@ -1,0 +1,28 @@
+name: PSS Forward Investigation to Telegram
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  forward:
+    if: contains(github.event.issue.labels.*.name, 'needs-investigation')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send last comment to Telegram
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          COMMENT=$(gh api "repos/${REPO}/issues/${ISSUE_NUMBER}/comments" --jq '.[-1].body // "(no investigation comment found)"')
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=Investigated: ${ISSUE_TITLE}
+
+${COMMENT}
+
+https://github.com/${REPO}/issues/${ISSUE_NUMBER}"
