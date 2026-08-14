@@ -1,8 +1,8 @@
 {
-  "reviewCount": 9,
+  "reviewCount": 10,
   "ratingDecimal": "5.0",
   "ratingComma": "5,0",
   "placeName": "Perfekt Sauber Service",
-  "updatedAt": "2026-07-29T12:40:05.312Z",
-  "note": "Manual update to 9 reviews per owner request 2026-07-29 (API automation dormant, billing not enabled)."
+  "updatedAt": "2026-08-14T00:00:00.000Z",
+  "note": "State file was stale (site already showed 10 site-wide since Manuela's review, commit 2026-08-12). Synced state to match live site; no HTML changes needed."
 }

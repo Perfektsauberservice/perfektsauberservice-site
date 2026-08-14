@@ -44,9 +44,8 @@
 
 ### B.1 Push Google Reviews (cel mai mare ROI pentru SEO local)
 
-**State:** 4 reviews / 5.0
-**Target 30 zile:** 12+ reviews
-**Target 90 zile:** 25+ reviews
+**State (2026-08-14):** 10 reviews / 5.0 (de la 4 în mai — progres real, mai lent decât proiectat: 12-14 în 30 zile țintit, 10 atinse în ~3 luni)
+**Target 90 zile de la 14-08:** 20+ reviews
 
 **De ce contează:** Pentru un local biz în 2026, reviews Google sunt **direct factor de ranking** și signal pentru External factors (semnale sociale + autoritate). 1 review nou = mai mult decât 5 directoare.
 
@@ -122,7 +121,7 @@ Per memorie 2026-05-07: **"Do NOT propose AI-generated Stadtteil content"**. În
 | Referring domains | 14 | ___ | ___ | ___ |
 | IPs unice | 5 | ___ | ___ | ___ |
 | External factors score | 42% | ___ | ___ | ___ |
-| Google Reviews | 4 | ___ | ___ | ___ |
+| Google Reviews | 4 (start 10-05) → 10 (14-08, toate 5★) | ___ | ___ | ___ |
 | Page score total | 78% | ___ | ___ | ___ |
 
 ---
