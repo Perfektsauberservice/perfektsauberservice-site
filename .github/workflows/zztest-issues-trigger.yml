@@ -6,6 +6,7 @@ on:
 
 jobs:
   ping:
+    if: contains(github.event.issue.labels.*.name, 'needs-investigation')
     runs-on: ubuntu-latest
     steps:
       - run: echo "fired for issue ${{ github.event.issue.number }}, action ${{ github.event.action }}"
