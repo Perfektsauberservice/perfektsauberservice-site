@@ -17,4 +17,7 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           REPO: ${{ github.repository }}
-        run: echo "bisect test, issue $ISSUE_NUMBER"
+        run: |
+          COMMENT=$(gh api "repos/${REPO}/issues/${ISSUE_NUMBER}/comments" --jq '.[-1].body // "(no investigation comment found)"')
+          MESSAGE="Investigated: ${ISSUE_TITLE}"$'\n\n'"${COMMENT}"$'\n\n'"https://github.com/${REPO}/issues/${ISSUE_NUMBER}"
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" --data-urlencode "text=${MESSAGE}"
