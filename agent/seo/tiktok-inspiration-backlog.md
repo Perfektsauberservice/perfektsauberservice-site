@@ -245,7 +245,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Custom Segment "konkurrent traffic" (Google Ads) | — | ☑ Testat 2026-08-14 — IMPOSIBIL pe campanii Search (confirmat API, 3 variante încercate), doar Display/Video/Discovery |
 | GSC striking-distance keywords (impresii mari, CTR mic) | — | ☑ Rulat 2026-08-14 — 12 oportunități găsite, toate "haushaltsauflösung [oraș mic]", 0 clicuri din ~294 impr/lună |
 | Cannibalizare Entrümpelung vs Haushaltsauflösung (orașe mici) | — | ☑ Consolidat 2026-08-14 — 6 orașe (Durmersheim, Bad Wildbad, Muggensturm, Malsch, Au am Rhein, Elchesheim-Illingen): redirect 301 haushaltsaufloesung-X → entruempelung-X, cross-links fixate, sitemap actualizat |
-| Cannibalizare Entrümpelung vs Haushaltsauflösung (orașe mari: Rastatt/Karlsruhe/Baden-Baden/Pforzheim/Gaggenau) | 🟡 Medie (proiect separat, diferențiere de conținut, nu redirect) | Neînceput |
+| Cannibalizare Entrümpelung vs Haushaltsauflösung (orașe mari: Rastatt/Karlsruhe/Baden-Baden/Pforzheim/Gaggenau) | — | ☑ Verificat 2026-08-14 (GSC 90 zile, API real) — zero click-uri pe toate 10 paginile; sunt servicii distincte (preț 150-200€ vs 690€), NU consolidăm; cross-linking deja corect pe toate; cauza reală (poziții 20-97) e autoritate/concurență, proiect separat mult mai mare |
 | Pagină Glosar + internal linking + backlinks țintite | 🟡 Medie | Neînceput |
 | Descrieri servicii GBP optimizate cu AI (sub 300 car.) | 🔴 Mare (completează gap #1) | ☑ Executat 2026-08-14 — 9 descrieri servicii scrise și publicate |
 | GSC pagină → conținut lipsă via Claude (CSV query-uri) | 🟡 Medie | Neînceput |
