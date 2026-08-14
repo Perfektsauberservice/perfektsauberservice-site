@@ -1,0 +1,51 @@
+name: PSS Site Health Check
+
+on:
+  schedule:
+    - cron: '13 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: agent/scripts/site-health
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run health check
+        id: check
+        working-directory: agent/scripts/site-health
+        run: node check.mjs
+        continue-on-error: true
+
+      - name: Ensure needs-investigation label exists
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh label create needs-investigation --color D93F0B --description "Opened by an automated check; awaiting Level 2 investigation" --force
+
+      - name: Open issue with findings
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Site Health: $(date -u +%Y-%m-%d) — issues found" \
+            --body-file agent/scripts/site-health/site-health-issue-body.md \
+            --label needs-investigation
+
+      - name: Fail the job if issues were found
+        if: steps.check.outcome == 'failure'
+        run: exit 1
