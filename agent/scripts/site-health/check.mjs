@@ -29,7 +29,7 @@ async function checkPage(browser, url) {
   const start = Date.now();
   let response;
   try {
-    response = await page.goto(url, { waitUntil: 'networkidle', timeout: 20000 });
+    response = await page.goto(url, { waitUntil: 'load', timeout: 20000 });
   } catch (e) {
     issues.push(`PAGE_LOAD_FAILED: ${e.message}`);
     await context.close();
@@ -123,4 +123,9 @@ async function main() {
   process.exit(withIssues.length > 0 ? 1 : 0);
 }
 
-main().catch(e => { console.error('FATAL:', e); process.exit(2); });
+main().catch(e => {
+  console.error('FATAL:', e);
+  const body = `Site health check crashed before completing.\n\nError: ${e.message}\n\n${e.stack || ''}`;
+  fs.writeFileSync(path.join(__dirname, 'site-health-issue-body.md'), body);
+  process.exit(2);
+});
