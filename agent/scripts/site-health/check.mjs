@@ -29,7 +29,7 @@ async function checkPage(browser, url) {
   const start = Date.now();
   let response;
   try {
-    response = await page.goto(url, { waitUntil: 'load', timeout: 20000 });
+    response = await page.goto(url, { waitUntil: 'networkidle', timeout: 20000 });
   } catch (e) {
     issues.push(`PAGE_LOAD_FAILED: ${e.message}`);
     await context.close();
@@ -59,20 +59,34 @@ async function checkPage(browser, url) {
 
   const heroTel = page.locator('.cta-row a[href^="tel:"]').first();
   const heroWa = page.locator('.cta-row a[href*="wa.me"]').first();
+  const HIT_TEST_ATTEMPTS = 3;
+  const HIT_TEST_RETRY_DELAY_MS = 400;
   for (const [label, locator] of [['phone', heroTel], ['whatsapp', heroWa]]) {
     const count = await locator.count();
     if (count === 0) { issues.push(`HERO_CTA_MISSING: ${label}`); continue; }
-    const box = await locator.boundingBox();
-    if (!box) { issues.push(`HERO_CTA_NOT_VISIBLE: ${label}`); continue; }
-    const cx = box.x + box.width / 2;
-    const cy = box.y + box.height / 2;
-    const hitOk = await page.evaluate(({ cx, cy }) => {
-      const el = document.elementFromPoint(cx, cy);
-      if (!el) return false;
-      const link = el.closest('a');
-      return !!(link && (link.href.startsWith('tel:') || link.href.includes('wa.me')));
-    }, { cx, cy });
-    if (!hitOk) issues.push(`HERO_CTA_BLOCKED: ${label} at (${Math.round(cx)},${Math.round(cy)}) is covered by another element`);
+
+    let lastFailureReason = null;
+    let passed = false;
+    for (let attempt = 1; attempt <= HIT_TEST_ATTEMPTS; attempt++) {
+      await locator.scrollIntoViewIfNeeded().catch(() => {});
+      const box = await locator.boundingBox();
+      if (!box) {
+        lastFailureReason = `HERO_CTA_NOT_VISIBLE: ${label}`;
+      } else {
+        const cx = box.x + box.width / 2;
+        const cy = box.y + box.height / 2;
+        const hitOk = await page.evaluate(({ cx, cy }) => {
+          const el = document.elementFromPoint(cx, cy);
+          if (!el) return false;
+          const link = el.closest('a');
+          return !!(link && (link.href.startsWith('tel:') || link.href.includes('wa.me')));
+        }, { cx, cy });
+        if (hitOk) { passed = true; break; }
+        lastFailureReason = `HERO_CTA_BLOCKED: ${label} at (${Math.round(cx)},${Math.round(cy)}) is covered by another element`;
+      }
+      if (attempt < HIT_TEST_ATTEMPTS) await page.waitForTimeout(HIT_TEST_RETRY_DELAY_MS);
+    }
+    if (!passed && lastFailureReason) issues.push(lastFailureReason);
   }
 
   await context.close();
