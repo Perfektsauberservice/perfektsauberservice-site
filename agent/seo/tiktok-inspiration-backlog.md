@@ -236,8 +236,8 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 |---|---|---|
 | GBP Profile strength 100% | 🔴 Mare (leagă de Maps Pack blocat) | ☑ Majoritar completat 2026-08-14 — categorie, descriere, opening date, Instagram, service area fix, recycling attributes; procent exact "strength" neconfirmat |
 | GMB Everywhere (research categorii concurenți) | 🟡 Medie | Neînceput |
-| Citations-checklist.md (HWK, Gelbeseiten, Bing, Apple) | 🟡 Medie | Planificat, neexecutat |
-| `site:` audit concurenți locali (topicuri/pagini lipsă) | 🟡 Medie | Neînceput — pot rula direct cu WebSearch |
+| Citations-checklist.md (HWK, Gelbeseiten, Bing, Apple) | 🟡 Medie | Parțial — B.1 (review push) executat 2026-08-14: template-uri deja existau, completat URL real + sincronizat 10 recenzii; Partea A (HWK/Gelbeseiten/Bing/Apple) necesită acțiune ta reală, neexecutat |
+| `site:` audit concurenți locali (topicuri/pagini lipsă) | — | ☑ Executat 2026-08-14 — 5 concurenți verificați (Rümpelprofi24, Rümpel Crew, Tina Entrümpelung, Neibert, Heinzis); 2 gap-uri reale găsite și rezolvate: pagina Nachhaltigkeit (nouă) + Preisrechner rebuild |
 | Audit concurență (PageAudit/RankReportCard) | 🟢 Mică | Neînceput |
 | FindQuestions.com — idei conținut | 🟢 Mică | Neînceput |
 | Unlinked.io — mențiuni fără link | 🟢 Mică | Neînceput |
@@ -265,7 +265,8 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Raport săptămânal automatizat (GSC+GA4+Ads) — idee proprie | — | ☑ 2/3 executat 2026-08-14 — extins `telegram-report.js` existent (Ads + GSC striking-distance) pe task-ul Windows deja programat la 2 zile; GA4 rămâne separat (Python, altă autentificare) |
 | Bid-uri sezoniere Ads — idee proprie | 🟡 Medie | Neînceput |
 | WhatsApp Business mesaj automat cu prețuri "ab" — idee proprie | — | Configurat 2026-08-14, apoi user a decis să NU-l folosească — nu insista, decizie luată |
-| RäumScan intern gratuit — idee proprie | 🟡 Medie | Neînceput |
+| RäumScan intern gratuit — idee proprie | 🟡 Medie | Parțial acoperit — Preisrechner public rebuild (14-08) face parte din același rol (ofertă preț rapidă din tarife reale); Entsorgungskosten-Rechner intern rămâne proiect separat (weekend) |
+| Preisrechner rebuild (bug istoric 1.620€ vs 482€) | — | ☑ Executat 2026-08-14 — cauza reală identificată (formulă m²×rată prea complexă), reconstruit ca lookup direct din tabelele deja publicate pe fiecare pagină de serviciu, restricționat la cele 17 servicii reale, testat cu script Node înainte de publicare |
 | Keyword Planner cu URL concurent (Google Ads) | — | ☑ Executat 2026-08-14 — 907 idei extrase din 6 concurenți, 3 keyword-uri noi adăugate live: "messie wohnungen" (vol 9.900), "sperrmüll karlsruhe" (vol 3.600), "entrümpelung in der nähe" (vol 4.400) |
 | Plugin claude-ads (evaluare tool) | 🟡 Medie (necesită testare separată, nu contul live) | Neînceput |
 | H1 per pagină = serviciu+oraș (verificare pattern) | 🟡 Medie | Neverificat |
