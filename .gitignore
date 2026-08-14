@@ -23,3 +23,6 @@ seo_audit_report.txt
 # Auto-generated blog fragments (produced by generate-blog.js at every Netlify build)
 content/auto/blog-cards.html
 content/auto/blog-auto.html
+
+# Visual brainstorming companion session files
+.superpowers/

@@ -399,18 +399,6 @@
   force = true
 
 [[redirects]]
-  from = "/haushaltsaufloesung-bietigheim"
-  to = "/haushaltsaufloesung-rastatt"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/haushaltsaufloesung-bietigheim.html"
-  to = "/haushaltsaufloesung-rastatt"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/haushaltsaufloesung-sandweier"
   to = "/haushaltsaufloesung-baden-baden"
   status = 301
@@ -2664,6 +2652,67 @@
 [[redirects]]
   from = "/blog/wohnungsaufloesung-sinzheim-was-bleibt-in-der-wohnung-.html"
   to = "/entruempelung-sinzheim"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/haushaltsaufloesung-durmersheim"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-durmersheim.html"
+  to = "/entruempelung-durmersheim"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-bad-wildbad"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-bad-wildbad.html"
+  to = "/entruempelung-bad-wildbad"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-muggensturm"
+  to = "/entruempelung-muggensturm"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-muggensturm.html"
+  to = "/entruempelung-muggensturm"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-malsch"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-malsch.html"
+  to = "/entruempelung-malsch"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-au-am-rhein"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-au-am-rhein.html"
+  to = "/entruempelung-au-am-rhein"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-elchesheim-illingen"
+  to = "/entruempelung-elchesheim-illingen"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/haushaltsaufloesung-elchesheim-illingen.html"
+  to = "/entruempelung-elchesheim-illingen"
   status = 301
   force = true
 
