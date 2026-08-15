@@ -68,9 +68,34 @@ async function checkPage(browser, url) {
     let lastFailureReason = null;
     let passed = false;
     for (let attempt = 1; attempt <= HIT_TEST_ATTEMPTS; attempt++) {
-      await locator.scrollIntoViewIfNeeded().catch(() => {});
-      const box = await locator.boundingBox();
-      if (!box) {
+      // Only scroll if the element genuinely isn't in the viewport yet. The
+      // site uses `scroll-behavior:smooth`, so scrollIntoViewIfNeeded()
+      // returns once a scroll is *initiated*, not once it settles — calling
+      // it unconditionally (even a harmless-looking few-px correction) and
+      // then reading boundingBox() immediately produced a mid-animation
+      // (stale) position, causing false HERO_CTA_BLOCKED/MISSING reports on
+      // pages where the button was already fully visible and clickable.
+      const inViewport = await locator.evaluate(el => {
+        const r = el.getBoundingClientRect();
+        return r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth;
+      }).catch(() => false);
+      if (!inViewport) {
+        await locator.scrollIntoViewIfNeeded().catch(() => {});
+        // A short poll can catch a momentary pause mid-animation and think
+        // it's settled too early. `scroll-behavior:smooth` easing needs a
+        // flat, generous wait instead.
+        await page.waitForTimeout(700);
+      }
+      // Read the rect via a plain DOM query rather than locator.boundingBox():
+      // boundingBox() showed the same stale-position symptom as
+      // scrollIntoViewIfNeeded() above even after the settle wait, while a
+      // fresh getBoundingClientRect() in-page consistently matched the
+      // element's true, settled position.
+      const box = await locator.evaluate(el => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left, y: r.top, width: r.width, height: r.height };
+      }).catch(() => null);
+      if (!box || box.width === 0 || box.height === 0) {
         lastFailureReason = `HERO_CTA_NOT_VISIBLE: ${label}`;
       } else {
         const cx = box.x + box.width / 2;
