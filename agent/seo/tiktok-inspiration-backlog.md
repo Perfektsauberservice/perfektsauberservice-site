@@ -84,7 +84,7 @@ URL: https://vm.tiktok.com/ZGdxyn1R6/
 
 URL: https://vm.tiktok.com/ZGdxyB9QP/
 
-- ☐ **Ahrefs Backlink Checker (free)** — backlinks proprii + domain rating, apoi ale concurenței, pentru surse/directoare de replicat. Se leagă de `citations-checklist.md` (neexecutat).
+- ☑ **Ahrefs blocat tehnic (SPA JS), delegat agentului seo-backlinks 2026-08-14 — date insuficiente, onest raportat.** Common Crawl (unica sursă gratuită fără cheie) nu are PSS indexat, nici 2 din 3 concurenți verificați; al 3-lea (ruempelprofi24.de) are rank nefolositor de jos. Fără Moz/Bing/DataForSEO API key = zero date reale. Unic număr existent: Seobility 14/14/5, dar din 10 mai, neverificat azi. Recomandare agent: cheie gratuită Moz API (2.500 req/lună) ar debloca date reale.
 
 ## Video 14 — Google Ads campaign type tier list
 
@@ -250,7 +250,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Descrieri servicii GBP optimizate cu AI (sub 300 car.) | 🔴 Mare (completează gap #1) | ☑ Executat 2026-08-14 — 9 descrieri servicii scrise și publicate |
 | GSC pagină → conținut lipsă via Claude (CSV query-uri) | 🟡 Medie | Neînceput |
 | Google Ads Transparency Center (copy reclame concurenți) | 🟡 Medie | Neînceput |
-| Ahrefs Backlink Checker (surse backlink concurenți) | 🟡 Medie | Neînceput |
+| Ahrefs Backlink Checker (surse backlink concurenți) | — | ☑ Încercat 2026-08-14 — date insuficiente din surse gratuite (Common Crawl fără PSS/2 din 3 concurenți indexați); blocaj real, nu lene — necesită cheie Moz API gratuită pentru date reale |
 | Automatically created assets / Account-level Automated Assets OFF | — | ☑ Verificat 2026-08-14 via API — ambele campanii active deja OPTED_OUT, nimic de dezactivat |
 | **App RäumScan → repivotat la Entsorgungskosten-Rechner** | 🔥 Foarte mare (operațional, nișă exactă) | Design aprobat 2026-08-14, spec la `docs/superpowers/specs/2026-08-14-entsorgungskosten-rechner-design.md`, construcție planificată weekend |
 | Tehnica "Council" pentru decizii strategice | 🟢 Mică (proces, nu marketing) | Neînceput |
