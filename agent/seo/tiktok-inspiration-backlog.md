@@ -158,7 +158,7 @@ URL: https://vm.tiktok.com/ZGdxaFQRb/
 
 URL: https://vm.tiktok.com/ZGdx5mhk9/ și https://vm.tiktok.com/ZGdx5NXtL/
 
-- ☐ **Plugin `claude-ads` (GitHub: AgriciDaniel/claude-ads, public, activ — 16 issues, 19 PR, 9 branch-uri)** — skill Claude Code pentru analiză competitivă, generare ad creatives și campanii pe Google/Meta/TikTok. Confirmat real (nu fake ca Video 47), merită testat separat pe un cont de test înainte de contul live PSS.
+- ☑ **Plugin `claude-ads` — EVALUAT 2026-08-14, NU recomand adoptarea.** Proiect legitim (8.062 stele, MIT, actualizat azi), dar instalarea pe Windows e confirmat stricată în 2 issue-uri deschise (`install.sh` exclude explicit Windows din matrice; `install.ps1` alternativ dă 404, link greșit către repo privat). PSS folosește doar Google Ads din cele 12 platforme suportate — scripturile Node existente în `c:\tmp\google-ads\` fac deja ce e nevoie, adaptat exact contului.
 
 ### Video 45 — @jakob..rankt (case study GBP Entrümpelung Heilbronn)
 
@@ -268,7 +268,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | RäumScan intern gratuit — idee proprie | 🟡 Medie | Parțial acoperit — Preisrechner public rebuild (14-08) face parte din același rol (ofertă preț rapidă din tarife reale); Entsorgungskosten-Rechner intern rămâne proiect separat (weekend) |
 | Preisrechner rebuild (bug istoric 1.620€ vs 482€) | — | ☑ Executat 2026-08-14 — cauza reală identificată (formulă m²×rată prea complexă), reconstruit ca lookup direct din tabelele deja publicate pe fiecare pagină de serviciu, restricționat la cele 17 servicii reale, testat cu script Node înainte de publicare |
 | Keyword Planner cu URL concurent (Google Ads) | — | ☑ Executat 2026-08-14 — 907 idei extrase din 6 concurenți, 3 keyword-uri noi adăugate live: "messie wohnungen" (vol 9.900), "sperrmüll karlsruhe" (vol 3.600), "entrümpelung in der nähe" (vol 4.400) |
-| Plugin claude-ads (evaluare tool) | 🟡 Medie (necesită testare separată, nu contul live) | Neînceput |
+| Plugin claude-ads (evaluare tool) | — | ☑ Evaluat 2026-08-14 — NU recomandat (instalare Windows stricată, confirmat în 2 issue-uri deschise; scripturile existente sunt suficiente) |
 | H1 per pagină = serviciu+oraș (verificare pattern) | — | ☑ Verificat 2026-08-14 — 243/243 corecte, 1 fragment orfan neindexat găsit (fără impact SEO) |
 | GBP Products/Offers/Posts folosite activ | 🔴 Mare (completează gap #1) | Neînceput |
 | Conținut reactiv hyperlocal (evenimente zonă) | 🟡 Medie | Neînceput |
