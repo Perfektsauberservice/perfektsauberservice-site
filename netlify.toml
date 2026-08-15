@@ -2,10 +2,15 @@
   publish = "."
   functions = "netlify/functions"
   command = "node generate-blog.js"
-  # Skip build daca commit-ul modifica DOAR fisiere de stare (loguri auto-postare).
-  # Exit 0 (skip) cand toate fisierele schimbate sunt sub agent/config/ sau agent/state/.
+  # Skip build daca NICIUN commit de la ultimul deploy reusit incoace nu modifica
+  # altceva decat fisiere de stare (loguri auto-postare) sub agent/config/ sau agent/state/.
+  # Foloseste $CACHED_COMMIT_REF (ultimul deploy reusit), NU doar HEAD^, pentru ca mai
+  # multe commit-uri pot ajunge intr-un singur push/build — un diff HEAD^..HEAD verifica
+  # doar ultimul commit si poate sari peste un build care contine si fix-uri reale
+  # dintr-un commit anterior din acelasi push (bug gasit 2026-08-15: fix-uri CSS din
+  # 12 si 14 aug. nu au ajuns niciodata live din cauza asta).
   # Reduce ~60-70% din deploys (chore: update fb/ig/kleinanzeigen logs + seo-report state nu schimba site-ul live).
-  ignore = '[ -z "$(git diff --name-only HEAD^ HEAD | grep -vE ^agent/(config|state)/)" ]'
+  ignore = '[ -z "$(git diff --name-only ${CACHED_COMMIT_REF:-HEAD~1} ${COMMIT_REF:-HEAD} | grep -vE ^agent/(config|state)/)" ]'
 
 [[headers]]
   for = "/*"

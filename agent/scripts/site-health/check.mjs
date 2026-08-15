@@ -75,14 +75,20 @@ async function checkPage(browser, url) {
       } else {
         const cx = box.x + box.width / 2;
         const cy = box.y + box.height / 2;
-        const hitOk = await page.evaluate(({ cx, cy }) => {
+        const hit = await page.evaluate(({ cx, cy }) => {
           const el = document.elementFromPoint(cx, cy);
-          if (!el) return false;
+          if (!el) return { ok: false, blocker: null };
           const link = el.closest('a');
-          return !!(link && (link.href.startsWith('tel:') || link.href.includes('wa.me')));
+          const ok = !!(link && (link.href.startsWith('tel:') || link.href.includes('wa.me')));
+          if (ok) return { ok: true };
+          const id = el.id ? `#${el.id}` : '';
+          const cls = el.className && typeof el.className === 'string'
+            ? '.' + el.className.trim().split(/\s+/).join('.')
+            : '';
+          return { ok: false, blocker: `${el.tagName.toLowerCase()}${id}${cls}` };
         }, { cx, cy });
-        if (hitOk) { passed = true; break; }
-        lastFailureReason = `HERO_CTA_BLOCKED: ${label} at (${Math.round(cx)},${Math.round(cy)}) is covered by another element`;
+        if (hit.ok) { passed = true; break; }
+        lastFailureReason = `HERO_CTA_BLOCKED: ${label} at (${Math.round(cx)},${Math.round(cy)}) is covered by ${hit.blocker || 'another element'}`;
       }
       if (attempt < HIT_TEST_ATTEMPTS) await page.waitForTimeout(HIT_TEST_RETRY_DELAY_MS);
     }
