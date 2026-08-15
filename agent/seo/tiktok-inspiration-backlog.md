@@ -91,7 +91,7 @@ URL: https://vm.tiktok.com/ZGdxyB9QP/
 URL: https://vm.tiktok.com/ZGdxD6AW8/
 
 - ☑ Search Partners + Display Network OFF — **deja confirmat activ la noi** (STATE.md), nu e gap.
-- ☐ **"Automatically created assets" (campaign settings) + Account-level Automated Assets → Advanced settings** — nu apare verificat nicăieri în munca anterioară. Gap real de verificat/dezactivat.
+- ☑ **"Automatically created assets" — VERIFICAT 2026-08-14 via API (`campaign.asset_automation_settings`)**: ambele campanii active (PSS_Entrumpelung_Search, PSS_Reinigung_Search) au deja TEXT_ASSET_AUTOMATION = OPTED_OUT (dezactivat, corect). O a treia campanie veche "Entrümpelung Rastatt" avea OPTED_IN, dar e REMOVED (ștearsă, nu rulează) — irelevant. Nu există echivalent la nivel de cont în API (doar per-campanie); "Account-level Advanced settings" e strict UI.
 - ☐ Performance Max — confirmă că nu e activat fără destule date istorice pentru lead-gen local.
 
 ## Video 15 — aplicația RäumScan (Besichtigung + ofertă preț fix, pentru Entrümpler)
@@ -251,7 +251,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | GSC pagină → conținut lipsă via Claude (CSV query-uri) | 🟡 Medie | Neînceput |
 | Google Ads Transparency Center (copy reclame concurenți) | 🟡 Medie | Neînceput |
 | Ahrefs Backlink Checker (surse backlink concurenți) | 🟡 Medie | Neînceput |
-| Automatically created assets / Account-level Automated Assets OFF | 🟡 Medie (verificare rapidă) | Neverificat |
+| Automatically created assets / Account-level Automated Assets OFF | — | ☑ Verificat 2026-08-14 via API — ambele campanii active deja OPTED_OUT, nimic de dezactivat |
 | **App RäumScan → repivotat la Entsorgungskosten-Rechner** | 🔥 Foarte mare (operațional, nișă exactă) | Design aprobat 2026-08-14, spec la `docs/superpowers/specs/2026-08-14-entsorgungskosten-rechner-design.md`, construcție planificată weekend |
 | Tehnica "Council" pentru decizii strategice | 🟢 Mică (proces, nu marketing) | Neînceput |
 | Google Ads budget pacing (÷30.4 din 1 iunie) | — | ☑ Verificat 2026-08-14: nu e problemă activă, ambele campanii sub buget |
