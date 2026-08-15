@@ -164,7 +164,7 @@ URL: https://vm.tiktok.com/ZGdx5mhk9/ și https://vm.tiktok.com/ZGdx5NXtL/
 
 URL: https://vm.tiktok.com/ZGdx5gM6c/
 
-- ☐ **Structură H1 per pagină de serviciu = [serviciu] + [oraș]** (ex. "Entrümpelung Heilbronn") — de verificat dacă paginile PSS existente (350+) respectă exact acest pattern sau doar se aproprie de el.
+- ☑ **Structură H1 per pagină de serviciu = [serviciu] + [oraș] — VERIFICAT 2026-08-14, 243/243 pagini corecte.** Singura anomalie găsită (`einsatzgebiete-block.html`, fără H1) e un fragment orfan cu `noindex` și link-uri placeholder, nefolosit nicăieri (0 referințe în cod) — nu afectează SEO. Pagina reală `einsatzgebiete.html` are H1 corect.
 - ☐ **Folosire activă (nu doar completare pasivă) a secțiunii Products/Offers/Posts din GBP** — completează direct gap #1 (GBP Profile strength) deja în listă.
 
 ### Video 46 — @colmlocalseo (Guerilla Local SEO — 6 tactici, sursă newsletter Corey Hind)
@@ -269,7 +269,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Preisrechner rebuild (bug istoric 1.620€ vs 482€) | — | ☑ Executat 2026-08-14 — cauza reală identificată (formulă m²×rată prea complexă), reconstruit ca lookup direct din tabelele deja publicate pe fiecare pagină de serviciu, restricționat la cele 17 servicii reale, testat cu script Node înainte de publicare |
 | Keyword Planner cu URL concurent (Google Ads) | — | ☑ Executat 2026-08-14 — 907 idei extrase din 6 concurenți, 3 keyword-uri noi adăugate live: "messie wohnungen" (vol 9.900), "sperrmüll karlsruhe" (vol 3.600), "entrümpelung in der nähe" (vol 4.400) |
 | Plugin claude-ads (evaluare tool) | 🟡 Medie (necesită testare separată, nu contul live) | Neînceput |
-| H1 per pagină = serviciu+oraș (verificare pattern) | 🟡 Medie | Neverificat |
+| H1 per pagină = serviciu+oraș (verificare pattern) | — | ☑ Verificat 2026-08-14 — 243/243 corecte, 1 fragment orfan neindexat găsit (fără impact SEO) |
 | GBP Products/Offers/Posts folosite activ | 🔴 Mare (completează gap #1) | Neînceput |
 | Conținut reactiv hyperlocal (evenimente zonă) | 🟡 Medie | Neînceput |
 | Conținut "doar un local ar ști" | 🟡 Medie | Neînceput |
