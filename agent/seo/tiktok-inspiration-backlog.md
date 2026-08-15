@@ -137,7 +137,7 @@ URL: https://vm.tiktok.com/ZGdxSfw6L/
 - ☐ Cauți echipe de fotbal/handbal/șah locale din zona PSS → pagină "Sponsoren" pe site-ul lor → scrii cerând doar logo+link pentru ~150-200€/an. Backlink local relevant + vizibilitate în comunitate, potrivit pentru o firmă hyper-locală.
 
 ### GA4 — funcție nouă
-- ☐ Traffic Acquisition → canal "AI Assistant" — arată vizitatori veniți din ChatGPT/Gemini/Claude. Verificabil acum, avem deja acces GA4.
+- ☑ Traffic Acquisition → canal "AI Assistant" — VERIFICAT 2026-08-14 via API: **2 sesiuni reale din chatgpt.com** în ultimele 90 zile (comparativ: 319 Google Ads, 90 direct, 28 organic). Mic dar real — PSS e deja menționat/găsit prin ChatGPT cel puțin ocazional. Gemini/Claude/Perplexity: 0 în perioada verificată.
 
 ### Tier-list unelte SEO (context, nu acțiune directă)
 - Microsoft Clarity (heatmaps gratuite) = 8/10, nefolosit de noi — singurul iesit în evidență ca nou.
@@ -261,7 +261,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Fix Ad Strength AVERAGE pe AG1_Bueroreinigung + AG8_Hausmeisterservice_Core | 🟡 Medie | Neexecutat — cooldown RSA până 17-21 aug (reminder creat) |
 | Backlink local prin sponsorizare club sportiv | 🟡 Medie (idee nouă) | Neînceput |
 | GBP + Gemini / sync GA4 / Search Breakdown | 🔴 Mare (completează gap #1) | Neînceput |
-| GA4 canal "AI Assistant" (trafic ChatGPT/Gemini/Claude) | 🟡 Medie | Neverificat |
+| GA4 canal "AI Assistant" (trafic ChatGPT/Gemini/Claude) | — | ☑ Verificat 2026-08-14 — 2 sesiuni reale din ChatGPT / 90 zile, restul (Gemini/Claude/Perplexity) 0 |
 | Raport săptămânal automatizat (GSC+GA4+Ads) — idee proprie | — | ☑ 2/3 executat 2026-08-14 — extins `telegram-report.js` existent (Ads + GSC striking-distance) pe task-ul Windows deja programat la 2 zile; GA4 rămâne separat (Python, altă autentificare) |
 | Bid-uri sezoniere Ads — idee proprie | 🟡 Medie | Neînceput |
 | WhatsApp Business mesaj automat cu prețuri "ab" — idee proprie | — | Configurat 2026-08-14, apoi user a decis să NU-l folosească — nu insista, decizie luată |
