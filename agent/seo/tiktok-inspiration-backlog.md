@@ -20,7 +20,7 @@ URL: https://vm.tiktok.com/ZGdxPsakU/
 URL: https://vm.tiktok.com/ZGdxPqFo5/
 
 - ☐ **Google Business Profile "Profile strength" la 100%** — confirmat incomplet de user (screenshot 12.08.2026). Cel mai mare gap găsit până acum, legat direct de blocajul Maps Pack Rastatt cunoscut.
-- ☐ **Extensia GMB Everywhere** — nu instalată/folosită; ar arăta categoriile exacte alese de concurenți pe Maps, utile pentru alegerea categoriei corecte PSS.
+- ☑ **Categorii GBP verificate 2026-08-17 (fără extensie, via directoare germane + verificare directă în dashboard).** Concurenți: Rümpelprofi24 = 2 categorii (Entrümpelung, Haushaltsauflösung), Tina Entrümpelung = 4 (+ Gebrauchtwaren, Secondhandshop pentru unghiul lor de reuse). **PSS are deja 5 categorii** — House clearance service (primară), House cleaning service, Janitorial service, Junk removal service, Debris removal service — mai bine acoperit decât ambii concurenți. Presupunerea inițială ("doar 1 categorie") era din memorie veche, incorectă. Nimic de adăugat.
 - ☐ **Backlinks locale prin directoare de branșă** — deja planificat în `agent/seo/citations-checklist.md` (HWK Karlsruhe, Gelbeseiten Grundeintrag, Bing Places, Apple Business Connect) dar **toate căsuțele nebifate** — muncă veche neexecutată, nu gap nou.
 
 ## Video 3 — @sofiia.ads (spionează concurența cu site: search)
@@ -235,7 +235,7 @@ URL: https://vm.tiktok.com/ZGdx5Rq37/
 | Gap | Prioritate estimată | Status |
 |---|---|---|
 | GBP Profile strength 100% | 🔴 Mare (leagă de Maps Pack blocat) | ☑ Majoritar completat 2026-08-14 — categorie, descriere, opening date, Instagram, service area fix, recycling attributes; procent exact "strength" neconfirmat |
-| GMB Everywhere (research categorii concurenți) | 🟡 Medie | Neînceput |
+| GMB Everywhere (research categorii concurenți) | — | ☑ Verificat 2026-08-17 — PSS are deja 5 categorii GBP, mai mult decât ambii concurenți verificați (2 și 4) |
 | Citations-checklist.md (HWK, Gelbeseiten, Bing, Apple) | 🟡 Medie | Parțial — B.1 (review push) executat 2026-08-14: template-uri deja existau, completat URL real + sincronizat 10 recenzii; Partea A (HWK/Gelbeseiten/Bing/Apple) necesită acțiune ta reală, neexecutat |
 | `site:` audit concurenți locali (topicuri/pagini lipsă) | — | ☑ Executat 2026-08-14 — 5 concurenți verificați (Rümpelprofi24, Rümpel Crew, Tina Entrümpelung, Neibert, Heinzis); 2 gap-uri reale găsite și rezolvate: pagina Nachhaltigkeit (nouă) + Preisrechner rebuild |
 | Audit concurență (PageAudit/RankReportCard) | 🟢 Mică | Neînceput |
