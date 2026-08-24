@@ -51,7 +51,7 @@ URL: https://vm.tiktok.com/ZGdxP8T4b/ (fără subtitrări, analizat din cadre)
 
 URL: https://vm.tiktok.com/ZGdxPR15q/
 
-- ☐ **GSC Performance → sortare după Impressions → găsește keyword-uri cu impresii mari, CTR mic, poziție 8-20** ("money keywords" aproape de pagina 1) → optimizezi pagina respectivă (H1/subtitlu/descriere) pentru acel keyword exact. Tehnică standard, foarte acționabilă.
+- ☑ **GSC striking-distance — RULAT 2026-08-14.** 12 oportunități găsite, toate "haushaltsauflösung [oraș mic]", 0 clicuri din ~294 impr/lună.
 - **Direct aplicabil:** avem deja date GSC zilnice salvate în `agent/gsc-snapshots/` — pot rula analiza asta pe datele reale ale site-ului, fără tool extern.
 
 ## Video 7 — @frewertmedia (glosar + internal linking prin ChatGPT)
@@ -65,7 +65,7 @@ URL: https://vm.tiktok.com/ZGdxPf39u/
 
 URL: https://vm.tiktok.com/ZGdxP2cuG/
 
-- ☐ **GBP → Edit Services → descriere AI sub 300 caractere per serviciu, cu keyword + oraș** — completează exact bucata "Services" din profilul Google Business incomplet.
+- ☑ **GBP → Edit Services — EXECUTAT 2026-08-14.** 9 descrieri servicii scrise și publicate, sub 300 caractere, cu keyword + oraș.
 - **Cel mai direct legat de gap-ul #1 din listă** (GBP Profile strength) — pot scrie chiar eu descrierile pentru serviciile PSS acum, e doar de copiat-lipit după.
 
 ## Video 9 — compactkeywords (GSC pagină → conținut lipsă via Claude)
@@ -151,7 +151,7 @@ URL: https://vm.tiktok.com/ZGdxSfw6L/
 
 URL: https://vm.tiktok.com/ZGdxaFQRb/
 
-- ☐ **Google Ads Keyword Planner → Discover new keywords → introduci URL-ul unui concurent local** (nu domeniul propriu) → Google generează toate keyword-urile pe care le asociază cu acel site, fără să licitezi pe marca lor. Tehnică distinctă de `site:` audit (Video 3) și de Custom Segments (Video 5) — extinde lista de keyword-uri pentru campaniile PSS_Reinigung_Search / PSS_Entrumpelung_Search.
+- ☑ **Google Ads Keyword Planner cu URL concurent — EXECUTAT 2026-08-14.** 907 idei extrase din 6 concurenți, 3 keyword-uri noi adăugate live ("messie wohnungen", "sperrmüll karlsruhe", "entrümpelung in der nähe").
 - Necesită aceeași listă de concurenți direcți (nume+site) cerută și de Video 3/5 — de făcut o singură dată, folosită de 3 tactici diferite.
 
 ### Video 44 + 48 — @alan.buildz / @luca.delfino_ (plugin Claude Ads — același tool, 2 creatori diferiți)
