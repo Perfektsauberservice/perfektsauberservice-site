@@ -275,7 +275,9 @@ window.psLoadGA = function(){
   gtag('config', 'AW-18036757035/LLZLCLHMmM8cEKukzJhD', { 'phone_conversion_number': '0163 9087197' });
   // /danke page is reachable only via Netlify form-submit redirect (noindex,nofollow,
   // not linked internally). Page-load fires the GA4 lead-capture event.
-  gtag('event', 'form_submit', { form_name: 'lead', page_path: location.pathname, value: 25, currency: 'EUR' });
+  // transport_type: beacon so the hit survives a fast tab-close/back-navigation
+  // (most visitors glance at "Danke" and leave within 1-2s).
+  gtag('event', 'form_submit', { form_name: 'lead', page_path: location.pathname, value: 25, currency: 'EUR', transport_type: 'beacon' });
   var s = document.createElement('script');
   s.async = true;
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
@@ -291,8 +293,13 @@ window.psGrantConsent = function(){
   try {
     if (localStorage.getItem('psCookieChoice') === 'all') window.psGrantConsent();
   } catch(e) {}
-  if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
-  else setTimeout(window.psLoadGA, 2500);
+  // Unlike other pages, /danke exists solely to record this one conversion event —
+  // there's no other content competing for load priority, and most visitors leave
+  // within seconds. Load GA4 immediately instead of deferring (requestIdleCallback/
+  // setTimeout previously gave visitors a 2.5-4s window to leave before the event
+  // ever fired, silently losing real leads — same bug class fixed for phone/whatsapp/
+  // email clicks on 2026-08-12, missed here).
+  window.psLoadGA();
 })();
 </script>
 </body>
