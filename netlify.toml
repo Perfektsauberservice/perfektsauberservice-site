@@ -2291,12 +2291,12 @@
   force = true
 [[redirects]]
   from = "/haushaltsaufloesung-bietigheim"
-  to = "/entruempelung-bietigheim"
+  to = "/haushaltsaufloesung-rastatt"
   status = 301
   force = true
 [[redirects]]
   from = "/haushaltsaufloesung-bietigheim.html"
-  to = "/entruempelung-bietigheim"
+  to = "/haushaltsaufloesung-rastatt"
   status = 301
   force = true
 [[redirects]]
