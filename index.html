@@ -1001,8 +1001,18 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   const btnAccept = document.getElementById('cookieAccept');
   const btnDecline = document.getElementById('cookieDecline');
   const reopen = document.getElementById('cookieReopen');
-  function show(){ banner.style.display = 'block'; }
-  function hide(){ banner.style.display = 'none'; }
+  function positionFab(){
+    const fab = document.querySelector('.fab');
+    if (!fab) return;
+    requestAnimationFrame(() => { fab.style.bottom = (banner.getBoundingClientRect().height + 24) + 'px'; });
+  }
+  function resetFab(){
+    const fab = document.querySelector('.fab');
+    if (fab) fab.style.bottom = '';
+  }
+  function show(){ banner.style.display = 'block'; positionFab(); }
+  function hide(){ banner.style.display = 'none'; resetFab(); }
+  window.addEventListener('resize', () => { if (banner.style.display === 'block') positionFab(); });
   if (!localStorage.getItem(KEY)) {
     setTimeout(show, 800);
   }
