@@ -1032,6 +1032,27 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 })();
 </script>
 
+<!-- ======== Reveal-on-scroll (with hard safety net so content is never stuck hidden) ======== -->
+<script>(function(){
+  var els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+  function show(el){ el.classList.add('in'); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) { show(entry.target); io.unobserve(entry.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.01 });
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(show);
+  }
+  // Safety net: force-reveal everything after 2.5s no matter what (protects against
+  // translate-tool DOM rewrites, ad blockers, or any other script on the page failing).
+  setTimeout(function(){ els.forEach(show); }, 2500);
+})();
+</script>
+
 <!-- ======== Mobile floating CTA ======== -->
 <div class="fab">
   <a class="w" href="https://wa.me/491639087197" aria-label="WhatsApp">
