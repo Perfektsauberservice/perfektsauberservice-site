@@ -1,5 +1,4 @@
 {
-  "note": "CLEAN Verifier input. Exactly the five allowed keys (atomic_claims, public_evidence, pss_data, period_filters, test_plan) plus this fixture note, which the Coordinator strips before handoff. All evidence is embedded and fictional: no live source, no repository file, no network. Every claim is re-derivable from its public_evidence entry. Carries none of the Analyst-only fields and no persuasive narrative.",
   "atomic_claims": [
     { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day (window ending 2026-08-17) to 22.0/day (window starting 2026-08-18).", "evidence_id": "EV-0001" },
     { "claim_id": "C-002", "text": "Over 28 days the /bueroreinigung page received 293 impressions across three pricing/quote-intent queries it does not answer on-page.", "evidence_id": "EV-0002" },

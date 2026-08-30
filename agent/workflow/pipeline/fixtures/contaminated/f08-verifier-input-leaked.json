@@ -1,5 +1,4 @@
 {
-  "note": "CONTAMINATED Verifier input. It carries the five allowed keys AND three keys the Verifier must never receive: priority, decision and rationale (copied from analysis FX-07). The contamination is confined to those three keys; the five allowed keys are clean, self-contained and fictional, identical in substance to clean/f09. Expected Verifier behaviour: context_leak_detected = true and overall = INSUFFICIENT_DATA.",
   "atomic_claims": [
     { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day (window ending 2026-08-17) to 22.0/day (window starting 2026-08-18).", "evidence_id": "EV-0001" },
     { "claim_id": "C-002", "text": "Over 28 days the /bueroreinigung page received 293 impressions across three pricing/quote-intent queries it does not answer on-page.", "evidence_id": "EV-0002" },
