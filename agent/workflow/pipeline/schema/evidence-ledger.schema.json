@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://perfektsauberservice.com/schema/evidence-ledger.schema.json",
+  "title": "Evidence ledger entry",
+  "description": "One row per factual claim that enters the partner pipeline. Phase 1 authoring artifact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evidence_id",
+    "claim",
+    "source_type",
+    "source_path",
+    "source_timestamp",
+    "period_start",
+    "period_end",
+    "timezone",
+    "filters",
+    "calculation",
+    "raw_result",
+    "status",
+    "confidence",
+    "alternative_explanations",
+    "falsification_test",
+    "limitations"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^EV-[0-9]{4,}$",
+      "description": "Stable id, e.g. EV-0001."
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 3,
+      "description": "One atomic factual statement. No recommendation, no causal language."
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "repo_file",
+        "repo_state_json",
+        "gsc_export",
+        "ga4_export",
+        "google_ads_export",
+        "serper_snapshot",
+        "public_web_page",
+        "public_gbp",
+        "public_reviews",
+        "ads_transparency_center",
+        "sitemap_or_robots",
+        "business_directory",
+        "public_social_page",
+        "pss_own_monitor_history",
+        "screenshot",
+        "other"
+      ]
+    },
+    "source_path": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repo-relative path, URL, or export identifier. No secrets."
+    },
+    "source_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the source was produced or captured (ISO 8601)."
+    },
+    "period_start": {
+      "type": ["string", "null"],
+      "description": "ISO date; null if the claim is not period-bound."
+    },
+    "period_end": {
+      "type": ["string", "null"],
+      "description": "ISO date; null if the claim is not period-bound."
+    },
+    "timezone": {
+      "type": "string",
+      "description": "IANA tz used for period_start/period_end, e.g. Europe/Berlin. Use 'n/a' if not period-bound."
+    },
+    "filters": {
+      "type": "object",
+      "description": "Every filter applied to obtain raw_result (country, device, query set, page set, segment, etc.). Empty object if none.",
+      "additionalProperties": true
+    },
+    "calculation": {
+      "type": "string",
+      "description": "Exact transformation from source to raw_result (formula, aggregation, dedup rule). 'none' if raw copy."
+    },
+    "raw_result": {
+      "description": "The unmodified result value(s) the claim rests on.",
+      "type": ["string", "number", "boolean", "array", "object", "null"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["CONFIRMED", "INFERRED", "UNVERIFIED", "CONTRADICTED"]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "alternative_explanations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "At least one alternative explanation for the observed result, even if weak."
+    },
+    "falsification_test": {
+      "type": "string",
+      "minLength": 3,
+      "description": "A concrete check that would prove the claim false if the claim were false."
+    },
+    "limitations": {
+      "type": "string",
+      "minLength": 3,
+      "description": "What this evidence does not establish; collection gaps; sample limits."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "note": "Raw finding for a MEDIU-tier run. Multiple plausible causes on purpose. Facts only.",
+  "finding_ref": "FX-05",
+  "channel": "seo",
+  "observed": [
+    "Organic clicks to /bueroreinigung fell from a 7-day mean of 41/day to 22/day.",
+    "The drop starts on 2026-08-18 and persists for 9 days.",
+    "Impressions for the same page fell from a 7-day mean of 610/day to 470/day over the same window.",
+    "Average position for the page's top query moved from 6.2 to 8.9.",
+    "A site deploy occurred on 2026-08-17 that touched shared header markup.",
+    "Google announced a core update rolling out 2026-08-15 to 2026-08-29.",
+    "August historically shows lower B2B cleaning demand (holiday season)."
+  ],
+  "period_start": "2026-08-04",
+  "period_end": "2026-08-27",
+  "timezone": "Europe/Berlin",
+  "filters": { "country": "deu", "search_type": "web", "page": "/bueroreinigung" },
+  "missing_data": [
+    "Whether the 2026-08-17 deploy changed anything on /bueroreinigung specifically.",
+    "Whether competitors' positions for the same query changed.",
+    "Year-over-year August seasonality for this page."
+  ]
+}

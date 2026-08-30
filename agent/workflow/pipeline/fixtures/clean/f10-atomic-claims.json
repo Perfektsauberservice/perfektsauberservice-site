@@ -1,0 +1,89 @@
+{
+  "artifact_type": "investigation",
+  "artifact_id": "FX-10",
+  "run_id": "fixture",
+  "produced_by": "investigator",
+  "produced_at": "2026-08-31T09:40:00Z",
+  "schema_version": "1.0.0-phase1",
+  "inputs_ref": ["FX-05"],
+  "finding_id": "F-0010",
+  "source_summary": "Investigated an organic performance drop on /bueroreinigung reported by an L1-style finding. Opened the cited GSC snapshot and the deploy log independently.",
+  "atomic_claims": [
+    { "claim_id": "C-001", "text": "/bueroreinigung 7-day mean organic clicks fell from 41/day to 22/day starting 2026-08-18.", "evidence_id": "EV-0001" },
+    { "claim_id": "C-002", "text": "The page's top query 'büroreinigung rastatt' moved from average position 6.2 to 8.9 between 2026-08-11 and 2026-08-27.", "evidence_id": "EV-0002" },
+    { "claim_id": "C-003", "text": "The 2026-08-17 deploy changed shared header markup and did not change /bueroreinigung body content.", "evidence_id": "EV-0003" }
+  ],
+  "evidence_ledger": [
+    {
+      "evidence_id": "EV-0001",
+      "claim": "/bueroreinigung 7-day mean organic clicks fell from 41/day to 22/day starting 2026-08-18.",
+      "source_type": "gsc_export",
+      "source_path": "agent/gsc-snapshots/2026-08-27.json",
+      "source_timestamp": "2026-08-27T05:45:00Z",
+      "period_start": "2026-08-04",
+      "period_end": "2026-08-27",
+      "timezone": "Europe/Berlin",
+      "filters": { "country": "deu", "search_type": "web", "page": "/bueroreinigung" },
+      "calculation": "7-day trailing mean of daily clicks, computed for the window before 2026-08-18 and the window after.",
+      "raw_result": { "clicks_7d_mean_before": 41, "clicks_7d_mean_after": 22 },
+      "status": "CONFIRMED",
+      "confidence": "high",
+      "alternative_explanations": ["August B2B seasonality", "core update reweighting", "post-deploy regression"],
+      "falsification_test": "If the daily click series for /bueroreinigung shows no step down around 2026-08-18, the claim is false.",
+      "limitations": "Does not establish a cause; single page; no year-over-year comparison in the fixture."
+    },
+    {
+      "evidence_id": "EV-0002",
+      "claim": "The top query moved from average position 6.2 to 8.9 in the window.",
+      "source_type": "gsc_export",
+      "source_path": "agent/gsc-snapshots/2026-08-27.json",
+      "source_timestamp": "2026-08-27T05:45:00Z",
+      "period_start": "2026-08-11",
+      "period_end": "2026-08-27",
+      "timezone": "Europe/Berlin",
+      "filters": { "country": "deu", "search_type": "web", "query": "büroreinigung rastatt" },
+      "calculation": "Mean of daily average position for the query, before vs after 2026-08-18.",
+      "raw_result": { "pos_before": 6.2, "pos_after": 8.9 },
+      "status": "CONFIRMED",
+      "confidence": "high",
+      "alternative_explanations": ["competitor gained positions", "SERP layout change", "core update"],
+      "falsification_test": "If the query's daily position series is flat across 2026-08-18, the claim is false.",
+      "limitations": "Position is an average across devices and locations; does not identify which competitor moved."
+    },
+    {
+      "evidence_id": "EV-0003",
+      "claim": "The 2026-08-17 deploy changed shared header markup only.",
+      "source_type": "repo_file",
+      "source_path": "deploy-log fixture (site-fixture context)",
+      "source_timestamp": "2026-08-17T00:00:00Z",
+      "period_start": null,
+      "period_end": null,
+      "timezone": "n/a",
+      "filters": {},
+      "calculation": "none",
+      "raw_result": "diff touched header partial; no change under the /bueroreinigung page body",
+      "status": "INFERRED",
+      "confidence": "medium",
+      "alternative_explanations": ["the diff summary is incomplete", "a shared CSS change affected rendering of this page"],
+      "falsification_test": "If the deploy diff shows an edit to the /bueroreinigung page body, the claim is false.",
+      "limitations": "Based on a diff summary, not a line-by-line review of every shared asset."
+    }
+  ],
+  "dedup_result": "No prior resolved finding covers this exact page + window. Not a duplicate.",
+  "recency_check": "GSC snapshot is 4 days old; deploy log entry is 14 days old. Both current enough for this analysis.",
+  "pss_comparison": "PSS's own /bueroreinigung content was unchanged in the window; the change vector is external (SERP) or deploy-side (shared markup).",
+  "observed_facts": [
+    "Clicks fell (EV-0001).",
+    "Top-query position worsened (EV-0002).",
+    "A deploy touched shared header markup on 2026-08-17 (EV-0003)."
+  ],
+  "estimates": [
+    "The deploy is unlikely to be the cause because it did not touch this page's body (medium confidence)."
+  ],
+  "open_questions": [
+    "Did a competitor gain positions for the top query?",
+    "What is the year-over-year August pattern for this page?"
+  ],
+  "risk_prelim": "MEDIU",
+  "recommended_next": "TO_ANALYST"
+}

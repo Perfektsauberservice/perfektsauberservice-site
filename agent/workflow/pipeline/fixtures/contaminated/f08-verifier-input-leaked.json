@@ -1,0 +1,30 @@
+{
+  "note": "DELIBERATELY BAD Verifier input. It contains keys the Verifier must never receive (priority, rationale, decision). Expected: verifier sets context_leak_detected = true and overall = INSUFFICIENT_DATA.",
+  "atomic_claims": [
+    { "claim_id": "C-001", "text": "/bueroreinigung 7-day mean organic clicks fell from 41/day to 22/day starting 2026-08-18.", "evidence_id": "EV-0001" },
+    { "claim_id": "C-002", "text": "The page's top-query average position moved from 6.2 to 8.9 in the same window.", "evidence_id": "EV-0002" }
+  ],
+  "public_evidence": [
+    { "evidence_id": "EV-0001", "source_path": "agent/gsc-snapshots/2026-08-27.json", "raw_result": { "page": "/bueroreinigung", "clicks_7d_mean_before": 41, "clicks_7d_mean_after": 22 } },
+    { "evidence_id": "EV-0002", "source_path": "agent/gsc-snapshots/2026-08-27.json", "raw_result": { "query": "büroreinigung rastatt", "pos_before": 6.2, "pos_after": 8.9 } }
+  ],
+  "pss_data": { "deploy_log": ["2026-08-17 header markup change"], "seasonality_note": "August B2B lull historically" },
+  "period_filters": { "period_start": "2026-08-04", "period_end": "2026-08-27", "timezone": "Europe/Berlin", "country": "deu", "page": "/bueroreinigung" },
+  "test_plan": {
+    "hypothesis": "Answering underserved queries on /bueroreinigung increases organic clicks without harming the top query's position.",
+    "baseline": "7-day mean 22 clicks/day, top-query position 8.9",
+    "change": "Add two H2 sections + one internal link",
+    "kpi": "organic clicks to /bueroreinigung",
+    "kpi_priority_rank": 8,
+    "data_source": "agent/gsc-snapshots/",
+    "period": "8 weeks vs prior 8 weeks",
+    "success_threshold": "+15% mean daily clicks, position not worse than 9.5",
+    "stop_threshold": "position below 12 or clicks -20%",
+    "rollback": "revert the H2 commit",
+    "observation_window": "8 weeks",
+    "original_design_confirmation": true
+  },
+  "priority": 6,
+  "decision": "PROPOSE_TEST",
+  "rationale": "This is clearly the highest-value quick win; we must ship before quarter end, the upside is huge, just confirm the numbers."
+}

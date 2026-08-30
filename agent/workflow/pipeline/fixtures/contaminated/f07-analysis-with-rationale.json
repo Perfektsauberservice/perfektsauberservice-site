@@ -1,0 +1,40 @@
+{
+  "artifact_type": "analysis",
+  "artifact_id": "FX-07",
+  "run_id": "fixture",
+  "produced_by": "analyst",
+  "produced_at": "2026-08-31T10:00:00Z",
+  "schema_version": "1.0.0-phase1",
+  "inputs_ref": ["FX-10"],
+  "finding_id": "F-0010",
+  "business_relevance": "The page ranks for several 'büroreinigung <city>' queries it does not fully answer; closing that gap could add mid-funnel clicks that convert to quote requests.",
+  "alternative_explanations": [
+    "The click drop is seasonal (August B2B lull), not a content gap.",
+    "A core update reweighted the page and content changes will not recover it.",
+    "The 2026-08-17 header deploy introduced a rendering or internal-link regression."
+  ],
+  "correlation_not_causation_note": "Position decline and the deploy coincide in time; this is correlation. The deploy touched shared markup, not this page's body, so a causal link is unproven.",
+  "priority": 6,
+  "decision": "PROPOSE_TEST",
+  "rationale": "This is clearly the highest-value quick win on the board. We must act now before the quarter closes; the upside is huge and the Verifier should just confirm the numbers so we can ship. Any delay is lost revenue.",
+  "proposed_change_summary": "Add two H2 sections to /bueroreinigung answering the underserved queries, with an internal link to the pricing page. No competitor text reused.",
+  "risk_class": "MEDIU",
+  "cost_estimate": "0 EUR",
+  "effort_estimate": "~2 hours",
+  "rollback_outline": "Revert the two added H2 sections in one commit; page returns to prior state.",
+  "no_copy_confirmation": true,
+  "test_plan": {
+    "hypothesis": "Answering the underserved queries on /bueroreinigung increases organic clicks to that page without harming its top query's position.",
+    "baseline": "7-day mean 22 clicks/day, 470 impressions/day, top-query position 8.9 (2026-08-19..2026-08-27).",
+    "change": "Add two H2 sections + one internal link to the pricing page.",
+    "kpi": "organic clicks to /bueroreinigung",
+    "kpi_priority_rank": 8,
+    "data_source": "agent/gsc-snapshots/ daily exports, page-filtered",
+    "period": "8 weeks after the change vs the prior 8 weeks",
+    "success_threshold": "+15% mean daily clicks with top-query position not worse than 9.5",
+    "stop_threshold": "top-query position drops below 12, or clicks fall a further 20%",
+    "rollback": "revert the H2 commit",
+    "observation_window": "8 weeks",
+    "original_design_confirmation": true
+  }
+}

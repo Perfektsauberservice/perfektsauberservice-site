@@ -1,0 +1,16 @@
+{
+  "note": "Raw finding for E2E-MONITOR. Real but low-impact; has a review_date; no cost, no external op, no deadline, no urgent risk. Expected: Analyst decision MONITOR; Coordinator ARCHIVE with archive_class MONITOR and monitor_archive_conditions_met = true; Laura not notified.",
+  "finding_ref": "FX-15",
+  "channel": "local-seo",
+  "observed": [
+    "A regional business directory (directory.example.invalid) added a free listing tier on 2026-08-25.",
+    "PSS is not listed there.",
+    "The directory has low domain authority and little local traffic per public estimates."
+  ],
+  "impact_estimate": "low",
+  "cost": "0",
+  "urgent_risk": false,
+  "deadline": "none",
+  "review_date": "2026-11-30",
+  "missing_data": ["Whether the free tier allows a dofollow link."]
+}

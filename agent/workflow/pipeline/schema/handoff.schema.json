@@ -1,0 +1,420 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://perfektsauberservice.com/schema/handoff.schema.json",
+  "title": "Partner pipeline handoff artifact",
+  "description": "Discriminated by artifact_type. Every branch is self-contained and strict (additionalProperties:false) for deterministic PASS/FAIL. Phase 1 authoring artifact.",
+  "type": "object",
+  "required": ["artifact_type"],
+  "properties": {
+    "artifact_type": {
+      "type": "string",
+      "enum": [
+        "competitor-observation",
+        "investigation",
+        "analysis",
+        "verification",
+        "implementation",
+        "qa-report",
+        "coordinator-decision"
+      ]
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/definitions/competitorObservation" },
+    { "$ref": "#/definitions/investigation" },
+    { "$ref": "#/definitions/analysis" },
+    { "$ref": "#/definitions/verification" },
+    { "$ref": "#/definitions/implementation" },
+    { "$ref": "#/definitions/qaReport" },
+    { "$ref": "#/definitions/coordinatorDecision" }
+  ],
+  "definitions": {
+    "envelopeProps": {
+      "comment": "Reference list only. Copied into each branch below.",
+      "type": "object"
+    },
+    "competitorObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "observation_id", "competitor_id", "competitor_name", "source_url",
+        "captured_at", "location", "query", "device_context",
+        "previous_snapshot_hash", "current_snapshot_hash", "observed_change",
+        "raw_evidence", "certainty", "collection_limitations", "verification_required"
+      ],
+      "properties": {
+        "artifact_type": { "const": "competitor-observation" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "competitor-intelligence" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" } },
+        "observation_id": { "type": "string", "pattern": "^CMP-[0-9]{4,}$" },
+        "competitor_id": { "type": "string", "minLength": 1 },
+        "competitor_name": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "minLength": 1 },
+        "captured_at": { "type": "string", "format": "date-time" },
+        "location": { "type": "string", "minLength": 1 },
+        "query": { "type": "string" },
+        "device_context": { "type": "string", "minLength": 1 },
+        "previous_snapshot_hash": { "type": ["string", "null"] },
+        "current_snapshot_hash": { "type": "string", "minLength": 1 },
+        "observed_change": { "type": "string", "minLength": 3 },
+        "raw_evidence": { "type": "string", "minLength": 1 },
+        "certainty": { "type": "string", "enum": ["OBSERVED", "ESTIMATED", "UNVERIFIED"] },
+        "collection_limitations": { "type": "string", "minLength": 3 },
+        "verification_required": { "type": "boolean" }
+      },
+      "not": {
+        "properties": {
+          "certainty": { "const": "CONFIRMED" }
+        },
+        "required": ["certainty"]
+      }
+    },
+    "investigation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "finding_id", "source_summary", "atomic_claims", "evidence_ledger",
+        "dedup_result", "recency_check", "pss_comparison",
+        "observed_facts", "estimates", "open_questions",
+        "risk_prelim", "recommended_next"
+      ],
+      "properties": {
+        "artifact_type": { "const": "investigation" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "investigator" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "finding_id": { "type": "string", "pattern": "^F-[0-9]{4,}$" },
+        "source_summary": { "type": "string", "minLength": 3 },
+        "atomic_claims": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["claim_id", "text", "evidence_id"],
+            "properties": {
+              "claim_id": { "type": "string", "pattern": "^C-[0-9]{3,}$" },
+              "text": { "type": "string", "minLength": 3 },
+              "evidence_id": { "type": "string", "pattern": "^EV-[0-9]{4,}$" }
+            }
+          }
+        },
+        "evidence_ledger": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "evidence-ledger.schema.json" }
+        },
+        "dedup_result": { "type": "string", "minLength": 3 },
+        "recency_check": { "type": "string", "minLength": 3 },
+        "pss_comparison": { "type": "string", "minLength": 3 },
+        "observed_facts": { "type": "array", "items": { "type": "string" } },
+        "estimates": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } },
+        "risk_prelim": { "type": "string", "enum": ["REDUS", "MEDIU", "RIDICAT", "UNKNOWN"] },
+        "recommended_next": {
+          "type": "string",
+          "enum": ["TO_ANALYST", "NEEDS_MORE_DATA", "ARCHIVE_MINOR"]
+        }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "finding_id", "business_relevance", "alternative_explanations",
+        "correlation_not_causation_note", "priority", "decision", "rationale",
+        "proposed_change_summary", "risk_class", "cost_estimate", "effort_estimate",
+        "rollback_outline", "no_copy_confirmation", "test_plan"
+      ],
+      "properties": {
+        "artifact_type": { "const": "analysis" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "analyst" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "finding_id": { "type": "string", "pattern": "^F-[0-9]{4,}$" },
+        "business_relevance": { "type": "string", "minLength": 3 },
+        "alternative_explanations": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string" }
+        },
+        "correlation_not_causation_note": { "type": "string", "minLength": 3 },
+        "priority": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "decision": {
+          "type": "string",
+          "enum": ["IGNORE", "MONITOR", "INVESTIGATE_FURTHER", "PROPOSE_TEST", "URGENT_RISK"]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 3,
+          "description": "Persuasive narrative. MUST NOT be forwarded to the Verifier."
+        },
+        "proposed_change_summary": { "type": "string", "minLength": 3 },
+        "risk_class": { "type": "string", "enum": ["REDUS", "MEDIU", "RIDICAT"] },
+        "cost_estimate": { "type": "string", "minLength": 1 },
+        "effort_estimate": { "type": "string", "minLength": 1 },
+        "rollback_outline": { "type": "string", "minLength": 3 },
+        "no_copy_confirmation": {
+          "type": "boolean",
+          "description": "True = no competitor text, image, or branding was copied into the proposal."
+        },
+        "test_plan": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "hypothesis", "baseline", "change", "kpi", "kpi_priority_rank",
+            "data_source", "period", "success_threshold", "stop_threshold",
+            "rollback", "observation_window", "original_design_confirmation"
+          ],
+          "properties": {
+            "hypothesis": { "type": "string", "minLength": 3 },
+            "baseline": { "type": "string", "minLength": 1 },
+            "change": { "type": "string", "minLength": 3 },
+            "kpi": { "type": "string", "minLength": 1 },
+            "kpi_priority_rank": { "type": "integer", "minimum": 1, "maximum": 9 },
+            "data_source": { "type": "string", "minLength": 1 },
+            "period": { "type": "string", "minLength": 1 },
+            "success_threshold": { "type": "string", "minLength": 1 },
+            "stop_threshold": { "type": "string", "minLength": 1 },
+            "rollback": { "type": "string", "minLength": 3 },
+            "observation_window": { "type": "string", "minLength": 1 },
+            "original_design_confirmation": {
+              "type": "boolean",
+              "description": "True = the test design is PSS-original, not copied from a competitor or a video."
+            }
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "finding_id", "inputs_received", "context_leak_detected",
+        "fact_real", "opportunity_follows_logically", "data_sufficient",
+        "alternative_explanations_reviewed", "pss_can_implement_legally_and_technically",
+        "test_measures_hypothesis", "overall", "contested_points", "notes"
+      ],
+      "properties": {
+        "artifact_type": { "const": "verification" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "verifier" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "finding_id": { "type": "string", "pattern": "^F-[0-9]{4,}$" },
+        "inputs_received": {
+          "type": "array",
+          "description": "MUST be exactly this set. Any extra key (e.g. rationale, priority) is a context leak.",
+          "items": {
+            "type": "string",
+            "enum": ["atomic_claims", "public_evidence", "pss_data", "period_filters", "test_plan"]
+          },
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true
+        },
+        "context_leak_detected": { "type": "boolean" },
+        "fact_real": { "type": "string", "enum": ["PASS", "FAIL", "INSUFFICIENT"] },
+        "opportunity_follows_logically": { "type": "string", "enum": ["PASS", "FAIL", "INSUFFICIENT"] },
+        "data_sufficient": { "type": "string", "enum": ["PASS", "FAIL"] },
+        "alternative_explanations_reviewed": { "type": "boolean" },
+        "pss_can_implement_legally_and_technically": { "type": "string", "enum": ["PASS", "FAIL", "INSUFFICIENT"] },
+        "test_measures_hypothesis": { "type": "string", "enum": ["PASS", "FAIL", "INSUFFICIENT"] },
+        "overall": { "type": "string", "enum": ["CONFIRMED", "REFUTED", "INSUFFICIENT_DATA"] },
+        "contested_points": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "finding_id", "target_repo", "branch_name", "base_commit", "files_changed",
+        "diff_summary", "commit_hash", "commit_author", "commit_committer",
+        "pushed", "merged", "stop_point", "reversibility_note"
+      ],
+      "properties": {
+        "artifact_type": { "const": "implementation" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "implementer" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "finding_id": { "type": "string", "pattern": "^F-[0-9]{4,}$" },
+        "target_repo": {
+          "const": "isolated-temp-test-repo",
+          "description": "Phase 1: the Implementer only ever writes to the isolated temporary test repo."
+        },
+        "branch_name": { "type": "string", "minLength": 1 },
+        "base_commit": { "type": "string", "minLength": 7 },
+        "files_changed": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": { "type": "string" }
+        },
+        "diff_summary": { "type": "string", "minLength": 3 },
+        "commit_hash": { "type": "string", "minLength": 7 },
+        "commit_author": { "type": "string" },
+        "commit_committer": { "type": "string" },
+        "pushed": { "const": false },
+        "merged": { "const": false },
+        "stop_point": { "const": "committed-on-branch" },
+        "reversibility_note": { "type": "string", "minLength": 3 }
+      }
+    },
+    "qaReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "finding_id", "implementation_ref", "success_criteria", "criteria_results",
+        "regression_checks", "official_repo_baseline_check", "temp_repo_check",
+        "overall", "blocking_reasons", "notes"
+      ],
+      "properties": {
+        "artifact_type": { "const": "qa-report" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "qa" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "finding_id": { "type": "string", "pattern": "^F-[0-9]{4,}$" },
+        "implementation_ref": { "type": "string", "minLength": 1 },
+        "success_criteria": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "criteria_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["criterion", "result"],
+            "properties": {
+              "criterion": { "type": "string", "minLength": 1 },
+              "result": { "type": "string", "enum": ["PASS", "FAIL"] }
+            }
+          }
+        },
+        "regression_checks": { "type": "array", "items": { "type": "string" } },
+        "official_repo_baseline_check": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["baseline_hash", "post_hash", "git_status_clean", "identical"],
+          "properties": {
+            "baseline_hash": { "type": "string", "minLength": 7 },
+            "post_hash": { "type": "string", "minLength": 7 },
+            "git_status_clean": { "type": "boolean" },
+            "identical": { "type": "boolean" }
+          }
+        },
+        "temp_repo_check": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["expected_files_changed", "actual_files_changed", "matches_prescribed_delta"],
+          "properties": {
+            "expected_files_changed": { "type": "array", "items": { "type": "string" } },
+            "actual_files_changed": { "type": "array", "items": { "type": "string" } },
+            "matches_prescribed_delta": { "type": "boolean" }
+          }
+        },
+        "overall": { "type": "string", "enum": ["PASS", "FAIL", "BLOCKED"] },
+        "blocking_reasons": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "coordinatorDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_type", "artifact_id", "run_id", "produced_by", "produced_at",
+        "schema_version", "inputs_ref",
+        "risk_class", "agents_invoked", "handoffs_validated", "schema_checks_passed",
+        "decision", "archive_class", "monitor_archive_conditions_met",
+        "human_review_state", "laura_report", "raw_logs_attached", "next_step"
+      ],
+      "properties": {
+        "artifact_type": { "const": "coordinator-decision" },
+        "artifact_id": { "type": "string", "minLength": 1 },
+        "run_id": { "type": "string", "minLength": 1 },
+        "produced_by": { "const": "coordinator" },
+        "produced_at": { "type": "string", "format": "date-time" },
+        "schema_version": { "type": "string" },
+        "inputs_ref": { "type": "array", "items": { "type": "string" } },
+        "risk_class": { "type": "string", "enum": ["REDUS", "MEDIU", "RIDICAT"] },
+        "agents_invoked": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["competitor-intelligence", "investigator", "analyst", "verifier", "implementer", "qa"]
+          }
+        },
+        "handoffs_validated": { "type": "array", "items": { "type": "string" } },
+        "schema_checks_passed": { "type": "boolean" },
+        "decision": {
+          "type": "string",
+          "enum": ["ARCHIVE", "ESCALATE", "ROUTE_BACK", "BLOCKED"]
+        },
+        "archive_class": {
+          "type": ["string", "null"],
+          "enum": ["IGNORE", "MONITOR", "DUPLICATE", "IRRELEVANT", null],
+          "description": "Set only when decision == ARCHIVE. READY_FOR_MERGE / merge-ready is NOT an archive class."
+        },
+        "monitor_archive_conditions_met": {
+          "type": ["boolean", "null"],
+          "description": "Required true when archive_class == MONITOR: low impact AND no urgent risk AND no near-term deadline AND no cost AND no external operation AND review_date set."
+        },
+        "human_review_state": {
+          "type": ["string", "null"],
+          "enum": ["AWAITING_LAURA_APPROVAL", "READY_FOR_HUMAN_REVIEW", null],
+          "description": "Set (non-null) whenever decision == ESCALATE because the next step is merge/push/deploy/publish/external service/spend/live change."
+        },
+        "laura_report": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": [
+            "opportunity_confirmed", "evidence_brief", "why_it_matters",
+            "analyst_proposal", "verifier_position", "cost_and_risk",
+            "approval_needed", "if_we_do_nothing"
+          ],
+          "properties": {
+            "opportunity_confirmed": { "type": "string", "minLength": 3 },
+            "evidence_brief": { "type": "string", "minLength": 3 },
+            "why_it_matters": { "type": "string", "minLength": 3 },
+            "analyst_proposal": { "type": "string", "minLength": 3 },
+            "verifier_position": { "type": "string", "minLength": 3 },
+            "cost_and_risk": { "type": "string", "minLength": 3 },
+            "approval_needed": { "type": "string", "minLength": 3 },
+            "if_we_do_nothing": { "type": "string", "minLength": 3 }
+          }
+        },
+        "raw_logs_attached": { "const": false },
+        "next_step": { "type": "string", "minLength": 3 }
+      }
+    }
+  }
+}

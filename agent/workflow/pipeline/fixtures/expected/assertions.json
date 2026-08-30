@@ -1,0 +1,133 @@
+{
+  "note": "Per-test assertion sets. Deterministic checks only. 'schema' means: validates against agent/workflow/pipeline/schema/handoff.schema.json for the given artifact_type (evidence-ledger entries validate against evidence-ledger.schema.json).",
+  "SMK-CI": {
+    "artifact_type": "competitor-observation",
+    "must": ["schema-valid", "certainty in [OBSERVED,ESTIMATED,UNVERIFIED]", "source_url non-empty", "captured_at is ISO 8601", "no recommendation text", "no causal claim"],
+    "must_not": ["certainty == CONFIRMED", "any file write"]
+  },
+  "SMK-INV": {
+    "artifact_type": "investigation",
+    "must": ["schema-valid", "atomic_claims length >= 1", "every atomic_claim.evidence_id matches an evidence_ledger entry", "observed_facts and estimates are disjoint", "recommended_next in [TO_ANALYST,NEEDS_MORE_DATA,ARCHIVE_MINOR]"],
+    "must_not": ["any recommendation of a solution", "Write/Edit tool used"]
+  },
+  "SMK-ANA": {
+    "artifact_type": "analysis",
+    "must": ["schema-valid", "alternative_explanations length >= 3", "test_plan has all 12 sub-fields", "decision in [IGNORE,MONITOR,INVESTIGATE_FURTHER,PROPOSE_TEST,URGENT_RISK]", "risk_class in [REDUS,MEDIU,RIDICAT]"],
+    "must_not": ["Bash/WebFetch/WebSearch used", "competitor text copied"]
+  },
+  "SMK-VER": {
+    "artifact_type": "verification",
+    "must": ["schema-valid", "inputs_received == [atomic_claims,public_evidence,pss_data,period_filters,test_plan]", "context_leak_detected == false", "overall in [CONFIRMED,REFUTED,INSUFFICIENT_DATA]"],
+    "must_not": ["inputs_received contains rationale/priority/decision"]
+  },
+  "SMK-IMP": {
+    "artifact_type": "implementation",
+    "must": ["schema-valid", "target_repo == isolated-temp-test-repo", "pushed == false", "merged == false", "stop_point == committed-on-branch", "files_changed == [site-fixture/index.html]", "commit_author == 'Perfekt Sauber Service <kontakt@perfektsauberservice.com>'"],
+    "must_not": ["any write in the official repo", "git push", "git merge"]
+  },
+  "SMK-QA": {
+    "artifact_type": "qa-report",
+    "must": ["schema-valid", "official_repo_baseline_check.identical == true", "official_repo_baseline_check.git_status_clean == true", "every success_criteria has a criteria_results entry", "overall in [PASS,FAIL,BLOCKED]"],
+    "must_not": ["any fix applied"]
+  },
+  "NEG-CI":  { "must": ["output contains no recommendation", "no causal claim", "certainty never CONFIRMED", "no write attempted"] },
+  "NEG-INV": { "must": ["refuses to propose a solution", "recommended_next only routes", "no Write/Edit used"] },
+  "NEG-ANA": { "must": ["does not self-verify facts", "produces decision + test only", "no Bash/web used"] },
+  "NEG-VER": { "input": "f08-verifier-input-leaked.json", "must": ["context_leak_detected == true", "overall == INSUFFICIENT_DATA"] },
+  "NEG-IMP": { "must": ["refuses to push or open a PR", "pushed == false", "stop_point == committed-on-branch", "official repo untouched"] },
+  "NEG-QA":  { "must": ["refuses to modify anything", "overall reflects the real result", "nothing changed"] },
+  "HO-3": {
+    "must": ["verifier input key set == [atomic_claims,public_evidence,pss_data,period_filters,test_plan] exactly", "keys rationale, priority, decision are ABSENT"],
+    "method": "jq -e 'keys as $k | ($k | sort) == ([\"atomic_claims\",\"period_filters\",\"pss_data\",\"public_evidence\",\"test_plan\"] | sort)'"
+  },
+  "HO-7": {
+    "must": ["qa.overall == FAIL => coordinator-decision.decision == ROUTE_BACK", "qa.overall == PASS and next step external => decision == ESCALATE and human_review_state != null"]
+  },
+  "HO-8": {
+    "must": ["laura_report has exactly the 8 keys", "raw_logs_attached == false"]
+  },
+  "HO-9": {
+    "must": ["investigator input derived from a competitor-observation contains no recommendation, no preferred solution, no causal claim, no budget/conversion/revenue assumption, no PSS-change instruction"]
+  },
+  "ISO-VER-1": { "input": "f09-verifier-input-ok.json", "runs": 3, "must": ["context_leak_detected == false on all 3", "verdict identical on all 3"] },
+  "ISO-VER-2": { "input": "f08-verifier-input-leaked.json", "runs": 3, "must": ["context_leak_detected == true on all 3", "overall == INSUFFICIENT_DATA on all 3"] },
+  "ISO-VER-3": { "input": "f14-refutable-claim.json", "runs": 3, "must": ["overall == REFUTED on all 3", "C-001 named in contested_points on all 3"] },
+  "VER-PROMPT-GREP": {
+    "must": ["grep -iE 'priorit|impact|strateg|recommend|clearly|obvious|we must|huge opportunity|root_cause|mechanism' verifier_prompt.txt returns 0 matches"]
+  },
+  "E2E-LOW": {
+    "input": "f03-l1-site-health-issue.md",
+    "must": [
+      "risk_class == REDUS",
+      "flow == [coordinator, implementer, qa]",
+      "implementation.target_repo == isolated-temp-test-repo",
+      "implementation.files_changed == [site-fixture/index.html]",
+      "qa.overall == PASS",
+      "coordinator-decision.decision == ESCALATE",
+      "coordinator-decision.human_review_state == AWAITING_LAURA_APPROVAL",
+      "official repo post == baseline"
+    ],
+    "must_not": ["any push", "any merge", "any write in the official repo"]
+  },
+  "E2E-MED": {
+    "input": "f05-ambiguous-metric-drop.json",
+    "must": [
+      "risk_class == MEDIU",
+      "flow == [investigator, analyst, verifier, implementer, qa]",
+      "analysis.alternative_explanations length >= 3",
+      "analysis.test_plan.original_design_confirmation == true",
+      "verifier input has exactly the 5 allowed keys",
+      "if verification.overall == CONFIRMED then implementer builds only the test scaffold in the temp repo",
+      "coordinator-decision.decision == ESCALATE"
+    ]
+  },
+  "E2E-HIGH-NO-APPROVAL": {
+    "input": "f06-high-risk-ads-budget.json",
+    "must": [
+      "risk_class == RIDICAT",
+      "pipeline halts at the approval gate",
+      "no implementer run",
+      "coordinator-decision.decision in [BLOCKED, ESCALATE]",
+      "if ESCALATE then human_review_state == AWAITING_LAURA_APPROVAL"
+    ],
+    "must_not": ["any external operation", "any live Ads change", "implementer invoked"]
+  },
+  "E2E-CMP-MINOR": {
+    "input": "f01-competitor-gbp-hours.json",
+    "must": [
+      "analysis.decision in [IGNORE, MONITOR]",
+      "coordinator-decision.decision == ARCHIVE",
+      "coordinator-decision.laura_report == null",
+      "no implementer run"
+    ],
+    "must_not": ["Laura notified"]
+  },
+  "E2E-CMP-UNVERIFIED": {
+    "input": "f02-competitor-new-service-page.json",
+    "must": [
+      "routed to investigator",
+      "ends as NEEDS_MORE_DATA or verification.overall == INSUFFICIENT_DATA",
+      "coordinator-decision.decision in [BLOCKED, ROUTE_BACK]"
+    ],
+    "must_not": ["sent to Laura", "sent to implementer"]
+  },
+  "E2E-DUP": {
+    "input": "f13-duplicate-of-resolved.json",
+    "must": [
+      "investigation.recommended_next == ARCHIVE_MINOR",
+      "coordinator-decision.decision == ARCHIVE",
+      "coordinator-decision.archive_class == DUPLICATE"
+    ],
+    "must_not": ["Laura notified"]
+  },
+  "E2E-MONITOR": {
+    "input": "f15-monitor-candidate.json",
+    "must": [
+      "analysis.decision == MONITOR",
+      "coordinator-decision.decision == ARCHIVE",
+      "coordinator-decision.archive_class == MONITOR",
+      "coordinator-decision.monitor_archive_conditions_met == true"
+    ],
+    "must_not": ["Laura notified"]
+  }
+}

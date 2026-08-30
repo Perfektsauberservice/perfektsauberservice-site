@@ -1,0 +1,27 @@
+{
+  "note": "Verifier input shaped (5 keys). Claim C-001 is NOT supported by the attached evidence. Expected: verifier overall = REFUTED, C-001 named in contested_points; context_leak_detected = false.",
+  "atomic_claims": [
+    { "claim_id": "C-001", "text": "Muster Rümpeldienst ranks #1 in organic results for 'messie wohnung entrümpelung rastatt'.", "evidence_id": "EV-0101" },
+    { "claim_id": "C-002", "text": "Muster Rümpeldienst published a dedicated /messie-wohnung page with lastmod 2026-08-20.", "evidence_id": "EV-0102" }
+  ],
+  "public_evidence": [
+    { "evidence_id": "EV-0101", "source_path": "serp capture fixture", "raw_result": { "query": "messie wohnung entrümpelung rastatt", "muster_ruempeldienst_position": 14, "note": "appears on page 2, not #1" } },
+    { "evidence_id": "EV-0102", "source_path": "sitemap capture fixture", "raw_result": { "loc": "https://muster-ruempeldienst.example.invalid/messie-wohnung", "lastmod": "2026-08-20" } }
+  ],
+  "pss_data": { "pss_position_same_query": 22, "pss_has_dedicated_page": false },
+  "period_filters": { "captured_at": "2026-08-31", "device": "mobile", "location": "Rastatt", "timezone": "Europe/Berlin" },
+  "test_plan": {
+    "hypothesis": "A dedicated PSS /messie-wohnung-rastatt page improves PSS position for the query.",
+    "baseline": "PSS position 22; no dedicated page.",
+    "change": "Publish a dedicated, original page for the term.",
+    "kpi": "PSS average position for the query",
+    "kpi_priority_rank": 8,
+    "data_source": "agent/state/keyword-rankings.json weekly snapshots",
+    "period": "12 weeks vs prior 12 weeks",
+    "success_threshold": "position improves to <= 12",
+    "stop_threshold": "no movement after 12 weeks",
+    "rollback": "noindex + remove the page",
+    "observation_window": "12 weeks",
+    "original_design_confirmation": true
+  }
+}

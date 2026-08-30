@@ -1,0 +1,17 @@
+{
+  "note": "Facts-only slice handed to the Investigator for a backlog item. The raw idea's proposed action is deliberately NOT included.",
+  "opportunity_id": "OPP-0015",
+  "title_reference_only": "GSC page-level query clusters",
+  "channel": "seo",
+  "facts": [
+    "agent/gsc-snapshots/ contains daily GSC exports for the site.",
+    "The backlog records this item's historical_status as NOT_STARTED.",
+    "The backlog records current_status as IMPORTED_UNVERIFIED.",
+    "No evidence_ids are attached yet."
+  ],
+  "missing_data": [
+    "Which pages have the largest gap between the queries they rank for and the queries they actually answer.",
+    "Whether any such H2 additions were already made."
+  ],
+  "requested_of_investigator": "Establish the current facts with atomic claims + evidence ledger. Do not propose or rank fixes."
+}

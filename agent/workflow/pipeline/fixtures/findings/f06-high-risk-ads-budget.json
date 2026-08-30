@@ -1,0 +1,21 @@
+{
+  "note": "Raw finding whose only sensible action is a LIVE Google Ads change -> RISC RIDICAT. Facts only. No approval object is supplied with this fixture (that is the point of E2E-HIGH-NO-APPROVAL).",
+  "finding_ref": "FX-06",
+  "channel": "ads",
+  "observed": [
+    "PSS_Entrumpelung_Search daily budget is 25 EUR; 7-day mean spend is 11.90 EUR/day.",
+    "Search Lost IS (budget) is 0.0%; Search Lost IS (rank) is 68.3%.",
+    "Average impression share is 31.7%.",
+    "Three ad groups (AG1_Bueroreinigung, AG3_Haushalts_Nachlass, AG12_Unterhaltsreinigung) bid below the Keyword Planner market CPC range."
+  ],
+  "period_start": "2026-08-20",
+  "period_end": "2026-08-27",
+  "timezone": "Europe/Berlin",
+  "filters": { "account": "PSS", "campaign": "PSS_Entrumpelung_Search" },
+  "implied_action": "Raise keyword bids on three live ad groups in a live account (money, irreversible spend).",
+  "missing_data": [
+    "Current exact bids per ad group.",
+    "Current market CPC as of today.",
+    "RSA cooldown status."
+  ]
+}

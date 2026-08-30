@@ -1,0 +1,264 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "pipeline-guardrails",
+  "description": "Machine-readable rules for the partner pipeline. Phase 1 authoring artifact. This file documents intent; it is NOT a running enforcement mechanism. Technical enforcement (hooks, permissions) is designed and tested separately in a later phase.",
+  "version": "1.0.0-phase1",
+  "phase": 1,
+  "official_repo": "C:/Users/laral/perfektsauberservice-site",
+  "work_branch": "setup/claude-partner-workflow",
+  "git_identity": {
+    "author_name": "Perfekt Sauber Service",
+    "author_email": "kontakt@perfektsauberservice.com",
+    "committer_name": "Perfekt Sauber Service",
+    "committer_email": "kontakt@perfektsauberservice.com",
+    "forbidden_email": "laurentiualin2017@gmail.com",
+    "method": "per-command environment variables; never modify global git config"
+  },
+  "coordinator": {
+    "who": "main conversation Claude session (NOT a subagent, no coordinator.md file)",
+    "responsibilities": [
+      "clarify objective with Laura when ambiguous",
+      "classify risk before any subagent runs; any doubt escalates one tier",
+      "choose subagents and order",
+      "build each subagent's isolated input slice",
+      "validate every handoff against handoff.schema.json before forwarding",
+      "validate every artifact: valid JSON, required fields, valid enums",
+      "stop pipeline (BLOCKED) on insufficient data and state exactly what is missing",
+      "archive without notifying Laura only: IGNORE, MONITOR meeting all archive conditions, minor/duplicate/irrelevant",
+      "present to Laura only the cases in laura_notify_when, as the 8-point brief",
+      "produce a coordinator-decision artifact per run"
+    ],
+    "must_not": [
+      "turn UNVERIFIED into CONFIRMED",
+      "override qa.overall == FAIL (must ROUTE_BACK)",
+      "substitute for a Laura approval",
+      "extend a Laura approval by interpretation",
+      "auto-archive anything whose next step is merge/push/deploy/publish/external/spend/live change",
+      "send Telegram or email in Phase 1 (relay to Laura in the conversation instead)"
+    ]
+  },
+  "roles": {
+    "competitor-intelligence": {
+      "stage": 0,
+      "in_approval_chain": false,
+      "input": "a public-source monitoring target (query, location, competitor id) from the Coordinator",
+      "output": "competitor-observation artifact(s), 15 fields, certainty in {OBSERVED, ESTIMATED, UNVERIFIED} - never CONFIRMED",
+      "allowed_tools": ["Read", "Grep", "Glob", "WebFetch", "WebSearch", "Bash(curl -s GET only)"],
+      "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "allowed_operations": [
+        "fetch public web pages, robots.txt, sitemaps",
+        "read public Google/Maps/GBP/review results",
+        "read Ads Transparency Center public data",
+        "read public business directories and public social pages",
+        "read PSS own monitor history (agent/state/keyword-rankings.json) and PSS own exports"
+      ],
+      "forbidden_operations": [
+        "log in to any competitor system",
+        "bypass CAPTCHA or access restrictions",
+        "aggressive scraping",
+        "leave reviews or report profiles",
+        "modify any competitor profile",
+        "impersonate a customer",
+        "contact competitors",
+        "copy competitor text, images, or branding",
+        "collect unnecessary personal data",
+        "make any PSS implementation change",
+        "produce recommendations, preferred solutions, causal claims, or budget/conversion/revenue assumptions",
+        "report directly to Laura"
+      ],
+      "stop_conditions": [
+        "a source requires login or CAPTCHA",
+        "cannot establish source URL and timestamp for an observation",
+        "would need to assert a non-public fact"
+      ]
+    },
+    "investigator": {
+      "stage": 1,
+      "in_approval_chain": true,
+      "input": "a raw finding: competitor-observation, an L1 check issue, or an opportunity-backlog item id - facts only",
+      "output": "investigation artifact with atomic_claims + evidence_ledger; observed_facts and estimates kept separate",
+      "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
+      "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "allowed_operations": [
+        "open and read the cited sources independently",
+        "compare snapshot hashes",
+        "deduplicate against prior findings",
+        "check recency of each source",
+        "compare against PSS own data"
+      ],
+      "forbidden_operations": [
+        "propose or evaluate a solution",
+        "make strategic recommendations",
+        "modify anything",
+        "assert causation"
+      ],
+      "stop_conditions": [
+        "a required source is unreachable",
+        "claims cannot be made atomic with evidence",
+        "the finding is a duplicate of an already-resolved item -> recommended_next = ARCHIVE_MINOR"
+      ]
+    },
+    "analyst": {
+      "stage": 2,
+      "in_approval_chain": true,
+      "input": "an investigation artifact (facts + evidence ledger)",
+      "output": "analysis artifact incl. decision in {IGNORE, MONITOR, INVESTIGATE_FURTHER, PROPOSE_TEST, URGENT_RISK}, risk_class, and a separate test_plan object",
+      "allowed_tools": ["Read", "Grep", "Glob"],
+      "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit", "Bash", "WebFetch", "WebSearch"],
+      "allowed_operations": [
+        "assess business relevance against PSS metric priority",
+        "produce at least 3 alternative explanations",
+        "state correlation-is-not-causation explicitly",
+        "assign priority (1-9) and risk_class",
+        "design an ORIGINAL minimal test with KPI/risk/duration/rollback"
+      ],
+      "forbidden_operations": [
+        "verify its own facts (that is the Verifier's job)",
+        "copy competitor text, images, or branding into the proposal",
+        "implement anything",
+        "contact anyone"
+      ],
+      "stop_conditions": [
+        "facts are insufficient to assess relevance -> decision = INVESTIGATE_FURTHER",
+        "no legal/feasible PSS action exists -> decision = IGNORE or MONITOR"
+      ]
+    },
+    "verifier": {
+      "stage": 3,
+      "in_approval_chain": true,
+      "input_exact_set": ["atomic_claims", "public_evidence", "pss_data", "period_filters", "test_plan"],
+      "must_not_receive": ["analyst rationale", "priority", "decision narrative", "impact wording", "any persuasive text"],
+      "output": "verification artifact with overall in {CONFIRMED, REFUTED, INSUFFICIENT_DATA} and context_leak_detected flag",
+      "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
+      "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "checks": [
+        "is the fact real",
+        "does the opportunity follow logically from the fact",
+        "is the data sufficient",
+        "were alternative explanations reviewed",
+        "can PSS implement this legally and technically",
+        "does the test measure the stated hypothesis"
+      ],
+      "stop_conditions": [
+        "input contains reasoning/persuasion -> set context_leak_detected = true and overall = INSUFFICIENT_DATA",
+        "a claimed fact cannot be independently reproduced -> overall = REFUTED or INSUFFICIENT_DATA"
+      ]
+    },
+    "implementer": {
+      "stage": 4,
+      "in_approval_chain": true,
+      "input": "a verified finding + the approved change scope (in RIDICAT, only after LAURA APPROVAL 1)",
+      "output": "implementation artifact; work committed on a branch in the isolated temp test repo",
+      "target_repo_phase1": "isolated-temp-test-repo (created OUTSIDE the official repo)",
+      "allowed_tools": ["Read", "Write", "Edit", "Grep", "Glob", "Bash(git local in temp repo + node --check)"],
+      "forbidden_tools": ["NotebookEdit"],
+      "allowed_operations": [
+        "make the minimal prescribed change",
+        "commit on a branch in the temp test repo",
+        "run node --check / local syntax validation"
+      ],
+      "forbidden_operations": [
+        "write, branch, commit, or stash in the official PSS repo",
+        "git push",
+        "git merge",
+        "deploy",
+        "any external service call",
+        "widen the change beyond the prescribed scope"
+      ],
+      "stop_conditions": [
+        "the prescribed change would touch more than the approved files",
+        "the change cannot be made minimal or reversible",
+        "any step would require writing to the official repo or an external service"
+      ]
+    },
+    "qa": {
+      "stage": 5,
+      "in_approval_chain": true,
+      "input": "an implementation artifact + the success criteria",
+      "output": "qa-report artifact with overall in {PASS, FAIL, BLOCKED}",
+      "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
+      "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "checks": [
+        "each success criterion PASS/FAIL deterministically",
+        "no regression introduced",
+        "temp repo delta matches the prescribed delta exactly",
+        "official PSS repo is byte-identical to its baseline (hash + clean status)"
+      ],
+      "forbidden_operations": ["fix anything", "merge", "push", "deploy"],
+      "stop_conditions": [
+        "official repo differs from baseline -> overall = FAIL, blocking_reasons records it",
+        "success criteria are not deterministic -> overall = BLOCKED"
+      ]
+    }
+  },
+  "risk_tiers": {
+    "REDUS": {
+      "flow": ["coordinator", "implementer", "qa"],
+      "all_conditions_required": [
+        "cause is evident and reproducible",
+        "at most 1-2 files",
+        "local change",
+        "fully reversible",
+        "no tracking",
+        "no forms",
+        "not structural SEO",
+        "does not touch canonical/sitemap/redirects",
+        "no sensitive data",
+        "no external service",
+        "no direct production impact",
+        "no bulk scripts / no multi-page generated output",
+        "a deterministic success criterion exists"
+      ],
+      "on_any_doubt": "reclassify as MEDIU"
+    },
+    "MEDIU": {
+      "flow": ["investigator", "analyst", "verifier", "implementer", "qa"],
+      "examples": ["tracking", "forms", "structural SEO", "canonical", "sitemap", "individual redirects", "several pages", "internal automations", "landing pages", "structural changes", "conversion logic"]
+    },
+    "RIDICAT": {
+      "flow": ["investigator", "analyst", "verifier", "PLAN+ROLLBACK", "LAURA_APPROVAL_1", "implementer", "qa", "LAURA_APPROVAL_2", "LIVE_OP", "POST_CHECK"],
+      "examples": ["push/merge to master", "deploy", "live Google Ads/GA4/GTM/GBP/GSC changes", "budgets", "bidding", "primary conversions", "targeting", "mass deletes/redirects", "publishing content", "sending email/messages", "financial operations", "irreversible changes", "access to sensitive data"]
+    }
+  },
+  "handoff_order": [
+    "competitor-observation -> investigation",
+    "investigation -> analysis",
+    "analysis(atomic_claims + public_evidence + pss_data + period_filters + test_plan only) -> verification",
+    "verification -> (coordinator) -> implementation",
+    "implementation -> qa-report",
+    "qa-report -> coordinator-decision"
+  ],
+  "laura_notify_when": [
+    "verified opportunity with relevant business impact",
+    "strategic decision required",
+    "spend required",
+    "external-account change required",
+    "high risk",
+    "urgent reputation or compliance problem",
+    "pipeline BLOCKED for lack of information",
+    "approval required before implementation or a live operation"
+  ],
+  "archive_without_notifying_laura": {
+    "IGNORE": "always allowed",
+    "MONITOR": "only if ALL: low impact AND no urgent risk AND no near-term deadline AND no cost AND no external operation AND review_date set",
+    "DUPLICATE": "allowed",
+    "IRRELEVANT": "allowed",
+    "READY_FOR_MERGE": "NOT an archive class - a QA PASS alone never authorizes merge/push/deploy/publish/external/spend/live change; escalate with human_review_state instead"
+  },
+  "isolation": {
+    "runs_and_logs": "created OUTSIDE the official repo (session scratchpad); never committed; .gitignore is NOT modified for them",
+    "committed_in_repo": ["static fixtures", "schemas", "TESTPLAN", "documentation", "templates without real data"],
+    "test_repo": "a throwaway `git init` repo + a bare `../testrepo-remote.git` origin, both outside the official repo; fictional data only; no credentials; no external access; deleted after each test"
+  },
+  "telegram_single_source": {
+    "note": "reference only - Phase 1 sends nothing to Telegram",
+    "lead_nou": "netlify/functions/submission-created.mjs (operational chat) - sole source",
+    "seo_daily_operational": "pss-seo-daily-report workflow - daily operational SEO report",
+    "competitive_positioning_periodic": "pss-competitor-monitor workflow - periodic competitor-positioning report (distinct category, not a weekly SEO report)",
+    "investigation_result": "pss-forward-investigation workflow - sole source",
+    "strategic_opportunity": "Coordinator brief only, after Investigator -> Analyst -> Verifier; never from competitor-intelligence directly",
+    "urgent_problem": "Coordinator escalation",
+    "approval_needed": "Coordinator escalation",
+    "never_on_telegram": ["minor competitor observations", "raw logs", "pipeline artifacts", "any Coordinator ARCHIVE"]
+  }
+}
