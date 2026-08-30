@@ -1,26 +1,38 @@
 {
-  "note": "Verifier input shaped (5 keys). Claim C-001 is NOT supported by the attached evidence. Expected: verifier overall = REFUTED, C-001 named in contested_points; context_leak_detected = false.",
+  "note": "Verifier input shaped (5 keys) plus this fixture note, which the Coordinator strips before handoff. All evidence is embedded and fictional: no live source, no repository file, no network, no external URL. Claim C-001 is deliberately NOT supported by its own attached evidence. Expected Verifier behaviour: overall = REFUTED, C-001 named in contested_points; context_leak_detected = false.",
   "atomic_claims": [
-    { "claim_id": "C-001", "text": "Muster Rümpeldienst ranks #1 in organic results for 'messie wohnung entrümpelung rastatt'.", "evidence_id": "EV-0101" },
-    { "claim_id": "C-002", "text": "Muster Rümpeldienst published a dedicated /messie-wohnung page with lastmod 2026-08-20.", "evidence_id": "EV-0102" }
+    { "claim_id": "C-001", "text": "The competitor 'Muster Ruempeldienst' ranks #1 in organic results for 'messie wohnung entruempelung musterstadt'.", "evidence_id": "EV-0101" },
+    { "claim_id": "C-002", "text": "The competitor 'Muster Ruempeldienst' has a dedicated /messie-wohnung page with a sitemap lastmod of 2026-08-20.", "evidence_id": "EV-0102" }
   ],
   "public_evidence": [
-    { "evidence_id": "EV-0101", "source_path": "serp capture fixture", "raw_result": { "query": "messie wohnung entrümpelung rastatt", "muster_ruempeldienst_position": 14, "note": "appears on page 2, not #1" } },
-    { "evidence_id": "EV-0102", "source_path": "sitemap capture fixture", "raw_result": { "loc": "https://muster-ruempeldienst.example.invalid/messie-wohnung", "lastmod": "2026-08-20" } }
+    {
+      "evidence_id": "EV-0101",
+      "kind": "serp_capture",
+      "source_ref": "fixture://serp/messie-wohnung-musterstadt/2026-08-31-mobile.json",
+      "method": "read the competitor's organic position directly from the embedded SERP capture",
+      "capture": { "query": "messie wohnung entruempelung musterstadt", "device": "mobile", "location": "Musterstadt", "captured_at": "2026-08-31", "organic_results_top10": ["ratgeber-entruempelung.fiktiv", "muster-stadt-hilfe.fiktiv", "aufraeumdienst-sued.fiktiv", "schnell-entruempelt.fiktiv", "messie-hilfe-bw.fiktiv", "raeumprofi.fiktiv", "sauber-weg.fiktiv", "entruempelung-express.fiktiv", "klar-schiff.fiktiv", "wohnungsaufloesung-plus.fiktiv"], "muster_ruempeldienst_position": 14, "capture_note": "competitor appears on results page 2 at position 14, not in the top 10" }
+    },
+    {
+      "evidence_id": "EV-0102",
+      "kind": "sitemap_capture",
+      "source_ref": "fixture://sitemap/muster-ruempeldienst-fiktiv/2026-08-31.xml",
+      "method": "read the loc path and lastmod for the /messie-wohnung entry from the embedded sitemap capture",
+      "capture": { "loc_path": "/messie-wohnung", "lastmod": "2026-08-20", "in_main_nav": true, "indexed_flag_in_capture": true }
+    }
   ],
-  "pss_data": { "pss_position_same_query": 22, "pss_has_dedicated_page": false },
-  "period_filters": { "captured_at": "2026-08-31", "device": "mobile", "location": "Rastatt", "timezone": "Europe/Berlin" },
+  "pss_data": { "pss_position_same_query": 22, "pss_has_dedicated_page": false, "pss_related_pages": ["/messie-wohnung-musterstadt-a", "/messie-wohnung-musterstadt-b"] },
+  "period_filters": { "captured_at": "2026-08-31", "device": "mobile", "location": "Musterstadt", "timezone": "Europe/Berlin" },
   "test_plan": {
-    "hypothesis": "A dedicated PSS /messie-wohnung-rastatt page improves PSS position for the query.",
-    "baseline": "PSS position 22; no dedicated page.",
-    "change": "Publish a dedicated, original page for the term.",
+    "hypothesis": "Publishing a dedicated, original PSS /messie-wohnung-musterstadt page improves PSS's average position for 'messie wohnung entruempelung musterstadt'.",
+    "baseline": "PSS average position 22; no single dedicated page for the term.",
+    "change": "Publish one dedicated, original German-language page for the term; original PSS copy only.",
     "kpi": "PSS average position for the query",
     "kpi_priority_rank": 8,
-    "data_source": "agent/state/keyword-rankings.json weekly snapshots",
-    "period": "12 weeks vs prior 12 weeks",
-    "success_threshold": "position improves to <= 12",
+    "data_source": "fixture://rank-tracker/messie-wohnung-musterstadt/weekly.json",
+    "period": "12 weeks after publication versus the prior 12 weeks",
+    "success_threshold": "PSS average position improves to 12 or better and holds for two consecutive weeks",
     "stop_threshold": "no movement after 12 weeks",
-    "rollback": "noindex + remove the page",
+    "rollback": "noindex and remove the page",
     "observation_window": "12 weeks",
     "original_design_confirmation": true
   }

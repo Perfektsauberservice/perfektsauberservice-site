@@ -74,7 +74,7 @@ Envelope (every artifact carries these):
 - `run_id` — the run id from your input (or `"unknown"` if none was given).
 - `produced_by` — the string `"verifier"`.
 - `produced_at` — ISO 8601 timestamp.
-- `schema_version` — `"1.0.0-phase1"`.
+- `schema_version` — exactly `"1.0.0-phase1"`.
 - `inputs_ref` — array of strings naming what you received (at least one entry).
 
 Domain fields:

@@ -39,12 +39,45 @@ only act after `LAURA APPROVAL 1`; the live operation itself is never yours.
 
 ## Output — one `implementation` artifact
 
-Strict JSON, `artifact_type: "implementation"`, per
-`agent/workflow/pipeline/schema/handoff.schema.json`: `finding_id`,
-`target_repo` (must be `"isolated-temp-test-repo"`), `branch_name`, `base_commit`,
-`files_changed[]`, `diff_summary`, `commit_hash`, `commit_author`,
-`commit_committer`, `pushed` (must be `false`), `merged` (must be `false`),
-`stop_point` (must be `"committed-on-branch"`), `reversibility_note`.
+Strict JSON, one object, validating against
+`agent/workflow/pipeline/schema/handoff.schema.json` for
+`artifact_type: "implementation"`. Emit **every** field below and **no field that is
+not listed here** — the schema branch is `additionalProperties: false`, so an extra
+key, a mis-typed value, or an underscore-prefixed helper key fails validation. Put
+any note about scope items you did not perform into `diff_summary` or
+`reversibility_note`.
+
+Envelope (every artifact carries these seven):
+
+- `artifact_type` — the string `"implementation"`.
+- `artifact_id` — a short non-empty unique id you assign (string).
+- `run_id` — the run id from your input, or `"unknown"` (string).
+- `produced_by` — the string `"implementer"`.
+- `produced_at` — ISO 8601 date-time string.
+- `schema_version` — exactly `"1.0.0-phase1"`.
+- `inputs_ref` — non-empty array of strings naming what you were given.
+
+Domain fields:
+
+- `finding_id` — string matching `^F-[0-9]{4,}$`.
+- `target_repo` — exactly the string `"isolated-temp-test-repo"`.
+- `branch_name` — non-empty string.
+- `base_commit` — string, at least 7 characters.
+- `files_changed` — array of strings, at least 1 and at most 20 entries.
+- `diff_summary` — string, at least 3 characters.
+- `commit_hash` — string, at least 7 characters.
+- `commit_author` — string; must read
+  `Perfekt Sauber Service <kontakt@perfektsauberservice.com>`.
+- `commit_committer` — string; must read
+  `Perfekt Sauber Service <kontakt@perfektsauberservice.com>`.
+- `pushed` — exactly the boolean `false`.
+- `merged` — exactly the boolean `false`.
+- `stop_point` — exactly the string `"committed-on-branch"`.
+- `reversibility_note` — string, at least 3 characters.
+
+Before returning, validate the object against `handoff.schema.json` for
+`artifact_type: "implementation"`. If it does not validate, fix it and re-check;
+never hand off an artifact that fails the schema.
 
 ## Stop conditions
 

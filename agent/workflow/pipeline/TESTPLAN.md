@@ -33,25 +33,31 @@ under test. A test only PASSES if the Git expectations for its class hold.
 
 ## Fixtures
 
-Static inputs under `fixtures/`. No real data anywhere.
+Static inputs under `fixtures/`. No real data anywhere. Every fixture is
+**self-contained**: it carries no live URL, no dependence on the internet or the
+production site, and no dependence on a real repository file. Any source it names is
+either a bundled `site-fixture/` file or a `fixture://…` identifier whose content is
+embedded in the fixture itself, so every claim is re-derivable from the fixture's
+own evidence. Contaminated fixtures are contaminated **only** through the field(s)
+under test; clean fixtures carry no Analyst-only field and no persuasive narrative.
 
 | id | file | purpose |
 |---|---|---|
-| FX-01 | `findings/f01-competitor-gbp-hours.json` | valid `competitor-observation`, minor change (hours), low relevance |
-| FX-02 | `findings/f02-competitor-new-service-page.json` | valid `competitor-observation`, potentially relevant, **unverified** |
+| FX-01 | `findings/f01-competitor-gbp-hours.json` | valid `competitor-observation`, minor change (hours), low relevance; capture embedded |
+| FX-02 | `findings/f02-competitor-new-service-page.json` | valid `competitor-observation`, potentially relevant, **unverified** (no ranking/traffic data embedded, on purpose) |
 | FX-03 | `findings/f03-l1-site-health-issue.md` | L1 automated-check issue body (broken internal link) — REDUS candidate |
-| FX-04 | `findings/f04-backlog-item.json` | one `opportunity-backlog` item id + facts only (no raw idea action) |
-| FX-05 | `findings/f05-ambiguous-metric-drop.json` | traffic drop with ≥3 plausible causes — MEDIU, correlation≠causation |
+| FX-04 | `findings/f04-backlog-item.json` | one `opportunity-backlog` item id + facts only (no raw idea action); records embedded |
+| FX-05 | `findings/f05-ambiguous-metric-drop.json` | traffic drop with ≥3 plausible causes — MEDIU, correlation≠causation; also carries a separately verifiable on-page content gap, with all series embedded, so E2E-MED has a legitimate path to `CONFIRMED` |
 | FX-06 | `findings/f06-high-risk-ads-budget.json` | proposal implying a live Ads budget change — RIDICAT |
 | FX-07 | `contaminated/f07-analysis-with-rationale.json` | full `analysis` incl. `rationale` — used to build a *bad* Verifier input |
-| FX-08 | `contaminated/f08-verifier-input-leaked.json` | Verifier input that wrongly contains `priority` + `rationale` |
-| FX-09 | `clean/f09-verifier-input-ok.json` | Verifier input with exactly the 5 allowed keys |
-| FX-10 | `clean/f10-atomic-claims.json` | 3 atomic claims + evidence-ledger entries (all fields) |
+| FX-08 | `contaminated/f08-verifier-input-leaked.json` | Verifier input that wrongly contains `priority`, `decision` + `rationale` (the only contamination); the five allowed keys are clean and self-contained |
+| FX-09 | `clean/f09-verifier-input-ok.json` | Verifier input with exactly the 5 allowed keys; every claim re-derivable from the embedded evidence |
+| FX-10 | `clean/f10-atomic-claims.json` | `investigation` with atomic claims + full evidence-ledger entries (all fields); each `raw_result` embeds the series the claim rests on |
 | FX-11 | `site-fixture/` | tiny static site with one broken link + one typo (Implementer target) |
 | FX-12 | `expected/` | per-test assertion sets (JSON) |
-| FX-13 | `findings/f13-duplicate-of-resolved.json` | `competitor-observation` duplicating an already-resolved item |
-| FX-14 | `findings/f14-refutable-claim.json` | atomic claim that the raw evidence does **not** support |
-| FX-15 | `findings/f15-monitor-candidate.json` | real-but-low-impact opportunity, has `review_date` → MONITOR archivable |
+| FX-13 | `findings/f13-duplicate-of-resolved.json` | `competitor-observation` duplicating an already-resolved item; the prior-resolution record is embedded |
+| FX-14 | `findings/f14-refutable-claim.json` | atomic claim (`C-001`, "#1 ranking") that the embedded evidence does **not** support (embedded SERP capture shows position 14) |
+| FX-15 | `findings/f15-monitor-candidate.json` | real-but-low-impact opportunity, has `review_date`; all evidence embedded (incl. that the free tier's link is `nofollow`), so the Investigator can hand a clean investigation to the Analyst → MONITOR |
 
 ---
 

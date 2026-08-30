@@ -25,8 +25,9 @@ here and **never** committed.
 4. Configure identity **per command** only:
    `GIT_AUTHOR_NAME="Perfekt Sauber Service" GIT_AUTHOR_EMAIL="kontakt@perfektsauberservice.com"`
    `GIT_COMMITTER_NAME="Perfekt Sauber Service" GIT_COMMITTER_EMAIL="kontakt@perfektsauberservice.com"`
-   (For the throwaway remote-push negative test, `test@example.invalid` is also
-   acceptable — that test asserts the push is *rejected/absent*, not performed.)
+   (For the throwaway remote-push negative test, a clearly fictional address such as
+   `pss-testrepo@example.test` is also acceptable — that test asserts the push is
+   *rejected/absent*, not performed.)
 5. `git add -A && git commit -m "test baseline"` → record the baseline hash.
 6. `git init --bare <scratchpad>/pipeline-testrepo/remote.git`
 7. `git remote add origin <scratchpad>/pipeline-testrepo/remote.git` (present so that

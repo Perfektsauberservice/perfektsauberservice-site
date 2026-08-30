@@ -54,22 +54,53 @@ state the basis.
 
 ## Output — one `competitor-observation` artifact per observation
 
-Emit strict JSON validating against
-`agent/workflow/pipeline/schema/handoff.schema.json` (`artifact_type:
-"competitor-observation"`). Exactly these 15 domain fields (plus the envelope):
+Strict JSON, one object, validating against
+`agent/workflow/pipeline/schema/handoff.schema.json` for
+`artifact_type: "competitor-observation"`. Emit **every** field below and **no field
+that is not listed here** — the schema branch is `additionalProperties: false`, so an
+extra key, a mis-typed value, or an underscore-prefixed helper key (e.g.
+`_needs_more_data`, `_debug`) fails validation. Do not add commentary keys.
 
-`observation_id` (`CMP-0001`…), `competitor_id`, `competitor_name`, `source_url`,
-`captured_at` (ISO 8601), `location`, `query`, `device_context`,
-`previous_snapshot_hash` (or null), `current_snapshot_hash`, `observed_change`,
-`raw_evidence` (short factual quote of the datum, not their marketing copy),
-`certainty` (`OBSERVED` | `ESTIMATED` | `UNVERIFIED` — **never `CONFIRMED`**),
-`collection_limitations`, `verification_required` (boolean).
+Envelope (every artifact carries these seven):
+
+- `artifact_type` — the string `"competitor-observation"`.
+- `artifact_id` — a short non-empty unique id you assign (string).
+- `run_id` — the run id from your input, or `"unknown"` (string).
+- `produced_by` — the string `"competitor-intelligence"`.
+- `produced_at` — ISO 8601 date-time string.
+- `schema_version` — exactly `"1.0.0-phase1"`.
+- `inputs_ref` — array of strings naming what you were given.
+
+Domain fields:
+
+- `observation_id` — string matching `^CMP-[0-9]{4,}$` (e.g. `CMP-0001`).
+- `competitor_id` — non-empty string.
+- `competitor_name` — non-empty string.
+- `source_url` — non-empty string; a `fixture://…` identifier is acceptable and is
+  not something to fetch.
+- `captured_at` — ISO 8601 date-time string.
+- `location` — non-empty string.
+- `query` — string.
+- `device_context` — non-empty string.
+- `previous_snapshot_hash` — string, or `null`.
+- `current_snapshot_hash` — non-empty string.
+- `observed_change` — string, at least 3 characters.
+- `raw_evidence` — non-empty string: a short factual quote of the datum, not their
+  marketing copy.
+- `certainty` — one of the strings `"OBSERVED"`, `"ESTIMATED"`, `"UNVERIFIED"`.
+  **Never `"CONFIRMED"`.**
+- `collection_limitations` — string, at least 3 characters.
+- `verification_required` — boolean.
 
 Keep strictly separate in `observed_change` vs your framing:
 1. what was observed,
 2. what is estimated,
 3. what it *might* mean for PSS (one neutral sentence, no recommendation),
 4. what must be verified before anyone acts.
+
+Before returning, validate the object against
+`handoff.schema.json` for `artifact_type: "competitor-observation"`. If it does not
+validate, fix it and re-check; never hand off an artifact that fails the schema.
 
 ## Stop conditions
 

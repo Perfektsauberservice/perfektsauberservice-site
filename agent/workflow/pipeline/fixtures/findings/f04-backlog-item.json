@@ -1,17 +1,31 @@
 {
-  "note": "Facts-only slice handed to the Investigator for a backlog item. The raw idea's proposed action is deliberately NOT included.",
+  "note": "Facts-only slice handed to the Investigator for a backlog item. The raw idea's proposed action is deliberately NOT included. All references are to an embedded, fictional fixture backlog record; no live source, no repository file, no network.",
   "opportunity_id": "OPP-0015",
-  "title_reference_only": "GSC page-level query clusters",
+  "title_reference_only": "page-level query clusters",
   "channel": "seo",
   "facts": [
-    "agent/gsc-snapshots/ contains daily GSC exports for the site.",
-    "The backlog records this item's historical_status as NOT_STARTED.",
-    "The backlog records current_status as IMPORTED_UNVERIFIED.",
-    "No evidence_ids are attached yet."
+    "A fictional fixture export set (fixture://gsc/site-fixture/daily-exports/) is stated to contain page- and query-level search-console-style exports for the fixture site.",
+    "The fixture backlog record fixture://backlog/OPP-0015.json shows historical_status NOT_STARTED.",
+    "The same record shows current_status IMPORTED_UNVERIFIED.",
+    "No evidence_ids are attached to OPP-0015 yet."
+  ],
+  "embedded_evidence": [
+    {
+      "evidence_id": "FX04-E1",
+      "type": "fixture_backlog_record",
+      "source_ref": "fixture://backlog/OPP-0015.json",
+      "content": "{ \"opportunity_id\": \"OPP-0015\", \"title\": \"page-level query clusters\", \"historical_status\": \"NOT_STARTED\", \"current_status\": \"IMPORTED_UNVERIFIED\", \"evidence_ids\": [] }"
+    },
+    {
+      "evidence_id": "FX04-E2",
+      "type": "fixture_export_set_manifest",
+      "source_ref": "fixture://gsc/site-fixture/daily-exports/manifest.json",
+      "content": "{ \"granularity\": [\"page\", \"query\"], \"dates\": \"fictional daily exports, 2026-07-01..2026-08-31\", \"note\": \"embedded fixture data only; not a real repository path\" }"
+    }
   ],
   "missing_data": [
-    "Which pages have the largest gap between the queries they rank for and the queries they actually answer.",
-    "Whether any such H2 additions were already made."
+    "Which fixture pages have the largest gap between the queries they receive impressions for and the queries they answer on-page.",
+    "Whether any such H2 additions were already made on the fixture site."
   ],
-  "requested_of_investigator": "Establish the current facts with atomic claims + evidence ledger. Do not propose or rank fixes."
+  "requested_of_investigator": "Establish the current facts with atomic claims plus an evidence ledger, using the embedded records only. Do not propose or rank fixes."
 }

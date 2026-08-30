@@ -45,14 +45,55 @@ solution, or an implementation instruction.
 
 ## Output — one `investigation` artifact
 
-Strict JSON, `artifact_type: "investigation"`, per
-`agent/workflow/pipeline/schema/handoff.schema.json`. Includes `finding_id`
-(`F-0001`…), `atomic_claims[]` (each with an `evidence_id`), the full
-`evidence_ledger[]`, `dedup_result`, `recency_check`, `pss_comparison`,
-`observed_facts[]`, `estimates[]`, `open_questions[]`, `risk_prelim`
-(`REDUS|MEDIU|RIDICAT|UNKNOWN` — preliminary only; the Analyst sets the binding
-`risk_class`), and `recommended_next` (`TO_ANALYST | NEEDS_MORE_DATA |
-ARCHIVE_MINOR`).
+Strict JSON, one object, validating against
+`agent/workflow/pipeline/schema/handoff.schema.json` for
+`artifact_type: "investigation"`. Emit **every** field below and **no field that is
+not listed here** — the schema branch is `additionalProperties: false`, so an extra
+key, a mis-typed value, or an underscore-prefixed helper key (e.g.
+`_needs_more_data`, `_notes`) fails validation. Put anything you would have added as
+a helper field into `open_questions[]` or `estimates[]` instead.
+
+Envelope (every artifact carries these seven):
+
+- `artifact_type` — the string `"investigation"`.
+- `artifact_id` — a short non-empty unique id you assign (string).
+- `run_id` — the run id from your input, or `"unknown"` (string).
+- `produced_by` — the string `"investigator"`.
+- `produced_at` — ISO 8601 date-time string.
+- `schema_version` — exactly `"1.0.0-phase1"`.
+- `inputs_ref` — non-empty array of strings naming what you were given.
+
+Domain fields:
+
+- `finding_id` — string matching `^F-[0-9]{4,}$` (e.g. `F-0001`).
+- `source_summary` — string, at least 3 characters.
+- `atomic_claims` — non-empty array of objects, each with exactly
+  `claim_id` (string `^C-[0-9]{3,}$`), `text` (string ≥ 3 chars),
+  `evidence_id` (string `^EV-[0-9]{4,}$`) — nothing else in the object.
+- `evidence_ledger` — non-empty array; each entry validates against
+  `agent/workflow/pipeline/schema/evidence-ledger.schema.json` (all 16 fields:
+  `evidence_id, claim, source_type, source_path, source_timestamp, period_start,
+  period_end, timezone, filters, calculation, raw_result, status, confidence,
+  alternative_explanations, falsification_test, limitations`). `source_type` is one
+  of the schema's enum values; `status` is one of `CONFIRMED | INFERRED | UNVERIFIED
+  | CONTRADICTED`; `confidence` is one of `low | medium | high`;
+  `alternative_explanations` is a non-empty array of strings; `period_start` and
+  `period_end` are an ISO date string or `null`.
+- `dedup_result` — string, at least 3 characters.
+- `recency_check` — string, at least 3 characters.
+- `pss_comparison` — string, at least 3 characters.
+- `observed_facts` — array of strings.
+- `estimates` — array of strings.
+- `open_questions` — array of strings.
+- `risk_prelim` — one of the strings `"REDUS"`, `"MEDIU"`, `"RIDICAT"`, `"UNKNOWN"`
+  (preliminary only; the Analyst sets the binding `risk_class`).
+- `recommended_next` — one of the strings `"TO_ANALYST"`, `"NEEDS_MORE_DATA"`,
+  `"ARCHIVE_MINOR"`.
+
+Before returning, validate the object against `handoff.schema.json` for
+`artifact_type: "investigation"` (and each ledger entry against
+`evidence-ledger.schema.json`). If it does not validate, fix it and re-check; never
+hand off an artifact that fails the schema.
 
 ## Stop conditions
 

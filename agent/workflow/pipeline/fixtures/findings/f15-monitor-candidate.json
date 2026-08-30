@@ -1,16 +1,47 @@
 {
-  "note": "Raw finding for E2E-MONITOR. Real but low-impact; has a review_date; no cost, no external op, no deadline, no urgent risk. Expected: Analyst decision MONITOR; Coordinator ARCHIVE with archive_class MONITOR and monitor_archive_conditions_met = true; Laura not notified.",
+  "note": "Raw finding for E2E-MONITOR. All evidence is embedded and fictional: no live source, no repository file, no network, no external URL. Real-but-low-impact opportunity with a review_date, no cost, no external operation required now, no deadline, no urgent risk. Every stated observation can be verified from the embedded_evidence entries. Expected path: Investigator verifies from embedded data -> TO_ANALYST -> Analyst decision MONITOR -> Coordinator ARCHIVE with archive_class MONITOR and monitor_archive_conditions_met = true; Laura not notified.",
   "finding_ref": "FX-15",
   "channel": "local-seo",
   "observed": [
-    "A regional business directory (directory.example.invalid) added a free listing tier on 2026-08-25.",
-    "PSS is not listed there.",
-    "The directory has low domain authority and little local traffic per public estimates."
+    "A small regional directory, 'Regionalverzeichnis Nordschwarzwald' (fictional), introduced a zero-cost 'Basis' listing tier effective 2026-08-25.",
+    "Perfekt Sauber Service is not listed in that directory.",
+    "The Basis tier's profile link is marked rel=nofollow, and the directory is low-authority with little measurable local reach."
+  ],
+  "embedded_evidence": [
+    {
+      "evidence_id": "FX15-E1",
+      "type": "directory_pricing_snapshot",
+      "source_ref": "fixture://directory/regionalverzeichnis-nordschwarzwald/tarife-2026-08-25.html",
+      "captured_at": "2026-08-25",
+      "content": "Tarife-Seite (fiktiv): 'Basis-Eintrag: 0 EUR/Jahr, neu ab 25.08.2026. Enthaelt: Firmenname, Adresse, Telefon, eine Kategorie. Kein Website-Link mit Linkkraft (siehe FAQ). Premium-Eintrag: 180 EUR/Jahr mit Website-Link, Bildern und Beschreibung.'"
+    },
+    {
+      "evidence_id": "FX15-E2",
+      "type": "pss_citation_list_check",
+      "source_ref": "fixture://pss/citations/state-2026-08.json",
+      "captured_at": "2026-08-31",
+      "content": "Aktive Verzeichnis-Eintraege von PSS (fiktiv): Handwerkskammer, Gelbe Seiten, Bing Places, Apple Business Connect, meinstadt-fiktiv, 11880-fiktiv. 'Regionalverzeichnis Nordschwarzwald' ist nicht in der Liste."
+    },
+    {
+      "evidence_id": "FX15-E3",
+      "type": "directory_reach_estimate",
+      "source_ref": "fixture://estimates/regionalverzeichnis-nordschwarzwald/2026-08-28.json",
+      "captured_at": "2026-08-28",
+      "content": "Fiktive Schaetzung: Domain-Authority 12/100; rund 90 organische Besuche pro Monat gesamt; kein messbarer lokaler Traffic-Anteil fuer Reinigungs- oder Entruempelungs-Suchbegriffe; drei Eintraege in der Kategorie 'Reinigung' fuer die gesamte Region."
+    },
+    {
+      "evidence_id": "FX15-E4",
+      "type": "link_type_check",
+      "source_ref": "fixture://directory/regionalverzeichnis-nordschwarzwald/faq-2026-08-28.html",
+      "captured_at": "2026-08-28",
+      "content": "FAQ-Zitat (fiktiv): 'Der Profil-Link im Basis-Eintrag traegt das Attribut rel=nofollow. Ein Link mit Linkkraft ist nur im Premium-Eintrag enthalten.' Eingebetteter HTML-Ausschnitt: <a rel=\"nofollow\" href=\"/profil/beispiel\">Profil</a>."
+    }
   ],
   "impact_estimate": "low",
   "cost": "0",
   "urgent_risk": false,
   "deadline": "none",
+  "external_operation_required_now": false,
   "review_date": "2026-11-30",
-  "missing_data": ["Whether the free tier allows a dofollow link."]
+  "missing_data": []
 }

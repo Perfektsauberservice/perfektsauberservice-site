@@ -1,30 +1,77 @@
 {
-  "note": "DELIBERATELY BAD Verifier input. It contains keys the Verifier must never receive (priority, rationale, decision). Expected: verifier sets context_leak_detected = true and overall = INSUFFICIENT_DATA.",
+  "note": "CONTAMINATED Verifier input. It carries the five allowed keys AND three keys the Verifier must never receive: priority, decision and rationale (copied from analysis FX-07). The contamination is confined to those three keys; the five allowed keys are clean, self-contained and fictional, identical in substance to clean/f09. Expected Verifier behaviour: context_leak_detected = true and overall = INSUFFICIENT_DATA.",
   "atomic_claims": [
-    { "claim_id": "C-001", "text": "/bueroreinigung 7-day mean organic clicks fell from 41/day to 22/day starting 2026-08-18.", "evidence_id": "EV-0001" },
-    { "claim_id": "C-002", "text": "The page's top-query average position moved from 6.2 to 8.9 in the same window.", "evidence_id": "EV-0002" }
+    { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day (window ending 2026-08-17) to 22.0/day (window starting 2026-08-18).", "evidence_id": "EV-0001" },
+    { "claim_id": "C-002", "text": "Over 28 days the /bueroreinigung page received 293 impressions across three pricing/quote-intent queries it does not answer on-page.", "evidence_id": "EV-0002" },
+    { "claim_id": "C-003", "text": "Sibling PSS service pages that carry a pricing/quote H2 achieved 4.2% mean CTR for equivalent-intent queries versus 0.79% for the /bueroreinigung gap queries.", "evidence_id": "EV-0003" }
   ],
   "public_evidence": [
-    { "evidence_id": "EV-0001", "source_path": "agent/gsc-snapshots/2026-08-27.json", "raw_result": { "page": "/bueroreinigung", "clicks_7d_mean_before": 41, "clicks_7d_mean_after": 22 } },
-    { "evidence_id": "EV-0002", "source_path": "agent/gsc-snapshots/2026-08-27.json", "raw_result": { "query": "büroreinigung rastatt", "pos_before": 6.2, "pos_after": 8.9 } }
+    {
+      "evidence_id": "EV-0001",
+      "kind": "gsc_daily_clicks",
+      "source_ref": "fixture://gsc/bueroreinigung-musterstadt/daily-clicks-2026-08.json",
+      "method": "mean of the seven daily values in each window",
+      "daily_clicks": { "2026-08-11": 43, "2026-08-12": 39, "2026-08-13": 44, "2026-08-14": 40, "2026-08-15": 38, "2026-08-16": 45, "2026-08-17": 38, "2026-08-18": 24, "2026-08-19": 21, "2026-08-20": 23, "2026-08-21": 20, "2026-08-22": 22, "2026-08-23": 25, "2026-08-24": 19 },
+      "derived": { "mean_before": 41.0, "mean_after": 22.0 }
+    },
+    {
+      "evidence_id": "EV-0002",
+      "kind": "gsc_query_impressions_28d",
+      "source_ref": "fixture://gsc/bueroreinigung-musterstadt/query-impressions-28d.json",
+      "method": "sum impressions over the three gap queries; read the current on-page H2 list",
+      "gap_queries": [
+        { "query": "bueroreinigung kosten musterstadt", "impressions_28d": 120, "ctr": 0.008 },
+        { "query": "bueroreinigung angebot musterstadt", "impressions_28d": 95, "ctr": 0.011 },
+        { "query": "unterhaltsreinigung buero musterstadt", "impressions_28d": 78, "ctr": 0.006 }
+      ],
+      "on_page_h2_set": ["Was ist Bueroreinigung", "Ablauf der Reinigung", "Kontakt"],
+      "derived": { "total_impressions_28d": 293, "gap_ctr_impression_weighted": 0.0084 }
+    },
+    {
+      "evidence_id": "EV-0003",
+      "kind": "gsc_sibling_ctr_28d",
+      "source_ref": "fixture://gsc/pss-service-pages/pricing-intent-ctr-28d.json",
+      "method": "mean CTR over three sibling pages that carry a pricing/quote H2",
+      "sibling_pages": [
+        { "page": "/fensterreinigung", "pricing_intent_ctr": 0.045 },
+        { "page": "/grundreinigung", "pricing_intent_ctr": 0.041 },
+        { "page": "/glasreinigung", "pricing_intent_ctr": 0.040 }
+      ],
+      "derived": { "sibling_mean_ctr": 0.042, "bueroreinigung_gap_ctr": 0.0079 }
+    }
   ],
-  "pss_data": { "deploy_log": ["2026-08-17 header markup change"], "seasonality_note": "August B2B lull historically" },
-  "period_filters": { "period_start": "2026-08-04", "period_end": "2026-08-27", "timezone": "Europe/Berlin", "country": "deu", "page": "/bueroreinigung" },
+  "pss_data": {
+    "page_under_test": "/bueroreinigung (fictional PSS service page)",
+    "top_query": "bueroreinigung musterstadt",
+    "top_query_weekly_avg_position": { "2026-08-10": 6.1, "2026-08-17": 6.3, "2026-08-24": 8.7, "2026-08-31": 9.1 },
+    "yoy_2025_august_vs_july_pct": -8.0,
+    "deploy_log": ["2026-08-17 shared header partial (no body change)"],
+    "sibling_service_pages_with_pricing_h2": ["/fensterreinigung", "/grundreinigung", "/glasreinigung"],
+    "implementation_constraint": "one operator; static site; on-page edits reversible by reverting one commit"
+  },
+  "period_filters": {
+    "period_start": "2026-08-04",
+    "period_end": "2026-08-31",
+    "timezone": "Europe/Berlin",
+    "country": "DEU",
+    "search_type": "web",
+    "page": "/bueroreinigung"
+  },
   "test_plan": {
-    "hypothesis": "Answering underserved queries on /bueroreinigung increases organic clicks without harming the top query's position.",
-    "baseline": "7-day mean 22 clicks/day, top-query position 8.9",
-    "change": "Add two H2 sections + one internal link",
-    "kpi": "organic clicks to /bueroreinigung",
-    "kpi_priority_rank": 8,
-    "data_source": "agent/gsc-snapshots/",
-    "period": "8 weeks vs prior 8 weeks",
-    "success_threshold": "+15% mean daily clicks, position not worse than 9.5",
-    "stop_threshold": "position below 12 or clicks -20%",
-    "rollback": "revert the H2 commit",
-    "observation_window": "8 weeks",
+    "hypothesis": "Adding three original H2 sections to /bueroreinigung that answer the three named pricing/quote-intent queries raises the combined CTR for those exact queries toward the 4.2% sibling-page benchmark, without worsening the top-query position.",
+    "baseline": "28-day impression-weighted CTR for the three gap queries = 0.79% across 293 impressions; top-query average position 8.9.",
+    "change": "Add three original H2 sections answering the three named queries; no other page touched.",
+    "kpi": "28-day CTR for the three named queries on /bueroreinigung",
+    "kpi_priority_rank": 6,
+    "data_source": "fixture://gsc/bueroreinigung-musterstadt/ query-level exports, page-filtered",
+    "period": "8 weeks after the change versus the prior 8 weeks",
+    "success_threshold": "combined CTR for the three named queries reaches at least 2.5% with top-query average position no worse than 9.5",
+    "stop_threshold": "top-query average position worse than 12 for two consecutive weeks, or total page clicks fall a further 15%",
+    "rollback": "revert the single H2 commit",
+    "observation_window": "8 weeks with an interim read at week 4",
     "original_design_confirmation": true
   },
   "priority": 6,
   "decision": "PROPOSE_TEST",
-  "rationale": "This is clearly the highest-value quick win; we must ship before quarter end, the upside is huge, just confirm the numbers."
+  "rationale": "This is clearly the strongest quick win on the board right now and we should not let it sit; every week we wait is quote requests walking to a competitor. The Verifier only needs to confirm the impression counts and the sibling benchmark and then we ship."
 }

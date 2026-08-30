@@ -42,12 +42,50 @@ One `investigation` artifact: atomic claims plus their evidence ledger. Facts on
 
 ## Output — one `analysis` artifact
 
-Strict JSON, `artifact_type: "analysis"`, per
-`agent/workflow/pipeline/schema/handoff.schema.json`: `finding_id`,
-`business_relevance`, `alternative_explanations[≥3]`,
-`correlation_not_causation_note`, `priority`, `decision`, `rationale`,
-`proposed_change_summary`, `risk_class`, `cost_estimate`, `effort_estimate`,
-`rollback_outline`, `no_copy_confirmation`, `test_plan`.
+Strict JSON, one object, validating against
+`agent/workflow/pipeline/schema/handoff.schema.json` for
+`artifact_type: "analysis"`. Emit **every** field below and **no field that is not
+listed here** — the schema branch is `additionalProperties: false`, so an extra key,
+a mis-typed value, or an underscore-prefixed helper key fails validation.
+
+Envelope (every artifact carries these seven):
+
+- `artifact_type` — the string `"analysis"`.
+- `artifact_id` — a short non-empty unique id you assign (string).
+- `run_id` — the run id from your input, or `"unknown"` (string).
+- `produced_by` — the string `"analyst"`.
+- `produced_at` — ISO 8601 date-time string.
+- `schema_version` — exactly `"1.0.0-phase1"`.
+- `inputs_ref` — non-empty array of strings naming what you were given.
+
+Domain fields:
+
+- `finding_id` — string matching `^F-[0-9]{4,}$`.
+- `business_relevance` — string, at least 3 characters.
+- `alternative_explanations` — array of **strings**, at least 3 entries.
+- `correlation_not_causation_note` — string, at least 3 characters.
+- `priority` — integer 1–9.
+- `decision` — one of the strings `"IGNORE"`, `"MONITOR"`, `"INVESTIGATE_FURTHER"`,
+  `"PROPOSE_TEST"`, `"URGENT_RISK"`.
+- `rationale` — string, at least 3 characters. This is the only place for
+  persuasive narrative. It is never forwarded to the Verifier.
+- `proposed_change_summary` — string, at least 3 characters.
+- `risk_class` — one of the strings `"REDUS"`, `"MEDIU"`, `"RIDICAT"`.
+- `cost_estimate` — non-empty string.
+- `effort_estimate` — non-empty string.
+- `rollback_outline` — string, at least 3 characters.
+- `no_copy_confirmation` — boolean.
+- `test_plan` — object with exactly these twelve fields and nothing else:
+  `hypothesis` (string ≥ 3), `baseline` (non-empty string), `change` (string ≥ 3),
+  `kpi` (non-empty string), `kpi_priority_rank` (integer 1–9),
+  `data_source` (non-empty string), `period` (non-empty string),
+  `success_threshold` (non-empty string), `stop_threshold` (non-empty string),
+  `rollback` (string ≥ 3), `observation_window` (non-empty string),
+  `original_design_confirmation` (boolean).
+
+Before returning, validate the object against `handoff.schema.json` for
+`artifact_type: "analysis"`. If it does not validate, fix it and re-check; never
+hand off an artifact that fails the schema.
 
 ## Stop conditions
 

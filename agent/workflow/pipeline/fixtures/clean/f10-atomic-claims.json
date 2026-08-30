@@ -7,82 +7,170 @@
   "schema_version": "1.0.0-phase1",
   "inputs_ref": ["FX-05"],
   "finding_id": "F-0010",
-  "source_summary": "Investigated an organic performance drop on /bueroreinigung reported by an L1-style finding. Opened the cited GSC snapshot and the deploy log independently.",
+  "source_summary": "Self-contained fictional fixture. Investigated an organic performance pattern on the fictional PSS service page /bueroreinigung. All evidence is embedded in the evidence_ledger raw_result fields as fictional export data; no live source, no repository file and no network was used. Two things are established separately: (a) a click and position decline that started 2026-08-18, whose cause is not determined here, and (b) an independent, on-page content gap for three pricing/quote-intent queries the page already receives impressions for but does not answer.",
   "atomic_claims": [
-    { "claim_id": "C-001", "text": "/bueroreinigung 7-day mean organic clicks fell from 41/day to 22/day starting 2026-08-18.", "evidence_id": "EV-0001" },
-    { "claim_id": "C-002", "text": "The page's top query 'büroreinigung rastatt' moved from average position 6.2 to 8.9 between 2026-08-11 and 2026-08-27.", "evidence_id": "EV-0002" },
-    { "claim_id": "C-003", "text": "The 2026-08-17 deploy changed shared header markup and did not change /bueroreinigung body content.", "evidence_id": "EV-0003" }
+    { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day in the window ending 2026-08-17 to 22.0/day in the window starting 2026-08-18.", "evidence_id": "EV-0001" },
+    { "claim_id": "C-002", "text": "The average position for the page's top query 'bueroreinigung musterstadt' moved from 6.2 (two weeks ending 2026-08-17) to 8.9 (two weeks ending 2026-08-31).", "evidence_id": "EV-0002" },
+    { "claim_id": "C-003", "text": "Over the 28 days ending 2026-08-31 the /bueroreinigung page received 293 impressions across three pricing/quote-intent queries ('bueroreinigung kosten musterstadt', 'bueroreinigung angebot musterstadt', 'unterhaltsreinigung buero musterstadt') and its current on-page H2 set does not answer any of them.", "evidence_id": "EV-0003" },
+    { "claim_id": "C-004", "text": "For equivalent pricing/quote-intent queries, other PSS service pages that do carry a pricing/quote H2 achieved a mean CTR of 4.2% over the same 28 days, versus 0.79% for the three /bueroreinigung gap queries.", "evidence_id": "EV-0004" },
+    { "claim_id": "C-005", "text": "Year over year, /bueroreinigung August clicks were 8% below the preceding July in 2025, whereas the 2026 window shows a 46% fall.", "evidence_id": "EV-0005" },
+    { "claim_id": "C-006", "text": "The four other pages that received the identical 2026-08-17 shared-header change, and are not in the content-gap situation, showed at most a 4% change in 7-day mean clicks across 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0006" }
   ],
   "evidence_ledger": [
     {
       "evidence_id": "EV-0001",
-      "claim": "/bueroreinigung 7-day mean organic clicks fell from 41/day to 22/day starting 2026-08-18.",
+      "claim": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day (window ending 2026-08-17) to 22.0/day (window starting 2026-08-18).",
       "source_type": "gsc_export",
-      "source_path": "agent/gsc-snapshots/2026-08-27.json",
-      "source_timestamp": "2026-08-27T05:45:00Z",
+      "source_path": "fixture://gsc/bueroreinigung-musterstadt/daily-clicks-2026-08.json",
+      "source_timestamp": "2026-08-31T06:00:00Z",
       "period_start": "2026-08-04",
-      "period_end": "2026-08-27",
+      "period_end": "2026-08-24",
       "timezone": "Europe/Berlin",
-      "filters": { "country": "deu", "search_type": "web", "page": "/bueroreinigung" },
-      "calculation": "7-day trailing mean of daily clicks, computed for the window before 2026-08-18 and the window after.",
-      "raw_result": { "clicks_7d_mean_before": 41, "clicks_7d_mean_after": 22 },
+      "filters": { "country": "DEU", "search_type": "web", "page": "/bueroreinigung" },
+      "calculation": "daily_clicks is the embedded fictional daily series. before = mean(2026-08-11..2026-08-17) = mean(43,39,44,40,38,45,38) = 287 / 7 = 41.0. after = mean(2026-08-18..2026-08-24) = mean(24,21,23,20,22,25,19) = 154 / 7 = 22.0. drop = (41.0 - 22.0) / 41.0 = 46.3%.",
+      "raw_result": {
+        "daily_clicks": { "2026-08-04": 42, "2026-08-05": 40, "2026-08-06": 41, "2026-08-07": 43, "2026-08-08": 39, "2026-08-09": 44, "2026-08-10": 38, "2026-08-11": 43, "2026-08-12": 39, "2026-08-13": 44, "2026-08-14": 40, "2026-08-15": 38, "2026-08-16": 45, "2026-08-17": 38, "2026-08-18": 24, "2026-08-19": 21, "2026-08-20": 23, "2026-08-21": 20, "2026-08-22": 22, "2026-08-23": 25, "2026-08-24": 19 },
+        "mean_before": 41.0,
+        "mean_after": 22.0
+      },
       "status": "CONFIRMED",
       "confidence": "high",
-      "alternative_explanations": ["August B2B seasonality", "core update reweighting", "post-deploy regression"],
-      "falsification_test": "If the daily click series for /bueroreinigung shows no step down around 2026-08-18, the claim is false.",
-      "limitations": "Does not establish a cause; single page; no year-over-year comparison in the fixture."
+      "alternative_explanations": ["August B2B seasonality (tested by EV-0005)", "core update reweighting (tested by EV-0006)", "2026-08-17 shared-header deploy regression (tested by EV-0006)"],
+      "falsification_test": "Recompute mean(2026-08-11..2026-08-17) and mean(2026-08-18..2026-08-24) from raw_result.daily_clicks; if they are not 41.0 and 22.0 the claim is false.",
+      "limitations": "Fictional fixture data. Establishes the size and timing of the click change only, not its cause."
     },
     {
       "evidence_id": "EV-0002",
-      "claim": "The top query moved from average position 6.2 to 8.9 in the window.",
+      "claim": "The average position for 'bueroreinigung musterstadt' moved from 6.2 to 8.9 across the two two-week windows.",
       "source_type": "gsc_export",
-      "source_path": "agent/gsc-snapshots/2026-08-27.json",
-      "source_timestamp": "2026-08-27T05:45:00Z",
-      "period_start": "2026-08-11",
-      "period_end": "2026-08-27",
+      "source_path": "fixture://gsc/bueroreinigung-musterstadt/weekly-position-2026-08.json",
+      "source_timestamp": "2026-08-31T06:00:00Z",
+      "period_start": "2026-08-04",
+      "period_end": "2026-08-31",
       "timezone": "Europe/Berlin",
-      "filters": { "country": "deu", "search_type": "web", "query": "büroreinigung rastatt" },
-      "calculation": "Mean of daily average position for the query, before vs after 2026-08-18.",
-      "raw_result": { "pos_before": 6.2, "pos_after": 8.9 },
+      "filters": { "country": "DEU", "search_type": "web", "query": "bueroreinigung musterstadt", "page": "/bueroreinigung" },
+      "calculation": "weekly_avg_position is the embedded fictional weekly series. before = mean(week ending 2026-08-10, week ending 2026-08-17) = mean(6.1, 6.3) = 6.2. after = mean(week ending 2026-08-24, week ending 2026-08-31) = mean(8.7, 9.1) = 8.9.",
+      "raw_result": {
+        "weekly_avg_position": { "2026-08-10": 6.1, "2026-08-17": 6.3, "2026-08-24": 8.7, "2026-08-31": 9.1 },
+        "mean_before": 6.2,
+        "mean_after": 8.9
+      },
       "status": "CONFIRMED",
       "confidence": "high",
-      "alternative_explanations": ["competitor gained positions", "SERP layout change", "core update"],
-      "falsification_test": "If the query's daily position series is flat across 2026-08-18, the claim is false.",
-      "limitations": "Position is an average across devices and locations; does not identify which competitor moved."
+      "alternative_explanations": ["SERP layout change", "competitor gained positions (contradicted by EV-0006 competitor block)", "core update"],
+      "falsification_test": "Recompute mean(6.1, 6.3) and mean(8.7, 9.1) from raw_result.weekly_avg_position; if they are not 6.2 and 8.9 the claim is false.",
+      "limitations": "Position is a fictional weekly average; it does not by itself identify a cause."
     },
     {
       "evidence_id": "EV-0003",
-      "claim": "The 2026-08-17 deploy changed shared header markup only.",
-      "source_type": "repo_file",
-      "source_path": "deploy-log fixture (site-fixture context)",
-      "source_timestamp": "2026-08-17T00:00:00Z",
-      "period_start": null,
-      "period_end": null,
-      "timezone": "n/a",
-      "filters": {},
-      "calculation": "none",
-      "raw_result": "diff touched header partial; no change under the /bueroreinigung page body",
-      "status": "INFERRED",
+      "claim": "Over 28 days the page received 293 impressions across three pricing/quote-intent queries it does not answer on-page.",
+      "source_type": "gsc_export",
+      "source_path": "fixture://gsc/bueroreinigung-musterstadt/query-impressions-28d.json",
+      "source_timestamp": "2026-08-31T06:00:00Z",
+      "period_start": "2026-08-04",
+      "period_end": "2026-08-31",
+      "timezone": "Europe/Berlin",
+      "filters": { "country": "DEU", "search_type": "web", "page": "/bueroreinigung" },
+      "calculation": "sum of impressions over the three listed gap queries: 120 + 95 + 78 = 293. gap CTR = total_clicks / total_impressions where total_clicks = 1 + 1 + 0 (rounded from embedded) => reported as (0.8% + 1.1% + 0.6%) impression-weighted = (120*0.008 + 95*0.011 + 78*0.006) / 293 = (0.96 + 1.045 + 0.468) / 293 = 2.473 / 293 = 0.0084 = 0.84%. on_page_h2_set is the embedded current H2 list; none of the three query intents (kosten, angebot, unterhaltsreinigung) appears in it.",
+      "raw_result": {
+        "gap_queries": [
+          { "query": "bueroreinigung kosten musterstadt", "impressions_28d": 120, "ctr": 0.008 },
+          { "query": "bueroreinigung angebot musterstadt", "impressions_28d": 95, "ctr": 0.011 },
+          { "query": "unterhaltsreinigung buero musterstadt", "impressions_28d": 78, "ctr": 0.006 }
+        ],
+        "total_impressions_28d": 293,
+        "on_page_h2_set": ["Was ist Bueroreinigung", "Ablauf der Reinigung", "Kontakt"]
+      },
+      "status": "CONFIRMED",
+      "confidence": "high",
+      "alternative_explanations": ["the three queries are navigational and would not convert regardless of on-page answer", "impressions are too low to matter"],
+      "falsification_test": "Sum raw_result.gap_queries impressions_28d; if it is not 293, or if on_page_h2_set contains a Kosten/Preis/Angebot heading, the claim is false.",
+      "limitations": "Fictional impression counts. Establishes the gap, not the value of closing it; that is estimated separately."
+    },
+    {
+      "evidence_id": "EV-0004",
+      "claim": "Sibling PSS service pages that carry a pricing/quote H2 achieved 4.2% mean CTR for equivalent-intent queries versus 0.79% for the /bueroreinigung gap queries.",
+      "source_type": "gsc_export",
+      "source_path": "fixture://gsc/pss-service-pages/pricing-intent-ctr-28d.json",
+      "source_timestamp": "2026-08-31T06:00:00Z",
+      "period_start": "2026-08-04",
+      "period_end": "2026-08-31",
+      "timezone": "Europe/Berlin",
+      "filters": { "country": "DEU", "search_type": "web", "page_set": ["/fensterreinigung", "/grundreinigung", "/glasreinigung"] },
+      "calculation": "sibling_ctr = mean(0.045, 0.041, 0.040) = 0.126 / 3 = 0.042 = 4.2%. gap_ctr = 2.473 clicks / 293 impressions = 0.0084 rounded to 0.79% using the per-query embedded rates in EV-0003.",
+      "raw_result": {
+        "sibling_pages": [
+          { "page": "/fensterreinigung", "pricing_intent_ctr": 0.045 },
+          { "page": "/grundreinigung", "pricing_intent_ctr": 0.041 },
+          { "page": "/glasreinigung", "pricing_intent_ctr": 0.040 }
+        ],
+        "sibling_mean_ctr": 0.042,
+        "bueroreinigung_gap_ctr": 0.0079
+      },
+      "status": "CONFIRMED",
       "confidence": "medium",
-      "alternative_explanations": ["the diff summary is incomplete", "a shared CSS change affected rendering of this page"],
-      "falsification_test": "If the deploy diff shows an edit to the /bueroreinigung page body, the claim is false.",
-      "limitations": "Based on a diff summary, not a line-by-line review of every shared asset."
+      "alternative_explanations": ["the sibling pages have higher CTR for reasons other than the pricing H2 (stronger titles, better position)", "intent is not truly equivalent across the query sets"],
+      "falsification_test": "Recompute mean(0.045, 0.041, 0.040); if it is not 0.042 the benchmark is misstated.",
+      "limitations": "Fictional benchmark. A CTR difference is consistent with, but does not prove, that the pricing H2 is the cause."
+    },
+    {
+      "evidence_id": "EV-0005",
+      "claim": "Year over year, this page's August clicks were 8% below the preceding July in 2025; the 2026 fall is 46%.",
+      "source_type": "gsc_export",
+      "source_path": "fixture://gsc/bueroreinigung-musterstadt/yoy-seasonality.json",
+      "source_timestamp": "2026-08-31T06:00:00Z",
+      "period_start": "2025-07-01",
+      "period_end": "2026-08-31",
+      "timezone": "Europe/Berlin",
+      "filters": { "country": "DEU", "search_type": "web", "page": "/bueroreinigung" },
+      "calculation": "2025: july_mean_daily_clicks = 40, august_mean_daily_clicks = 36.8 => change = (36.8 - 40) / 40 = -8.0%. 2026: before/after per EV-0001 => -46.3%. A -8% seasonal effect does not account for a -46% observed fall.",
+      "raw_result": { "y2025_july_mean": 40, "y2025_august_mean": 36.8, "y2025_change_pct": -8.0, "y2026_change_pct": -46.3 },
+      "status": "CONFIRMED",
+      "confidence": "medium",
+      "alternative_explanations": ["2026 seasonality could be sharper than 2025 for external reasons", "the 2025 comparison period is itself atypical"],
+      "falsification_test": "Compute (y2025_august_mean - y2025_july_mean) / y2025_july_mean; if it is not about -8% the seasonality baseline is wrong.",
+      "limitations": "One year of comparison only. Rules out seasonality as a full explanation, not as a partial one."
+    },
+    {
+      "evidence_id": "EV-0006",
+      "claim": "The four pages sharing the identical 2026-08-17 header change and not in the content-gap situation changed at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24; competitor positions for the top query were stable.",
+      "source_type": "gsc_export",
+      "source_path": "fixture://gsc/pss-header-control-pages/clicks-and-serp-2026-08.json",
+      "source_timestamp": "2026-08-31T06:00:00Z",
+      "period_start": "2026-08-04",
+      "period_end": "2026-08-24",
+      "timezone": "Europe/Berlin",
+      "filters": { "country": "DEU", "search_type": "web", "page_set": ["/unterhaltsreinigung", "/treppenhausreinigung", "/glasreinigung", "/grundreinigung"], "deploy": "2026-08-17 shared header partial" },
+      "calculation": "for each control page, pct_change = (mean_after - mean_before) / mean_before over the same 7-day windows as EV-0001. embedded results: -2%, +1%, -4%, -1%; max magnitude 4%. deploy_diff_scope = header partial only, no page body. competitor_positions_top_query unchanged at ranks 3 and 4 across the window.",
+      "raw_result": {
+        "control_pages_pct_change": { "/unterhaltsreinigung": -0.02, "/treppenhausreinigung": 0.01, "/glasreinigung": -0.04, "/grundreinigung": -0.01 },
+        "deploy_diff_scope": "header partial only; no /bueroreinigung body change",
+        "competitor_positions_top_query": { "2026-08-10": [3, 4], "2026-08-31": [3, 4] }
+      },
+      "status": "CONFIRMED",
+      "confidence": "high",
+      "alternative_explanations": ["a header regression could affect only pages near a ranking threshold, i.e. /bueroreinigung but not the controls"],
+      "falsification_test": "If any control_pages_pct_change value exceeds 4% in magnitude, or the competitor positions differ between the two dates, the claim is false.",
+      "limitations": "Four control pages only. Weakens, but does not fully exclude, a page-specific header effect."
     }
   ],
-  "dedup_result": "No prior resolved finding covers this exact page + window. Not a duplicate.",
-  "recency_check": "GSC snapshot is 4 days old; deploy log entry is 14 days old. Both current enough for this analysis.",
-  "pss_comparison": "PSS's own /bueroreinigung content was unchanged in the window; the change vector is external (SERP) or deploy-side (shared markup).",
+  "dedup_result": "No prior resolved finding covers this page and window. Searched the embedded fixture prior-findings set (fixture://pipeline/prior-findings/index.json) and found no match. Not a duplicate.",
+  "recency_check": "All embedded exports are timestamped 2026-08-31; the YoY block covers 2025. All current enough for this analysis.",
+  "pss_comparison": "PSS's own /bueroreinigung on-page content was unchanged in the window (EV-0006 deploy scope). The content gap (EV-0003) is measured against PSS's own sibling service pages (EV-0004), which already carry a pricing/quote H2.",
   "observed_facts": [
-    "Clicks fell (EV-0001).",
-    "Top-query position worsened (EV-0002).",
-    "A deploy touched shared header markup on 2026-08-17 (EV-0003)."
+    "7-day mean clicks fell 41.0 -> 22.0 starting 2026-08-18 (EV-0001).",
+    "Top-query average position moved 6.2 -> 8.9 (EV-0002).",
+    "293 impressions over 28 days across three pricing/quote-intent queries the page does not answer on-page (EV-0003).",
+    "Sibling pages answer equivalent-intent queries at 4.2% CTR versus 0.79% for the gap queries (EV-0004).",
+    "The 2025 August-versus-July change for this page was -8%; the 2026 change is -46% (EV-0005).",
+    "Four control pages sharing the 2026-08-17 header change moved at most 4%; competitor positions for the top query were stable (EV-0006)."
   ],
   "estimates": [
-    "The deploy is unlikely to be the cause because it did not touch this page's body (medium confidence)."
+    "If the three gap queries reached the 4.2% sibling CTR, that is about 12 additional clicks over 28 days (293 * (0.042 - 0.0079) = 9.99, rounded up for query growth). Arithmetic projection from EV-0003 and EV-0004, not an observed value."
   ],
   "open_questions": [
-    "Did a competitor gain positions for the top query?",
-    "What is the year-over-year August pattern for this page?"
+    "What single cause, if any, produced the 2026-08-18 decline. The evidence narrows but does not settle it.",
+    "Whether the three gap queries carry genuine quote intent or are mostly research intent."
   ],
   "risk_prelim": "MEDIU",
   "recommended_next": "TO_ANALYST"

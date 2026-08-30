@@ -29,13 +29,44 @@ One `implementation` artifact plus the **success criteria** for the change.
 
 ## Output — one `qa-report` artifact
 
-Strict JSON, `artifact_type: "qa-report"`, per
-`agent/workflow/pipeline/schema/handoff.schema.json`: `finding_id`,
-`implementation_ref`, `success_criteria[]`, `criteria_results[]` (each `PASS|FAIL`),
-`regression_checks[]`, `official_repo_baseline_check` (`baseline_hash`, `post_hash`,
-`git_status_clean`, `identical`), `temp_repo_check` (`expected_files_changed`,
-`actual_files_changed`, `matches_prescribed_delta`), `overall`
-(`PASS | FAIL | BLOCKED`), `blocking_reasons[]`, `notes`.
+Strict JSON, one object, validating against
+`agent/workflow/pipeline/schema/handoff.schema.json` for
+`artifact_type: "qa-report"`. Emit **every** field below and **no field that is not
+listed here** — the schema branch is `additionalProperties: false`, so an extra key,
+a mis-typed value, or an underscore-prefixed helper key fails validation.
+
+Envelope (every artifact carries these seven):
+
+- `artifact_type` — the string `"qa-report"`.
+- `artifact_id` — a short non-empty unique id you assign (string).
+- `run_id` — the run id from your input, or `"unknown"` (string).
+- `produced_by` — the string `"qa"`.
+- `produced_at` — ISO 8601 date-time string.
+- `schema_version` — exactly `"1.0.0-phase1"`.
+- `inputs_ref` — non-empty array of strings naming what you were given.
+
+Domain fields:
+
+- `finding_id` — string matching `^F-[0-9]{4,}$`.
+- `implementation_ref` — non-empty string.
+- `success_criteria` — non-empty array of **strings**.
+- `criteria_results` — non-empty array of objects, each with exactly
+  `criterion` (non-empty string) and `result` (one of the strings `"PASS"`,
+  `"FAIL"`) — nothing else in the object. One entry per `success_criteria` entry.
+- `regression_checks` — array of strings.
+- `official_repo_baseline_check` — object with exactly `baseline_hash` (string ≥ 7
+  chars), `post_hash` (string ≥ 7 chars), `git_status_clean` (boolean),
+  `identical` (boolean).
+- `temp_repo_check` — object with exactly `expected_files_changed` (array of
+  strings), `actual_files_changed` (array of strings), `matches_prescribed_delta`
+  (boolean).
+- `overall` — one of the strings `"PASS"`, `"FAIL"`, `"BLOCKED"`.
+- `blocking_reasons` — array of strings.
+- `notes` — string.
+
+Before returning, validate the object against `handoff.schema.json` for
+`artifact_type: "qa-report"`. If it does not validate, fix it and re-check; never
+hand off an artifact that fails the schema.
 
 ## Stop conditions
 
