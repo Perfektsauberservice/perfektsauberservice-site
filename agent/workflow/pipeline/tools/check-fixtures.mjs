@@ -68,7 +68,12 @@ const sha256 = (p) =>
   createHash("sha256").update(readFileSync(p, "utf8").replace(/\r\n/g, "\n"), "utf8").digest("hex");
 const readJSON = (p) => JSON.parse(readFileSync(p, "utf8"));
 
-const allFixtureFiles = walk(FIXTURES).filter((p) => relFix(p) !== "fixture-manifest.json");
+// sandbox-manifest.json (agent/workflow/pipeline/fixtures/sandbox-manifest.json) is
+// the sandbox allow-list/inventory, not a fixture; it is checked separately by
+// check-sandbox.mjs, the same way fixture-manifest.json itself is excluded here.
+const allFixtureFiles = walk(FIXTURES).filter(
+  (p) => relFix(p) !== "fixture-manifest.json" && relFix(p) !== "sandbox-manifest.json"
+);
 
 // ---------------------------------------------------------------- write-manifest
 if (WRITE_MANIFEST) {

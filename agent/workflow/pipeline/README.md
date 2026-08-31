@@ -14,13 +14,23 @@ Claude Code session. This document is the operating manual.
 
 | Stage | Agent | In approval chain | Writes files |
 |---|---|---|---|
-| 0 | `competitor-intelligence` | no (source) | no |
-| 1 | `investigator` | yes | no |
-| 2 | `analyst` | yes | no |
-| 3 | `verifier` | yes | no |
+| 0 | `competitor-intelligence` | no (source) | **no — zero writes anywhere, incl. OS temp** |
+| 1 | `investigator` | yes | **no — zero writes anywhere, incl. OS temp** |
+| 2 | `analyst` | yes | **no — zero writes anywhere, incl. OS temp** |
+| 3 | `verifier` | yes | **no — zero writes anywhere, incl. OS temp** |
 | 4 | `implementer` | yes | **only the isolated temp test repo** |
-| 5 | `qa` | yes | no |
-| — | **Coordinator** = this Claude session | orchestrates | only pipeline artifacts, outside the repo |
+| 5 | `qa` | yes | **no — zero writes anywhere, incl. OS temp** |
+| — | **Coordinator** = this Claude session | orchestrates | only pipeline artifacts, outside the repo — a harness write, never conflated with a subagent write |
+
+**Read-only means zero writes, full stop.** Stages 0/1/2/3/5 never create, modify,
+move, or delete a file — not in the official repo, not in the sandbox, not in the
+isolated temp test repo, and not in OS temp (`%TEMP%`/`%TMP%`/`$TMPDIR`/`/tmp`); a
+write under OS temp is not exempt. Each agent's `.md` carries a "Zero-write
+contract" section; `agent/workflow/pipeline/tools/check-agent-writes.mjs` checks it
+statically and, given `--events-dir=<run-dir>`, scans real per-stage tool events.
+A violation is a deterministic `FAIL`, the pipeline is `BLOCKED`, and that stage's
+artifact is not forwarded. Only the Implementer writes, and only inside the
+isolated temp test repo.
 
 ## 2. Coordinator protocol
 
@@ -42,15 +52,27 @@ Claude Code session. This document is the operating manual.
    `test_plan` — nothing else. Build it with `jq` and assert the key set.
    In a **fixture-only test run**, build a sandbox **outside the official repo**
    from the `fixtures/fixture-manifest.json` allow-list (static copies only), and
-   pass each agent sandbox paths / embedded `fixture://…` data only. An agent that
-   reaches for anything off the allow-list, or for the network, returns `BLOCKED`
-   and that test is `FAIL`. This restriction is test-mode only — it does not narrow
+   pass each agent sandbox paths / embedded `fixture://…` data only. The sandbox's
+   **full declared inventory** — the same 18 fixtures plus the 2 structural
+   contracts (the schemas) — lives in `fixtures/sandbox-manifest.json`; the
+   sandbox must hold exactly those 20 files (verified by sha256 after copy), and
+   an agent slice may include only the entries whose `roles` name that agent. An
+   agent that reaches for anything off the allow-list, or for the network, returns
+   `BLOCKED` and that test is `FAIL`; an undeclared sandbox file, a missing
+   contract, a wrong hash, or a slice handing a role a file it is not listed for
+   is the same failure. This restriction is test-mode only — it does not narrow
    an agent's authorised read-only access in a real task
-   (`pipeline-guardrails.json → fixture_only_test_mode`). Confidential commercial
+   (`pipeline-guardrails.json → fixture_only_test_mode` /
+   `→ read_only_zero_write` / `→ strict_json_output`). Confidential commercial
    data (real Ads spend/bids/budgets, revenue, conversions, absolute GA4/GSC
    figures) never enters a fixture, prompt, handoff, report, or log.
 5. **Validate every handoff** against `schema/handoff.schema.json` before passing it
-   on. Reject and route back on any schema failure.
+   on. Reject and route back on any schema failure. Before that: confirm the
+   producing agent's reply was **exactly one JSON object** — no fence, no prose
+   outside it (`check-json-output.mjs`) — and, for the five read-only stages, that
+   no write of any kind was attempted, including under OS temp
+   (`check-agent-writes.mjs`). Either failure means the artifact is **not
+   forwarded**.
 6. **Decide** (produce a `coordinator-decision` artifact):
    - `ARCHIVE` — `IGNORE`; `MONITOR` only if **all** archive conditions hold
      (low impact, no urgent risk, no near-term deadline, no cost, no external op,

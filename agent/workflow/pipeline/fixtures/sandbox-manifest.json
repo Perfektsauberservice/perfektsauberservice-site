@@ -1,0 +1,227 @@
+{
+  "note": "Full declared inventory of the fixture-only test SANDBOX. The Coordinator/harness builds the sandbox OUTSIDE the official repo by copying EXACTLY the files listed here — the 18 fixtures (also in fixture-manifest.json) plus the 2 structural contracts (the schemas) — and nothing else. After copying, every sha256 is re-verified. Each agent under test receives ONLY the subset of entries whose `roles` array contains that agent's name; an entry with `roles: []` stays in the Coordinator/harness workspace and is never placed in an agent slice. An extra file in the sandbox, a missing contract, a sha256 mismatch, or a slice that hands a role a file it is not listed for -> the run is FAIL and the pipeline is BLOCKED. sha256 is over LF-normalised content. Regenerate with: node agent/workflow/pipeline/tools/check-sandbox.mjs --write-manifest (role decisions are preserved by sandbox_path).",
+  "schema_version": "1.0.0-phase1",
+  "official_repo_root": "agent/workflow/pipeline",
+  "roles": [
+    "competitor-intelligence",
+    "investigator",
+    "analyst",
+    "verifier",
+    "implementer",
+    "qa"
+  ],
+  "file_count": 20,
+  "fixture_count": 18,
+  "contract_count": 2,
+  "files": [
+    {
+      "sandbox_path": "clean/f09-verifier-input-ok.json",
+      "source_path": "agent/workflow/pipeline/fixtures/clean/f09-verifier-input-ok.json",
+      "category": "fixture",
+      "roles": [
+        "verifier"
+      ],
+      "sha256": "f6502cc7a97b9dd08d3e047a2be706cda40ec8999479e113a9f808b8bd944456",
+      "purpose": "Verifier input, exactly the 5 allowed keys (SMK-VER, ISO-VER-1)."
+    },
+    {
+      "sandbox_path": "clean/f10-atomic-claims.json",
+      "source_path": "agent/workflow/pipeline/fixtures/clean/f10-atomic-claims.json",
+      "category": "fixture",
+      "roles": [
+        "analyst"
+      ],
+      "sha256": "622b7afd2678357eaeed6e2dd624bf5cc411d35d164b2719e717409f18be924d",
+      "purpose": "Investigation artifact used as Analyst input (SMK-ANA)."
+    },
+    {
+      "sandbox_path": "contaminated/f07-analysis-with-rationale.json",
+      "source_path": "agent/workflow/pipeline/fixtures/contaminated/f07-analysis-with-rationale.json",
+      "category": "fixture",
+      "roles": [],
+      "sha256": "73fe0f8b07a7828fda57095521ada198be1aa85473d9a9b4af340cde24880ffd",
+      "purpose": "Coordinator-only raw material for building a deliberately-bad Verifier input; never handed to an agent whole."
+    },
+    {
+      "sandbox_path": "contaminated/f08-verifier-input-leaked.json",
+      "source_path": "agent/workflow/pipeline/fixtures/contaminated/f08-verifier-input-leaked.json",
+      "category": "fixture",
+      "roles": [
+        "verifier"
+      ],
+      "sha256": "f257b0b6e5e5b1cf7bfd84b80eabbc88e60893cd68bd5726e051f196665716e7",
+      "purpose": "Contaminated Verifier input (NEG-VER, ISO-VER-2)."
+    },
+    {
+      "sandbox_path": "expected/assertions.json",
+      "source_path": "agent/workflow/pipeline/fixtures/expected/assertions.json",
+      "category": "fixture",
+      "roles": [],
+      "sha256": "4cf546ecb3d2ebd9d71f50c19a10adf2bb80effbf4c73cbfabbeef638afb6ce6",
+      "purpose": "Per-test assertion oracle. Coordinator/harness only — never placed in an agent slice (teaching to the test)."
+    },
+    {
+      "sandbox_path": "findings/f01-competitor-gbp-hours.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f01-competitor-gbp-hours.json",
+      "category": "fixture",
+      "roles": [
+        "competitor-intelligence",
+        "investigator"
+      ],
+      "sha256": "ca6f2b8db4f639e2a1466ba366db916829349d8757e41a4b371727400ea6e28e",
+      "purpose": "Minor competitor GBP-hours change (SMK-CI target basis, E2E-CMP-MINOR investigator input)."
+    },
+    {
+      "sandbox_path": "findings/f02-competitor-new-service-page.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f02-competitor-new-service-page.json",
+      "category": "fixture",
+      "roles": [
+        "investigator"
+      ],
+      "sha256": "de4ec7bb8c297359362c2c2a0d29dcf6e43710beab447f12a322a7b016b9e20f",
+      "purpose": "Unverified competitor opportunity (SMK-INV, E2E-CMP-UNVERIFIED)."
+    },
+    {
+      "sandbox_path": "findings/f03-l1-site-health-issue.md",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f03-l1-site-health-issue.md",
+      "category": "fixture",
+      "roles": [
+        "implementer",
+        "qa"
+      ],
+      "sha256": "2a3098e1616a6a4ba7431cd23bb1a2c386418c7187fa579d5a3e92bc43d28935",
+      "purpose": "L1 broken-link finding; REDUS flow hands it to Implementer then QA (E2E-LOW)."
+    },
+    {
+      "sandbox_path": "findings/f04-backlog-item.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f04-backlog-item.json",
+      "category": "fixture",
+      "roles": [
+        "investigator"
+      ],
+      "sha256": "87d6c999bb7758ceabe3a70bd1605ab3236b5ff9c00ab381ac17edac05e29f65",
+      "purpose": "Opportunity-backlog item, facts only (Investigator input)."
+    },
+    {
+      "sandbox_path": "findings/f05-ambiguous-metric-drop.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f05-ambiguous-metric-drop.json",
+      "category": "fixture",
+      "roles": [
+        "investigator"
+      ],
+      "sha256": "274c2fc884fbfab6fbb6d7d0ea25075d150f2b655c32a97b0d8836d9c7062786",
+      "purpose": "Ambiguous traffic drop + verifiable content gap (E2E-MED investigator input)."
+    },
+    {
+      "sandbox_path": "findings/f06-high-risk-ads-budget.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f06-high-risk-ads-budget.json",
+      "category": "fixture",
+      "roles": [
+        "investigator"
+      ],
+      "sha256": "6e2b61707a29c407ef900119ff1c2a37a057c7523758a57593fa40a1b0b2a352",
+      "purpose": "Implied live Ads budget change; RIDICAT (E2E-HIGH-NO-APPROVAL investigator input)."
+    },
+    {
+      "sandbox_path": "findings/f13-duplicate-of-resolved.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f13-duplicate-of-resolved.json",
+      "category": "fixture",
+      "roles": [
+        "investigator"
+      ],
+      "sha256": "5721bab80781894a47b278723ee5c4857336e164972994ae1568f657eb52c811",
+      "purpose": "Confirmed duplicate of an already-resolved item (E2E-DUP investigator input)."
+    },
+    {
+      "sandbox_path": "findings/f14-refutable-claim.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f14-refutable-claim.json",
+      "category": "fixture",
+      "roles": [
+        "verifier"
+      ],
+      "sha256": "c5206bc5c9f196165cee38a781d9c307654b4dfac7f835379956b52fc31bdb93",
+      "purpose": "Verifier input whose atomic claim the embedded evidence refutes (ISO-VER-3)."
+    },
+    {
+      "sandbox_path": "findings/f15-monitor-candidate.json",
+      "source_path": "agent/workflow/pipeline/fixtures/findings/f15-monitor-candidate.json",
+      "category": "fixture",
+      "roles": [
+        "investigator"
+      ],
+      "sha256": "c45cc6c84f40bd91ebdb2640df870d58e1a0c0df49973cab405f48a2d97db62f",
+      "purpose": "Real but low-impact opportunity with review_date (E2E-MONITOR investigator input)."
+    },
+    {
+      "sandbox_path": "schema/evidence-ledger.schema.json",
+      "source_path": "agent/workflow/pipeline/schema/evidence-ledger.schema.json",
+      "category": "contract",
+      "roles": [
+        "investigator",
+        "analyst",
+        "verifier"
+      ],
+      "sha256": "38a02d1d5ed82893c2d78fbee7f6a72348a193e1a57d7bf89d7962554699fac5",
+      "purpose": "Structural contract (non-sensitive). Evidence-ledger entry shape — the three roles that produce or consume ledger entries."
+    },
+    {
+      "sandbox_path": "schema/handoff.schema.json",
+      "source_path": "agent/workflow/pipeline/schema/handoff.schema.json",
+      "category": "contract",
+      "roles": [
+        "competitor-intelligence",
+        "investigator",
+        "analyst",
+        "verifier",
+        "implementer",
+        "qa"
+      ],
+      "sha256": "41ef92533313892bc0364948661842719319c91906c246494874f5f6a34890f1",
+      "purpose": "Structural contract (non-sensitive). Every agent validates its own output artifact against its branch."
+    },
+    {
+      "sandbox_path": "site-fixture/index.html",
+      "source_path": "agent/workflow/pipeline/fixtures/site-fixture/index.html",
+      "category": "fixture",
+      "roles": [
+        "implementer",
+        "qa"
+      ],
+      "sha256": "2977a1f43c783df4dde5d76091eb889e423e90151467cef4d0e11dddefa31961",
+      "purpose": "Static site fixture with the broken link + typo (Implementer target / QA baseline)."
+    },
+    {
+      "sandbox_path": "site-fixture/kontakt.html",
+      "source_path": "agent/workflow/pipeline/fixtures/site-fixture/kontakt.html",
+      "category": "fixture",
+      "roles": [
+        "implementer",
+        "qa"
+      ],
+      "sha256": "01a6cd47c153e66f5bb6e2eb8ef076f485c7f446154394fb62910d11a6c0538e",
+      "purpose": "Static site fixture, intended link target (Implementer target / QA baseline)."
+    },
+    {
+      "sandbox_path": "site-fixture/leistungen.html",
+      "source_path": "agent/workflow/pipeline/fixtures/site-fixture/leistungen.html",
+      "category": "fixture",
+      "roles": [
+        "implementer",
+        "qa"
+      ],
+      "sha256": "96827e5cbe363cdec70b44b4b7de8ccb70952380bc8fb463a610200773eef8b5",
+      "purpose": "Static site fixture (Implementer target / QA baseline)."
+    },
+    {
+      "sandbox_path": "site-fixture/README.md",
+      "source_path": "agent/workflow/pipeline/fixtures/site-fixture/README.md",
+      "category": "fixture",
+      "roles": [
+        "implementer",
+        "qa"
+      ],
+      "sha256": "124753c5ebe0cabcacadefeeedbf94fbd06584c9b7ef5e27e1f31d6c79764c9d",
+      "purpose": "Static site fixture (Implementer target / QA baseline)."
+    }
+  ]
+}

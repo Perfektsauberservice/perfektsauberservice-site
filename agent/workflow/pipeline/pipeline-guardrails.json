@@ -37,6 +37,29 @@
       "send Telegram or email in Phase 1 (relay to Laura in the conversation instead)"
     ]
   },
+  "read_only_zero_write": {
+    "applies_to": ["competitor-intelligence", "investigator", "analyst", "verifier", "qa"],
+    "rule": "These five stages make ZERO writes anywhere: not the official repo, not the sandbox, not the isolated temporary test repo, not OS temp (%TEMP%/%TMP%/$TMPDIR//tmp or any other OS temp location), not via a helper script, and not as the side effect of a cache- or artifact-producing command. A write under OS temp is NOT non-blocking - it is the same violation as any other.",
+    "forbidden_vectors": [
+      "Write, Edit, MultiEdit, NotebookEdit tool use",
+      "shell output redirection to a file (>, >>, 2>file)",
+      "pipe to a file-writing command (| tee, | Out-File, | Set-Content)",
+      "heredoc or here-string file creation (<<EOF ... EOF, @'...'@, @\"...\"@)",
+      "Set-Content, Add-Content, Out-File, New-Item, Export-Csv, Export-Clixml",
+      "copy/move/delete: cp, mv, rm, cp/copy, move, del, Remove-Item, Copy-Item, Move-Item, Rename-Item, mkdir",
+      "any write into OS temp, including via mktemp/mkdtemp/GetTempFileName",
+      "git add/commit/stash/push/init/merge/rebase/checkout -b/switch -c/reset/clean/rm/mv/apply in any repository"
+    ],
+    "who_may_write_instead": "Only the Implementer, and only inside the isolated temporary test repo created outside the official repo. The Coordinator/harness may create the sandbox, run artifacts, and logs - that is a harness write, never a subagent write, and the two are never conflated in a report.",
+    "on_violation": "the run is a deterministic test FAIL, the pipeline is BLOCKED, and the offending stage's artifact is NOT forwarded to the next stage",
+    "enforcement_status_phase1": "documented here + in each read-only agent's .md ('Zero-write contract' section) + in TESTPLAN.md, and checked statically by agent/workflow/pipeline/tools/check-agent-writes.mjs (frontmatter tool grants, contract text presence, and a positive/negative detector battery over synthetic tool-call records; --events-dir=<run-dir> scans real per-stage tool-event logs during a behavioral run). Hook / permission enforcement is a later phase."
+  },
+  "strict_json_output": {
+    "applies_to": ["competitor-intelligence", "investigator", "analyst", "verifier", "implementer", "qa"],
+    "rule": "Every agent reply is EXACTLY one JSON object: no preamble, no trailing text, no second object, no Markdown code fence, no ` ```json ` wrapper, and no artificial HTML-escaping of <, >, or & in any string value. Every explanation goes in an approved schema field.",
+    "on_violation": "the reply is rejected BEFORE handoff, is not forwarded to the next stage, and the run is FAIL",
+    "enforcement_status_phase1": "documented here + in each agent's .md ('Output format (strict)' section), and checked statically by agent/workflow/pipeline/tools/check-json-output.mjs (contract text presence + a positive/negative parser battery: single object, fenced, prose-before, prose-after, two-objects, unjustified-HTML-escaping; --file=<reply> validates one real reply)."
+  },
   "roles": {
     "competitor-intelligence": {
       "stage": 0,
@@ -45,6 +68,7 @@
       "output": "competitor-observation artifact(s), 15 fields, certainty in {OBSERVED, ESTIMATED, UNVERIFIED} - never CONFIRMED",
       "allowed_tools": ["Read", "Grep", "Glob", "WebFetch", "WebSearch", "Bash(curl -s GET only)"],
       "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "writes_any_file": false,
       "allowed_operations": [
         "fetch public web pages, robots.txt, sitemaps",
         "read public Google/Maps/GBP/review results",
@@ -79,6 +103,7 @@
       "output": "investigation artifact with atomic_claims + evidence_ledger; observed_facts and estimates kept separate",
       "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
       "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "writes_any_file": false,
       "allowed_operations": [
         "open and read the cited sources independently",
         "compare snapshot hashes",
@@ -107,6 +132,7 @@
       "output": "analysis artifact incl. decision in {IGNORE, MONITOR, INVESTIGATE_FURTHER, PROPOSE_TEST, URGENT_RISK}, risk_class, and a separate test_plan object",
       "allowed_tools": ["Read", "Grep", "Glob"],
       "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit", "Bash", "WebFetch", "WebSearch"],
+      "writes_any_file": false,
       "allowed_operations": [
         "assess business relevance against PSS metric priority",
         "produce at least 3 alternative explanations",
@@ -133,6 +159,7 @@
       "output": "verification artifact with overall in {CONFIRMED, REFUTED, INSUFFICIENT_DATA} and context_leak_detected flag",
       "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
       "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "writes_any_file": false,
       "checks": [
         "is the fact real",
         "does the opportunity follow logically from the fact",
@@ -154,6 +181,8 @@
       "target_repo_phase1": "isolated-temp-test-repo (created OUTSIDE the official repo)",
       "allowed_tools": ["Read", "Write", "Edit", "Grep", "Glob", "Bash(git local in temp repo + node --check)"],
       "forbidden_tools": ["NotebookEdit"],
+      "writes_any_file": true,
+      "writes_only_in": "isolated-temp-test-repo",
       "allowed_operations": [
         "make the minimal prescribed change",
         "commit on a branch in the temp test repo",
@@ -180,6 +209,7 @@
       "output": "qa-report artifact with overall in {PASS, FAIL, BLOCKED}",
       "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
       "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
+      "writes_any_file": false,
       "checks": [
         "each success criterion PASS/FAIL deterministically",
         "no regression introduced",
@@ -249,7 +279,7 @@
   },
   "isolation": {
     "runs_and_logs": "created OUTSIDE the official repo (session scratchpad); never committed; .gitignore is NOT modified for them",
-    "committed_in_repo": ["static fixtures", "fixture-manifest.json", "schemas", "TESTPLAN", "documentation", "templates without real data", "tools/check-fixtures.mjs"],
+    "committed_in_repo": ["static fixtures", "fixture-manifest.json", "sandbox-manifest.json", "schemas", "TESTPLAN", "documentation", "templates without real data", "tools/check-fixtures.mjs", "tools/check-fixtures-negtest.mjs", "tools/check-sandbox.mjs", "tools/check-sandbox-negtest.mjs", "tools/check-agent-writes.mjs", "tools/check-json-output.mjs"],
     "test_repo": "a throwaway `git init` repo + a bare `../testrepo-remote.git` origin, both outside the official repo; fictional data only; no credentials; no external access; deleted after each test"
   },
   "fixture_only_test_mode": {
@@ -258,7 +288,9 @@
     "not_a_permission_change": "scoped to test runs only; it does NOT narrow the Investigator's or any agent's authorised read-only access to the official repo in a real, non-test task",
     "coordinator_builds": [
       "an allow-list manifest (agent/workflow/pipeline/fixtures/fixture-manifest.json) naming every fixture file a run may use, each with its sha256",
-      "a sandbox directory OUTSIDE the official repo holding ONLY static copies of the allow-listed files",
+      "the full sandbox inventory (agent/workflow/pipeline/fixtures/sandbox-manifest.json) naming every file the sandbox may hold - the 18 fixtures plus the 2 structural-contract schemas - each with its sandbox path, category, allowed roles, and sha256",
+      "a sandbox directory OUTSIDE the official repo holding EXACTLY the files declared in sandbox-manifest.json - no more, no fewer - verified by sha256 after copy",
+      "each agent input slice built ONLY from the sandbox entries whose roles list names that agent; an entry with roles:[] never enters any agent slice",
       "each agent input slice that references only sandbox paths and fixture:// identifiers"
     ],
     "agent_rules": [
@@ -268,8 +300,8 @@
       "no network - no WebFetch, no curl, no fetch - the fixtures carry all evidence inline",
       "Implementer writes only inside the isolated temporary test repo (never the sandbox source, never the official repo)"
     ],
-    "on_violation": "the agent stops and returns BLOCKED naming the out-of-allow-list path or operation; the Coordinator records that test as FAIL; the pipeline does not continue past the violation",
-    "enforcement_status_phase1": "documented here + in TESTPLAN.md, and checked statically by agent/workflow/pipeline/tools/check-fixtures.mjs (manifest completeness + sha256, JSON parse, artifact shape, fixture arithmetic re-derivation, no real-PSS-reference scan). Hook / permission enforcement is a later phase."
+    "on_violation": "the agent stops and returns BLOCKED naming the out-of-allow-list path or operation; the Coordinator records that test as FAIL; the pipeline does not continue past the violation. An undeclared file in the sandbox, a missing contract schema, a sha256 mismatch, or a slice that hands a role a file its roles list does not name is the same failure: FAIL + BLOCKED.",
+    "enforcement_status_phase1": "documented here + in TESTPLAN.md, and checked statically by agent/workflow/pipeline/tools/check-fixtures.mjs (manifest completeness + sha256, JSON parse, artifact shape, fixture arithmetic re-derivation, no real-PSS-reference scan) and agent/workflow/pipeline/tools/check-sandbox.mjs + check-sandbox-negtest.mjs (full sandbox inventory completeness, sha256, exact composition against a built sandbox, per-role slice negative tests). Hook / permission enforcement is a later phase."
   },
   "confidential_commercial_data": {
     "definition": "real PSS Google Ads spend / bids / budgets, real revenue, real conversion counts, real lead volumes, real GA4 or GSC absolute figures, and anything else in the repo that identifies PSS business performance",

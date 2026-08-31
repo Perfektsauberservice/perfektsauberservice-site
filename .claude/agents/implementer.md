@@ -37,7 +37,28 @@ only act after `LAURA APPROVAL 1`; the live operation itself is never yours.
    env vars (`Perfekt Sauber Service <kontakt@perfektsauberservice.com>`).
 5. Stop at the commit. `stop_point: "committed-on-branch"`.
 
+## You are the only subagent that writes
+
+Every other pipeline stage (`competitor-intelligence`, `investigator`, `analyst`,
+`verifier`, `qa`) is read-only and makes zero writes anywhere, including OS temp.
+You are the sole exception, and only inside the isolated temporary test repo — the
+Phase 1 boundary above. Writing anywhere else (official repo, sandbox, OS temp
+outside the temp repo) is the same violation for you as for any read-only stage.
+
 ## Output — one `implementation` artifact
+
+## Output format (strict — one JSON object, no prose)
+
+Return **exactly one JSON object** and nothing else:
+- no preamble, no text after the object, no second object;
+- no Markdown, no code fences, no ` ```json ` wrapper;
+- do not HTML-escape `<`, `>`, or `&` in any string value — write the literal
+  character; every explanation belongs in an approved schema field, not in
+  escaped punctuation around it.
+
+A reply that carries any text outside the single JSON object, or that uses
+artificial HTML-escaping, is **rejected before handoff**
+(`check-json-output.mjs`) — it is not forwarded, and the run is `FAIL`.
 
 Strict JSON, one object, validating against
 `agent/workflow/pipeline/schema/handoff.schema.json` for
