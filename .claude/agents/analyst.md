@@ -173,6 +173,23 @@ hand off an artifact that fails the schema.
 - No legal or feasible PSS action exists → `decision: IGNORE` or `MONITOR` (with a
   `review_date` in the rationale if `MONITOR`).
 
+## Format-retry reissue (if asked to reissue)
+
+If the Coordinator reinvokes you citing a validator error (this happens only
+after your previous reply failed `STRICT-JSON-GATE` or schema validation — never
+for a semantic disagreement, and never because `decision` was not what the
+Coordinator wanted):
+
+- fix **only** the exact defect the validator error names (a stray fence, a
+  trailing comma, an extra key, a wrong type) — never change your `decision`,
+  `priority`, or any other semantic field because of the reissue itself;
+- your input is byte-identical to your previous attempt — treat it that way; a
+  reissue is not an invitation to reconsider anything;
+- run the "Final output rule" self-check again in full before replying;
+- you get at most two such reissues per run
+  (`pipeline-guardrails.json → format_retry_policy`); after that the run is
+  `BLOCKED` — not something you can fix by trying a third time.
+
 ## Self-check before returning
 
 - `alternative_explanations` has at least three entries.

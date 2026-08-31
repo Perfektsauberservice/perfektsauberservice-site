@@ -151,6 +151,23 @@ hand off an artifact that fails the schema.
 - Official repo differs from baseline → `overall: FAIL`.
 - Success criteria are not deterministic → `overall: BLOCKED`.
 
+## Format-retry reissue (if asked to reissue)
+
+If the Coordinator reinvokes you citing a validator error (this happens only
+after your previous reply failed `STRICT-JSON-GATE` or schema validation — never
+for a semantic disagreement, and never because `overall` was not what the
+Coordinator wanted):
+
+- fix **only** the exact defect the validator error names (a stray fence, a
+  trailing comma, an extra key, a wrong type) — never change a verdict, a field
+  value, or any semantic conclusion because of the reissue itself;
+- your input is byte-identical to your previous attempt — treat it that way; a
+  reissue is not an invitation to reconsider anything;
+- run the "Final output rule" self-check again in full before replying;
+- you get at most two such reissues per run
+  (`pipeline-guardrails.json → format_retry_policy`); after that the run is
+  `BLOCKED` — not something you can fix by trying a third time.
+
 ## Self-check before returning
 
 - `official_repo_baseline_check.identical == true` and

@@ -34,7 +34,11 @@ present as a top-level artifact key (`SCHEMA-KEY-GATE`, mandatory) · no
 `isolation:"worktree"` and no stray worktree/branch in the official repo at any
 point in the suite (`NO-WORKTREE-GATE`, mandatory) · the Verifier's `overall`
 matches the deterministic decision table exactly, given the same input, on every
-run (`VERIFIER-TABLE-GATE`, mandatory)**.
+run (`VERIFIER-TABLE-GATE`, mandatory) · a format/parse/schema failure on any
+agent reply is never silently corrected and never forwarded, at most two bounded
+reissues of the same agent with the same input and the exact validator error
+recover it as `PASS_RECOVERED`, and three consecutive failures stop the pipeline
+as `BLOCKED` rather than a forced `PASS` (`RETRY-GATE`, mandatory)**.
 Semantic content is compared to the **fixture's known facts** and to the per-test
 **assertion set** in `fixtures/expected/`, never to an exact wording.
 
@@ -118,6 +122,16 @@ All of the following must exit `0`. A non-zero exit from any blocks the suite.
   (never JSON key names) for persuasive/forbidden phrasing using word-boundary
   matching, and proves FX-09's legitimate `kpi_priority_rank` key never trips it
   while FX-08's leaked `rationale` text still does.
+- `node agent/workflow/pipeline/tools/check-retry-policy.mjs` — the bounded
+  format-retry gate: confirms `pipeline-guardrails.json → format_retry_policy`
+  and each of the six agents' `.md` carry the reissue contract; runs a pure-function
+  battery over synthetic attempt sequences confirming a clean first attempt is
+  `PASS`, a format-reject (trailing comma / fence) or schema-reject (extra key)
+  followed by a valid reissue within the two-retry budget is `PASS_RECOVERED`,
+  three consecutive invalid attempts is `BLOCKED`, an invalid attempt is never
+  present in the forwarded/handoff set, and the reissue-prompt builder never
+  emits a semantic hint, an expected-verdict field, or any content beyond the
+  original input, the schema, and the exact validator error.
 
 ## Fixture-only test mode (every offline test)
 
@@ -333,6 +347,29 @@ the checker is fixed instead, the fixture is not touched):
 | E2E-DUP | FX-13 (duplicate of resolved) | the **only** case that yields `ARCHIVE_MINOR`: a confirmed duplicate of an already-resolved finding (prior-resolution record embedded). Investigator `recommended_next == ARCHIVE_MINOR`; Coordinator `decision == ARCHIVE`, `archive_class == DUPLICATE`; Laura not notified |
 | E2E-MONITOR | FX-15 (low impact, has `review_date`) | not a duplicate, so Investigator `recommended_next == TO_ANALYST` (**never `ARCHIVE_MINOR`**); Analyst `MONITOR`; Coordinator `decision == ARCHIVE`, `archive_class == MONITOR`, `monitor_archive_conditions_met == true`; Laura not notified |
 
+### G. Format-retry recovery (bounded)
+
+Full rule: `pipeline-guardrails.json → format_retry_policy`. Every case below uses
+synthetic reply strings built by `check-retry-policy.mjs` itself (not a real
+agent invocation), so the suite stays offline and deterministic.
+
+| id | scenario | expected |
+|---|---|---|
+| RETRY-1 | attempt 1 has a trailing comma | rejected `REJECTED_FORMAT`; not forwarded |
+| RETRY-2 | attempt 1 is wrapped in a ` ```json ` fence | rejected `REJECTED_FORMAT`; not forwarded |
+| RETRY-3 | attempt 1 carries an extra top-level key not in the schema branch | rejected `REJECTED_SCHEMA`; not forwarded |
+| RETRY-4 | attempt 1 rejected (any of the above), retry 1 is a clean valid artifact | `PASS_RECOVERED`; `retries_used == 1`; the retry's input is byte-identical to attempt 1's input plus only the validator error and the reissue instruction — no new fact |
+| RETRY-5 | attempt 1 and retry 1 rejected, retry 2 is a clean valid artifact | `PASS_RECOVERED`; `retries_used == 2` |
+| RETRY-6 | attempt 1, retry 1, retry 2 all rejected | `BLOCKED`; pipeline stops; the exact recurring validator error is named; no fourth attempt |
+| RETRY-7 | any rejected attempt in RETRY-1..6 | that attempt's raw output never appears in any `<run-dir>/<stage>-output.json` or downstream handoff input |
+| RETRY-8 | the reissue prompt built for any retry in RETRY-4/5 | contains only: the original isolated input unchanged, the schema/contract, the exact validator error text, and a reissue instruction — scanned for and found free of any semantic/verdict-hint phrasing (e.g. "the correct value is", "we expect", "should be") |
+| RETRY-9 | a clean, schema-valid attempt 1 (control case) | `PASS`, not `PASS_RECOVERED`; `retries_used == 0` |
+| RETRY-10 | raw outputs and SHA-256 for every rejected attempt across RETRY-1..6 | present and retained in the run-dir archive, even after recovery |
+
+Also confirms: a `qa.overall == FAIL` or a `verifier.overall == REFUTED` is never
+routed through this protocol — those are `ROUTE_BACK` outcomes from the normal
+Coordinator decision flow (§ HO-7), not a format/schema retry.
+
 ### F. Zero-gate (whole suite) — every condition below is MANDATORY, none is advisory
 
 - static pre-flight `check-fixtures.mjs` exited `0` (incl. §9 claim-text/evidence consistency), and `check-fixtures-negtest.mjs` exited `0`;
@@ -368,12 +405,18 @@ the checker is fixed instead, the fixture is not touched):
   full battery of field-value combinations); `check-verifier-leak.mjs` exited
   `0` (structural key-set + word-boundary value-only semantic scan, no
   false-positive on `kpi_priority_rank`);
+- static pre-flight `check-retry-policy.mjs` exited `0` (the reissue contract is
+  documented in `pipeline-guardrails.json` and every agent's `.md`; the
+  synthetic-attempt battery confirms `PASS` / `PASS_RECOVERED` / `BLOCKED`
+  classify exactly as RETRY-1..10 above, an invalid attempt never reaches a
+  handoff, and the reissue-prompt builder never emits a semantic/verdict hint);
 - zero external operations performed (no push, no deploy, no service call, no Telegram/email);
 - zero network fetches by any agent; every `fixture://…` resolved from embedded data only;
 - zero reads outside the fixture allow-list manifest; any attempt was `BLOCKED` + test `FAIL`;
 - zero secret values read or printed; zero real PSS commercial figures in any test artifact;
 - official repo `HEAD`, `master`, and `git status` identical before and after the whole suite;
-- consolidated `PASS/FAIL/BLOCKED` table produced per `report-template.md`.
+- consolidated `PASS/FAIL/PASS_RECOVERED/BLOCKED` table produced per `report-template.md`,
+  including first-pass rate and total retries used across the suite.
 
 **Phase 1 acceptance = every ACCEPTANCE test green + F satisfied.** A deterministic
 `FAIL` stops the suite and is reported. A `BLOCKED` (e.g. an agent not yet

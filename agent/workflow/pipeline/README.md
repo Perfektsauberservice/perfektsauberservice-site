@@ -86,7 +86,9 @@ repo — see `TESTPLAN.md → Worktree prohibition (Phase 1)`.
    outside it (`check-json-output.mjs`) — and, for the five read-only stages, that
    no write of any kind was attempted, including under OS temp
    (`check-agent-writes.mjs`). Either failure means the artifact is **not
-   forwarded**.
+   forwarded** — instead apply the bounded format-retry protocol below (§ 2a).
+   A format/schema failure is never silently corrected, fenced, stripped, or
+   re-parsed by the Coordinator — see § 2a for the only recovery path.
 6. **Decide** (produce a `coordinator-decision` artifact):
    - `ARCHIVE` — `IGNORE`; `MONITOR` only if **all** archive conditions hold
      (low impact, no urgent risk, no near-term deadline, no cost, no external op,
@@ -107,8 +109,65 @@ repo — see `TESTPLAN.md → Worktree prohibition (Phase 1)`.
    No raw logs unless Laura asks.
 
 **The Coordinator never** turns `UNVERIFIED` into `CONFIRMED`, overrides a QA
-`FAIL`, substitutes for a Laura approval, extends an approval by interpretation, or
-sends Telegram/email in Phase 1.
+`FAIL`, substitutes for a Laura approval, extends an approval by interpretation,
+sends Telegram/email in Phase 1, or reports a retry-recovered run as an
+unqualified `PASS` (it is `PASS_RECOVERED` — see § 2a).
+
+## 2a. Format-retry protocol (bounded)
+
+Full machine-readable rule: `pipeline-guardrails.json → format_retry_policy`.
+This is the **only** recovery path for a reply that fails `STRICT-JSON-GATE` or
+schema validation. It never applies to a semantic outcome the Coordinator would
+prefer different (a `qa.overall == FAIL`, a `verifier.overall` the Coordinator
+dislikes, a `ROUTE_BACK` decision) — those are routed back through the normal
+flow, never retried as if they were a format problem.
+
+1. **Trigger.** Only a parse/format failure (`check-json-output.mjs`) or a schema
+   failure (`handoff.schema.json`) on the agent's raw reply. Nothing else.
+2. **Mark the attempt.** `REJECTED_FORMAT` (fails `STRICT-JSON-GATE`) or
+   `REJECTED_SCHEMA` (parses, but fails schema validation).
+3. **Archive raw evidence**, outside the official repo, for every rejected
+   attempt: the raw output, its SHA-256, the exact validator error, the attempt
+   number, and `usage.tool_uses`. This record is never discarded, even after a
+   later attempt succeeds.
+4. **Do not forward** the rejected artifact to the next stage, under any
+   circumstance.
+5. **Reissue** the same agent (same `subagent_type`) with:
+   - the identical isolated input from the failed attempt, byte-for-byte;
+   - the identical schema/contract;
+   - the exact validator error text from step 2;
+   - an instruction to re-emit the artifact correcting only that defect.
+   The reissue prompt carries **no new fact, no new semantic information, and no
+   hint at the expected verdict/value/decision** — the Coordinator is not allowed
+   to nudge the agent toward a particular answer while asking it to fix its JSON.
+6. **Re-validate from zero**: strict JSON, parse, schema, the semantic assertions
+   for that test, role-boundary checks, and the zero-write/zero-tool-use gates —
+   every gate runs again on the new reply, none is skipped because a prior
+   attempt already passed it.
+7. **Budget: at most two reissues** after the initial attempt —
+   `attempt 1 + retry 1 + retry 2`, three tries total. The Coordinator never
+   extends this budget and never changes scope mid-retry.
+8. **Exhaustion.** If all three attempts fail format/schema validation, the
+   pipeline stops as `BLOCKED` and Laura is told exactly which stage and which
+   validator error recurred three times. No fourth attempt, no fallback parser,
+   no manual repair of the reply.
+9. **Recovery.** If a later attempt validates, the run is reported as
+   `PASS_RECOVERED`, distinct from a clean `PASS` on the first try. The count and
+   raw content of the invalid attempt(s) is never hidden from the report — a
+   recovered pipeline is not the same claim as a pipeline that never failed.
+10. **Verifier determinism is untouched by retries.** For `ISO-VER` (§ D in
+    `TESTPLAN.md`), only the **first valid** artifact of each of the three
+    independent runs is compared. Rejected attempts are excluded from the
+    comparison and may be reissued per this protocol, but a reissue never carries
+    the desired verdict — it receives only the structural/format/schema error. If
+    the first valid artifacts of the three runs disagree on `overall`, the test
+    stays `FAIL`; the retry protocol cannot turn semantic non-determinism into a
+    passing result.
+
+Reporting always separates: `first_attempt_conformance` (did attempt 1 alone
+conform), `retries_used` (0, 1, or 2), `final_valid_artifact` (the one artifact
+that was actually forwarded, if any), and `pipeline_safety` (did an invalid
+artifact ever reach a handoff — must always be no).
 
 ## 3. How a subagent is started (Phase 1, manual)
 
@@ -127,9 +186,11 @@ sends Telegram/email in Phase 1.
   stage, is passed unless it is in the allowed slice.
 - **Execution model:** Claude Code subagents (Sonnet). Cost = normal subagent token
   cost. Permissions = the tools in each agent's frontmatter, nothing more.
-- **Stop on error:** any schema failure, any stop condition, any tool denial →
-  the Coordinator halts that run, records `BLOCKED` with the reason, and does not
-  improvise past it.
+- **Stop on error:** a format/parse/schema failure on the agent's reply goes
+  through the bounded format-retry protocol (§ 2a) first — at most two reissues —
+  before it can become `BLOCKED`. Any other stop condition or tool denial halts
+  that run immediately, records `BLOCKED` with the reason, and the Coordinator
+  does not improvise past it.
 - **Sequential transcript capture (behavioral Acceptance runs):** never invoke
   agents in parallel or in the background if the transcript could be emptied
   before inspection. One agent at a time, in the foreground: (1) invoke it,

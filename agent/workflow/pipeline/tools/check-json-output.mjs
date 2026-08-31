@@ -80,6 +80,14 @@ function findHtmlEscaping(node, path = "$") {
 }
 
 // ---------------------------------------------------------------------------
+// CLI entry point only — importing parseStrictAgentJson from another tool
+// (e.g. check-retry-policy.mjs) must never trigger this script's own checks,
+// output, or process.exit.
+// ---------------------------------------------------------------------------
+const isMainModule = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+if (isMainModule) {
+
+// ---------------------------------------------------------------------------
 // 1. static: every agent's body carries the strict-output contract
 // ---------------------------------------------------------------------------
 section("1. strict-output contract text present in each agent");
@@ -158,3 +166,5 @@ console.log(`\n${"=".repeat(60)}`);
 if (failures === 0) { console.log("RESULT: PASS — strict single-JSON-object output gate holds"); process.exit(0); }
 console.log(`RESULT: FAIL — ${failures} check(s) failed`);
 process.exit(1);
+
+} // isMainModule

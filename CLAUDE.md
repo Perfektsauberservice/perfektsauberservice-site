@@ -160,14 +160,25 @@ subagent. The Coordinator:
 4. builds each subagent's **isolated input** (only the slice that role may see);
 5. validates every handoff against `handoff.schema.json` before passing it on;
 6. checks every artifact is valid JSON with required fields and valid enums;
-7. stops the pipeline (`BLOCKED`) when data is insufficient and states exactly what
+7. on a **format/parse/schema-only** failure of an agent's reply (never a semantic
+   disagreement, never a verdict the Coordinator would prefer different), applies
+   the **bounded format-retry protocol** — at most two reissues of the same agent
+   with the same isolated input, the same schema, and the exact validator error,
+   with no new semantic information and no hint at the expected verdict; three
+   consecutive failures (`attempt 1 + retry 1 + retry 2`) stop the pipeline as
+   `BLOCKED`, never as a silently-forced `PASS`. Full protocol:
+   `agent/workflow/pipeline/pipeline-guardrails.json → format_retry_policy` and
+   `agent/workflow/pipeline/README.md § 2a`;
+8. stops the pipeline (`BLOCKED`) when data is insufficient and states exactly what
    is missing;
-8. **archives without notifying Laura**: `IGNORE`; `MONITOR` that meets every
+9. **archives without notifying Laura**: `IGNORE`; `MONITOR` that meets every
    archive condition in §8; minor / duplicate / irrelevant observations;
-9. **presents to Laura** only the cases in §8, as the 8-point brief;
-10. never turns `UNVERIFIED` into `CONFIRMED`, never overrides a `qa.overall == FAIL`
+10. **presents to Laura** only the cases in §8, as the 8-point brief;
+11. never turns `UNVERIFIED` into `CONFIRMED`, never overrides a `qa.overall == FAIL`
     (that routes back), never substitutes for a Laura approval, never extends an
-    approval by interpretation.
+    approval by interpretation, and never turns a recovered-after-retry artifact
+    into an unqualified `PASS` — a recovered pipeline run is reported as
+    `PASS_RECOVERED`, with the invalid attempt count never hidden.
 
 Full protocol: `agent/workflow/pipeline/README.md`.
 

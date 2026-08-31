@@ -128,6 +128,23 @@ never hand off an artifact that fails the schema.
 - The change cannot be made minimal or reversible.
 - Any step needs the official repo or an external service.
 
+## Format-retry reissue (if asked to reissue)
+
+If the Coordinator reinvokes you citing a validator error (this happens only
+after your previous reply failed `STRICT-JSON-GATE` or schema validation — never
+for a semantic disagreement):
+
+- fix **only** the exact defect the validator error names (a stray fence, a
+  trailing comma, an extra key, a wrong type) — never change a field value or
+  any semantic conclusion because of the reissue itself, and never make a second
+  commit or touch any file again;
+- your input is byte-identical to your previous attempt — treat it that way; a
+  reissue is not an invitation to redo the implementation;
+- run the "Final output rule" self-check again in full before replying;
+- you get at most two such reissues per run
+  (`pipeline-guardrails.json → format_retry_policy`); after that the run is
+  `BLOCKED` — not something you can fix by trying a third time.
+
 ## Self-check before returning
 
 - `target_repo == "isolated-temp-test-repo"`; the path is outside the official repo.

@@ -54,6 +54,22 @@
     "must": ["exit code 0", "each agent .md carries the strict-output contract", "the parser battery passes: single object, fenced, prose-before, prose-after, two-objects, and unjustified-HTML-escaping cases all resolve as expected"],
     "must_not": ["a reply with text outside the single JSON object forwarded to the next stage", "a fenced or HTML-escaped reply accepted as a handoff"]
   },
+  "RETRY-GATE": {
+    "note": "Mandatory, whole-suite. Bounded format-retry protocol per pipeline-guardrails.json -> format_retry_policy. Applies only to STRICT-JSON-GATE / schema failures, never to a semantic outcome (qa FAIL, verifier REFUTED, etc. route back through the normal flow instead).",
+    "method": "node agent/workflow/pipeline/tools/check-retry-policy.mjs",
+    "must": ["exit code 0", "format_retry_policy documented in pipeline-guardrails.json with max_attempts_total == 3", "each agent .md carries the format-retry reissue note", "synthetic battery RETRY-1..10 classifies exactly as documented"],
+    "must_not": ["an invalid attempt forwarded to any handoff", "a reissue prompt containing a new fact, a new semantic detail, or a hint at the expected verdict/value/decision", "a 4th attempt after attempt_1+retry_1+retry_2 all fail", "a qa.overall==FAIL or verifier.overall==REFUTED routed through this protocol instead of ROUTE_BACK"]
+  },
+  "RETRY-1": { "must": ["attempt 1 with a trailing comma classified REJECTED_FORMAT", "not forwarded"] },
+  "RETRY-2": { "must": ["attempt 1 wrapped in a ```json fence classified REJECTED_FORMAT", "not forwarded"] },
+  "RETRY-3": { "must": ["attempt 1 with an extra top-level key classified REJECTED_SCHEMA", "not forwarded"] },
+  "RETRY-4": { "must": ["attempt 1 rejected, retry 1 valid => overall == PASS_RECOVERED", "retries_used == 1", "retry 1's input == attempt 1's input + exact validator error + reissue instruction, nothing else"] },
+  "RETRY-5": { "must": ["attempt 1 and retry 1 rejected, retry 2 valid => overall == PASS_RECOVERED", "retries_used == 2"] },
+  "RETRY-6": { "must": ["attempt 1, retry 1, retry 2 all rejected => overall == BLOCKED", "pipeline stops", "no 4th attempt"] },
+  "RETRY-7": { "must": ["every rejected attempt's raw output absent from every <run-dir>/<stage>-output.json and every downstream handoff input"] },
+  "RETRY-8": { "must": ["reissue prompt contains only: original input unchanged, schema/contract, exact validator error, reissue instruction"], "must_not": ["reissue prompt matches persuasive/verdict-hint phrasing (e.g. 'the correct value is', 'we expect', 'should be')"] },
+  "RETRY-9": { "must": ["a clean valid attempt 1 => overall == PASS, not PASS_RECOVERED", "retries_used == 0"] },
+  "RETRY-10": { "must": ["raw output + sha256 for every rejected attempt retained in the run-dir archive even after recovery"] },
   "HO-3": {
     "must": ["verifier input key set == [atomic_claims,public_evidence,pss_data,period_filters,test_plan] exactly", "keys rationale, priority, decision are ABSENT"],
     "method": "jq -e 'keys as $k | ($k | sort) == ([\"atomic_claims\",\"period_filters\",\"pss_data\",\"public_evidence\",\"test_plan\"] | sort)'"

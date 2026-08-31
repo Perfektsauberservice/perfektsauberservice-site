@@ -225,6 +225,24 @@ Return only the JSON object, nothing before or after it.
   `overall: INSUFFICIENT_DATA`. Either way, name the specific point (prefixed by
   its claim id) in `contested_points`.
 
+## Format-retry reissue (if asked to reissue)
+
+If the Coordinator reinvokes you citing a validator error (this happens only
+after your previous reply failed `STRICT-JSON-GATE` or schema validation — never
+for a semantic disagreement, and never because your `overall` was not the one
+the Coordinator wanted):
+
+- fix **only** the exact defect the validator error names (a stray fence, a
+  trailing comma, an extra key, a wrong type) — never change a verdict, a field
+  value, or any semantic conclusion because of the reissue itself;
+- your input is byte-identical to your previous attempt — treat it that way; a
+  reissue is not an invitation to reconsider the facts or re-derive a different
+  `overall`;
+- run the "Final self-check" below again in full before replying;
+- you get at most two such reissues per run
+  (`pipeline-guardrails.json → format_retry_policy`); after that the run is
+  `BLOCKED` — not something you can fix by trying a third time.
+
 ## Self-check before returning
 
 - `inputs_received` lists only: `atomic_claims`, `public_evidence`, `pss_data`,

@@ -197,6 +197,23 @@ hand off an artifact that fails the schema.
 - A required file is outside the fixture allow-list in a test run → `BLOCKED`,
   name the path.
 
+## Format-retry reissue (if asked to reissue)
+
+If the Coordinator reinvokes you citing a validator error (this happens only
+after your previous reply failed `STRICT-JSON-GATE` or schema validation — never
+for a semantic disagreement, and never because `recommended_next` was not what
+the Coordinator wanted):
+
+- fix **only** the exact defect the validator error names (a stray fence, a
+  trailing comma, an extra key, a wrong type) — never change `recommended_next`,
+  an atomic claim, or any other semantic field because of the reissue itself;
+- your input is byte-identical to your previous attempt — treat it that way; a
+  reissue is not an invitation to reconsider anything;
+- run the "Final output rule" self-check again in full before replying;
+- you get at most two such reissues per run
+  (`pipeline-guardrails.json → format_retry_policy`); after that the run is
+  `BLOCKED` — not something you can fix by trying a third time.
+
 ## Self-check before returning
 
 - Every atomic claim has exactly one evidence-ledger entry.

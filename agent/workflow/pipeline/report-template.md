@@ -37,6 +37,21 @@ directory instead.
 
 - `verifier_prompt.txt` forbidden-term grep matches: (must be 0)
 - ISO-VER-1 / -2 / -3 across 3 runs each: consistent? (yes/no)
+- Any rejected/retried attempt inside an ISO-VER run: was the reissue free of a
+  semantic/verdict hint? (yes/no) — if the first VALID artifacts of the 3 runs
+  disagree on `overall`, this stays `FAIL`; a retry never resolves it.
+
+## Format-retry recovery (RETRY-GATE)
+
+| test id | attempts (1/R1/R2) | result (PASS/PASS_RECOVERED/BLOCKED) | retries_used | raw attempts archived? |
+|---|---|---|---|---|
+| | | | | |
+
+- `first_attempt_conformance` (share of runs where attempt 1 alone was valid):
+- Total retries used across the suite:
+- Any run that exhausted all 3 attempts (`BLOCKED`): (list, with the recurring validator error)
+- Any invalid attempt found in a downstream handoff input: (must be none)
+- Any reissue prompt found carrying a semantic/verdict hint: (must be none)
 
 ## Zero-gate
 
@@ -46,7 +61,9 @@ directory instead.
 
 ## Summary
 
-- ACCEPTANCE totals: PASS __ / FAIL __ / BLOCKED __
+- ACCEPTANCE totals: PASS __ / PASS_RECOVERED __ / FAIL __ / BLOCKED __
+- First-pass conformance rate (attempt 1 valid, no retry needed): __%
+- Total retries used across the suite: __
 - Blocking issues (with unblock step):
 - Contradictions found that change architecture: (if any → STOP + report)
 - Recommendation: Phase 1 READY_FOR_APPROVAL | NEEDS_REVISION — reasons:

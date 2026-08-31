@@ -60,6 +60,61 @@
     "on_violation": "the reply is rejected BEFORE handoff, is not forwarded to the next stage, and the run is FAIL — the harness does not clean up or reformat a non-conforming reply",
     "enforcement_status_phase1": "documented here + in each agent's .md ('Output format (strict)' section placed before the contract, and the 'Final output rule' section placed last), and checked statically by agent/workflow/pipeline/tools/check-json-output.mjs (contract text presence including the first/last-character and final-self-check language + a positive/negative parser battery: single object, fenced, prose-before, prose-after, two-objects, any backtick anywhere, unjustified-HTML-escaping; --file=<reply> validates one real reply)."
   },
+  "format_retry_policy": {
+    "applies_to": ["competitor-intelligence", "investigator", "analyst", "verifier", "implementer", "qa"],
+    "trigger": "ONLY a format/parse failure (STRICT-JSON-GATE, check-json-output.mjs) or a schema-validation failure (handoff.schema.json) on the agent's raw reply. NEVER a semantic disagreement, a qa.overall == FAIL, a verifier.overall the Coordinator would prefer different, or any other outcome the Coordinator dislikes - those route back through the normal flow (see roles/decision tables), they are not retried as if they were a format problem.",
+    "max_attempts_total": 3,
+    "attempt_labels": ["attempt_1", "retry_1", "retry_2"],
+    "on_reject": {
+      "label": "REJECTED_FORMAT (fails STRICT-JSON-GATE) or REJECTED_SCHEMA (parses but fails handoff.schema.json)",
+      "archive_before_discarding": ["raw_output", "sha256", "exact_validator_error", "attempt_number", "usage.tool_uses"],
+      "archive_retention": "kept even after a later attempt succeeds - never overwritten or dropped from the report",
+      "forwarded_to_next_stage": false
+    },
+    "reissue_rule": {
+      "who": "the same agent (same subagent_type), reinvoked",
+      "must_include": [
+        "the identical isolated input from the failed attempt, byte-for-byte",
+        "the identical schema/contract",
+        "the exact validator error text from the failed attempt",
+        "an instruction to re-emit the artifact correcting only that defect"
+      ],
+      "must_not_include": [
+        "any new fact",
+        "any new semantic information",
+        "any hint at the expected verdict, value, or decision",
+        "any summary of what was 'wrong' beyond the literal validator error"
+      ],
+      "revalidate_from_zero_on_every_reissue": ["strict JSON (STRICT-JSON-GATE)", "parse", "schema (handoff.schema.json)", "the test's semantic assertions", "role-boundary checks", "zero-write / zero-tool-use gates"]
+    },
+    "on_exhaustion": {
+      "condition": "attempt_1 AND retry_1 AND retry_2 all fail format/schema validation",
+      "result": "BLOCKED",
+      "pipeline_stops": true,
+      "laura_told": "exactly which stage and which validator error recurred three times",
+      "forbidden_next_steps": ["a fourth attempt", "a fallback/tolerant parser", "manual repair of the reply by the Coordinator", "extending the retry budget", "changing scope mid-retry"]
+    },
+    "on_recovery": {
+      "condition": "attempt_1, or retry_1, or retry_2 validates (strict JSON + schema)",
+      "result_label": "PASS_RECOVERED",
+      "distinct_from": "PASS (a clean first-attempt success)",
+      "never_hides": "the count and raw content of the invalid attempt(s)"
+    },
+    "never_do_on_a_rejected_reply": [
+      "strip a trailing comma and accept it",
+      "strip a Markdown fence and accept it",
+      "extract the JSON object from surrounding prose and accept it",
+      "run it through a tolerant/lenient parser",
+      "silently rewrite or reformat it",
+      "forward it to the next stage under any circumstance"
+    ],
+    "verifier_determinism_interaction": {
+      "rule": "ISO-VER (TESTPLAN.md sec. D) compares only the FIRST VALID artifact of each of the three independent runs. A rejected attempt is excluded from the comparison and may be reissued per this protocol, but the reissue never carries the desired verdict - it receives only the structural/format/schema error, never a semantic hint.",
+      "on_disagreement": "if the first valid artifacts of the three independent runs disagree on overall, the test stays FAIL - the retry protocol never turns semantic non-determinism into a passing result"
+    },
+    "reporting_fields": ["first_attempt_conformance", "retries_used", "final_valid_artifact", "pipeline_safety"],
+    "enforcement_status_phase1": "documented here + in CLAUDE.md sec. 7 + README.md sec. 2a + TESTPLAN.md (RETRY-GATE, Acceptance sec. G) + a short 'Format-retry reissue' note in each agent's .md, and checked statically by agent/workflow/pipeline/tools/check-retry-policy.mjs (contract text presence in this file and in each agent's .md, plus a pure-function battery: format-reject-then-recover -> PASS_RECOVERED, schema-reject-then-recover -> PASS_RECOVERED, three consecutive rejects -> BLOCKED, a clean first attempt -> PASS, an invalid attempt never appears in the forwarded/handoff set, and the reissue-prompt builder never includes a semantic hint or expected-verdict field)."
+  },
   "schema_keywords_are_not_artifact_fields": {
     "words": ["additionalProperties", "properties", "required", "type", "enum", "$schema", "$id"],
     "rule": "These are JSON Schema vocabulary, not artifact fields. No agent ever copies one into its output as a top-level key. Every artifact branch is additionalProperties:false, so an injected schema-keyword key is rejected as an unexpected key before handoff, the same as any other extra key.",
