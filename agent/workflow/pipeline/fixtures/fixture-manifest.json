@@ -6,7 +6,7 @@
   "files": [
     {
       "path": "clean/f09-verifier-input-ok.json",
-      "sha256": "a015b4014427d4c3918689870a58f83cd515a1e6022fa972992baba45feb030c"
+      "sha256": "f6502cc7a97b9dd08d3e047a2be706cda40ec8999479e113a9f808b8bd944456"
     },
     {
       "path": "clean/f10-atomic-claims.json",

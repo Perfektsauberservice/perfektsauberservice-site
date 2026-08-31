@@ -34,8 +34,16 @@ family arithmetic re-derives exactly (gap CTR = 30 / 3000 = 1.00%; sibling
 benchmark = 140 / 3500 = 4.00%; projection 3000·(0.0400−0.0100) = 90; YoY −8.0%);
 the CTR figure is a single propagated value (no stale `0.79` / `0.84` / `4.2%`);
 no real-PSS identifier, secret, tag id, or absolute repo path appears in any
-fixture; and `E2E-MED` still requires the CONFIRMED path and bars `ROUTE_BACK`.
-A non-zero exit blocks the suite.
+fixture; `E2E-MED` still requires the CONFIRMED path and bars `ROUTE_BACK`; and
+(§9) the **wording** of every numeric claim in the family agrees with the
+evidence it cites and with the same claim in the sibling fixtures — control-page
+count, impression/click totals, CTR, query and sibling counts, daily means,
+the "at most 4%" threshold, periods, and the 2026-08-18..2026-08-24 window — so a
+claim that says "Four pages" over a six-page control ledger fails here.
+`node agent/workflow/pipeline/tools/check-fixtures-negtest.mjs` must also exit `0`:
+it proves the §9 gate by tampering one claim in a throwaway copy of the tree and
+confirming the checker rejects it; the real fixtures are untouched.
+A non-zero exit from either blocks the suite.
 
 ## Fixture-only test mode (every offline test)
 
@@ -163,7 +171,7 @@ returns **0 matches**.
 
 ### F. Zero-gate (whole suite)
 
-- static pre-flight `check-fixtures.mjs` exited `0`;
+- static pre-flight `check-fixtures.mjs` exited `0` (incl. §9 claim-text/evidence consistency), and `check-fixtures-negtest.mjs` exited `0`;
 - zero external operations performed (no push, no deploy, no service call, no Telegram/email);
 - zero network fetches by any agent; every `fixture://…` resolved from embedded data only;
 - zero reads outside the fixture allow-list manifest; any attempt was `BLOCKED` + test `FAIL`;

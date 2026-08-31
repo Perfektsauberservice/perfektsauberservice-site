@@ -3,7 +3,7 @@
     { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day (window ending 2026-08-17) to 22.0/day (window starting 2026-08-18).", "evidence_id": "EV-0001" },
     { "claim_id": "C-002", "text": "Over 28 days the /bueroreinigung page received 3000 impressions and 30 clicks across three pricing/quote-intent queries it does not answer on-page.", "evidence_id": "EV-0002" },
     { "claim_id": "C-003", "text": "Sibling PSS service pages that carry a pricing/quote H2 achieved a 4.00% impression-weighted CTR for equivalent-intent queries versus 1.00% for the /bueroreinigung gap queries.", "evidence_id": "EV-0003" },
-    { "claim_id": "C-004", "text": "Four pages sharing the identical 2026-08-17 shared-header change, and not in the content-gap situation, moved at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0004" }
+    { "claim_id": "C-004", "text": "Six pages sharing the identical 2026-08-17 shared-header change, and not in the content-gap situation, moved at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0004" }
   ],
   "public_evidence": [
     {

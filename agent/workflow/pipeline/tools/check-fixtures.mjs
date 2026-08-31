@@ -15,20 +15,30 @@
 //   6. no real-PSS reference anywhere in the fixtures (fictional data only)
 //   7. no " EUR" Ads figure outside the explicitly-fictional budget fixtures
 //   8. assertions.json E2E-MED requires the CONFIRMED path and bars ROUTE_BACK
+//   9. every numeric claim in the /bueroreinigung family agrees with the evidence
+//      it cites and with the same claim in the sibling fixtures — the wording of a
+//      claim (e.g. "Six pages…") may not contradict its evidence ledger. The
+//      companion check-fixtures-negtest.mjs proves this gate rejects a tampered
+//      claim ("Four pages…") on a throwaway copy of the tree.
 
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { join, relative, dirname } from "node:path";
+import { join, relative, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PIPELINE = join(HERE, "..");
-const FIXTURES = join(PIPELINE, "fixtures");
-const MANIFEST = join(FIXTURES, "fixture-manifest.json");
 const SCHEMA_DIR = join(PIPELINE, "schema");
 
 const args = process.argv.slice(2);
 const WRITE_MANIFEST = args.includes("--write-manifest");
+// Optional --fixtures-dir=<path> points the checker at a *copy* of the fixtures
+// tree instead of the real one. check-fixtures-negtest.mjs uses it to prove the
+// §9 claim-text/evidence gate rejects a tampered claim, against a throwaway copy,
+// without touching the real fixture. Still offline and read-only either way.
+const fxArg = args.find((a) => a.startsWith("--fixtures-dir="));
+const FIXTURES = fxArg ? resolve(fxArg.slice("--fixtures-dir=".length)) : join(PIPELINE, "fixtures");
+const MANIFEST = join(FIXTURES, "fixture-manifest.json");
 
 let failures = 0;
 let sectionMark = 0;
@@ -347,6 +357,234 @@ section("8. assertions E2E-MED requires CONFIRMED, bars ROUTE_BACK");
     if (!/recommended_next == ARCHIVE_MINOR/.test((a.must_not || []).join(" | "))) fail(`${id}.must_not does not bar ARCHIVE_MINOR`);
   }
   if (sectionOk()) pass("E2E-MED path is CONFIRMED→…→AWAITING_LAURA_APPROVAL; ROUTE_BACK/REFUTED barred; ARCHIVE_MINOR reserved to duplicates");
+}
+
+// ---------------- 9. claim text vs cited evidence — /bueroreinigung family
+// Section 4 re-derives the arithmetic from the data arrays. Section 9 is the
+// other half: it checks that the *words* of every numeric claim in the family
+// (and the same claim repeated across f05 / f07 / f08 / f09 / f10) agree with
+// that arithmetic and with each other. A claim that says "Four pages" while its
+// evidence ledger holds six control pages is a contradiction and fails here.
+section("9. claim text vs cited evidence — /bueroreinigung family");
+{
+  const NUMWORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
+  const num = (w) => {
+    if (w == null) return NaN;
+    const s = String(w).trim().toLowerCase().replace(/,/g, "");
+    if (/^\d+(?:\.\d+)?$/.test(s)) return Number(s);
+    return NUMWORDS[s] ?? NaN;
+  };
+  const norm = (v) => (typeof v === "number" && Number.isFinite(v) ? Number(v.toFixed(4)) : v);
+
+  // Canonical family values. Section 4 already proves these hold in the data
+  // arrays; §9 anchors the prose to them.
+  const CANON = {
+    control_page_count: 6,
+    control_threshold_pct: 4,       // "moved at most 4%"
+    gap_impressions_28d: 3000,
+    gap_clicks_28d: 30,
+    gap_ctr_pct: 1,                 // 30 / 3000
+    sibling_ctr_pct: 4,             // 140 / 3500
+    sibling_pages: 3,
+    gap_queries: 3,
+    daily_mean_before: 41,
+    daily_mean_after: 22,
+    observation_days: 28,
+    period_start: "2026-08-04",
+    period_end: "2026-08-31",
+    after_window: "2026-08-18..2026-08-24",
+  };
+  // self-check: the canonical window really is 28 inclusive days
+  {
+    const d0 = Date.parse(CANON.period_start), d1 = Date.parse(CANON.period_end);
+    const days = Math.round((d1 - d0) / 86400000) + 1;
+    if (days !== CANON.observation_days) fail(`§9 canon period ${CANON.period_start}..${CANON.period_end} spans ${days} days, not ${CANON.observation_days}`);
+  }
+
+  const obs = []; // { fixture, where, field, value, kind }
+  const seen = (fixture, where, field, value, kind) => {
+    const v = norm(value);
+    if (v === undefined || v === null) return;
+    if (typeof v === "number" && Number.isNaN(v)) return;
+    obs.push({ fixture, where, field, value: v, kind });
+  };
+
+  const ranges = (s) => {
+    const out = [];
+    const re = /\b2026-08-(\d\d)\s*(?:to|\.\.|-|–)\s*2026-08-(\d\d)\b/g;
+    let m;
+    while ((m = re.exec(s))) out.push(`2026-08-${m[1]}..2026-08-${m[2]}`);
+    return out;
+  };
+
+  // Parse a claim-like sentence. Deliberately NOT applied to verbose
+  // `calculation` / `falsification_test` strings, which legitimately mention the
+  // 2026-08-11..2026-08-17 baseline window and would create false hits.
+  const scanText = (fixture, where, s) => {
+    if (typeof s !== "string" || !s) return;
+    let m;
+    if ((m = s.match(/\b(\w+)\s+(?:other\s+)?pages\s+(?:that\s+)?(?:shar(?:e|ing)|received|receive)\b[^.]*?\bheader\b/i)))
+      seen(fixture, where, "control_page_count", num(m[1]), "text");
+    if ((m = s.match(/\b(\w+)\s+control pages\b/i)))
+      seen(fixture, where, "control_page_count", num(m[1]), "text");
+    if ((m = s.match(/\b([\d,]+)\s+impressions and\s+([\d,]+)\s+clicks\b/i))) {
+      seen(fixture, where, "gap_impressions_28d", num(m[1]), "text");
+      seen(fixture, where, "gap_clicks_28d", num(m[2]), "text");
+    }
+    if ((m = s.match(/\b([\d,]+)\s+impressions\s*\/\s*([\d,]+)\s+clicks\b/i))) {
+      seen(fixture, where, "gap_impressions_28d", num(m[1]), "text");
+      seen(fixture, where, "gap_clicks_28d", num(m[2]), "text");
+    }
+    if ((m = s.match(/\(([\d,]+)\s+clicks\s*\/\s*([\d,]+)\s+impressions\)/i))) {
+      seen(fixture, where, "gap_clicks_28d", num(m[1]), "text");
+      seen(fixture, where, "gap_impressions_28d", num(m[2]), "text");
+    }
+    if ((m = s.match(/\b(\w+)\s+pricing\/quote-intent quer(?:y|ies)\b/i)))
+      seen(fixture, where, "gap_queries", num(m[1]), "text");
+    if ((m = s.match(/\b(\w+)\s+query intents\b/i)))
+      seen(fixture, where, "gap_queries", num(m[1]), "text");
+    if ((m = s.match(/\b(\w+)\s+sibling pages\b/i)))
+      seen(fixture, where, "sibling_pages", num(m[1]), "text");
+    if ((m = s.match(/([\d.]+)%\s+impression-weighted CTR\b[^.]*?\bversus\s+([\d.]+)%/i))) {
+      seen(fixture, where, "sibling_ctr_pct", parseFloat(m[1]), "text");
+      seen(fixture, where, "gap_ctr_pct", parseFloat(m[2]), "text");
+    }
+    if ((m = s.match(/impression-weighted CTR of\s+([\d.]+)%[^.]*?\bversus\s+([\d.]+)%/i))) {
+      seen(fixture, where, "sibling_ctr_pct", parseFloat(m[1]), "text");
+      seen(fixture, where, "gap_ctr_pct", parseFloat(m[2]), "text");
+    }
+    if ((m = s.match(/([\d.]+)%\s+sibling[- ](?:page\s+)?(?:benchmark|ctr)\b/i)))
+      seen(fixture, where, "sibling_ctr_pct", parseFloat(m[1]), "text");
+    if ((m = s.match(/\bat most\s+(?:a\s+)?([\d.]+)%/i)))
+      seen(fixture, where, "control_threshold_pct", parseFloat(m[1]), "text");
+    if ((m = s.match(/<=\s*([\d.]+)%/)))
+      seen(fixture, where, "control_threshold_pct", parseFloat(m[1]), "text");
+    if ((m = s.match(/(?:organic\s+)?clicks\b(?:\s+to\s+\S+)?\s+(?:fell|dropped|moved)\s+from\b[^.]*?([\d.]+)\/day\b[^.]*?\bto\s+([\d.]+)\/day\b/i))) {
+      seen(fixture, where, "daily_mean_before", parseFloat(m[1]), "text");
+      seen(fixture, where, "daily_mean_after", parseFloat(m[2]), "text");
+    }
+    if ((m = s.match(/\bover\s+(?:the\s+)?(\d+)\s+days\b/i)))
+      seen(fixture, where, "observation_days", Number(m[1]), "text");
+    if ((m = s.match(/\b(\d+)\s+days ending\s+(2026-\d\d-\d\d)/i))) {
+      seen(fixture, where, "observation_days", Number(m[1]), "text");
+      seen(fixture, where, "period_end", m[2], "text");
+    }
+    // an explicit date range is only the control/click "after" window when the
+    // sentence is actually about that comparison
+    if (/7-day mean clicks/i.test(s) && /header|control/i.test(s))
+      for (const r of ranges(s)) seen(fixture, where, "after_window", r, "text");
+  };
+
+  const pick = (node, key) => (node.derived && node.derived[key] !== undefined ? node.derived[key] : node[key]);
+  const scanData = (fixture, node) => {
+    if (!node || typeof node !== "object" || Array.isArray(node)) return;
+    if (node.control_pages_pct_change && typeof node.control_pages_pct_change === "object") {
+      seen(fixture, "control_pages_pct_change[]", "control_page_count", Object.keys(node.control_pages_pct_change).length, "structured");
+      const cpc = pick(node, "control_page_count");
+      if (cpc !== undefined) seen(fixture, "derived.control_page_count", "control_page_count", cpc, "structured");
+      const mag = pick(node, "max_control_magnitude");
+      if (mag !== undefined) seen(fixture, "derived.max_control_magnitude", "control_threshold_pct", mag * 100, "structured");
+    }
+    if (Array.isArray(node.gap_queries)) {
+      seen(fixture, "gap_queries[]", "gap_queries", node.gap_queries.length, "structured");
+      seen(fixture, "gap_queries[]", "gap_impressions_28d", node.gap_queries.reduce((s, q) => s + (q.impressions_28d || 0), 0), "structured");
+      seen(fixture, "gap_queries[]", "gap_clicks_28d", node.gap_queries.reduce((s, q) => s + (q.clicks_28d || 0), 0), "structured");
+      const ti = pick(node, "total_impressions_28d"), tc = pick(node, "total_clicks_28d"), gc = pick(node, "gap_ctr_impression_weighted");
+      if (ti !== undefined) seen(fixture, "derived.total_impressions_28d", "gap_impressions_28d", ti, "structured");
+      if (tc !== undefined) seen(fixture, "derived.total_clicks_28d", "gap_clicks_28d", tc, "structured");
+      if (gc !== undefined) seen(fixture, "derived.gap_ctr_impression_weighted", "gap_ctr_pct", gc * 100, "structured");
+    }
+    if (Array.isArray(node.sibling_pages)) {
+      seen(fixture, "sibling_pages[]", "sibling_pages", node.sibling_pages.length, "structured");
+      const si = node.sibling_pages.reduce((s, p) => s + (p.pricing_intent_impressions_28d || 0), 0);
+      const sc = node.sibling_pages.reduce((s, p) => s + (p.pricing_intent_clicks_28d || 0), 0);
+      if (si > 0) seen(fixture, "sibling_pages[]", "sibling_ctr_pct", (sc / si) * 100, "structured");
+      const sw = pick(node, "sibling_ctr_impression_weighted"), bg = pick(node, "bueroreinigung_gap_ctr");
+      if (sw !== undefined) seen(fixture, "derived.sibling_ctr_impression_weighted", "sibling_ctr_pct", sw * 100, "structured");
+      if (bg !== undefined) seen(fixture, "derived.bueroreinigung_gap_ctr", "gap_ctr_pct", bg * 100, "structured");
+    }
+    if (node.daily_clicks && typeof node.daily_clicks === "object") {
+      const mb = meanWindow(node.daily_clicks, "2026-08-11", "2026-08-17");
+      const ma = meanWindow(node.daily_clicks, "2026-08-18", "2026-08-24");
+      if (Number.isFinite(mb)) seen(fixture, "daily_clicks", "daily_mean_before", mb, "structured");
+      if (Number.isFinite(ma)) seen(fixture, "daily_clicks", "daily_mean_after", ma, "structured");
+      const b = pick(node, "mean_before"), a = pick(node, "mean_after");
+      if (b !== undefined) seen(fixture, "derived.mean_before", "daily_mean_before", b, "structured");
+      if (a !== undefined) seen(fixture, "derived.mean_after", "daily_mean_after", a, "structured");
+    }
+  };
+  const walkData = (fixture, node) => {
+    if (!node || typeof node !== "object") return;
+    scanData(fixture, node);
+    for (const v of Array.isArray(node) ? node : Object.values(node))
+      if (v && typeof v === "object") walkData(fixture, v);
+  };
+
+  const collectText = (fixture, obj) => {
+    if (!obj || typeof obj !== "object") return;
+    for (const c of obj.atomic_claims || []) scanText(fixture, c.claim_id || "atomic_claim", c.text);
+    for (const e of obj.evidence_ledger || []) {
+      scanText(fixture, `${e.evidence_id} claim`, e.claim);
+      scanText(fixture, `${e.evidence_id} limitations`, e.limitations);
+    }
+    for (const s of obj.observed_facts || []) scanText(fixture, "observed_facts", s);
+    for (const s of obj.estimates || []) scanText(fixture, "estimates", s);
+    for (const s of obj.observed || []) scanText(fixture, "observed", s);
+    for (const ev of obj.embedded_evidence || []) {
+      scanText(fixture, `${ev.evidence_id} note`, ev.note);
+      scanText(fixture, `${ev.evidence_id} method`, ev.method);
+    }
+    for (const pe of obj.public_evidence || []) {
+      scanText(fixture, `${pe.evidence_id} method`, pe.method);
+      scanText(fixture, `${pe.evidence_id} limitations`, pe.limitations);
+    }
+    for (const k of ["correlation_not_causation_note", "business_relevance", "proposed_change_summary", "source_summary", "note"])
+      if (typeof obj[k] === "string") scanText(fixture, k, obj[k]);
+    const tp = obj.test_plan || {};
+    for (const k of ["hypothesis", "baseline", "change", "success_threshold", "stop_threshold", "period", "observation_window"])
+      if (typeof tp[k] === "string") scanText(fixture, `test_plan.${k}`, tp[k]);
+    const ps = obj.period_filters?.period_start ?? obj.period_start;
+    const pe = obj.period_filters?.period_end ?? obj.period_end;
+    if (ps) seen(fixture, "period_start", "period_start", ps, "structured");
+    if (pe) seen(fixture, "period_end", "period_end", pe, "structured");
+  };
+
+  const FAM9 = [
+    "findings/f05-ambiguous-metric-drop.json",
+    "clean/f09-verifier-input-ok.json",
+    "clean/f10-atomic-claims.json",
+    "contaminated/f07-analysis-with-rationale.json",
+    "contaminated/f08-verifier-input-leaked.json",
+  ];
+  for (const name of FAM9) {
+    const obj = jsonFixtures[name];
+    if (!obj) continue;
+    collectText(name, obj);
+    walkData(name, obj);
+  }
+
+  // (a) every stated value must equal the canonical family value
+  for (const o of obs) {
+    const canon = CANON[o.field];
+    if (canon === undefined) continue;
+    const eq = typeof canon === "number" ? Math.abs(Number(o.value) - canon) < 1e-6 : String(o.value) === String(canon);
+    if (!eq) fail(`§9 ${o.fixture} [${o.where}] ${o.field}: ${o.kind} says ${o.value}, evidence/family value is ${canon}`);
+  }
+  // (b) the same claim repeated across f05 / f09 / f10 (and f07 / f08) must not diverge
+  const byField = new Map();
+  for (const o of obs) {
+    if (!byField.has(o.field)) byField.set(o.field, []);
+    byField.get(o.field).push(o);
+  }
+  for (const [field, list] of byField) {
+    const distinct = [...new Set(list.map((o) => String(o.value)))];
+    if (distinct.length > 1)
+      fail(`§9 ${field}: divergent across the family -> ${list.map((o) => `${o.fixture}[${o.where}]=${o.value}`).join(" ; ")}`);
+  }
+
+  if (sectionOk())
+    pass(`${obs.length} stated values agree with cited evidence and across f05/f07/f08/f09/f10 ` +
+      `(control-page count, impressions/clicks, CTR, query & sibling counts, daily means, thresholds, periods, windows)`);
 }
 
 // ------------------------------------------------------------------- summary
