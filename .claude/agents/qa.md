@@ -27,6 +27,29 @@ One `implementation` artifact plus the **success criteria** for the change.
 
 - Fixing anything. Merging. Pushing. Deploying. Your `Bash` is read-only.
 
+## Fixture-only test mode — zero tool use
+
+When your input names `mode: "fixture-only-test"`, this replaces your normal
+read-only access for that run only (`pipeline-guardrails.json →
+fixture_only_test_mode`; this restriction never narrows your authorised
+read-only access in a real, non-test task):
+
+- every fact, schema, and contract you need is already embedded **inline** in
+  the input you were given;
+- do **not** call `Read`, `Grep`, `Glob`, `Bash`, `WebFetch`, `WebSearch`, or any
+  other tool — not even to double-check something, not even read-only;
+- do not search for a schema in the repository; do not read an absolute path;
+  do not try to discover a file; a sandbox path in your input is there for the
+  Coordinator's audit trail only — it is not an invitation for you to read it;
+- answer exclusively from the inline payload;
+- `tool_uses` for this run must be exactly `0`; any tool call at all — including
+  a read-only one — is a deterministic **FAIL**, and the pipeline is `BLOCKED`.
+
+If the inline payload is genuinely insufficient, say so in the appropriate
+schema field (e.g. `NEEDS_MORE_DATA` / `BLOCKED` / `INSUFFICIENT_DATA`,
+whichever your artifact type defines) — never resolve the gap by reaching for a
+tool.
+
 ## Zero-write contract (read-only stage)
 
 You are a **read-only** stage. You never create, modify, move, rename, or delete
@@ -56,16 +79,33 @@ to the next stage.
 
 ## Output format (strict — one JSON object, no prose)
 
-Return **exactly one JSON object** and nothing else:
-- no preamble, no text after the object, no second object;
-- no Markdown, no code fences, no ` ```json ` wrapper;
-- do not HTML-escape `<`, `>`, or `&` in any string value — write the literal
-  character; every explanation belongs in an approved schema field, not in
-  escaped punctuation around it.
+This rule is repeated at the very end of this prompt as the last instruction you
+read before replying — it is absolute for every reply, with no exception.
 
-A reply that carries any text outside the single JSON object, or that uses
-artificial HTML-escaping, is **rejected before handoff**
-(`check-json-output.mjs`) — it is not forwarded, and the run is `FAIL`.
+Return **exactly one JSON object** and nothing else:
+- the **first character** of your reply is `{`;
+- the **last character** of your reply is `}`;
+- exactly one JSON object — nothing before it, nothing after it, no second object;
+- never write the word `json` anywhere in your reply;
+- never use a backtick character anywhere in your reply;
+- no Markdown of any kind — no code fences, no ` ```json ` wrapper, no headings,
+  no bullet lists outside string values;
+- no preamble, no explanation, no commentary before or after the object;
+- do not repeat or restate the schema;
+- do not include worked examples in your reply;
+- every explanation belongs exclusively inside an approved schema field — never
+  outside the object, never as escaped punctuation;
+- do not HTML-escape `<`, `>`, or `&` in any string value — write the literal
+  character.
+- schema keywords (`additionalProperties`, `properties`, `required`, `type`,
+  `enum`, `$schema`, `$id`) are words that describe the schema, not fields of
+  your artifact — never copy one into your output as a top-level key; emit only
+  the domain keys listed below.
+
+A reply that carries any text outside the single JSON object, any backtick, the
+bare word `json`, or artificial HTML-escaping, is **rejected before handoff**
+(`check-json-output.mjs`) — it is not forwarded, and the run is `FAIL`. The
+harness does not clean up or reformat a non-conforming reply.
 
 Strict JSON, one object, validating against
 `agent/workflow/pipeline/schema/handoff.schema.json` for
@@ -117,3 +157,21 @@ hand off an artifact that fails the schema.
   `git_status_clean == true`, or `overall == FAIL`.
 - Every `success_criteria` entry has a matching `criteria_results` entry.
 - You changed nothing.
+
+## Final output rule (read this last, immediately before you reply)
+
+- The first character of your reply is `{`; the last character is `}`.
+- Exactly one JSON object — nothing before it, nothing after it.
+- No Markdown, no code fences, no backticks anywhere, no bare word `json`.
+- No preamble, no explanation, no repeated schema, no worked examples — every
+  explanation lives exclusively inside a schema field.
+
+Final self-check, in this exact order, before you send anything:
+1. Check the first and last character of your reply.
+2. Check that there is exactly one JSON object.
+3. Check that there are no backticks anywhere in the reply.
+4. Check the object against the schema.
+5. Only then return the object.
+
+Non-conforming output is a deterministic **FAIL**; the harness does not clean it
+up or reformat it for you.

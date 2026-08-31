@@ -11,7 +11,10 @@
 //     { "tool": "...", "command": "...", "file_path": "...", "path": "..." }
 //     for each read-only stage (competitor-intelligence, investigator, analyst,
 //     verifier, qa). Any write vector -> that stage FAILS and the pipeline is
-//     BLOCKED; the stage artifact is not forwarded.
+//     BLOCKED; the stage artifact is not forwarded. A missing or 0-byte event
+//     log for a role is reported as BLOCKED (exit 2), never as a silent skip or
+//     an implicit PASS — a zero-write claim always requires a real, captured,
+//     non-empty transcript, never frontmatter alone.
 //
 // The five read-only stages may not create, modify, move, rename, or delete any
 // file ANYWHERE — official repo, sandbox, isolated temp test repo, %TEMP% / %TMP%
@@ -199,14 +202,28 @@ if (bMiss === 0) pass(`${REJECT.length} write vectors rejected, ${ALLOW.length} 
 // 4. optional: scan a real run's per-stage event logs
 // ---------------------------------------------------------------------------
 const evDirArg = process.argv.slice(2).find((a) => a.startsWith("--events-dir="));
+let blocked = 0;
 if (evDirArg) {
   section("4. per-stage event scan");
   const dir = evDirArg.slice("--events-dir=".length);
   for (const role of READ_ONLY) {
     const p = join(dir, `${role}-events.json`);
-    if (!existsSync(p)) { console.log(`  (skip) no ${role}-events.json`); continue; }
+    // F-6: a missing or empty transcript/event log is a harness limitation, not a
+    // pass. "Zero-write" is never claimed from frontmatter alone — only from an
+    // actually-captured, non-empty transcript scanned by this gate.
+    if (!existsSync(p)) {
+      console.log(`  BLOCKED  ${role}: no ${role}-events.json captured — cannot confirm zero-write from a real transcript; category is BLOCKED, not PASS`);
+      blocked++;
+      continue;
+    }
+    const raw = readFileSync(p, "utf8");
+    if (raw.trim().length === 0) {
+      console.log(`  BLOCKED  ${role}: ${role}-events.json is 0 bytes — harness failed to capture the transcript; category is BLOCKED, not PASS`);
+      blocked++;
+      continue;
+    }
     let events;
-    try { events = JSON.parse(readFileSync(p, "utf8")); }
+    try { events = JSON.parse(raw); }
     catch (e) { fail(`${role}: events log unparseable: ${e.message}`); continue; }
     if (!Array.isArray(events)) { fail(`${role}: events log is not an array`); continue; }
     let hits = 0;
@@ -219,6 +236,7 @@ if (evDirArg) {
 }
 
 console.log(`\n${"=".repeat(60)}`);
+if (blocked > 0) { console.log(`RESULT: BLOCKED — ${blocked} stage(s) had no usable captured transcript (harness limitation, not a pass)`); process.exit(2); }
 if (failures === 0) { console.log("RESULT: PASS — read-only stages carry a zero-write contract and the detector holds"); process.exit(0); }
 console.log(`RESULT: FAIL — ${failures} check(s) failed`);
 process.exit(1);

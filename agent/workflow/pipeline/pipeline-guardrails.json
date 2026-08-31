@@ -56,9 +56,15 @@
   },
   "strict_json_output": {
     "applies_to": ["competitor-intelligence", "investigator", "analyst", "verifier", "implementer", "qa"],
-    "rule": "Every agent reply is EXACTLY one JSON object: no preamble, no trailing text, no second object, no Markdown code fence, no ` ```json ` wrapper, and no artificial HTML-escaping of <, >, or & in any string value. Every explanation goes in an approved schema field.",
-    "on_violation": "the reply is rejected BEFORE handoff, is not forwarded to the next stage, and the run is FAIL",
-    "enforcement_status_phase1": "documented here + in each agent's .md ('Output format (strict)' section), and checked statically by agent/workflow/pipeline/tools/check-json-output.mjs (contract text presence + a positive/negative parser battery: single object, fenced, prose-before, prose-after, two-objects, unjustified-HTML-escaping; --file=<reply> validates one real reply)."
+    "rule": "Every agent reply is EXACTLY one JSON object: first character '{', last character '}', no preamble, no trailing text, no second object, no Markdown of any kind, no code fence, no ` ```json ` wrapper, no bare word 'json' anywhere in the reply, no backtick character anywhere in the reply, no repeated/restated schema, no worked examples, and no artificial HTML-escaping of <, >, or & in any string value. Every explanation goes in an approved schema field, never outside the object. This rule is stated twice in each agent's .md: immediately before the field-by-field output contract, and again as the literal last section of the file ('Final output rule (read this last...)'), ending with a 5-step self-check (check first/last character; check exactly one object; check no backticks; check against schema; only then return it).",
+    "on_violation": "the reply is rejected BEFORE handoff, is not forwarded to the next stage, and the run is FAIL — the harness does not clean up or reformat a non-conforming reply",
+    "enforcement_status_phase1": "documented here + in each agent's .md ('Output format (strict)' section placed before the contract, and the 'Final output rule' section placed last), and checked statically by agent/workflow/pipeline/tools/check-json-output.mjs (contract text presence including the first/last-character and final-self-check language + a positive/negative parser battery: single object, fenced, prose-before, prose-after, two-objects, any backtick anywhere, unjustified-HTML-escaping; --file=<reply> validates one real reply)."
+  },
+  "schema_keywords_are_not_artifact_fields": {
+    "words": ["additionalProperties", "properties", "required", "type", "enum", "$schema", "$id"],
+    "rule": "These are JSON Schema vocabulary, not artifact fields. No agent ever copies one into its output as a top-level key. Every artifact branch is additionalProperties:false, so an injected schema-keyword key is rejected as an unexpected key before handoff, the same as any other extra key.",
+    "documented_in": "each agent's .md, inside the 'Output format (strict)' section, immediately before the field-by-field contract",
+    "enforcement_status_phase1": "check-fixtures.mjs section 3 rejects any top-level key not in the schema branch's properties (this already covers the seven schema-keyword words); agent/workflow/pipeline/tools/check-schema-key-negtest.mjs proves it by injecting each of the seven words as a top-level key into a real artifact fixture copy and asserting check-fixtures.mjs names every one as an unexpected key."
   },
   "roles": {
     "competitor-intelligence": {
@@ -168,6 +174,18 @@
         "can PSS implement this legally and technically",
         "does the test measure the stated hypothesis"
       ],
+      "decision_table": {
+        "note": "overall is derived ONLY from these fields, in this order; the same input always yields the same verdict. Full table in verifier.md ('Deterministic decision table').",
+        "mandatory_controls": ["fact_real", "opportunity_follows_logically", "data_sufficient", "alternative_explanations_reviewed", "pss_can_implement_legally_and_technically", "test_measures_hypothesis"],
+        "order": [
+          "1. context_leak_detected == true -> INSUFFICIENT_DATA",
+          "2. else fact_real == FAIL -> REFUTED",
+          "3. else any mandatory control INSUFFICIENT (or data_sufficient == FAIL, or alternative_explanations_reviewed == false) -> INSUFFICIENT_DATA",
+          "4. else any remaining mandatory control FAIL (opportunity_follows_logically / pss_can_implement_legally_and_technically / test_measures_hypothesis) -> REFUTED",
+          "5. else all mandatory controls PASS (and alternative_explanations_reviewed == true) -> CONFIRMED"
+        ],
+        "non_fatal": "declared limitations and contested_points never move overall off the table's result once every mandatory control is PASS"
+      },
       "stop_conditions": [
         "input contains reasoning/persuasion -> set context_leak_detected = true and overall = INSUFFICIENT_DATA",
         "a claimed fact cannot be independently reproduced -> overall = REFUTED or INSUFFICIENT_DATA"
@@ -298,10 +316,46 @@
       "treat every fixture:// identifier as data already embedded in the input - never resolve it against the official repo or the network",
       "no read of the official repo working tree, .git, .env or .env.local, token or OAuth files, agent/state, agent/google-ads, agent/gsc-snapshots, or any real PSS export",
       "no network - no WebFetch, no curl, no fetch - the fixtures carry all evidence inline",
+      "for the five read-only roles (competitor-intelligence, investigator, analyst, verifier, qa): ZERO tool use of any kind in fixture-only-test mode - not Read, not Grep, not Glob, not Bash, not WebFetch, not WebSearch, not even a read-only call; tool_uses must be exactly 0; everything needed is inline in the input; a sandbox path in the input is for the Coordinator's audit trail only, never an invitation to read it",
       "Implementer writes only inside the isolated temporary test repo (never the sandbox source, never the official repo)"
     ],
-    "on_violation": "the agent stops and returns BLOCKED naming the out-of-allow-list path or operation; the Coordinator records that test as FAIL; the pipeline does not continue past the violation. An undeclared file in the sandbox, a missing contract schema, a sha256 mismatch, or a slice that hands a role a file its roles list does not name is the same failure: FAIL + BLOCKED.",
-    "enforcement_status_phase1": "documented here + in TESTPLAN.md, and checked statically by agent/workflow/pipeline/tools/check-fixtures.mjs (manifest completeness + sha256, JSON parse, artifact shape, fixture arithmetic re-derivation, no real-PSS-reference scan) and agent/workflow/pipeline/tools/check-sandbox.mjs + check-sandbox-negtest.mjs (full sandbox inventory completeness, sha256, exact composition against a built sandbox, per-role slice negative tests). Hook / permission enforcement is a later phase."
+    "coordinator_prompt_must_include": [
+      "mode: \"fixture-only-test\"",
+      "the sandbox path, labelled as for Coordinator-audit only, never as something the agent should read",
+      "the fixture payload inline, in full",
+      "the schema/contract the agent must validate against, inline, in full",
+      "an explicit line: DO NOT USE TOOLS"
+    ],
+    "on_violation": "the agent stops and returns BLOCKED naming the out-of-allow-list path or operation; the Coordinator records that test as FAIL; the pipeline does not continue past the violation. An undeclared file in the sandbox, a missing contract schema, a sha256 mismatch, a slice that hands a role a file its roles list does not name, or any tool_use > 0 by one of the five read-only roles is the same failure: FAIL + BLOCKED.",
+    "enforcement_status_phase1": "documented here + in TESTPLAN.md + in each read-only agent's .md ('Fixture-only test mode - zero tool use' section), and checked statically by agent/workflow/pipeline/tools/check-fixtures.mjs (manifest completeness + sha256, JSON parse, artifact shape, fixture arithmetic re-derivation, no real-PSS-reference scan), agent/workflow/pipeline/tools/check-sandbox.mjs + check-sandbox-negtest.mjs (full sandbox inventory completeness, sha256, exact composition against a built sandbox, per-role slice negative tests), and agent/workflow/pipeline/tools/check-fixture-tooluse.mjs (static: each read-only agent's .md carries the zero-tool-use section; behavioral: --events-dir=<run-dir> asserts each read-only stage's event log has exactly 0 entries in a fixture-only-test run). Hook / permission enforcement is a later phase."
+  },
+  "verifier_leak_check_methodology": {
+    "goal": "detect the Analyst's persuasive reasoning leaking into the Verifier's input - not substrings of permitted field NAMES.",
+    "replaces": "a raw grep of the whole Verifier prompt text, which false-positives on legitimate structural key names (e.g. 'kpi_priority_rank' contains 'priorit' and would wrongly trip a bare 'priorit' substring match)",
+    "check_A_structural": "the built Verifier input has EXACTLY the five allowed top-level keys (atomic_claims, public_evidence, pss_data, period_filters, test_plan); zero rationale/priority/decision; zero other extra keys (jq key-set assertion; see TESTPLAN.md HO-3).",
+    "check_B_semantic": "scan only STRING VALUES (never JSON key names) in the built input, plus any Coordinator-authored prose, for persuasive/forbidden phrasing using word-boundary matching; explicitly exclude permitted structural names such as kpi_priority_rank because key names are never scanned in the first place.",
+    "rule": "the fixture is never edited just to dodge the checker; the checker is fixed to scan values instead of raw text.",
+    "enforcement_status_phase1": "documented here + in TESTPLAN.md (ISO-VER 'Also:' paragraph) + checked by agent/workflow/pipeline/tools/check-verifier-leak.mjs (structural key-set check + word-boundary value-only semantic scan, with a battery proving f09's legitimate 'kpi_priority_rank' never trips it and f08's leaked rationale text still does)."
+  },
+  "worktree_prohibition_phase1": {
+    "rule": "Fixture-only tests and Phase 1 Acceptance never use isolation:\"worktree\" (the Agent-tool worktree isolation mode) and never create a worktree or an auxiliary branch inside the official repo. The five read-only roles run without any isolation mode, on inline payload only. The Implementer uses exclusively the isolated temporary test repo OUTSIDE the official repo (a plain `git init` / clone of the throwaway bare remote), never a worktree.",
+    "protocol": "before and after every test category: run `git worktree list` and list all branches in the official repo; any worktree or branch present that was not there before the category started is FAIL + STOP, reported to Laura for approval - the harness never auto-cleans a destructive deviation like this.",
+    "on_violation": "FAIL + STOP; do not continue the suite; report the unexpected worktree/branch and its origin; request human approval before any cleanup action",
+    "enforcement_status_phase1": "documented here + in TESTPLAN.md + in implementer.md (Phase 1 boundary), and checked statically by agent/workflow/pipeline/tools/check-no-worktree.mjs (structural scan of pipeline-guardrails.json and fixtures/expected/assertions.json for any isolation/worktree key-value pair; scan of fenced code blocks in TESTPLAN.md/README.md/report-template.md for a literal isolation:\"worktree\" usage pattern; positive/negative battery proving both scans catch an injected occurrence)."
+  },
+  "sequential_transcript_capture_protocol": {
+    "rule": "Behavioral Acceptance runs never invoke agents in parallel or in the background if the transcript could be discarded before it is inspected. One agent at a time, in the foreground.",
+    "steps": [
+      "1. invoke a single agent",
+      "2. wait for it to finish",
+      "3. immediately capture the raw output, usage.tool_uses, and every available transcript/event record",
+      "4. copy the evidence into the run-dir OUTSIDE the official repo",
+      "5. verify the captured file is non-empty and compute its SHA-256",
+      "6. run the zero-write gate (check-agent-writes.mjs --events-dir=<run-dir>) and the strict-JSON gate (check-json-output.mjs --file=<reply>) against the captured evidence",
+      "7. only then start the next agent"
+    ],
+    "on_missing_or_empty_transcript": "the test is BLOCKED, not PASS; do not continue that category; report the harness limitation by name. A zero-write claim is never made from frontmatter alone - it requires the events-dir scan of an actually-captured, non-empty transcript.",
+    "enforcement_status_phase1": "documented here + in TESTPLAN.md ('Sequential transcript-capture protocol') + in README.md (Coordinator protocol, subagent start/stop section); check-agent-writes.mjs --events-dir treats a missing or empty <role>-events.json as BLOCKED (distinct exit condition from FAIL), never as a silent skip or an implicit PASS."
   },
   "confidential_commercial_data": {
     "definition": "real PSS Google Ads spend / bids / budgets, real revenue, real conversion counts, real lead volumes, real GA4 or GSC absolute figures, and anything else in the repo that identifies PSS business performance",

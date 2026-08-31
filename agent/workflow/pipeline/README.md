@@ -30,7 +30,12 @@ contract" section; `agent/workflow/pipeline/tools/check-agent-writes.mjs` checks
 statically and, given `--events-dir=<run-dir>`, scans real per-stage tool events.
 A violation is a deterministic `FAIL`, the pipeline is `BLOCKED`, and that stage's
 artifact is not forwarded. Only the Implementer writes, and only inside the
-isolated temp test repo.
+isolated temp test repo. In **fixture-only-test mode**, stages 0/1/2/3/5 go
+further than zero writes: **zero tool use of any kind** (`tool_uses == 0`) —
+every fact and schema they need is inline in the prompt; `check-fixture-tooluse.mjs`
+checks this statically and, given `--events-dir=<run-dir>`, behaviorally. None of
+this uses `isolation:"worktree"` or creates a worktree/branch in the official
+repo — see `TESTPLAN.md → Worktree prohibition (Phase 1)`.
 
 ## 2. Coordinator protocol
 
@@ -52,7 +57,16 @@ isolated temp test repo.
    `test_plan` — nothing else. Build it with `jq` and assert the key set.
    In a **fixture-only test run**, build a sandbox **outside the official repo**
    from the `fixtures/fixture-manifest.json` allow-list (static copies only), and
-   pass each agent sandbox paths / embedded `fixture://…` data only. The sandbox's
+   pass each agent sandbox paths / embedded `fixture://…` data only. For the five
+   read-only agents this means **zero tool use of any kind**, not just no
+   writes — the prompt must include `mode: "fixture-only-test"`, the sandbox path
+   labelled for Coordinator-audit only (never as something to read), the fixture
+   payload inline in full, the required schema/contract inline in full, and an
+   explicit `DO NOT USE TOOLS` line; `tool_uses` for that stage must come back
+   `0`. Never use `isolation:"worktree"` for a fixture-only run, and never create
+   a worktree or auxiliary branch in the official repo — the Implementer's
+   isolated temp test repo is a plain `git init` outside the official repo. The
+   sandbox's
    **full declared inventory** — the same 18 fixtures plus the 2 structural
    contracts (the schemas) — lives in `fixtures/sandbox-manifest.json`; the
    sandbox must hold exactly those 20 files (verified by sha256 after copy), and
@@ -116,6 +130,18 @@ sends Telegram/email in Phase 1.
 - **Stop on error:** any schema failure, any stop condition, any tool denial →
   the Coordinator halts that run, records `BLOCKED` with the reason, and does not
   improvise past it.
+- **Sequential transcript capture (behavioral Acceptance runs):** never invoke
+  agents in parallel or in the background if the transcript could be emptied
+  before inspection. One agent at a time, in the foreground: (1) invoke it,
+  (2) wait for it to finish, (3) immediately capture the raw output,
+  `usage.tool_uses`, and every available transcript/event record, (4) copy that
+  evidence into the run-dir outside the official repo, (5) verify the file is
+  non-empty and compute its SHA-256, (6) run the zero-write gate
+  (`check-agent-writes.mjs --events-dir=<run-dir>`) and the strict-JSON gate
+  (`check-json-output.mjs --file=<reply>`) against it, (7) only then start the
+  next agent. A missing or 0-byte transcript makes that test `BLOCKED`, not
+  `PASS` — do not continue the category, and report the harness limitation by
+  name. A zero-write claim is never made from frontmatter alone.
 
 ## 4. Run directory (outside the official repo)
 

@@ -36,8 +36,8 @@ export function parseStrictAgentJson(raw) {
   if (typeof raw !== "string") return { ok: false, reason: "not a string" };
   const trimmed = raw.trim();
   if (trimmed.length === 0) return { ok: false, reason: "empty output" };
-  if (/```/.test(trimmed)) return { ok: false, reason: "Markdown code fence present" };
-  if (!trimmed.startsWith("{")) return { ok: false, reason: "does not start with '{' (preamble or wrong type)" };
+  if (/`/.test(trimmed)) return { ok: false, reason: "backtick character present (fence or inline code)" };
+  if (!trimmed.startsWith("{")) return { ok: false, reason: "does not start with '{' (preamble, bare word 'json', or wrong type)" };
   if (!trimmed.endsWith("}")) return { ok: false, reason: "does not end with '}' (trailing text)" };
 
   let value;
@@ -92,8 +92,18 @@ for (const role of ALL_AGENTS) {
   const noFence = /no (markdown )?(code )?fences?/i.test(md) || /no.*```json/i.test(md);
   const noEscape = /HTML[- ]escap/i.test(md);
   const rejectedPreHandoff = /rejected\s+before\s+handoff/i.test(md);
-  if (hasHeading && oneObject && noFence && noEscape && rejectedPreHandoff) pass(`${role}: strict-output contract complete`);
-  else fail(`${role}: strict-output contract incomplete (heading=${hasHeading} oneObject=${oneObject} noFence=${noFence} noEscape=${noEscape} rejected=${rejectedPreHandoff})`);
+  const firstLastChar = /first character/i.test(md) && /last character/i.test(md);
+  const noBacktickAnywhere = /backtick/i.test(md);
+  const noBareJson = /word `json`/i.test(md);
+  const noSchemaRepeat = /do not repeat.{0,20}schema/i.test(md);
+  const noExamples = /worked examples/i.test(md);
+  const finalRuleHeading = /##\s*Final output rule/i.test(md);
+  const finalSelfCheckOrder = /Final self-check, in this exact order/i.test(md);
+  const complete = hasHeading && oneObject && noFence && noEscape && rejectedPreHandoff &&
+    firstLastChar && noBacktickAnywhere && noBareJson && noSchemaRepeat && noExamples &&
+    finalRuleHeading && finalSelfCheckOrder;
+  if (complete) pass(`${role}: strict-output contract complete (incl. first/last-char rule + final self-check)`);
+  else fail(`${role}: strict-output contract incomplete (heading=${hasHeading} oneObject=${oneObject} noFence=${noFence} noEscape=${noEscape} rejected=${rejectedPreHandoff} firstLastChar=${firstLastChar} noBacktickAnywhere=${noBacktickAnywhere} noBareJson=${noBareJson} noSchemaRepeat=${noSchemaRepeat} noExamples=${noExamples} finalRuleHeading=${finalRuleHeading} finalSelfCheckOrder=${finalSelfCheckOrder})`);
 }
 
 // ---------------------------------------------------------------------------
@@ -118,6 +128,9 @@ const CASES = [
   { name: "unjustified HTML-escaped <", input: '{"note":"x &lt; y"}', expect: false },
   { name: "unjustified HTML-escaped &", input: '{"note":"Tom &amp; Jerry"}', expect: false },
   { name: "unjustified HTML-escaped quote", input: '{"note":"say &quot;hi&quot;"}', expect: false },
+  { name: "single inline backtick, no fence", input: '{"note":"see `x.js` for details"}', expect: false },
+  { name: "bare word json prefix, no fence", input: 'json\n{"a":1}', expect: false },
+  { name: "backtick inside value, otherwise clean", input: '{"a":"it`s fine"}', expect: false },
 ];
 let bMiss = 0;
 for (const c of CASES) {
