@@ -22,7 +22,7 @@
     },
     {
       "path": "expected/assertions.json",
-      "sha256": "7f56a8a886b0b172980c6df730f9c59f3b715b44e84bf42f43b1406a29f91ccc"
+      "sha256": "1956d4e6093bbcb1421d7e5e95bb07759ba74c593cd6ed5381b0d6bea6b298f4"
     },
     {
       "path": "findings/f01-competitor-gbp-hours.json",

@@ -32,9 +32,19 @@ outside it (`STRICT-JSON-GATE`, mandatory) · no JSON-Schema keyword
 (`additionalProperties`/`properties`/`required`/`type`/`enum`/`$schema`/`$id`)
 present as a top-level artifact key (`SCHEMA-KEY-GATE`, mandatory) · no
 `isolation:"worktree"` and no stray worktree/branch in the official repo at any
-point in the suite (`NO-WORKTREE-GATE`, mandatory) · the Verifier's `overall`
-matches the deterministic decision table exactly, given the same input, on every
-run (`VERIFIER-TABLE-GATE`, mandatory) · a format/parse/schema failure on any
+point in the suite (`NO-WORKTREE-GATE`, mandatory) · the Verifier's official
+`overall` is computed independently by the Decision Engine
+(`check-verifier-decision-table.mjs → computeOfficialVerdict()`) from the
+artifact's atomic fields — `context_leak_detected`, `fact_real`,
+`opportunity_follows_logically`, `data_sufficient`, the structured
+`alternative_explanations` list, `pss_can_implement_legally_and_technically`,
+`test_measures_hypothesis` — **never** from the Verifier's own `overall` value,
+and given the same input this always yields the same verdict on every run; the
+Verifier's own `overall` is informative only, and a disagreement between it and
+the computed verdict, or a structurally invalid `alternative_explanations` entry
+(a `TESTED` entry with no `evidence_ids`, or a `NOT_APPLICABLE` entry with a
+placeholder `reason`), blocks the handoff rather than being resolved either way
+(`VERIFIER-TABLE-GATE`, mandatory) · a format/parse/schema failure on any
 agent reply is never silently corrected and never forwarded, at most two bounded
 reissues of the same agent with the same input and the exact validator error
 recover it as `PASS_RECOVERED`, and three consecutive failures stop the pipeline
@@ -108,14 +118,32 @@ All of the following must exit `0`. A non-zero exit from any blocks the suite.
   `report-template.md` for a literal `isolation:"worktree"` usage pattern; runs
   a positive/negative battery proving both scans catch an injected occurrence.
 - `node agent/workflow/pipeline/tools/check-verifier-decision-table.mjs` —
-  implements the F-3 decision table as a pure function and runs it against a
-  battery of synthetic Verifier outputs (every combination of
-  `context_leak_detected`, `fact_real`, `opportunity_follows_logically`,
-  `data_sufficient`, `alternative_explanations_reviewed`,
-  `pss_can_implement_legally_and_technically`, `test_measures_hypothesis`
-  worth covering), confirming the same input always yields the same `overall`
-  and that the verdict never depends on a fixture id; also confirms
-  `verifier.md` documents the table.
+  the ISO-VER-1 fix: implements the Decision Engine — `computeOfficialVerdict()`,
+  a pure function that consumes only the Verifier's atomic fields
+  (`context_leak_detected`, `fact_real`, `opportunity_follows_logically`,
+  `data_sufficient`, `alternative_explanations`,
+  `pss_can_implement_legally_and_technically`, `test_measures_hypothesis`) and
+  is the sole authority for `overall` — and `checkHandoff()`, which rejects the
+  artifact when its own `overall` disagrees with the computed verdict. Also
+  implements `validateAlternativeExplanations()` (a `TESTED` entry needs
+  `evidence_ids`; a `NOT_APPLICABLE` entry needs a substantive, non-placeholder
+  `reason`; `alternative_id` values are present and unique) and
+  `deriveMandatoryAlternativeIds()` (the fixed ALT-1/ALT-2/ALT-3 base set
+  documented in `verifier.md`, exercised for its own purity only). The battery
+  covers every decision-table branch plus the 14 cases in this fix's brief:
+  all-tested-all-PASS → `CONFIRMED`; a mandatory alternative `NOT_TESTED` or
+  `INSUFFICIENT_EVIDENCE` → `INSUFFICIENT_DATA`; an essential fact refuted →
+  `REFUTED`; a context leak → `INSUFFICIENT_DATA`; an unjustified
+  `NOT_APPLICABLE` or a `TESTED` entry with no `evidence_ids` → artifact invalid
+  (no verdict computed); a proposed `overall` disagreeing with the computed
+  verdict → handoff rejected; identical structure with different descriptive
+  wording → identical official verdict; representative FX-09/FX-08/FX-14
+  evaluations resolving to `CONFIRMED`/`INSUFFICIENT_DATA`/`REFUTED`
+  respectively; format-retry tracking metadata never changing the computed
+  verdict; and re-running the gate on the same artifact twice (no override
+  channel, no extra parameter). Also confirms `verifier.md` and
+  `handoff.schema.json` both document the contract and that the retired
+  `alternative_explanations_reviewed` boolean is gone from both.
 - `node agent/workflow/pipeline/tools/check-verifier-leak.mjs` — the F-7
   structural + semantic leak check: confirms FX-09's built Verifier input has
   exactly the five allowed keys and FX-08 does not; scans only string VALUES
@@ -301,7 +329,7 @@ under test; clean fixtures carry no Analyst-only field and no persuasive narrati
 | HO-1 | raw finding → investigator input | investigator receives facts only, no proposed action |
 | HO-2 | investigation → analyst input | analyst receives atomic claims + evidence ledger, nothing else |
 | HO-3 | analysis → verifier input | built input has **exactly** `atomic_claims,public_evidence,pss_data,period_filters,test_plan`; `rationale`/`priority`/`decision` absent (`jq` key-set assertion) |
-| HO-4 | verification → coordinator | `overall` respected; `REFUTED`/`INSUFFICIENT_DATA` ⇒ ROUTE_BACK, never forwarded to implementer |
+| HO-4 | verification → coordinator | the **official** `overall` (Decision Engine, `computeOfficialVerdict()`, not the artifact's own self-check `overall`) is respected; `REFUTED`/`INSUFFICIENT_DATA` ⇒ ROUTE_BACK, never forwarded to implementer; a self-check `overall` that disagrees with the computed value is rejected before this handoff is even reached |
 | HO-5 | (coordinator) → implementer input | implementer receives the verified finding + approved scope only |
 | HO-6 | implementation → qa input | qa receives the implementation artifact + success criteria only |
 | HO-7 | qa-report → coordinator-decision | `qa FAIL` ⇒ `decision == ROUTE_BACK`; `qa PASS` + next step external ⇒ `ESCALATE` + `human_review_state` set |
@@ -312,9 +340,30 @@ under test; clean fixtures carry no Analyst-only field and no persuasive narrati
 
 | id | input | expected (all 3 runs identical) |
 |---|---|---|
-| ISO-VER-1 | FX-09 (clean) | `context_leak_detected == false`; verdict derived only from the 5 keys |
-| ISO-VER-2 | FX-08 (contaminated) | `context_leak_detected == true`; `overall == INSUFFICIENT_DATA` |
-| ISO-VER-3 | FX-14 (claim unsupported by evidence) | `overall == REFUTED`; the unsupported point named in `contested_points` |
+| ISO-VER-1 | FX-09 (clean) | `context_leak_detected == false`; **official** verdict (Decision Engine, not the Verifier's own `overall`) derived only from the 5 keys |
+| ISO-VER-2 | FX-08 (contaminated) | `context_leak_detected == true`; official `overall == INSUFFICIENT_DATA` |
+| ISO-VER-3 | FX-14 (claim unsupported by evidence) | official `overall == REFUTED`; the unsupported point named in `contested_points` |
+
+**ISO-VER-1 nondeterminism fix.** The Acceptance Suite found that ISO-VER-1's "all
+3 runs identical" requirement could fail even when each individual run looked
+internally consistent, because the old free boolean
+`alternative_explanations_reviewed` gave two correct-looking runs on the same
+input no shared structure to agree on, and the Verifier's own `overall` doubled
+as the final authority — so a difference in *how* one run reasoned about
+alternatives, not *what* the evidence said, could flip the verdict. The fix
+(`pipeline-guardrails.json → roles.verifier.decision_table` /
+`.alternative_explanations_contract`; `verifier.md` "Decision Engine" and
+"Deriving the mandatory alternative-explanations list"; `handoff.schema.json →
+verification.alternative_explanations`) separates the Verifier's atomic
+evaluation from the mechanical verdict: the Verifier emits structured
+`alternative_explanations` entries (`applicability` / `verification_status` /
+`control_result`, never free-text judgement alone), and a Decision Engine
+(`check-verifier-decision-table.mjs → computeOfficialVerdict()`) — not the
+Verifier, not the Coordinator — computes `overall` from those structured fields
+only. Differing `description`/`reason` wording across the 3 runs is expected and
+does not fail this test; differing `applicability`/`verification_status`/
+`control_result` classifications, or a computed verdict that differs from a
+run's own `overall`, does.
 
 Also — leak check in two parts, never a raw grep of the whole prompt text (a raw
 grep on `priorit` false-positives on the legitimate structural key name
@@ -400,9 +449,13 @@ Coordinator decision flow (§ HO-7), not a format/schema retry.
   in the pipeline's own configuration/docs, and the battery proves the scan
   catches an injected occurrence); `git worktree list` and the branch list are
   identical before and after every category, in the official repo;
-- static pre-flight `check-verifier-decision-table.mjs` exited `0` (the same
-  synthetic input always yields the same `overall`, matching the table, for the
-  full battery of field-value combinations); `check-verifier-leak.mjs` exited
+- static pre-flight `check-verifier-decision-table.mjs` exited `0` (the Decision
+  Engine's `computeOfficialVerdict()` yields the same official verdict for the
+  same atomic-field input on every run, independently of the Verifier's own
+  `overall`; the structural `alternative_explanations` validity gate rejects an
+  unjustified `NOT_APPLICABLE` and a `TESTED` entry with no `evidence_ids`; a
+  proposed `overall` that disagrees with the computed verdict blocks the
+  handoff); `check-verifier-leak.mjs` exited
   `0` (structural key-set + word-boundary value-only semantic scan, no
   false-positive on `kpi_priority_rank`);
 - static pre-flight `check-retry-policy.mjs` exited `0` (the reissue contract is

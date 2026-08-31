@@ -88,13 +88,27 @@ repo — see `TESTPLAN.md → Worktree prohibition (Phase 1)`.
    (`check-agent-writes.mjs`). Either failure means the artifact is **not
    forwarded** — instead apply the bounded format-retry protocol below (§ 2a).
    A format/schema failure is never silently corrected, fenced, stripped, or
-   re-parsed by the Coordinator — see § 2a for the only recovery path.
+   re-parsed by the Coordinator — see § 2a for the only recovery path. For a
+   `verification` artifact specifically, schema-validity is not enough: run the
+   Decision Engine (`check-verifier-decision-table.mjs → checkHandoff()`) on it
+   before forwarding. A structurally invalid `alternative_explanations` entry,
+   or a self-check `overall` that disagrees with the independently computed
+   verdict, is a **semantic** rejection — route it back through the normal flow
+   (never the format-retry protocol, which is reserved for parse/schema
+   failures only).
 6. **Decide** (produce a `coordinator-decision` artifact):
    - `ARCHIVE` — `IGNORE`; `MONITOR` only if **all** archive conditions hold
      (low impact, no urgent risk, no near-term deadline, no cost, no external op,
      `review_date` set); `DUPLICATE`; `IRRELEVANT`. Laura is **not** notified.
    - `ROUTE_BACK` — `qa.overall == FAIL`, or a handoff failed validation, or the
-     Verifier returned `REFUTED` / `INSUFFICIENT_DATA`.
+     Verifier's **official** verdict (computed by the Decision Engine,
+     `agent/workflow/pipeline/tools/check-verifier-decision-table.mjs →
+     computeOfficialVerdict()`, from the artifact's atomic fields — never from
+     the Verifier's own self-check `overall`) is `REFUTED` / `INSUFFICIENT_DATA`.
+     A Verifier artifact whose own `overall` disagrees with the computed
+     official verdict, or whose `alternative_explanations` entries are
+     structurally invalid, is rejected before it even reaches this decision —
+     see step 5 and `TESTPLAN.md` § D.
    - `BLOCKED` — insufficient data; state exactly what is missing.
    - `ESCALATE` — one of the `laura_notify_when` conditions holds. Set
      `human_review_state` to `AWAITING_LAURA_APPROVAL` (a live op / spend / external
@@ -157,12 +171,17 @@ flow, never retried as if they were a format problem.
    recovered pipeline is not the same claim as a pipeline that never failed.
 10. **Verifier determinism is untouched by retries.** For `ISO-VER` (§ D in
     `TESTPLAN.md`), only the **first valid** artifact of each of the three
-    independent runs is compared. Rejected attempts are excluded from the
+    independent runs is compared, and the comparison is on the **official**
+    verdict (Decision Engine, `computeOfficialVerdict()`), never on a run's own
+    self-check `overall` in isolation. Rejected attempts are excluded from the
     comparison and may be reissued per this protocol, but a reissue never carries
     the desired verdict — it receives only the structural/format/schema error. If
-    the first valid artifacts of the three runs disagree on `overall`, the test
-    stays `FAIL`; the retry protocol cannot turn semantic non-determinism into a
-    passing result.
+    the first valid artifacts of the three runs disagree on the computed official
+    verdict, or if any of the three carries a self-check `overall` that disagrees
+    with its own computed verdict, the test stays `FAIL`; the retry protocol
+    cannot turn semantic non-determinism into a passing result, and a Decision
+    Engine disagreement is never itself grounds for a format-retry reissue (it is
+    a semantic outcome, not a parse/schema failure).
 
 Reporting always separates: `first_attempt_conformance` (did attempt 1 alone
 conform), `retries_used` (0, 1, or 2), `final_valid_artifact` (the one artifact

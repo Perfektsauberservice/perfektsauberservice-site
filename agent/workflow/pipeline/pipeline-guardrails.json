@@ -62,7 +62,7 @@
   },
   "format_retry_policy": {
     "applies_to": ["competitor-intelligence", "investigator", "analyst", "verifier", "implementer", "qa"],
-    "trigger": "ONLY a format/parse failure (STRICT-JSON-GATE, check-json-output.mjs) or a schema-validation failure (handoff.schema.json) on the agent's raw reply. NEVER a semantic disagreement, a qa.overall == FAIL, a verifier.overall the Coordinator would prefer different, or any other outcome the Coordinator dislikes - those route back through the normal flow (see roles/decision tables), they are not retried as if they were a format problem.",
+    "trigger": "ONLY a format/parse failure (STRICT-JSON-GATE, check-json-output.mjs) or a schema-validation failure (handoff.schema.json) on the agent's raw reply. NEVER a semantic disagreement, a qa.overall == FAIL, a verifier.overall the Coordinator would prefer different, a verifier.overall that disagrees with the Decision Engine's independently computed verdict (roles.verifier.decision_table), or any other outcome the Coordinator dislikes - those route back through the normal flow (see roles/decision tables), they are not retried as if they were a format problem.",
     "max_attempts_total": 3,
     "attempt_labels": ["attempt_1", "retry_1", "retry_2"],
     "on_reject": {
@@ -229,17 +229,29 @@
         "can PSS implement this legally and technically",
         "does the test measure the stated hypothesis"
       ],
+      "alternative_explanations_contract": {
+        "note": "ISO-VER-1 fix: the free boolean alternative_explanations_reviewed is retired. The Verifier instead emits a structured alternative_explanations array (schema: handoff.schema.json -> verification.alternative_explanations); each entry carries alternative_id, description, applicability (APPLICABLE/NOT_APPLICABLE), verification_status (TESTED/NOT_TESTED/INSUFFICIENT_EVIDENCE), evidence_ids, reason, required_control, control_result (PASS/FAIL/INSUFFICIENT/NOT_APPLICABLE).",
+        "mandatory_set_is_deterministic": "the set of required alternative_id entries is a pure function of test_plan/input, documented in verifier.md ('Deriving the mandatory alternative-explanations list') and mirrored by check-verifier-decision-table.mjs -> deriveMandatoryAlternativeIds(); it is never invented freely per run, and differing description/reason wording across runs never changes the verdict, only the structured fields do",
+        "artifact_validity_rules": [
+          "a TESTED entry with empty evidence_ids is an invalid artifact (rejected before the Decision Engine computes a verdict)",
+          "a NOT_APPLICABLE entry with a placeholder reason (n/a, none, not applicable, or similarly empty of content) is an invalid artifact",
+          "duplicate or missing alternative_id values make the artifact invalid"
+        ],
+        "enforcement_status_phase1": "documented here + in verifier.md + in handoff.schema.json's field description, and checked by check-verifier-decision-table.mjs -> validateAlternativeExplanations()"
+      },
       "decision_table": {
-        "note": "overall is derived ONLY from these fields, in this order; the same input always yields the same verdict. Full table in verifier.md ('Deterministic decision table').",
-        "mandatory_controls": ["fact_real", "opportunity_follows_logically", "data_sufficient", "alternative_explanations_reviewed", "pss_can_implement_legally_and_technically", "test_measures_hypothesis"],
+        "note": "overall is the Verifier's own SELF-CHECK reading of the rule below -- informative only. The OFFICIAL verdict is computed independently by the Coordinator's Decision Engine (check-verifier-decision-table.mjs -> computeOfficialVerdict()) from the atomic fields listed in mandatory_controls plus alternative_explanations, never from the Verifier's own overall value. If the Verifier's overall disagrees with the Decision Engine's recomputation, the artifact is rejected before handoff -- not corrected, not forwarded. No agent (Coordinator included) may override the computed verdict. The same input always yields the same computed verdict; full rule in verifier.md ('Decision Engine').",
+        "authority": "the Decision Engine script, not the Verifier and not the Coordinator, is authoritative for overall",
+        "mandatory_controls": ["fact_real", "opportunity_follows_logically", "data_sufficient", "pss_can_implement_legally_and_technically", "test_measures_hypothesis"],
         "order": [
           "1. context_leak_detected == true -> INSUFFICIENT_DATA",
           "2. else fact_real == FAIL -> REFUTED",
-          "3. else any mandatory control INSUFFICIENT (or data_sufficient == FAIL, or alternative_explanations_reviewed == false) -> INSUFFICIENT_DATA",
-          "4. else any remaining mandatory control FAIL (opportunity_follows_logically / pss_can_implement_legally_and_technically / test_measures_hypothesis) -> REFUTED",
-          "5. else all mandatory controls PASS (and alternative_explanations_reviewed == true) -> CONFIRMED"
+          "3. else any mandatory control INSUFFICIENT (or data_sufficient == FAIL), or any APPLICABLE alternative_explanations entry has verification_status in {NOT_TESTED, INSUFFICIENT_EVIDENCE} or control_result == INSUFFICIENT -> INSUFFICIENT_DATA",
+          "4. else any remaining mandatory control FAIL (opportunity_follows_logically / pss_can_implement_legally_and_technically / test_measures_hypothesis), or any APPLICABLE alternative_explanations entry has control_result == FAIL -> REFUTED",
+          "5. else all mandatory controls PASS and every APPLICABLE alternative_explanations entry is PASS or a justified NOT_APPLICABLE -> CONFIRMED"
         ],
-        "non_fatal": "declared limitations and contested_points never move overall off the table's result once every mandatory control is PASS"
+        "non_fatal": "declared limitations and contested_points never move overall off the table's result once every mandatory control is PASS",
+        "verifier_overall_vs_official_verdict": "the artifact's own overall field is the Verifier's self-check and is retained for continuity (HO-4 etc. still read it), but check-verifier-decision-table.mjs -> checkHandoff() never treats it as authoritative -- disagreement with the recomputed value is a handoff-blocking condition (VERIFIER-TABLE-GATE), not a format/schema issue and NOT eligible for format_retry_policy"
       },
       "stop_conditions": [
         "input contains reasoning/persuasion -> set context_leak_detected = true and overall = INSUFFICIENT_DATA",

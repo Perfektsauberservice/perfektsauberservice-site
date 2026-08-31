@@ -36,10 +36,18 @@ directory instead.
 ## Verifier isolation
 
 - `verifier_prompt.txt` forbidden-term grep matches: (must be 0)
-- ISO-VER-1 / -2 / -3 across 3 runs each: consistent? (yes/no)
+- ISO-VER-1 / -2 / -3 across 3 runs each: consistent **official verdict**
+  (Decision Engine, `computeOfficialVerdict()`)? (yes/no)
+- Each run's own self-check `overall` agrees with its own computed official
+  verdict? (yes/no) — a disagreement blocks that run's handoff regardless of the
+  other two runs.
+- Any `alternative_explanations` entry structurally invalid in any run (a
+  `TESTED` entry with no `evidence_ids`, or a `NOT_APPLICABLE` entry with a
+  placeholder `reason`)? (must be none)
 - Any rejected/retried attempt inside an ISO-VER run: was the reissue free of a
   semantic/verdict hint? (yes/no) — if the first VALID artifacts of the 3 runs
-  disagree on `overall`, this stays `FAIL`; a retry never resolves it.
+  disagree on the computed official verdict, this stays `FAIL`; a retry never
+  resolves it.
 
 ## Format-retry recovery (RETRY-GATE)
 

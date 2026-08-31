@@ -57,7 +57,7 @@
       "source_path": "agent/workflow/pipeline/fixtures/expected/assertions.json",
       "category": "fixture",
       "roles": [],
-      "sha256": "7f56a8a886b0b172980c6df730f9c59f3b715b44e84bf42f43b1406a29f91ccc",
+      "sha256": "1956d4e6093bbcb1421d7e5e95bb07759ba74c593cd6ed5381b0d6bea6b298f4",
       "purpose": "Per-test assertion oracle. Coordinator/harness only — never placed in an agent slice (teaching to the test)."
     },
     {
@@ -176,7 +176,7 @@
         "implementer",
         "qa"
       ],
-      "sha256": "41ef92533313892bc0364948661842719319c91906c246494874f5f6a34890f1",
+      "sha256": "38760d10ed8ceefc56969207085bc278f07492c7fde896aac5a4530bba8b78b0",
       "purpose": "Structural contract (non-sensitive). Every agent validates its own output artifact against its branch."
     },
     {

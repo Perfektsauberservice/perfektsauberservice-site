@@ -83,9 +83,9 @@
   "HO-9": {
     "must": ["investigator input derived from a competitor-observation contains no recommendation, no preferred solution, no causal claim, no budget/conversion/revenue assumption, no PSS-change instruction"]
   },
-  "ISO-VER-1": { "input": "f09-verifier-input-ok.json", "runs": 3, "must": ["context_leak_detected == false on all 3", "verdict identical on all 3"] },
-  "ISO-VER-2": { "input": "f08-verifier-input-leaked.json", "runs": 3, "must": ["context_leak_detected == true on all 3", "overall == INSUFFICIENT_DATA on all 3"] },
-  "ISO-VER-3": { "input": "f14-refutable-claim.json", "runs": 3, "must": ["overall == REFUTED on all 3", "C-001 named in contested_points on all 3"] },
+  "ISO-VER-1": { "input": "f09-verifier-input-ok.json", "runs": 3, "must": ["context_leak_detected == false on all 3", "alternative_explanations valid on all 3 (check-verifier-decision-table.mjs -> validateAlternativeExplanations)", "official verdict (computeOfficialVerdict, not the run's own overall) identical on all 3", "each run's own overall agrees with its own computed official verdict"] },
+  "ISO-VER-2": { "input": "f08-verifier-input-leaked.json", "runs": 3, "must": ["context_leak_detected == true on all 3", "official overall == INSUFFICIENT_DATA on all 3"] },
+  "ISO-VER-3": { "input": "f14-refutable-claim.json", "runs": 3, "must": ["official overall == REFUTED on all 3", "C-001 named in contested_points on all 3"] },
   "VER-PROMPT-GREP": {
     "must": ["grep -iE 'priorit|impact|strateg|recommend|clearly|obvious|we must|huge opportunity|root_cause|mechanism' verifier_prompt.txt returns 0 matches"]
   },
