@@ -1,5 +1,5 @@
 {
-  "note": "Raw finding for a MEDIU-tier run (E2E-MED). The drop has multiple plausible causes on purpose and its cause is not meant to be settled. All evidence is embedded and fictional: no live source, no repository file, no network, no external URL. The embedded_evidence is sufficient for the Investigator to build atomic claims and an evidence ledger (see fixture clean/f10 for the intended shape) and, separately from any diagnosis of the drop, to establish an on-page content gap that gives E2E-MED a legitimate path to verification.overall = CONFIRMED.",
+  "note": "Raw finding for a MEDIU-tier run (E2E-MED). The drop has multiple plausible causes on purpose and its cause is not meant to be settled. All evidence is embedded and fictional: no live source, no repository file, no network, no external URL. The embedded_evidence is sufficient for the Investigator to build atomic claims and an evidence ledger (see fixture clean/f10 for the intended shape) and, separately from any diagnosis of the drop, to establish an on-page content gap. The gap-query panel carries an adequately powered volume (3000 impressions / 30 clicks over 28 days => impression-weighted CTR exactly 30/3000 = 1.00%) and an impression-weighted sibling benchmark (140 clicks / 3500 impressions = 4.00%), so a rigorous Verifier has a legitimate path to verification.overall = CONFIRMED on the merits without inflating any figure.",
   "finding_ref": "FX-05",
   "channel": "seo",
   "page_under_finding": "/bueroreinigung (fictional PSS service page)",
@@ -11,7 +11,7 @@
     "A site deploy on 2026-08-17 touched shared header markup only.",
     "A search-engine core update was announced for 2026-08-15 to 2026-08-29.",
     "August historically shows lower B2B cleaning demand (holiday season).",
-    "Over the 28 days ending 2026-08-31 the page received 293 impressions across three pricing/quote-intent queries it does not answer on-page."
+    "Over the 28 days ending 2026-08-31 the page received 3000 impressions and 30 clicks across three pricing/quote-intent queries it does not answer on-page."
   ],
   "period_start": "2026-08-04",
   "period_end": "2026-08-31",
@@ -37,23 +37,24 @@
       "type": "gsc_query_impressions_28d",
       "source_ref": "fixture://gsc/bueroreinigung-musterstadt/query-impressions-28d.json",
       "gap_queries": [
-        { "query": "bueroreinigung kosten musterstadt", "impressions_28d": 120, "ctr": 0.008 },
-        { "query": "bueroreinigung angebot musterstadt", "impressions_28d": 95, "ctr": 0.011 },
-        { "query": "unterhaltsreinigung buero musterstadt", "impressions_28d": 78, "ctr": 0.006 }
+        { "query": "bueroreinigung kosten musterstadt", "impressions_28d": 1350, "clicks_28d": 17 },
+        { "query": "bueroreinigung angebot musterstadt", "impressions_28d": 950, "clicks_28d": 9 },
+        { "query": "unterhaltsreinigung buero musterstadt", "impressions_28d": 700, "clicks_28d": 4 }
       ],
       "on_page_h2_set": ["Was ist Bueroreinigung", "Ablauf der Reinigung", "Kontakt"],
-      "note": "total gap impressions = 293 ; none of the three query intents appears in on_page_h2_set"
+      "note": "Sum impressions = 1350 + 950 + 700 = 3000 ; sum clicks = 17 + 9 + 4 = 30 ; impression-weighted CTR = 30 / 3000 = 0.0100 = 1.00%. None of the three query intents appears in on_page_h2_set."
     },
     {
       "evidence_id": "FX05-E4",
       "type": "gsc_sibling_ctr_28d",
       "source_ref": "fixture://gsc/pss-service-pages/pricing-intent-ctr-28d.json",
+      "method": "impression-weighted CTR (sum clicks / sum impressions) over the same three pricing/quote-intent query intents on each sibling page that carries a pricing/quote H2; this normalises out per-page impression-volume differences",
       "sibling_pages": [
-        { "page": "/fensterreinigung", "pricing_intent_ctr": 0.045 },
-        { "page": "/grundreinigung", "pricing_intent_ctr": 0.041 },
-        { "page": "/glasreinigung", "pricing_intent_ctr": 0.040 }
+        { "page": "/fensterreinigung", "pricing_intent_impressions_28d": 1500, "pricing_intent_clicks_28d": 66 },
+        { "page": "/grundreinigung", "pricing_intent_impressions_28d": 1200, "pricing_intent_clicks_28d": 48 },
+        { "page": "/glasreinigung", "pricing_intent_impressions_28d": 800, "pricing_intent_clicks_28d": 26 }
       ],
-      "note": "mean sibling CTR for equivalent pricing/quote intent = 4.2% versus 0.79% for the /bueroreinigung gap queries"
+      "note": "Impression-weighted sibling CTR = (66 + 48 + 26) / (1500 + 1200 + 800) = 140 / 3500 = 0.0400 = 4.00% for the matched pricing/quote intent set, versus 30 / 3000 = 1.00% for the /bueroreinigung gap queries (ratio 4.0x)."
     },
     {
       "evidence_id": "FX05-E5",
@@ -67,10 +68,10 @@
       "evidence_id": "FX05-E6",
       "type": "header_control_pages",
       "source_ref": "fixture://gsc/pss-header-control-pages/clicks-and-serp-2026-08.json",
-      "control_pages_pct_change": { "/unterhaltsreinigung": -0.02, "/treppenhausreinigung": 0.01, "/glasreinigung": -0.04, "/grundreinigung": -0.01 },
+      "control_pages_pct_change": { "/unterhaltsreinigung": -0.02, "/treppenhausreinigung": 0.01, "/glasreinigung": -0.04, "/grundreinigung": -0.01, "/aufzugreinigung": 0.02, "/teppichreinigung": -0.03 },
       "deploy_diff_scope": "2026-08-17 shared header partial only; no /bueroreinigung page body change",
       "competitor_positions_top_query": { "2026-08-10": [3, 4], "2026-08-31": [3, 4] },
-      "note": "four pages sharing the identical header change moved <=4%; competitor positions for the top query were stable"
+      "note": "six pages sharing the identical 2026-08-17 header change moved <=4% in 7-day mean clicks over 2026-08-18..2026-08-24; competitor positions for the top query were stable. This separates the shared-header deploy from the -46% fall on /bueroreinigung."
     }
   ],
   "missing_data": [

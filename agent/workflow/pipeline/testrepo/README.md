@@ -38,6 +38,13 @@ here and **never** committed.
 - Fictional data only. No real client names, addresses, phone numbers, or emails.
 - No credentials, no tokens, no `.env*`.
 - No network access from inside the test repo.
+- **Fixture-only test mode** (`../pipeline-guardrails.json → fixture_only_test_mode`):
+  the only files copied in are those listed in `../fixtures/fixture-manifest.json`
+  (verified by `../tools/check-fixtures.mjs`). No agent reads the official repo, its
+  `.git`, `agent/state`, `agent/google-ads`, `agent/gsc-snapshots`, or any real PSS
+  export while a test runs. The Implementer writes **only** here, never the sandbox
+  source and never the official repo. Any reach outside the allow-list → `BLOCKED`
+  + test `FAIL`. No real Ads/revenue/conversion figure is ever copied in.
 
 ## Before / after every test — record to `<run-dir>/git-{baseline,post}.txt`
 

@@ -90,12 +90,14 @@
         "propose or evaluate a solution",
         "make strategic recommendations",
         "modify anything",
-        "assert causation"
+        "assert causation",
+        "use ARCHIVE_MINOR for a finding that is not a confirmed duplicate (route non-duplicate low-impact findings TO_ANALYST)"
       ],
       "stop_conditions": [
         "a required source is unreachable",
         "claims cannot be made atomic with evidence",
-        "the finding is a duplicate of an already-resolved item -> recommended_next = ARCHIVE_MINOR"
+        "the finding is a CONFIRMED DUPLICATE of an already-resolved item -> recommended_next = ARCHIVE_MINOR (the only use of ARCHIVE_MINOR)",
+        "a required file is outside the fixture allow-list in a fixture-only test run -> BLOCKED"
       ]
     },
     "analyst": {
@@ -247,8 +249,33 @@
   },
   "isolation": {
     "runs_and_logs": "created OUTSIDE the official repo (session scratchpad); never committed; .gitignore is NOT modified for them",
-    "committed_in_repo": ["static fixtures", "schemas", "TESTPLAN", "documentation", "templates without real data"],
+    "committed_in_repo": ["static fixtures", "fixture-manifest.json", "schemas", "TESTPLAN", "documentation", "templates without real data", "tools/check-fixtures.mjs"],
     "test_repo": "a throwaway `git init` repo + a bare `../testrepo-remote.git` origin, both outside the official repo; fictional data only; no credentials; no external access; deleted after each test"
+  },
+  "fixture_only_test_mode": {
+    "applies_to": "every ACCEPTANCE and EXTENDED suite run, and any run whose input is a fixture under agent/workflow/pipeline/fixtures/",
+    "purpose": "make offline tests hermetic - an agent under test reasons only from static fixture copies in a sandbox, never from the live official repo, secrets, real PSS commercial data, or the network",
+    "not_a_permission_change": "scoped to test runs only; it does NOT narrow the Investigator's or any agent's authorised read-only access to the official repo in a real, non-test task",
+    "coordinator_builds": [
+      "an allow-list manifest (agent/workflow/pipeline/fixtures/fixture-manifest.json) naming every fixture file a run may use, each with its sha256",
+      "a sandbox directory OUTSIDE the official repo holding ONLY static copies of the allow-listed files",
+      "each agent input slice that references only sandbox paths and fixture:// identifiers"
+    ],
+    "agent_rules": [
+      "read only files that are inside the sandbox AND listed in the manifest",
+      "treat every fixture:// identifier as data already embedded in the input - never resolve it against the official repo or the network",
+      "no read of the official repo working tree, .git, .env or .env.local, token or OAuth files, agent/state, agent/google-ads, agent/gsc-snapshots, or any real PSS export",
+      "no network - no WebFetch, no curl, no fetch - the fixtures carry all evidence inline",
+      "Implementer writes only inside the isolated temporary test repo (never the sandbox source, never the official repo)"
+    ],
+    "on_violation": "the agent stops and returns BLOCKED naming the out-of-allow-list path or operation; the Coordinator records that test as FAIL; the pipeline does not continue past the violation",
+    "enforcement_status_phase1": "documented here + in TESTPLAN.md, and checked statically by agent/workflow/pipeline/tools/check-fixtures.mjs (manifest completeness + sha256, JSON parse, artifact shape, fixture arithmetic re-derivation, no real-PSS-reference scan). Hook / permission enforcement is a later phase."
+  },
+  "confidential_commercial_data": {
+    "definition": "real PSS Google Ads spend / bids / budgets, real revenue, real conversion counts, real lead volumes, real GA4 or GSC absolute figures, and anything else in the repo that identifies PSS business performance",
+    "in_tests": "never copied into a fixture, a prompt, a handoff, a report, or a log; tests use fictional values only (Musterstadt, *.fiktiv, fixture://...)",
+    "in_real_tasks": "used only where the specific task needs it and the access is permitted; minimised in prompts, never pasted whole",
+    "never": ["send to Telegram", "write into raw logs", "include in a Laura brief beyond the minimum the decision needs"]
   },
   "telegram_single_source": {
     "note": "reference only - Phase 1 sends nothing to Telegram",

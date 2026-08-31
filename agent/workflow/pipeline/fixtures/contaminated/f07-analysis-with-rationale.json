@@ -7,14 +7,14 @@
   "schema_version": "1.0.0-phase1",
   "inputs_ref": ["FX-10"],
   "finding_id": "F-0010",
-  "business_relevance": "The /bueroreinigung page already receives 293 impressions over 28 days for three pricing/quote-intent queries it does not answer on-page; sibling pages that answer such intent convert at 4.2% CTR versus 0.79% here. Closing that gap is a plausible source of mid-funnel clicks that lead to quote requests.",
+  "business_relevance": "The /bueroreinigung page already receives 3000 impressions over 28 days for three pricing/quote-intent queries it does not answer on-page; sibling pages that answer such intent convert at a 4.00% impression-weighted CTR versus 1.00% here. Closing that gap is a plausible source of mid-funnel clicks that lead to quote requests.",
   "alternative_explanations": [
     "The three gap queries carry research intent, not quote intent, so answering them on-page would not lift CTR.",
     "The sibling pages' higher CTR comes from stronger titles or better average position, not from the pricing H2.",
     "The 2026-08-18 click decline is a seasonal or algorithmic effect that will revert on its own, making any content change look effective when it was not.",
-    "Impression volume for the three queries is too low for a CTR change to reach significance in eight weeks."
+    "The pricing/quote queries may be dominated by price-comparison shoppers who bounce whether or not the page answers them, so CTR may not move even if the gap is closed."
   ],
-  "correlation_not_causation_note": "The click decline and the top-query position move coincide in time with the 2026-08-17 header deploy, but the four control pages that received the same header change did not move, so a causal link is unproven and is deliberately not part of this proposal. The proposed test targets the independently measured content gap, not a diagnosis of the decline.",
+  "correlation_not_causation_note": "The click decline and the top-query position move coincide in time with the 2026-08-17 header deploy, but the six control pages that received the same header change did not move, so a causal link is unproven and is deliberately not part of this proposal. The proposed test targets the independently measured content gap, not a diagnosis of the decline.",
   "priority": 6,
   "decision": "PROPOSE_TEST",
   "rationale": "This is clearly the strongest quick win on the board right now and we should not let it sit. The gap is already costing us impressions we paid nothing for, the fix is a two-hour on-page edit, and every week we wait is quote requests walking to a competitor. The Verifier only needs to confirm the impression counts and the sibling benchmark and then we ship. I am pushing priority to 6 because the upside compounds and the downside is a single revert.",
@@ -25,8 +25,8 @@
   "rollback_outline": "Revert the single H2 commit; the page returns to its prior state with no data migration.",
   "no_copy_confirmation": true,
   "test_plan": {
-    "hypothesis": "Adding three original H2 sections to /bueroreinigung that answer the three named pricing/quote-intent queries raises the combined CTR for those exact queries toward the 4.2% sibling-page benchmark, without worsening the top-query position.",
-    "baseline": "28-day impression-weighted CTR for the three gap queries on /bueroreinigung = 0.79% across 293 impressions; top-query average position 8.9.",
+    "hypothesis": "Adding three original H2 sections to /bueroreinigung that answer the three named pricing/quote-intent queries raises the combined CTR for those exact queries toward the 4.00% sibling-page benchmark, without worsening the top-query position.",
+    "baseline": "28-day impression-weighted CTR for the three gap queries on /bueroreinigung = 1.00% (30 clicks / 3000 impressions); top-query average position 8.9.",
     "change": "Add three original H2 sections answering the three named queries; no other page touched.",
     "kpi": "28-day CTR for the three named queries on /bueroreinigung",
     "kpi_priority_rank": 6,

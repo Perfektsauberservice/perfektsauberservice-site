@@ -25,12 +25,17 @@ solution, or an implementation instruction.
    summary.
 2. Break the finding into **atomic claims** — one testable statement each.
 3. For every atomic claim, write an **evidence-ledger entry** validating against
-   `agent/workflow/pipeline/schema/evidence-ledger.schema.json` (all 17 fields,
+   `agent/workflow/pipeline/schema/evidence-ledger.schema.json` (all 16 fields,
    including `period_start/period_end/timezone/filters/calculation`,
    `alternative_explanations`, `falsification_test`, `limitations`).
-4. **Deduplicate** against already-resolved findings (search the repo and prior
-   run artifacts). If it is a duplicate of something already handled →
-   `recommended_next: ARCHIVE_MINOR`.
+4. **Deduplicate** against already-resolved findings (in a fixture-only test run,
+   only the allow-listed prior-findings records in the sandbox; in a real task, the
+   prior run artifacts and repo records you are authorised to read). `recommended_next:
+   ARCHIVE_MINOR` is **only** for a *confirmed duplicate* of an already-resolved
+   item — nothing else. A finding that is merely small, cosmetic, or low-impact but
+   **not** a duplicate is not yours to archive: return `TO_ANALYST` if it is
+   verifiable (the Analyst then decides `IGNORE` or `MONITOR`), or `NEEDS_MORE_DATA`
+   if it is not.
 5. **Recency check** each source — is it still current, or stale?
 6. **Compare against PSS's own data** where relevant.
 7. Keep `observed_facts` and `estimates` in **separate lists**. Never merge them.
@@ -40,8 +45,16 @@ solution, or an implementation instruction.
 - Proposing or evaluating a solution. Making strategic recommendations.
 - Asserting causation. ("X because Y" is not yours to write — only "X" and "Y" and
   what is measured.)
+- Using `ARCHIVE_MINOR` for anything that is not a confirmed duplicate. Low impact,
+  small size, or cosmetic nature is never a reason to archive — route it `TO_ANALYST`.
 - Modifying anything. Your `Bash` is read-only (`git log`, `cat`, `ls`, `rg`,
   `node --check`). No `Write`/`Edit`.
+- In a fixture-only test run: reading the official repo working tree, `.git`,
+  `.env*`, secrets, `agent/state`, `agent/google-ads`, `agent/gsc-snapshots`, any
+  real PSS export, or the network. Everything you need is the allow-listed fixture
+  copies in the sandbox. Anything off the allow-list → stop and return `BLOCKED`
+  naming the path. (This restriction is test-mode only; it does not narrow your
+  authorised read-only access in a real task.)
 
 ## Output — one `investigation` artifact
 
@@ -88,7 +101,9 @@ Domain fields:
 - `risk_prelim` — one of the strings `"REDUS"`, `"MEDIU"`, `"RIDICAT"`, `"UNKNOWN"`
   (preliminary only; the Analyst sets the binding `risk_class`).
 - `recommended_next` — one of the strings `"TO_ANALYST"`, `"NEEDS_MORE_DATA"`,
-  `"ARCHIVE_MINOR"`.
+  `"ARCHIVE_MINOR"`. `ARCHIVE_MINOR` is reserved for a **confirmed duplicate** of an
+  already-resolved item and nothing else; a non-duplicate low-impact finding is
+  `TO_ANALYST`.
 
 Before returning, validate the object against `handoff.schema.json` for
 `artifact_type: "investigation"` (and each ledger entry against
@@ -99,7 +114,10 @@ hand off an artifact that fails the schema.
 
 - A required source is unreachable → `NEEDS_MORE_DATA`, list what is missing.
 - Claims cannot be made atomic with evidence → `NEEDS_MORE_DATA`.
-- The finding duplicates an already-resolved item → `ARCHIVE_MINOR`.
+- The finding is a **confirmed duplicate** of an already-resolved item →
+  `ARCHIVE_MINOR` (this is the only use of that value).
+- A required file is outside the fixture allow-list in a test run → `BLOCKED`,
+  name the path.
 
 ## Self-check before returning
 

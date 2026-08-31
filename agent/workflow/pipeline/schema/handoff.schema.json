@@ -124,7 +124,8 @@
         "risk_prelim": { "type": "string", "enum": ["REDUS", "MEDIU", "RIDICAT", "UNKNOWN"] },
         "recommended_next": {
           "type": "string",
-          "enum": ["TO_ANALYST", "NEEDS_MORE_DATA", "ARCHIVE_MINOR"]
+          "enum": ["TO_ANALYST", "NEEDS_MORE_DATA", "ARCHIVE_MINOR"],
+          "description": "ARCHIVE_MINOR is reserved for a confirmed duplicate of an already-resolved finding only. A non-duplicate low-impact finding is routed TO_ANALYST (the Analyst returns IGNORE or MONITOR); insufficient data is NEEDS_MORE_DATA."
         }
       }
     },
@@ -382,7 +383,7 @@
         "archive_class": {
           "type": ["string", "null"],
           "enum": ["IGNORE", "MONITOR", "DUPLICATE", "IRRELEVANT", null],
-          "description": "Set only when decision == ARCHIVE. READY_FOR_MERGE / merge-ready is NOT an archive class."
+          "description": "Set only when decision == ARCHIVE. DUPLICATE corresponds to an Investigator recommended_next == ARCHIVE_MINOR; IGNORE / MONITOR come from the Analyst decision. READY_FOR_MERGE / merge-ready is NOT an archive class."
         },
         "monitor_archive_conditions_met": {
           "type": ["boolean", "null"],

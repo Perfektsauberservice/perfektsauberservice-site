@@ -1,0 +1,80 @@
+{
+  "note": "Allow-list for fixture-only test mode. The Coordinator copies ONLY these files into the test sandbox (outside the official repo) and gives each agent copies of the slice it is allowed to see. An agent that reaches for any path not listed here returns BLOCKED and the test is FAIL. sha256 is over LF-normalised content, so it matches on both a CRLF working tree and an LF checkout. Regenerate with: node agent/workflow/pipeline/tools/check-fixtures.mjs --write-manifest",
+  "schema_version": "1.0.0-phase1",
+  "root": "agent/workflow/pipeline/fixtures",
+  "file_count": 18,
+  "files": [
+    {
+      "path": "clean/f09-verifier-input-ok.json",
+      "sha256": "a015b4014427d4c3918689870a58f83cd515a1e6022fa972992baba45feb030c"
+    },
+    {
+      "path": "clean/f10-atomic-claims.json",
+      "sha256": "622b7afd2678357eaeed6e2dd624bf5cc411d35d164b2719e717409f18be924d"
+    },
+    {
+      "path": "contaminated/f07-analysis-with-rationale.json",
+      "sha256": "73fe0f8b07a7828fda57095521ada198be1aa85473d9a9b4af340cde24880ffd"
+    },
+    {
+      "path": "contaminated/f08-verifier-input-leaked.json",
+      "sha256": "f257b0b6e5e5b1cf7bfd84b80eabbc88e60893cd68bd5726e051f196665716e7"
+    },
+    {
+      "path": "expected/assertions.json",
+      "sha256": "bee7446c9bd6d3e41bdb1f1b8e4b669a839b2f6390348d942d9c6a4cb82f2dbf"
+    },
+    {
+      "path": "findings/f01-competitor-gbp-hours.json",
+      "sha256": "ca6f2b8db4f639e2a1466ba366db916829349d8757e41a4b371727400ea6e28e"
+    },
+    {
+      "path": "findings/f02-competitor-new-service-page.json",
+      "sha256": "de4ec7bb8c297359362c2c2a0d29dcf6e43710beab447f12a322a7b016b9e20f"
+    },
+    {
+      "path": "findings/f03-l1-site-health-issue.md",
+      "sha256": "2a3098e1616a6a4ba7431cd23bb1a2c386418c7187fa579d5a3e92bc43d28935"
+    },
+    {
+      "path": "findings/f04-backlog-item.json",
+      "sha256": "87d6c999bb7758ceabe3a70bd1605ab3236b5ff9c00ab381ac17edac05e29f65"
+    },
+    {
+      "path": "findings/f05-ambiguous-metric-drop.json",
+      "sha256": "274c2fc884fbfab6fbb6d7d0ea25075d150f2b655c32a97b0d8836d9c7062786"
+    },
+    {
+      "path": "findings/f06-high-risk-ads-budget.json",
+      "sha256": "6e2b61707a29c407ef900119ff1c2a37a057c7523758a57593fa40a1b0b2a352"
+    },
+    {
+      "path": "findings/f13-duplicate-of-resolved.json",
+      "sha256": "5721bab80781894a47b278723ee5c4857336e164972994ae1568f657eb52c811"
+    },
+    {
+      "path": "findings/f14-refutable-claim.json",
+      "sha256": "c5206bc5c9f196165cee38a781d9c307654b4dfac7f835379956b52fc31bdb93"
+    },
+    {
+      "path": "findings/f15-monitor-candidate.json",
+      "sha256": "c45cc6c84f40bd91ebdb2640df870d58e1a0c0df49973cab405f48a2d97db62f"
+    },
+    {
+      "path": "site-fixture/index.html",
+      "sha256": "2977a1f43c783df4dde5d76091eb889e423e90151467cef4d0e11dddefa31961"
+    },
+    {
+      "path": "site-fixture/kontakt.html",
+      "sha256": "01a6cd47c153e66f5bb6e2eb8ef076f485c7f446154394fb62910d11a6c0538e"
+    },
+    {
+      "path": "site-fixture/leistungen.html",
+      "sha256": "96827e5cbe363cdec70b44b4b7de8ccb70952380bc8fb463a610200773eef8b5"
+    },
+    {
+      "path": "site-fixture/README.md",
+      "sha256": "124753c5ebe0cabcacadefeeedbf94fbd06584c9b7ef5e27e1f31d6c79764c9d"
+    }
+  ]
+}

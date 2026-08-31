@@ -40,6 +40,15 @@ Claude Code session. This document is the operating manual.
    (`pipeline-guardrails.json` → `roles.<role>.input`). For the Verifier this is
    *exactly* `atomic_claims`, `public_evidence`, `pss_data`, `period_filters`,
    `test_plan` — nothing else. Build it with `jq` and assert the key set.
+   In a **fixture-only test run**, build a sandbox **outside the official repo**
+   from the `fixtures/fixture-manifest.json` allow-list (static copies only), and
+   pass each agent sandbox paths / embedded `fixture://…` data only. An agent that
+   reaches for anything off the allow-list, or for the network, returns `BLOCKED`
+   and that test is `FAIL`. This restriction is test-mode only — it does not narrow
+   an agent's authorised read-only access in a real task
+   (`pipeline-guardrails.json → fixture_only_test_mode`). Confidential commercial
+   data (real Ads spend/bids/budgets, revenue, conversions, absolute GA4/GSC
+   figures) never enters a fixture, prompt, handoff, report, or log.
 5. **Validate every handoff** against `schema/handoff.schema.json` before passing it
    on. Reject and route back on any schema failure.
 6. **Decide** (produce a `coordinator-decision` artifact):
@@ -94,6 +103,9 @@ Each run uses a working directory in the session scratchpad, e.g.
 ```
 <run_id>/
   00-request.md            # Laura's ask + Coordinator classification
+  sandbox/                 # fixture-only test runs: static copies of the allow-listed
+                           #   fixtures (per fixtures/fixture-manifest.json); the only
+                           #   files an agent under test may read
   10-competitor-observation.json
   20-investigation.json
   30-analysis.json

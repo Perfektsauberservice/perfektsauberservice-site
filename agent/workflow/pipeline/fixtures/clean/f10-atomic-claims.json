@@ -11,10 +11,10 @@
   "atomic_claims": [
     { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day in the window ending 2026-08-17 to 22.0/day in the window starting 2026-08-18.", "evidence_id": "EV-0001" },
     { "claim_id": "C-002", "text": "The average position for the page's top query 'bueroreinigung musterstadt' moved from 6.2 (two weeks ending 2026-08-17) to 8.9 (two weeks ending 2026-08-31).", "evidence_id": "EV-0002" },
-    { "claim_id": "C-003", "text": "Over the 28 days ending 2026-08-31 the /bueroreinigung page received 293 impressions across three pricing/quote-intent queries ('bueroreinigung kosten musterstadt', 'bueroreinigung angebot musterstadt', 'unterhaltsreinigung buero musterstadt') and its current on-page H2 set does not answer any of them.", "evidence_id": "EV-0003" },
-    { "claim_id": "C-004", "text": "For equivalent pricing/quote-intent queries, other PSS service pages that do carry a pricing/quote H2 achieved a mean CTR of 4.2% over the same 28 days, versus 0.79% for the three /bueroreinigung gap queries.", "evidence_id": "EV-0004" },
+    { "claim_id": "C-003", "text": "Over the 28 days ending 2026-08-31 the /bueroreinigung page received 3000 impressions and 30 clicks across three pricing/quote-intent queries ('bueroreinigung kosten musterstadt', 'bueroreinigung angebot musterstadt', 'unterhaltsreinigung buero musterstadt') and its current on-page H2 set does not answer any of them.", "evidence_id": "EV-0003" },
+    { "claim_id": "C-004", "text": "For equivalent pricing/quote-intent queries, other PSS service pages that do carry a pricing/quote H2 achieved an impression-weighted CTR of 4.00% over the same 28 days, versus 1.00% for the three /bueroreinigung gap queries.", "evidence_id": "EV-0004" },
     { "claim_id": "C-005", "text": "Year over year, /bueroreinigung August clicks were 8% below the preceding July in 2025, whereas the 2026 window shows a 46% fall.", "evidence_id": "EV-0005" },
-    { "claim_id": "C-006", "text": "The four other pages that received the identical 2026-08-17 shared-header change, and are not in the content-gap situation, showed at most a 4% change in 7-day mean clicks across 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0006" }
+    { "claim_id": "C-006", "text": "The six other pages that received the identical 2026-08-17 shared-header change, and are not in the content-gap situation, showed at most a 4% change in 7-day mean clicks across 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0006" }
   ],
   "evidence_ledger": [
     {
@@ -63,7 +63,7 @@
     },
     {
       "evidence_id": "EV-0003",
-      "claim": "Over 28 days the page received 293 impressions across three pricing/quote-intent queries it does not answer on-page.",
+      "claim": "Over 28 days the page received 3000 impressions and 30 clicks across three pricing/quote-intent queries it does not answer on-page.",
       "source_type": "gsc_export",
       "source_path": "fixture://gsc/bueroreinigung-musterstadt/query-impressions-28d.json",
       "source_timestamp": "2026-08-31T06:00:00Z",
@@ -71,46 +71,48 @@
       "period_end": "2026-08-31",
       "timezone": "Europe/Berlin",
       "filters": { "country": "DEU", "search_type": "web", "page": "/bueroreinigung" },
-      "calculation": "sum of impressions over the three listed gap queries: 120 + 95 + 78 = 293. gap CTR = total_clicks / total_impressions where total_clicks = 1 + 1 + 0 (rounded from embedded) => reported as (0.8% + 1.1% + 0.6%) impression-weighted = (120*0.008 + 95*0.011 + 78*0.006) / 293 = (0.96 + 1.045 + 0.468) / 293 = 2.473 / 293 = 0.0084 = 0.84%. on_page_h2_set is the embedded current H2 list; none of the three query intents (kosten, angebot, unterhaltsreinigung) appears in it.",
+      "calculation": "Sum impressions over the three listed gap queries: 1350 + 950 + 700 = 3000. Sum clicks: 17 + 9 + 4 = 30. Impression-weighted gap CTR = total clicks / total impressions = 30 / 3000 = 0.0100 = 1.00% (exact, integer over integer). on_page_h2_set is the embedded current H2 list; none of the three query intents (kosten, angebot, unterhaltsreinigung) appears in it. At ~107 gap-query impressions/day an 8-week test arm accrues ~6000 impressions, enough to detect a lift from 1.00% toward the 2.5% success threshold.",
       "raw_result": {
         "gap_queries": [
-          { "query": "bueroreinigung kosten musterstadt", "impressions_28d": 120, "ctr": 0.008 },
-          { "query": "bueroreinigung angebot musterstadt", "impressions_28d": 95, "ctr": 0.011 },
-          { "query": "unterhaltsreinigung buero musterstadt", "impressions_28d": 78, "ctr": 0.006 }
+          { "query": "bueroreinigung kosten musterstadt", "impressions_28d": 1350, "clicks_28d": 17 },
+          { "query": "bueroreinigung angebot musterstadt", "impressions_28d": 950, "clicks_28d": 9 },
+          { "query": "unterhaltsreinigung buero musterstadt", "impressions_28d": 700, "clicks_28d": 4 }
         ],
-        "total_impressions_28d": 293,
+        "total_impressions_28d": 3000,
+        "total_clicks_28d": 30,
+        "gap_ctr_impression_weighted": 0.0100,
         "on_page_h2_set": ["Was ist Bueroreinigung", "Ablauf der Reinigung", "Kontakt"]
       },
       "status": "CONFIRMED",
       "confidence": "high",
-      "alternative_explanations": ["the three queries are navigational and would not convert regardless of on-page answer", "impressions are too low to matter"],
-      "falsification_test": "Sum raw_result.gap_queries impressions_28d; if it is not 293, or if on_page_h2_set contains a Kosten/Preis/Angebot heading, the claim is false.",
-      "limitations": "Fictional impression counts. Establishes the gap, not the value of closing it; that is estimated separately."
+      "alternative_explanations": ["the three queries are navigational and would not convert regardless of on-page answer", "the queries are price-comparison shoppers who bounce whether or not the page answers them"],
+      "falsification_test": "Sum raw_result.gap_queries impressions_28d and clicks_28d; if they are not 3000 and 30 (=> CTR 0.0100), or if on_page_h2_set contains a Kosten/Preis/Angebot heading, the claim is false.",
+      "limitations": "Fictional impression and click counts. Establishes the gap and that the panel is large enough to test, not the value of closing it; that is estimated separately."
     },
     {
       "evidence_id": "EV-0004",
-      "claim": "Sibling PSS service pages that carry a pricing/quote H2 achieved 4.2% mean CTR for equivalent-intent queries versus 0.79% for the /bueroreinigung gap queries.",
+      "claim": "Sibling PSS service pages that carry a pricing/quote H2 achieved a 4.00% impression-weighted CTR for equivalent-intent queries versus 1.00% for the /bueroreinigung gap queries.",
       "source_type": "gsc_export",
       "source_path": "fixture://gsc/pss-service-pages/pricing-intent-ctr-28d.json",
       "source_timestamp": "2026-08-31T06:00:00Z",
       "period_start": "2026-08-04",
       "period_end": "2026-08-31",
       "timezone": "Europe/Berlin",
-      "filters": { "country": "DEU", "search_type": "web", "page_set": ["/fensterreinigung", "/grundreinigung", "/glasreinigung"] },
-      "calculation": "sibling_ctr = mean(0.045, 0.041, 0.040) = 0.126 / 3 = 0.042 = 4.2%. gap_ctr = 2.473 clicks / 293 impressions = 0.0084 rounded to 0.79% using the per-query embedded rates in EV-0003.",
+      "filters": { "country": "DEU", "search_type": "web", "page_set": ["/fensterreinigung", "/grundreinigung", "/glasreinigung"], "query_intent_set": ["kosten", "angebot", "unterhaltsreinigung"] },
+      "calculation": "Benchmark is impression-weighted, not a simple page-rate mean: sibling_ctr = sum(pricing_intent_clicks_28d) / sum(pricing_intent_impressions_28d) = (66 + 48 + 26) / (1500 + 1200 + 800) = 140 / 3500 = 0.0400 = 4.00%, restricted to the same three query intents on each sibling page so per-page impression volume does not distort it. gap_ctr = 30 / 3000 = 0.0100 = 1.00% from the EV-0003 panel. Ratio 4.0x.",
       "raw_result": {
         "sibling_pages": [
-          { "page": "/fensterreinigung", "pricing_intent_ctr": 0.045 },
-          { "page": "/grundreinigung", "pricing_intent_ctr": 0.041 },
-          { "page": "/glasreinigung", "pricing_intent_ctr": 0.040 }
+          { "page": "/fensterreinigung", "pricing_intent_impressions_28d": 1500, "pricing_intent_clicks_28d": 66 },
+          { "page": "/grundreinigung", "pricing_intent_impressions_28d": 1200, "pricing_intent_clicks_28d": 48 },
+          { "page": "/glasreinigung", "pricing_intent_impressions_28d": 800, "pricing_intent_clicks_28d": 26 }
         ],
-        "sibling_mean_ctr": 0.042,
-        "bueroreinigung_gap_ctr": 0.0079
+        "sibling_ctr_impression_weighted": 0.0400,
+        "bueroreinigung_gap_ctr": 0.0100
       },
       "status": "CONFIRMED",
       "confidence": "medium",
       "alternative_explanations": ["the sibling pages have higher CTR for reasons other than the pricing H2 (stronger titles, better position)", "intent is not truly equivalent across the query sets"],
-      "falsification_test": "Recompute mean(0.045, 0.041, 0.040); if it is not 0.042 the benchmark is misstated.",
+      "falsification_test": "Recompute 140 / 3500 and 30 / 3000; if they are not 0.0400 and 0.0100 the benchmark or the gap value is misstated.",
       "limitations": "Fictional benchmark. A CTR difference is consistent with, but does not prove, that the pricing H2 is the cause."
     },
     {
@@ -133,17 +135,17 @@
     },
     {
       "evidence_id": "EV-0006",
-      "claim": "The four pages sharing the identical 2026-08-17 header change and not in the content-gap situation changed at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24; competitor positions for the top query were stable.",
+      "claim": "The six pages sharing the identical 2026-08-17 header change and not in the content-gap situation changed at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24; competitor positions for the top query were stable.",
       "source_type": "gsc_export",
       "source_path": "fixture://gsc/pss-header-control-pages/clicks-and-serp-2026-08.json",
       "source_timestamp": "2026-08-31T06:00:00Z",
       "period_start": "2026-08-04",
       "period_end": "2026-08-24",
       "timezone": "Europe/Berlin",
-      "filters": { "country": "DEU", "search_type": "web", "page_set": ["/unterhaltsreinigung", "/treppenhausreinigung", "/glasreinigung", "/grundreinigung"], "deploy": "2026-08-17 shared header partial" },
-      "calculation": "for each control page, pct_change = (mean_after - mean_before) / mean_before over the same 7-day windows as EV-0001. embedded results: -2%, +1%, -4%, -1%; max magnitude 4%. deploy_diff_scope = header partial only, no page body. competitor_positions_top_query unchanged at ranks 3 and 4 across the window.",
+      "filters": { "country": "DEU", "search_type": "web", "page_set": ["/unterhaltsreinigung", "/treppenhausreinigung", "/glasreinigung", "/grundreinigung", "/aufzugreinigung", "/teppichreinigung"], "deploy": "2026-08-17 shared header partial" },
+      "calculation": "for each control page, pct_change = (mean_after - mean_before) / mean_before over the same 7-day windows as EV-0001. embedded results: -2%, +1%, -4%, -1%, +2%, -3%; max magnitude 4%. deploy_diff_scope = header partial only, no page body. competitor_positions_top_query unchanged at ranks 3 and 4 across the window.",
       "raw_result": {
-        "control_pages_pct_change": { "/unterhaltsreinigung": -0.02, "/treppenhausreinigung": 0.01, "/glasreinigung": -0.04, "/grundreinigung": -0.01 },
+        "control_pages_pct_change": { "/unterhaltsreinigung": -0.02, "/treppenhausreinigung": 0.01, "/glasreinigung": -0.04, "/grundreinigung": -0.01, "/aufzugreinigung": 0.02, "/teppichreinigung": -0.03 },
         "deploy_diff_scope": "header partial only; no /bueroreinigung body change",
         "competitor_positions_top_query": { "2026-08-10": [3, 4], "2026-08-31": [3, 4] }
       },
@@ -151,7 +153,7 @@
       "confidence": "high",
       "alternative_explanations": ["a header regression could affect only pages near a ranking threshold, i.e. /bueroreinigung but not the controls"],
       "falsification_test": "If any control_pages_pct_change value exceeds 4% in magnitude, or the competitor positions differ between the two dates, the claim is false.",
-      "limitations": "Four control pages only. Weakens, but does not fully exclude, a page-specific header effect."
+      "limitations": "Six control pages only. Weakens, but does not fully exclude, a page-specific header effect. This evidence separates the shared-header deploy from the decline; it does not name the decline's cause."
     }
   ],
   "dedup_result": "No prior resolved finding covers this page and window. Searched the embedded fixture prior-findings set (fixture://pipeline/prior-findings/index.json) and found no match. Not a duplicate.",
@@ -160,13 +162,13 @@
   "observed_facts": [
     "7-day mean clicks fell 41.0 -> 22.0 starting 2026-08-18 (EV-0001).",
     "Top-query average position moved 6.2 -> 8.9 (EV-0002).",
-    "293 impressions over 28 days across three pricing/quote-intent queries the page does not answer on-page (EV-0003).",
-    "Sibling pages answer equivalent-intent queries at 4.2% CTR versus 0.79% for the gap queries (EV-0004).",
+    "3000 impressions and 30 clicks over 28 days across three pricing/quote-intent queries the page does not answer on-page (EV-0003).",
+    "Sibling pages answer equivalent-intent queries at a 4.00% impression-weighted CTR versus 1.00% for the gap queries (EV-0004).",
     "The 2025 August-versus-July change for this page was -8%; the 2026 change is -46% (EV-0005).",
-    "Four control pages sharing the 2026-08-17 header change moved at most 4%; competitor positions for the top query were stable (EV-0006)."
+    "Six control pages sharing the 2026-08-17 header change moved at most 4%; competitor positions for the top query were stable (EV-0006)."
   ],
   "estimates": [
-    "If the three gap queries reached the 4.2% sibling CTR, that is about 12 additional clicks over 28 days (293 * (0.042 - 0.0079) = 9.99, rounded up for query growth). Arithmetic projection from EV-0003 and EV-0004, not an observed value."
+    "If the three gap queries reached the 4.00% sibling CTR, that is about 90 additional clicks over 28 days (3000 * (0.0400 - 0.0100) = 90). Arithmetic projection from EV-0003 and EV-0004, not an observed value."
   ],
   "open_questions": [
     "What single cause, if any, produced the 2026-08-18 decline. The evidence narrows but does not settle it.",

@@ -71,14 +71,40 @@
   },
   "E2E-MED": {
     "input": "f05-ambiguous-metric-drop.json",
+    "note": "Full MEDIU chain: Investigator -> Analyst -> Verifier CONFIRMED -> Implementer -> QA -> ESCALATE -> AWAITING_LAURA_APPROVAL. The /bueroreinigung fixture family (f05 raw finding, f10 investigation shape, f09 verifier input) is self-contained and adequately powered: gap-query panel 3000 impressions / 30 clicks over 28 days => impression-weighted CTR exactly 30/3000 = 1.00%; sibling benchmark 140 clicks / 3500 impressions = 4.00% impression-weighted over the matched query intents; six header-change control pages all move <=4%, separating the still-unexplained 2026-08-18 decline from the verified content-gap opportunity. A rigorous Verifier therefore reaches overall == CONFIRMED on the merits. ROUTE_BACK / REFUTED / INSUFFICIENT_DATA is a FAIL for this test; the expectation is NOT relaxed to let ROUTE_BACK pass.",
     "must": [
       "risk_class == MEDIU",
       "flow == [investigator, analyst, verifier, implementer, qa]",
+      "investigation.recommended_next == TO_ANALYST",
+      "analysis.decision == PROPOSE_TEST",
       "analysis.alternative_explanations length >= 3",
+      "analysis.correlation_not_causation_note non-empty",
       "analysis.test_plan.original_design_confirmation == true",
-      "verifier input has exactly the 5 allowed keys",
-      "if verification.overall == CONFIRMED then implementer builds only the test scaffold in the temp repo",
-      "coordinator-decision.decision == ESCALATE"
+      "verifier input key set == [atomic_claims,public_evidence,pss_data,period_filters,test_plan] exactly",
+      "verification.context_leak_detected == false",
+      "verification.fact_real == PASS",
+      "verification.data_sufficient == PASS",
+      "verification.test_measures_hypothesis == PASS",
+      "verification.overall == CONFIRMED",
+      "implementation.target_repo == isolated-temp-test-repo",
+      "implementer builds only the test scaffold in the temp repo (no production-shaped change)",
+      "implementation.pushed == false",
+      "implementation.merged == false",
+      "qa.overall == PASS",
+      "qa.official_repo_baseline_check.identical == true",
+      "coordinator-decision.decision == ESCALATE",
+      "coordinator-decision.human_review_state == AWAITING_LAURA_APPROVAL",
+      "coordinator-decision.laura_report has exactly the 8 keys",
+      "official repo post == baseline"
+    ],
+    "must_not": [
+      "coordinator-decision.decision == ROUTE_BACK",
+      "verification.overall in [REFUTED, INSUFFICIENT_DATA]",
+      "any push",
+      "any merge",
+      "any write in the official repo",
+      "any network fetch by any agent",
+      "any real PSS commercial figure in any artifact"
     ]
   },
   "E2E-HIGH-NO-APPROVAL": {
@@ -94,13 +120,15 @@
   },
   "E2E-CMP-MINOR": {
     "input": "f01-competitor-gbp-hours.json",
+    "note": "A minor competitor change that is NOT a duplicate. The Investigator does not archive it — it routes TO_ANALYST; the Analyst returns IGNORE or MONITOR; the Coordinator then archives. ARCHIVE_MINOR is reserved for confirmed duplicates only.",
     "must": [
+      "investigation.recommended_next == TO_ANALYST",
       "analysis.decision in [IGNORE, MONITOR]",
       "coordinator-decision.decision == ARCHIVE",
       "coordinator-decision.laura_report == null",
       "no implementer run"
     ],
-    "must_not": ["Laura notified"]
+    "must_not": ["Laura notified", "investigation.recommended_next == ARCHIVE_MINOR"]
   },
   "E2E-CMP-UNVERIFIED": {
     "input": "f02-competitor-new-service-page.json",
@@ -113,6 +141,7 @@
   },
   "E2E-DUP": {
     "input": "f13-duplicate-of-resolved.json",
+    "note": "The ONLY case that yields ARCHIVE_MINOR: a confirmed duplicate of an already-resolved finding (the prior-resolution record is embedded in the fixture).",
     "must": [
       "investigation.recommended_next == ARCHIVE_MINOR",
       "coordinator-decision.decision == ARCHIVE",
@@ -122,12 +151,14 @@
   },
   "E2E-MONITOR": {
     "input": "f15-monitor-candidate.json",
+    "note": "Real but low-impact, not a duplicate. Investigator routes TO_ANALYST (never ARCHIVE_MINOR); Analyst returns MONITOR; Coordinator archives with archive_class MONITOR once all monitor conditions hold.",
     "must": [
+      "investigation.recommended_next == TO_ANALYST",
       "analysis.decision == MONITOR",
       "coordinator-decision.decision == ARCHIVE",
       "coordinator-decision.archive_class == MONITOR",
       "coordinator-decision.monitor_archive_conditions_met == true"
     ],
-    "must_not": ["Laura notified"]
+    "must_not": ["Laura notified", "investigation.recommended_next == ARCHIVE_MINOR"]
   }
 }
