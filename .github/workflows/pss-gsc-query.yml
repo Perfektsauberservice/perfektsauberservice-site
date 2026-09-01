@@ -1,0 +1,88 @@
+name: PSS GSC Ad-hoc Query (read-only)
+
+# Manual, on-demand, READ-ONLY Google Search Console query.
+# - Calls only searchAnalytics.query (a read endpoint), via the same
+#   JWT/service-account auth pattern already used by pss-seo-daily-report.yml
+#   and pss-gsc-delta-tracker.yml, scoped to webmasters.readonly.
+# - Never writes back to the GSC property, the repository, or any branch —
+#   this workflow has no `git commit`/`git push` step and only `contents: read`.
+# - Produces a single sanitized JSON artifact (query params + Google's own
+#   response data). The service account JSON, any private key, and any
+#   access token are never written to the artifact or to logs.
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Start date (YYYY-MM-DD)'
+        required: true
+      end_date:
+        description: 'End date (YYYY-MM-DD)'
+        required: true
+      dimensions:
+        description: 'Comma-separated dimensions (page,query,date,country,device)'
+        required: false
+        default: 'page'
+      country:
+        description: 'Country filter, ISO-3 lowercase e.g. deu (blank = no filter)'
+        required: false
+        default: ''
+      page_filter:
+        description: 'Page URL "contains" filter, e.g. /blog/ (optional)'
+        required: false
+        default: ''
+      query_filter:
+        description: 'Query "contains" filter (optional)'
+        required: false
+        default: ''
+      row_limit:
+        description: 'Rows per page (GSC max 25000)'
+        required: false
+        default: '1000'
+      fetch_all:
+        description: 'Paginate through all available rows (true/false)'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pss-gsc-query
+  cancel-in-progress: false
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run GSC query (read-only)
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          START_DATE: ${{ inputs.start_date }}
+          END_DATE: ${{ inputs.end_date }}
+          DIMENSIONS: ${{ inputs.dimensions }}
+          COUNTRY: ${{ inputs.country }}
+          PAGE_FILTER: ${{ inputs.page_filter }}
+          QUERY_FILTER: ${{ inputs.query_filter }}
+          ROW_LIMIT: ${{ inputs.row_limit }}
+          FETCH_ALL: ${{ inputs.fetch_all }}
+        run: |
+          ARGS=(--start="$START_DATE" --end="$END_DATE" --dimensions="$DIMENSIONS" --rowLimit="$ROW_LIMIT" --out=gsc-result.json)
+          [ -n "$COUNTRY" ] && ARGS+=(--country="$COUNTRY")
+          [ -n "$PAGE_FILTER" ] && ARGS+=(--pageContains="$PAGE_FILTER")
+          [ -n "$QUERY_FILTER" ] && ARGS+=(--queryContains="$QUERY_FILTER")
+          [ "$FETCH_ALL" = "true" ] && ARGS+=(--all)
+          node agent/scripts/gsc-query.mjs "${ARGS[@]}"
+
+      - name: Upload sanitized result artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gsc-query-result
+          path: gsc-result.json
+          retention-days: 14
