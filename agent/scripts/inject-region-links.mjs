@@ -47,7 +47,6 @@ const NAMES = {
   'au-am-rhein': 'Au am Rhein',
   forbach: 'Forbach',
   rheinmuenster: 'Rheinmünster',
-  'elchesheim-illingen': 'Elchesheim-Illingen',
   'pforzheim-broetzingen': 'Pforzheim-Brötzingen',
   'pforzheim-buckenberg': 'Pforzheim-Buckenberg',
   'pforzheim-dillweissenstein': 'Pforzheim-Dillweißenstein',
@@ -105,7 +104,6 @@ const NEIGHBOURS = {
   'au-am-rhein':  ['rastatt', 'iffezheim', 'baden-baden', 'karlsruhe'],
   forbach:        ['gaggenau', 'gernsbach', 'weisenbach', 'baden-baden'],
   rheinmuenster:  ['buehl', 'achern', 'baden-baden', 'rastatt'],
-  'elchesheim-illingen': ['rastatt', 'durmersheim', 'karlsruhe', 'rheinstetten'],
   // Pforzheim sub-areas — link to Pforzheim main + Karlsruhe
   'pforzheim-broetzingen':       ['pforzheim', 'karlsruhe', 'bad-wildbad'],
   'pforzheim-buckenberg':        ['pforzheim', 'karlsruhe', 'bad-wildbad'],

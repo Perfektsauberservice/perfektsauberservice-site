@@ -35,7 +35,6 @@ const PAGES = [
   ['entruempelung-bietigheim.html',          'Hero · Entrümpelung · Bietigheim'],
   ['entruempelung-bischweier.html',          'Hero · Entrümpelung · Bischweier'],
   ['entruempelung-durmersheim.html',         'Hero · Entrümpelung · Durmersheim'],
-  ['entruempelung-elchesheim-illingen.html', 'Hero · Entrümpelung · Elchesheim-Illingen'],
   ['entruempelung-forbach.html',             'Hero · Entrümpelung · Forbach'],
   ['entruempelung-gernsbach.html',           'Hero · Entrümpelung · Gernsbach'],
   ['entruempelung-huegelsheim.html',         'Hero · Entrümpelung · Hügelsheim'],

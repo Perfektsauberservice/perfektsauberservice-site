@@ -45,7 +45,6 @@ const PAGES_RAW = [
   ['entruempelung-bietigheim.html',          'Entrümpelung', 'Bietigheim',         150],
   ['entruempelung-bischweier.html',          'Entrümpelung', 'Bischweier',         150],
   ['entruempelung-durmersheim.html',         'Entrümpelung', 'Durmersheim',        150],
-  ['entruempelung-elchesheim-illingen.html', 'Entrümpelung', 'Elchesheim-Illingen',150],
   ['entruempelung-forbach.html',             'Entrümpelung', 'Forbach',            150],
   ['entruempelung-gernsbach.html',           'Entrümpelung', 'Gernsbach',          150],
   ['entruempelung-huegelsheim.html',         'Entrümpelung', 'Hügelsheim',         150],

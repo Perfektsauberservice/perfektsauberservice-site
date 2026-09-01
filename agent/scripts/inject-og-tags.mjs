@@ -35,7 +35,7 @@ const CITY_NAMES = {
   'karlsruhe':'Karlsruhe','achern':'Achern','au-am-rhein':'Au am Rhein',
   'bad-herrenalb':'Bad Herrenalb','bad-wildbad':'Bad Wildbad',
   'bietigheim':'Bietigheim','bischweier':'Bischweier','buehl':'Bühl',
-  'durmersheim':'Durmersheim','elchesheim-illingen':'Elchesheim-Illingen',
+  'durmersheim':'Durmersheim',
   'ettlingen':'Ettlingen','forbach':'Forbach','gernsbach':'Gernsbach',
   'huegelsheim':'Hügelsheim','iffezheim':'Iffezheim','kuppenheim':'Kuppenheim',
   'loffenau':'Loffenau','malsch':'Malsch','muggensturm':'Muggensturm',
