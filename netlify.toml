@@ -448,50 +448,50 @@
 # entruempelung-<city> (city hub). Consolidates SEO signal; resolves 84 GSC "Not found" errors.
 [[redirects]]
   from = "/bueroaufloesung-elchesheim-illingen"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/bueroaufloesung-elchesheim-illingen.html"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/kellerentruempelung-elchesheim-illingen"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/kellerentruempelung-elchesheim-illingen.html"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/messi-wohnung-elchesheim-illingen"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/messi-wohnung-elchesheim-illingen.html"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/hausmeisterservice-elchesheim-illingen"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
   from = "/hausmeisterservice-elchesheim-illingen.html"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 
 [[redirects]]
@@ -2712,13 +2712,75 @@
   force = true
 [[redirects]]
   from = "/haushaltsaufloesung-elchesheim-illingen"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
   force = true
 [[redirects]]
   from = "/haushaltsaufloesung-elchesheim-illingen.html"
-  to = "/entruempelung-elchesheim-illingen"
-  status = 301
+  to = "/410.html"
+  status = 410
+  force = true
+
+# Elchesheim-Illingen retired entirely (2026-09-01): not a relevant PSS service area, no replacement page.
+[[redirects]]
+  from = "/entruempelung-elchesheim-illingen"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/entruempelung-elchesheim-illingen.html"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/wohnungsaufloesung-elchesheim-illingen"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/wohnungsaufloesung-elchesheim-illingen.html"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/nachlassaufloesung-elchesheim-illingen"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/nachlassaufloesung-elchesheim-illingen.html"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/gewerberaeumung-elchesheim-illingen"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/gewerberaeumung-elchesheim-illingen.html"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/garagenentruempelung-elchesheim-illingen"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/garagenentruempelung-elchesheim-illingen.html"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-elchesheim-illingen"
+  to = "/410.html"
+  status = 410
+  force = true
+[[redirects]]
+  from = "/dachbodenentruempelung-elchesheim-illingen.html"
+  to = "/410.html"
+  status = 410
   force = true
 
 # === GLOBAL: .html -> pretty URL via Edge Function ===

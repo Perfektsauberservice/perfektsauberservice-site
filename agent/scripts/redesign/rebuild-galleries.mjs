@@ -84,7 +84,7 @@ const MAX_LOCAL_SLIDERS = 6;
 
 const ALL_CITIES = [
   'achern','au-am-rhein','bad-herrenalb','bad-wildbad','baden-baden','bietigheim',
-  'bischweier','buehl','durmersheim','elchesheim-illingen','ettlingen','forbach',
+  'bischweier','buehl','durmersheim','ettlingen','forbach',
   'gaggenau','gernsbach','huegelsheim','iffezheim','karlsruhe','karlsruhe-durlach',
   'kuppenheim','loffenau','malsch','muggensturm','oetigheim','pforzheim','rastatt',
   'rheinmuenster','rheinstetten','sinzheim','steinmauern','stutensee','weisenbach',
@@ -94,7 +94,7 @@ const CITY_LABEL = {
   'achern': 'Achern', 'au-am-rhein': 'Au am Rhein', 'bad-herrenalb': 'Bad Herrenalb',
   'bad-wildbad': 'Bad Wildbad', 'baden-baden': 'Baden-Baden', 'bietigheim': 'Bietigheim',
   'bischweier': 'Bischweier', 'buehl': 'Bühl', 'durmersheim': 'Durmersheim',
-  'elchesheim-illingen': 'Elchesheim-Illingen', 'ettlingen': 'Ettlingen',
+  'ettlingen': 'Ettlingen',
   'forbach': 'Forbach', 'gaggenau': 'Gaggenau', 'gernsbach': 'Gernsbach',
   'huegelsheim': 'Hügelsheim', 'iffezheim': 'Iffezheim', 'karlsruhe': 'Karlsruhe',
   'karlsruhe-durlach': 'Karlsruhe-Durlach', 'kuppenheim': 'Kuppenheim',

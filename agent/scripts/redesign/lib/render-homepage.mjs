@@ -58,7 +58,6 @@ const CITY_DATA = [
   { slug:'bischweier',          label:'Bischweier',          lat:48.8419, lng:8.2597 },
   { slug:'durmersheim',         label:'Durmersheim',         lat:48.9275, lng:8.2742 },
   { slug:'au-am-rhein',         label:'Au am Rhein',         lat:48.9325, lng:8.2156 },
-  { slug:'elchesheim-illingen', label:'Elchesheim-Illingen', lat:48.9114, lng:8.2156 },
   { slug:'rheinmuenster',       label:'Rheinmünster',        lat:48.7717, lng:8.0247 },
 ];
 const CITIES = CITY_DATA.map(c => c.slug);

@@ -53,7 +53,6 @@ const SLUG_TO_DISPLAY = {
   'oetigheim': 'Ötigheim',
   'rheinmuenster': 'Rheinmünster',
   'buehl': 'Bühl',
-  'elchesheim-illingen': 'Elchesheim-Illingen',
   'region': 'Region',
 };
 

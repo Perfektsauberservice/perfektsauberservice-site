@@ -32,7 +32,6 @@ const NAMES = {
   bietigheim: 'Bietigheim', oetigheim: 'Ötigheim', durmersheim: 'Durmersheim',
   steinmauern: 'Steinmauern', weisenbach: 'Weisenbach', bischweier: 'Bischweier',
   'au-am-rhein': 'Au am Rhein', forbach: 'Forbach', rheinmuenster: 'Rheinmünster',
-  'elchesheim-illingen': 'Elchesheim-Illingen',
 };
 
 function buildBlock(currentService, citySlug, cityName, otherServices) {
