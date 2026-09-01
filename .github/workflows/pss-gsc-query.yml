@@ -20,7 +20,7 @@ on:
         description: 'End date (YYYY-MM-DD)'
         required: true
       dimensions:
-        description: 'Comma-separated dimensions (page,query,date,country,device)'
+        description: 'Comma-separated dimensions (page,query,date,country,device), or "none" for an aggregate/totals query with no per-row breakdown'
         required: false
         default: 'page'
       country:

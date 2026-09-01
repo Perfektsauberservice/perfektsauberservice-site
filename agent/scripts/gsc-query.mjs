@@ -29,6 +29,15 @@
  * Usage as a CLI (writes JSON result to stdout, and optionally to --out):
  *   node agent/scripts/gsc-query.mjs --start=2026-08-03 --end=2026-08-30 \
  *     --dimensions=page --country=DEU --all --out=/path/to/result.json
+ *
+ *   Aggregate (site- or filter-level totals, no per-row breakdown):
+ *   node agent/scripts/gsc-query.mjs --start=2026-08-03 --end=2026-08-30 \
+ *     --dimensions=none --country=DEU --pageContains=/blog --out=/path/to/result.json
+ *
+ * Aggregate vs. dimensioned results are NOT interchangeable — see the
+ * buildSanitizedResult() docstring below for why `total_clicks` only
+ * appears for an aggregate (dimensions: []) query, and why a dimensioned
+ * query's summed rows are reported under different field names instead.
  */
 
 import { readFileSync, existsSync, writeFileSync } from 'fs';
@@ -203,44 +212,89 @@ function parseCliArgs(argv) {
  * pipeline (Investigator/Analyst/Verifier) and with CI artifacts. Contains
  * only query parameters and Google's own (non-credential) response data —
  * never the service account JSON, a private key, or an access token.
+ *
+ * Two distinct query shapes, kept semantically separate on purpose:
+ *
+ *   - AGGREGATE (dimensions: []): GSC returns a single summary row for the
+ *     given filters/date range. That row's clicks/impressions are the real
+ *     property-level (or filter-level) totals, so they are reported as
+ *     `total_clicks`/`total_impressions`.
+ *
+ *   - DIMENSIONED (dimensions: ['page', ...] etc.): GSC's Search Analytics
+ *     API does not guarantee it returns every row that exists for the
+ *     filters/date range, even with correct startRow pagination — this is
+ *     documented API behaviour (internal sampling/row limits), independent
+ *     of our own pagination cap (MAX_PAGES). Summing the rows we did get
+ *     back is therefore NOT a verified total, so those sums are reported
+ *     under different, explicitly-named fields (`returned_rows_clicks`/
+ *     `returned_rows_impressions`) and `metadata.gsc_rows_not_guaranteed_complete`
+ *     is always true for this shape — to get a real total for a subset
+ *     (e.g. blog pages), run a separate AGGREGATE query with the same
+ *     filter (e.g. page contains '/blog') rather than summing dimensioned
+ *     rows.
+ *
+ * `metadata.possibly_truncated` is a different, narrower signal: it only
+ * reflects whether OUR OWN pagination loop stopped on a full page (i.e.
+ * more rows may exist beyond what this call fetched). It is unrelated to
+ * `gsc_rows_not_guaranteed_complete`, which holds even for a dimensioned
+ * query whose pagination was not truncated at all.
  */
 export function buildSanitizedResult({ startDate, endDate, dimensions, filters, queryResult }) {
-  const totals = queryResult.rows.reduce(
+  const isAggregate = dimensions.length === 0;
+
+  const sums = queryResult.rows.reduce(
     (acc, row) => {
-      acc.total_clicks += row.clicks || 0;
-      acc.total_impressions += row.impressions || 0;
+      acc.clicks += row.clicks || 0;
+      acc.impressions += row.impressions || 0;
       return acc;
     },
-    { total_clicks: 0, total_impressions: 0 }
+    { clicks: 0, impressions: 0 }
   );
 
-  return {
+  const base = {
     source: 'GOOGLE_SEARCH_CONSOLE_API',
     property: SITE_URL,
     start_date: startDate,
     end_date: endDate,
     dimensions,
     filters,
+    query_type: isAggregate ? 'aggregate' : 'dimensioned',
     rows: queryResult.rows,
     row_count: queryResult.rows.length,
-    total_clicks: totals.total_clicks,
-    total_impressions: totals.total_impressions,
     metadata: {
       pages_fetched: queryResult.pagesFetched,
       row_limit_hit_on_last_page: queryResult.rowLimitHit,
-      possibly_truncated: queryResult.rowLimitHit, // true => more rows may exist beyond what was fetched
+      possibly_truncated: queryResult.rowLimitHit, // our own pagination cap — more rows may exist beyond what was fetched
+      gsc_rows_not_guaranteed_complete: !isAggregate, // GSC API's own row-completeness limitation for dimensioned queries
     },
     captured_at: new Date().toISOString(),
   };
+
+  return isAggregate
+    ? { ...base, total_clicks: sums.clicks, total_impressions: sums.impressions }
+    : { ...base, returned_rows_clicks: sums.clicks, returned_rows_impressions: sums.impressions };
+}
+
+/**
+ * Resolves the CLI --dimensions value into a queryGSC() dimensions array.
+ * The literal, case-insensitive value "none" deterministically requests an
+ * AGGREGATE query (dimensions: []) — GSC's own valid "no dimension" query
+ * shape, not [""] and not a dimension named "none". Unset defaults to
+ * ['page'] for backward compatibility with prior CLI usage.
+ */
+export function resolveDimensions(dimensionsArg) {
+  if (!dimensionsArg) return ['page'];
+  if (String(dimensionsArg).trim().toLowerCase() === 'none') return [];
+  return String(dimensionsArg).split(',').map((d) => d.trim()).filter(Boolean);
 }
 
 async function main() {
   const args = parseCliArgs(process.argv.slice(2));
   if (!args.start || !args.end) {
-    console.error('Usage: node gsc-query.mjs --start=YYYY-MM-DD --end=YYYY-MM-DD [--dimensions=page,query] [--country=DEU] [--pageContains=/blog/] [--rowLimit=1000] [--all] [--out=file.json]');
+    console.error('Usage: node gsc-query.mjs --start=YYYY-MM-DD --end=YYYY-MM-DD [--dimensions=page,query|none] [--country=DEU] [--pageContains=/blog/] [--rowLimit=1000] [--all] [--out=file.json]');
     process.exit(1);
   }
-  const dimensions = args.dimensions ? String(args.dimensions).split(',').map((d) => d.trim()) : ['page'];
+  const dimensions = resolveDimensions(args.dimensions);
   const filters = {};
   if (args.country) filters.country = String(args.country).toLowerCase();
   if (args.pageContains) filters.page = { contains: args.pageContains };

@@ -9,7 +9,7 @@
 
 import assert from 'assert';
 import { generateKeyPairSync } from 'crypto';
-import { queryGSC, buildSanitizedResult } from './gsc-query.mjs';
+import { queryGSC, buildSanitizedResult, resolveDimensions } from './gsc-query.mjs';
 
 let passed = 0;
 let failed = 0;
@@ -70,7 +70,7 @@ function mockQueryPage(rows, opts = {}) {
 
 // ─── Tests ──────────────────────────────────────────────────────────────
 
-await test('happy path: single page, computes correct totals and envelope shape', async () => {
+await test('dimensioned query: does NOT claim a guaranteed total — uses returned_rows_* and flags incompleteness', async () => {
   resetMocks();
   mockToken();
   mockQueryPage([
@@ -83,11 +83,57 @@ await test('happy path: single page, computes correct totals and envelope shape'
   assert.strictEqual(queryResult.rows.length, 2);
 
   const sanitized = buildSanitizedResult({ startDate: '2026-08-03', endDate: '2026-08-30', dimensions: ['page'], filters: {}, queryResult });
-  assert.strictEqual(sanitized.total_clicks, 3);
-  assert.strictEqual(sanitized.total_impressions, 150);
+  assert.strictEqual(sanitized.query_type, 'dimensioned');
+  assert.strictEqual(sanitized.returned_rows_clicks, 3);
+  assert.strictEqual(sanitized.returned_rows_impressions, 150);
+  assert.strictEqual(sanitized.total_clicks, undefined, 'dimensioned query must not expose total_clicks as if it were a guaranteed total');
+  assert.strictEqual(sanitized.total_impressions, undefined);
+  assert.strictEqual(sanitized.metadata.gsc_rows_not_guaranteed_complete, true);
   assert.strictEqual(sanitized.row_count, 2);
   assert.strictEqual(sanitized.source, 'GOOGLE_SEARCH_CONSOLE_API');
   assert.ok(sanitized.captured_at);
+});
+
+await test('aggregate query (dimensions: []): reports real total_clicks/total_impressions, not row-completeness-limited', async () => {
+  resetMocks();
+  mockToken();
+  // GSC returns a single summary row for a fully aggregate query, typically with no `keys` field at all.
+  mockQueryPage([{ clicks: 2, impressions: 207, ctr: 0.0097, position: 45.3 }]);
+  process.env.GSC_SERVICE_ACCOUNT_JSON = FAKE_SERVICE_ACCOUNT;
+
+  const queryResult = await queryGSC({ startDate: '2026-08-03', endDate: '2026-08-30', dimensions: [], filters: { country: 'deu' } });
+  const sanitized = buildSanitizedResult({ startDate: '2026-08-03', endDate: '2026-08-30', dimensions: [], filters: { country: 'deu' }, queryResult });
+
+  assert.strictEqual(sanitized.query_type, 'aggregate');
+  assert.strictEqual(sanitized.total_clicks, 2);
+  assert.strictEqual(sanitized.total_impressions, 207);
+  assert.strictEqual(sanitized.returned_rows_clicks, undefined, 'aggregate query must not use the dimensioned-query field names');
+  assert.strictEqual(sanitized.returned_rows_impressions, undefined);
+  assert.strictEqual(sanitized.metadata.gsc_rows_not_guaranteed_complete, false);
+});
+
+await test('resolveDimensions: "none" deterministically maps to [] (aggregate), never [""]', () => {
+  assert.deepStrictEqual(resolveDimensions('none'), []);
+  assert.deepStrictEqual(resolveDimensions('None'), []);
+  assert.deepStrictEqual(resolveDimensions('  none  '), []);
+  assert.deepStrictEqual(resolveDimensions('page'), ['page']);
+  assert.deepStrictEqual(resolveDimensions('page,query'), ['page', 'query']);
+  assert.deepStrictEqual(resolveDimensions(undefined), ['page']); // backward-compatible default
+});
+
+await test('aggregate request body: dimensions: [] is sent as-is to the API, never [""]', async () => {
+  resetMocks();
+  mockToken();
+  let capturedBody = null;
+  global.fetch = (url, opts) => {
+    if (url.includes('oauth2.googleapis.com')) return mockFetch(url, opts);
+    capturedBody = JSON.parse(opts.body);
+    return Promise.resolve({ ok: true, status: 200, json: async () => ({ rows: [{ clicks: 1, impressions: 1 }] }) });
+  };
+  process.env.GSC_SERVICE_ACCOUNT_JSON = FAKE_SERVICE_ACCOUNT;
+
+  await queryGSC({ startDate: '2026-08-03', endDate: '2026-08-30', dimensions: resolveDimensions('none') });
+  assert.deepStrictEqual(capturedBody.dimensions, []);
 });
 
 await test('pagination: fetches until a partial page, respects MAX_PAGES safety cap conceptually', async () => {
