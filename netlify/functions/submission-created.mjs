@@ -11,6 +11,10 @@
  *   ALERT_EMAIL_FROM    = adresa expeditor (verificata in Resend)
  */
 
+import crypto from 'node:crypto';
+
+const LEAD_ID_PATTERN = /^PSS-\d{8}-[a-z0-9]{8}$/i;
+
 export const handler = async (event) => {
   try {
     const payload = JSON.parse(event.body);
@@ -26,6 +30,20 @@ export const handler = async (event) => {
     const city    = data.data?.city      || data.data?.ort       || '—';
     const service = data.data?.service   || data.data?.leistung  || '—';
 
+    // lead_id: generat client-side de formular; validat aici, cu fallback server-side
+    // daca lipseste sau nu respecta formatul. Orice eroare in acest bloc e izolata —
+    // NU trebuie sa opreasca trimiterea notificarilor Telegram/Email de mai jos.
+    let lead_id = '—';
+    try {
+      const rawLeadId = data.data?.lead_id;
+      lead_id = (typeof rawLeadId === 'string' && LEAD_ID_PATTERN.test(rawLeadId))
+        ? rawLeadId
+        : `PSS-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${crypto.randomUUID().slice(0, 8)}`;
+    } catch (leadIdErr) {
+      console.error('⚠️  lead_id fallback generation failed:', leadIdErr.message);
+      lead_id = `PSS-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${(Date.now().toString(36) + Math.random().toString(36).slice(2)).slice(0, 8)}`;
+    }
+
     // Construieste mesajul Telegram
     const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
     const text = [
@@ -38,6 +56,7 @@ export const handler = async (event) => {
       `📍 Oras: ${city}`,
       `🔧 Serviciu: ${service}`,
       `💬 Mesaj: ${message}`,
+      `📌 Lead ID: ${lead_id}`,
       ``,
       `🌐 perfektsauberservice.com`,
     ].join('\n');
@@ -85,6 +104,7 @@ export const handler = async (event) => {
         `<p><strong>Oras:</strong> ${city}</p>`,
         `<p><strong>Serviciu:</strong> ${service}</p>`,
         `<p><strong>Mesaj:</strong> ${message}</p>`,
+        `<p><strong>Lead ID:</strong> ${lead_id}</p>`,
       ].join('\n');
 
       const emailRes = await fetch('https://api.resend.com/emails', {

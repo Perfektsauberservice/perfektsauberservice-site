@@ -219,6 +219,15 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="hero-form">
       <input type="hidden" name="form-name" value="lead">
       <input type="hidden" name="seite" value="Hero · Haushaltsauflösung · Rastatt">
+      <input type="hidden" name="lead_id" id="heroLeadIdHidden" value="">
+      <input type="hidden" name="gclid" id="heroGclid" value="">
+      <input type="hidden" name="gbraid" id="heroGbraid" value="">
+      <input type="hidden" name="wbraid" id="heroWbraid" value="">
+      <input type="hidden" name="utm_source" id="heroUtmSource" value="">
+      <input type="hidden" name="utm_medium" id="heroUtmMedium" value="">
+      <input type="hidden" name="utm_campaign" id="heroUtmCampaign" value="">
+      <input type="hidden" name="utm_term" id="heroUtmTerm" value="">
+      <input type="hidden" name="utm_content" id="heroUtmContent" value="">
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
       <div class="hf-row">
         <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
@@ -500,6 +509,15 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="lead-form">
       <input type="hidden" name="form-name" value="lead"/>
       <input type="hidden" name="seite" value="Haushaltsauflösung · Rastatt"/>
+      <input type="hidden" name="lead_id" id="leadIdHidden" value=""/>
+      <input type="hidden" name="gclid" id="leadGclid" value=""/>
+      <input type="hidden" name="gbraid" id="leadGbraid" value=""/>
+      <input type="hidden" name="wbraid" id="leadWbraid" value=""/>
+      <input type="hidden" name="utm_source" id="leadUtmSource" value=""/>
+      <input type="hidden" name="utm_medium" id="leadUtmMedium" value=""/>
+      <input type="hidden" name="utm_campaign" id="leadUtmCampaign" value=""/>
+      <input type="hidden" name="utm_term" id="leadUtmTerm" value=""/>
+      <input type="hidden" name="utm_content" id="leadUtmContent" value=""/>
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"/></label></p>
       <div class="lf-row">
         <label class="lf-field">
@@ -602,6 +620,40 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
   </div>
 </div>
+<script>
+(function(){
+  var heroForm = document.querySelector('form.hero-form');
+  if (heroForm) heroForm.addEventListener('submit', function(){
+    document.getElementById('heroLeadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
+    if (localStorage.getItem('psCookieChoice') === 'all') {
+      var qp = new URLSearchParams(location.search);
+      var lg = document.getElementById('heroGclid'); if (lg) lg.value = qp.get('gclid') || '';
+      var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
+      var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
+      var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
+      var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
+      var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
+      var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
+      var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
+    }
+  });
+  var lfForm = document.querySelector('form.lead-form');
+  if (lfForm) lfForm.addEventListener('submit', function(){
+    document.getElementById('leadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
+    if (localStorage.getItem('psCookieChoice') === 'all') {
+      var qp2 = new URLSearchParams(location.search);
+      var g2 = document.getElementById('leadGclid'); if (g2) g2.value = qp2.get('gclid') || '';
+      var gb2 = document.getElementById('leadGbraid'); if (gb2) gb2.value = qp2.get('gbraid') || '';
+      var wb2 = document.getElementById('leadWbraid'); if (wb2) wb2.value = qp2.get('wbraid') || '';
+      var us2 = document.getElementById('leadUtmSource'); if (us2) us2.value = qp2.get('utm_source') || '';
+      var um2 = document.getElementById('leadUtmMedium'); if (um2) um2.value = qp2.get('utm_medium') || '';
+      var uc2 = document.getElementById('leadUtmCampaign'); if (uc2) uc2.value = qp2.get('utm_campaign') || '';
+      var ut2 = document.getElementById('leadUtmTerm'); if (ut2) ut2.value = qp2.get('utm_term') || '';
+      var uco2 = document.getElementById('leadUtmContent'); if (uco2) uco2.value = qp2.get('utm_content') || '';
+    }
+  });
+})();
+</script>
 <script>
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
