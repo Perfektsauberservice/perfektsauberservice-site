@@ -1,0 +1,53 @@
+{
+  "date": "2026-09-02",
+  "queries": [
+    {
+      "q": "büroreinigung rastatt",
+      "page": "https://perfektsauberservice.com/",
+      "position": 91.67,
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung bietigheim bissingen",
+      "page": "https://perfektsauberservice.com/entruempelung-oetigheim",
+      "position": 98.5,
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung bietigheim-bissingen",
+      "page": "https://perfektsauberservice.com/entruempelung-oetigheim",
+      "position": 97.53,
+      "impressions": 15,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung gernsbach",
+      "page": "https://perfektsauberservice.com/",
+      "position": 1,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "haushaltsauflösung rastatt",
+      "page": "https://perfektsauberservice.com/",
+      "position": 81,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "sperrmüll malsch",
+      "page": "https://perfektsauberservice.com/entruempelung-malsch",
+      "position": 62,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    }
+  ]
+}
