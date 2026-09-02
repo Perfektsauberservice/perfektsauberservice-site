@@ -58,6 +58,21 @@ Phase 2, the two daily snapshot workflows (`pss-gsc-delta-tracker`,
 `pss-seo-daily-report`) and the Level 2 Investigator cloud routine continue to push
 to `master` exactly as they do today; Phase 1 does not touch them.
 
+**Exception, added 2026-09-01 by Laura, for named-PR merges:** Claude MAY merge one
+specific, already-open pull request into `master` when Laura gives an explicit
+approval naming that exact PR/branch. The exception holds only while the merged
+diff and its previously-reported gates (file scope, test results, secret scan,
+permissions/scope, and any other checks reported to her at approval time) remain
+byte-for-byte unchanged from what she approved — Claude re-verifies this
+immediately before merging. If the PR changes after her approval, even by one
+additional commit, the exception lapses and a fresh approval is required before
+any merge. This covers only the mechanical merge action for the one named PR; it
+is not a standing or routine merge right, it does not authorize merging any other
+PR, and it does not relax §2's git-identity requirement (the merge commit itself
+must still carry `Perfekt Sauber Service <kontakt@perfektsauberservice.com>` as
+both Author and Committer) or §9's requirement that every external operation or
+live change name its own separate approval.
+
 ---
 
 ## 4. What Phase 1 must not touch
@@ -77,6 +92,32 @@ to `master` exactly as they do today; Phase 1 does not touch them.
   (Ads, GA4, GTM, GBP, GSC, Indexing API), Telegram, email/Resend.
 - No reading or printing of secret values (`.env`, `.env.local`, tokens, API keys,
   OAuth credentials). Not needed for any Phase 1 step.
+
+**Exception mechanism, added 2026-09-02 by Laura, for separately-approved
+workstreams:** The list above is the **default scope restriction for Phase 1
+pipeline work**, not a blanket freeze on all future changes to the site. A
+separate, non-Phase-1 workstream may touch files or services listed above —
+including `netlify/functions/*`, `agent/scripts/*`, or production HTML — only
+when **all** of the following hold together: (1) Laura gives an explicit
+approval naming the concrete files or task, not a general go-ahead; (2) the
+work happens on an isolated branch dedicated to that task, separate from
+Phase 1 branches; (3) the diff stays scoped to the named task; (4) it passes
+QA; (5) it passes Verifier; (6) a rollback is defined; (7) no further live
+change beyond what was named is made without a new, separate approval. A
+general or implied approval never satisfies condition (1). This exception
+does not enlarge Phase 1's own scope — Phase 1 pipeline work still observes
+the restrictions above unchanged — it only clarifies that other,
+individually-approved workstreams are not blocked by this file simply
+because they touch files this section lists.
+
+**Documented prior exception:** `PSS_LEAD_ID_BUSINESS_SIDE_V1`
+(client-generated `lead_id` on lead-capture forms, plus the matching
+read/validate change in `netlify/functions/submission-created.mjs`) was
+implemented on an isolated branch, QA'd, Laura-approved, and merged via
+PR #26 into `master` as a workstream separate from Phase 1. It is recorded
+here as an already-approved workstream under this exception mechanism,
+not as a Phase 1 deliverable and not as a precedent that widens Phase 1
+itself.
 
 ---
 
@@ -221,6 +262,26 @@ scope; the financial limit (if any); the rollback. The approval is not extended 
 interpretation to anything adjacent. After execution Claude verifies the result and
 reports. Owner of the decision and the approval is always Laura.
 
+**Exception, added 2026-09-01 by Laura, for READ-ONLY Google Ads / GA4 / GSC (and
+later GBP, once legitimate access exists) access:** Claude is permanently authorized
+to use and reuse the existing PSS credentials for these services for READ-ONLY
+operations, from whatever environment/secret store they are already legitimately
+configured in, without a fresh Laura approval before each read. This exception is
+scoped strictly to reads (queries, reports, inspections, log reads) — it grants
+nothing else. Every WRITE-shaped operation on any of these services — budgets,
+bids, campaigns, ad groups, keywords, negative keywords, ads/assets, geo,
+schedules, bidding strategy, conversion actions (including flipping a conversion
+action's status or primary/secondary goal configuration), GBP profile edits, or
+any other mutation — is unaffected by this exception and still requires Laura's
+specific, per-change approval under the normal shape above; this exception is never
+read as covering anything adjacent to a read. This exception documents Laura's
+authorization; it does not by itself change what any runtime permission system
+(e.g. an auto-mode action classifier) will actually allow a given session to
+execute — if a technical control still blocks a read despite this authorization,
+that is the §1 "stop and report the contradiction" case, not something to route
+around, and Claude reports the exact blocked action rather than assuming the
+exception alone unblocks it.
+
 ---
 
 ## 10. Credentials policy
@@ -232,3 +293,11 @@ reports. Owner of the decision and the approval is always Laura.
 - Real per-account values live only on the machine / in the CI secret store, never
   in the repo, prompts, handoffs, Telegram, or agent memory.
 - Test environments use only fictional data and `*.invalid` identities.
+- Under the §9 read-only exception, Claude may cause the already-configured Ads/
+  GA4/GSC credentials to be *used* (e.g. by an authorized runner reading them from
+  its own environment) without a fresh approval per read — but the never-print rule
+  above is absolute and unaffected: the credential values themselves are never
+  echoed into a report, evidence ledger, handoff, final output, or repo file,
+  regardless of how routine the read has become. Only sanitized results (metrics,
+  statuses, names, IDs that are not secrets) ever leave the read into pipeline
+  evidence.
