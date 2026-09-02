@@ -219,6 +219,15 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="hero-form">
       <input type="hidden" name="form-name" value="lead">
       <input type="hidden" name="seite" value="Hero · Entrümpelung · Karlsruhe">
+      <input type="hidden" name="lead_id" id="heroLeadIdHidden" value="">
+      <input type="hidden" name="gclid" id="heroGclid" value="">
+      <input type="hidden" name="gbraid" id="heroGbraid" value="">
+      <input type="hidden" name="wbraid" id="heroWbraid" value="">
+      <input type="hidden" name="utm_source" id="heroUtmSource" value="">
+      <input type="hidden" name="utm_medium" id="heroUtmMedium" value="">
+      <input type="hidden" name="utm_campaign" id="heroUtmCampaign" value="">
+      <input type="hidden" name="utm_term" id="heroUtmTerm" value="">
+      <input type="hidden" name="utm_content" id="heroUtmContent" value="">
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
       <div class="hf-row">
         <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
@@ -235,6 +244,26 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <button type="submit" class="btn btn-pri hf-submit">Festpreis anfragen →</button>
       <p class="hf-mini">Kontakt in 2 Std. · kostenlose Besichtigung · kein Werbeversand</p>
     </form>
+    <script>
+    (function(){
+      var form = document.querySelector('form.hero-form');
+      if (!form) return;
+      form.addEventListener('submit', function(){
+        document.getElementById('heroLeadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
+        if (localStorage.getItem('psCookieChoice') === 'all') {
+          var qp = new URLSearchParams(location.search);
+          var lg = document.getElementById('heroGclid'); if (lg) lg.value = qp.get('gclid') || '';
+          var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
+          var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
+          var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
+          var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
+          var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
+          var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
+          var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
+        }
+      });
+    })();
+    </script>
     <div class="trust"><div class="it"><strong>✓</strong><span>Termin in 48 h</span></div><div class="it"><strong>✓</strong><span>Festpreis-Garantie</span></div><div class="it"><strong>✓</strong><span>Ordnungsgemäße Rechnung</span></div><div class="it"><strong>✓</strong><span>16 Stadtteile</span></div></div>
   </div>
   <div class="hero-img">
