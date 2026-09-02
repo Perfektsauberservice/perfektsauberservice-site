@@ -41,7 +41,7 @@ export const handler = async (event) => {
         : `PSS-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${crypto.randomUUID().slice(0, 8)}`;
     } catch (leadIdErr) {
       console.error('⚠️  lead_id fallback generation failed:', leadIdErr.message);
-      lead_id = '—';
+      lead_id = `PSS-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${(Date.now().toString(36) + Math.random().toString(36).slice(2)).slice(0, 8)}`;
     }
 
     // Construieste mesajul Telegram
