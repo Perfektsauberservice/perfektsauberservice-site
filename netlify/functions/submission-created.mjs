@@ -47,7 +47,7 @@ export const handler = async (event) => {
     // Construieste mesajul Telegram
     const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
     const text = [
-      `🔔 *NOU LEAD — Perfekt Sauber Service*`,
+      `🔔 NOU LEAD — Perfekt Sauber Service`,
       `📅 ${now}`,
       ``,
       `👤 Nume: ${name}`,
@@ -74,7 +74,6 @@ export const handler = async (event) => {
         body: JSON.stringify({
           chat_id: chatId,
           text,
-          parse_mode: 'Markdown',
         }),
       });
 
