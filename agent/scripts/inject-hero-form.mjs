@@ -8,6 +8,15 @@
 //
 // Idempotent: skips pages that already contain class="hero-form".
 //
+// NOTE (2026-09-02, lead_id/attribution addition): because the skip check above
+// only looks for class="hero-form" and not for the current template content,
+// simply re-running this script against the 44 pages listed in PAGES will NOT
+// propagate the lead_id/attribution hidden-field template change below to pages
+// that already have a hero-form — they will all be reported as SKIP (has form).
+// Propagating this change to those already-generated pages needs a separate,
+// explicitly reviewed follow-up (either a one-time migration pass or a template-
+// diff-aware skip condition), which is out of scope for this commit.
+//
 // Run from repo root: node agent/scripts/inject-hero-form.mjs
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -70,6 +79,15 @@ function formMarkup(seite) {
   return `<form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="hero-form">
       <input type="hidden" name="form-name" value="lead">
       <input type="hidden" name="seite" value="${seite}">
+      <input type="hidden" name="lead_id" id="leadIdHidden" value="">
+      <input type="hidden" name="gclid" id="leadGclid" value="">
+      <input type="hidden" name="gbraid" id="leadGbraid" value="">
+      <input type="hidden" name="wbraid" id="leadWbraid" value="">
+      <input type="hidden" name="utm_source" id="leadUtmSource" value="">
+      <input type="hidden" name="utm_medium" id="leadUtmMedium" value="">
+      <input type="hidden" name="utm_campaign" id="leadUtmCampaign" value="">
+      <input type="hidden" name="utm_term" id="leadUtmTerm" value="">
+      <input type="hidden" name="utm_content" id="leadUtmContent" value="">
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
       <div class="hf-row">
         <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
@@ -81,7 +99,27 @@ function formMarkup(seite) {
       </label>
       <button type="submit" class="btn btn-pri hf-submit">Festpreis anfragen →</button>
       <p class="hf-mini">Antwort in 24 h · kostenlose Besichtigung · kein Werbeversand</p>
-    </form>`;
+    </form>
+    <script>
+    (function(){
+      var form = document.querySelector('form.hero-form');
+      if (!form) return;
+      form.addEventListener('submit', function(){
+        document.getElementById('leadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
+        if (localStorage.getItem('psCookieChoice') === 'all') {
+          var qp = new URLSearchParams(location.search);
+          var lg = document.getElementById('leadGclid'); if (lg) lg.value = qp.get('gclid') || '';
+          var lgb = document.getElementById('leadGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
+          var lwb = document.getElementById('leadWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
+          var lus = document.getElementById('leadUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
+          var lum = document.getElementById('leadUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
+          var luc = document.getElementById('leadUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
+          var lut = document.getElementById('leadUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
+          var luco = document.getElementById('leadUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
+        }
+      });
+    })();
+    </script>`;
 }
 
 let totals = { ok: 0, alreadyHad: 0, noAnchor: 0, missing: 0 };
