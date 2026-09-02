@@ -733,6 +733,34 @@
       "owner_agent": "investigator",
       "requires_laura_approval": false,
       "review_date": "2026-10-31"
+    },
+    {
+      "opportunity_id": "OPP-0027",
+      "title": "ATTRIBUTION_PERSISTENCE_CONSENT_REVIEW: evaluate persisting gclid/gbraid/wbraid/UTM params across the /danke redirect (e.g. sessionStorage) for consent-granted sessions, instead of the current current-page-URL-only V1 read",
+      "source": "PSS_LEAD_ID_BUSINESS_SIDE_IMPLEMENTATION_SPEC (lead_id + attribution V1 implementation, 2026-09-02)",
+      "created_at": "2026-09-02",
+      "last_verified_at": null,
+      "channel": "conversion-tracking",
+      "historical_status": "NOT_STARTED",
+      "current_status": "IMPORTED_UNVERIFIED",
+      "evidence_ids": [],
+      "problem_addressed": "V1 of the lead_id/attribution implementation reads gclid/gbraid/wbraid/utm_* only from the current page's URL at submit time, with no sessionStorage/localStorage/cookie persistence. If a visitor lands with attribution params, then navigates internally before submitting a form, those params are lost by design (deliberate V1 scope decision, not a defect) and the submission's attribution fields end up empty (a valid UNKNOWN outcome). This item tracks whether persisting those params (e.g. sessionStorage, consent-gated) across such an internal-navigation-then-submit path is worth the added complexity and consent-surface.",
+      "expected_business_outcome": "Unproven. Would only improve attribution completeness for the specific case of internal navigation between landing and form submission; magnitude of that gap is not yet measured.",
+      "impact_estimate": "unknown (not yet measured)",
+      "confidence": "low",
+      "effort": "small (sessionStorage read/write gated on the same psCookieChoice==='all' check already used)",
+      "cost": "0",
+      "risk": "low if implemented (additive, consent-gated, no GA4/GTM/Ads change)",
+      "dependencies": ["lead_id + attribution V1 implementation (this backlog batch)"],
+      "missing_data": "Whether internal-navigation-before-submit is common enough in real PSS traffic to justify the added persistence logic and consent surface; current attribution field fill-rate under V1.",
+      "next_verification": "Investigator measures V1 attribution field fill-rate over an observation window before any persistence work is proposed.",
+      "proposed_test": "Not proposed yet. This item is explicitly non-blocking for the V1 lead_id/attribution work it references and requires its own Investigator -> Analyst -> Verifier pass before any implementation.",
+      "success_metric": "Attribution field (gclid/UTM) fill rate on real form submissions, if pursued.",
+      "observation_window": "n/a while IMPORTED_UNVERIFIED",
+      "rollback": "n/a (no implementation authorized)",
+      "owner_agent": "investigator",
+      "requires_laura_approval": true,
+      "review_date": "2026-10-15"
     }
   ]
 }

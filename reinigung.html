@@ -442,6 +442,15 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="lead-form">
       <input type="hidden" name="form-name" value="lead"/>
       <input type="hidden" name="seite" value="Reinigung"/>
+      <input type="hidden" name="lead_id" id="leadIdHidden" value=""/>
+      <input type="hidden" name="gclid" id="leadGclid" value=""/>
+      <input type="hidden" name="gbraid" id="leadGbraid" value=""/>
+      <input type="hidden" name="wbraid" id="leadWbraid" value=""/>
+      <input type="hidden" name="utm_source" id="leadUtmSource" value=""/>
+      <input type="hidden" name="utm_medium" id="leadUtmMedium" value=""/>
+      <input type="hidden" name="utm_campaign" id="leadUtmCampaign" value=""/>
+      <input type="hidden" name="utm_term" id="leadUtmTerm" value=""/>
+      <input type="hidden" name="utm_content" id="leadUtmContent" value=""/>
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"/></label></p>
       <div class="lf-row">
         <label class="lf-field">
@@ -527,6 +536,26 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <button class="dec" id="cookieDecline" aria-label="Nur notwendige Cookies">Nur notwendige</button>
   </div>
 </div>
+<script>
+(function(){
+  var form = document.querySelector('form.lead-form');
+  if (!form) return;
+  form.addEventListener('submit', function(){
+    document.getElementById('leadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
+    if (localStorage.getItem('psCookieChoice') === 'all') {
+      var qp = new URLSearchParams(location.search);
+      var lg = document.getElementById('leadGclid'); if (lg) lg.value = qp.get('gclid') || '';
+      var lgb = document.getElementById('leadGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
+      var lwb = document.getElementById('leadWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
+      var lus = document.getElementById('leadUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
+      var lum = document.getElementById('leadUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
+      var luc = document.getElementById('leadUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
+      var lut = document.getElementById('leadUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
+      var luco = document.getElementById('leadUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
+    }
+  });
+})();
+</script>
 <script>
 (function(){
   document.getElementById('year').textContent = new Date().getFullYear();
