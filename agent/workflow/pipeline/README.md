@@ -19,18 +19,21 @@ Claude Code session. This document is the operating manual.
 | 2 | `analyst` | yes | **no — zero writes anywhere, incl. OS temp** |
 | 3 | `verifier` | yes | **no — zero writes anywhere, incl. OS temp** |
 | 4 | `implementer` | yes | **only the isolated temp test repo** |
-| 5 | `qa` | yes | **no — zero writes anywhere, incl. OS temp** |
+| 5 | `qa` | yes | **no, except a narrow `EPHEMERAL_VERIFICATION_ARTIFACTS` exception (§2b) — synthetic scratch strictly outside any repo/worktree; never the official repo, sandbox, temp test repo, or a declared dependency repo** |
 | — | **Coordinator** = this Claude session | orchestrates | only pipeline artifacts, outside the repo — a harness write, never conflated with a subagent write |
 
-**Read-only means zero writes, full stop.** Stages 0/1/2/3/5 never create, modify,
+**Read-only means zero writes, full stop.** Stages 0/1/2/3 never create, modify,
 move, or delete a file — not in the official repo, not in the sandbox, not in the
 isolated temp test repo, and not in OS temp (`%TEMP%`/`%TMP%`/`$TMPDIR`/`/tmp`); a
-write under OS temp is not exempt. Each agent's `.md` carries a "Zero-write
+write under OS temp is not exempt. Stage 5 (`qa`) is the same, with exactly one
+narrow, additive exception (`EPHEMERAL_VERIFICATION_ARTIFACTS`, §2b below) —
+synthetic scratch strictly outside every repo/worktree; every repo/worktree write
+stays absolutely forbidden for QA too. Each agent's `.md` carries a "Zero-write
 contract" section; `agent/workflow/pipeline/tools/check-agent-writes.mjs` checks it
 statically and, given `--events-dir=<run-dir>`, scans real per-stage tool events.
 A violation is a deterministic `FAIL`, the pipeline is `BLOCKED`, and that stage's
-artifact is not forwarded. Only the Implementer writes, and only inside the
-isolated temp test repo. In **fixture-only-test mode**, stages 0/1/2/3/5 go
+artifact is not forwarded. Only the Implementer writes inside a repo, and only
+inside the isolated temp test repo. In **fixture-only-test mode**, stages 0/1/2/3/5 go
 further than zero writes: **zero tool use of any kind** (`tool_uses == 0`) —
 every fact and schema they need is inline in the prompt; `check-fixture-tooluse.mjs`
 checks this statically and, given `--events-dir=<run-dir>`, behaviorally. None of
@@ -187,6 +190,44 @@ Reporting always separates: `first_attempt_conformance` (did attempt 1 alone
 conform), `retries_used` (0, 1, or 2), `final_valid_artifact` (the one artifact
 that was actually forwarded, if any), and `pipeline_safety` (did an invalid
 artifact ever reach a handoff — must always be no).
+
+## 2b. QA scope isolation, ephemeral scratch, and Verifier re-verification (QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX)
+
+Full machine-readable rules: `pipeline-guardrails.json → qa_ephemeral_verification_artifacts_exception`
+and `→ verifier_reverification_with_qa_corroboration`. Three narrow, additive
+fixes, none of which change the primary `handoff_order` or weaken the
+Decision Engine:
+
+1. **QA scope isolation.** QA's input may carry a `verification_scope`
+   (`target_repo`, `target_worktree`, `target_commit`, `allowed_dependencies`,
+   `external_repos_expected_unchanged`). QA's `official_repo_baseline_check`
+   applies only to `target_repo`; any other declared repo gets an
+   `external_repo_checks` entry; any repo not declared at all is out of scope
+   and never affects `overall`, however dirty it already was. Absent
+   `verification_scope` = the legacy single-implicit-target behavior,
+   unchanged — this is why no existing caller needs to change.
+2. **`EPHEMERAL_VERIFICATION_ARTIFACTS`.** QA — and only QA — may create a
+   throwaway synthetic scratch artifact (e.g. a scratch DB) strictly outside
+   every repo/worktree, to independently reproduce a technical invariant a
+   read-only check cannot confirm, gated on all ten conditions in `qa.md`.
+   `handoff.schema.json → qaReport.ephemeral_scratch.target_repo_modified` is
+   schema-locked `false` — QA cannot even express a repo write through this
+   field. The other four zero-write roles are completely unaffected.
+3. **Verifier re-verification with QA corroboration.** When a Verifier pass's
+   official verdict is `INSUFFICIENT_DATA` *solely* because a mandatory
+   `alternative_explanations` entry needs independent reproduction the
+   Verifier's own contract forbids it from performing, the Coordinator may run
+   a **second, independent** Verifier pass whose `public_evidence` is extended
+   with QA's `reproduction_evidence` entries
+   (`source_type: "qa_reproduction_evidence"`). This is never a
+   format-retry reissue (§2a above) — it is a fresh semantic run, new
+   `run_id`, evaluated by the exact same unmodified Decision Engine
+   (`check-verifier-decision-table.mjs → computeOfficialVerdict()`). If the
+   second pass still cannot close the alternative, the pipeline stays
+   fail-closed (`INSUFFICIENT_DATA`/`REFUTED`) — no third attempt for the same
+   blocking alternative without a fresh, separately-documented reason.
+
+Checked by `agent/workflow/pipeline/tools/check-qa-scope-and-reproduction.mjs`.
 
 ## 3. How a subagent is started (Phase 1, manual)
 

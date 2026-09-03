@@ -52,6 +52,7 @@
         "public_social_page",
         "pss_own_monitor_history",
         "screenshot",
+        "qa_reproduction_evidence",
         "other"
       ]
     },

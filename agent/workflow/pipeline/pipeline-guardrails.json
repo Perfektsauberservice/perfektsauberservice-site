@@ -50,9 +50,18 @@
       "any write into OS temp, including via mktemp/mkdtemp/GetTempFileName",
       "git add/commit/stash/push/init/merge/rebase/checkout -b/switch -c/reset/clean/rm/mv/apply in any repository"
     ],
-    "who_may_write_instead": "Only the Implementer, and only inside the isolated temporary test repo created outside the official repo. The Coordinator/harness may create the sandbox, run artifacts, and logs - that is a harness write, never a subagent write, and the two are never conflated in a report.",
+    "who_may_write_instead": "Only the Implementer, and only inside the isolated temporary test repo created outside the official repo (unchanged) -- PLUS, as of QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX, QA may create EPHEMERAL_VERIFICATION_ARTIFACTS under the narrow exception below; QA still writes nowhere else. The Coordinator/harness may create the sandbox, run artifacts, and logs - that is a harness write, never a subagent write, and the two are never conflated in a report.",
     "on_violation": "the run is a deterministic test FAIL, the pipeline is BLOCKED, and the offending stage's artifact is NOT forwarded to the next stage",
     "enforcement_status_phase1": "documented here + in each read-only agent's .md ('Zero-write contract' section) + in TESTPLAN.md, and checked statically by agent/workflow/pipeline/tools/check-agent-writes.mjs (frontmatter tool grants, contract text presence, and a positive/negative detector battery over synthetic tool-call records; --events-dir=<run-dir> scans real per-stage tool-event logs during a behavioral run). Hook / permission enforcement is a later phase."
+  },
+  "qa_ephemeral_verification_artifacts_exception": {
+    "added_by": "QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX",
+    "applies_to": ["qa"],
+    "not_applicable_to": ["competitor-intelligence", "investigator", "analyst", "verifier"],
+    "rule": "QA -- and only QA -- may create an EPHEMERAL_VERIFICATION_ARTIFACT (e.g. a throwaway synthetic scratch DB) to independently reproduce a technical invariant a read-only check cannot confirm, strictly outside every repo/worktree, and ONLY when all ten conditions in qa.md's 'EPHEMERAL_VERIFICATION_ARTIFACTS' section hold: (1) isolated temp/scratch location only; (2) never inside the official repo, sandbox, isolated temp test repo, or any verification_scope repo/worktree; (3) never modifies the source under verification; (4) never real data/PII; (5) synthetic/fixture input only; (6) exists exclusively to run/reproduce one test; (7) removed after the test wherever the mechanism supports it; (8) any reported path is secret-free; (9) any write attempt inside a target/declared repo or worktree is STILL an absolute FAIL under the unmodified zero-write rule -- this exception widens nothing about that; (10) production/live data is completely out of reach.",
+    "reporting_fields": ["scratch_created", "scratch_location_class", "synthetic_only", "target_repo_modified", "cleanup_status"],
+    "schema": "handoff.schema.json -> qaReport.ephemeral_scratch (optional object; target_repo_modified is schema-const false -- a truthful report of a repo write cannot even validate against this branch)",
+    "does_not_widen": "the read_only_zero_write rule above for the other four roles, or QA's own prohibition on repo/worktree writes -- this is a scratch-creation exception only, never a fix/merge/push/deploy exception, and it is not a general write grant"
   },
   "strict_json_output": {
     "applies_to": ["competitor-intelligence", "investigator", "analyst", "verifier", "implementer", "qa"],
@@ -228,7 +237,8 @@
         "is the data sufficient",
         "were alternative explanations reviewed",
         "can PSS implement this legally and technically",
-        "does the test measure the stated hypothesis"
+        "does the test measure the stated hypothesis",
+        "a public_evidence entry with source_type qa_reproduction_evidence is evaluated exactly like any other entry (reproduction-boundary rule unchanged) and may serve as TESTED corroboration for the alternative it bears on -- see verifier_reverification_with_qa_corroboration; this adds no tool, no capability, and no exception to the Verifier's zero-write / zero-independent-gathering contract"
       ],
       "alternative_explanations_contract": {
         "note": "ISO-VER-1 fix: the free boolean alternative_explanations_reviewed is retired. The Verifier instead emits a structured alternative_explanations array (schema: handoff.schema.json -> verification.alternative_explanations); each entry carries alternative_id, description, applicability (APPLICABLE/NOT_APPLICABLE), verification_status (TESTED/NOT_TESTED/INSUFFICIENT_EVIDENCE), evidence_ids, reason, required_control, control_result (PASS/FAIL/INSUFFICIENT/NOT_APPLICABLE).",
@@ -293,21 +303,25 @@
     "qa": {
       "stage": 5,
       "in_approval_chain": true,
-      "input": "an implementation artifact + the success criteria",
+      "input": "an implementation artifact + the success criteria + optional verification_scope",
       "output": "qa-report artifact with overall in {PASS, FAIL, BLOCKED}",
-      "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only)", "WebFetch"],
+      "allowed_tools": ["Read", "Grep", "Glob", "Bash(read-only, plus narrowly the qa_ephemeral_verification_artifacts_exception)", "WebFetch"],
       "forbidden_tools": ["Write", "Edit", "MultiEdit", "NotebookEdit"],
-      "writes_any_file": false,
+      "writes_any_file": "false, except an EPHEMERAL_VERIFICATION_ARTIFACT under qa_ephemeral_verification_artifacts_exception (never inside any repo/worktree)",
       "checks": [
         "each success criterion PASS/FAIL deterministically",
         "no regression introduced",
         "temp repo delta matches the prescribed delta exactly",
-        "official PSS repo is byte-identical to its baseline (hash + clean status)"
+        "target repo (verification_scope.target_repo, or the one implicit target when verification_scope is absent) is byte-identical to its baseline (hash + clean status)",
+        "each declared verification_scope dependency/expected-unchanged repo is UNCHANGED (external_repo_checks) -- a repo NOT declared in verification_scope is out of scope and never checked or blamed",
+        "optionally: independent reproduction of a technical invariant in ephemeral synthetic scratch, reported as reproduction_evidence, when asked under verifier_reverification_with_qa_corroboration"
       ],
-      "forbidden_operations": ["fix anything", "merge", "push", "deploy"],
+      "forbidden_operations": ["fix anything", "merge", "push", "deploy", "write inside the target repo or any declared dependency repo/worktree, ever, under any exception", "use real data or PII in any ephemeral verification artifact", "decide an alternative_explanations verdict (that stays the Verifier's job)"],
       "stop_conditions": [
-        "official repo differs from baseline -> overall = FAIL, blocking_reasons records it",
-        "success criteria are not deterministic -> overall = BLOCKED"
+        "target repo differs from baseline -> overall = FAIL, blocking_reasons records it",
+        "a declared dependency/expected-unchanged repo shows CHANGED_UNEXPECTED -> overall = FAIL",
+        "success criteria are not deterministic -> overall = BLOCKED",
+        "an ephemeral-verification-artifact request cannot meet all ten qa_ephemeral_verification_artifacts_exception conditions -> do not create it; BLOCKED or FAIL/note naming the failed condition"
       ]
     }
   },
@@ -409,6 +423,29 @@
     "check_B_semantic": "scan only STRING VALUES (never JSON key names) in the built input, plus any Coordinator-authored prose, for persuasive/forbidden phrasing using word-boundary matching; explicitly exclude permitted structural names such as kpi_priority_rank because key names are never scanned in the first place.",
     "rule": "the fixture is never edited just to dodge the checker; the checker is fixed to scan values instead of raw text.",
     "enforcement_status_phase1": "documented here + in TESTPLAN.md (ISO-VER 'Also:' paragraph) + checked by agent/workflow/pipeline/tools/check-verifier-leak.mjs (structural key-set check + word-boundary value-only semantic scan, with a battery proving f09's legitimate 'kpi_priority_rank' never trips it and f08's leaked rationale text still does)."
+  },
+  "verifier_reverification_with_qa_corroboration": {
+    "added_by": "QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX",
+    "problem_closed": "a Verifier pass can compute INSUFFICIENT_DATA solely because a mandatory alternative_explanations entry (typically ALT-3, measurement/tracking-or-invariant artifact) needs independent reproduction the Verifier's contract explicitly forbids it from performing itself (see verifier.md 'Reproduction boundary'), even though every individual atomic field would otherwise resolve PASS.",
+    "trigger": "the Verifier's first pass's official verdict (computeOfficialVerdict()) is INSUFFICIENT_DATA, and the ONLY blocking cause is one or more mandatory alternative_explanations entries with verification_status in {NOT_TESTED, INSUFFICIENT_EVIDENCE} or control_result == INSUFFICIENT -- not a context leak, not fact_real == FAIL, not any other mandatory control FAIL/INSUFFICIENT -- AND an implementation already exists for the finding under review (there is something concrete to reproduce against).",
+    "not_a_format_retry": "this is a distinct, semantic re-verification pass. It is never counted against format_retry_policy.max_attempts_total, is never triggered by a parse/schema failure, and format_retry_policy's 'never for a semantic disagreement' rule is completely unaffected by this flow -- they are separate mechanisms for separate problems.",
+    "steps": [
+      "1. Coordinator identifies exactly which alternative_id(s) are blocking and what independent reproduction would resolve them.",
+      "2. Coordinator asks QA (its normal stage-5 role, or a dedicated re-invocation for this purpose) to attempt that reproduction, strictly under the qa_ephemeral_verification_artifacts_exception above.",
+      "3. QA reports the attempt in its qa-report's reproduction_evidence[] (full evidence-ledger entries, source_type: qa_reproduction_evidence) and ephemeral_scratch{}. QA never sets applicability/verification_status/control_result on any alternative -- that stays the Verifier's job, not QA's.",
+      "4. Coordinator builds a SECOND, independent Verifier input: atomic_claims/pss_data/period_filters/test_plan byte-identical to the first pass, public_evidence extended by exactly the relevant reproduction_evidence entries and nothing else -- no new fact beyond that evidence, no hint at the desired verdict.",
+      "5. This second pass is a fresh, independent Verifier run (new run_id), never a format-retry reissue of the first -- it re-derives every atomic field and the full alternative_explanations array from scratch, under its normal reproduction-boundary rule, still zero-tool for independent gathering.",
+      "6. The unmodified Decision Engine (computeOfficialVerdict()) recomputes the official verdict from this second pass exactly as it would for any other -- no special-casing, no weakening, no bypass.",
+      "7. If the second pass still cannot close the blocking alternative(s) (the reproduction was itself insufficient, inconclusive, or contradicts the claim), the pipeline stays INSUFFICIENT_DATA or REFUTED as computed -- fail-closed. No third pass for the same blocking alternative(s) without a new, separately-documented reason."
+    ],
+    "forbidden": [
+      "skipping straight to CONFIRMED without an actual second, independent Verifier pass",
+      "the Coordinator or QA asserting an alternative is resolved instead of the Verifier deciding it",
+      "reusing this flow to relitigate a mandatory control the first pass already resolved FAIL/PASS on other grounds",
+      "modifying computeOfficialVerdict(), checkHandoff(), or any Decision Engine logic to accommodate this flow -- the engine is unmodified and remains the sole authority over overall",
+      "treating a QA-produced reproduction as authoritative on its own -- it is only ever input evidence for an independent Verifier re-pass"
+    ],
+    "checked_by": "agent/workflow/pipeline/tools/check-qa-scope-and-reproduction.mjs (pure-function battery: a first pass blocked solely on ALT-3 -> INSUFFICIENT_DATA; the same claim with QA corroboration folded into public_evidence and re-evaluated by the SAME unmodified Decision Engine -> CONFIRMED; a corroboration attempt that is itself INSUFFICIENT_EVIDENCE -> stays INSUFFICIENT_DATA, fail-closed; the Decision Engine functions used are imported unmodified from check-verifier-decision-table.mjs, never reimplemented)"
   },
   "worktree_prohibition_phase1": {
     "rule": "Fixture-only tests and Phase 1 Acceptance never use isolation:\"worktree\" (the Agent-tool worktree isolation mode) and never create a worktree or an auxiliary branch inside the official repo. The five read-only roles run without any isolation mode, on inline payload only. The Implementer uses exclusively the isolated temporary test repo OUTSIDE the official repo (a plain `git init` / clone of the throwaway bare remote), never a worktree.",

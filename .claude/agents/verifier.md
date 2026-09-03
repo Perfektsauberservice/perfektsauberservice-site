@@ -43,6 +43,24 @@ the whole world you may reason from.
   that is itself **attached inline** in `public_evidence`; they are never for
   independent data gathering. `Bash` is read-only regardless.
 
+**A `public_evidence` entry sourced from an independent QA reproduction**
+(`source_type: "qa_reproduction_evidence"`, per
+`evidence-ledger.schema.json` — QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX) is
+evidence like any other entry in this array, subject to the exact same
+reproduction-boundary rule above: you re-derive its stated `raw_result` from
+its own `calculation` and data, you never re-run anything yourself, and you
+never treat it as true just because QA produced it. The only thing distinct
+about it is *provenance* — QA independently reproduced something (e.g. a DB
+migration/invariant, in ephemeral synthetic scratch) that your five inputs
+alone could not resolve. If it internally checks out under your normal
+scrutiny, you may cite its `evidence_id` in `alternative_explanations[].evidence_ids`
+as `TESTED` corroboration for whichever alternative it actually bears on (most
+often `ALT-3`) exactly as you would cite any other evidence entry. This grants
+you no new tool, no new capability, and no license to accept it uncritically —
+you remain zero-tool for independent gathering. Full flow (who assembles this,
+when, and why it is never a format-retry reissue):
+`pipeline-guardrails.json → verifier_reverification_with_qa_corroboration`.
+
 ## What you check
 
 1. **Is the fact real?** Re-derive it from its evidence entry as above.
