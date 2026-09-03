@@ -50,7 +50,11 @@ const sectionOk = () => failures === sectionMark;
 // The git author/committer identity is MANDATED by CLAUDE.md §2 and is expected to
 // appear in policy text and assertions. It is the public business identity, not
 // confidential commercial data, so it is exempt from the real-PSS-reference scan.
-const MANDATED_IDENTITY = /Perfekt Sauber Service <kontakt@perfektsauberservice\.com>/g;
+// Matches both notations: `Name <email>` (the real git commit trailer, per
+// CLAUDE.md §2) and `Name (email)` (the implementation artifact's commit_author/
+// commit_committer reporting field, which uses parentheses instead of angle
+// brackets to avoid a platform HTML-escaping behavior — see implementer.md).
+const MANDATED_IDENTITY = /Perfekt Sauber Service [<(]kontakt@perfektsauberservice\.com[>)]/g;
 
 function walk(dir) {
   const out = [];

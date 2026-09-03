@@ -395,8 +395,30 @@ section("7. descriptive wording never changes the computed verdict");
 section("8. representative fixture verdicts (static, via the Decision Engine)");
 {
   // FX-09 (clean, adequately-powered content-gap opportunity): fact_real PASS,
-  // data sufficient, alternatives tested against the embedded control-page /
-  // sibling-benchmark evidence, all controls resolve PASS -> CONFIRMED.
+  // data sufficient, alternatives resolved against the embedded control-page /
+  // sibling-benchmark evidence -> CONFIRMED.
+  //
+  // F-11c fix (2026-08-31): this case previously resolved ALT-1 (seasonality)
+  // as TESTED/PASS by citing EV-0004 (the header-change control pages) -- but
+  // EV-0004 tests ALT-2 (a concurrent deploy), not seasonality; that was
+  // double-counting one control as evidence for two different confounds. A
+  // real Verifier run on FX-09 correctly declined to do that and instead
+  // treated the fixture's only genuine before/after signal (EV-0001, the
+  // click-decline series) as required evidence for ALT-1, which sent overall
+  // to INSUFFICIENT_DATA -- because EV-0001 is explicitly marked background
+  // context only in the fixture (EV-0001.limitations: "background context for
+  // the test, not the opportunity under verification"; pss_data.decline_cause_status:
+  // "not established ... background context only and is not what this test
+  // measures"). The decision-relevant claims (C-002/C-003, the gap-vs-sibling
+  // CTR comparison) are a same-period, cross-sectional comparison with no
+  // before/after dimension of their own, so seasonality is not a live confound
+  // for them once the background-only claim is correctly excluded -- see
+  // verifier.md "Deriving the mandatory alternative-explanations list" ->
+  // scoping step. The methodologically correct resolution is ALT-1
+  // NOT_APPLICABLE (not "tested" via borrowed evidence), which still yields
+  // CONFIRMED once ALT-2/ALT-3 are genuinely resolved. See section 8b below
+  // for the full regression battery proving this scoping rule is deterministic
+  // and does not let a Verifier dodge a real gap in a decision-relevant claim.
   const fx09 = {
     context_leak_detected: false,
     fact_real: "PASS",
@@ -405,14 +427,14 @@ section("8. representative fixture verdicts (static, via the Decision Engine)");
     pss_can_implement_legally_and_technically: "PASS",
     test_measures_hypothesis: "PASS",
     alternative_explanations: [
-      { alternative_id: "ALT-1", description: "Seasonality / broader traffic trend.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0001"], reason: "Six header-change control pages over the same window move at most 4%, well below the -46% fall.", required_control: "Compare against unrelated control pages over the same window.", control_result: "PASS" },
+      { alternative_id: "ALT-1", description: "Seasonality / broader traffic trend.", applicability: "NOT_APPLICABLE", verification_status: "NOT_TESTED", evidence_ids: [], reason: "The only before/after time-series claim in this input (C-001, the click decline in EV-0001) is explicitly marked background context only (EV-0001.limitations; pss_data.decline_cause_status) and is not the opportunity under verification. The decision-relevant claims (C-002/C-003, the gap-vs-sibling CTR comparison) are a same-period cross-sectional comparison with no before/after dimension of their own, so seasonality is not a live confound for them.", required_control: "n/a - not applicable to the decision-relevant claims", control_result: "NOT_APPLICABLE" },
       { alternative_id: "ALT-2", description: "Concurrent shared/site-wide deploy.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0004"], reason: "The 2026-08-17 shared header partial is isolated as a confound and shown not to explain the gap-query CTR shortfall specifically.", required_control: "Check deploy_log against the control-page magnitudes.", control_result: "PASS" },
       { alternative_id: "ALT-3", description: "Measurement/tracking artifact.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0002", "EV-0003"], reason: "Impression-weighted CTR re-derives exactly from the embedded per-query counts on both the gap side and the sibling benchmark; no tagging anomaly is evident.", required_control: "Re-derive CTR from raw impressions/clicks.", control_result: "PASS" },
     ],
     overall: "CONFIRMED",
   };
   const r09 = checkHandoff(fx09);
-  if (r09.handoff === "ACCEPTED" && r09.official_verdict === "CONFIRMED") pass(`Test 10: FX-09 representative evaluation -> official verdict CONFIRMED`);
+  if (r09.handoff === "ACCEPTED" && r09.official_verdict === "CONFIRMED") pass(`Test 10: FX-09 representative evaluation (ALT-1 correctly NOT_APPLICABLE, not borrowed-evidence TESTED) -> official verdict CONFIRMED`);
   else fail(`Test 10: FX-09 representative evaluation did not resolve to CONFIRMED: ${JSON.stringify(r09)}`);
 
   // FX-08 (contaminated: leaked rationale/priority/decision) -> context leak.
@@ -440,6 +462,165 @@ section("8. representative fixture verdicts (static, via the Decision Engine)");
   const r14 = checkHandoff(fx14);
   if (r14.handoff === "ACCEPTED" && r14.official_verdict === "REFUTED") pass(`Test 12: FX-14 representative evaluation (fact contradicted by its own evidence) -> official verdict REFUTED`);
   else fail(`Test 12: FX-14 representative evaluation did not resolve to REFUTED: ${JSON.stringify(r14)}`);
+}
+
+// ---------------------------------------------------------------------------
+// 8b. F-11c fix regression: background-only claim scoping (verifier.md
+// "Deriving the mandatory alternative-explanations list" -> scoping step).
+// This is a prose-contract rule (it governs the real Verifier's own judgement
+// about which claims are decision-relevant), not a pure function this file can
+// unit-test directly -- deriveMandatoryAlternativeIds() is exercised only for
+// its own purity (section 12) and is never called by computeOfficialVerdict()
+// or checkHandoff(), so it is NOT part of the live Decision Engine path and is
+// deliberately left untouched by this fix. What IS testable here, on the real
+// Decision Engine, is the DOWNSTREAM effect: given two artifacts that differ
+// only in whether ALT-1 is (a) correctly scoped away as NOT_APPLICABLE with a
+// background-only-referencing reason, or (b) left APPLICABLE but unresolved
+// (as a Verifier that ignored the scoping step would report it), the computed
+// verdict must differ predictably, and must do so deterministically.
+// ---------------------------------------------------------------------------
+section("8b. background-only claim scoping regression (F-11c fix)");
+{
+  const base = {
+    context_leak_detected: false,
+    fact_real: "PASS",
+    opportunity_follows_logically: "PASS",
+    data_sufficient: "PASS",
+    pss_can_implement_legally_and_technically: "PASS",
+    test_measures_hypothesis: "PASS",
+  };
+  const alt2 = { alternative_id: "ALT-2", description: "Concurrent shared/site-wide deploy.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0004"], reason: "control pages bound the deploy effect", required_control: "compare control pages", control_result: "PASS" };
+  const alt3 = { alternative_id: "ALT-3", description: "Measurement/tracking artifact.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0002", "EV-0003"], reason: "arithmetic reproduces exactly", required_control: "re-derive from raw counts", control_result: "PASS" };
+
+  // Case 1 (req. #2 + #3, "correct" arm): ALT-1 correctly scoped away because
+  // its only supporting claim is explicitly marked background-only in the
+  // input. -> CONFIRMED.
+  const scopedCorrectly = {
+    ...base,
+    alternative_explanations: [
+      { alternative_id: "ALT-1", description: "Seasonality.", applicability: "NOT_APPLICABLE", verification_status: "NOT_TESTED", evidence_ids: [], reason: "The only before/after claim (C-001) is marked background context only in its own limitations field and is not the decision-relevant opportunity; no decision-relevant claim has a time dimension.", required_control: "n/a", control_result: "NOT_APPLICABLE" },
+      alt2, alt3,
+    ],
+    overall: "CONFIRMED",
+  };
+  const rScoped = checkHandoff(scopedCorrectly);
+  if (rScoped.handoff === "ACCEPTED" && rScoped.official_verdict === "CONFIRMED")
+    pass("req #2: ALT-1 correctly scoped away as NOT_APPLICABLE (background-only claim excluded) -> CONFIRMED, the correct behavior");
+  else fail(`req #2 failed: ${JSON.stringify(rScoped)}`);
+
+  // Case 2 (req. #1, decision-relevant arm): the SAME shape of gap -- ALT-1
+  // unresolved -- but this time because a DECISION-RELEVANT claim (not a
+  // background-only one) has an untested time dimension. This must still
+  // block CONFIRMED: the scoping step never lets a real gap in a
+  // decision-relevant claim escape as if it were background-only.
+  const decisionRelevantGap = {
+    ...base,
+    alternative_explanations: [
+      { alternative_id: "ALT-1", description: "Seasonality.", applicability: "APPLICABLE", verification_status: "INSUFFICIENT_EVIDENCE", evidence_ids: [], reason: "C-002 (the decision-relevant gap-CTR claim itself, not a background claim) is a before/after comparison in this variant, and no baseline/YoY data resolves seasonality for it.", required_control: "compare against a YoY baseline for the gap claim itself", control_result: "INSUFFICIENT" },
+      alt2, alt3,
+    ],
+    overall: "INSUFFICIENT_DATA",
+  };
+  const rGap = checkHandoff(decisionRelevantGap);
+  if (rGap.handoff === "ACCEPTED" && rGap.official_verdict === "INSUFFICIENT_DATA")
+    pass("req #1: the same unresolved-ALT-1 shape, but tied to a decision-relevant claim -> INSUFFICIENT_DATA, correctly blocks CONFIRMED");
+  else fail(`req #1 failed: ${JSON.stringify(rGap)}`);
+
+  // Case 3 (req. #3, "incorrect" arm): identical to Case 1's shape, except
+  // ALT-1 is left APPLICABLE+INSUFFICIENT_EVIDENCE instead of correctly scoped
+  // to NOT_APPLICABLE -- i.e. what a Verifier that ignored the scoping step
+  // would report for the exact same underlying input as Case 1. Flipping only
+  // the applicability/verification_status fields must flip the verdict
+  // predictably, proving the scoping step is load-bearing, not cosmetic.
+  const unscopedIncorrectly = {
+    ...base,
+    alternative_explanations: [
+      { alternative_id: "ALT-1", description: "Seasonality.", applicability: "APPLICABLE", verification_status: "INSUFFICIENT_EVIDENCE", evidence_ids: [], reason: "Same underlying input as the correctly-scoped case, but the background-only exclusion was not applied.", required_control: "n/a", control_result: "INSUFFICIENT" },
+      alt2, alt3,
+    ],
+    overall: "INSUFFICIENT_DATA",
+  };
+  const rUnscoped = checkHandoff(unscopedIncorrectly);
+  if (rUnscoped.handoff === "ACCEPTED" && rUnscoped.official_verdict === "INSUFFICIENT_DATA" &&
+      rScoped.official_verdict !== rUnscoped.official_verdict)
+    pass("req #3: flipping only the background-only scoping (NOT_APPLICABLE vs APPLICABLE+INSUFFICIENT_EVIDENCE) flips CONFIRMED <-> INSUFFICIENT_DATA predictably");
+  else fail(`req #3 failed: scoped=${rScoped.official_verdict} unscoped=${rUnscoped.official_verdict}`);
+
+  // Case 4 (req. #4): the Decision Engine remains a deterministic, pure
+  // function across repeated runs of the correctly-scoped artifact.
+  const repeats = Array.from({ length: 5 }, () => computeOfficialVerdict(scopedCorrectly).verdict);
+  if (repeats.every((v) => v === "CONFIRMED"))
+    pass("req #4: 5 repeated runs of the correctly-scoped artifact all produce CONFIRMED -- Decision Engine remains deterministic");
+  else fail(`req #4 failed: ${JSON.stringify(repeats)}`);
+}
+
+// ---------------------------------------------------------------------------
+// 8c. multi-control positive case (E2E-MED fixture redesign regression,
+// 2026-08-31). E2E-MED's own real Verifier runs surfaced three genuinely
+// unresolved mandatory alternatives (a seasonal/YoY confound, a cross-page
+// causal-attribution confound, and a page-specific intervention-integrity
+// confound) that blocked CONFIRMED even after two rounds of unrelated
+// Coordinator bug fixes. The fixture was then redesigned with three new,
+// minimal, citable evidence entries resolving each one. This section proves
+// the DOWNSTREAM effect on the real Decision Engine only: a representative
+// artifact with all three resolved reaches CONFIRMED, and losing the
+// resolution on any single one of the three (independently) forces
+// INSUFFICIENT_DATA. The Decision Engine itself is not touched by this
+// section or by the fixture redesign — no branch here or in
+// computeOfficialVerdict()/checkHandoff() names E2E-MED, FX-05, or any other
+// fixture ID; every case below passes or fails purely because of its atomic
+// applicability/verification_status/control_result fields, the same as any
+// other artifact.
+// ---------------------------------------------------------------------------
+section("8c. multi-control positive case (E2E-MED fixture redesign regression)");
+{
+  const base = {
+    context_leak_detected: false,
+    fact_real: "PASS",
+    opportunity_follows_logically: "PASS",
+    data_sufficient: "PASS",
+    pss_can_implement_legally_and_technically: "PASS",
+    test_measures_hypothesis: "PASS",
+  };
+  const seasonalResolved = { alternative_id: "ALT-1", description: "Seasonality.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0007"], reason: "same-calendar-month YoY control for the exact decision-relevant metric", required_control: "same-month prior-year CTR baseline", control_result: "PASS" };
+  const crossPageResolved = { alternative_id: "ALT-4", description: "Cross-page causal attribution.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0009"], reason: "matched-position no-treatment control page isolates the causal factor", required_control: "matched-position control page without the treatment", control_result: "PASS" };
+  const interventionResolved = { alternative_id: "ALT-5", description: "Page-specific intervention integrity.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0010"], reason: "page-specific change log shows no other concurrent page-level change", required_control: "page-specific change/deploy log", control_result: "PASS" };
+  const alt3 = { alternative_id: "ALT-3", description: "Measurement artifact.", applicability: "APPLICABLE", verification_status: "TESTED", evidence_ids: ["EV-0008"], reason: "tracking/tagging integrity log", required_control: "tag and property change log", control_result: "PASS" };
+
+  const allControlsPresent = { ...base, alternative_explanations: [seasonalResolved, crossPageResolved, interventionResolved, alt3], overall: "CONFIRMED" };
+  const rAll = checkHandoff(allControlsPresent);
+  if (rAll.handoff === "ACCEPTED" && rAll.official_verdict === "CONFIRMED")
+    pass("positive case: seasonal + cross-page + intervention-integrity + measurement controls all TESTED/PASS -> CONFIRMED");
+  else fail(`positive case failed: ${JSON.stringify(rAll)}`);
+
+  const missingSeasonal = { ...base, alternative_explanations: [
+    { ...seasonalResolved, verification_status: "NOT_TESTED", evidence_ids: [], control_result: "INSUFFICIENT" },
+    crossPageResolved, interventionResolved, alt3,
+  ], overall: "INSUFFICIENT_DATA" };
+  const rMissSeason = checkHandoff(missingSeasonal);
+  if (rMissSeason.handoff === "ACCEPTED" && rMissSeason.official_verdict === "INSUFFICIENT_DATA")
+    pass("missing seasonal control alone -> INSUFFICIENT_DATA (CONFIRMED correctly blocked)");
+  else fail(`missing-seasonal case failed: ${JSON.stringify(rMissSeason)}`);
+
+  const missingCrossPage = { ...base, alternative_explanations: [
+    seasonalResolved,
+    { ...crossPageResolved, verification_status: "INSUFFICIENT_EVIDENCE", evidence_ids: [], control_result: "INSUFFICIENT" },
+    interventionResolved, alt3,
+  ], overall: "INSUFFICIENT_DATA" };
+  const rMissCross = checkHandoff(missingCrossPage);
+  if (rMissCross.handoff === "ACCEPTED" && rMissCross.official_verdict === "INSUFFICIENT_DATA")
+    pass("missing cross-page control alone -> INSUFFICIENT_DATA (CONFIRMED correctly blocked)");
+  else fail(`missing-cross-page case failed: ${JSON.stringify(rMissCross)}`);
+
+  const missingIntervention = { ...base, alternative_explanations: [
+    seasonalResolved, crossPageResolved,
+    { ...interventionResolved, verification_status: "NOT_TESTED", evidence_ids: [], control_result: "INSUFFICIENT" },
+    alt3,
+  ], overall: "INSUFFICIENT_DATA" };
+  const rMissInterv = checkHandoff(missingIntervention);
+  if (rMissInterv.handoff === "ACCEPTED" && rMissInterv.official_verdict === "INSUFFICIENT_DATA")
+    pass("missing intervention-integrity control alone -> INSUFFICIENT_DATA (CONFIRMED correctly blocked)");
+  else fail(`missing-intervention case failed: ${JSON.stringify(rMissInterv)}`);
 }
 
 // ---------------------------------------------------------------------------

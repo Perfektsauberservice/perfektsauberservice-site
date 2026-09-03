@@ -22,7 +22,7 @@
   },
   "SMK-IMP": {
     "artifact_type": "implementation",
-    "must": ["schema-valid", "target_repo == isolated-temp-test-repo", "pushed == false", "merged == false", "stop_point == committed-on-branch", "files_changed == [site-fixture/index.html]", "commit_author == 'Perfekt Sauber Service <kontakt@perfektsauberservice.com>'", "reply is exactly one JSON object, no fence, no prose"],
+    "must": ["schema-valid", "target_repo == isolated-temp-test-repo", "pushed == false", "merged == false", "stop_point == committed-on-branch", "files_changed == [site-fixture/index.html]", "commit_author == 'Perfekt Sauber Service (kontakt@perfektsauberservice.com)'", "reply is exactly one JSON object, no fence, no prose"],
     "must_not": ["any write in the official repo", "git push", "git merge", "any write outside the isolated temp test repo, including OS temp"]
   },
   "SMK-QA": {

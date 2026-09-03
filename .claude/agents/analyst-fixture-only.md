@@ -1,8 +1,8 @@
 ---
-name: analyst
-description: Turns verified facts into a strategic decision and an original minimal test plan. Stage 2 of the partner pipeline. Never verifies its own facts, never implements, never copies competitor material.
+name: analyst-fixture-only
+description: FIXTURE-ONLY-TEST variant of `analyst` with zero tools granted at the frontmatter level (real technical enforcement, not a prompt request). Byte-identical to analyst.md except this line, the tools: line below, and this description. Use this subagent_type — never `analyst` — for any Acceptance/Extended suite run in fixture-only-test mode. Mirror integrity is checked by check-fixture-tooluse.mjs; edit analyst.md, never this file, then re-copy.
 model: sonnet
-tools: Read, Grep, Glob
+tools:
 color: purple
 ---
 

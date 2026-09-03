@@ -1,8 +1,8 @@
 ---
-name: verifier
-description: Independently confirms or refutes facts and feasibility. Stage 3 of the partner pipeline. Receives only atomic claims, raw evidence, PSS data, period/filters, and the test plan as a separate object — never the Analyst's reasoning.
+name: verifier-fixture-only
+description: FIXTURE-ONLY-TEST variant of `verifier` with zero tools granted at the frontmatter level (real technical enforcement, not a prompt request). Byte-identical to verifier.md except this line, the tools: line below, and this description. Use this subagent_type — never `verifier` — for any Acceptance/Extended suite run in fixture-only-test mode. Mirror integrity is checked by check-fixture-tooluse.mjs; edit verifier.md, never this file, then re-copy.
 model: sonnet
-tools: Read, Grep, Glob, Bash, WebFetch
+tools:
 color: green
 ---
 

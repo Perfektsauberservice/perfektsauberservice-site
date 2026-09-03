@@ -21,7 +21,7 @@
       "roles": [
         "verifier"
       ],
-      "sha256": "f6502cc7a97b9dd08d3e047a2be706cda40ec8999479e113a9f808b8bd944456",
+      "sha256": "50b56721eb00ccaeb3e82eebc11dfb50f3d7f4bc0922aafee70066356646f1c8",
       "purpose": "Verifier input, exactly the 5 allowed keys (SMK-VER, ISO-VER-1)."
     },
     {
@@ -57,7 +57,7 @@
       "source_path": "agent/workflow/pipeline/fixtures/expected/assertions.json",
       "category": "fixture",
       "roles": [],
-      "sha256": "1956d4e6093bbcb1421d7e5e95bb07759ba74c593cd6ed5381b0d6bea6b298f4",
+      "sha256": "fdb9fe50eb101b3159c56b289837c6b0f83223f64116fc5a9a4378aa34b7dae5",
       "purpose": "Per-test assertion oracle. Coordinator/harness only — never placed in an agent slice (teaching to the test)."
     },
     {
@@ -109,7 +109,7 @@
       "roles": [
         "investigator"
       ],
-      "sha256": "274c2fc884fbfab6fbb6d7d0ea25075d150f2b655c32a97b0d8836d9c7062786",
+      "sha256": "161e5a1bb88e6198f1f915c53cc0910fa540665ea9b1d9ebd6c8634f48a24891",
       "purpose": "Ambiguous traffic drop + verifiable content gap (E2E-MED investigator input)."
     },
     {

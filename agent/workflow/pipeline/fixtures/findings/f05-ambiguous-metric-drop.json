@@ -72,6 +72,42 @@
       "deploy_diff_scope": "2026-08-17 shared header partial only; no /bueroreinigung page body change",
       "competitor_positions_top_query": { "2026-08-10": [3, 4], "2026-08-31": [3, 4] },
       "note": "six pages sharing the identical 2026-08-17 header change moved <=4% in 7-day mean clicks over 2026-08-18..2026-08-24; competitor positions for the top query were stable. This separates the shared-header deploy from the -46% fall on /bueroreinigung."
+    },
+    {
+      "evidence_id": "FX05-E7",
+      "type": "yoy_gap_query_ctr_same_month",
+      "source_ref": "fixture://gsc/bueroreinigung-musterstadt/gap-query-ctr-2025-08.json",
+      "gap_queries_2025_08": [
+        { "query": "bueroreinigung kosten musterstadt", "impressions": 1300, "clicks": 16 },
+        { "query": "bueroreinigung angebot musterstadt", "impressions": 910, "clicks": 9 },
+        { "query": "unterhaltsreinigung buero musterstadt", "impressions": 670, "clicks": 4 }
+      ],
+      "note": "Prior-year same-calendar-month reading for the identical three named queries, 28-day window ending 2025-08-31: total 2880 impressions, total 29 clicks. The click-through rate this implies is essentially unchanged from the 2026 reading for the same query panel over the equivalent window ending 2026-08-31, unlike the much larger swing seen in total page click volume over that period."
+    },
+    {
+      "evidence_id": "FX05-E8",
+      "type": "tracking_integrity_check",
+      "source_ref": "fixture://gsc/bueroreinigung-musterstadt/tag-and-property-integrity-2026-08.json",
+      "tag_and_property_log": { "gsc_property_reverification_events": 0, "gtm_container_publishes_affecting_organic_tags": 0, "gsc_data_anomaly_flags": 0 },
+      "note": "Review of the GSC property-verification event log and the GTM container publish history for organic-search tracking, covering /bueroreinigung and the pages already used for the header-deploy comparison, across 2026-07-01 to 2026-08-31: zero property re-verification events, zero tag-configuration changes, zero GSC-reported data-anomaly flags for any of those pages in that window."
+    },
+    {
+      "evidence_id": "FX05-E9",
+      "type": "cross_page_h2_causality_control",
+      "source_ref": "fixture://gsc/pss-service-pages/no-h2-control-ctr-28d.json",
+      "no_h2_control_page": { "page": "/teppichreinigung", "matched_intent_impressions": 950, "matched_intent_clicks": 10, "avg_position_matched_intent": 5.8 },
+      "h2_bearing_page_avg_position": { "/fensterreinigung": 5.5, "/grundreinigung": 6.0, "/glasreinigung": 5.9 },
+      "bueroreinigung_avg_position_matched_intent": 5.9,
+      "note": "The page /teppichreinigung does not carry a pricing or quote heading, the same content shape as /bueroreinigung today, yet ranks for a matched commercial query set at an average position closely matching both the pages that do carry that heading and /bueroreinigung itself (all four pages fall within a narrow band). With ranking position held effectively constant across the compared pages, its click-through rate on that matched query set is close to /bueroreinigung's own rate rather than the higher rate seen on pages that carry the heading, isolating heading content, not ranking position or general page authority, as the factor that tracks with the higher rate."
+    },
+    {
+      "evidence_id": "FX05-E10",
+      "type": "page_specific_change_log",
+      "source_ref": "fixture://cms/bueroreinigung/change-log-2026-08.json",
+      "change_log_window": { "start": "2026-08-01", "end": "2026-08-31" },
+      "page_specific_changes_excluding_shared_header": 0,
+      "rendered_header_diff": { "pages_compared": ["/bueroreinigung", "/unterhaltsreinigung", "/treppenhausreinigung", "/glasreinigung", "/grundreinigung", "/aufzugreinigung", "/teppichreinigung"], "markup_byte_diff_count": 0, "page_specific_override_or_conditional_branch_detected": false },
+      "note": "Content-management change history for the /bueroreinigung page itself across the stated window records exactly one deploy touching this page: the shared header partial applied identically to every page on the same template, already characterized elsewhere in this evidence set. No other content edit, meta tag change, redirect, canonical change, or page-specific template override was applied to this page in that window. A rendered-markup diff of the shared header partial was additionally run, comparing bueroreinigung against each of the pages already used for the header-deploy comparison: every comparison came back byte-identical, with no page-specific override, conditional branch, or A/B logic detected for bueroreinigung specifically, so the header rendered and behaved the same way on this page as on the others."
     }
   ],
   "missing_data": [

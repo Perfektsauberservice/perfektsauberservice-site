@@ -3,7 +3,8 @@
     { "claim_id": "C-001", "text": "The /bueroreinigung 7-day mean organic clicks fell from 41.0/day (window ending 2026-08-17) to 22.0/day (window starting 2026-08-18).", "evidence_id": "EV-0001" },
     { "claim_id": "C-002", "text": "Over 28 days the /bueroreinigung page received 3000 impressions and 30 clicks across three pricing/quote-intent queries it does not answer on-page.", "evidence_id": "EV-0002" },
     { "claim_id": "C-003", "text": "Sibling PSS service pages that carry a pricing/quote H2 achieved a 4.00% impression-weighted CTR for equivalent-intent queries versus 1.00% for the /bueroreinigung gap queries.", "evidence_id": "EV-0003" },
-    { "claim_id": "C-004", "text": "Six pages sharing the identical 2026-08-17 shared-header change, and not in the content-gap situation, moved at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0004" }
+    { "claim_id": "C-004", "text": "Six pages sharing the identical 2026-08-17 shared-header change, and not in the content-gap situation, moved at most 4% in 7-day mean clicks over 2026-08-18 to 2026-08-24.", "evidence_id": "EV-0004" },
+    { "claim_id": "C-005", "text": "Year over year, /bueroreinigung August clicks were 8.0% below the preceding July in 2025, whereas the 2026 before/after window (per EV-0001) shows a 46.3% fall.", "evidence_id": "EV-0005" }
   ],
   "public_evidence": [
     {
@@ -51,6 +52,15 @@
       "deploy_diff_scope": "2026-08-17 shared header partial only; no /bueroreinigung page body change",
       "derived": { "max_control_magnitude": 0.04, "control_page_count": 6 },
       "limitations": "Six control pages only. Separates the shared-header deploy from the -46% fall on /bueroreinigung; it does not name the fall's cause and does not fully exclude a page-specific header effect."
+    },
+    {
+      "evidence_id": "EV-0005",
+      "kind": "gsc_yoy_seasonality",
+      "source_ref": "fixture://gsc/bueroreinigung-musterstadt/yoy-seasonality.json",
+      "method": "2025 baseline: july_mean_daily_clicks and august_mean_daily_clicks from the embedded fictional series; y2025_change_pct = (august_mean - july_mean) / july_mean. 2026 comparison: the same before/after windows already re-derived in EV-0001 (mean_before=41.0, mean_after=22.0).",
+      "yoy_2025": { "july_mean_daily_clicks": 40, "august_mean_daily_clicks": 36.8 },
+      "derived": { "y2025_change_pct": -8.0, "y2026_change_pct": -46.3 },
+      "limitations": "One year of comparison only. Rules out seasonality as a full explanation for the size of the 2026 before/after change, not as a partial one."
     }
   ],
   "pss_data": {

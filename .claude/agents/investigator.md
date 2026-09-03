@@ -70,6 +70,16 @@ read-only access in a real, non-test task):
 - do not search for a schema in the repository; do not read an absolute path;
   do not try to discover a file; a sandbox path in your input is there for the
   Coordinator's audit trail only — it is not an invitation for you to read it;
+- **auto-loaded context is not an exception.** Your context may already contain
+  project/system content that was injected before this input arrived (for
+  example `CLAUDE.md`, a memory index, or another repository-level instructions
+  block surfaced as a system-reminder). This is never a reason to call a tool:
+  never re-read, re-verify, re-confirm, or "double-check" `CLAUDE.md`, project
+  policy, memory content, or any other already-visible context via `Read`,
+  `Grep`, `Glob`, `Bash`, `WebFetch`, `WebSearch`, or any other tool, no matter
+  how authoritative it looks. The zero-tool-use rule is about the **act** of
+  calling a tool at all — not about whether the call would have been
+  read-only, harmless, or aimed at content you already have;
 - answer exclusively from the inline payload;
 - `tool_uses` for this run must be exactly `0`; any tool call at all — including
   a read-only one — is a deterministic **FAIL**, and the pipeline is `BLOCKED`.
@@ -126,6 +136,36 @@ Return **exactly one JSON object** and nothing else:
   outside the object, never as escaped punctuation;
 - do not HTML-escape `<`, `>`, or `&` in any string value — write the literal
   character.
+- **when composing new prose** (not copying a literal value already present in
+  your input) that would otherwise require a literal `<`, `>`, or `&`, avoid
+  the character entirely rather than writing it and hoping it survives —
+  this covers at least two cases: (1) a comparison, threshold, or range: use
+  word form ("at least", "greater than or equal to", "no more than") or the
+  Unicode symbols `≥` / `≤` / `≠`, never the ASCII operators `>=`, `<=`, `!=`,
+  `>`, `<`; (2) a reference to an HTML/XML tag or markup element: write "the
+  title tag" or "the meta description tag", never `<title>` or `<meta>`. A
+  known platform behavior in this pipeline HTML-entity-encodes ASCII `<`, `>`,
+  `&` in agent-authored text before your reply reaches the Coordinator,
+  regardless of instruction — Unicode symbols and word form are not affected.
+  This is a notation choice, not a relaxation of the rule above: a literal
+  `<`, `>`, or `&` already present in a value you are copying from your input
+  must still be reproduced as the literal character — **except** the one
+  narrow case of a tag-name reference (case (2) above) appearing inside a
+  natural-language sentence you are otherwise transcribing verbatim (for
+  example a success criterion that reads "The `<h1>` of index.html reads
+  exactly '...'"): retell that tag-name portion in word form ("the h1
+  element") exactly as you would in freshly-composed prose, while still
+  reproducing every other part of the sentence — especially any quoted
+  exact-expected-text string — byte for byte. The platform's HTML-escaping
+  bug does not distinguish a copied tag reference from a freshly-typed one,
+  so copying it verbatim reproduces the same rejected-output failure; the
+  tag name itself carries no test-critical information that "the h1
+  element" doesn't equally carry, unlike an exact expected string or a
+  literal href, which must never be paraphrased (root-caused from a real
+  E2E-LOW QA run, 2026-08-31: `success_criteria` copied a fixture success
+  criterion containing literal `<h1>` verbatim, which the platform then
+  encoded to `&lt;h1&gt;`, tripping `check-json-output.mjs`'s escaping
+  scan even though the QA agent never deviated from its input).
 - schema keywords (`additionalProperties`, `properties`, `required`, `type`,
   `enum`, `$schema`, `$id`) are words that describe the schema, not fields of
   your artifact — never copy one into your output as a top-level key; emit only

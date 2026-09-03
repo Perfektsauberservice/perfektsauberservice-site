@@ -288,6 +288,79 @@ const EXTRA_KEY = '{"artifact_type":"test-artifact","value":1,"extra":true}';
 }
 
 // ---------------------------------------------------------------------------
+// Reissue-scope integrity: a retry must change ONLY the field(s) named by the
+// validator error. F-10 fix (SMK-ANA RETRY_EXHAUSTED incident, 2026-08-31):
+// on its final retry the Analyst left the targeted defect (&gt; in
+// test_plan.success_threshold) uncorrected AND additionally reworded an
+// unrelated field ("+/-4%" -> "plus-or-minus 4%") that the reissue instruction
+// explicitly said not to touch ("change nothing else"). A reissue instruction
+// alone cannot be verified as followed — this is a deterministic, structural
+// check on the two artifacts themselves, independent of what the instruction
+// said. errorPath uses a "$.a.b" dotted/bracket path matching the style
+// findHtmlEscaping() already emits, so a real validator error string can be
+// used directly as the scope boundary.
+// ---------------------------------------------------------------------------
+function collectLeafPaths(node, path, out) {
+  if (Array.isArray(node)) {
+    node.forEach((v, i) => collectLeafPaths(v, `${path}[${i}]`, out));
+  } else if (node && typeof node === "object") {
+    for (const [k, v] of Object.entries(node)) collectLeafPaths(v, `${path}.${k}`, out);
+  } else {
+    out.set(path, node);
+  }
+}
+function inScope(changedPath, errorPath) {
+  return changedPath === errorPath ||
+    changedPath.startsWith(`${errorPath}.`) ||
+    changedPath.startsWith(`${errorPath}[`);
+}
+// Pure function: returns { ok: true } iff every leaf that differs between
+// originalObj and retryObj lies within (at or under) errorPath. A field
+// present in one object but not the other, at a path outside errorPath, is
+// also drift. Never mutates either input.
+export function checkRetryScopeIntegrity(originalObj, retryObj, errorPath) {
+  const before = new Map(); collectLeafPaths(originalObj, "$", before);
+  const after = new Map(); collectLeafPaths(retryObj, "$", after);
+  const allPaths = new Set([...before.keys(), ...after.keys()]);
+  const driftedPaths = [];
+  for (const p of allPaths) {
+    const b = before.has(p) ? before.get(p) : undefined;
+    const a = after.has(p) ? after.get(p) : undefined;
+    if (b !== a && !inScope(p, errorPath)) driftedPaths.push(p);
+  }
+  return driftedPaths.length === 0 ? { ok: true, driftedPaths: [] } : { ok: false, driftedPaths };
+}
+
+// ---------------------------------------------------------------------------
+// 4b. behavioral: reissue-scope integrity battery (RETRY-11/12)
+// ---------------------------------------------------------------------------
+section("4b. reissue-scope integrity battery (a retry changes only the named field)");
+{
+  // RETRY-11: retry fixes only the field named by the validator error -> ok
+  const original = { finding_id: "F-0005", correlation_not_causation_note: "ruled out via 6 control pages within +/-4%", test_plan: { success_threshold: "CTR rises to &gt;= 2.50%" } };
+  const retry = { finding_id: "F-0005", correlation_not_causation_note: "ruled out via 6 control pages within +/-4%", test_plan: { success_threshold: "CTR rises to ≥ 2.50%" } };
+  const r = checkRetryScopeIntegrity(original, retry, "$.test_plan.success_threshold");
+  if (r.ok) pass("RETRY-11: retry changes only the field named by the validator error -> scope-clean");
+  else fail(`RETRY-11: unexpected drift ${JSON.stringify(r.driftedPaths)}`);
+}
+{
+  // RETRY-12: SMK-ANA regression case — retry also rewords an untouched field -> FAIL
+  const original = { finding_id: "F-0005", correlation_not_causation_note: "ruled out via 6 control pages within +/-4%", test_plan: { success_threshold: "CTR rises to &gt;= 2.50%" } };
+  const retryDrifted = { finding_id: "F-0005", correlation_not_causation_note: "ruled out via 6 control pages within plus-or-minus 4%", test_plan: { success_threshold: "CTR rises to &gt; = 2.50%" } };
+  const r = checkRetryScopeIntegrity(original, retryDrifted, "$.test_plan.success_threshold");
+  if (!r.ok && r.driftedPaths.includes("$.correlation_not_causation_note"))
+    pass("RETRY-12: retry rewording an untouched field (SMK-ANA regression case) -> detected as drift, FAIL");
+  else fail(`RETRY-12: drift not detected, expected $.correlation_not_causation_note in driftedPaths, got ${JSON.stringify(r)}`);
+}
+{
+  // control: identical objects -> no drift
+  const obj = { a: 1, b: { c: "x" } };
+  const r = checkRetryScopeIntegrity(obj, obj, "$.a");
+  if (r.ok) pass("RETRY-12 control: identical objects -> no drift");
+  else fail(`RETRY-12 control: unexpected drift on identical objects ${JSON.stringify(r)}`);
+}
+
+// ---------------------------------------------------------------------------
 // 4. never route a semantic outcome through this protocol
 // ---------------------------------------------------------------------------
 section("4. semantic outcomes are excluded from the retry trigger");

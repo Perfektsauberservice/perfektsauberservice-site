@@ -14,6 +14,17 @@
 // HTML-escaping of <, >, or & in string values (explanations belong in approved
 // schema fields, not in escaped punctuation). A reply that fails this gate is
 // rejected BEFORE handoff and is not forwarded to the next stage.
+//
+// F-9 fix (SMK-ANA RETRY_EXHAUSTED incident, 2026-08-31): a reproducer proved
+// ASCII <, >, & in agent-authored prose get HTML-entity-encoded by a systemic
+// platform/transport behavior, 100% of the time, for ANY agent, regardless of
+// an explicit "do not escape" instruction (the rule above was already present
+// verbatim and still failed 3 consecutive attempts) — while Unicode ≥/≤ and
+// word form ("at least") pass through unescaped. The checker's escape-detection
+// (findHtmlEscaping) is NOT weakened or taught to normalize &gt;/&lt;/&amp; —
+// that would mask a real STRICT-JSON-GATE violation. Instead each agent's
+// contract now requires Unicode ≥/≤/≠ or word form for freshly-composed
+// comparison language, and section 1 below checks that guidance is present.
 
 import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -107,11 +118,28 @@ for (const role of ALL_AGENTS) {
   const noExamples = /worked examples/i.test(md);
   const finalRuleHeading = /##\s*Final output rule/i.test(md);
   const finalSelfCheckOrder = /Final self-check, in this exact order/i.test(md);
+  // F-9/F-9b: comparison-notation guidance (Unicode ≥/≤/≠ or word form instead
+  // of ASCII >=/<=/!= in freshly-composed prose), broadened after a second
+  // incident (SMK-ANA post-fix validation) showed the same escaping bug also
+  // hits HTML/XML tag-name references (e.g. "<title>") — not just comparisons.
+  const comparisonNotation = /when composing new prose/i.test(md) &&
+    /≥/.test(md) && /≤/.test(md) &&
+    /never the ASCII operators/i.test(md) &&
+    /HTML\/XML tag or markup element/i.test(md);
+  // F-9c, root-caused from a real E2E-LOW QA run, 2026-08-31: a tag-name
+  // reference copied VERBATIM from fixture-provided prose (a success
+  // criterion containing literal "<h1>") still trips the platform's
+  // escaping bug even though the agent never deviated from its input -
+  // the "copy literal values as-is" rule and the "avoid the character in
+  // fresh prose" rule collided. Fix: carve out tag-name references
+  // specifically (never exact expected strings or hrefs) as safe to
+  // retell in word form even when otherwise transcribing verbatim.
+  const tagNameCarveOut = /retell that tag-name portion in word form/i.test(md);
   const complete = hasHeading && oneObject && noFence && noEscape && rejectedPreHandoff &&
     firstLastChar && noBacktickAnywhere && noBareJson && noSchemaRepeat && noExamples &&
-    finalRuleHeading && finalSelfCheckOrder;
-  if (complete) pass(`${role}: strict-output contract complete (incl. first/last-char rule + final self-check)`);
-  else fail(`${role}: strict-output contract incomplete (heading=${hasHeading} oneObject=${oneObject} noFence=${noFence} noEscape=${noEscape} rejected=${rejectedPreHandoff} firstLastChar=${firstLastChar} noBacktickAnywhere=${noBacktickAnywhere} noBareJson=${noBareJson} noSchemaRepeat=${noSchemaRepeat} noExamples=${noExamples} finalRuleHeading=${finalRuleHeading} finalSelfCheckOrder=${finalSelfCheckOrder})`);
+    finalRuleHeading && finalSelfCheckOrder && comparisonNotation && tagNameCarveOut;
+  if (complete) pass(`${role}: strict-output contract complete (incl. first/last-char rule, comparison-notation guidance, tag-name carve-out, + final self-check)`);
+  else fail(`${role}: strict-output contract incomplete (heading=${hasHeading} oneObject=${oneObject} noFence=${noFence} noEscape=${noEscape} rejected=${rejectedPreHandoff} firstLastChar=${firstLastChar} noBacktickAnywhere=${noBacktickAnywhere} noBareJson=${noBareJson} noSchemaRepeat=${noSchemaRepeat} noExamples=${noExamples} finalRuleHeading=${finalRuleHeading} finalSelfCheckOrder=${finalSelfCheckOrder} comparisonNotation=${comparisonNotation} tagNameCarveOut=${tagNameCarveOut})`);
 }
 
 // ---------------------------------------------------------------------------
@@ -134,6 +162,10 @@ const CASES = [
   { name: "truncated / invalid JSON", input: '{"a":1,', expect: false },
   { name: "empty output", input: '', expect: false },
   { name: "unjustified HTML-escaped <", input: '{"note":"x &lt; y"}', expect: false },
+  { name: "unjustified HTML-escaped > (SMK-ANA regression)", input: '{"test_plan":{"success_threshold":"CTR rises to &gt;= 2.50%"}}', expect: false },
+  { name: "Unicode ≥ instead of ASCII >= (workaround, must pass)", input: '{"test_plan":{"success_threshold":"CTR rises to ≥ 2.50%"}}', expect: true },
+  { name: "unjustified HTML-escaped tag name (SMK-ANA post-fix regression)", input: '{"test_plan":{"change":"Rewrite the &lt;title&gt; tag"}}', expect: false },
+  { name: "word-form tag reference (workaround, must pass)", input: '{"test_plan":{"change":"Rewrite the title tag"}}', expect: true },
   { name: "unjustified HTML-escaped &", input: '{"note":"Tom &amp; Jerry"}', expect: false },
   { name: "unjustified HTML-escaped quote", input: '{"note":"say &quot;hi&quot;"}', expect: false },
   { name: "single inline backtick, no fence", input: '{"note":"see `x.js` for details"}', expect: false },

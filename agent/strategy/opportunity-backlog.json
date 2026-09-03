@@ -733,6 +733,34 @@
       "owner_agent": "investigator",
       "requires_laura_approval": false,
       "review_date": "2026-10-31"
+    },
+    {
+      "opportunity_id": "OPP-0026",
+      "title": "Blog section structural hygiene: reconnect the orphaned /blog content (index/sitemap reconciliation, hub-to-post links, internal cross-links, AUTO-BLOG-CARDS mechanism decision, optional nav entry)",
+      "source": "Phase 1.5 real pilot F-0901, 3 rounds (Investigator/Analyst/Verifier x3), 2026-09-01",
+      "created_at": "2026-09-01",
+      "last_verified_at": "2026-09-01",
+      "channel": "seo",
+      "historical_status": "NOT_STARTED",
+      "current_status": "MONITOR",
+      "evidence_ids": ["EV-0002", "EV-0003", "EV-0005", "EV-0006", "EV-0008", "EV-0009", "EV-0010", "EV-0011", "EV-0030", "EV-0031", "EV-0032"],
+      "problem_addressed": "96 real blog posts have zero hub-to-post links (blog.html), zero cross-links between posts, no primary-nav /blog entry (only 3 of 257 site pages even link to the hub), a stale 120-item content index (24 entries with no matching file), 17 real post files missing from sitemap.xml, and a documented AUTO-BLOG-CARDS content-injection mechanism that was apparently never executed. A live, direct GSC aggregate query (2026-08-03..2026-08-30, DEU) confirms blog's tracked search share is 0% of both clicks and impressions in that window.",
+      "expected_business_outcome": "Uncertain / not demonstrated. A live GSC page-detail query in the same window shows PSS's own commercial city/service pages (not blog) also carry the site's real search visibility; the blog's contribution to leads/quotes/jobs/revenue is unproven and, per the live 0%-share data point, currently negligible. This item is tracked as engineering hygiene (a functioning site should not have an orphaned content section, a stale index, or a broken automation), not as a claimed traffic or revenue opportunity.",
+      "impact_estimate": "low (per 3-round live-verified pilot; structural defects are real but no evidence of business impact from fixing them)",
+      "confidence": "high (structural facts) / low (business impact)",
+      "effort": "small-medium (blog.html hub links, nav entry if pursued, sitemap.xml regeneration, blog-index.json reconciliation, decide retire-vs-execute for AUTO-BLOG-CARDS)",
+      "cost": "0",
+      "risk": "low (additive/corrective static file edits only, fully git-revertible, no external service, no tracking/conversion logic touched)",
+      "dependencies": [],
+      "missing_data": "Whether a structural fix would move blog_impression_share at all (see F-0901 round 3 Verifier: INSUFFICIENT_DATA on the causal question, 3 unresolved alternatives — sitewide-event confound, page-filter validation against the literal blog URL list, single-window/thin-sample generalizability).",
+      "next_verification": "If ever revisited: Investigator re-runs the same live GSC aggregate methodology (site vs blog, dimensions: [], page contains /blog, DEU) over a longer or additional window before recommending implementation.",
+      "proposed_test": "Not authorized for implementation. If later approved as hygiene work: add blog.html hub-to-post links + limited cross-links + sitemap.xml/blog-index.json reconciliation + a decision to retire or execute AUTO-BLOG-CARDS; nav entry optional, only if a future re-test shows non-trivial blog share.",
+      "success_metric": "Not tracked as a business success metric at this time (TECHNICAL HYGIENE ONLY, not a growth investment) — CLAUDE.md metric priority: profit -> job revenue -> jobs won -> valid leads -> quotes -> real calls/form submissions -> micro-conversions -> traffic -> impressions.",
+      "observation_window": "n/a while in MONITOR",
+      "rollback": "n/a (no implementation authorized)",
+      "owner_agent": "analyst",
+      "requires_laura_approval": true,
+      "review_date": "2026-12-01"
     }
   ]
 }
