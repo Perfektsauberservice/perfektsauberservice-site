@@ -293,8 +293,12 @@ window.psGrantConsent = function(){
   try {
     if (localStorage.getItem('psCookieChoice') === 'all') window.psGrantConsent();
   } catch(e) {}
-  if ('requestIdleCallback' in window) requestIdleCallback(window.psLoadGA, { timeout: 4000 });
-  else setTimeout(window.psLoadGA, 2500);
+  // Load GA4 immediately once eligible (consent state, checked above, is unchanged by this
+  // line -- psLoadGA() only loads gtag.js; Consent Mode still governs what it may store/send).
+  // Previously deferred via requestIdleCallback/setTimeout (2.5-4s), which gave short visits a
+  // window to leave before GA4 ever initialized -- the same bug class already fixed for
+  // /danke.html and for phone/whatsapp/email clicks (2026-08-12), now applied here too.
+  window.psLoadGA();
 })();
 </script>
 </body>
