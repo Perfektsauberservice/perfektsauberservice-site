@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-03",
+  "queries": [
+    {
+      "q": "büroreinigung rastatt",
+      "page": "https://perfektsauberservice.com/",
+      "position": 91.75,
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung bietigheim bissingen",
+      "page": "https://perfektsauberservice.com/entruempelung-oetigheim",
+      "position": 98.5,
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung bietigheim-bissingen",
+      "page": "https://perfektsauberservice.com/entruempelung-oetigheim",
+      "position": 97.64,
+      "impressions": 11,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung gernsbach",
+      "page": "https://perfektsauberservice.com/",
+      "position": 1,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "entrümpelung meppen",
+      "page": "https://perfektsauberservice.com/entruempelung-kuppenheim",
+      "position": 97,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    }
+  ]
+}
