@@ -371,7 +371,53 @@
         },
         "overall": { "type": "string", "enum": ["PASS", "FAIL", "BLOCKED"] },
         "blocking_reasons": { "type": "array", "items": { "type": "string" } },
-        "notes": { "type": "string" }
+        "notes": { "type": "string" },
+        "verification_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Optional (QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX). Absent = legacy behavior: official_repo_baseline_check alone names the single implicit target, exactly as before this field existed. Present = QA checks target_repo/target_worktree for the official_repo_baseline_check; any OTHER repo is checked only if it appears in allowed_dependencies or external_repos_expected_unchanged (see external_repo_checks below) -- a repo that is not named here is out of scope and its pre-existing state, dirty or not, never affects `overall`.",
+          "required": ["target_repo", "target_worktree", "target_commit", "allowed_dependencies", "external_repos_expected_unchanged"],
+          "properties": {
+            "target_repo": { "type": "string", "minLength": 1 },
+            "target_worktree": { "type": "string", "minLength": 1 },
+            "target_commit": { "type": "string", "minLength": 7 },
+            "allowed_dependencies": { "type": "array", "items": { "type": "string" } },
+            "external_repos_expected_unchanged": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "external_repo_checks": {
+          "type": "array",
+          "description": "Optional; only meaningful when verification_scope is present. One entry per repo named in verification_scope.allowed_dependencies or .external_repos_expected_unchanged -- never for a repo outside that declared set. Absent or empty when verification_scope is absent, preserving legacy single-repo behavior.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["repo", "role", "check_performed", "result"],
+            "properties": {
+              "repo": { "type": "string", "minLength": 1 },
+              "role": { "type": "string", "enum": ["dependency", "expected_unchanged"] },
+              "check_performed": { "type": "boolean" },
+              "result": { "type": "string", "enum": ["UNCHANGED", "CHANGED_UNEXPECTED", "NOT_IN_SCOPE_SKIPPED"] }
+            }
+          }
+        },
+        "ephemeral_scratch": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Optional (QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX EPHEMERAL_VERIFICATION_ARTIFACTS exception). Present only when QA created ephemeral scratch to independently reproduce a technical invariant read-only checks could not confirm. target_repo_modified is schema-locked to false -- QA cannot even express having modified the target repo through this field, truthfully or otherwise; a real such write is caught by the unmodified zero-write gate, not by this field.",
+          "required": ["scratch_created", "scratch_location_class", "synthetic_only", "target_repo_modified", "cleanup_status"],
+          "properties": {
+            "scratch_created": { "type": "boolean" },
+            "scratch_location_class": { "type": "string", "enum": ["OS_TEMP", "DEDICATED_VERIFICATION_SCRATCH", "NONE"] },
+            "synthetic_only": { "type": "boolean" },
+            "target_repo_modified": { "const": false },
+            "cleanup_status": { "type": "string", "enum": ["REMOVED", "NOT_APPLICABLE", "REMOVAL_NOT_SUPPORTED_BY_MECHANISM"] }
+          }
+        },
+        "reproduction_evidence": {
+          "type": "array",
+          "description": "Optional. Independent technical reproduction QA performed in ephemeral synthetic scratch (see ephemeral_scratch above), evidence-ledger-shaped so the Coordinator can fold entries verbatim into a re-invoked Verifier's public_evidence array as independent corroboration for a mandatory alternative_explanations entry (see pipeline-guardrails.json -> verifier_reverification_with_qa_corroboration). Never a replacement for criteria_results, and QA never itself sets an alternative's applicability/verification_status/control_result -- that stays the Verifier's job.",
+          "items": { "$ref": "evidence-ledger.schema.json" }
+        }
       }
     },
     "coordinatorDecision": {

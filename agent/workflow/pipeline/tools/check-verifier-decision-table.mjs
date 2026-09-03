@@ -47,13 +47,33 @@
 //
 // Run: node agent/workflow/pipeline/tools/check-verifier-decision-table.mjs
 
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, realpathSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(HERE, "..", "..", "..", "..");
 const VERIFIER_MD = join(REPO_ROOT, ".claude", "agents", "verifier.md");
+
+// QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX: this module's exported functions
+// (computeOfficialVerdict, checkHandoff, validateAlternativeExplanations,
+// deriveMandatoryAlternativeIds) are reused, unmodified, by
+// check-qa-scope-and-reproduction.mjs so a second call site can prove the
+// Decision Engine is not weakened by that fix. Without this guard, importing
+// this module for its exports would also re-run the battery below and call
+// process.exit() as a side effect of the import, killing the importing
+// script before it runs its own checks. Running this file directly
+// (`node check-verifier-decision-table.mjs`) is completely unaffected: the
+// exact same battery still runs and exits the same way — this only skips the
+// battery when the module is `import`ed rather than executed as the entry
+// point.
+const IS_MAIN = (() => {
+  try {
+    return Boolean(process.argv[1]) && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+  } catch {
+    return false;
+  }
+})();
 
 let failures = 0;
 const pass = (m) => console.log(`  PASS  ${m}`);
@@ -180,6 +200,7 @@ export function deriveMandatoryAlternativeIds(input) {
   return ids;
 }
 
+if (IS_MAIN) {
 // ---------------------------------------------------------------------------
 // 1. static: verifier.md documents the new contract
 // ---------------------------------------------------------------------------
@@ -707,3 +728,4 @@ console.log(`\n${"=".repeat(60)}`);
 if (failures === 0) { console.log("RESULT: PASS — Verifier Decision Engine is deterministic, documented, and authoritative over `overall`"); process.exit(0); }
 console.log(`RESULT: FAIL — ${failures} check(s) failed`);
 process.exit(1);
+} // end IS_MAIN

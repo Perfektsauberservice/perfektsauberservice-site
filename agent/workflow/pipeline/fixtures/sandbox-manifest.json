@@ -161,7 +161,7 @@
         "analyst",
         "verifier"
       ],
-      "sha256": "38a02d1d5ed82893c2d78fbee7f6a72348a193e1a57d7bf89d7962554699fac5",
+      "sha256": "78dab5aaab0182d5c64b8e3d4e102fb2042e9260e15e2ed2137d51b43a2a926d",
       "purpose": "Structural contract (non-sensitive). Evidence-ledger entry shape — the three roles that produce or consume ledger entries."
     },
     {
@@ -176,7 +176,7 @@
         "implementer",
         "qa"
       ],
-      "sha256": "38760d10ed8ceefc56969207085bc278f07492c7fde896aac5a4530bba8b78b0",
+      "sha256": "d1448d3e43161d8c7b3108b0bfbbb42532c910cbad8b97f7032383d281dc369e",
       "purpose": "Structural contract (non-sensitive). Every agent validates its own output artifact against its branch."
     },
     {

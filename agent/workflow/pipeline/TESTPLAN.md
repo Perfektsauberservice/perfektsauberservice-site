@@ -160,6 +160,39 @@ All of the following must exit `0`. A non-zero exit from any blocks the suite.
   present in the forwarded/handoff set, and the reissue-prompt builder never
   emits a semantic hint, an expected-verdict field, or any content beyond the
   original input, the schema, and the exact validator error.
+- `node agent/workflow/pipeline/tools/check-qa-scope-and-reproduction.mjs` —
+  QA_VERIFIER_SCOPE_AND_REPRODUCTION_FIX: proves (1) an out-of-scope, pre-dirty
+  external repo never forces QA `overall: FAIL`, while (2) the declared target
+  repo differing from baseline, or a declared dependency/expected-unchanged
+  repo showing `CHANGED_UNEXPECTED`, still does; (3)/(4) a scratch path outside
+  every in-scope repo/worktree is classified `allowed`, one inside the target
+  repo or a declared dependency repo is not, even under the
+  `EPHEMERAL_VERIFICATION_ARTIFACTS` exception; (5) an `ephemeral_scratch`
+  report claiming non-synthetic data or a target-repo write is rejected; (6) a
+  representative DB-invariant reproduction is a complete, correctly-shaped
+  evidence-ledger entry (`source_type: "qa_reproduction_evidence"`); (7) the
+  Coordinator's reverification-input builder extends only `public_evidence`,
+  leaving `atomic_claims`/`pss_data`/`period_filters`/`test_plan`
+  byte-identical to the first pass; (8)/(9) — the load-bearing pair — a first
+  Verifier pass blocked solely on `ALT-3 NOT_TESTED` resolves
+  `INSUFFICIENT_DATA`, the same claim with QA's reproduction evidence folded
+  into `public_evidence` resolves `CONFIRMED`, and a still-inconclusive
+  corroboration (`INSUFFICIENT_EVIDENCE`) stays `INSUFFICIENT_DATA` — using
+  `computeOfficialVerdict()`/`checkHandoff()` **imported unmodified** from
+  `check-verifier-decision-table.mjs`, never reimplemented; (10) an ordinary
+  marketing verification with no QA corroboration involved still resolves
+  exactly as before this fix; (11) `pipeline-guardrails.json`'s `roles` map
+  still names exactly the original 6 pipeline agents, each with its own
+  `.claude/agents/<role>.md`; (12) the Decision Engine's exported function
+  signatures are unchanged (no override/corroboration-bypass parameter was
+  added). Also confirms statically that `qa.md` documents `Verification
+  scope`, `EPHEMERAL_VERIFICATION_ARTIFACTS`, and `Independent reproduction
+  evidence`, that this exception appears in **no other** agent's `.md`, that
+  `verifier.md` documents `qa_reproduction_evidence` corroboration without
+  granting any new tool/capability, and that `handoff.schema.json`'s
+  `qaReport.required` array — and `evidence-ledger.schema.json`'s 16 required
+  fields — are byte-identical to their pre-fix lists, so every existing
+  fixture stays valid unchanged.
 
 ## Fixture-only test mode (every offline test)
 
