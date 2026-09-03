@@ -30,6 +30,20 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(HERE, "..", "..", "..", "..");
 const AGENTS_DIR = join(REPO_ROOT, ".claude", "agents");
 
+// Line-ending-tolerant read for agent .md files. A CRLF checkout (Windows,
+// core.autocrlf=true) is semantically identical content to an LF checkout,
+// but frontmatter()'s `^---\n` anchor is LF-only, so an unnormalised CRLF
+// read silently produces an empty frontmatter match -> toolList() reads as
+// [] for every role, which happened to still read as "no write tool" for
+// the five read-only roles (a false negative that was accidentally safe)
+// but as a hard FAIL for the Implementer's "keeps Write + Edit" check (a
+// false positive, and the actual symptom that surfaced this bug). This
+// mirrors the existing LF-normalisation convention already used by
+// check-fixtures.mjs's sha256() for the same reason. Only the read used for
+// *parsing* is normalised — nothing about detectWriteVector() or the write-
+// vector battery in section 3 (the actual security-relevant logic) changes.
+const readNormalized = (p) => readFileSync(p, "utf8").replace(/\r\n/g, "\n");
+
 const READ_ONLY = ["competitor-intelligence", "investigator", "analyst", "verifier", "qa"];
 const WRITER = "implementer";
 const WRITE_TOOLS = new Set(["Write", "Edit", "MultiEdit", "NotebookEdit", "Artifact"]);
@@ -110,14 +124,14 @@ function toolList(fm) {
 for (const role of READ_ONLY) {
   const p = join(AGENTS_DIR, `${role}.md`);
   if (!existsSync(p)) { fail(`${role}.md missing`); continue; }
-  const tools = toolList(frontmatter(readFileSync(p, "utf8")));
+  const tools = toolList(frontmatter(readNormalized(p)));
   const bad = tools.filter((t) => WRITE_TOOLS.has(t));
   if (bad.length) fail(`${role}: grants write tool(s) ${bad.join(", ")}`);
   else pass(`${role}: tools = [${tools.join(", ")}] — no write tool`);
 }
 {
   const p = join(AGENTS_DIR, `${WRITER}.md`);
-  const tools = toolList(frontmatter(readFileSync(p, "utf8")));
+  const tools = toolList(frontmatter(readNormalized(p)));
   if (tools.includes("Write") && tools.includes("Edit")) pass(`${WRITER}: retains Write + Edit (sole writer, temp repo only)`);
   else fail(`${WRITER}: expected to keep Write + Edit`);
 }
@@ -127,7 +141,7 @@ for (const role of READ_ONLY) {
 // ---------------------------------------------------------------------------
 section("2. zero-write contract text present in each read-only agent");
 for (const role of READ_ONLY) {
-  const md = readFileSync(join(AGENTS_DIR, `${role}.md`), "utf8");
+  const md = readNormalized(join(AGENTS_DIR, `${role}.md`));
   const hasHeading = /##\s*Zero-write contract/i.test(md);
   const namesTemp = /%TEMP%|OS temp/i.test(md);
   const namesVectors = /Set-Content/i.test(md) && /Out-File/i.test(md) && /New-Item/i.test(md) &&
