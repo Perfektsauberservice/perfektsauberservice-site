@@ -344,6 +344,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
         <input type="hidden" name="utm_campaign" id="leadUtmCampaign" value="">
         <input type="hidden" name="utm_term" id="leadUtmTerm" value="">
         <input type="hidden" name="utm_content" id="leadUtmContent" value="">
+      <input type="hidden" name="landing_page_url" id="leadLandingPage" value="">
+      <input type="hidden" name="first_seen_at" id="leadFirstSeenAt" value="">
 
         <div class="form-row">
           <div class="form-group">
@@ -439,17 +441,21 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   if (!form) return;
   form.addEventListener('submit', function(){
     document.getElementById('leadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
-    if (localStorage.getItem('psCookieChoice') === 'all') {
-      var qp = new URLSearchParams(location.search);
-      var lg = document.getElementById('leadGclid'); if (lg) lg.value = qp.get('gclid') || '';
-      var lgb = document.getElementById('leadGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
-      var lwb = document.getElementById('leadWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
-      var lus = document.getElementById('leadUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
-      var lum = document.getElementById('leadUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
-      var luc = document.getElementById('leadUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
-      var lut = document.getElementById('leadUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
-      var luco = document.getElementById('leadUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
-    }
+        try {
+      var attr2 = JSON.parse(sessionStorage.getItem('ps_attribution') || 'null');
+      if (attr2) {
+        var lg = document.getElementById('leadGclid'); if (lg) lg.value = attr2.gclid || '';
+        var lgb = document.getElementById('leadGbraid'); if (lgb) lgb.value = attr2.gbraid || '';
+        var lwb = document.getElementById('leadWbraid'); if (lwb) lwb.value = attr2.wbraid || '';
+        var lus = document.getElementById('leadUtmSource'); if (lus) lus.value = attr2.utm_source || '';
+        var lum = document.getElementById('leadUtmMedium'); if (lum) lum.value = attr2.utm_medium || '';
+        var luc = document.getElementById('leadUtmCampaign'); if (luc) luc.value = attr2.utm_campaign || '';
+        var lut = document.getElementById('leadUtmTerm'); if (lut) lut.value = attr2.utm_term || '';
+        var luco = document.getElementById('leadUtmContent'); if (luco) luco.value = attr2.utm_content || '';
+        var llp = document.getElementById('leadLandingPage'); if (llp) llp.value = attr2.landing_page_url || '';
+        var lfs = document.getElementById('leadFirstSeenAt'); if (lfs) lfs.value = attr2.first_seen_at || '';
+      }
+    } catch(e) {}
   });
 })();
 </script>
@@ -506,7 +512,28 @@ window.psLoadGA = function(){
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
   document.head.appendChild(s);
 };
+window.psCaptureAttribution = function(){
+  try {
+    if (localStorage.getItem('psCookieChoice') !== 'all') return;
+    if (sessionStorage.getItem('ps_attribution')) return;
+    var qp = new URLSearchParams(location.search);
+    var attr = {
+      gclid: qp.get('gclid') || '',
+      gbraid: qp.get('gbraid') || '',
+      wbraid: qp.get('wbraid') || '',
+      utm_source: qp.get('utm_source') || '',
+      utm_medium: qp.get('utm_medium') || '',
+      utm_campaign: qp.get('utm_campaign') || '',
+      utm_term: qp.get('utm_term') || '',
+      utm_content: qp.get('utm_content') || '',
+      landing_page_url: location.href,
+      first_seen_at: new Date().toISOString()
+    };
+    sessionStorage.setItem('ps_attribution', JSON.stringify(attr));
+  } catch(e) {}
+};
 window.psGrantConsent = function(){
+  window.psCaptureAttribution();
   gtag('consent', 'update', {
     ad_storage: 'granted', ad_user_data: 'granted',
     ad_personalization: 'granted', analytics_storage: 'granted'
