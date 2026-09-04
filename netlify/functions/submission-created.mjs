@@ -44,6 +44,43 @@ export const handler = async (event) => {
       lead_id = `PSS-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${(Date.now().toString(36) + Math.random().toString(36).slice(2)).slice(0, 8)}`;
     }
 
+    // Atribuire marketing (gclid/UTM/landing page) — capturata client-side,
+    // trimisa aditional alaturi de lead_id. Niciun camp existent de mai sus
+    // nu e modificat de acest bloc.
+    const gclid            = data.data?.gclid            || '';
+    const gbraid           = data.data?.gbraid           || '';
+    const wbraid            = data.data?.wbraid           || '';
+    const utm_source        = data.data?.utm_source        || '';
+    const utm_medium        = data.data?.utm_medium        || '';
+    const utm_campaign      = data.data?.utm_campaign      || '';
+    const utm_term          = data.data?.utm_term          || '';
+    const utm_content       = data.data?.utm_content       || '';
+    const landing_page_url  = data.data?.landing_page_url  || '';
+    const first_seen_at     = data.data?.first_seen_at     || '';
+
+    const attribution = {
+      lead_id,
+      gclid: gclid || null,
+      gbraid: gbraid || null,
+      wbraid: wbraid || null,
+      utm_source: utm_source || null,
+      utm_medium: utm_medium || null,
+      utm_campaign: utm_campaign || null,
+      utm_term: utm_term || null,
+      utm_content: utm_content || null,
+      landing_page_url: landing_page_url || null,
+      first_seen_at: first_seen_at || null,
+    };
+    console.log('DEBUG attribution:', JSON.stringify(attribution));
+
+    const hasAttribution = Boolean(gclid || gbraid || wbraid || utm_source || utm_campaign);
+    const attributionLine = hasAttribution
+      ? `🎯 Attribution: gclid=${gclid || '—'} utm_source=${utm_source || '—'} utm_campaign=${utm_campaign || '—'}`
+      : null;
+    const attributionHtml = hasAttribution
+      ? `<p><strong>Attribution:</strong> gclid=${gclid || '—'} utm_source=${utm_source || '—'} utm_campaign=${utm_campaign || '—'}</p>`
+      : '';
+
     // Construieste mesajul Telegram
     const now = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
     const text = [
@@ -57,6 +94,7 @@ export const handler = async (event) => {
       `🔧 Serviciu: ${service}`,
       `💬 Mesaj: ${message}`,
       `📌 Lead ID: ${lead_id}`,
+      ...(attributionLine ? [attributionLine] : []),
       ``,
       `🌐 perfektsauberservice.com`,
     ].join('\n');
@@ -104,6 +142,7 @@ export const handler = async (event) => {
         `<p><strong>Serviciu:</strong> ${service}</p>`,
         `<p><strong>Mesaj:</strong> ${message}</p>`,
         `<p><strong>Lead ID:</strong> ${lead_id}</p>`,
+        attributionHtml,
       ].join('\n');
 
       const emailRes = await fetch('https://api.resend.com/emails', {

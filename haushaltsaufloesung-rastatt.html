@@ -228,6 +228,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <input type="hidden" name="utm_campaign" id="heroUtmCampaign" value="">
       <input type="hidden" name="utm_term" id="heroUtmTerm" value="">
       <input type="hidden" name="utm_content" id="heroUtmContent" value="">
+      <input type="hidden" name="landing_page_url" id="heroLandingPage" value="">
+      <input type="hidden" name="first_seen_at" id="heroFirstSeenAt" value="">
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
       <div class="hf-row">
         <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
@@ -518,6 +520,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <input type="hidden" name="utm_campaign" id="leadUtmCampaign" value=""/>
       <input type="hidden" name="utm_term" id="leadUtmTerm" value=""/>
       <input type="hidden" name="utm_content" id="leadUtmContent" value=""/>
+      <input type="hidden" name="landing_page_url" id="leadLandingPage" value=""/>
+      <input type="hidden" name="first_seen_at" id="leadFirstSeenAt" value=""/>
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"/></label></p>
       <div class="lf-row">
         <label class="lf-field">
@@ -625,32 +629,40 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   var heroForm = document.querySelector('form.hero-form');
   if (heroForm) heroForm.addEventListener('submit', function(){
     document.getElementById('heroLeadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
-    if (localStorage.getItem('psCookieChoice') === 'all') {
-      var qp = new URLSearchParams(location.search);
-      var lg = document.getElementById('heroGclid'); if (lg) lg.value = qp.get('gclid') || '';
-      var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
-      var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
-      var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
-      var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
-      var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
-      var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
-      var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
-    }
+        try {
+      var attr = JSON.parse(sessionStorage.getItem('ps_attribution') || 'null');
+      if (attr) {
+        var lg = document.getElementById('heroGclid'); if (lg) lg.value = attr.gclid || '';
+        var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = attr.gbraid || '';
+        var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = attr.wbraid || '';
+        var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = attr.utm_source || '';
+        var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = attr.utm_medium || '';
+        var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = attr.utm_campaign || '';
+        var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = attr.utm_term || '';
+        var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = attr.utm_content || '';
+        var llp = document.getElementById('heroLandingPage'); if (llp) llp.value = attr.landing_page_url || '';
+        var lfs = document.getElementById('heroFirstSeenAt'); if (lfs) lfs.value = attr.first_seen_at || '';
+      }
+    } catch(e) {}
   });
   var lfForm = document.querySelector('form.lead-form');
   if (lfForm) lfForm.addEventListener('submit', function(){
     document.getElementById('leadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
-    if (localStorage.getItem('psCookieChoice') === 'all') {
-      var qp2 = new URLSearchParams(location.search);
-      var g2 = document.getElementById('leadGclid'); if (g2) g2.value = qp2.get('gclid') || '';
-      var gb2 = document.getElementById('leadGbraid'); if (gb2) gb2.value = qp2.get('gbraid') || '';
-      var wb2 = document.getElementById('leadWbraid'); if (wb2) wb2.value = qp2.get('wbraid') || '';
-      var us2 = document.getElementById('leadUtmSource'); if (us2) us2.value = qp2.get('utm_source') || '';
-      var um2 = document.getElementById('leadUtmMedium'); if (um2) um2.value = qp2.get('utm_medium') || '';
-      var uc2 = document.getElementById('leadUtmCampaign'); if (uc2) uc2.value = qp2.get('utm_campaign') || '';
-      var ut2 = document.getElementById('leadUtmTerm'); if (ut2) ut2.value = qp2.get('utm_term') || '';
-      var uco2 = document.getElementById('leadUtmContent'); if (uco2) uco2.value = qp2.get('utm_content') || '';
-    }
+    try {
+      var attr2 = JSON.parse(sessionStorage.getItem('ps_attribution') || 'null');
+      if (attr2) {
+        var g2 = document.getElementById('leadGclid'); if (g2) g2.value = attr2.gclid || '';
+        var gb2 = document.getElementById('leadGbraid'); if (gb2) gb2.value = attr2.gbraid || '';
+        var wb2 = document.getElementById('leadWbraid'); if (wb2) wb2.value = attr2.wbraid || '';
+        var us2 = document.getElementById('leadUtmSource'); if (us2) us2.value = attr2.utm_source || '';
+        var um2 = document.getElementById('leadUtmMedium'); if (um2) um2.value = attr2.utm_medium || '';
+        var uc2 = document.getElementById('leadUtmCampaign'); if (uc2) uc2.value = attr2.utm_campaign || '';
+        var ut2 = document.getElementById('leadUtmTerm'); if (ut2) ut2.value = attr2.utm_term || '';
+        var uco2 = document.getElementById('leadUtmContent'); if (uco2) uco2.value = attr2.utm_content || '';
+        var llp2 = document.getElementById('leadLandingPage'); if (llp2) llp2.value = attr2.landing_page_url || '';
+        var lfs2 = document.getElementById('leadFirstSeenAt'); if (lfs2) lfs2.value = attr2.first_seen_at || '';
+      }
+    } catch(e) {}
   });
 })();
 </script>
@@ -734,7 +746,28 @@ window.psLoadGA = function(){
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
   document.head.appendChild(s);
 };
+window.psCaptureAttribution = function(){
+  try {
+    if (localStorage.getItem('psCookieChoice') !== 'all') return;
+    if (sessionStorage.getItem('ps_attribution')) return;
+    var qp = new URLSearchParams(location.search);
+    var attr = {
+      gclid: qp.get('gclid') || '',
+      gbraid: qp.get('gbraid') || '',
+      wbraid: qp.get('wbraid') || '',
+      utm_source: qp.get('utm_source') || '',
+      utm_medium: qp.get('utm_medium') || '',
+      utm_campaign: qp.get('utm_campaign') || '',
+      utm_term: qp.get('utm_term') || '',
+      utm_content: qp.get('utm_content') || '',
+      landing_page_url: location.href,
+      first_seen_at: new Date().toISOString()
+    };
+    sessionStorage.setItem('ps_attribution', JSON.stringify(attr));
+  } catch(e) {}
+};
 window.psGrantConsent = function(){
+  window.psCaptureAttribution();
   gtag('consent', 'update', {
     ad_storage: 'granted', ad_user_data: 'granted',
     ad_personalization: 'granted', analytics_storage: 'granted'

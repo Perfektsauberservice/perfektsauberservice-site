@@ -228,6 +228,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       <input type="hidden" name="utm_campaign" id="heroUtmCampaign" value="">
       <input type="hidden" name="utm_term" id="heroUtmTerm" value="">
       <input type="hidden" name="utm_content" id="heroUtmContent" value="">
+      <input type="hidden" name="landing_page_url" id="heroLandingPage" value="">
+      <input type="hidden" name="first_seen_at" id="heroFirstSeenAt" value="">
       <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
       <div class="hf-row">
         <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
@@ -250,17 +252,21 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
       if (!form) return;
       form.addEventListener('submit', function(){
         document.getElementById('heroLeadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
-        if (localStorage.getItem('psCookieChoice') === 'all') {
-          var qp = new URLSearchParams(location.search);
-          var lg = document.getElementById('heroGclid'); if (lg) lg.value = qp.get('gclid') || '';
-          var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = qp.get('gbraid') || '';
-          var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = qp.get('wbraid') || '';
-          var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = qp.get('utm_source') || '';
-          var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = qp.get('utm_medium') || '';
-          var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = qp.get('utm_campaign') || '';
-          var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = qp.get('utm_term') || '';
-          var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = qp.get('utm_content') || '';
-        }
+            try {
+      var attr = JSON.parse(sessionStorage.getItem('ps_attribution') || 'null');
+      if (attr) {
+        var lg = document.getElementById('heroGclid'); if (lg) lg.value = attr.gclid || '';
+        var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = attr.gbraid || '';
+        var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = attr.wbraid || '';
+        var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = attr.utm_source || '';
+        var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = attr.utm_medium || '';
+        var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = attr.utm_campaign || '';
+        var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = attr.utm_term || '';
+        var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = attr.utm_content || '';
+        var llp = document.getElementById('heroLandingPage'); if (llp) llp.value = attr.landing_page_url || '';
+        var lfs = document.getElementById('heroFirstSeenAt'); if (lfs) lfs.value = attr.first_seen_at || '';
+      }
+    } catch(e) {}
       });
     })();
     </script>
@@ -625,7 +631,28 @@ window.psLoadGA = function(){
   s.src = 'https://www.googletagmanager.com/gtag/js?id=G-BMC32KSYKF';
   document.head.appendChild(s);
 };
+window.psCaptureAttribution = function(){
+  try {
+    if (localStorage.getItem('psCookieChoice') !== 'all') return;
+    if (sessionStorage.getItem('ps_attribution')) return;
+    var qp = new URLSearchParams(location.search);
+    var attr = {
+      gclid: qp.get('gclid') || '',
+      gbraid: qp.get('gbraid') || '',
+      wbraid: qp.get('wbraid') || '',
+      utm_source: qp.get('utm_source') || '',
+      utm_medium: qp.get('utm_medium') || '',
+      utm_campaign: qp.get('utm_campaign') || '',
+      utm_term: qp.get('utm_term') || '',
+      utm_content: qp.get('utm_content') || '',
+      landing_page_url: location.href,
+      first_seen_at: new Date().toISOString()
+    };
+    sessionStorage.setItem('ps_attribution', JSON.stringify(attr));
+  } catch(e) {}
+};
 window.psGrantConsent = function(){
+  window.psCaptureAttribution();
   gtag('consent', 'update', {
     ad_storage: 'granted', ad_user_data: 'granted',
     ad_personalization: 'granted', analytics_storage: 'granted'
