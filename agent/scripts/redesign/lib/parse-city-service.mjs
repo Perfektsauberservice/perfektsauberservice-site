@@ -23,7 +23,7 @@ const decode = (s) => s
   .replace(/&gt;/g, '>')
   .replace(/&rsaquo;/g, '›')
   .replace(/&nbsp;/g, ' ');
-const stripTags = (s) => decode(s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+const stripTags = (s) => decode(s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim());
 
 export function parseCityService(filePath) {
   const html = fs.readFileSync(filePath, 'utf8');
