@@ -15,6 +15,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { queryGSC, buildSanitizedResult } from './gsc-query.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -158,23 +159,84 @@ async function getGSCData(accessToken) {
   const keywordsData = await keywordsRes.json();
 
   // Date ultimele 28 zile — total site (pentru comparatie)
+  // country=deu adaugat aici pentru a fi consistent cu pull-ul de keywords
+  // de mai sus (care filtreaza deja Germania) — inainte, aceste doua totaluri
+  // erau worldwide, in timp ce keywords-urile erau Germania-only, in acelasi
+  // raport, fara nicio mentiune a diferentei de scop geografic.
   const totalsRes = await fetch(base, {
     method: 'POST', headers,
-    body: JSON.stringify({ startDate: startDate28, endDate, dimensions: [] }),
+    body: JSON.stringify({
+      startDate: startDate28, endDate, dimensions: [],
+      dimensionFilterGroups: [{
+        filters: [{ dimension: 'country', operator: 'equals', expression: 'deu' }]
+      }],
+    }),
   });
   const totalsData = await totalsRes.json();
 
-  // Date ziua precedenta
+  // Date ziua precedenta (acelasi motiv: country=deu pentru consistenta)
   const yesterdayRes = await fetch(base, {
     method: 'POST', headers,
-    body: JSON.stringify({ startDate: startDate1, endDate, dimensions: [] }),
+    body: JSON.stringify({
+      startDate: startDate1, endDate, dimensions: [],
+      dimensionFilterGroups: [{
+        filters: [{ dimension: 'country', operator: 'equals', expression: 'deu' }]
+      }],
+    }),
   });
   const yesterdayData = await yesterdayRes.json();
 
+  const totals28 = totalsData.rows?.[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 };
+
+  // Page-dimension pull (acelasi interval de 28 zile ca totals28, acelasi
+  // filtru country=deu) — foloseste modulul existent gsc-query.mjs (PR #23)
+  // in loc sa duplice logica de paginare/autentificare. Read-only, la fel ca
+  // toate celelalte apeluri GSC din acest fisier. Esec izolat: daca acest
+  // apel nou pica, restul raportului tot se trimite (acelasi tipar ca
+  // pageSpeed/backlinks mai jos, care sunt deja optionale).
+  let pages = [];
+  let pagesFetchFailed = false;
+  try {
+    const pageResult = await queryGSC({
+      startDate: startDate28, endDate,
+      dimensions: ['page'],
+      filters: { country: 'deu' },
+      rowLimit: 1000,
+      all: true,
+    });
+    pages = buildSanitizedResult({
+      startDate: startDate28, endDate,
+      dimensions: ['page'], filters: { country: 'deu' },
+      queryResult: pageResult,
+    }).rows;
+  } catch (err) {
+    console.log('GSC page-dimension pull failed (non-fatal):', err.message);
+    pagesFetchFailed = true;
+  }
+
+  // queryCoverageRatio: cat din clicks/impressions reale (totals28, acum
+  // Germania-only, la fel ca keywords) reusesc sa fie vizibile si la nivel
+  // de query in lista de top-25 keywords de mai sus. GSC ascunde din motive
+  // de confidentialitate o parte din query-urile cu volum mic, deci acest
+  // raport poate fi real mai mic decat 1 fara sa insemne o eroare — vezi
+  // gsc-query.mjs, campul gsc_rows_not_guaranteed_complete, pentru acelasi
+  // fenomen documentat la nivel de pagina.
+  const keywordsSum = (keywordsData.rows || []).reduce(
+    (acc, row) => ({ clicks: acc.clicks + (row.clicks || 0), impressions: acc.impressions + (row.impressions || 0) }),
+    { clicks: 0, impressions: 0 }
+  );
+  const queryCoverageRatio = {
+    clicks: totals28.clicks > 0 ? keywordsSum.clicks / totals28.clicks : null,
+    impressions: totals28.impressions > 0 ? keywordsSum.impressions / totals28.impressions : null,
+  };
+
   return {
     keywords: keywordsData.rows || [],
-    totals28: totalsData.rows?.[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 },
+    totals28,
     yesterday: yesterdayData.rows?.[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 },
+    pages,
+    pagesFetchFailed,
+    queryCoverageRatio,
   };
 }
 
@@ -402,7 +464,8 @@ async function main() {
       gsc = await getGSCData(token);
       newState.clicks28 = gsc.totals28.clicks;
       newState.impressions28 = gsc.totals28.impressions;
-      console.log('GSC OK — clicks28:', gsc.totals28.clicks);
+      newState.queryCoverageRatio = gsc.queryCoverageRatio;
+      console.log('GSC OK — clicks28:', gsc.totals28.clicks, '| queryCoverageRatio:', gsc.queryCoverageRatio);
     } catch (err) {
       console.error('GSC error:', err.message);
     }
