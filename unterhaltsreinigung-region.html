@@ -427,8 +427,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   var b = document.getElementById('cookieBanner');
   if (!localStorage.getItem('psCookieChoice')) { setTimeout(function(){ b.style.display='block'; }, 1200); }
   function close(c){ localStorage.setItem('psCookieChoice', c); b.style.display='none'; }
-  document.getElementById('cookieAccept').onclick = function(){ close('all'); if (typeof window.psGrantConsent === 'function') window.psGrantConsent(); if (typeof window.psLoadGA === 'function') window.psLoadGA(); };
-  document.getElementById('cookieDecline').onclick = function(){ close('necessary'); };
+  document.getElementById('cookieAccept').onclick = function(){ close('all'); if (typeof window.psGrantConsent === 'function') window.psGrantConsent(); if (typeof window.psLoadGA === 'function') window.psLoadGA(); try{ if (typeof gtag==='function' && sessionStorage.getItem('psConsentChoiceRecorded')!=='all'){ sessionStorage.setItem('psConsentChoiceRecorded','all'); gtag('event','cookie_choice',{choice:'all'}); } }catch(e){} };
+  document.getElementById('cookieDecline').onclick = function(){ close('necessary'); try{ if (typeof gtag==='function' && sessionStorage.getItem('psConsentChoiceRecorded')!=='necessary'){ sessionStorage.setItem('psConsentChoiceRecorded','necessary'); gtag('event','cookie_choice',{choice:'necessary'}); } }catch(e){} };
   document.getElementById('cookieReopen').onclick = function(e){ e.preventDefault(); b.style.display='block'; };
   // GA4 conversion event tracking
   document.addEventListener('click', function(e){
