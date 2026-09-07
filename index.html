@@ -758,10 +758,12 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     localStorage.setItem(KEY, 'all');
     if (typeof window.psGrantConsent === 'function') window.psGrantConsent();
     if (typeof window.psLoadGA === 'function') window.psLoadGA();
+    try{ if (typeof gtag==='function' && sessionStorage.getItem('psConsentChoiceRecorded')!=='all'){ sessionStorage.setItem('psConsentChoiceRecorded','all'); gtag('event','cookie_choice',{choice:'all'}); } }catch(e){}
     hide();
   });
   btnDecline.addEventListener('click', () => {
     localStorage.setItem(KEY, 'necessary');
+    try{ if (typeof gtag==='function' && sessionStorage.getItem('psConsentChoiceRecorded')!=='necessary'){ sessionStorage.setItem('psConsentChoiceRecorded','necessary'); gtag('event','cookie_choice',{choice:'necessary'}); } }catch(e){}
     hide();
   });
   reopen.addEventListener('click', (e) => { e.preventDefault(); show(); });
