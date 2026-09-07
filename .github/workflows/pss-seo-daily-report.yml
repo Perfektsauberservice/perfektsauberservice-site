@@ -32,7 +32,18 @@ jobs:
         run: |
           git config user.name "PSS SEO Bot"
           git config user.email "bot@perfektsauberservice.com"
-          git add agent/state/seo-report-state.json agent/gsc-snapshots/*.json
-          git diff --staged --quiet || git commit -m "seo-report: state + gsc snapshot actualizat [$(date +%Y-%m-%d)]"
-          git pull --rebase origin master
-          git push
+          git add agent/state/seo-report-state.json agent/gsc-snapshots/
+          if git diff --staged --quiet; then
+            echo "No state/snapshot changes to commit."
+          else
+            git commit -m "seo-report: state + gsc snapshot actualizat [$(date +%Y-%m-%d)]"
+            # Persist to the ref this run actually checked out -- never a
+            # hard-coded branch name. `schedule` events only ever run off the
+            # default branch, so github.ref_name resolves to "master" there;
+            # workflow_dispatch resolves to whichever branch was selected when
+            # launching the run. A genuine conflict here fails the step loudly
+            # (no -f, no auto-resolve) rather than rebasing a feature branch
+            # onto master or silently discarding either side.
+            git pull --rebase origin "${{ github.ref_name }}"
+            git push origin HEAD:"${{ github.ref_name }}"
+          fi

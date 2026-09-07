@@ -29,7 +29,7 @@
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { queryGSC, buildSanitizedResult } from './gsc-query.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -72,15 +72,15 @@ const SERVICES = [
   'dachbodenentrümpelung','dachbodenentruempelung','messie','messi','hausmeisterservice'
 ];
 
-function isRelevantQuery(q) {
+export function isRelevantQuery(q) {
   const lower = q.toLowerCase();
   return CITIES.some(c => lower.includes(c)) || SERVICES.some(s => lower.includes(s));
 }
 
 // O miscare de pozitie conteaza doar peste acest prag, in ambele directii,
 // si doar daca are volum minim — vezi comentariul din header.
-const MIN_MOVE_DELTA = 5;
-const MIN_MOVE_IMPRESSIONS = 5;
+export const MIN_MOVE_DELTA = 5;
+export const MIN_MOVE_IMPRESSIONS = 5;
 
 // State pentru comparatie zi precedenta
 const STATE_PATH = join(ROOT, 'agent', 'state', 'seo-report-state.json');
@@ -124,7 +124,7 @@ function loadPreviousSnapshot(today) {
 
 // ─── Position-move deltas (fostul GSC Delta Tracker) ─────────────────────────
 
-function computeDeltas(todayQueries, previousSnapshot) {
+export function computeDeltas(todayQueries, previousSnapshot) {
   const yMap = new Map((previousSnapshot?.queries || []).map(q => [q.q, q]));
   const tMap = new Map(todayQueries.map(q => [q.q, q]));
   const ups = [], downs = [], news = [], losts = [];
@@ -151,6 +151,31 @@ function computeDeltas(todayQueries, previousSnapshot) {
 function fmtMoveRow(q) {
   const arrow = q.delta < 0 ? '▲' : '▼';
   return `${arrow} <b>${q.q}</b> — pos ${q.prev?.toFixed(1)} → ${q.position?.toFixed(1)} (Δ ${q.delta > 0 ? '+' : ''}${q.delta.toFixed(1)}) · ${q.impressions} impr`;
+}
+
+// ─── Signal / failure-alert logic ────────────────────────────────────────────
+
+// A dataset that failed to fetch must never be reported as "0 movers" or
+// otherwise silently folded into a healthy-looking number -- computeDeltas
+// is simply never called for a failed tracked-queries fetch (see main()),
+// and this function turns each failure into an explicit, named warning line
+// instead, so a partial failure can never look identical to "nothing to
+// report today".
+export function computeWarnings({ gscFetchFailed, trackedQueriesFetchFailed, pagesFetchFailed }) {
+  const warnings = [];
+  if (gscFetchFailed) warnings.push('Date GSC generale (totaluri, top cuvinte cheie) indisponibile');
+  if (trackedQueriesFetchFailed) warnings.push('Cuvinte cheie tinta (miscari de pozitie) indisponibile');
+  if (pagesFetchFailed) warnings.push('Date GSC per pagina indisponibile');
+  return warnings;
+}
+
+// The single source of truth for whether today's report gets sent at all.
+// Any dataset warning ALWAYS forces a send, regardless of how "quiet"
+// everything else looks -- a degraded/partial fetch must never be
+// indistinguishable from a genuinely uneventful day.
+export function computeHasSignal({ warnings, clicksDiff, blogIsNew, deltas, isFirstDeltaRun }) {
+  const hasMoveSignal = !!deltas && (deltas.ups.length > 0 || deltas.downs.length > 0 || deltas.news.length > 0);
+  return (warnings && warnings.length > 0) || clicksDiff !== 0 || blogIsNew || hasMoveSignal || isFirstDeltaRun;
 }
 
 // ─── Telegram ─────────────────────────────────────────────────────────────────
@@ -466,11 +491,18 @@ async function auditOwnSite() {
 
 // ─── Format mesaj Telegram ────────────────────────────────────────────────────
 
-function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions, deltas, isFirstDeltaRun }) {
+export function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions, deltas, isFirstDeltaRun, warnings }) {
   const today = new Date().toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
 
   let msg = `<b>📊 SEO Tageszericht — ${today}</b>\n`;
   msg += `<b>perfektsauberservice.com</b>\n\n`;
+
+  // ─ Avertismente (date indisponibile) — mereu primele, ca sa nu fie ratate
+  if (warnings && warnings.length > 0) {
+    msg += `<b>⚠️ Date indisponibile azi</b>\n`;
+    warnings.forEach(w => { msg += `• ${w}\n`; });
+    msg += '\n';
+  }
 
   // ─ GSC
   if (gsc) {
@@ -668,17 +700,23 @@ async function main() {
   // 6. Decide daca exista vreun semnal real de raportat. Fara asta, raportul
   // zilnic ajunge sa spuna "nimic notabil" aproape in fiecare zi, la stadiul
   // actual de trafic al site-ului — liniste utila e mai buna decat zgomot
-  // zilnic constant.
+  // zilnic constant. Un fetch esuat (total sau partial) conteaza mereu ca
+  // semnal -- o defectiune nu trebuie sa fie identica cu o zi linistita.
   const clicksDiff = gsc ? gsc.totals28.clicks - (prevState.clicks28 || 0) : 0;
   const blogIsNew = blogCount > (prevState.blogCount || 0);
-  const hasMoveSignal = deltas ? (deltas.ups.length > 0 || deltas.downs.length > 0 || deltas.news.length > 0) : false;
   const gscFetchFailed = !gsc;
-  const hasSignal = gscFetchFailed || clicksDiff !== 0 || blogIsNew || hasMoveSignal || isFirstDeltaRun;
+  const warnings = computeWarnings({
+    gscFetchFailed,
+    trackedQueriesFetchFailed: gsc?.trackedQueriesFetchFailed || false,
+    pagesFetchFailed: gsc?.pagesFetchFailed || false,
+  });
+  const hasSignal = computeHasSignal({ warnings, clicksDiff, blogIsNew, deltas, isFirstDeltaRun });
 
   if (!hasSignal) {
     console.log('[SEO Daily Report] Fara semnal notabil azi — raportul NU se trimite pe Telegram.');
   } else {
-    const report = buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions, deltas, isFirstDeltaRun });
+    if (warnings.length > 0) console.log('[SEO Daily Report] Avertismente:', warnings.join(' | '));
+    const report = buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions, deltas, isFirstDeltaRun, warnings });
     console.log('\nRaport generat. Trimit pe Telegram...');
     await sendTelegram(report);
     console.log('Trimis!');
@@ -690,7 +728,14 @@ async function main() {
   console.log('State salvat.');
 }
 
-main().catch(err => {
-  console.error('[FATAL]', err.message);
-  process.exit(1);
-});
+// Only auto-run when executed directly (node agent/scripts/seo-daily-report.mjs
+// -- exactly how GitHub Actions invokes it), never when imported as a module
+// by a test file. Without this guard, importing this file to unit-test the
+// exported pure functions above would also fire a live run as a side effect.
+const isMainModule = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMainModule) {
+  main().catch(err => {
+    console.error('[FATAL]', err.message);
+    process.exit(1);
+  });
+}
