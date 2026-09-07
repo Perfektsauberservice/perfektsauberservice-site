@@ -1,18 +1,33 @@
 /**
  * SEO Daily Report Agent
  *
- * Trimite zilnic pe Telegram un raport complet:
+ * Trimite pe Telegram un singur raport zilnic unificat:
  * - Pozitii Google (GSC API) — click-uri, impresii, pozitii cuvinte cheie
+ * - Miscari de pozitie pentru cuvinte cheie tinta (27 orase + 11 servicii),
+ *   comparate cu snapshot-ul zilei precedente (fostul GSC Delta Tracker,
+ *   acum parte din acelasi raport — cele doua se suprapuneau mult, ambele
+ *   trageau date GSC la ~15 min distanta)
  * - Oportunitati GSC — keywords cu impresii mari si CTR mic
  * - Idei cuvinte cheie noi (Google Autocomplete)
  * - Viteza site (PageSpeed Insights API)
  * - Audit tehnic site propriu
  *
+ * Prag miscari (simetric, ca sa nu raporteze zgomot statistic): o miscare
+ * de pozitie conteaza doar daca e >=5 pozitii SI cuvantul are >=5 impresii
+ * (fie azi, fie ieri) — inainte, sectiunea de urcari nu avea niciun prag,
+ * de-aia aparea "▲ pos 77.7 → 77.3 (Δ -0.4)" ca "top mover", desi era doar
+ * fluctuatie normala pe un cuvant cu 0 clickuri.
+ *
+ * Daca nu exista niciun semnal real (nicio miscare peste prag, niciun
+ * cuvant nou, niciun click nou fata de ieri, niciun articol nou), raportul
+ * NU se mai trimite pe Telegram — doar salveaza state-ul si snapshot-ul.
+ * Liniste utila in loc de raport zilnic gol.
+ *
  * Rulare: node agent/scripts/seo-daily-report.mjs
- * GitHub Actions: pss-seo-daily-report.yml (zilnic 07:00 Germania)
+ * GitHub Actions: pss-seo-daily-report.yml (zilnic 07:30 Germania)
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { queryGSC, buildSanitizedResult } from './gsc-query.mjs';
@@ -40,8 +55,36 @@ const AUTOCOMPLETE_SEEDS = [
   'entrümpelung karlsruhe',
 ];
 
+// 27 orase + 11 servicii — filtru pentru cuvintele urmarite in sectiunea de
+// miscari de pozitie (fostul GSC Delta Tracker).
+const CITIES = [
+  'rastatt','baden-baden','baden baden','karlsruhe','gaggenau','ettlingen','bühl','buehl',
+  'pforzheim','loffenau','muggensturm','achern','stutensee','ötigheim','oetigheim',
+  'steinmauern','au am rhein','elchesheim','illingen','weisenbach','bad herrenalb','bad wildbad',
+  'bietigheim','bischweier','durmersheim','forbach','hügelsheim','huegelsheim','iffezheim',
+  'kuppenheim','malsch','rheinmünster','rheinmuenster'
+];
+const SERVICES = [
+  'entrümpelung','entruempelung','haushaltsauflösung','haushaltsaufloesung',
+  'wohnungsauflösung','wohnungsaufloesung','büroauflösung','bueroauflösung','bueroaufloesung',
+  'gewerberäumung','gewerberaeumung','nachlassauflösung','nachlassaufloesung',
+  'kellerentrümpelung','kellerentruempelung','garagenentrümpelung','garagenentruempelung',
+  'dachbodenentrümpelung','dachbodenentruempelung','messie','messi','hausmeisterservice'
+];
+
+function isRelevantQuery(q) {
+  const lower = q.toLowerCase();
+  return CITIES.some(c => lower.includes(c)) || SERVICES.some(s => lower.includes(s));
+}
+
+// O miscare de pozitie conteaza doar peste acest prag, in ambele directii,
+// si doar daca are volum minim — vezi comentariul din header.
+const MIN_MOVE_DELTA = 5;
+const MIN_MOVE_IMPRESSIONS = 5;
+
 // State pentru comparatie zi precedenta
 const STATE_PATH = join(ROOT, 'agent', 'state', 'seo-report-state.json');
+const SNAPSHOTS_DIR = join(ROOT, 'agent', 'gsc-snapshots');
 
 function loadState() {
   if (!existsSync(STATE_PATH)) return {};
@@ -53,6 +96,61 @@ function saveState(data) {
   const dir = join(ROOT, 'agent', 'state');
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   writeFileSync(STATE_PATH, JSON.stringify(data, null, 2), 'utf8');
+}
+
+function ensureSnapshotsDir() {
+  if (!existsSync(SNAPSHOTS_DIR)) mkdirSync(SNAPSHOTS_DIR, { recursive: true });
+}
+
+function saveSnapshot(date, queries) {
+  ensureSnapshotsDir();
+  const path = join(SNAPSHOTS_DIR, `${date}.json`);
+  writeFileSync(path, JSON.stringify({ date, queries }, null, 2), 'utf8');
+  return path;
+}
+
+function loadPreviousSnapshot(today) {
+  if (!existsSync(SNAPSHOTS_DIR)) return null;
+  const files = readdirSync(SNAPSHOTS_DIR)
+    .filter(f => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+    .filter(f => f.replace('.json', '') < today)
+    .sort()
+    .reverse();
+  if (!files.length) return null;
+  const path = join(SNAPSHOTS_DIR, files[0]);
+  try { return JSON.parse(readFileSync(path, 'utf8')); }
+  catch { return null; }
+}
+
+// ─── Position-move deltas (fostul GSC Delta Tracker) ─────────────────────────
+
+function computeDeltas(todayQueries, previousSnapshot) {
+  const yMap = new Map((previousSnapshot?.queries || []).map(q => [q.q, q]));
+  const tMap = new Map(todayQueries.map(q => [q.q, q]));
+  const ups = [], downs = [], news = [], losts = [];
+
+  for (const t of todayQueries) {
+    const y = yMap.get(t.q);
+    if (!y) { news.push(t); continue; }
+    if (t.position == null || y.position == null) continue;
+    const delta = t.position - y.position; // negativ = pozitie mai buna
+    const meaningfulVolume = t.impressions >= MIN_MOVE_IMPRESSIONS || y.impressions >= MIN_MOVE_IMPRESSIONS;
+    if (!meaningfulVolume) continue;
+    if (delta <= -MIN_MOVE_DELTA) ups.push({ ...t, prev: y.position, delta });
+    else if (delta >= MIN_MOVE_DELTA) downs.push({ ...t, prev: y.position, delta });
+  }
+  for (const y of (previousSnapshot?.queries || [])) {
+    if (!tMap.has(y.q)) losts.push(y);
+  }
+  ups.sort((a, b) => a.delta - b.delta);     // cea mai mare urcare prima
+  downs.sort((a, b) => b.delta - a.delta);   // cea mai mare scadere prima
+  news.sort((a, b) => b.impressions - a.impressions);
+  return { ups, downs, news, losts };
+}
+
+function fmtMoveRow(q) {
+  const arrow = q.delta < 0 ? '▲' : '▼';
+  return `${arrow} <b>${q.q}</b> — pos ${q.prev?.toFixed(1)} → ${q.position?.toFixed(1)} (Δ ${q.delta > 0 ? '+' : ''}${q.delta.toFixed(1)}) · ${q.impressions} impr`;
 }
 
 // ─── Telegram ─────────────────────────────────────────────────────────────────
@@ -214,6 +312,41 @@ async function getGSCData(accessToken) {
     pagesFetchFailed = true;
   }
 
+  // Cuvinte cheie tinta (27 orase + 11 servicii), pentru sectiunea de
+  // miscari de pozitie fata de ieri (fostul GSC Delta Tracker). Reuseste
+  // acelasi accessToken deja obtinut mai sus — un singur login Google in
+  // loc de doua (inainte, scriptul separat facea propriul JWT+token exchange
+  // la 15 minute dupa acesta). Esec izolat, la fel ca pull-ul de pagini.
+  let trackedQueries = [];
+  let trackedQueriesFetchFailed = false;
+  try {
+    const trackedRes = await fetch(base, {
+      method: 'POST', headers,
+      body: JSON.stringify({
+        startDate: startDate7, endDate,
+        dimensions: ['query', 'page'],
+        rowLimit: 5000,
+        dimensionFilterGroups: [{
+          filters: [{ dimension: 'country', operator: 'equals', expression: 'deu' }]
+        }],
+      }),
+    });
+    const trackedData = await trackedRes.json();
+    trackedQueries = (trackedData.rows || [])
+      .filter(r => isRelevantQuery(r.keys[0]))
+      .map(r => ({
+        q: r.keys[0],
+        page: r.keys[1] || '',
+        position: parseFloat(r.position?.toFixed(2)) || null,
+        impressions: r.impressions || 0,
+        clicks: r.clicks || 0,
+        ctr: parseFloat((r.ctr * 100).toFixed(2)) || 0,
+      }));
+  } catch (err) {
+    console.log('GSC tracked-queries pull failed (non-fatal):', err.message);
+    trackedQueriesFetchFailed = true;
+  }
+
   // queryCoverageRatio: cat din clicks/impressions reale (totals28, acum
   // Germania-only, la fel ca keywords) reusesc sa fie vizibile si la nivel
   // de query in lista de top-25 keywords de mai sus. GSC ascunde din motive
@@ -236,6 +369,8 @@ async function getGSCData(accessToken) {
     yesterday: yesterdayData.rows?.[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 },
     pages,
     pagesFetchFailed,
+    trackedQueries,
+    trackedQueriesFetchFailed,
     queryCoverageRatio,
   };
 }
@@ -331,7 +466,7 @@ async function auditOwnSite() {
 
 // ─── Format mesaj Telegram ────────────────────────────────────────────────────
 
-function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions }) {
+function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions, deltas, isFirstDeltaRun }) {
   const today = new Date().toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: '2-digit', year: 'numeric' });
 
   let msg = `<b>📊 SEO Tageszericht — ${today}</b>\n`;
@@ -369,6 +504,33 @@ function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, k
     }
   } else {
     msg += `<b>🔍 GSC</b> — date indisponibile\n\n`;
+  }
+
+  // ─ Miscari de pozitie pe cuvinte cheie tinta (fostul GSC Delta Tracker)
+  if (isFirstDeltaRun) {
+    msg += `<b>📍 Urmarire pozitii initiata</b>\n`;
+    msg += `<i>Baseline stabilit pentru cuvintele cheie tinta (orase + servicii). Comparatii incep de maine.</i>\n\n`;
+  } else if (deltas) {
+    if (deltas.ups.length) {
+      msg += `<b>🔝 Miscari pozitive (&gt;${MIN_MOVE_DELTA} pozitii)</b> (${deltas.ups.length})\n`;
+      deltas.ups.slice(0, 8).forEach(q => { msg += fmtMoveRow(q) + '\n'; });
+      msg += '\n';
+    }
+    if (deltas.downs.length) {
+      msg += `<b>⚠️ Scaderi &gt;${MIN_MOVE_DELTA} pozitii</b> (${deltas.downs.length})\n`;
+      deltas.downs.slice(0, 8).forEach(q => { msg += fmtMoveRow(q) + '\n'; });
+      msg += '\n';
+    }
+    if (deltas.news.length) {
+      msg += `<b>🆕 Cuvinte noi indexate</b> (${deltas.news.length})\n`;
+      deltas.news.slice(0, 6).forEach(q => {
+        msg += `<b>${q.q}</b> — pos ${q.position?.toFixed(1)} · ${q.impressions} impr · ${q.clicks} clicks\n`;
+      });
+      msg += '\n';
+    }
+    if (deltas.losts.length) {
+      msg += `📉 ${deltas.losts.length} cuvinte au disparut din top (probabil scazute peste poz. 100)\n\n`;
+    }
   }
 
   // ─ PageSpeed
@@ -436,7 +598,7 @@ function buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, k
   }
 
   // ─ Footer
-  msg += `<i>Urmatorul raport maine la 07:00</i>`;
+  msg += `<i>Urmatorul raport maine la 07:30</i>`;
 
   return msg;
 }
@@ -448,6 +610,7 @@ async function main() {
 
   const prevState = loadState();
   const newState = {};
+  const todayStr = new Date().toISOString().split('T')[0];
 
   // 1. Blog count
   const blogIndex = JSON.parse(readFileSync(join(ROOT, 'content', 'auto', 'blog-index.json'), 'utf8'));
@@ -455,7 +618,7 @@ async function main() {
   newState.blogCount = blogCount;
   console.log('Blog articole:', blogCount);
 
-  // 2. Google Search Console
+  // 2. Google Search Console (totaluri, top keywords, cuvinte tinta)
   let gsc = null;
   if (GSC_SERVICE_ACCOUNT) {
     try {
@@ -466,6 +629,7 @@ async function main() {
       newState.impressions28 = gsc.totals28.impressions;
       newState.queryCoverageRatio = gsc.queryCoverageRatio;
       console.log('GSC OK — clicks28:', gsc.totals28.clicks, '| queryCoverageRatio:', gsc.queryCoverageRatio);
+      console.log('Cuvinte tinta urmarite:', gsc.trackedQueries.length);
     } catch (err) {
       console.error('GSC error:', err.message);
     }
@@ -473,7 +637,17 @@ async function main() {
     console.log('GSC_SERVICE_ACCOUNT_JSON lipsa — skip GSC');
   }
 
-  // 3. PageSpeed
+  // 3. Miscari de pozitie fata de ieri (fostul GSC Delta Tracker)
+  const previousSnapshot = loadPreviousSnapshot(todayStr);
+  const isFirstDeltaRun = !previousSnapshot;
+  let deltas = null;
+  if (gsc && !gsc.trackedQueriesFetchFailed) {
+    deltas = computeDeltas(gsc.trackedQueries, previousSnapshot);
+    saveSnapshot(todayStr, gsc.trackedQueries);
+    console.log(`Miscari: ups=${deltas.ups.length} downs=${deltas.downs.length} news=${deltas.news.length} losts=${deltas.losts.length}`);
+  }
+
+  // 4. PageSpeed
   console.log('Fetching PageSpeed...');
   const pageSpeed = await getPageSpeed(SITE_URL);
   if (pageSpeed) {
@@ -481,7 +655,7 @@ async function main() {
     console.log('PageSpeed OK — performance:', pageSpeed.performance);
   }
 
-  // 4. Keyword suggestions + Site audit + Backlinks — in paralel
+  // 5. Keyword suggestions + Site audit + Backlinks — in paralel
   console.log('Fetching keyword suggestions, backlinks & auditing site...');
   const [keywordSuggestions, audit, backlinks] = await Promise.all([
     getKeywordSuggestions(AUTOCOMPLETE_SEEDS),
@@ -491,11 +665,24 @@ async function main() {
   console.log('Keyword suggestions:', keywordSuggestions.length, '| Audit done | Backlinks:', backlinks?.rank ?? 'N/A');
   if (backlinks) newState.oprRank = backlinks.rank;
 
-  // 5. Build & send report
-  const report = buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions });
-  console.log('\nRaport generat. Trimit pe Telegram...');
-  await sendTelegram(report);
-  console.log('Trimis!');
+  // 6. Decide daca exista vreun semnal real de raportat. Fara asta, raportul
+  // zilnic ajunge sa spuna "nimic notabil" aproape in fiecare zi, la stadiul
+  // actual de trafic al site-ului — liniste utila e mai buna decat zgomot
+  // zilnic constant.
+  const clicksDiff = gsc ? gsc.totals28.clicks - (prevState.clicks28 || 0) : 0;
+  const blogIsNew = blogCount > (prevState.blogCount || 0);
+  const hasMoveSignal = deltas ? (deltas.ups.length > 0 || deltas.downs.length > 0 || deltas.news.length > 0) : false;
+  const gscFetchFailed = !gsc;
+  const hasSignal = gscFetchFailed || clicksDiff !== 0 || blogIsNew || hasMoveSignal || isFirstDeltaRun;
+
+  if (!hasSignal) {
+    console.log('[SEO Daily Report] Fara semnal notabil azi — raportul NU se trimite pe Telegram.');
+  } else {
+    const report = buildReport({ gsc, pageSpeed, audit, backlinks, prevState, blogCount, keywordSuggestions, deltas, isFirstDeltaRun });
+    console.log('\nRaport generat. Trimit pe Telegram...');
+    await sendTelegram(report);
+    console.log('Trimis!');
+  }
 
   // 7. Save state
   newState.lastRunAt = new Date().toISOString();

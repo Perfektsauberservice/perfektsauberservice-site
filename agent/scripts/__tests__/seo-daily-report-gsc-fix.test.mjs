@@ -81,9 +81,9 @@ test('I: queryCoverageRatio is persisted to newState (not just computed and disc
   assert.match(SRC, /newState\.queryCoverageRatio = gsc\.queryCoverageRatio/);
 });
 
-test('J: the 3 pre-existing GSC calls (keywords/totals28/yesterday) are structurally unchanged apart from the added country filter -- still exactly 3 direct fetch() calls to the same endpoint, no refactor onto queryGSC for those 3', () => {
+test('J: the 3 pre-existing GSC calls (keywords/totals28/yesterday) plus the tracked-queries pull (merged in from the former gsc-delta-tracker.mjs, 2026-09-07) are the only direct fetch(base, ...) calls -- still no refactor onto queryGSC for these 4', () => {
   const fetchCalls = SRC.match(/await fetch\(base,/g) || [];
-  assert.equal(fetchCalls.length, 3, 'expected exactly 3 direct fetch(base, ...) calls (keywords, totals28, yesterday) -- the 4th call goes through queryGSC, not fetch(base, ...)');
+  assert.equal(fetchCalls.length, 4, 'expected exactly 4 direct fetch(base, ...) calls (keywords, totals28, yesterday, trackedQueries) -- the page-dimension call goes through queryGSC, not fetch(base, ...)');
 });
 
 test('K: coverage-ratio math is correct given representative synthetic numbers (pure function check, no I/O)', () => {
