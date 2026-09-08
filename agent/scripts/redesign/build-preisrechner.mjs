@@ -41,16 +41,9 @@ const jsonLd = JSON.stringify({
   operatingSystem: 'Any',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
   provider: {
-    '@type': 'LocalBusiness',
+    '@type': 'Organization',
     name: 'Perfekt Sauber Service',
     telephone: '+49 163 9087197',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Reutstraße 9',
-      addressLocality: 'Loffenau',
-      postalCode: '76597',
-      addressCountry: 'DE',
-    },
   },
 }, null, 2);
 

@@ -12,10 +12,9 @@ function build() {
   const url = `${SITE}/reinigung`;
 
   const provider = {
-    '@type': 'LocalBusiness', name: 'Perfekt Sauber Service',
+    '@type': 'Organization', name: 'Perfekt Sauber Service',
     telephone: '+49 163 9087197', email: 'kontakt@perfektsauberservice.com',
     url: SITE, image: `${SITE}/images/echipa.webp`,
-    address: { '@type':'PostalAddress', streetAddress:'Reutstraße 9', addressLocality:'Loffenau', postalCode:'76597', addressCountry:'DE' },
     priceRange:'€€',
     aggregateRating:{ '@type':'AggregateRating', ratingValue:'5.0', reviewCount:'10', bestRating:'5', worstRating:'1' },
   };
