@@ -47,7 +47,7 @@ export function contactSection(city, serviceLabel, waText) {
 
 export const FOOTER = `<footer class="foot">
   <span>© <span id="year">2026</span> Perfekt Sauber Service · Inh. Laura Craciun</span>
-  <span>Reutstraße 9 · 76597 Loffenau</span>
+  <span>Einsatzgebiet: Rastatt, Baden-Baden, Gaggenau, Karlsruhe</span>
   <span>perfektsauberservice.com · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a> · <a href="#" id="cookieReopen">Cookies</a></span>
 </footer>`;
 

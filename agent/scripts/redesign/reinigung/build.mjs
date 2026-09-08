@@ -20,19 +20,12 @@ const GALLERY_IMAGES = [
 function buildSchema(service, city, slug, faqs) {
   const url = `${SITE}/${slug}`;
   const provider = {
-    '@type': 'LocalBusiness',
+    '@type': 'Organization',
     name: 'Perfekt Sauber Service',
     telephone: PHONE,
     email: EMAIL,
     url: SITE,
     image: `${SITE}/images/echipa.webp`,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Reutstraße 9',
-      addressLocality: 'Loffenau',
-      postalCode: '76597',
-      addressCountry: 'DE',
-    },
     priceRange: '€€',
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -257,9 +250,8 @@ export function buildServiceHubPage(serviceSlug) {
   }));
 
   const provider = {
-    '@type': 'LocalBusiness', name: 'Perfekt Sauber Service',
+    '@type': 'Organization', name: 'Perfekt Sauber Service',
     telephone: PHONE, email: EMAIL, url: SITE, image: `${SITE}/images/echipa.webp`,
-    address: { '@type':'PostalAddress', streetAddress:'Reutstraße 9', addressLocality:'Loffenau', postalCode:'76597', addressCountry:'DE' },
     priceRange:'€€', aggregateRating:{ '@type':'AggregateRating', ratingValue:'5.0', reviewCount:'10', bestRating:'5', worstRating:'1' },
   };
 
