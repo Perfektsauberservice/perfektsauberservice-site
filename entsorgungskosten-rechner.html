@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Entsorgungskosten-Rechner (intern) — Perfekt Sauber Service</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preload" href="/fonts/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="/fonts/fonts.css"/></noscript>
+<style>
+  @font-face{font-family:'Fraunces Fallback';src:local('Times New Roman'),local('Times'),local('Liberation Serif');size-adjust:102.41%;ascent-override:95.06%;descent-override:26.82%;line-gap-override:0%;}
+  @font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica');size-adjust:107.06%;ascent-override:90.49%;descent-override:22.51%;line-gap-override:0%;}
+  :root{ --bg:#fbf7f0; --ink:#1a2030; --muted:#6b6456; --line:#e5dccb; --blue:#1d6dd6; --green:#5aa83a; --green-dk:#3f7f28; --red:#b6432c; }
+  *{box-sizing:border-box;}
+  html,body{overflow-x:hidden;}
+  body{font-family:"Inter","Inter Fallback",system-ui,sans-serif; background:var(--bg); color:var(--ink); margin:0; -webkit-font-smoothing:antialiased;}
+  .mono{font-family:"Geist Mono",monospace;}
+  .serif{font-family:"Fraunces","Fraunces Fallback",serif;}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+  .skip-link{position:absolute; top:-40px; left:0; background:var(--ink); color:#fff; padding:8px 16px; z-index:100; text-decoration:none; font-family:"Geist Mono",monospace; font-size:.78rem;}
+  .skip-link:focus{top:0;}
+  header.bar{padding:18px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .brand{font-family:"Fraunces","Fraunces Fallback",serif; font-size:1.05rem;}
+  .brand b{font-weight:600;} .brand em{font-style:italic; color:var(--green-dk);}
+  .tag{font-family:"Geist Mono",monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:4px 10px; white-space:nowrap;}
+  main{max-width:640px; margin:0 auto; padding:20px 16px 80px;}
+  .step-indicator{display:flex; gap:6px; margin:18px 0 24px;}
+  .step-dot{flex:1; height:4px; border-radius:99px; background:var(--line);}
+  .step-dot.done,.step-dot.active{background:var(--blue);}
+  h1.h1{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:400; font-size:clamp(1.5rem,5vw,2rem); margin:0 0 8px; line-height:1.15;}
+  p.lead{color:var(--muted); font-size:.95rem; line-height:1.5; margin:0 0 22px;}
+  label.field-label{display:block; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;}
+  input[type="text"],input[type="number"]{width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; font-family:Inter,sans-serif; font-size:1rem; color:var(--ink);}
+  select{width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; font-family:Inter,sans-serif; font-size:1rem; color:var(--ink);}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:15px 22px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600; border:1px solid transparent; cursor:pointer; text-decoration:none; width:100%;}
+  .btn-primary{background:var(--green); color:#fff;}
+  .btn-primary:hover{background:var(--green-dk);}
+  .btn-primary:disabled{background:#c9c2b0; cursor:not-allowed;}
+  .btn-secondary{background:#fff; color:var(--ink); border-color:var(--line);}
+  .btn-secondary:hover{border-color:var(--ink);}
+  .btn-text{background:none; border:none; color:var(--blue); font-family:"Geist Mono",monospace; font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; cursor:pointer; padding:10px 0; width:auto;}
+  .btn-row{display:flex; gap:10px; margin-top:22px;}
+  .btn-row .btn{width:auto; flex:1;}
+  [hidden]{display:none !important;}
+  .photo-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0;}
+  .photo-thumb{position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#fff;}
+  .photo-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .photo-thumb button{position:absolute; top:4px; right:4px; width:26px; height:26px; border-radius:50%; border:none; background:rgba(26,32,48,.75); color:#fff; font-size:.9rem; line-height:1; cursor:pointer;}
+  .photo-add{aspect-ratio:1; border:1px dashed var(--line); border-radius:10px; display:flex; align-items:center; justify-content:center; background:#fff; cursor:pointer; font-family:"Geist Mono",monospace; font-size:1.6rem; color:var(--muted);}
+  .photo-add input{position:absolute; width:1px; height:1px; opacity:0; overflow:hidden;}
+  .loading-wrap{display:flex; flex-direction:column; align-items:center; text-align:center; padding:60px 20px;}
+  .spinner{width:38px; height:38px; border-radius:50%; border:3px solid var(--line); border-top-color:var(--blue); animation:spin 0.9s linear infinite; margin-bottom:18px;}
+  @media (prefers-reduced-motion: reduce){ .spinner{animation-duration:2.4s;} }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .warn-banner{display:flex; gap:10px; align-items:flex-start; background:#fff8e8; border:1px solid #e8d9a8; border-radius:10px; padding:14px; font-size:.86rem; line-height:1.45; margin-bottom:18px;}
+  .warn-banner .ic{font-size:1.1rem;}
+  .line-item{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; background:#fff;}
+  .line-item-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;}
+  .line-item-head strong{font-size:.95rem; line-height:1.3;}
+  .line-remove{background:none; border:none; color:var(--muted); font-size:1rem; cursor:pointer; padding:4px;}
+  .line-remove:hover{color:var(--red);}
+  .line-cost{font-family:"Geist Mono",monospace; font-size:.9rem; color:var(--blue); font-weight:600; margin-top:10px;}
+  .line-note{font-family:"Geist Mono",monospace; font-size:.72rem; color:var(--muted); margin-top:6px; line-height:1.4;}
+  .toggle-row{display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:.88rem;}
+  .toggle-row input{width:18px; height:18px;}
+  .free-badge{display:inline-block; font-family:"Geist Mono",monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--green-dk); background:#eef7e8; border-radius:999px; padding:6px 12px;}
+  .total-card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:26px; text-align:center; margin:8px 0 22px;}
+  .total-label{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;}
+  .total-value{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(2.2rem,8vw,3.2rem); color:var(--blue); line-height:1;}
+  .breakdown{font-family:"Geist Mono",monospace; font-size:.78rem; line-height:1.9; border-top:1px solid var(--line); margin-top:18px; padding-top:16px; text-align:left;}
+  .breakdown-row{display:flex; justify-content:space-between; gap:10px;}
+  .disclaimer{font-size:.8rem; color:var(--muted); line-height:1.5; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:18px;}
+  .status-live{font-size:.85rem; color:var(--muted); text-align:center;}
+  .err-box{background:#fdeceb; border:1px solid #f0b8b0; color:var(--red); border-radius:10px; padding:14px; font-size:.86rem; margin-bottom:16px;}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+<header class="bar">
+  <span class="brand"><b>Perfekt</b> <em>Sauber</em></span>
+  <span class="tag">Intern &middot; Entsorgungskosten</span>
+</header>
+
+<main id="main-content">
+  <div class="step-indicator" role="progressbar" aria-valuemin="1" aria-valuemax="5" id="stepIndicator">
+    <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+  </div>
+
+  <!-- SCREEN 1: START -->
+  <section id="screen-start">
+    <h1 class="h1">Entsorgungskosten-Rechner</h1>
+    <p class="lead">Interne Schätzung der eigenen Entsorgungskosten (Wertstoffhof/Deponie) während der Besichtigung. Kein Angebot für den Kunden — das bleibt wie bisher separat.</p>
+    <label class="field-label" for="customerField">Kunde / Adresse (optional)</label>
+    <input type="text" id="customerField" name="customerField" autocomplete="off" placeholder="z.B. Müller, Karlsruhe" />
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" id="btnGoPhotos">Fotos aufnehmen</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: PHOTOS -->
+  <section id="screen-photos" hidden>
+    <h1 class="h1">Fotos</h1>
+    <p class="lead">Mach Fotos von den Materialien/Abfällen vor Ort. Mehrere Fotos möglich (max. 5 pro Analyse).</p>
+    <div class="photo-grid" id="photoGrid">
+      <label class="photo-add" id="photoAddTile">
+        +
+        <input type="file" id="photoInput" accept="image/*" capture="environment" multiple aria-label="Foto aufnehmen oder auswählen" />
+      </label>
+    </div>
+    <div id="photoError" class="err-box" hidden></div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="btnBackToStart">Zurück</button>
+      <button type="button" class="btn btn-primary" id="btnAnalyze" disabled>Analysieren</button>
+    </div>
+    <div style="margin-top:14px;">
+      <button type="button" class="btn-text" id="btnSkipToManual">Ohne Foto-Analyse fortfahren (manuell)</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: ANALYSIS -->
+  <section id="screen-analyzing" hidden>
+    <div class="loading-wrap">
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="status-live" role="status" aria-live="polite" id="analyzeStatus">Analysiere Fotos…</p>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: RESULT / EDIT -->
+  <section id="screen-result" hidden>
+    <h1 class="h1">Ergebnis prüfen</h1>
+    <div class="warn-banner">
+      <span class="ic" aria-hidden="true">⚠️</span>
+      <span>Schätzung der KI — Mengen sind editierbar, bevor du weitermachst. Bitte jede Zeile kontrollieren.</span>
+    </div>
+    <div id="resultError" class="err-box" hidden></div>
+    <div id="lineItems"></div>
+    <button type="button" class="btn-text" id="btnAddCategory">+ Kategorie manuell hinzufügen</button>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="btnBackToPhotos">Zurück</button>
+      <button type="button" class="btn btn-primary" id="btnGoTotal" disabled>Weiter zur Summe</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 5: TOTAL -->
+  <section id="screen-total" hidden>
+    <h1 class="h1">Gesamtkosten</h1>
+    <div class="total-card">
+      <div class="total-label">Geschätzte Entsorgungskosten</div>
+      <div class="total-value mono" id="totalValue">0,00 €</div>
+      <div class="breakdown" id="totalBreakdown"></div>
+    </div>
+    <div class="disclaimer">
+      Interne Kostenschätzung für PSS (Entsorgungsgebühren), Stand Tarife 2026. <strong>Kein Angebot und kein Preis für den Kunden.</strong> Endgültige Kosten hängen von tatsächlichem Gewicht/Volumen bei Anlieferung ab.
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="btnBackToResult">Zurück</button>
+      <button type="button" class="btn btn-primary" id="btnMakePdf">PDF erstellen</button>
+    </div>
+    <div style="margin-top:14px;">
+      <button type="button" class="btn-text" id="btnRestart">Neue Berechnung starten</button>
+    </div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js" defer></script>
+<script type="module">
+import { calculateLineItem, calculateTotal, findCategory } from "/assets/js/entsorgungskosten-calc.mjs";
+
+const screens = ["start", "photos", "analyzing", "result", "total"];
+const dots = document.querySelectorAll(".step-dot");
+let feeTable = null;
+const state = {
+  customer: "",
+  photos: [], // { id, dataUrl, base64, mediaType }
+  lines: [],  // { id, category, input, aiNote }
+};
+
+function showScreen(name) {
+  const idx = screens.indexOf(name);
+  screens.forEach((s, i) => {
+    document.getElementById(`screen-${s}`).hidden = s !== name;
+    dots[i].classList.toggle("active", i === idx);
+    dots[i].classList.toggle("done", i < idx);
+  });
+  document.getElementById("main-content").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function loadFeeTable() {
+  const res = await fetch("/data/entsorgungsgebuehren-2026.json");
+  feeTable = await res.json();
+}
+
+// --- Screen 1 ---
+document.getElementById("btnGoPhotos").addEventListener("click", () => {
+  state.customer = document.getElementById("customerField").value.trim();
+  showScreen("photos");
+});
+
+// --- Screen 2: photos ---
+const photoGrid = document.getElementById("photoGrid");
+const photoInput = document.getElementById("photoInput");
+const photoError = document.getElementById("photoError");
+const MAX_PHOTOS = 5;
+
+function renderPhotoGrid() {
+  [...photoGrid.querySelectorAll(".photo-thumb")].forEach((el) => el.remove());
+  state.photos.forEach((p) => {
+    const div = document.createElement("div");
+    div.className = "photo-thumb";
+    div.innerHTML = `<img src="${p.dataUrl}" alt="Foto" /><button type="button" aria-label="Foto entfernen">✕</button>`;
+    div.querySelector("button").addEventListener("click", () => {
+      state.photos = state.photos.filter((x) => x.id !== p.id);
+      renderPhotoGrid();
+    });
+    photoGrid.insertBefore(div, document.getElementById("photoAddTile"));
+  });
+  document.getElementById("photoAddTile").hidden = state.photos.length >= MAX_PHOTOS;
+  document.getElementById("btnAnalyze").disabled = state.photos.length === 0;
+}
+
+function fileToEntry(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      const base64 = dataUrl.split(",")[1];
+      resolve({ id: crypto.randomUUID(), dataUrl, base64, mediaType: file.type || "image/jpeg" });
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+photoInput.addEventListener("change", async (e) => {
+  photoError.hidden = true;
+  const files = [...e.target.files].slice(0, MAX_PHOTOS - state.photos.length);
+  if (e.target.files.length > files.length) {
+    photoError.textContent = `Nur ${MAX_PHOTOS} Fotos pro Analyse möglich.`;
+    photoError.hidden = false;
+  }
+  for (const file of files) {
+    if (!file.type.startsWith("image/")) continue;
+    state.photos.push(await fileToEntry(file));
+  }
+  photoInput.value = "";
+  renderPhotoGrid();
+});
+
+document.getElementById("btnBackToStart").addEventListener("click", () => showScreen("start"));
+
+document.getElementById("btnSkipToManual").addEventListener("click", async () => {
+  if (!feeTable) await loadFeeTable();
+  state.lines = [];
+  renderLineItems();
+  showScreen("result");
+});
+
+// --- Screen 3: analyze ---
+document.getElementById("btnAnalyze").addEventListener("click", async () => {
+  showScreen("analyzing");
+  const statusEl = document.getElementById("analyzeStatus");
+  try {
+    if (!feeTable) await loadFeeTable();
+    const res = await fetch("/api/entsorgungskosten-analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        images: state.photos.map((p) => ({ mediaType: p.mediaType, data: p.base64 })),
+      }),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || "Analyse fehlgeschlagen");
+    }
+    const data = await res.json();
+    state.lines = (data.items || []).map((item) => ({
+      id: crypto.randomUUID(),
+      category: findCategory(feeTable, item.categoryId),
+      input: defaultInputFor(findCategory(feeTable, item.categoryId)),
+      aiNote: [item.quantityGuess, item.note].filter(Boolean).join(" — "),
+    }));
+    renderLineItems();
+    showScreen("result");
+  } catch (err) {
+    statusEl.textContent = "";
+    document.getElementById("resultError").hidden = false;
+    document.getElementById("resultError").textContent =
+      "KI-Analyse fehlgeschlagen: " + err.message + ". Du kannst Kategorien manuell hinzufügen.";
+    state.lines = [];
+    renderLineItems();
+    showScreen("result");
+  }
+});
+
+function defaultInputFor(category) {
+  switch (category.mode) {
+    case "flat_by_volume_tier": return { tierId: category.tiers[0].id, count: 1 };
+    case "per_piece": case "per_piece_capped": return { quantity: 1 };
+    case "weight_threshold": return { weightKg: 0 };
+    case "weight_threshold_with_small_flat": return { smallVolume: true, weightKg: 0 };
+    default: return {};
+  }
+}
+
+// --- Screen 4: result / edit ---
+const lineItemsEl = document.getElementById("lineItems");
+
+function computeLineCost(line) {
+  try {
+    return calculateLineItem(line.category, line.input);
+  } catch {
+    return { cost: 0 };
+  }
+}
+
+function renderLineItems() {
+  lineItemsEl.innerHTML = "";
+  document.getElementById("resultError").hidden = state.lines.length > 0 || true;
+  state.lines.forEach((line) => {
+    lineItemsEl.appendChild(renderLineItem(line));
+  });
+  document.getElementById("btnGoTotal").disabled = state.lines.length === 0;
+}
+
+function renderLineItem(line) {
+  const wrap = document.createElement("div");
+  wrap.className = "line-item";
+  const catSelectId = `cat-${line.id}`;
+
+  const head = document.createElement("div");
+  head.className = "line-item-head";
+  head.innerHTML = `<strong>${line.category.label}</strong>`;
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "line-remove";
+  removeBtn.setAttribute("aria-label", `${line.category.label} entfernen`);
+  removeBtn.textContent = "✕";
+  removeBtn.addEventListener("click", () => {
+    state.lines = state.lines.filter((l) => l.id !== line.id);
+    renderLineItems();
+  });
+  head.appendChild(removeBtn);
+  wrap.appendChild(head);
+
+  const catLabel = document.createElement("label");
+  catLabel.className = "field-label";
+  catLabel.setAttribute("for", catSelectId);
+  catLabel.textContent = "Kategorie";
+  wrap.appendChild(catLabel);
+
+  const catSelect = document.createElement("select");
+  catSelect.id = catSelectId;
+  catSelect.style.marginBottom = "12px";
+  feeTable.categories.forEach((c) => {
+    const opt = document.createElement("option");
+    opt.value = c.id;
+    opt.textContent = c.label;
+    opt.selected = c.id === line.category.id;
+    catSelect.appendChild(opt);
+  });
+  catSelect.addEventListener("change", () => {
+    line.category = findCategory(feeTable, catSelect.value);
+    line.input = defaultInputFor(line.category);
+    renderLineItems();
+  });
+  wrap.appendChild(catSelect);
+
+  wrap.appendChild(renderInputFields(line));
+
+  if (line.aiNote) {
+    const note = document.createElement("div");
+    note.className = "line-note";
+    note.textContent = `KI-Hinweis: ${line.aiNote}`;
+    wrap.appendChild(note);
+  }
+
+  const costEl = document.createElement("div");
+  costEl.className = "line-cost mono";
+  const result = computeLineCost(line);
+  costEl.textContent = `${result.cost.toFixed(2).replace(".", ",")} €`;
+  wrap.appendChild(costEl);
+  if (result.warning) {
+    const w = document.createElement("div");
+    w.className = "line-note";
+    w.textContent = result.warning;
+    wrap.appendChild(w);
+  }
+
+  return wrap;
+}
+
+function renderInputFields(line) {
+  const box = document.createElement("div");
+  const cat = line.category;
+  const rerender = () => {
+    const parent = box.closest(".line-item");
+    const idx = [...lineItemsEl.children].indexOf(parent);
+    lineItemsEl.replaceChild(renderLineItem(line), parent);
+  };
+
+  if (cat.mode === "free") {
+    const badge = document.createElement("span");
+    badge.className = "free-badge";
+    badge.textContent = "Gebührenfrei";
+    box.appendChild(badge);
+    return box;
+  }
+
+  if (cat.mode === "flat_by_volume_tier") {
+    const lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = "Menge (Volumen)";
+    box.appendChild(lbl);
+    const sel = document.createElement("select");
+    sel.setAttribute("aria-label", `${cat.label}: Volumen wählen`);
+    cat.tiers.forEach((t) => {
+      const opt = document.createElement("option");
+      opt.value = t.id;
+      opt.textContent = `${t.label} — ${t.flatPrice}€/Stück`;
+      opt.selected = t.id === line.input.tierId;
+      sel.appendChild(opt);
+    });
+    sel.style.marginBottom = "10px";
+    sel.addEventListener("change", () => { line.input.tierId = sel.value; rerender(); });
+    box.appendChild(sel);
+
+    const countLbl = document.createElement("label");
+    countLbl.className = "field-label";
+    countLbl.textContent = "Anzahl Abholungen";
+    box.appendChild(countLbl);
+    const countInput = document.createElement("input");
+    countInput.type = "number";
+    countInput.min = "1";
+    countInput.step = "1";
+    countInput.value = line.input.count;
+    countInput.setAttribute("aria-label", `${cat.label}: Anzahl`);
+    countInput.addEventListener("input", () => {
+      line.input.count = Math.max(1, parseInt(countInput.value, 10) || 1);
+      rerender();
+    });
+    box.appendChild(countInput);
+    return box;
+  }
+
+  if (cat.mode === "per_piece" || cat.mode === "per_piece_capped") {
+    const lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = cat.mode === "per_piece_capped" ? `Anzahl Stück (max. ${cat.maxPieces})` : "Anzahl Stück";
+    box.appendChild(lbl);
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "1";
+    input.step = "1";
+    input.value = line.input.quantity;
+    input.setAttribute("aria-label", `${cat.label}: Anzahl Stück`);
+    input.addEventListener("input", () => {
+      line.input.quantity = Math.max(1, parseInt(input.value, 10) || 1);
+      rerender();
+    });
+    box.appendChild(input);
+    return box;
+  }
+
+  // weight_threshold / weight_threshold_with_small_flat
+  if (cat.mode === "weight_threshold_with_small_flat") {
+    const row = document.createElement("div");
+    row.className = "toggle-row";
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.id = `small-${line.id}`;
+    chk.checked = !!line.input.smallVolume;
+    chk.addEventListener("change", () => { line.input.smallVolume = chk.checked; rerender(); });
+    const chkLbl = document.createElement("label");
+    chkLbl.setAttribute("for", chk.id);
+    chkLbl.textContent = `Kleinmenge (bis 0,5 m³, pauschal ${cat.smallVolumeFlat}€)`;
+    row.appendChild(chk); row.appendChild(chkLbl);
+    box.appendChild(row);
+  }
+
+  const showWeight = cat.mode === "weight_threshold" || !line.input.smallVolume;
+  if (showWeight) {
+    const lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = `Gewicht in kg (ab ${cat.thresholdKg}kg = ${cat.atOrAboveThresholdRatePerTon}€/Tonne, darunter pauschal ${cat.belowThresholdFlat}€)`;
+    box.appendChild(lbl);
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "0";
+    input.step = "1";
+    input.value = line.input.weightKg || 0;
+    input.setAttribute("aria-label", `${cat.label}: Gewicht in kg`);
+    input.addEventListener("input", () => {
+      line.input.weightKg = Math.max(0, parseFloat(input.value) || 0);
+      rerender();
+    });
+    box.appendChild(input);
+  }
+  return box;
+}
+
+document.getElementById("btnAddCategory").addEventListener("click", async () => {
+  if (!feeTable) await loadFeeTable();
+  const cat = feeTable.categories[0];
+  state.lines.push({ id: crypto.randomUUID(), category: cat, input: defaultInputFor(cat), aiNote: "" });
+  renderLineItems();
+});
+
+document.getElementById("btnBackToPhotos").addEventListener("click", () => showScreen("photos"));
+
+document.getElementById("btnGoTotal").addEventListener("click", () => {
+  renderTotal();
+  showScreen("total");
+});
+
+// --- Screen 5: total ---
+function renderTotal() {
+  const { total, lines } = calculateTotal(state.lines.map((l) => ({ category: l.category, input: l.input, label: l.category.label })));
+  document.getElementById("totalValue").textContent = total.toFixed(2).replace(".", ",") + " €";
+  const breakdownEl = document.getElementById("totalBreakdown");
+  breakdownEl.innerHTML = "";
+  lines.forEach((l) => {
+    const row = document.createElement("div");
+    row.className = "breakdown-row";
+    row.innerHTML = `<span>${l.label}</span><span>${l.cost.toFixed(2).replace(".", ",")} €</span>`;
+    breakdownEl.appendChild(row);
+  });
+}
+
+document.getElementById("btnBackToResult").addEventListener("click", () => showScreen("result"));
+document.getElementById("btnRestart").addEventListener("click", () => {
+  state.customer = "";
+  state.photos = [];
+  state.lines = [];
+  document.getElementById("customerField").value = "";
+  renderPhotoGrid();
+  showScreen("start");
+});
+
+document.getElementById("btnMakePdf").addEventListener("click", () => {
+  const { jsPDF } = window.jspdf || {};
+  if (!jsPDF) {
+    alert("PDF-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen.");
+    return;
+  }
+  const { total, lines } = calculateTotal(state.lines.map((l) => ({ category: l.category, input: l.input, label: l.category.label })));
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text("Entsorgungskosten-Schätzung (intern)", 14, 18);
+  doc.setFontSize(10);
+  doc.text(`Erstellt: ${new Date().toLocaleDateString("de-DE")}`, 14, 26);
+  if (state.customer) doc.text(`Kunde/Adresse: ${state.customer}`, 14, 32);
+  let y = 44;
+  doc.setFontSize(11);
+  lines.forEach((l) => {
+    doc.text(`${l.label}`, 14, y);
+    doc.text(`${l.cost.toFixed(2).replace(".", ",")} €`, 180, y, { align: "right" });
+    y += 8;
+  });
+  y += 4;
+  doc.setFontSize(13);
+  doc.text("Gesamt", 14, y);
+  doc.text(`${total.toFixed(2).replace(".", ",")} €`, 180, y, { align: "right" });
+  y += 12;
+  doc.setFontSize(9);
+  doc.text("Interne Kostenschätzung (Entsorgungsgebühren) — kein Angebot/Preis für den Kunden.", 14, y);
+  doc.save(`entsorgungskosten-${Date.now()}.pdf`);
+});
+
+renderPhotoGrid();
+</script>
+</body>
+</html>

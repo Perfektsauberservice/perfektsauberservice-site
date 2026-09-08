@@ -87,6 +87,14 @@
   to = "/.netlify/functions/pss-auto-content"
   status = 200
 
+# Entsorgungskosten-Rechner (entsorgungskosten-rechner.html) — internal tool
+# for Laura only, unlisted (noindex, not in sitemap/nav). See
+# docs/superpowers/specs/2026-08-14-entsorgungskosten-rechner-design.md.
+[[redirects]]
+  from = "/api/entsorgungskosten-analyze"
+  to = "/.netlify/functions/entsorgungskosten-analyze"
+  status = 200
+
 # === Dashboard (internal, not SEO-indexed) ===
 [[redirects]]
   from = "/dashboard/agent"
