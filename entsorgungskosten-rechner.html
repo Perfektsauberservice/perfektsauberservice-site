@@ -18,7 +18,7 @@
   a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
   .skip-link{position:absolute; top:-40px; left:0; background:var(--ink); color:#fff; padding:8px 16px; z-index:100; text-decoration:none; font-family:"Geist Mono",monospace; font-size:.78rem;}
   .skip-link:focus{top:0;}
-  header.bar{padding:18px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  header.bar{padding:18px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; row-gap:8px;}
   .brand{font-family:"Fraunces","Fraunces Fallback",serif; font-size:1.05rem;}
   .brand b{font-weight:600;} .brand em{font-style:italic; color:var(--green-dk);}
   .tag{font-family:"Geist Mono",monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:4px 10px; white-space:nowrap;}
@@ -71,12 +71,47 @@
   .disclaimer{font-size:.8rem; color:var(--muted); line-height:1.5; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:18px;}
   .status-live{font-size:.85rem; color:var(--muted); text-align:center;}
   .err-box{background:#fdeceb; border:1px solid #f0b8b0; color:var(--red); border-radius:10px; padding:14px; font-size:.86rem; margin-bottom:16px;}
+  .auth-gate{position:fixed; inset:0; background:var(--bg); z-index:50; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .auth-gate .card{max-width:380px; width:100%; background:#fff; border:1px solid var(--line); border-radius:14px; padding:28px; text-align:center;}
+  .auth-gate h2{font-size:1.15rem; margin:0 0 10px;}
+  .auth-gate p{color:var(--muted); font-size:.88rem; line-height:1.5; margin:0 0 18px;}
+  .user-bar{font-size:.72rem; color:var(--muted); display:flex; align-items:center; gap:10px; min-width:0;}
+  .user-bar #userEmailLabel{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:38vw;}
+  .user-bar button{background:none; border:none; color:var(--blue); font-family:"Geist Mono",monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; cursor:pointer; padding:0; flex-shrink:0;}
+  @media (max-width: 480px){
+    .user-bar #userEmailLabel{display:none;}
+    header.bar .tag{display:none;}
+  }
+  .privacy-note{font-size:.78rem; color:var(--muted); line-height:1.5; background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:0 0 16px;}
 </style>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+<!--
+  Client-side login gate: UX only, not the real security boundary. The
+  actual access control is server-side: netlify.toml's Role-based redirect
+  (Netlify's edge checks the Identity "internal" role before this HTML is
+  even served) and the analyze Function's own context.clientContext.user
+  check (fails closed regardless of what this page shows). This overlay
+  just gives a clear login prompt/logged-in state instead of a broken UI
+  if someone reaches this page without a session (e.g. local dev without
+  the redirect infra active).
+-->
+<div class="auth-gate" id="authGate">
+  <div class="card">
+    <h2>Anmeldung erforderlich</h2>
+    <p>Dieses interne Werkzeug ist nur für autorisierte PSS-Mitarbeiter zugänglich.</p>
+    <button type="button" class="btn btn-primary" id="btnAuthLogin" style="width:auto; display:inline-flex; padding:14px 24px;">Anmelden</button>
+  </div>
+</div>
+
 <header class="bar">
   <span class="brand"><b>Perfekt</b> <em>Sauber</em></span>
+  <span class="user-bar" id="userBar" hidden>
+    <span id="userEmailLabel"></span>
+    <button type="button" id="btnLogout">Abmelden</button>
+  </span>
   <span class="tag">Intern &middot; Entsorgungskosten</span>
 </header>
 
@@ -100,10 +135,13 @@
   <section id="screen-photos" hidden>
     <h1 class="h1">Fotos</h1>
     <p class="lead">Mach Fotos von den Materialien/Abfällen vor Ort. Mehrere Fotos möglich (max. 5 pro Analyse).</p>
+    <div class="privacy-note">
+      Fotos werden zur Analyse an einen externen KI-Dienst (Anthropic) gesendet. Standort- und Metadaten werden vorher automatisch entfernt. Bitte keine Personen oder Dokumente unnötig mit aufnehmen.
+    </div>
     <div class="photo-grid" id="photoGrid">
       <label class="photo-add" id="photoAddTile">
         +
-        <input type="file" id="photoInput" accept="image/*" capture="environment" multiple aria-label="Foto aufnehmen oder auswählen" />
+        <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" capture="environment" multiple aria-label="Foto aufnehmen oder auswählen" />
       </label>
     </div>
     <div id="photoError" class="err-box" hidden></div>
@@ -164,6 +202,7 @@
 <script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js" defer></script>
 <script type="module">
 import { calculateLineItem, calculateTotal, findCategory } from "/assets/js/entsorgungskosten-calc.mjs";
+import { sanitizeImage } from "/assets/js/entsorgungskosten-image-sanitizer.mjs";
 
 const screens = ["start", "photos", "analyzing", "result", "total"];
 const dots = document.querySelectorAll(".step-dot");
@@ -187,6 +226,23 @@ function showScreen(name) {
 async function loadFeeTable() {
   const res = await fetch("/data/entsorgungsgebuehren-2026.json");
   feeTable = await res.json();
+}
+
+// --- Auth: Netlify Identity. The real security boundary is server-side
+// (see comment on #authGate above and on the Function itself) -- this
+// helper is what actually attaches the credential to each protected
+// request; if there's no valid session, it returns null and the caller
+// must not proceed to call the AI endpoint at all. .jwt() auto-refreshes
+// a near-expiry token; if the session has genuinely expired it resolves
+// null/rejects instead, which we treat the same as "not logged in". ---
+async function getIdentityToken() {
+  const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+  if (!user) return null;
+  try {
+    return (await user.jwt()) || null;
+  } catch {
+    return null;
+  }
 }
 
 // --- Screen 1 ---
@@ -217,18 +273,11 @@ function renderPhotoGrid() {
   document.getElementById("btnAnalyze").disabled = state.photos.length === 0;
 }
 
-function fileToEntry(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result;
-      const base64 = dataUrl.split(",")[1];
-      resolve({ id: crypto.randomUUID(), dataUrl, base64, mediaType: file.type || "image/jpeg" });
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
+// Photo sanitization (decode -> render pixels -> re-encode, discarding
+// all EXIF/GPS/device metadata) lives in
+// /assets/js/entsorgungskosten-image-sanitizer.mjs -- see that file for
+// why. If any step fails, sanitizeImage() throws; the handler below never
+// falls back to sending the original file on failure.
 
 photoInput.addEventListener("change", async (e) => {
   photoError.hidden = true;
@@ -237,9 +286,19 @@ photoInput.addEventListener("change", async (e) => {
     photoError.textContent = `Nur ${MAX_PHOTOS} Fotos pro Analyse möglich.`;
     photoError.hidden = false;
   }
+  const sanitizeErrors = [];
   for (const file of files) {
-    if (!file.type.startsWith("image/")) continue;
-    state.photos.push(await fileToEntry(file));
+    try {
+      const sanitized = await sanitizeImage(file);
+      state.photos.push({ id: crypto.randomUUID(), ...sanitized });
+    } catch (err) {
+      // Never forward the original file when sanitization fails.
+      sanitizeErrors.push(`${file.name}: ${err.message}`);
+    }
+  }
+  if (sanitizeErrors.length > 0) {
+    photoError.textContent = sanitizeErrors.join(" ");
+    photoError.hidden = false;
   }
   photoInput.value = "";
   renderPhotoGrid();
@@ -260,10 +319,19 @@ document.getElementById("btnAnalyze").addEventListener("click", async () => {
   showScreen("analyzing");
   const statusEl = document.getElementById("analyzeStatus");
   try {
+    const token = await getIdentityToken();
+    if (!token) {
+      // Fail closed client-side too: never call the AI endpoint without a
+      // session. The Function would reject it anyway (401), but there's
+      // no reason to make the request at all, and this gives a clearer
+      // "please log in again" message than a generic fetch error would.
+      showAuthGate();
+      throw new Error("Sitzung abgelaufen — bitte erneut einloggen");
+    }
     if (!feeTable) await loadFeeTable();
     const res = await fetch("/api/entsorgungskosten-analyze", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify({
         images: state.photos.map((p) => ({ mediaType: p.mediaType, data: p.base64 })),
       }),
@@ -598,6 +666,33 @@ document.getElementById("btnMakePdf").addEventListener("click", () => {
 });
 
 renderPhotoGrid();
+
+// --- Identity widget wiring ---
+const authGateEl = document.getElementById("authGate");
+const userBarEl = document.getElementById("userBar");
+const userEmailLabelEl = document.getElementById("userEmailLabel");
+
+function showAuthGate() {
+  authGateEl.hidden = false;
+  userBarEl.hidden = true;
+}
+function hideAuthGate(user) {
+  authGateEl.hidden = true;
+  userBarEl.hidden = false;
+  userEmailLabelEl.textContent = user?.email || "";
+}
+
+function initIdentity() {
+  if (!window.netlifyIdentity) { setTimeout(initIdentity, 200); return; }
+  window.netlifyIdentity.on("init", (user) => (user ? hideAuthGate(user) : showAuthGate()));
+  window.netlifyIdentity.on("login", (user) => hideAuthGate(user));
+  window.netlifyIdentity.on("logout", () => showAuthGate());
+  document.getElementById("btnAuthLogin").addEventListener("click", () => window.netlifyIdentity.open("login"));
+  document.getElementById("btnLogout").addEventListener("click", () => window.netlifyIdentity.logout());
+  window.netlifyIdentity.init();
+}
+initIdentity();
 </script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
 </body>
 </html>

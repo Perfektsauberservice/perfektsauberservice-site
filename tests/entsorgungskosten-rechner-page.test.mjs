@@ -169,6 +169,84 @@ check("fee table JSON is valid and reachable from data/", () => {
   assert.ok(Array.isArray(json.categories) && json.categories.length > 0);
 });
 
+// --- internal access + photo privacy hardening ---
+
+check("page loads the Netlify Identity widget (already-provisioned auth, not a new service)", () => {
+  assert.match(pageHtml, /https:\/\/identity\.netlify\.com\/v1\/netlify-identity-widget\.js/);
+});
+
+check("a client-side auth gate exists and is not the security boundary by itself (documented as UX only)", () => {
+  assert.match(pageHtml, /id="authGate"/);
+  assert.match(pageHtml, /not the real security boundary/);
+});
+
+check("Analysieren flow attaches a real Identity JWT as Authorization: Bearer, not a static secret", () => {
+  assert.match(pageHtml, /"Authorization": `Bearer \$\{token\}`/);
+  assert.match(pageHtml, /getIdentityToken/);
+});
+
+check("no session -> AI endpoint is never called (fail closed client-side, before fetch)", () => {
+  assert.match(pageHtml, /if \(!token\) \{[\s\S]{0,500}showAuthGate\(\);[\s\S]{0,100}throw new Error/);
+});
+
+check("no hardcoded bypass password anywhere on this page (the dashboard's known anti-pattern)", () => {
+  assert.ok(!/DEMO_PASSWORD/i.test(pageHtml));
+  assert.ok(!/pss_dashboard_demo_login/i.test(pageHtml));
+});
+
+check("photo sanitizer module is imported, not duplicated inline (single source of truth)", () => {
+  assert.match(pageHtml, /import \{ sanitizeImage \} from "\/assets\/js\/entsorgungskosten-image-sanitizer\.mjs"/);
+});
+
+check("sanitization failure is never silently swallowed into a raw-file fallback (no bytes sent on catch)", () => {
+  assert.match(pageHtml, /Never forward the original file when sanitization fails/);
+});
+
+check("file picker itself is restricted to supported formats (JPEG/PNG/WEBP, no bare image\\/\\*)", () => {
+  assert.match(pageHtml, /accept="image\/jpeg,image\/png,image\/webp"/);
+});
+
+check("short, operational German privacy disclosure present before photo upload (not a legal policy page)", () => {
+  assert.match(pageHtml, /externen KI-Dienst \(Anthropic\)/);
+  assert.match(pageHtml, /Standort- und Metadaten werden vorher automatisch entfernt/);
+  assert.ok(pageHtml.match(/externen KI-Dienst \(Anthropic\)[\s\S]{0,300}/)[0].length < 400, "privacy note must stay short, not a policy page");
+});
+
+check("login/logout UI present (session lifecycle, not just a one-way gate)", () => {
+  assert.match(pageHtml, /id="btnLogout"/);
+  assert.match(pageHtml, /id="userEmailLabel"/);
+});
+
+check("login page exists and contains no bypass password", () => {
+  const login = readFileSync(path.join(root, "entsorgungskosten-login.html"), "utf8");
+  assert.match(login, /https:\/\/identity\.netlify\.com\/v1\/netlify-identity-widget\.js/);
+  assert.ok(!/DEMO_PASSWORD/i.test(login));
+  assert.match(login, /noindex, nofollow/);
+});
+
+check("netlify.toml gates the page behind a real Identity role (server-side, Netlify's own redirect feature)", () => {
+  const toml = readFileSync(path.join(root, "netlify.toml"), "utf8");
+  assert.match(toml, /from = "\/entsorgungskosten-rechner\.html"[\s\S]{0,80}to = "\/entsorgungskosten-rechner\.html"[\s\S]{0,80}conditions = \{Role = \["internal"\]\}/);
+  assert.match(toml, /to = "\/entsorgungskosten-login\.html"/);
+});
+
+check("netlify.toml adds a scoped CSP (not sitewide) so the Identity widget script is allowed only on these two pages", () => {
+  const toml = readFileSync(path.join(root, "netlify.toml"), "utf8");
+  assert.match(toml, /for = "\/entsorgungskosten-rechner\.html"[\s\S]{0,300}identity\.netlify\.com/);
+  assert.match(toml, /for = "\/entsorgungskosten-login\.html"[\s\S]{0,300}identity\.netlify\.com/);
+});
+
+check("the AI Function's own auth check is independent of the page-level redirect (must fail closed even if the redirect were bypassed)", () => {
+  const fn = readFileSync(path.join(root, "netlify/functions/entsorgungskosten-analyze.mjs"), "utf8");
+  assert.match(fn, /context\?\.clientContext\?\.user/);
+  assert.match(fn, /statusCode: 401/);
+});
+
+check("header stays usable on narrow mobile (regression: user-bar/tag clipped at 390px before this fix)", () => {
+  assert.match(pageHtml, /header\.bar\{[^}]*flex-wrap:wrap/);
+  assert.match(pageHtml, /@media \(max-width: 480px\)\{[\s\S]{0,120}#userEmailLabel\{display:none;\}/);
+});
+
 console.log(`\n${passCount}/${passCount + failCount} passed`);
 if (failCount > 0) {
   console.log("\nFailures:");

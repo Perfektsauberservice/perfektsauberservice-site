@@ -12,6 +12,15 @@
 // Env vars required:
 //   ANTHROPIC_API_KEY — same var already used by netlify/functions/telegram-bot.mjs
 //
+// Auth: requires a valid Netlify Identity session. The client attaches
+// `Authorization: Bearer <identity-jwt>` (from netlifyIdentity.currentUser().jwt());
+// Netlify's own infrastructure verifies that JWT's signature/expiry BEFORE
+// invoking this function and populates `context.clientContext.user` only
+// when it's valid. No JWT verification happens in this file's own code —
+// this is Netlify's documented, already-provisioned mechanism, not a
+// custom auth scheme. Missing/invalid identity -> fail closed (401),
+// before any other check, before any Anthropic call.
+//
 // Request:  POST { images: [{ mediaType: "image/jpeg"|"image/png"|"image/webp", data: "<base64>" }, ...] }
 // Response: 200 { items: [{ categoryId, label, quantityGuess, note }] }
 //           4xx/5xx { error }
@@ -47,9 +56,15 @@ Răspunde DOAR cu JSON valid, fără text suplimentar, în acest format exact:
 Dacă nu identifici nimic relevant: {"items": []}`;
 }
 
-export async function handler(event) {
+export async function handler(event, context) {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
+  }
+
+  const identityUser = context?.clientContext?.user;
+  if (!identityUser) {
+    console.error("entsorgungskosten-analyze: unauthenticated request rejected (no Netlify Identity session)");
+    return { statusCode: 401, body: JSON.stringify({ error: "Anmeldung erforderlich" }) };
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
