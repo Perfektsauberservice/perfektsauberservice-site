@@ -131,8 +131,17 @@ export async function handler(event) {
     return { statusCode: 502, body: JSON.stringify({ error: "AI response was not valid JSON" }) };
   }
 
-  const items = Array.isArray(parsed.items) ? parsed.items : [];
-  const safeItems = items
+  if (!Array.isArray(parsed.items)) {
+    // parsed is valid JSON but not the {items:[...]} shape the prompt asks
+    // for — treat as a failed analysis, not a silent "found nothing". A
+    // genuine "AI found nothing" is items:[] with the correct shape, which
+    // is allowed through below and still blocks the calculator's "Weiter"
+    // button client-side until a human adds a category manually.
+    console.error("entsorgungskosten-analyze: AI response missing items array", raw);
+    return { statusCode: 502, body: JSON.stringify({ error: "AI response did not match expected format" }) };
+  }
+
+  const safeItems = parsed.items
     .filter((item) => item && validIds.has(item.categoryId))
     .map((item) => {
       const category = feeTable.categories.find((c) => c.id === item.categoryId);

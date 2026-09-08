@@ -249,6 +249,7 @@ document.getElementById("btnBackToStart").addEventListener("click", () => showSc
 
 document.getElementById("btnSkipToManual").addEventListener("click", async () => {
   if (!feeTable) await loadFeeTable();
+  document.getElementById("resultError").hidden = true;
   state.lines = [];
   renderLineItems();
   showScreen("result");
@@ -272,12 +273,19 @@ document.getElementById("btnAnalyze").addEventListener("click", async () => {
       throw new Error(body.error || "Analyse fehlgeschlagen");
     }
     const data = await res.json();
-    state.lines = (data.items || []).map((item) => ({
+    if (!Array.isArray(data.items)) {
+      // A 200 response that isn't shaped as expected (proxy interference,
+      // future server drift, ...) must not be treated as "AI found
+      // nothing" -- that would be a silent, misleading empty result.
+      throw new Error("Antwort der KI hatte ein unerwartetes Format");
+    }
+    state.lines = data.items.map((item) => ({
       id: crypto.randomUUID(),
       category: findCategory(feeTable, item.categoryId),
       input: defaultInputFor(findCategory(feeTable, item.categoryId)),
       aiNote: [item.quantityGuess, item.note].filter(Boolean).join(" — "),
     }));
+    document.getElementById("resultError").hidden = true;
     renderLineItems();
     showScreen("result");
   } catch (err) {
@@ -314,7 +322,6 @@ function computeLineCost(line) {
 
 function renderLineItems() {
   lineItemsEl.innerHTML = "";
-  document.getElementById("resultError").hidden = state.lines.length > 0 || true;
   state.lines.forEach((line) => {
     lineItemsEl.appendChild(renderLineItem(line));
   });
@@ -353,7 +360,7 @@ function renderLineItem(line) {
   feeTable.categories.forEach((c) => {
     const opt = document.createElement("option");
     opt.value = c.id;
-    opt.textContent = c.label;
+    opt.textContent = c.official === false ? `${c.label} — inoffizieller Tarif` : c.label;
     opt.selected = c.id === line.category.id;
     catSelect.appendChild(opt);
   });
@@ -363,6 +370,14 @@ function renderLineItem(line) {
     renderLineItems();
   });
   wrap.appendChild(catSelect);
+
+  if (line.category.official === false) {
+    const sourceWarn = document.createElement("div");
+    sourceWarn.className = "line-note";
+    sourceWarn.style.color = "var(--red)";
+    sourceWarn.textContent = `⚠ Kein offizieller Landkreis-Tarif — ${line.category.note || "manuell angegebener Wert."}`;
+    wrap.appendChild(sourceWarn);
+  }
 
   wrap.appendChild(renderInputFields(line));
 
@@ -517,12 +532,22 @@ function renderTotal() {
   document.getElementById("totalValue").textContent = total.toFixed(2).replace(".", ",") + " €";
   const breakdownEl = document.getElementById("totalBreakdown");
   breakdownEl.innerHTML = "";
-  lines.forEach((l) => {
+  let hasUnofficial = false;
+  lines.forEach((l, i) => {
+    const isUnofficial = state.lines[i].category.official === false;
+    if (isUnofficial) hasUnofficial = true;
     const row = document.createElement("div");
     row.className = "breakdown-row";
-    row.innerHTML = `<span>${l.label}</span><span>${l.cost.toFixed(2).replace(".", ",")} €</span>`;
+    row.innerHTML = `<span>${l.label}${isUnofficial ? " *" : ""}</span><span>${l.cost.toFixed(2).replace(".", ",")} €</span>`;
     breakdownEl.appendChild(row);
   });
+  if (hasUnofficial) {
+    const foot = document.createElement("div");
+    foot.style.marginTop = "10px";
+    foot.style.color = "var(--red)";
+    foot.textContent = "* kein offizieller Landkreis-Tarif, manuell angegebener Wert";
+    breakdownEl.appendChild(foot);
+  }
 }
 
 document.getElementById("btnBackToResult").addEventListener("click", () => showScreen("result"));
@@ -550,8 +575,11 @@ document.getElementById("btnMakePdf").addEventListener("click", () => {
   if (state.customer) doc.text(`Kunde/Adresse: ${state.customer}`, 14, 32);
   let y = 44;
   doc.setFontSize(11);
-  lines.forEach((l) => {
-    doc.text(`${l.label}`, 14, y);
+  let hasUnofficial = false;
+  lines.forEach((l, i) => {
+    const isUnofficial = state.lines[i].category.official === false;
+    if (isUnofficial) hasUnofficial = true;
+    doc.text(`${l.label}${isUnofficial ? " *" : ""}`, 14, y);
     doc.text(`${l.cost.toFixed(2).replace(".", ",")} €`, 180, y, { align: "right" });
     y += 8;
   });
@@ -562,6 +590,10 @@ document.getElementById("btnMakePdf").addEventListener("click", () => {
   y += 12;
   doc.setFontSize(9);
   doc.text("Interne Kostenschätzung (Entsorgungsgebühren) — kein Angebot/Preis für den Kunden.", 14, y);
+  if (hasUnofficial) {
+    y += 6;
+    doc.text("* kein offizieller Landkreis-Tarif, manuell angegebener Wert.", 14, y);
+  }
   doc.save(`entsorgungskosten-${Date.now()}.pdf`);
 });
 

@@ -107,6 +107,51 @@ await checkAsync("missing base64 data is rejected (400) (invalid input)", async 
   assert.equal(res.statusCode, 400);
 });
 
+// --- fetch-mocked tests: exercise the post-network parsing branches
+// WITHOUT any live call to api.anthropic.com. Added after a live-review
+// found a real gap: a 200 response whose JSON doesn't have an `items`
+// array was being silently treated as "found nothing" instead of a
+// failure, indistinguishable in the UI from a genuine empty result. ---
+
+function withMockedFetch(responseFactory, fn) {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => responseFactory();
+  return fn().finally(() => { globalThis.fetch = originalFetch; });
+}
+
+function anthropicResponse(text) {
+  return {
+    ok: true,
+    json: async () => ({ content: [{ text }] }),
+    text: async () => JSON.stringify({ content: [{ text }] }),
+  };
+}
+
+await checkAsync("malformed AI response (valid JSON, wrong shape) is rejected (502), not silently treated as zero items", async () => {
+  process.env.ANTHROPIC_API_KEY = "test-key-mocked-fetch-no-network";
+  const res = await withMockedFetch(
+    () => anthropicResponse(JSON.stringify({ notItems: "garbage" })),
+    () => handler({
+      httpMethod: "POST",
+      body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }),
+    })
+  );
+  assert.equal(res.statusCode, 502);
+});
+
+await checkAsync("genuine empty result (correct {items:[]} shape) is still accepted as 200", async () => {
+  process.env.ANTHROPIC_API_KEY = "test-key-mocked-fetch-no-network";
+  const res = await withMockedFetch(
+    () => anthropicResponse(JSON.stringify({ items: [] })),
+    () => handler({
+      httpMethod: "POST",
+      body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }),
+    })
+  );
+  assert.equal(res.statusCode, 200);
+  assert.deepEqual(JSON.parse(res.body).items, []);
+});
+
 delete process.env.ANTHROPIC_API_KEY;
 
 console.log(`\n${passCount}/${passCount + failCount} passed`);

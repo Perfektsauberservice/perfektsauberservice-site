@@ -119,6 +119,39 @@ check("uses pinned jsPDF version from an allowed CDN (unpkg, per CSP script-src)
   assert.match(pageHtml, /https:\/\/unpkg\.com\/jspdf@2\.5\.2\//);
 });
 
+// --- fee-source transparency: an unofficial rate (Matratzen) must never be
+// indistinguishable from an official Landkreis Rastatt one, in the picker,
+// on the line item, on the total breakdown, or in the PDF. ---
+
+check("category picker marks non-official categories in their option label", () => {
+  assert.match(pageHtml, /c\.official === false \? `\$\{c\.label\} — inoffizieller Tarif` : c\.label/);
+});
+
+check("line item shows an explicit non-official-source warning", () => {
+  assert.match(pageHtml, /Kein offizieller Landkreis-Tarif/);
+});
+
+check("total breakdown flags non-official lines with a footnote", () => {
+  assert.match(pageHtml, /kein offizieller Landkreis-Tarif, manuell angegebener Wert/);
+});
+
+check("PDF export also flags non-official lines (not just the on-screen UI)", () => {
+  assert.match(pageHtml, /hasUnofficial = true/);
+  assert.match(pageHtml, /kein offizieller Landkreis-Tarif, manuell angegebener Wert\.", 14, y\);/);
+});
+
+// --- AI failure handling: a 200 response shaped wrong must surface as an
+// error, never be silently treated as "AI found nothing" ---
+
+check("client rejects a 200 response whose body isn't {items:[...]} instead of silently defaulting to empty", () => {
+  assert.match(pageHtml, /if \(!Array\.isArray\(data\.items\)\)/);
+  assert.match(pageHtml, /unerwartetes Format/);
+});
+
+check("renderLineItems() never unconditionally re-hides the error banner (regression: `|| true` bug made AI-failure errors invisible)", () => {
+  assert.ok(!pageHtml.includes('"resultError").hidden = state.lines.length > 0 || true'), "the always-true hide bug must not come back");
+});
+
 // --- backend wiring ---
 
 check("netlify.toml redirects /api/entsorgungskosten-analyze to the function", () => {
