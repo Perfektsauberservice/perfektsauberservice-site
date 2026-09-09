@@ -12,14 +12,23 @@
 // Env vars required:
 //   ANTHROPIC_API_KEY — same var already used by netlify/functions/telegram-bot.mjs
 //
-// Auth: requires a valid Netlify Identity session. The client attaches
+// Auth: requires a valid Netlify Identity session AND the verified
+// "internal" role. The client attaches
 // `Authorization: Bearer <identity-jwt>` (from netlifyIdentity.currentUser().jwt());
 // Netlify's own infrastructure verifies that JWT's signature/expiry BEFORE
 // invoking this function and populates `context.clientContext.user` only
 // when it's valid. No JWT verification happens in this file's own code —
 // this is Netlify's documented, already-provisioned mechanism, not a
 // custom auth scheme. Missing/invalid identity -> fail closed (401),
-// before any other check, before any Anthropic call.
+// before any other check, before any Anthropic call. Authenticated but
+// missing the exact "internal" role in the verified
+// user.app_metadata.roles -> fail closed (403). The role is read ONLY
+// from that server-populated, JWT-verified field — never from the request
+// body, query string, or headers — so page-level Netlify redirect
+// protection (netlify.toml Role = ["internal"]) is defense-in-depth only;
+// this function enforces the role independently, so calling
+// /api/entsorgungskosten-analyze directly (bypassing the HTML page) still
+// requires the verified role.
 //
 // Request:  POST { images: [{ mediaType: "image/jpeg"|"image/png"|"image/webp", data: "<base64>" }, ...] }
 // Response: 200 { items: [{ categoryId, label, quantityGuess, note }] }
@@ -65,6 +74,17 @@ export async function handler(event, context) {
   if (!identityUser) {
     console.error("entsorgungskosten-analyze: unauthenticated request rejected (no Netlify Identity session)");
     return { statusCode: 401, body: JSON.stringify({ error: "Anmeldung erforderlich" }) };
+  }
+
+  // Role check reads ONLY identityUser.app_metadata.roles, which Netlify
+  // itself populates from the verified Identity JWT above -- never from the
+  // request body, query string, or headers, none of which are trustworthy
+  // client input. No default allow: any shape other than an array
+  // containing the exact string "internal" is rejected.
+  const roles = identityUser.app_metadata?.roles;
+  if (!Array.isArray(roles) || !roles.includes("internal")) {
+    console.error("entsorgungskosten-analyze: authenticated user lacks internal role", identityUser.email || identityUser.sub || "unknown");
+    return { statusCode: 403, body: JSON.stringify({ error: "Kein Zugriff" }) };
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

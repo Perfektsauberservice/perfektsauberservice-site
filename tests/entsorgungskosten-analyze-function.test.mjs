@@ -220,6 +220,119 @@ await checkAsync("AI (fetch) is never invoked when auth fails -- mocked fetch th
   }
 });
 
+// --- internal-role enforcement (server-side, cannot be bypassed by any
+// client-supplied value -- added to close the gap where any authenticated
+// Netlify Identity user, not just Laura with the "internal" role, could
+// call this paid-AI endpoint directly). Fails closed: no default allow. ---
+
+function ctxWithUser(user) {
+  return { clientContext: { user } };
+}
+
+await checkAsync("authenticated user with no app_metadata at all is rejected (403)", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1" })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("authenticated user with app_metadata but no roles field is rejected (403)", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: {} })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("authenticated user with empty roles array is rejected (403)", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: [] } })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("authenticated user with an unrelated role is rejected (403)", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: ["editor"] } })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("authenticated user with wrong-case role (\"Internal\") is rejected (403) -- exact match required", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: ["Internal"] } })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("authenticated user with malformed roles (string instead of array) is rejected (403), does not throw", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: "internal" } })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("malformed identity context (app_metadata is null) is rejected (403), does not throw", async () => {
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: null })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("client-forged role in the request BODY is ignored -- authenticated non-internal user is still rejected (403)", async () => {
+  const res = await handler(
+    {
+      httpMethod: "POST",
+      body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }], role: "internal", app_metadata: { roles: ["internal"] } }),
+    },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: [] } })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("client-forged role via a request HEADER is ignored -- authenticated non-internal user is still rejected (403)", async () => {
+  const res = await handler(
+    {
+      httpMethod: "POST",
+      headers: { "x-user-role": "internal", "x-app-metadata-roles": "internal" },
+      body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }),
+    },
+    ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: [] } })
+  );
+  assert.equal(res.statusCode, 403);
+});
+
+await checkAsync("authenticated user with exact role \"internal\" among other roles passes the auth+role gate (reaches 500, not 401/403)", async () => {
+  delete process.env.ANTHROPIC_API_KEY;
+  const res = await handler(
+    { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+    ctxWithUser({ email: "kontakt@perfektsauberservice.com", sub: "u1", app_metadata: { roles: ["editor", "internal"] } })
+  );
+  assert.equal(res.statusCode, 500);
+  assert.notEqual(res.statusCode, 401);
+  assert.notEqual(res.statusCode, 403);
+});
+
+await checkAsync("AI (fetch) is never invoked when authenticated but not internal -- mocked fetch throws if called, request must still fail via 403 not reach it", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => { throw new Error("fetch must not be called for a non-internal user"); };
+  try {
+    const res = await handler(
+      { httpMethod: "POST", body: JSON.stringify({ images: [{ mediaType: "image/jpeg", data: "abc" }] }) },
+      ctxWithUser({ email: "someone@example.com", sub: "u1", app_metadata: { roles: [] } })
+    );
+    assert.equal(res.statusCode, 403);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 delete process.env.ANTHROPIC_API_KEY;
 
 console.log(`\n${passCount}/${passCount + failCount} passed`);
