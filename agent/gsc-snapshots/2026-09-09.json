@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-09",
+  "queries": [
+    {
+      "q": "hausmeister rastatt",
+      "page": "https://perfektsauberservice.com/hausmeisterservice",
+      "position": 27,
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "professioneller gebäudeservice in rastatt, karlsruhe und umgebung",
+      "page": "https://perfektsauberservice.com/",
+      "position": 99,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "treppenhausreinigung rastatt",
+      "page": "https://perfektsauberservice.com/",
+      "position": 77.33,
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0
+    }
+  ]
+}
