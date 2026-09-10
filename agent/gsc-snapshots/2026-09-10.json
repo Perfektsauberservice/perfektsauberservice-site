@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-10",
+  "queries": [
+    {
+      "q": "hausmeister rastatt",
+      "page": "https://perfektsauberservice.com/hausmeisterservice",
+      "position": 27,
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "treppenhausreinigung rastatt",
+      "page": "https://perfektsauberservice.com/",
+      "position": 77,
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0
+    }
+  ]
+}
