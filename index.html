@@ -803,6 +803,34 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 })();
 </script>
 
+<!-- ======== Before/After sliders (drag/touch to compare) ======== -->
+<script>(function(){
+  function init(wrap){
+    if (wrap.dataset.baReady) return; wrap.dataset.baReady = '1';
+    var vor = wrap.querySelector('.ba-vor');
+    var handle = wrap.querySelector('.ba-handle');
+    if (!vor || !handle) return;
+    var dragging = false;
+    function setPos(clientX){
+      var r = wrap.getBoundingClientRect();
+      var pct = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
+      vor.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+      handle.style.left = pct + '%';
+    }
+    function start(e){ dragging = true; setPos(e.touches ? e.touches[0].clientX : e.clientX); if (e.preventDefault) e.preventDefault(); }
+    function move(e){ if (!dragging) return; setPos(e.touches ? e.touches[0].clientX : e.clientX); }
+    function end(){ dragging = false; }
+    wrap.addEventListener('mousedown', start);
+    wrap.addEventListener('touchstart', start, { passive: true });
+    document.addEventListener('mousemove', move);
+    document.addEventListener('touchmove', move, { passive: true });
+    document.addEventListener('mouseup', end);
+    document.addEventListener('touchend', end);
+  }
+  document.querySelectorAll('[data-ba]').forEach(init);
+})();
+</script>
+
 <!-- ======== Mobile floating CTA ======== -->
 <div class="fab">
   <a class="w" href="https://wa.me/491639087197" aria-label="WhatsApp">
