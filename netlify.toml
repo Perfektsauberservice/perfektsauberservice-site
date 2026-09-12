@@ -29,6 +29,23 @@
     # replaying real page loads through a local server with this policy attached.
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://*.googletagmanager.com https://*.google.com https://*.doubleclick.net www.gstatic.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https://server.arcgisonline.com https://images.pexels.com https://*.google.com https://*.google.de https://*.doubleclick.net https://*.googletagmanager.com https://*.google-analytics.com https://*.googlesyndication.com; font-src 'self' data:; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.google.com https://*.google.de https://*.doubleclick.net https://*.googleadservices.com https://*.googlesyndication.com; frame-src 'self' https://*.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
 
+# Entsorgungskosten-Rechner + its login page need the Netlify Identity
+# widget script (from identity.netlify.com) to authenticate; the widget's
+# actual auth API calls go to this site's own /.netlify/identity/* path
+# (same-origin, already covered by connect-src 'self'), so only script-src
+# needs the one addition. Scoped to just these two pages (more specific
+# path wins over the sitewide "/*" block above) to avoid widening the
+# site-wide CSP for a need that only exists on this internal tool.
+[[headers]]
+  for = "/entsorgungskosten-rechner.html"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://identity.netlify.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https://identity.netlify.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+
+[[headers]]
+  for = "/entsorgungskosten-login.html"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://identity.netlify.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https://identity.netlify.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"
+
 [[headers]]
   for = "*.webp"
   [headers.values]
@@ -85,6 +102,47 @@
 [[redirects]]
   from = "/api/pss-auto-content"
   to = "/.netlify/functions/pss-auto-content"
+  status = 200
+
+# Entsorgungskosten-Rechner (entsorgungskosten-rechner.html) — internal tool
+# for Laura only, unlisted (noindex, not in sitemap/nav) AND gated behind a
+# real Netlify Identity "internal" role. See
+# docs/superpowers/specs/2026-08-14-entsorgungskosten-rechner-design.md and
+# LAURA_REVIEW_REPORT.md for why: unlisted/noindex alone was found to be
+# discovery prevention only, not access control.
+#
+# Netlify's own first-party role-based-redirect feature (no custom code):
+# evaluated top-to-bottom, first match wins. A visitor whose Identity JWT
+# (via the nf_jwt cookie the widget sets on login) carries the "internal"
+# role gets the real page (first rule matches, 200); everyone else falls
+# through to the second rule and is redirected to the login page. This is
+# enforced by Netlify's edge infrastructure before the response is served,
+# not by client-side JS.
+#
+# NOTE: requires a one-time, post-approval manual step in the real Netlify
+# site's Identity admin panel -- assign Laura's existing Identity user
+# (kontakt@perfektsauberservice.com, already invited per
+# dashboard/README-dashboard.txt) the "internal" role. Cannot be done from
+# this isolated, undeployed worktree (no production access, per NO DEPLOY).
+[[redirects]]
+  from = "/entsorgungskosten-rechner.html"
+  to = "/entsorgungskosten-rechner.html"
+  status = 200
+  force = true
+  conditions = {Role = ["internal"]}
+
+[[redirects]]
+  from = "/entsorgungskosten-rechner.html"
+  to = "/entsorgungskosten-login.html"
+  status = 302
+  force = true
+
+# The AI Function is gated independently, server-side, inside the function
+# itself (context.clientContext.user check) -- it must fail closed even if
+# this HTML-page redirect were ever misconfigured or bypassed.
+[[redirects]]
+  from = "/api/entsorgungskosten-analyze"
+  to = "/.netlify/functions/entsorgungskosten-analyze"
   status = 200
 
 # === Dashboard (internal, not SEO-indexed) ===

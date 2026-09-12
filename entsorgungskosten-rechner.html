@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Entsorgungskosten-Rechner (intern) — Perfekt Sauber Service</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preload" href="/fonts/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="/fonts/fonts.css"/></noscript>
+<style>
+  @font-face{font-family:'Fraunces Fallback';src:local('Times New Roman'),local('Times'),local('Liberation Serif');size-adjust:102.41%;ascent-override:95.06%;descent-override:26.82%;line-gap-override:0%;}
+  @font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica');size-adjust:107.06%;ascent-override:90.49%;descent-override:22.51%;line-gap-override:0%;}
+  :root{ --bg:#fbf7f0; --ink:#1a2030; --muted:#6b6456; --line:#e5dccb; --blue:#1d6dd6; --green:#5aa83a; --green-dk:#3f7f28; --red:#b6432c; }
+  *{box-sizing:border-box;}
+  html,body{overflow-x:hidden;}
+  body{font-family:"Inter","Inter Fallback",system-ui,sans-serif; background:var(--bg); color:var(--ink); margin:0; -webkit-font-smoothing:antialiased;}
+  .mono{font-family:"Geist Mono",monospace;}
+  .serif{font-family:"Fraunces","Fraunces Fallback",serif;}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--blue); outline-offset:2px;}
+  .skip-link{position:absolute; top:-40px; left:0; background:var(--ink); color:#fff; padding:8px 16px; z-index:100; text-decoration:none; font-family:"Geist Mono",monospace; font-size:.78rem;}
+  .skip-link:focus{top:0;}
+  header.bar{padding:18px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; row-gap:8px;}
+  .brand{font-family:"Fraunces","Fraunces Fallback",serif; font-size:1.05rem;}
+  .brand b{font-weight:600;} .brand em{font-style:italic; color:var(--green-dk);}
+  .tag{font-family:"Geist Mono",monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line); border-radius:999px; padding:4px 10px; white-space:nowrap;}
+  main{max-width:640px; margin:0 auto; padding:20px 16px 80px;}
+  .step-indicator{display:flex; gap:6px; margin:18px 0 24px;}
+  .step-dot{flex:1; height:4px; border-radius:99px; background:var(--line);}
+  .step-dot.done,.step-dot.active{background:var(--blue);}
+  h1.h1{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:400; font-size:clamp(1.5rem,5vw,2rem); margin:0 0 8px; line-height:1.15;}
+  p.lead{color:var(--muted); font-size:.95rem; line-height:1.5; margin:0 0 22px;}
+  label.field-label{display:block; font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;}
+  input[type="text"],input[type="number"]{width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; font-family:Inter,sans-serif; font-size:1rem; color:var(--ink);}
+  select{width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:8px; background:#fff; font-family:Inter,sans-serif; font-size:1rem; color:var(--ink);}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:15px 22px; border-radius:999px; font-family:"Geist Mono",monospace; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600; border:1px solid transparent; cursor:pointer; text-decoration:none; width:100%;}
+  .btn-primary{background:var(--green); color:#fff;}
+  .btn-primary:hover{background:var(--green-dk);}
+  .btn-primary:disabled{background:#c9c2b0; cursor:not-allowed;}
+  .btn-secondary{background:#fff; color:var(--ink); border-color:var(--line);}
+  .btn-secondary:hover{border-color:var(--ink);}
+  .btn-text{background:none; border:none; color:var(--blue); font-family:"Geist Mono",monospace; font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; cursor:pointer; padding:10px 0; width:auto;}
+  .btn-row{display:flex; gap:10px; margin-top:22px;}
+  .btn-row .btn{width:auto; flex:1;}
+  [hidden]{display:none !important;}
+  .photo-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:18px 0;}
+  .photo-thumb{position:relative; aspect-ratio:1; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#fff;}
+  .photo-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+  .photo-thumb button{position:absolute; top:4px; right:4px; width:26px; height:26px; border-radius:50%; border:none; background:rgba(26,32,48,.75); color:#fff; font-size:.9rem; line-height:1; cursor:pointer;}
+  .photo-add{aspect-ratio:1; border:1px dashed var(--line); border-radius:10px; display:flex; align-items:center; justify-content:center; background:#fff; cursor:pointer; font-family:"Geist Mono",monospace; font-size:1.6rem; color:var(--muted);}
+  .photo-add input{position:absolute; width:1px; height:1px; opacity:0; overflow:hidden;}
+  .loading-wrap{display:flex; flex-direction:column; align-items:center; text-align:center; padding:60px 20px;}
+  .spinner{width:38px; height:38px; border-radius:50%; border:3px solid var(--line); border-top-color:var(--blue); animation:spin 0.9s linear infinite; margin-bottom:18px;}
+  @media (prefers-reduced-motion: reduce){ .spinner{animation-duration:2.4s;} }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .warn-banner{display:flex; gap:10px; align-items:flex-start; background:#fff8e8; border:1px solid #e8d9a8; border-radius:10px; padding:14px; font-size:.86rem; line-height:1.45; margin-bottom:18px;}
+  .warn-banner .ic{font-size:1.1rem;}
+  .line-item{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; background:#fff;}
+  .line-item-head{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:10px;}
+  .line-item-head strong{font-size:.95rem; line-height:1.3;}
+  .line-remove{background:none; border:none; color:var(--muted); font-size:1rem; cursor:pointer; padding:4px;}
+  .line-remove:hover{color:var(--red);}
+  .line-cost{font-family:"Geist Mono",monospace; font-size:.9rem; color:var(--blue); font-weight:600; margin-top:10px;}
+  .line-note{font-family:"Geist Mono",monospace; font-size:.72rem; color:var(--muted); margin-top:6px; line-height:1.4;}
+  .toggle-row{display:flex; align-items:center; gap:8px; margin-bottom:10px; font-size:.88rem;}
+  .toggle-row input{width:18px; height:18px;}
+  .free-badge{display:inline-block; font-family:"Geist Mono",monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--green-dk); background:#eef7e8; border-radius:999px; padding:6px 12px;}
+  .total-card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:26px; text-align:center; margin:8px 0 22px;}
+  .total-label{font-family:"Geist Mono",monospace; font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;}
+  .total-value{font-family:"Fraunces","Fraunces Fallback",serif; font-weight:300; font-size:clamp(2.2rem,8vw,3.2rem); color:var(--blue); line-height:1;}
+  .breakdown{font-family:"Geist Mono",monospace; font-size:.78rem; line-height:1.9; border-top:1px solid var(--line); margin-top:18px; padding-top:16px; text-align:left;}
+  .breakdown-row{display:flex; justify-content:space-between; gap:10px;}
+  .disclaimer{font-size:.8rem; color:var(--muted); line-height:1.5; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:18px;}
+  .status-live{font-size:.85rem; color:var(--muted); text-align:center;}
+  .err-box{background:#fdeceb; border:1px solid #f0b8b0; color:var(--red); border-radius:10px; padding:14px; font-size:.86rem; margin-bottom:16px;}
+  .auth-gate{position:fixed; inset:0; background:var(--bg); z-index:50; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .auth-gate .card{max-width:380px; width:100%; background:#fff; border:1px solid var(--line); border-radius:14px; padding:28px; text-align:center;}
+  .auth-gate h2{font-size:1.15rem; margin:0 0 10px;}
+  .auth-gate p{color:var(--muted); font-size:.88rem; line-height:1.5; margin:0 0 18px;}
+  .user-bar{font-size:.72rem; color:var(--muted); display:flex; align-items:center; gap:10px; min-width:0;}
+  .user-bar #userEmailLabel{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:38vw;}
+  .user-bar button{background:none; border:none; color:var(--blue); font-family:"Geist Mono",monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; cursor:pointer; padding:0; flex-shrink:0;}
+  @media (max-width: 480px){
+    .user-bar #userEmailLabel{display:none;}
+    header.bar .tag{display:none;}
+  }
+  .privacy-note{font-size:.78rem; color:var(--muted); line-height:1.5; background:#fff; border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin:0 0 16px;}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+
+<!--
+  Client-side login gate: UX only, not the real security boundary. The
+  actual access control is server-side: netlify.toml's Role-based redirect
+  (Netlify's edge checks the Identity "internal" role before this HTML is
+  even served) and the analyze Function's own context.clientContext.user
+  check (fails closed regardless of what this page shows). This overlay
+  just gives a clear login prompt/logged-in state instead of a broken UI
+  if someone reaches this page without a session (e.g. local dev without
+  the redirect infra active).
+-->
+<div class="auth-gate" id="authGate">
+  <div class="card">
+    <h2>Anmeldung erforderlich</h2>
+    <p>Dieses interne Werkzeug ist nur für autorisierte PSS-Mitarbeiter zugänglich.</p>
+    <button type="button" class="btn btn-primary" id="btnAuthLogin" style="width:auto; display:inline-flex; padding:14px 24px;">Anmelden</button>
+  </div>
+</div>
+
+<header class="bar">
+  <span class="brand"><b>Perfekt</b> <em>Sauber</em></span>
+  <span class="user-bar" id="userBar" hidden>
+    <span id="userEmailLabel"></span>
+    <button type="button" id="btnLogout">Abmelden</button>
+  </span>
+  <span class="tag">Intern &middot; Entsorgungskosten</span>
+</header>
+
+<main id="main-content">
+  <div class="step-indicator" role="progressbar" aria-valuemin="1" aria-valuemax="5" id="stepIndicator">
+    <div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div>
+  </div>
+
+  <!-- SCREEN 1: START -->
+  <section id="screen-start">
+    <h1 class="h1">Entsorgungskosten-Rechner</h1>
+    <p class="lead">Interne Schätzung der eigenen Entsorgungskosten (Wertstoffhof/Deponie) während der Besichtigung. Kein Angebot für den Kunden — das bleibt wie bisher separat.</p>
+    <label class="field-label" for="customerField">Kunde / Adresse (optional)</label>
+    <input type="text" id="customerField" name="customerField" autocomplete="off" placeholder="z.B. Müller, Karlsruhe" />
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary" id="btnGoPhotos">Fotos aufnehmen</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: PHOTOS -->
+  <section id="screen-photos" hidden>
+    <h1 class="h1">Fotos</h1>
+    <p class="lead">Mach Fotos von den Materialien/Abfällen vor Ort. Mehrere Fotos möglich (max. 5 pro Analyse).</p>
+    <div class="privacy-note">
+      Fotos werden zur Analyse an einen externen KI-Dienst (Anthropic) gesendet. Standort- und Metadaten werden vorher automatisch entfernt. Bitte keine Personen oder Dokumente unnötig mit aufnehmen.
+    </div>
+    <div class="photo-grid" id="photoGrid">
+      <label class="photo-add" id="photoAddTile">
+        +
+        <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" capture="environment" multiple aria-label="Foto aufnehmen oder auswählen" />
+      </label>
+    </div>
+    <div id="photoError" class="err-box" hidden></div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="btnBackToStart">Zurück</button>
+      <button type="button" class="btn btn-primary" id="btnAnalyze" disabled>Analysieren</button>
+    </div>
+    <div style="margin-top:14px;">
+      <button type="button" class="btn-text" id="btnSkipToManual">Ohne Foto-Analyse fortfahren (manuell)</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: ANALYSIS -->
+  <section id="screen-analyzing" hidden>
+    <div class="loading-wrap">
+      <div class="spinner" aria-hidden="true"></div>
+      <p class="status-live" role="status" aria-live="polite" id="analyzeStatus">Analysiere Fotos…</p>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: RESULT / EDIT -->
+  <section id="screen-result" hidden>
+    <h1 class="h1">Ergebnis prüfen</h1>
+    <div class="warn-banner">
+      <span class="ic" aria-hidden="true">⚠️</span>
+      <span>Schätzung der KI — Mengen sind editierbar, bevor du weitermachst. Bitte jede Zeile kontrollieren.</span>
+    </div>
+    <div id="resultError" class="err-box" hidden></div>
+    <div id="lineItems"></div>
+    <button type="button" class="btn-text" id="btnAddCategory">+ Kategorie manuell hinzufügen</button>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="btnBackToPhotos">Zurück</button>
+      <button type="button" class="btn btn-primary" id="btnGoTotal" disabled>Weiter zur Summe</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 5: TOTAL -->
+  <section id="screen-total" hidden>
+    <h1 class="h1">Gesamtkosten</h1>
+    <div class="total-card">
+      <div class="total-label">Geschätzte Entsorgungskosten</div>
+      <div class="total-value mono" id="totalValue">0,00 €</div>
+      <div class="breakdown" id="totalBreakdown"></div>
+    </div>
+    <div class="disclaimer">
+      Interne Kostenschätzung für PSS (Entsorgungsgebühren), Stand Tarife 2026. <strong>Kein Angebot und kein Preis für den Kunden.</strong> Endgültige Kosten hängen von tatsächlichem Gewicht/Volumen bei Anlieferung ab.
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn btn-secondary" id="btnBackToResult">Zurück</button>
+      <button type="button" class="btn btn-primary" id="btnMakePdf">PDF erstellen</button>
+    </div>
+    <div style="margin-top:14px;">
+      <button type="button" class="btn-text" id="btnRestart">Neue Berechnung starten</button>
+    </div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js" defer></script>
+<script type="module">
+import { calculateLineItem, calculateTotal, findCategory } from "/assets/js/entsorgungskosten-calc.mjs";
+import { sanitizeImage } from "/assets/js/entsorgungskosten-image-sanitizer.mjs";
+
+const screens = ["start", "photos", "analyzing", "result", "total"];
+const dots = document.querySelectorAll(".step-dot");
+let feeTable = null;
+const state = {
+  customer: "",
+  photos: [], // { id, dataUrl, base64, mediaType }
+  lines: [],  // { id, category, input, aiNote }
+};
+
+function showScreen(name) {
+  const idx = screens.indexOf(name);
+  screens.forEach((s, i) => {
+    document.getElementById(`screen-${s}`).hidden = s !== name;
+    dots[i].classList.toggle("active", i === idx);
+    dots[i].classList.toggle("done", i < idx);
+  });
+  document.getElementById("main-content").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function loadFeeTable() {
+  const res = await fetch("/data/entsorgungsgebuehren-2026.json");
+  feeTable = await res.json();
+}
+
+// --- Auth: Netlify Identity. The real security boundary is server-side
+// (see comment on #authGate above and on the Function itself) -- this
+// helper is what actually attaches the credential to each protected
+// request; if there's no valid session, it returns null and the caller
+// must not proceed to call the AI endpoint at all. .jwt() auto-refreshes
+// a near-expiry token; if the session has genuinely expired it resolves
+// null/rejects instead, which we treat the same as "not logged in". ---
+async function getIdentityToken() {
+  const user = window.netlifyIdentity && window.netlifyIdentity.currentUser();
+  if (!user) return null;
+  try {
+    return (await user.jwt()) || null;
+  } catch {
+    return null;
+  }
+}
+
+// --- Screen 1 ---
+document.getElementById("btnGoPhotos").addEventListener("click", () => {
+  state.customer = document.getElementById("customerField").value.trim();
+  showScreen("photos");
+});
+
+// --- Screen 2: photos ---
+const photoGrid = document.getElementById("photoGrid");
+const photoInput = document.getElementById("photoInput");
+const photoError = document.getElementById("photoError");
+const MAX_PHOTOS = 5;
+
+function renderPhotoGrid() {
+  [...photoGrid.querySelectorAll(".photo-thumb")].forEach((el) => el.remove());
+  state.photos.forEach((p) => {
+    const div = document.createElement("div");
+    div.className = "photo-thumb";
+    div.innerHTML = `<img src="${p.dataUrl}" alt="Foto" /><button type="button" aria-label="Foto entfernen">✕</button>`;
+    div.querySelector("button").addEventListener("click", () => {
+      state.photos = state.photos.filter((x) => x.id !== p.id);
+      renderPhotoGrid();
+    });
+    photoGrid.insertBefore(div, document.getElementById("photoAddTile"));
+  });
+  document.getElementById("photoAddTile").hidden = state.photos.length >= MAX_PHOTOS;
+  document.getElementById("btnAnalyze").disabled = state.photos.length === 0;
+}
+
+// Photo sanitization (decode -> render pixels -> re-encode, discarding
+// all EXIF/GPS/device metadata) lives in
+// /assets/js/entsorgungskosten-image-sanitizer.mjs -- see that file for
+// why. If any step fails, sanitizeImage() throws; the handler below never
+// falls back to sending the original file on failure.
+
+photoInput.addEventListener("change", async (e) => {
+  photoError.hidden = true;
+  const files = [...e.target.files].slice(0, MAX_PHOTOS - state.photos.length);
+  if (e.target.files.length > files.length) {
+    photoError.textContent = `Nur ${MAX_PHOTOS} Fotos pro Analyse möglich.`;
+    photoError.hidden = false;
+  }
+  const sanitizeErrors = [];
+  for (const file of files) {
+    try {
+      const sanitized = await sanitizeImage(file);
+      state.photos.push({ id: crypto.randomUUID(), ...sanitized });
+    } catch (err) {
+      // Never forward the original file when sanitization fails.
+      sanitizeErrors.push(`${file.name}: ${err.message}`);
+    }
+  }
+  if (sanitizeErrors.length > 0) {
+    photoError.textContent = sanitizeErrors.join(" ");
+    photoError.hidden = false;
+  }
+  photoInput.value = "";
+  renderPhotoGrid();
+});
+
+document.getElementById("btnBackToStart").addEventListener("click", () => showScreen("start"));
+
+document.getElementById("btnSkipToManual").addEventListener("click", async () => {
+  if (!feeTable) await loadFeeTable();
+  document.getElementById("resultError").hidden = true;
+  state.lines = [];
+  renderLineItems();
+  showScreen("result");
+});
+
+// --- Screen 3: analyze ---
+document.getElementById("btnAnalyze").addEventListener("click", async () => {
+  showScreen("analyzing");
+  const statusEl = document.getElementById("analyzeStatus");
+  try {
+    const token = await getIdentityToken();
+    if (!token) {
+      // Fail closed client-side too: never call the AI endpoint without a
+      // session. The Function would reject it anyway (401), but there's
+      // no reason to make the request at all, and this gives a clearer
+      // "please log in again" message than a generic fetch error would.
+      showAuthGate();
+      throw new Error("Sitzung abgelaufen — bitte erneut einloggen");
+    }
+    if (!feeTable) await loadFeeTable();
+    const res = await fetch("/api/entsorgungskosten-analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+      body: JSON.stringify({
+        images: state.photos.map((p) => ({ mediaType: p.mediaType, data: p.base64 })),
+      }),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || "Analyse fehlgeschlagen");
+    }
+    const data = await res.json();
+    if (!Array.isArray(data.items)) {
+      // A 200 response that isn't shaped as expected (proxy interference,
+      // future server drift, ...) must not be treated as "AI found
+      // nothing" -- that would be a silent, misleading empty result.
+      throw new Error("Antwort der KI hatte ein unerwartetes Format");
+    }
+    state.lines = data.items.map((item) => ({
+      id: crypto.randomUUID(),
+      category: findCategory(feeTable, item.categoryId),
+      input: defaultInputFor(findCategory(feeTable, item.categoryId)),
+      aiNote: [item.quantityGuess, item.note].filter(Boolean).join(" — "),
+    }));
+    document.getElementById("resultError").hidden = true;
+    renderLineItems();
+    showScreen("result");
+  } catch (err) {
+    statusEl.textContent = "";
+    document.getElementById("resultError").hidden = false;
+    document.getElementById("resultError").textContent =
+      "KI-Analyse fehlgeschlagen: " + err.message + ". Du kannst Kategorien manuell hinzufügen.";
+    state.lines = [];
+    renderLineItems();
+    showScreen("result");
+  }
+});
+
+function defaultInputFor(category) {
+  switch (category.mode) {
+    case "flat_by_volume_tier": return { tierId: category.tiers[0].id, count: 1 };
+    case "per_piece": case "per_piece_capped": return { quantity: 1 };
+    case "weight_threshold": return { weightKg: 0 };
+    case "weight_threshold_with_small_flat": return { smallVolume: true, weightKg: 0 };
+    default: return {};
+  }
+}
+
+// --- Screen 4: result / edit ---
+const lineItemsEl = document.getElementById("lineItems");
+
+function computeLineCost(line) {
+  try {
+    return calculateLineItem(line.category, line.input);
+  } catch {
+    return { cost: 0 };
+  }
+}
+
+function renderLineItems() {
+  lineItemsEl.innerHTML = "";
+  state.lines.forEach((line) => {
+    lineItemsEl.appendChild(renderLineItem(line));
+  });
+  document.getElementById("btnGoTotal").disabled = state.lines.length === 0;
+}
+
+function renderLineItem(line) {
+  const wrap = document.createElement("div");
+  wrap.className = "line-item";
+  const catSelectId = `cat-${line.id}`;
+
+  const head = document.createElement("div");
+  head.className = "line-item-head";
+  head.innerHTML = `<strong>${line.category.label}</strong>`;
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.className = "line-remove";
+  removeBtn.setAttribute("aria-label", `${line.category.label} entfernen`);
+  removeBtn.textContent = "✕";
+  removeBtn.addEventListener("click", () => {
+    state.lines = state.lines.filter((l) => l.id !== line.id);
+    renderLineItems();
+  });
+  head.appendChild(removeBtn);
+  wrap.appendChild(head);
+
+  const catLabel = document.createElement("label");
+  catLabel.className = "field-label";
+  catLabel.setAttribute("for", catSelectId);
+  catLabel.textContent = "Kategorie";
+  wrap.appendChild(catLabel);
+
+  const catSelect = document.createElement("select");
+  catSelect.id = catSelectId;
+  catSelect.style.marginBottom = "12px";
+  feeTable.categories.forEach((c) => {
+    const opt = document.createElement("option");
+    opt.value = c.id;
+    opt.textContent = c.official === false ? `${c.label} — inoffizieller Tarif` : c.label;
+    opt.selected = c.id === line.category.id;
+    catSelect.appendChild(opt);
+  });
+  catSelect.addEventListener("change", () => {
+    line.category = findCategory(feeTable, catSelect.value);
+    line.input = defaultInputFor(line.category);
+    renderLineItems();
+  });
+  wrap.appendChild(catSelect);
+
+  if (line.category.official === false) {
+    const sourceWarn = document.createElement("div");
+    sourceWarn.className = "line-note";
+    sourceWarn.style.color = "var(--red)";
+    sourceWarn.textContent = `⚠ Kein offizieller Landkreis-Tarif — ${line.category.note || "manuell angegebener Wert."}`;
+    wrap.appendChild(sourceWarn);
+  }
+
+  wrap.appendChild(renderInputFields(line));
+
+  if (line.aiNote) {
+    const note = document.createElement("div");
+    note.className = "line-note";
+    note.textContent = `KI-Hinweis: ${line.aiNote}`;
+    wrap.appendChild(note);
+  }
+
+  const costEl = document.createElement("div");
+  costEl.className = "line-cost mono";
+  const result = computeLineCost(line);
+  costEl.textContent = `${result.cost.toFixed(2).replace(".", ",")} €`;
+  wrap.appendChild(costEl);
+  if (result.warning) {
+    const w = document.createElement("div");
+    w.className = "line-note";
+    w.textContent = result.warning;
+    wrap.appendChild(w);
+  }
+
+  return wrap;
+}
+
+function renderInputFields(line) {
+  const box = document.createElement("div");
+  const cat = line.category;
+  const rerender = () => {
+    const parent = box.closest(".line-item");
+    const idx = [...lineItemsEl.children].indexOf(parent);
+    lineItemsEl.replaceChild(renderLineItem(line), parent);
+  };
+
+  if (cat.mode === "free") {
+    const badge = document.createElement("span");
+    badge.className = "free-badge";
+    badge.textContent = "Gebührenfrei";
+    box.appendChild(badge);
+    return box;
+  }
+
+  if (cat.mode === "flat_by_volume_tier") {
+    const lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = "Menge (Volumen)";
+    box.appendChild(lbl);
+    const sel = document.createElement("select");
+    sel.setAttribute("aria-label", `${cat.label}: Volumen wählen`);
+    cat.tiers.forEach((t) => {
+      const opt = document.createElement("option");
+      opt.value = t.id;
+      opt.textContent = `${t.label} — ${t.flatPrice}€/Stück`;
+      opt.selected = t.id === line.input.tierId;
+      sel.appendChild(opt);
+    });
+    sel.style.marginBottom = "10px";
+    sel.addEventListener("change", () => { line.input.tierId = sel.value; rerender(); });
+    box.appendChild(sel);
+
+    const countLbl = document.createElement("label");
+    countLbl.className = "field-label";
+    countLbl.textContent = "Anzahl Abholungen";
+    box.appendChild(countLbl);
+    const countInput = document.createElement("input");
+    countInput.type = "number";
+    countInput.min = "1";
+    countInput.step = "1";
+    countInput.value = line.input.count;
+    countInput.setAttribute("aria-label", `${cat.label}: Anzahl`);
+    countInput.addEventListener("input", () => {
+      line.input.count = Math.max(1, parseInt(countInput.value, 10) || 1);
+      rerender();
+    });
+    box.appendChild(countInput);
+    return box;
+  }
+
+  if (cat.mode === "per_piece" || cat.mode === "per_piece_capped") {
+    const lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = cat.mode === "per_piece_capped" ? `Anzahl Stück (max. ${cat.maxPieces})` : "Anzahl Stück";
+    box.appendChild(lbl);
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "1";
+    input.step = "1";
+    input.value = line.input.quantity;
+    input.setAttribute("aria-label", `${cat.label}: Anzahl Stück`);
+    input.addEventListener("input", () => {
+      line.input.quantity = Math.max(1, parseInt(input.value, 10) || 1);
+      rerender();
+    });
+    box.appendChild(input);
+    return box;
+  }
+
+  // weight_threshold / weight_threshold_with_small_flat
+  if (cat.mode === "weight_threshold_with_small_flat") {
+    const row = document.createElement("div");
+    row.className = "toggle-row";
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.id = `small-${line.id}`;
+    chk.checked = !!line.input.smallVolume;
+    chk.addEventListener("change", () => { line.input.smallVolume = chk.checked; rerender(); });
+    const chkLbl = document.createElement("label");
+    chkLbl.setAttribute("for", chk.id);
+    chkLbl.textContent = `Kleinmenge (bis 0,5 m³, pauschal ${cat.smallVolumeFlat}€)`;
+    row.appendChild(chk); row.appendChild(chkLbl);
+    box.appendChild(row);
+  }
+
+  const showWeight = cat.mode === "weight_threshold" || !line.input.smallVolume;
+  if (showWeight) {
+    const lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = `Gewicht in kg (ab ${cat.thresholdKg}kg = ${cat.atOrAboveThresholdRatePerTon}€/Tonne, darunter pauschal ${cat.belowThresholdFlat}€)`;
+    box.appendChild(lbl);
+    const input = document.createElement("input");
+    input.type = "number";
+    input.min = "0";
+    input.step = "1";
+    input.value = line.input.weightKg || 0;
+    input.setAttribute("aria-label", `${cat.label}: Gewicht in kg`);
+    input.addEventListener("input", () => {
+      line.input.weightKg = Math.max(0, parseFloat(input.value) || 0);
+      rerender();
+    });
+    box.appendChild(input);
+  }
+  return box;
+}
+
+document.getElementById("btnAddCategory").addEventListener("click", async () => {
+  if (!feeTable) await loadFeeTable();
+  const cat = feeTable.categories[0];
+  state.lines.push({ id: crypto.randomUUID(), category: cat, input: defaultInputFor(cat), aiNote: "" });
+  renderLineItems();
+});
+
+document.getElementById("btnBackToPhotos").addEventListener("click", () => showScreen("photos"));
+
+document.getElementById("btnGoTotal").addEventListener("click", () => {
+  renderTotal();
+  showScreen("total");
+});
+
+// --- Screen 5: total ---
+function renderTotal() {
+  const { total, lines } = calculateTotal(state.lines.map((l) => ({ category: l.category, input: l.input, label: l.category.label })));
+  document.getElementById("totalValue").textContent = total.toFixed(2).replace(".", ",") + " €";
+  const breakdownEl = document.getElementById("totalBreakdown");
+  breakdownEl.innerHTML = "";
+  let hasUnofficial = false;
+  lines.forEach((l, i) => {
+    const isUnofficial = state.lines[i].category.official === false;
+    if (isUnofficial) hasUnofficial = true;
+    const row = document.createElement("div");
+    row.className = "breakdown-row";
+    row.innerHTML = `<span>${l.label}${isUnofficial ? " *" : ""}</span><span>${l.cost.toFixed(2).replace(".", ",")} €</span>`;
+    breakdownEl.appendChild(row);
+  });
+  if (hasUnofficial) {
+    const foot = document.createElement("div");
+    foot.style.marginTop = "10px";
+    foot.style.color = "var(--red)";
+    foot.textContent = "* kein offizieller Landkreis-Tarif, manuell angegebener Wert";
+    breakdownEl.appendChild(foot);
+  }
+}
+
+document.getElementById("btnBackToResult").addEventListener("click", () => showScreen("result"));
+document.getElementById("btnRestart").addEventListener("click", () => {
+  state.customer = "";
+  state.photos = [];
+  state.lines = [];
+  document.getElementById("customerField").value = "";
+  renderPhotoGrid();
+  showScreen("start");
+});
+
+document.getElementById("btnMakePdf").addEventListener("click", () => {
+  const { jsPDF } = window.jspdf || {};
+  if (!jsPDF) {
+    alert("PDF-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen.");
+    return;
+  }
+  const { total, lines } = calculateTotal(state.lines.map((l) => ({ category: l.category, input: l.input, label: l.category.label })));
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text("Entsorgungskosten-Schätzung (intern)", 14, 18);
+  doc.setFontSize(10);
+  doc.text(`Erstellt: ${new Date().toLocaleDateString("de-DE")}`, 14, 26);
+  if (state.customer) doc.text(`Kunde/Adresse: ${state.customer}`, 14, 32);
+  let y = 44;
+  doc.setFontSize(11);
+  let hasUnofficial = false;
+  lines.forEach((l, i) => {
+    const isUnofficial = state.lines[i].category.official === false;
+    if (isUnofficial) hasUnofficial = true;
+    doc.text(`${l.label}${isUnofficial ? " *" : ""}`, 14, y);
+    doc.text(`${l.cost.toFixed(2).replace(".", ",")} €`, 180, y, { align: "right" });
+    y += 8;
+  });
+  y += 4;
+  doc.setFontSize(13);
+  doc.text("Gesamt", 14, y);
+  doc.text(`${total.toFixed(2).replace(".", ",")} €`, 180, y, { align: "right" });
+  y += 12;
+  doc.setFontSize(9);
+  doc.text("Interne Kostenschätzung (Entsorgungsgebühren) — kein Angebot/Preis für den Kunden.", 14, y);
+  if (hasUnofficial) {
+    y += 6;
+    doc.text("* kein offizieller Landkreis-Tarif, manuell angegebener Wert.", 14, y);
+  }
+  doc.save(`entsorgungskosten-${Date.now()}.pdf`);
+});
+
+renderPhotoGrid();
+
+// --- Identity widget wiring ---
+const authGateEl = document.getElementById("authGate");
+const userBarEl = document.getElementById("userBar");
+const userEmailLabelEl = document.getElementById("userEmailLabel");
+
+function showAuthGate() {
+  authGateEl.hidden = false;
+  userBarEl.hidden = true;
+}
+function hideAuthGate(user) {
+  authGateEl.hidden = true;
+  userBarEl.hidden = false;
+  userEmailLabelEl.textContent = user?.email || "";
+}
+
+function initIdentity() {
+  if (!window.netlifyIdentity) { setTimeout(initIdentity, 200); return; }
+  window.netlifyIdentity.on("init", (user) => (user ? hideAuthGate(user) : showAuthGate()));
+  window.netlifyIdentity.on("login", (user) => hideAuthGate(user));
+  window.netlifyIdentity.on("logout", () => showAuthGate());
+  document.getElementById("btnAuthLogin").addEventListener("click", () => window.netlifyIdentity.open("login"));
+  document.getElementById("btnLogout").addEventListener("click", () => window.netlifyIdentity.logout());
+  window.netlifyIdentity.init();
+}
+initIdentity();
+</script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+</body>
+</html>

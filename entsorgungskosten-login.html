@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Anmeldung erforderlich — Perfekt Sauber Service</title>
+<meta name="robots" content="noindex, nofollow" />
+<style>
+  :root{ --bg:#fbf7f0; --ink:#1a2030; --muted:#6b6456; --line:#e5dccb; --green:#5aa83a; --green-dk:#3f7f28; }
+  *{box-sizing:border-box;}
+  body{font-family:system-ui,sans-serif; background:var(--bg); color:var(--ink); margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .card{max-width:420px; width:100%; background:#fff; border:1px solid var(--line); border-radius:14px; padding:32px; text-align:center;}
+  h1{font-size:1.3rem; margin:0 0 10px;}
+  p{color:var(--muted); font-size:.92rem; line-height:1.5; margin:0 0 22px;}
+  button{padding:14px 22px; border-radius:999px; font-size:.85rem; font-weight:600; border:none; background:var(--green); color:#fff; cursor:pointer; width:100%;}
+  button:hover{background:var(--green-dk);}
+  a:focus-visible,button:focus-visible{outline:2px solid #1d6dd6; outline-offset:2px;}
+  .status{margin-top:16px; font-size:.85rem; color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Nur für autorisierte PSS-Mitarbeiter</h1>
+  <p>Der Entsorgungskosten-Rechner ist ein internes Werkzeug. Bitte melde dich mit deinem PSS-Konto an, um fortzufahren.</p>
+  <button type="button" id="btnLogin">Anmelden</button>
+  <div class="status" id="statusText" role="status" aria-live="polite"></div>
+</div>
+
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" defer></script>
+<script>
+  function ready() {
+    if (!window.netlifyIdentity) { setTimeout(ready, 200); return; }
+    window.netlifyIdentity.on("init", (user) => {
+      if (user) window.location.href = "/entsorgungskosten-rechner.html";
+    });
+    window.netlifyIdentity.on("login", () => {
+      document.getElementById("statusText").textContent = "Angemeldet — Weiterleitung…";
+      window.location.href = "/entsorgungskosten-rechner.html";
+    });
+    document.getElementById("btnLogin").addEventListener("click", () => {
+      window.netlifyIdentity.open("login");
+    });
+    window.netlifyIdentity.init();
+  }
+  ready();
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+{
+  "_source": "Abfallwirtschaftsbetrieb Landkreis Rastatt, \"Abfallentsorgungsgebühren 2026\" (Fotos vom 2026-08-14). Siehe docs/superpowers/specs/2026-08-14-entsorgungskosten-rechner-design.md.",
+  "_note": "Preis = PSS-eigene Entsorgungskosten, KEIN Preis für den Kunden. Nur von Laura / autorisierter Person bearbeiten, mit dokumentierter Quelle für jede Änderung.",
+  "currency": "EUR",
+  "categories": [
+    {
+      "id": "sperrmuellsammlung",
+      "label": "Sperrmüllsammlung",
+      "mode": "flat_by_volume_tier",
+      "official": true,
+      "tiers": [
+        { "id": "0.5m3", "label": "0,5 m³", "flatPrice": 18 },
+        { "id": "1m3", "label": "1 m³", "flatPrice": 30 },
+        { "id": "2m3", "label": "2 m³", "flatPrice": 45 }
+      ]
+    },
+    {
+      "id": "sperrmuell_einzelanlieferung",
+      "label": "Sperrmüll Einzelanlieferung ab 2m³",
+      "mode": "weight_threshold",
+      "official": true,
+      "thresholdKg": 200,
+      "belowThresholdFlat": 45,
+      "atOrAboveThresholdRatePerTon": 260
+    },
+    {
+      "id": "altholz_a1_a2",
+      "label": "Altholz Kategorie A I–A II (unbehandeltes Holz)",
+      "mode": "weight_threshold_with_small_flat",
+      "official": true,
+      "smallVolumeMaxM3": 0.5,
+      "smallVolumeFlat": 10,
+      "thresholdKg": 200,
+      "belowThresholdFlat": 16,
+      "atOrAboveThresholdRatePerTon": 85
+    },
+    {
+      "id": "altholz_a4",
+      "label": "Altholz Kategorie A IV (behandeltes Holz)",
+      "mode": "weight_threshold_with_small_flat",
+      "official": true,
+      "smallVolumeMaxM3": 0.5,
+      "smallVolumeFlat": 20,
+      "thresholdKg": 200,
+      "belowThresholdFlat": 30,
+      "atOrAboveThresholdRatePerTon": 170
+    },
+    {
+      "id": "bauabfallgemische",
+      "label": "Bauabfallgemische (gemischter Bauschutt)",
+      "mode": "weight_threshold_with_small_flat",
+      "official": true,
+      "smallVolumeMaxM3": 0.5,
+      "smallVolumeFlat": 18,
+      "smallVolumeNote": "Kleinmenge PKW bis 0,5m³",
+      "thresholdKg": 200,
+      "belowThresholdFlat": 35,
+      "atOrAboveThresholdRatePerTon": 185
+    },
+    {
+      "id": "gewerbeabfaelle",
+      "label": "Gewerbeabfälle (gemischte Gewerbeabfälle)",
+      "mode": "weight_threshold",
+      "official": true,
+      "thresholdKg": 200,
+      "belowThresholdFlat": 30,
+      "atOrAboveThresholdRatePerTon": 280
+    },
+    {
+      "id": "metallschrott",
+      "label": "Metallschrott",
+      "mode": "free",
+      "official": true
+    },
+    {
+      "id": "elektro_altgeraete",
+      "label": "Elektro-/Elektronik-Altgeräte",
+      "mode": "free",
+      "official": true
+    },
+    {
+      "id": "altpapier",
+      "label": "Altpapier",
+      "mode": "free",
+      "official": true
+    },
+    {
+      "id": "pkw_reifen",
+      "label": "PKW-Reifen ohne Felge (≤20 Zoll)",
+      "mode": "per_piece_capped",
+      "official": true,
+      "pricePerPiece": 5,
+      "maxPieces": 10
+    },
+    {
+      "id": "altreifen_grossreifen",
+      "label": "Altreifen Großreifen/-anhänger",
+      "mode": "weight_threshold",
+      "official": true,
+      "thresholdKg": 200,
+      "belowThresholdFlat": 77,
+      "atOrAboveThresholdRatePerTon": 385
+    },
+    {
+      "id": "matratzen",
+      "label": "Matratzen",
+      "mode": "per_piece",
+      "official": false,
+      "pricePerPiece": 25,
+      "note": "Tarif direkt von Laura angegeben, NICHT aus dem offiziellen Landkreis-Merkblatt — regelmäßig neu prüfen."
+    }
+  ]
+}
