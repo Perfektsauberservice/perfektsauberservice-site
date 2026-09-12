@@ -4,9 +4,10 @@
  * Ruleaza automat dupa fiecare articol publicat.
  */
 
-import { readdirSync, writeFileSync, statSync } from 'fs';
+import { readdirSync, writeFileSync, readFileSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { deriveRedirectExclusions } from './redirect-exclusions.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
@@ -23,6 +24,16 @@ const EXCLUDE = new Set([
 
 // Foldere excluse din root
 const EXCLUDE_DIRS = new Set(['dashboard', 'agent', 'netlify', 'images', 'content', '.github']);
+
+// Rute redirectate (301) sau disparute (410) conform netlify.toml -- derivate
+// din sursa de adevar a site-ului, nu dintr-o a doua lista manuala. Un fisier
+// .html poate exista fizic pe disc (orfan, redirectionat la edge) fara sa mai
+// fie o URL canonica -- vezi PSS_SEO_HYGIENE_TIER_B_ROOT_CAUSE_READONLY_V1.
+const redirectExclusions = deriveRedirectExclusions(readFileSync(join(ROOT, 'netlify.toml'), 'utf8'));
+
+// Edge function strip-html.js convertește /xxx.html → /xxx via 301.
+// Definit aici (nu mai jos) ca sa poata fi folosit si la filtrarea rootFiles.
+const stripHtml = (file) => file.replace(/\.html$/, '');
 
 function getLastmod(filePath) {
   try {
@@ -52,7 +63,7 @@ function getChangefreq(file, isBlog) {
 
 // Colecteaza paginile root
 const rootFiles = readdirSync(ROOT, { withFileTypes: true })
-  .filter(d => d.isFile() && d.name.endsWith('.html') && !EXCLUDE.has(d.name))
+  .filter(d => d.isFile() && d.name.endsWith('.html') && !EXCLUDE.has(d.name) && !redirectExclusions.has(stripHtml(d.name)))
   .map(d => d.name)
   .sort();
 
@@ -70,10 +81,6 @@ try {
 const today = new Date().toISOString();
 let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
 xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
-
-// Edge function strip-html.js convertește /xxx.html → /xxx via 301.
-// Sitemap-ul listează URL-ul canonic (fără .html) ca să nu raporteze GSC redirect-uri.
-const stripHtml = (file) => file.replace(/\.html$/, '');
 
 for (const file of rootFiles) {
   const url = file === 'index.html' ? `${BASE_URL}/` : `${BASE_URL}/${stripHtml(file)}`;
