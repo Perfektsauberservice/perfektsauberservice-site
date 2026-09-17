@@ -29,6 +29,9 @@ export const handler = async (event) => {
     const message = data.data?.message   || data.data?.Message   || data.data?.nachricht || data.data?.Nachricht || '—';
     const city    = data.data?.city      || data.data?.ort       || '—';
     const service = data.data?.service   || data.data?.leistung  || '—';
+    const plz          = data.data?.plz          || '—';
+    const umfang       = data.data?.umfang       || '—';
+    const wunschtermin = data.data?.wunschtermin || '—';
 
     // lead_id: generat client-side de formular; validat aici, cu fallback server-side
     // daca lipseste sau nu respecta formatul. Orice eroare in acest bloc e izolata —
@@ -91,7 +94,10 @@ export const handler = async (event) => {
       `📧 Email: ${email}`,
       `📱 Telefon: ${phone}`,
       `📍 Oras: ${city}`,
+      `📮 PLZ: ${plz}`,
       `🔧 Serviciu: ${service}`,
+      `📐 Umfang: ${umfang}`,
+      `🗓️ Wunschtermin: ${wunschtermin}`,
       `💬 Mesaj: ${message}`,
       `📌 Lead ID: ${lead_id}`,
       ...(attributionLine ? [attributionLine] : []),
@@ -139,7 +145,10 @@ export const handler = async (event) => {
         `<p><strong>Email:</strong> ${email}</p>`,
         `<p><strong>Telefon:</strong> ${phone}</p>`,
         `<p><strong>Oras:</strong> ${city}</p>`,
+        `<p><strong>PLZ:</strong> ${plz}</p>`,
         `<p><strong>Serviciu:</strong> ${service}</p>`,
+        `<p><strong>Umfang:</strong> ${umfang}</p>`,
+        `<p><strong>Wunschtermin:</strong> ${wunschtermin}</p>`,
         `<p><strong>Mesaj:</strong> ${message}</p>`,
         `<p><strong>Lead ID:</strong> ${lead_id}</p>`,
         attributionHtml,

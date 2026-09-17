@@ -348,8 +348,58 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <div class="cta-row">
       <a href="tel:+491639087197" class="btn btn-phone">📞 0163 9087197</a>
       <a href="https://wa.me/491639087197?text=Hallo%2C%20ich%20m%C3%B6chte%20eine%20Grundreinigung%20in%20Baden-Baden%20anfragen." class="btn btn-w" target="_blank" rel="noreferrer">WhatsApp →</a>
-      
+
     </div>
+    <p class="qualify-note">Jede Anfrage wird individuell nach Umfang, Fläche, Anfahrt und Aufwand bewertet — je genauer Ihre Angaben, desto passgenauer unser Angebot. Einen festen Mindestpreis nennen wir hier bewusst nicht.</p>
+    <form name="lead" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/danke" class="hero-form">
+      <input type="hidden" name="form-name" value="lead">
+      <input type="hidden" name="seite" value="Hero · Grundreinigung · Baden-Baden">
+      <input type="hidden" name="lead_id" id="heroLeadIdHidden" value="">
+      <input type="hidden" name="gclid" id="heroGclid" value="">
+      <input type="hidden" name="gbraid" id="heroGbraid" value="">
+      <input type="hidden" name="wbraid" id="heroWbraid" value="">
+      <input type="hidden" name="utm_source" id="heroUtmSource" value="">
+      <input type="hidden" name="utm_medium" id="heroUtmMedium" value="">
+      <input type="hidden" name="utm_campaign" id="heroUtmCampaign" value="">
+      <input type="hidden" name="utm_term" id="heroUtmTerm" value="">
+      <input type="hidden" name="utm_content" id="heroUtmContent" value="">
+      <input type="hidden" name="landing_page_url" id="heroLandingPage" value="">
+      <input type="hidden" name="first_seen_at" id="heroFirstSeenAt" value="">
+      <p class="hp"><label>Bitte leer lassen: <input name="bot-field"></label></p>
+      <div class="hf-row">
+        <label class="hf-field"><span>Name</span><input type="text" name="name" autocomplete="name" required placeholder="Ihr Name"></label>
+        <label class="hf-field"><span>Telefon</span><input type="tel" name="telefon" autocomplete="tel" required placeholder="+49…"></label>
+      </div>
+      <div class="hf-row">
+        <label class="hf-field"><span>PLZ</span><input type="text" name="plz" autocomplete="postal-code" required placeholder="76xxx" maxlength="10"></label>
+        <label class="hf-field"><span>Ort</span><input type="text" name="ort" autocomplete="address-level2" required placeholder="z.B. Baden-Baden"></label>
+      </div>
+      <label class="hf-field">
+        <span>Art der Reinigung</span>
+        <select name="service" required>
+          <option value="" selected disabled>Bitte wählen</option>
+          <option value="Wohnungsreinigung">Wohnungsreinigung</option>
+          <option value="Hausreinigung">Hausreinigung</option>
+          <option value="Büro/Gewerbe">Büro / Gewerbe</option>
+          <option value="Sonstige Grundreinigung">Sonstige Grundreinigung</option>
+        </select>
+      </label>
+      <div class="hf-row">
+        <label class="hf-field"><span>Fläche / Umfang (optional)</span><input type="text" name="umfang" placeholder="z.B. 3-Zimmer-Wohnung, ca. 70 m²"></label>
+        <label class="hf-field"><span>Wunschtermin (optional)</span><input type="text" name="wunschtermin" placeholder="z.B. nächste Woche, flexibel"></label>
+      </div>
+      <label class="hf-field"><span>E-Mail (optional)</span><input type="email" name="email" autocomplete="email" placeholder="ihre@email.de"></label>
+      <label class="hf-field hf-field-msg">
+        <span>Ihr Anliegen</span>
+        <textarea name="nachricht" rows="2" required placeholder="Was möchten Sie reinigen lassen? Kurz in 1-2 Sätzen."></textarea>
+      </label>
+      <label class="hf-consent">
+        <input type="checkbox" name="agb_widerruf_accepted" required>
+        <span>Ich akzeptiere die <a href="/agb">AGB</a> und das <a href="/widerrufsbelehrung">Widerrufsrecht</a>.</span>
+      </label>
+      <button type="submit" class="btn btn-pri hf-submit">Festpreis anfragen →</button>
+      <p class="hf-mini">Kontakt in 2 Std. · kostenlose Besichtigung · kein Werbeversand</p>
+    </form>
     <div class="trust"><div class="it"><strong>✓</strong><span>Termin in 48 h</span></div><div class="it"><strong>✓</strong><span>Festpreis-Garantie</span></div><div class="it"><strong>✓</strong><span>Ordnungsgemäße Rechnung</span></div><div class="it"><strong>✓</strong><span>Ordnungsgemäße Rechnung</span></div></div>
   </div>
   <div class="hero-img">
@@ -732,6 +782,30 @@ window.psGrantConsent = function(){
   // window to leave before GA4 ever initialized -- the same bug class already fixed for
   // /danke.html and for phone/whatsapp/email clicks (2026-08-12), now applied here too.
   window.psLoadGA();
+})();
+</script>
+<script>
+(function(){
+  var heroForm = document.querySelector('form.hero-form');
+  if (!heroForm) return;
+  heroForm.addEventListener('submit', function(){
+    document.getElementById('heroLeadIdHidden').value = 'PSS-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + crypto.randomUUID().slice(0,8);
+    try {
+      var attr = JSON.parse(sessionStorage.getItem('ps_attribution') || 'null');
+      if (attr) {
+        var lg = document.getElementById('heroGclid'); if (lg) lg.value = attr.gclid || '';
+        var lgb = document.getElementById('heroGbraid'); if (lgb) lgb.value = attr.gbraid || '';
+        var lwb = document.getElementById('heroWbraid'); if (lwb) lwb.value = attr.wbraid || '';
+        var lus = document.getElementById('heroUtmSource'); if (lus) lus.value = attr.utm_source || '';
+        var lum = document.getElementById('heroUtmMedium'); if (lum) lum.value = attr.utm_medium || '';
+        var luc = document.getElementById('heroUtmCampaign'); if (luc) luc.value = attr.utm_campaign || '';
+        var lut = document.getElementById('heroUtmTerm'); if (lut) lut.value = attr.utm_term || '';
+        var luco = document.getElementById('heroUtmContent'); if (luco) luco.value = attr.utm_content || '';
+        var llp = document.getElementById('heroLandingPage'); if (llp) llp.value = attr.landing_page_url || '';
+        var lfs = document.getElementById('heroFirstSeenAt'); if (lfs) lfs.value = attr.first_seen_at || '';
+      }
+    } catch(e) {}
+  });
 })();
 </script>
 </body>
