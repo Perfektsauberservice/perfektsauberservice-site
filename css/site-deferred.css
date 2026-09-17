@@ -130,6 +130,10 @@ html{overflow-x:hidden;}
   border-radius:8px; background:#fff; font:inherit; color:var(--ink,#1a2030);
   transition:border-color .2s; resize:vertical; min-height:48px;}
 .hf-field textarea:focus{border-color:var(--green,#5aa83a); outline:none;}
+.hf-field select{padding:10px 12px; border:1.5px solid var(--line,#e5dccb);
+  border-radius:8px; background:#fff; font:inherit; color:var(--ink,#1a2030);
+  transition:border-color .2s;}
+.hf-field select:focus{border-color:var(--green,#5aa83a); outline:none;}
 .hf-consent{display:flex; gap:8px; font-size:.74rem; color:var(--muted,#4a5160);
   margin:6px 0 10px; line-height:1.4; align-items:flex-start; cursor:pointer;}
 .hf-consent input{margin-top:2px; flex-shrink:0;}
@@ -138,6 +142,8 @@ html{overflow-x:hidden;}
 .hf-mini{font-size:.66rem; letter-spacing:.06em;
   color:var(--muted,#4a5160); margin-top:8px; text-align:center;
   font-family:"Geist Mono",monospace;}
+.qualify-note{font-size:.78rem; line-height:1.5; color:var(--muted,#4a5160);
+  margin:2px 0 14px; max-width:480px;}
 
 /* MOBILE FAB */
 .fab{display:none;}
