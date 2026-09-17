@@ -19,7 +19,6 @@ export const handler = async (event) => {
   try {
     const payload = JSON.parse(event.body);
     console.log('DEBUG payload keys:', JSON.stringify(Object.keys(payload)));
-    console.log('DEBUG payload.payload:', JSON.stringify(payload.payload));
     const data = payload.payload || {};
 
     // Extrage datele clientului
@@ -105,75 +104,86 @@ export const handler = async (event) => {
       `🌐 perfektsauberservice.com`,
     ].join('\n');
 
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId   = process.env.TELEGRAM_CHAT_ID;
+    // Canal 1: Telegram. Izolat in propriul try/catch -- o eroare aici
+    // (fetch care pica, raspuns non-JSON, etc.) NU trebuie sa opreasca
+    // tentativa de email de mai jos.
+    try {
+      const botToken = process.env.TELEGRAM_BOT_TOKEN;
+      const chatId   = process.env.TELEGRAM_CHAT_ID;
 
-    if (!botToken || !chatId) {
-      console.warn('⚠️  TELEGRAM_BOT_TOKEN sau TELEGRAM_CHAT_ID lipsesc din env vars.');
-    } else {
-      const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-      const res = await fetch(telegramUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text,
-        }),
-      });
-
-      const resJson = await res.json();
-
-      if (res.ok) {
-        console.log(`✅ Telegram trimis pentru lead: ${name} (${email})`);
+      if (!botToken || !chatId) {
+        console.warn('⚠️  TELEGRAM_BOT_TOKEN sau TELEGRAM_CHAT_ID lipsesc din env vars.');
       } else {
-        console.error(`❌ Telegram eroare:`, JSON.stringify(resJson));
+        const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const res = await fetch(telegramUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text,
+          }),
+        });
+
+        if (res.ok) {
+          console.log(`✅ Telegram trimis pentru lead: ${lead_id}`);
+        } else {
+          const resJson = await res.json().catch(() => ({}));
+          console.error(`❌ Telegram eroare:`, JSON.stringify(resJson));
+        }
       }
+    } catch (telegramErr) {
+      console.error('❌ Telegram eroare (exceptie):', telegramErr.message);
     }
 
-    // Al doilea canal, independent de Telegram: email prin Resend
-    const resendKey = process.env.RESEND_API_KEY;
-    const emailTo    = process.env.ALERT_EMAIL_TO;
-    const emailFrom  = process.env.ALERT_EMAIL_FROM;
+    // Canal 2: email prin Resend. Izolat separat -- independent de rezultatul
+    // canalului Telegram de mai sus, in ambele sensuri.
+    try {
+      const resendKey = process.env.RESEND_API_KEY;
+      const emailTo    = process.env.ALERT_EMAIL_TO;
+      const emailFrom  = process.env.ALERT_EMAIL_FROM;
 
-    if (!resendKey || !emailTo || !emailFrom) {
-      console.warn('⚠️  RESEND_API_KEY, ALERT_EMAIL_TO sau ALERT_EMAIL_FROM lipsesc din env vars — email nesendut.');
-    } else {
-      const html = [
-        `<h2>🔔 Nou lead — Perfekt Sauber Service</h2>`,
-        `<p><strong>Data:</strong> ${now}</p>`,
-        `<p><strong>Nume:</strong> ${name}</p>`,
-        `<p><strong>Email:</strong> ${email}</p>`,
-        `<p><strong>Telefon:</strong> ${phone}</p>`,
-        `<p><strong>Oras:</strong> ${city}</p>`,
-        `<p><strong>PLZ:</strong> ${plz}</p>`,
-        `<p><strong>Serviciu:</strong> ${service}</p>`,
-        `<p><strong>Umfang:</strong> ${umfang}</p>`,
-        `<p><strong>Wunschtermin:</strong> ${wunschtermin}</p>`,
-        `<p><strong>Mesaj:</strong> ${message}</p>`,
-        `<p><strong>Lead ID:</strong> ${lead_id}</p>`,
-        attributionHtml,
-      ].join('\n');
-
-      const emailRes = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${resendKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: emailFrom,
-          to: emailTo,
-          subject: `Nou lead: ${name} (${service})`,
-          html,
-        }),
-      });
-
-      if (emailRes.ok) {
-        console.log(`✅ Email trimis pentru lead: ${name} (${email})`);
+      if (!resendKey || !emailTo || !emailFrom) {
+        console.warn('⚠️  RESEND_API_KEY, ALERT_EMAIL_TO sau ALERT_EMAIL_FROM lipsesc din env vars — email nesendut.');
       } else {
-        const emailErr = await emailRes.text();
-        console.error(`❌ Email eroare:`, emailErr);
+        const html = [
+          `<h2>🔔 Nou lead — Perfekt Sauber Service</h2>`,
+          `<p><strong>Data:</strong> ${now}</p>`,
+          `<p><strong>Nume:</strong> ${name}</p>`,
+          `<p><strong>Email:</strong> ${email}</p>`,
+          `<p><strong>Telefon:</strong> ${phone}</p>`,
+          `<p><strong>Oras:</strong> ${city}</p>`,
+          `<p><strong>PLZ:</strong> ${plz}</p>`,
+          `<p><strong>Serviciu:</strong> ${service}</p>`,
+          `<p><strong>Umfang:</strong> ${umfang}</p>`,
+          `<p><strong>Wunschtermin:</strong> ${wunschtermin}</p>`,
+          `<p><strong>Mesaj:</strong> ${message}</p>`,
+          `<p><strong>Lead ID:</strong> ${lead_id}</p>`,
+          attributionHtml,
+        ].join('\n');
+
+        const emailRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${resendKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: emailFrom,
+            to: emailTo,
+            subject: `Nou lead: ${name} (${service})`,
+            html,
+          }),
+        });
+
+        if (emailRes.ok) {
+          console.log(`✅ Email trimis pentru lead: ${lead_id}`);
+        } else {
+          const emailErr = await emailRes.text().catch(() => '');
+          console.error(`❌ Email eroare:`, emailErr);
+        }
       }
+    } catch (emailErr) {
+      console.error('❌ Email eroare (exceptie):', emailErr.message);
     }
 
     return { statusCode: 200, body: 'OK' };
