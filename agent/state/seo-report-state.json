@@ -1,10 +1,10 @@
 {
   "blogCount": 118,
-  "clicks28": 5,
-  "impressions28": 100,
+  "clicks28": 7,
+  "impressions28": 98,
   "queryCoverageRatio": {
-    "clicks": 0.2,
-    "impressions": 0.03
+    "clicks": 0.2857142857142857,
+    "impressions": 0.04081632653061224
   },
-  "lastRunAt": "2026-09-17T10:19:30.981Z"
+  "lastRunAt": "2026-09-18T09:59:36.082Z"
 }
