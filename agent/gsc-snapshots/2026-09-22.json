@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-22",
+  "queries": [
+    {
+      "q": "entrümpelung gaggenau",
+      "page": "https://perfektsauberservice.com/",
+      "position": 1,
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 100
+    },
+    {
+      "q": "grundreinigung gaggenau",
+      "page": "https://perfektsauberservice.com/grundreinigung-gaggenau",
+      "position": 58,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    }
+  ]
+}
