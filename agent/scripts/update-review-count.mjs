@@ -1,6 +1,21 @@
 /**
  * update-review-count.mjs
  *
+ * SUPERSEDED 2026-09-24 by agent/scripts/update-gbp-reviews.mjs, which uses
+ * the official Google Business Profile APIs (OAuth, GitHub encrypted
+ * secrets) instead of the Places API Legacy key, and writes a single
+ * canonical data/google-reviews.json consumed by js/gbp-reviews-widget.js,
+ * instead of regex-patching review count/rating text directly into ~311
+ * HTML files. This file and its GitHub Action
+ * (.github/workflows/pss-gmb-reviews-update.yml) are kept for history and
+ * are not deleted, but are no longer the active review data source. The
+ * workflow's own schedule trigger has already been disabled since
+ * 2026-07-07 (Cloud Billing cost decision) -- do not re-enable it; the new
+ * workflow (.github/workflows/pss-gbp-reviews-sync.yml) is the one active
+ * scheduled review synchronization job.
+ *
+ * Original description, unchanged below for reference:
+ *
  * Fetcheaza Google Places API pentru Perfekt Sauber Service si actualizeaza
  * review count + rating in toate paginile HTML din site (~311 fisiere).
  *
