@@ -1,5 +1,11 @@
 name: PSS GMB Reviews Update
 
+# SUPERSEDED 2026-09-24: replaced by pss-gbp-reviews-sync.yml, which uses
+# the official Google Business Profile APIs and writes data/google-reviews.json
+# for js/gbp-reviews-widget.js, instead of patching review text into every
+# HTML file via the Places API Legacy key. Kept for history, not deleted.
+# Do not re-enable the schedule below -- pss-gbp-reviews-sync.yml is now the
+# one active scheduled review-sync workflow.
 on:
   # PAUZAT 2026-07-07: necesita Google Cloud Billing activ pe proiect, proprietarul a decis sa nu plateasca.
   # Actualizarea recenziilor se face manual, la cerere (vezi conversatie 2026-07-07).

@@ -1,0 +1,44 @@
+name: PSS GBP Reviews Sync (official API)
+
+# Replaces pss-gmb-reviews-update.yml (Places API Legacy, superseded 2026-09-24).
+# The only active scheduled review-synchronization workflow -- do not add a
+# second one, and do not re-enable the old one's schedule.
+on:
+  schedule:
+    - cron: '20 6 * * *'
+  workflow_dispatch:
+
+# Prevents overlapping runs the same way pss-gmb-reviews-update.yml did.
+concurrency:
+  group: pss-gbp-reviews-sync
+  cancel-in-progress: false
+
+jobs:
+  sync-reviews:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run GBP Reviews Sync
+        env:
+          GBP_OAUTH_CLIENT_ID: ${{ secrets.GBP_OAUTH_CLIENT_ID }}
+          GBP_OAUTH_CLIENT_SECRET: ${{ secrets.GBP_OAUTH_CLIENT_SECRET }}
+          GBP_OAUTH_REFRESH_TOKEN: ${{ secrets.GBP_OAUTH_REFRESH_TOKEN }}
+        run: node agent/scripts/update-gbp-reviews.mjs
+
+      - name: Commit changes (only if data actually changed)
+        run: |
+          git config user.name "PSS GBP Reviews Bot"
+          git config user.email "bot@perfektsauberservice.com"
+          git add data/google-reviews.json
+          git diff --staged --quiet || git commit -m "chore: sync reviews from official Google Business Profile API [$(date +%Y-%m-%d)]"
+          git diff --staged --quiet && echo "No change -- nothing committed." || (git pull --rebase origin master && git push)
