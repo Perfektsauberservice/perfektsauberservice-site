@@ -1,808 +1,6 @@
 {
   "weeks": [
     {
-      "date": "2026-07-06",
-      "keywords": [
-        {
-          "query": "Entrümpelung Rastatt",
-          "city": "Rastatt",
-          "service": "Entrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 35,
-              "address": "Gartenstraße 40, 76437 Rastatt",
-              "website": "https://www.ruempelprofi24.de/rastatt/"
-            },
-            {
-              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
-              "rating": 5,
-              "reviews": 113,
-              "address": "Gartenstraße 1a, 76467 Bietigheim",
-              "website": "https://www.dieruempelcrew.de/"
-            },
-            {
-              "name": "MBA Entrümpelung",
-              "rating": 5,
-              "reviews": 2,
-              "address": "Herrenstraße 39, 76437 Rastatt",
-              "website": "https://www.mbaentrumpelunginrastatt.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
-              "link": "https://www.ruempelprofi24.de/rastatt/",
-              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
-            },
-            {
-              "title": "Startseite - Hoffmann Entrümpelung – Ihr zuverlässiger Partner für ...",
-              "link": "https://hoffmannentruempelung.de/",
-              "snippet": "Als erfahrenes Familienunternehmen bieten wir Ihnen professionelle Entrümpelungs- und Gebäude-reinigungsdienste in Rastatt, Karlsruhe, Bühl und Umgebung. Ob ..."
-            },
-            {
-              "title": "Die Rümpel Crew|Haushaltsauflösung und Entrümpelung!",
-              "link": "https://www.dieruempelcrew.de/",
-              "snippet": "Haushaltsauflösung & Entrümpelung Karlsruhe, Rastatt, Baden-Baden, Bühl bis ins Kinzigtal und Umkreis zum Festpreis!"
-            }
-          ]
-        },
-        {
-          "query": "Haushaltsauflösung Rastatt",
-          "city": "Rastatt",
-          "service": "Haushaltsauflösung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 35,
-              "address": "Gartenstraße 40, 76437 Rastatt",
-              "website": "https://www.ruempelprofi24.de/rastatt/"
-            },
-            {
-              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
-              "rating": 5,
-              "reviews": 113,
-              "address": "Gartenstraße 1a, 76467 Bietigheim",
-              "website": "https://www.dieruempelcrew.de/"
-            },
-            {
-              "name": "EF-Service & Dienstleistungen",
-              "rating": 5,
-              "reviews": 20,
-              "address": "Hanna-Nagel-Straße 7, 76437 Rastatt",
-              "website": "http://ef-service-dienstleistungen.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Wohnungsauflösung in Rastatt | kleinanzeigen.de",
-              "link": "https://www.kleinanzeigen.de/s-rastatt/wohnungsaufl%C3%B6sung/k0l8193",
-              "snippet": "Tel. 01590 6831647. Sie benötigen Hilfe bei einer Entrümpelung oder Haushaltsauflösung? Wir bieten schnelle und saubere Arbeiten zu."
-            },
-            {
-              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
-              "link": "https://www.ruempelprofi24.de/rastatt/",
-              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
-            },
-            {
-              "title": "Haushaltsauflösung Rastatt - wir Freischaufler räumen für Sie vor Ort !",
-              "link": "https://freischaufler.de/haushaltsaufloesung/rastatt/",
-              "snippet": "Haushaltsauflösung Rastatt schnell ✓ gut ✓ günstig ✓. Kosten sparen mit Wertanrechnung ✓ zum Festpreis ✓ und besenreiner Raumübergabe ✓ = Freischaufler !"
-            }
-          ]
-        },
-        {
-          "query": "Wohnungsauflösung Rastatt",
-          "city": "Rastatt",
-          "service": "Wohnungsauflösung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 35,
-              "address": "Gartenstraße 40, 76437 Rastatt",
-              "website": "https://www.ruempelprofi24.de/rastatt/"
-            },
-            {
-              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
-              "rating": 5,
-              "reviews": 113,
-              "address": "Gartenstraße 1a, 76467 Bietigheim",
-              "website": "https://www.dieruempelcrew.de/"
-            },
-            {
-              "name": "MBA Entrümpelung",
-              "rating": 5,
-              "reviews": 2,
-              "address": "Herrenstraße 39, 76437 Rastatt",
-              "website": "https://www.mbaentrumpelunginrastatt.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Wohnungsauflösung in Rastatt | kleinanzeigen.de",
-              "link": "https://www.kleinanzeigen.de/s-rastatt/wohnungsaufl%C3%B6sung/k0l8193",
-              "snippet": "Tel. 01590 6831647. Sie benötigen Hilfe bei einer Entrümpelung oder Haushaltsauflösung? Wir bieten schnelle und saubere Arbeiten zu."
-            },
-            {
-              "title": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung zum Festpreis!",
-              "link": "https://dieruempelcrew.de/haushaltsaufloesung-entruempelung-arbeitsbereich/",
-              "snippet": "Wir sind Ihr zuverlässiger Partner für Haushaltsauflösung & Entrümpelung Karlsruhe, Rastatt, Freudenstadt, Baden-Baden, Bühl, Achern bis ins Kinzigtal zum ..."
-            },
-            {
-              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
-              "link": "https://www.ruempelprofi24.de/rastatt/",
-              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
-            }
-          ]
-        },
-        {
-          "query": "Entrümpelung Baden-Baden",
-          "city": "Baden-Baden",
-          "service": "Entrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Mehmeti Entrümpelung",
-              "rating": 5,
-              "reviews": 19,
-              "address": "Eberbachstraße 19, 76532 Baden-Baden",
-              "website": ""
-            },
-            {
-              "name": "Umzüge & Entrümpelungen Neibert",
-              "rating": 4.9,
-              "reviews": 104,
-              "address": "Baden-Baden DE, Im Weingarten 51, 76547 Sinzheim",
-              "website": "https://www.neibert.de/"
-            },
-            {
-              "name": "Fischer & Klein Seniorenumzüge und Entrümpelungen",
-              "rating": 5,
-              "reviews": 7,
-              "address": "Große Dollenstraße 29, 76530 Baden-Baden",
-              "website": "http://www.fischerundklein.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Entrümpelung in Baden-Baden (31 Treffer) - Gelbe Seiten",
-              "link": "https://www.gelbeseiten.de/branchen/entr%C3%BCmpelung/baden-baden",
-              "snippet": "Entrümpelung in Baden-Baden (31 Treffer) · Licht + Hoffnung e.V. · RuckZuck Haushaltsauflösung · Braun Gerüstbau · Anglo's Entrümpelungen · Angelo's ..."
-            },
-            {
-              "title": "Entrümpelung Baden-Baden - Platzmeister",
-              "link": "https://platz-meister.de/standort/entruempelung-baden-baden/",
-              "snippet": "Wir übernehmen für Sie die Entrümpelung inklusive der Entsorgung für Objekte in Baden-Baden & Umgebung!"
-            },
-            {
-              "title": "Wohnungsauflösung, Umzüge, Entrümpelungen in Baden-Baden ...",
-              "link": "https://www.kaiserb-b.de/",
-              "snippet": "Im Großraum Baden-Baden führen wir für Sie Wohnungs-, Geschäftsauflösungen,. Entrümpelungen, Umzüge, Transporte und Renovierungen zuverlässig, fachgerecht, ..."
-            }
-          ]
-        },
-        {
-          "query": "Haushaltsauflösung Baden-Baden",
-          "city": "Baden-Baden",
-          "service": "Haushaltsauflösung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Haushaltsauflösung Baden-Baden",
-              "rating": 5,
-              "reviews": 2,
-              "address": "Belchenstraße 17, 76532 Baden-Baden",
-              "website": "https://www.baden-baden-haushaltsaufloesung.de/"
-            },
-            {
-              "name": "Mehmeti Entrümpelung",
-              "rating": 5,
-              "reviews": 19,
-              "address": "Eberbachstraße 19, 76532 Baden-Baden",
-              "website": ""
-            },
-            {
-              "name": "Fischer & Klein Seniorenumzüge und Entrümpelungen",
-              "rating": 5,
-              "reviews": 7,
-              "address": "Große Dollenstraße 29, 76530 Baden-Baden",
-              "website": "http://www.fischerundklein.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Haushaltsauflösung in Baden-Baden | kleinanzeigen.de",
-              "link": "https://www.kleinanzeigen.de/s-baden-baden/haushaltsaufl%C3%B6sung/k0l9045",
-              "snippet": "Die Firma Profibau aus Nehren bietet Ihnen professionelle Entrümpelungen, sorgfältige Haushaltsauflösungen sowie zuverlässige Umzüge an – al... VB. ENTRÜMPELUNG ..."
-            },
-            {
-              "title": "Haushaltsauflösungen in Baden-Baden - Rohrer Immobilien GmbH",
-              "link": "https://www.rohrer-immo.de/haushaltsaufloesungen-baden-baden/",
-              "snippet": "Ihre Haushaltsauflösung in Baden-Baden und Umgebung wird von uns zuverlässig, diskret und innerhalb weniger Tage organisiert und durchgeführt."
-            },
-            {
-              "title": "Entrümpelung in Baden-Baden (31 Treffer) - Gelbe Seiten",
-              "link": "https://www.gelbeseiten.de/branchen/entr%C3%BCmpelung/baden-baden",
-              "snippet": "Entrümpelung in Baden-Baden (31 Treffer) · Licht + Hoffnung e.V. · RuckZuck Haushaltsauflösung · Braun Gerüstbau · Anglo's Entrümpelungen · Angelo's ..."
-            }
-          ]
-        },
-        {
-          "query": "Entrümpelung Karlsruhe",
-          "city": "Karlsruhe",
-          "service": "Entrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 234,
-              "address": "Schneidemühler Str. 20 b, 76139 Karlsruhe",
-              "website": "https://www.ruempelprofi24.de/karlsruhe/"
-            },
-            {
-              "name": "Tina Entrümpelung",
-              "rating": 4.9,
-              "reviews": 165,
-              "address": "Secondhand Shop Tina, Entrümpelungen Tina, Marienstraße 36, 76137 Karlsruhe",
-              "website": "https://tina-entruempelung.de/"
-            },
-            {
-              "name": "Heinzis Entrümpelungen Karlsruhe",
-              "rating": 4.8,
-              "reviews": 49,
-              "address": "Zur Seeplatte 13, 76228 Karlsruhe",
-              "website": "https://www.heinzis.info/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Entrümpelung Karlsruhe | TINA – fair & nachhaltig",
-              "link": "https://tina-entruempelung.de/",
-              "snippet": "Wir entrümpeln Wohnung, Lagerhalle, Keller oder Arztpraxis - professionell, effizient und selbstverständlich besenrein. Maßgeschneiderte Lösungen für private ..."
-            },
-            {
-              "title": "Start - Entrümpelungen & Immobilienvermarktung",
-              "link": "https://rohrer-karlsruhe.de/",
-              "snippet": "Im Großraum Karlsruhe – Pforzheim und dessen Umkreis führen wir für Sie Haushaltsauflösungen und Entrümpelungen fachgerecht und besenrein durch."
-            },
-            {
-              "title": "Haushaltsauflösung & Entrümpelung Karlsruhe | Zum Festpreis",
-              "link": "https://www.ruempelprofi24.de/karlsruhe/",
-              "snippet": "Haushaltsauflösung & Entrümpelung in Karlsruhe. Wir bieten zuverlässigen Service mit Festpreis, kostenloser Besichtigung. Jetzt unverbindlich anfragen!"
-            }
-          ]
-        },
-        {
-          "query": "Haushaltsauflösung Karlsruhe",
-          "city": "Karlsruhe",
-          "service": "Haushaltsauflösung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 234,
-              "address": "Schneidemühler Str. 20 b, 76139 Karlsruhe",
-              "website": "https://www.ruempelprofi24.de/karlsruhe/"
-            },
-            {
-              "name": "GSA Entrümpelungen & Haushaltsauflösung",
-              "rating": 5,
-              "reviews": 37,
-              "address": "Rüppurrer Str. 56, 76137 Karlsruhe-Südstadt",
-              "website": "http://gsakarlsruhe.de/"
-            },
-            {
-              "name": "Tina Entrümpelung",
-              "rating": 4.9,
-              "reviews": 165,
-              "address": "Secondhand Shop Tina, Entrümpelungen Tina, Marienstraße 36, 76137 Karlsruhe",
-              "website": "https://tina-entruempelung.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Haushaltsauflösung in Karlsruhe | kleinanzeigen.de",
-              "link": "https://www.kleinanzeigen.de/s-karlsruhe/haushaltsaufl%C3%B6sung/k0l9186",
-              "snippet": "Die Firma Profibau aus Nehren bietet Ihnen professionelle Entrümpelungen, sorgfältige Haushaltsauflösungen sowie zuverlässige Umzüge an – al... VB. ENTRÜMPELUNG ..."
-            },
-            {
-              "title": "Haushaltsauflösung & Entrümpelung Karlsruhe | Zum Festpreis",
-              "link": "https://www.ruempelprofi24.de/karlsruhe/",
-              "snippet": "Haushaltsauflösung & Entrümpelung in Karlsruhe. Wir bieten zuverlässigen Service mit Festpreis, kostenloser Besichtigung. Jetzt unverbindlich anfragen!"
-            },
-            {
-              "title": "Entrümpelung, Haushaltsauflösung, Entsorgung Graf Karlsruhe",
-              "link": "https://www.graf1plus1.de/",
-              "snippet": "Professionelle Entrümpelung Karlsruhe: Haushaltsauflösung und Wohnungsauflösungen mit Entsorgung Graf. Schnell und diskret. ☎️ 0157 38916571."
-            }
-          ]
-        },
-        {
-          "query": "Entrümpelung Gaggenau",
-          "city": "Gaggenau",
-          "service": "Entrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Daniels Entrümpelungen und Haushaltsauflösungen",
-              "rating": 5,
-              "reviews": 38,
-              "address": "Haydnstraße 6, 76571 Gaggenau-Ottenau",
-              "website": "http://xn--daniels-entrmpelungen-kic.de/"
-            },
-            {
-              "name": "PP-Entrümpelung",
-              "rating": 5,
-              "reviews": 13,
-              "address": "Bismarckstraße 84, 76571 Gaggenau",
-              "website": ""
-            },
-            {
-              "name": "Serkan Elcik - Entrümpelungen & Haushaltsauflösungen",
-              "rating": 5,
-              "reviews": 81,
-              "address": "Bahnhofstraße 35, 76316 Malsch",
-              "website": "https://www.elcik-entruempelungen.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Entrümpelung Gaggenau - || - Hilfe in 24h - || - Preis in 12h -",
-              "link": "http://www.entruempelung-24.de/entruempelung+gaggenau.html",
-              "snippet": "Wir entrümpeln Wohnräume, Keller, Garagen, Speicher, Dachböden, Gärten, Freiflächen und Büros. Deponien - Wir kennen die Deponien in Gaggenau und können daher ..."
-            },
-            {
-              "title": "Entrümpelung in Gaggenau – Vor Ort von Rudi Rümpel",
-              "link": "https://gaggenau.rudi-ruempel.de/",
-              "snippet": "Wir übernehmen für Sie Entrümpelungen, Haushaltsauflösungen, Wohnungsauflösungen und Tatortreinigungen – einfühlsam, diskret und kostengünstig. Dabei ..."
-            },
-            {
-              "title": "PP-Entrümpelung | Gaggenau - Facebook",
-              "link": "https://www.facebook.com/ppentruempelung/?locale=de_DE",
-              "snippet": "Wir arbeiten schnell, sauber und zuverlässig. •Entrümpelung von Schuppen , Dachböden, Keller, Garagen usw. •Haushaltsauflösung •Umzüge (europaweit) •Transporte ..."
-            }
-          ]
-        },
-        {
-          "query": "Entrümpelung Bühl",
-          "city": "Bühl",
-          "service": "Entrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Szabo Entrümpelung",
-              "rating": 5,
-              "reviews": 8,
-              "address": "Büchelbachstraße 51A, 77830 Bühlertal",
-              "website": "https://www.szaboentruempelung.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Entrümpelung Bühl - Platzmeister",
-              "link": "https://platz-meister.de/standort/entruempelung-buehl/",
-              "snippet": "Wir übernehmen für Sie die Entrümpelung inklusive der Entsorgung für Objekte in Bühl & Umgebung!"
-            },
-            {
-              "title": "Entrümpelung Bühl | Zum Festpreis - Rümpelprofi24",
-              "link": "https://www.ruempelprofi24.de/entruempelung-buehl/",
-              "snippet": "Entrümpelungen in Bühl sind wir von Rümpelprofi24 zuständig für das Aufräumen und Entsorgen von unerwünschten Gegenständen und Abfällen in Wohnungen, Häusern, ..."
-            },
-            {
-              "title": "Die Rümpel Crew|Haushaltsauflösung und Entrümpelung!",
-              "link": "https://www.dieruempelcrew.de/",
-              "snippet": "Haushaltsauflösung & Entrümpelung Karlsruhe, Rastatt, Baden-Baden, Bühl bis ins Kinzigtal und Umkreis zum Festpreis!"
-            }
-          ]
-        },
-        {
-          "query": "Entrümpelung Ettlingen",
-          "city": "Ettlingen",
-          "service": "Entrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "ZACKaufZACK",
-              "rating": 4.8,
-              "reviews": 43,
-              "address": "Durlacher Str. 5",
-              "website": "http://www.zackaufzack.de/"
-            },
-            {
-              "name": "Serkan Elcik - Entrümpelungen & Haushaltsauflösungen",
-              "rating": 5,
-              "reviews": 81,
-              "address": "",
-              "website": "https://www.elcik-entruempelungen.de/"
-            },
-            {
-              "name": "Zack Dienstleistungen - Haushaltsauflösung Ettlingen Karlsruhe",
-              "rating": 5,
-              "reviews": 3,
-              "address": "",
-              "website": "https://www.zackaufzack.de/haushaltsaufloesung-karlsruhe/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Entrümpelung Ettlingen | Express | Hilfe in 24h | Preis 12h -",
-              "link": "http://www.entruempelung-24.de/entruempelung+ettlingen.html",
-              "snippet": "Wir sind eine Entrümpelungsfirma mit über zehnjähriger Erfahrung im Bereich der Komplettauflösung von Wohnungen und Häusern. Als gewerbliches Unternehmen ..."
-            },
-            {
-              "title": "Haushaltsauflösung & Entrümpelung in Karlsruhe & Umgebung",
-              "link": "https://www.zackaufzack.de/haushaltsaufloesung-karlsruhe/",
-              "snippet": "Wir lösen Haushalte auf im Großraum Karlsruhe und Ettlingen sowie in Baden-Baden, Rastatt, Waldbronn, Durlach, Rüppurr, Marxzell, Malsch, Karlsbad, ..."
-            },
-            {
-              "title": "ZACKaufZACK: Haushaltsauflösung und Entrümpelung in Karlsruhe ...",
-              "link": "https://www.zackaufzack.de/",
-              "snippet": "Ihr Partner für besenreine Haushaltsauflösungen und Entrümpelungen in Karlsruhe, Ettlingen und Umgebung. Haushaltsauflösung vom Profi ..."
-            }
-          ]
-        },
-        {
-          "query": "Kellerentrümpelung Rastatt",
-          "city": "Rastatt",
-          "service": "Kellerentrümpelung",
-          "position": null,
-          "positionPrev": null,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 35,
-              "address": "Gartenstraße 40, 76437 Rastatt",
-              "website": "https://www.ruempelprofi24.de/rastatt/"
-            },
-            {
-              "name": "MBA Entrümpelung",
-              "rating": 5,
-              "reviews": 2,
-              "address": "Herrenstraße 39, 76437 Rastatt",
-              "website": "https://www.mbaentrumpelunginrastatt.de/"
-            },
-            {
-              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
-              "rating": 5,
-              "reviews": 113,
-              "address": "Gartenstraße 1a, 76467 Bietigheim",
-              "website": "https://www.dieruempelcrew.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
-              "link": "https://www.ruempelprofi24.de/rastatt/",
-              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
-            },
-            {
-              "title": "Entrümpelung Rastatt - Ihr Profi Entrümpler",
-              "link": "https://www.kleeo.de/entruempelung-Rastatt-BW.html",
-              "snippet": "Ihr Entrümpler für Wohnung, Haus und Garage wir übernehmen die Entrümpelung in 76437 Rastatt für sie. Ob Haus mit Nebengelass oder Garage."
-            },
-            {
-              "title": "Entrümpelung Rastatt, Diskrete + Festpreis",
-              "link": "https://sumo-entruempelung.de/rastatt/",
-              "snippet": "SUMO Entrümpelung Rastatt inkl. Entsorgung ✓ Diskrete Entrümpelungsfirma ✓Wohnung ✓Keller ✓Haushalt ✓Firmen Besenreine ➫ Festpreis!"
-            }
-          ]
-        },
-        {
-          "query": "Gewerberäumung Rastatt",
-          "city": "Rastatt",
-          "service": "Gewerberäumung",
-          "position": 1,
-          "positionPrev": 1,
-          "inLocalPack": false,
-          "inLocalPackPrev": false,
-          "competitors": [
-            {
-              "name": "MBA Entrümpelung",
-              "rating": 5,
-              "reviews": 2,
-              "address": "Herrenstraße 39, 76437 Rastatt",
-              "website": "https://www.mbaentrumpelunginrastatt.de/"
-            },
-            {
-              "name": "Rümpelprofi24",
-              "rating": 5,
-              "reviews": 35,
-              "address": "Gartenstraße 40, 76437 Rastatt",
-              "website": "https://www.ruempelprofi24.de/rastatt/"
-            },
-            {
-              "name": "EF-Service & Dienstleistungen",
-              "rating": 5,
-              "reviews": 20,
-              "address": "Hanna-Nagel-Straße 7, 76437 Rastatt",
-              "website": "http://ef-service-dienstleistungen.de/"
-            }
-          ],
-          "topOrganic": [
-            {
-              "title": "Formulare - Stadt Rastatt",
-              "link": "https://www.rastatt.de/rathaus-und-politik/buergerservice/formulare",
-              "snippet": "Die Online-Dienste der Stadt Rastatt werden über das Serviceportal des Landes Baden-Württembergs abgewickelt. Formulare, die nicht als Online-Dienst ..."
-            },
-            {
-              "title": "Entrümpelung Rastatt | Zum Festpreis - Rümpelprofi24",
-              "link": "https://www.ruempelprofi24.de/entruempelung-rastatt/",
-              "snippet": "Entrümpelung in Rastatt mit Kostenkalkulator und Festpreisgarantie | Rümpelprofi24 übernimmt Entrümpelung in Rastatt."
-            },
-            {
-              "title": "Sperrmüllberatung | Abfallwirtschaftsbetrieb des Landkreises Rastatt",
-              "link": "https://www.awb-landkreis-rastatt.de/Sperrmuell",
-              "snippet": "Die Maximalmenge je Abholauftrag beträgt 10 m³. Für die Abholung von Sperrmüll fällt eine gesonderte Gebühr an. Damit zahlt nur, wer diese Entsorgungsleistung ..."
-            }
-          ]
-        }
-      ],
-      "competitorList": [
-        {
-          "name": "Rümpelprofi24",
-          "rating": 5,
-          "reviews": 35,
-          "address": "Gartenstraße 40, 76437 Rastatt",
-          "website": "https://www.ruempelprofi24.de/rastatt/",
-          "appearsFor": [
-            "Entrümpelung Rastatt",
-            "Haushaltsauflösung Rastatt",
-            "Wohnungsauflösung Rastatt",
-            "Entrümpelung Karlsruhe",
-            "Haushaltsauflösung Karlsruhe",
-            "Kellerentrümpelung Rastatt",
-            "Gewerberäumung Rastatt"
-          ],
-          "reviewsPrev": 31,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
-          "rating": 5,
-          "reviews": 113,
-          "address": "Gartenstraße 1a, 76467 Bietigheim",
-          "website": "https://www.dieruempelcrew.de/",
-          "appearsFor": [
-            "Entrümpelung Rastatt",
-            "Haushaltsauflösung Rastatt",
-            "Wohnungsauflösung Rastatt",
-            "Kellerentrümpelung Rastatt"
-          ],
-          "reviewsPrev": 112,
-          "ratingPrev": 5
-        },
-        {
-          "name": "MBA Entrümpelung",
-          "rating": 5,
-          "reviews": 2,
-          "address": "Herrenstraße 39, 76437 Rastatt",
-          "website": "https://www.mbaentrumpelunginrastatt.de/",
-          "appearsFor": [
-            "Entrümpelung Rastatt",
-            "Wohnungsauflösung Rastatt",
-            "Kellerentrümpelung Rastatt",
-            "Gewerberäumung Rastatt"
-          ],
-          "reviewsPrev": 2,
-          "ratingPrev": 5
-        },
-        {
-          "name": "EF-Service & Dienstleistungen",
-          "rating": 5,
-          "reviews": 20,
-          "address": "Hanna-Nagel-Straße 7, 76437 Rastatt",
-          "website": "http://ef-service-dienstleistungen.de/",
-          "appearsFor": [
-            "Haushaltsauflösung Rastatt",
-            "Gewerberäumung Rastatt"
-          ],
-          "reviewsPrev": 20,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Mehmeti Entrümpelung",
-          "rating": 5,
-          "reviews": 19,
-          "address": "Eberbachstraße 19, 76532 Baden-Baden",
-          "website": "",
-          "appearsFor": [
-            "Entrümpelung Baden-Baden",
-            "Haushaltsauflösung Baden-Baden"
-          ],
-          "reviewsPrev": 19,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Fischer & Klein Seniorenumzüge und Entrümpelungen",
-          "rating": 5,
-          "reviews": 7,
-          "address": "Große Dollenstraße 29, 76530 Baden-Baden",
-          "website": "http://www.fischerundklein.de/",
-          "appearsFor": [
-            "Entrümpelung Baden-Baden",
-            "Haushaltsauflösung Baden-Baden"
-          ],
-          "reviewsPrev": 7,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Tina Entrümpelung",
-          "rating": 4.9,
-          "reviews": 165,
-          "address": "Secondhand Shop Tina, Entrümpelungen Tina, Marienstraße 36, 76137 Karlsruhe",
-          "website": "https://tina-entruempelung.de/",
-          "appearsFor": [
-            "Entrümpelung Karlsruhe",
-            "Haushaltsauflösung Karlsruhe"
-          ],
-          "reviewsPrev": 164,
-          "ratingPrev": 4.9
-        },
-        {
-          "name": "Serkan Elcik - Entrümpelungen & Haushaltsauflösungen",
-          "rating": 5,
-          "reviews": 81,
-          "address": "Bahnhofstraße 35, 76316 Malsch",
-          "website": "https://www.elcik-entruempelungen.de/",
-          "appearsFor": [
-            "Entrümpelung Gaggenau",
-            "Entrümpelung Ettlingen"
-          ],
-          "reviewsPrev": 80,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Umzüge & Entrümpelungen Neibert",
-          "rating": 4.9,
-          "reviews": 104,
-          "address": "Baden-Baden DE, Im Weingarten 51, 76547 Sinzheim",
-          "website": "https://www.neibert.de/",
-          "appearsFor": [
-            "Entrümpelung Baden-Baden"
-          ],
-          "reviewsPrev": 104,
-          "ratingPrev": 4.9
-        },
-        {
-          "name": "Haushaltsauflösung Baden-Baden",
-          "rating": 5,
-          "reviews": 2,
-          "address": "Belchenstraße 17, 76532 Baden-Baden",
-          "website": "https://www.baden-baden-haushaltsaufloesung.de/",
-          "appearsFor": [
-            "Haushaltsauflösung Baden-Baden"
-          ],
-          "reviewsPrev": 2,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Heinzis Entrümpelungen Karlsruhe",
-          "rating": 4.8,
-          "reviews": 49,
-          "address": "Zur Seeplatte 13, 76228 Karlsruhe",
-          "website": "https://www.heinzis.info/",
-          "appearsFor": [
-            "Entrümpelung Karlsruhe"
-          ],
-          "reviewsPrev": 49,
-          "ratingPrev": 4.8
-        },
-        {
-          "name": "GSA Entrümpelungen & Haushaltsauflösung",
-          "rating": 5,
-          "reviews": 37,
-          "address": "Rüppurrer Str. 56, 76137 Karlsruhe-Südstadt",
-          "website": "http://gsakarlsruhe.de/",
-          "appearsFor": [
-            "Haushaltsauflösung Karlsruhe"
-          ],
-          "reviewsPrev": 37,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Daniels Entrümpelungen und Haushaltsauflösungen",
-          "rating": 5,
-          "reviews": 38,
-          "address": "Haydnstraße 6, 76571 Gaggenau-Ottenau",
-          "website": "http://xn--daniels-entrmpelungen-kic.de/",
-          "appearsFor": [
-            "Entrümpelung Gaggenau"
-          ],
-          "reviewsPrev": 38,
-          "ratingPrev": 5
-        },
-        {
-          "name": "PP-Entrümpelung",
-          "rating": 5,
-          "reviews": 13,
-          "address": "Bismarckstraße 84, 76571 Gaggenau",
-          "website": "",
-          "appearsFor": [
-            "Entrümpelung Gaggenau"
-          ],
-          "reviewsPrev": 13,
-          "ratingPrev": 5
-        },
-        {
-          "name": "Szabo Entrümpelung",
-          "rating": 5,
-          "reviews": 8,
-          "address": "Büchelbachstraße 51A, 77830 Bühlertal",
-          "website": "https://www.szaboentruempelung.de/",
-          "appearsFor": [
-            "Entrümpelung Bühl"
-          ],
-          "reviewsPrev": null,
-          "ratingPrev": null
-        },
-        {
-          "name": "ZACKaufZACK",
-          "rating": 4.8,
-          "reviews": 43,
-          "address": "Durlacher Str. 5",
-          "website": "http://www.zackaufzack.de/",
-          "appearsFor": [
-            "Entrümpelung Ettlingen"
-          ],
-          "reviewsPrev": 42,
-          "ratingPrev": 4.8
-        },
-        {
-          "name": "Zack Dienstleistungen - Haushaltsauflösung Ettlingen Karlsruhe",
-          "rating": 5,
-          "reviews": 3,
-          "address": "",
-          "website": "https://www.zackaufzack.de/haushaltsaufloesung-karlsruhe/",
-          "appearsFor": [
-            "Entrümpelung Ettlingen"
-          ],
-          "reviewsPrev": 3,
-          "ratingPrev": 5
-        }
-      ]
-    },
-    {
       "date": "2026-07-13",
       "keywords": [
         {
@@ -9154,6 +8352,838 @@
           ],
           "reviewsPrev": 45,
           "ratingPrev": 4.8
+        }
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "keywords": [
+        {
+          "query": "Entrümpelung Rastatt",
+          "city": "Rastatt",
+          "service": "Entrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Rümpelprofi24",
+              "rating": 5,
+              "reviews": 45,
+              "address": "Gartenstraße 40, 76437 Rastatt",
+              "website": "https://www.ruempelprofi24.de/rastatt/"
+            },
+            {
+              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
+              "rating": 5,
+              "reviews": 114,
+              "address": "Gartenstraße 1a, 76467 Bietigheim",
+              "website": "https://www.dieruempelcrew.de/"
+            },
+            {
+              "name": "MBA Entrümpelung",
+              "rating": 5,
+              "reviews": 2,
+              "address": "Herrenstraße 39, 76437 Rastatt",
+              "website": "https://www.mbaentrumpelunginrastatt.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
+              "link": "https://www.ruempelprofi24.de/rastatt/",
+              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
+            },
+            {
+              "title": "Startseite - Hoffmann Entrümpelung – Ihr zuverlässiger ...",
+              "link": "https://hoffmannentruempelung.de/",
+              "snippet": "Als erfahrenes Familienunternehmen bieten wir Ihnen professionelle Entrümpelungs- und Gebäude-reinigungsdienste in Rastatt, Karlsruhe, Bühl und Umgebung. Ob ..."
+            },
+            {
+              "title": "Entrümpelung in Rastatt (22 Treffer)",
+              "link": "https://www.gelbeseiten.de/branchen/entr%C3%BCmpelung/rastatt",
+              "snippet": "Entrümpelung in Rastatt (22 Treffer) · Setzer Umzüge · RuckZuck Haushaltsauflösung · Braun Gerüstbau · Licht + Hoffnung e.V. · Isaenco Rastatt · Allroundservice ..."
+            }
+          ]
+        },
+        {
+          "query": "Haushaltsauflösung Rastatt",
+          "city": "Rastatt",
+          "service": "Haushaltsauflösung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Rümpelprofi24",
+              "rating": 5,
+              "reviews": 45,
+              "address": "Gartenstraße 40, 76437 Rastatt",
+              "website": "https://www.ruempelprofi24.de/rastatt/"
+            },
+            {
+              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
+              "rating": 5,
+              "reviews": 114,
+              "address": "Gartenstraße 1a, 76467 Bietigheim",
+              "website": "https://www.dieruempelcrew.de/"
+            },
+            {
+              "name": "MBA Entrümpelung",
+              "rating": 5,
+              "reviews": 2,
+              "address": "Herrenstraße 39, 76437 Rastatt",
+              "website": "https://www.mbaentrumpelunginrastatt.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
+              "link": "https://www.ruempelprofi24.de/rastatt/",
+              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
+            },
+            {
+              "title": "Wohnungsauflösung in Rastatt",
+              "link": "https://www.kleinanzeigen.de/s-rastatt/wohnungsaufl%C3%B6sung/k0l8193",
+              "snippet": "Sie suchen Hilfe bei einer Wohnungsauflösung oder müssen einen vollgestellten Keller räumen? Wir packen an! Egal ob Privathaushalt, Mes... VB. Entrümpelung & ..."
+            },
+            {
+              "title": "Haushaltsauflösung Rastatt - wir Freischaufler räumen für ...",
+              "link": "https://freischaufler.de/haushaltsaufloesung/rastatt/",
+              "snippet": "Haushaltsauflösung Rastatt schnell ✓ gut ✓ günstig ✓. Kosten sparen mit Wertanrechnung ✓ zum Festpreis ✓ und besenreiner Raumübergabe ..."
+            }
+          ]
+        },
+        {
+          "query": "Wohnungsauflösung Rastatt",
+          "city": "Rastatt",
+          "service": "Wohnungsauflösung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Rümpelprofi24",
+              "rating": 5,
+              "reviews": 45,
+              "address": "Gartenstraße 40, 76437 Rastatt",
+              "website": "https://www.ruempelprofi24.de/rastatt/"
+            },
+            {
+              "name": "MBA Entrümpelung",
+              "rating": 5,
+              "reviews": 2,
+              "address": "Herrenstraße 39, 76437 Rastatt",
+              "website": "https://www.mbaentrumpelunginrastatt.de/"
+            },
+            {
+              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
+              "rating": 5,
+              "reviews": 114,
+              "address": "Gartenstraße 1a, 76467 Bietigheim",
+              "website": "https://www.dieruempelcrew.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
+              "link": "https://www.ruempelprofi24.de/rastatt/",
+              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
+            },
+            {
+              "title": "Wohnungsauflösung in Rastatt",
+              "link": "https://www.kleinanzeigen.de/s-rastatt/wohnungsaufl%C3%B6sung/k0l8193",
+              "snippet": "Sie suchen Hilfe bei einer Wohnungsauflösung oder müssen einen vollgestellten Keller räumen? Wir packen an! Egal ob Privathaushalt, Mes... VB. Entrümpelung & ..."
+            },
+            {
+              "title": "Haushaltsauflösung Rastatt - wir Freischaufler räumen für ...",
+              "link": "https://freischaufler.de/haushaltsaufloesung/rastatt/",
+              "snippet": "Haushaltsauflösung Rastatt schnell ✓ gut ✓ günstig ✓. Kosten sparen mit Wertanrechnung ✓ zum Festpreis ✓ und besenreiner Raumübergabe ..."
+            }
+          ]
+        },
+        {
+          "query": "Entrümpelung Baden-Baden",
+          "city": "Baden-Baden",
+          "service": "Entrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Koc Entrümpelung&Umzüge",
+              "rating": 5,
+              "reviews": 28,
+              "address": "Breslauer Str. 13, 76532 Baden-Baden",
+              "website": "https://www.xn--entrmpelungbaden-baden-vlc.de/"
+            },
+            {
+              "name": "Mehmeti Entrümpelung",
+              "rating": 5,
+              "reviews": 28,
+              "address": "Eberbachstraße 19, 76532 Baden-Baden",
+              "website": ""
+            },
+            {
+              "name": "Umzüge & Entrümpelungen Neibert",
+              "rating": 4.9,
+              "reviews": 108,
+              "address": "Baden-Baden DE, Im Weingarten 51, 76547 Sinzheim",
+              "website": "https://www.neibert.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Entrümpelung in Baden-Baden (29 Treffer)",
+              "link": "https://www.gelbeseiten.de/branchen/entr%C3%BCmpelung/baden-baden",
+              "snippet": "Entrümpelung in Baden-Baden (29 Treffer) · Licht + Hoffnung e.V. · RuckZuck Haushaltsauflösung · Braun Gerüstbau · Anglo's Entrümpelungen · Angelo's ..."
+            },
+            {
+              "title": "Haushaltsauflösung Baden-Baden | Räumungsservice",
+              "link": "https://dieruempelcrew.de/haushaltsaufloesung-baden-baden/",
+              "snippet": "Wir unterstützen Privatpersonen, Eigentümer und Unternehmen in Baden-Baden bei der zuverlässigen Durchführung von Entrümpelungen, Haushaltsauflösungen, ..."
+            },
+            {
+              "title": "Wohnungsauflösung, Umzüge, Entrümpelungen in Baden ...",
+              "link": "https://www.kaiserb-b.de/",
+              "snippet": "Kaiser B-B übernimmt für Sie Ihre Wohnungsauflösung, Haushaltsauflösung, Entrümpelung und Umzüge in Baden-Baden. Zwischenlagerungen von Möbeln, Demontagen ..."
+            }
+          ]
+        },
+        {
+          "query": "Haushaltsauflösung Baden-Baden",
+          "city": "Baden-Baden",
+          "service": "Haushaltsauflösung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Mehmeti Entrümpelung",
+              "rating": 5,
+              "reviews": 28,
+              "address": "Eberbachstraße 19, 76532 Baden-Baden",
+              "website": ""
+            },
+            {
+              "name": "Fischer & Klein Seniorenumzüge und Entrümpelungen",
+              "rating": 5,
+              "reviews": 7,
+              "address": "Große Dollenstraße 29, 76530 Baden-Baden",
+              "website": "http://www.fischerundklein.de/"
+            },
+            {
+              "name": "Koc Entrümpelung&Umzüge",
+              "rating": 5,
+              "reviews": 28,
+              "address": "Breslauer Str. 13, 76532 Baden-Baden",
+              "website": "https://www.xn--entrmpelungbaden-baden-vlc.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "„haushaltsauflösung“ in Baden-Baden",
+              "link": "https://www.kleinanzeigen.de/s-baden-baden/haushaltsaufl%C3%B6sung/k0l9045",
+              "snippet": "Entrümpelung vom Profi – schnell, zuverlässig & besenrein! Sie möchten eine Wohnung, ein Haus, einen Keller, Dachboden, eine Garage ode... VB."
+            },
+            {
+              "title": "Haushaltsauflösung Baden-Baden | Räumungsservice",
+              "link": "https://dieruempelcrew.de/haushaltsaufloesung-baden-baden/",
+              "snippet": "Wir übernehmen Entrümpelungen in Baden-Baden zuverlässig und flexibel – unabhängig davon, ob es sich um eine kleinere Räumung oder umfangreichere Arbeiten an ..."
+            },
+            {
+              "title": "Entrümpelung in Baden-Baden (29 Treffer)",
+              "link": "https://www.gelbeseiten.de/branchen/entr%C3%BCmpelung/baden-baden",
+              "snippet": "Entrümpelung in Baden-Baden (29 Treffer) · Licht + Hoffnung e.V. · RuckZuck Haushaltsauflösung · Braun Gerüstbau · Anglo's Entrümpelungen · Angelo's ..."
+            }
+          ]
+        },
+        {
+          "query": "Entrümpelung Karlsruhe",
+          "city": "Karlsruhe",
+          "service": "Entrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Rümpelprofi24",
+              "rating": 5,
+              "reviews": 257,
+              "address": "Schneidemühler Str. 20 b, 76139 Karlsruhe",
+              "website": "https://booking.ruempelprofi24.de/"
+            },
+            {
+              "name": "Tina Entrümpelung",
+              "rating": 4.9,
+              "reviews": 169,
+              "address": "Secondhand Shop Tina, Entrümpelungen Tina, Marienstraße 36, 76137 Karlsruhe",
+              "website": "https://tina-entruempelung.de/"
+            },
+            {
+              "name": "GSA Entrümpelungen & Haushaltsauflösung",
+              "rating": 5,
+              "reviews": 42,
+              "address": "Rüppurrer Str. 56, 76137 Karlsruhe-Südstadt",
+              "website": "http://gsakarlsruhe.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Entrümpelung Karlsruhe | TINA – fair & nachhaltig",
+              "link": "https://tina-entruempelung.de/",
+              "snippet": "Wir entrümpeln Wohnung, Lagerhalle, Keller oder Arztpraxis - professionell, effizient und selbstverständlich besenrein. Maßgeschneiderte Lösungen für private ..."
+            },
+            {
+              "title": "Start - Entrümpelungen & Immobilienvermarktung",
+              "link": "https://rohrer-karlsruhe.de/",
+              "snippet": "Im Großraum Karlsruhe – Pforzheim und dessen Umkreis führen wir für Sie Haushaltsauflösungen und Entrümpelungen fachgerecht und besenrein durch."
+            },
+            {
+              "title": "Haushaltsauflösung & Entrümpelung Karlsruhe",
+              "link": "https://www.ruempelprofi24.de/karlsruhe/",
+              "snippet": "Haushaltsauflösung & Entrümpelung in Karlsruhe. Wir bieten zuverlässigen Service mit Festpreis, kostenloser Besichtigung. Jetzt unverbindlich anfragen!"
+            }
+          ]
+        },
+        {
+          "query": "Haushaltsauflösung Karlsruhe",
+          "city": "Karlsruhe",
+          "service": "Haushaltsauflösung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Rümpelprofi24",
+              "rating": 5,
+              "reviews": 257,
+              "address": "Schneidemühler Str. 20 b, 76139 Karlsruhe",
+              "website": "https://booking.ruempelprofi24.de/"
+            },
+            {
+              "name": "GSA Entrümpelungen & Haushaltsauflösung",
+              "rating": 5,
+              "reviews": 42,
+              "address": "Rüppurrer Str. 56, 76137 Karlsruhe-Südstadt",
+              "website": "http://gsakarlsruhe.de/"
+            },
+            {
+              "name": "Rümpel Büchler – Entrümpelung & Haushaltsauflösung.",
+              "rating": 5,
+              "reviews": 13,
+              "address": "Eugen-Geck-Straße 8/d, 76189 Karlsruhe",
+              "website": "http://www.xn--rmpel-bchler-dlbg.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "„haushaltsauflösung“ in Karlsruhe",
+              "link": "https://www.kleinanzeigen.de/s-karlsruhe/haushaltsaufl%C3%B6sung/k0l9186",
+              "snippet": "Wir übernehmen Entrümpelungen und Wohnungsauflösungen in Kraichtal sowie im Umkreis von ca. 90 km – darunter Karlsruhe, Pforzheim, Heilbronn... VB. Entrümpelung ..."
+            },
+            {
+              "title": "Haushaltsauflösung & Entrümpelung Karlsruhe",
+              "link": "https://www.ruempelprofi24.de/karlsruhe/",
+              "snippet": "Haushaltsauflösung & Entrümpelung in Karlsruhe. Wir bieten zuverlässigen Service mit Festpreis, kostenloser Besichtigung. Jetzt unverbindlich anfragen!"
+            },
+            {
+              "title": "Entrümpelung, Haushaltsauflösung, Entsorgung Graf Karlsruhe",
+              "link": "https://www.graf1plus1.de/",
+              "snippet": "Professionelle Entrümpelung Karlsruhe: Haushaltsauflösung und Wohnungsauflösungen mit Entsorgung Graf. Schnell und diskret. ☎️ 0157 38916571."
+            }
+          ]
+        },
+        {
+          "query": "Entrümpelung Gaggenau",
+          "city": "Gaggenau",
+          "service": "Entrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": true,
+          "inLocalPackPrev": true,
+          "competitors": [
+            {
+              "name": "Daniels Entrümpelungen und Haushaltsauflösungen",
+              "rating": 5,
+              "reviews": 39,
+              "address": "Haydnstraße 6, 76571 Gaggenau-Ottenau",
+              "website": "http://xn--daniels-entrmpelungen-kic.de/"
+            },
+            {
+              "name": "PP-Entrümpelung",
+              "rating": 5,
+              "reviews": 13,
+              "address": "Bismarckstraße 84, 76571 Gaggenau",
+              "website": ""
+            },
+            {
+              "name": "Serkan Elcik - Entrümpelungen & Haushaltsauflösungen",
+              "rating": 5,
+              "reviews": 86,
+              "address": "Bahnhofstraße 35, 76316 Malsch",
+              "website": "https://www.elcik-entruempelungen.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Entrümpelung in Gaggenau – Vor Ort von Rudi Rümpel",
+              "link": "https://gaggenau.rudi-ruempel.de/",
+              "snippet": "Rudi Rümpel Professionelle Entrümpelung in Gaggenau: : anfragen@rudi-ruempel.de 0173 / 4269542 0800 000 92 18 (kostenlos)"
+            },
+            {
+              "title": "PP-Entrümpelung | Gaggenau",
+              "link": "https://www.facebook.com/ppentruempelung/?locale=de_DE",
+              "snippet": "Wir arbeiten schnell, sauber und zuverlässig. •Entrümpelung von Schuppen , Dachböden, Keller, Garagen usw. •Haushaltsauflösung •Umzüge (europaweit) •Transporte ..."
+            },
+            {
+              "title": "- STARTSEITE",
+              "link": "https://xn--daniels-entrmpelungen-kic.de/STARTSEITE/",
+              "snippet": "Ihr starker und Zuverlässiger Partner rund um Entrümpelungen, Umzüge, Haushaltsauflösungen und Transporte. Fachgerechte Entsorgung der Umwelt zu Liebe ist uns ..."
+            }
+          ]
+        },
+        {
+          "query": "Entrümpelung Bühl",
+          "city": "Bühl",
+          "service": "Entrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Szabo Entrümpelung",
+              "rating": 5,
+              "reviews": 8,
+              "address": "Büchelbachstraße 51A, 77830 Bühlertal",
+              "website": "https://www.szaboentruempelung.de/"
+            },
+            {
+              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
+              "rating": 5,
+              "reviews": 114,
+              "address": "Gartenstraße 1a, 76467 Bietigheim",
+              "website": "https://www.dieruempelcrew.de/"
+            },
+            {
+              "name": "DG Dienstleistungen",
+              "rating": 5,
+              "reviews": 1,
+              "address": "Im Kinzhurst 6, 77815 Bühl",
+              "website": "https://www.dg-dl.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Entrümpelung Bühl - Platzmeister",
+              "link": "https://platz-meister.de/standort/entruempelung-buehl/",
+              "snippet": "Wir übernehmen für Sie die Entrümpelung inklusive der Entsorgung für Objekte in Bühl & Umgebung!"
+            },
+            {
+              "title": "Entrümpelung Bühl | Zum Festpreis",
+              "link": "https://www.ruempelprofi24.de/entruempelung-buehl/",
+              "snippet": "Entrümpelungen in Bühl sind wir von Rümpelprofi24 zuständig für das Aufräumen und Entsorgen von unerwünschten Gegenständen und Abfällen in Wohnungen, Häusern, ..."
+            },
+            {
+              "title": "Haushaltsauflösung & Entrümpelung | Räumungsservice zum ...",
+              "link": "https://dieruempelcrew.de/",
+              "snippet": "Professionelle Haushaltsauflösungen und Entrümpelungen zum Festpreis. Die Rümpel Crew übernimmt Räumungen, Räumungen von Messie-Wohnungen und ..."
+            }
+          ]
+        },
+        {
+          "query": "Entrümpelung Ettlingen",
+          "city": "Ettlingen",
+          "service": "Entrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Serkan Elcik - Entrümpelungen & Haushaltsauflösungen",
+              "rating": 5,
+              "reviews": 86,
+              "address": "",
+              "website": ""
+            },
+            {
+              "name": "Zack Dienstleistungen - Haushaltsauflösung Ettlingen Karlsruhe",
+              "rating": 5,
+              "reviews": 3,
+              "address": "",
+              "website": ""
+            },
+            {
+              "name": "ZACKaufZACK",
+              "rating": 4.8,
+              "reviews": 45,
+              "address": "Durlacher Str. 5",
+              "website": ""
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "ZACKaufZACK: Haushaltsauflösung und Entrümpelung in ...",
+              "link": "https://www.zackaufzack.de/",
+              "snippet": "Haushaltsauflösung, Entrümpelung & Wohnungsauflösung ✓ Günstig, gut & schnell zum Festpreis ✓ Besichtigung & Kostenvoranschlag kostenlos ✓ Ihre PROFIS ..."
+            },
+            {
+              "title": "Haushaltsauflösung in Karlsruhe, Ettlingen und Umgebung",
+              "link": "https://www.zackaufzack.de/haushaltsaufloesung-karlsruhe/",
+              "snippet": "Wir lösen Haushalte auf im Großraum Karlsruhe und Ettlingen sowie in Baden-Baden, Rastatt, Waldbronn, Durlach, Rüppurr, Marxzell, Malsch, Karlsbad, ..."
+            },
+            {
+              "title": "Entrümpelung Ettlingen",
+              "link": "https://platz-meister.de/standort/entruempelung-ettlingen/",
+              "snippet": "Wir übernehmen für Sie die Entrümpelung inklusive der Entsorgung für Objekte in Ettlingen & Umgebung!"
+            }
+          ]
+        },
+        {
+          "query": "Kellerentrümpelung Rastatt",
+          "city": "Rastatt",
+          "service": "Kellerentrümpelung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Rümpelprofi24",
+              "rating": 5,
+              "reviews": 45,
+              "address": "Gartenstraße 40, 76437 Rastatt",
+              "website": "https://www.ruempelprofi24.de/rastatt/"
+            },
+            {
+              "name": "MBA Entrümpelung",
+              "rating": 5,
+              "reviews": 2,
+              "address": "Herrenstraße 39, 76437 Rastatt",
+              "website": "https://www.mbaentrumpelunginrastatt.de/"
+            },
+            {
+              "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
+              "rating": 5,
+              "reviews": 114,
+              "address": "Gartenstraße 1a, 76467 Bietigheim",
+              "website": "https://www.dieruempelcrew.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Startseite - Hoffmann Entrümpelung – Ihr zuverlässiger ...",
+              "link": "https://hoffmannentruempelung.de/",
+              "snippet": "Als erfahrenes Familienunternehmen bieten wir Ihnen professionelle Entrümpelungs- und Gebäude-reinigungsdienste in Rastatt, Karlsruhe, Bühl und Umgebung. Ob ..."
+            },
+            {
+              "title": "Haushaltsauflösung & Entrümpelung in Rastatt mit Festpreis!",
+              "link": "https://www.ruempelprofi24.de/rastatt/",
+              "snippet": "Haushaltsauflösung & Entrümpelung in Rastatt. ✓Wohnungsauflösung✓Sperrmüll ✓Entrümpelungen ✓Ihr Fachbetrieb aus Rastatt. ☎️ 07222/4013600."
+            },
+            {
+              "title": "Entrümpelung Rastatt - Platzmeister",
+              "link": "https://platz-meister.de/standort/entruempelung-rastatt/",
+              "snippet": "Wir übernehmen für Sie die Entrümpelung inklusive der Entsorgung für Objekte in Rastatt & Umgebung!"
+            }
+          ]
+        },
+        {
+          "query": "Gewerberäumung Rastatt",
+          "city": "Rastatt",
+          "service": "Gewerberäumung",
+          "position": null,
+          "positionPrev": null,
+          "inLocalPack": false,
+          "inLocalPackPrev": false,
+          "competitors": [
+            {
+              "name": "Gewerbezentrum Mittelbaden",
+              "rating": null,
+              "reviews": null,
+              "address": "Karlsruher Str. 31, 76437 Rastatt",
+              "website": ""
+            },
+            {
+              "name": "RA³ Gewerbeverein für Einwohner, Industrie und Handel in Rastatt e. V.",
+              "rating": 5,
+              "reviews": 1,
+              "address": "Westring 21/2, 76437 Rastatt",
+              "website": "http://rastatt-hoch-drei.de/"
+            }
+          ],
+          "topOrganic": [
+            {
+              "title": "Gewerberäumung Rastatt – Festpreis - Rohrer Immobilien",
+              "link": "https://www.rohrer-immo.de/gewerberaeumungen/regionen/rastatt",
+              "snippet": "In Rastatt räumen wir Ladenflächen und Büros in der Innenstadt sowie Werkstätten, Lager und Betriebsflächen in Niederbühl, Ottersdorf, Plittersdorf und ..."
+            },
+            {
+              "title": "Entrümpelung Rastatt – Preise transparent & fair",
+              "link": "https://platz-macher.de/entruempelung/rastatt/",
+              "snippet": "Wir räumen sowohl private Wohnungen und Häuser als auch Gewerbeobjekte — Büros, Lagerräume oder Ladenlokale entlang der Karlsruher Straße eingeschlossen. Der ..."
+            },
+            {
+              "title": "Haushaltsauflösung in Rastatt | Räumungsservice",
+              "link": "https://dieruempelcrew.de/haushaltsaufloesung-rastatt/",
+              "snippet": "Die Rümpel Crew bietet Haushaltsauflösungen, Entrümpelungen, das Räumen von Messiewohnungen und Firmenauflösungen in Rastatt an."
+            }
+          ]
+        }
+      ],
+      "competitorList": [
+        {
+          "name": "Rümpelprofi24",
+          "rating": 5,
+          "reviews": 45,
+          "address": "Gartenstraße 40, 76437 Rastatt",
+          "website": "https://www.ruempelprofi24.de/rastatt/",
+          "appearsFor": [
+            "Entrümpelung Rastatt",
+            "Haushaltsauflösung Rastatt",
+            "Wohnungsauflösung Rastatt",
+            "Entrümpelung Karlsruhe",
+            "Haushaltsauflösung Karlsruhe",
+            "Kellerentrümpelung Rastatt"
+          ],
+          "reviewsPrev": 45,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Die Rümpel Crew Haushaltsauflösung & Entrümpelung",
+          "rating": 5,
+          "reviews": 114,
+          "address": "Gartenstraße 1a, 76467 Bietigheim",
+          "website": "https://www.dieruempelcrew.de/",
+          "appearsFor": [
+            "Entrümpelung Rastatt",
+            "Haushaltsauflösung Rastatt",
+            "Wohnungsauflösung Rastatt",
+            "Entrümpelung Bühl",
+            "Kellerentrümpelung Rastatt"
+          ],
+          "reviewsPrev": 113,
+          "ratingPrev": 5
+        },
+        {
+          "name": "MBA Entrümpelung",
+          "rating": 5,
+          "reviews": 2,
+          "address": "Herrenstraße 39, 76437 Rastatt",
+          "website": "https://www.mbaentrumpelunginrastatt.de/",
+          "appearsFor": [
+            "Entrümpelung Rastatt",
+            "Haushaltsauflösung Rastatt",
+            "Wohnungsauflösung Rastatt",
+            "Kellerentrümpelung Rastatt"
+          ],
+          "reviewsPrev": 2,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Koc Entrümpelung&Umzüge",
+          "rating": 5,
+          "reviews": 28,
+          "address": "Breslauer Str. 13, 76532 Baden-Baden",
+          "website": "https://www.xn--entrmpelungbaden-baden-vlc.de/",
+          "appearsFor": [
+            "Entrümpelung Baden-Baden",
+            "Haushaltsauflösung Baden-Baden"
+          ],
+          "reviewsPrev": 25,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Mehmeti Entrümpelung",
+          "rating": 5,
+          "reviews": 28,
+          "address": "Eberbachstraße 19, 76532 Baden-Baden",
+          "website": "",
+          "appearsFor": [
+            "Entrümpelung Baden-Baden",
+            "Haushaltsauflösung Baden-Baden"
+          ],
+          "reviewsPrev": 28,
+          "ratingPrev": 5
+        },
+        {
+          "name": "GSA Entrümpelungen & Haushaltsauflösung",
+          "rating": 5,
+          "reviews": 42,
+          "address": "Rüppurrer Str. 56, 76137 Karlsruhe-Südstadt",
+          "website": "http://gsakarlsruhe.de/",
+          "appearsFor": [
+            "Entrümpelung Karlsruhe",
+            "Haushaltsauflösung Karlsruhe"
+          ],
+          "reviewsPrev": 42,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Serkan Elcik - Entrümpelungen & Haushaltsauflösungen",
+          "rating": 5,
+          "reviews": 86,
+          "address": "Bahnhofstraße 35, 76316 Malsch",
+          "website": "https://www.elcik-entruempelungen.de/",
+          "appearsFor": [
+            "Entrümpelung Gaggenau",
+            "Entrümpelung Ettlingen"
+          ],
+          "reviewsPrev": 86,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Umzüge & Entrümpelungen Neibert",
+          "rating": 4.9,
+          "reviews": 108,
+          "address": "Baden-Baden DE, Im Weingarten 51, 76547 Sinzheim",
+          "website": "https://www.neibert.de/",
+          "appearsFor": [
+            "Entrümpelung Baden-Baden"
+          ],
+          "reviewsPrev": 107,
+          "ratingPrev": 4.9
+        },
+        {
+          "name": "Fischer & Klein Seniorenumzüge und Entrümpelungen",
+          "rating": 5,
+          "reviews": 7,
+          "address": "Große Dollenstraße 29, 76530 Baden-Baden",
+          "website": "http://www.fischerundklein.de/",
+          "appearsFor": [
+            "Haushaltsauflösung Baden-Baden"
+          ],
+          "reviewsPrev": 7,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Tina Entrümpelung",
+          "rating": 4.9,
+          "reviews": 169,
+          "address": "Secondhand Shop Tina, Entrümpelungen Tina, Marienstraße 36, 76137 Karlsruhe",
+          "website": "https://tina-entruempelung.de/",
+          "appearsFor": [
+            "Entrümpelung Karlsruhe"
+          ],
+          "reviewsPrev": null,
+          "ratingPrev": null
+        },
+        {
+          "name": "Rümpel Büchler – Entrümpelung & Haushaltsauflösung.",
+          "rating": 5,
+          "reviews": 13,
+          "address": "Eugen-Geck-Straße 8/d, 76189 Karlsruhe",
+          "website": "http://www.xn--rmpel-bchler-dlbg.de/",
+          "appearsFor": [
+            "Haushaltsauflösung Karlsruhe"
+          ],
+          "reviewsPrev": 12,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Daniels Entrümpelungen und Haushaltsauflösungen",
+          "rating": 5,
+          "reviews": 39,
+          "address": "Haydnstraße 6, 76571 Gaggenau-Ottenau",
+          "website": "http://xn--daniels-entrmpelungen-kic.de/",
+          "appearsFor": [
+            "Entrümpelung Gaggenau"
+          ],
+          "reviewsPrev": 39,
+          "ratingPrev": 5
+        },
+        {
+          "name": "PP-Entrümpelung",
+          "rating": 5,
+          "reviews": 13,
+          "address": "Bismarckstraße 84, 76571 Gaggenau",
+          "website": "",
+          "appearsFor": [
+            "Entrümpelung Gaggenau"
+          ],
+          "reviewsPrev": 13,
+          "ratingPrev": 5
+        },
+        {
+          "name": "Szabo Entrümpelung",
+          "rating": 5,
+          "reviews": 8,
+          "address": "Büchelbachstraße 51A, 77830 Bühlertal",
+          "website": "https://www.szaboentruempelung.de/",
+          "appearsFor": [
+            "Entrümpelung Bühl"
+          ],
+          "reviewsPrev": 8,
+          "ratingPrev": 5
+        },
+        {
+          "name": "DG Dienstleistungen",
+          "rating": 5,
+          "reviews": 1,
+          "address": "Im Kinzhurst 6, 77815 Bühl",
+          "website": "https://www.dg-dl.de/",
+          "appearsFor": [
+            "Entrümpelung Bühl"
+          ],
+          "reviewsPrev": null,
+          "ratingPrev": null
+        },
+        {
+          "name": "Zack Dienstleistungen - Haushaltsauflösung Ettlingen Karlsruhe",
+          "rating": 5,
+          "reviews": 3,
+          "address": "",
+          "website": "",
+          "appearsFor": [
+            "Entrümpelung Ettlingen"
+          ],
+          "reviewsPrev": 3,
+          "ratingPrev": 5
+        },
+        {
+          "name": "ZACKaufZACK",
+          "rating": 4.8,
+          "reviews": 45,
+          "address": "Durlacher Str. 5",
+          "website": "",
+          "appearsFor": [
+            "Entrümpelung Ettlingen"
+          ],
+          "reviewsPrev": 45,
+          "ratingPrev": 4.8
+        },
+        {
+          "name": "Gewerbezentrum Mittelbaden",
+          "rating": null,
+          "reviews": null,
+          "address": "Karlsruher Str. 31, 76437 Rastatt",
+          "website": "",
+          "appearsFor": [
+            "Gewerberäumung Rastatt"
+          ],
+          "reviewsPrev": null,
+          "ratingPrev": null
+        },
+        {
+          "name": "RA³ Gewerbeverein für Einwohner, Industrie und Handel in Rastatt e. V.",
+          "rating": 5,
+          "reviews": 1,
+          "address": "Westring 21/2, 76437 Rastatt",
+          "website": "http://rastatt-hoch-drei.de/",
+          "appearsFor": [
+            "Gewerberäumung Rastatt"
+          ],
+          "reviewsPrev": null,
+          "ratingPrev": null
         }
       ]
     }
