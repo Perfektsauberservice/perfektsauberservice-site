@@ -107,6 +107,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   text-transform:uppercase; color:var(--muted); margin-top:6px; display:block;}
 
 /* hero image */
+.hero-img .vn-card{position:absolute; inset:0; width:100%; height:100%; aspect-ratio:auto; border-radius:14px; box-shadow:0 30px 60px -20px rgba(26,32,48,.25);}
 .hero-img{position:relative; aspect-ratio:4/5; max-width:480px; margin-left:auto; width:100%;}
 @media(max-width:980px){.hero-img{margin:0 auto;}}
 .hero-img > img{width:100%; height:100%; object-fit:cover; border-radius:14px; box-shadow:0 30px 60px -20px rgba(26,32,48,.25);}
@@ -181,7 +182,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 </script>
 
 <link rel="preload" href="/css/site-deferred.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/site-deferred.css"></noscript>
-<link rel="preload" as="image" href="/images/locations/entruempelung-bad-herrenalb-freigeraeumter-bereich.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/images/locations/keller-werkstatt-nachher.webp" fetchpriority="high">
 </head>
 <body>
 <a href="#main" class="skip-link">Zum Inhalt springen</a>
@@ -217,7 +218,13 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
     <div class="trust"><div class="it"><strong>✓</strong><span>Termin in 48 h</span></div><div class="it"><strong>✓</strong><span>Festpreis-Garantie</span></div><div class="it"><strong>✓</strong><span>Ordnungsgemäße Rechnung</span></div><div class="it"><strong>✓</strong><span>Ordnungsgemäße Rechnung</span></div></div>
   </div>
   <div class="hero-img">
-    <img src="/images/locations/entruempelung-bad-herrenalb-freigeraeumter-bereich.webp" width="940" height="627" alt="Gewerberäumung Bad Herrenalb — freigeräumte Gewerbefläche durch Perfekt Sauber Service" loading="eager"/>
+    <figure class="vn-card" data-vn>
+      <img class="vn-img vn-after" src="/images/locations/keller-werkstatt-nachher.webp" width="800" height="1000" alt="Gewerberäumung Bad Herrenalb — Referenz: Werkstatt komplett geräumt und besenrein durch Perfekt Sauber Service" loading="eager" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/locations/keller-werkstatt-vorher.webp" width="800" height="1000" alt="Gewerberäumung Bad Herrenalb — Referenz: Werkstatt vor der Räumung" loading="eager" decoding="async"/>
+      <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
+      <span class="vn-tag vn-tag-l">Vorher</span>
+      <span class="vn-tag vn-tag-r">Nachher</span>
+    </figure>
     <div class="badge"><strong>Vor &amp; Nach</strong><span>Bad Herrenalb</span></div>
   </div>
 </section>
