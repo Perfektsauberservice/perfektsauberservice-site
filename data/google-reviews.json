@@ -1,9 +1,17 @@
 {
   "averageRating": 5,
-  "totalReviewCount": 11,
-  "lastSuccessfulSync": "2026-09-24T16:01:53.264Z",
+  "totalReviewCount": 12,
+  "lastSuccessfulSync": "2026-09-30T13:21:14.815Z",
   "directGoogleProfileUrl": "https://maps.google.com/maps?cid=10440757061765338764",
   "reviews": [
+    {
+      "displayName": "Mihai Bazac",
+      "starRating": 5,
+      "text": "(Translated by Google) A very hardworking team; everything went quickly and smoothly.\n\nHighly recommended.\n\n(Original)\nSehr fleissiges Team, alles sind schnell und unkompliziert gelaufen.\nSehr zu empfehlen.",
+      "date": "2026-09-29",
+      "ownerReply": null,
+      "replyDate": null
+    },
     {
       "displayName": "An Ja",
       "starRating": 5,
