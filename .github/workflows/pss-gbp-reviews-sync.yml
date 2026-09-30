@@ -40,5 +40,10 @@ jobs:
           git config user.name "PSS GBP Reviews Bot"
           git config user.email "bot@perfektsauberservice.com"
           git add data/google-reviews.json
-          git diff --staged --quiet || git commit -m "chore: sync reviews from official Google Business Profile API [$(date +%Y-%m-%d)]"
-          git diff --staged --quiet && echo "No change -- nothing committed." || (git pull --rebase origin master && git push)
+          if git diff --staged --quiet; then
+            echo "No change -- nothing committed."
+          else
+            git commit -m "chore: sync reviews from official Google Business Profile API [$(date +%Y-%m-%d)]"
+            git pull --rebase origin master
+            git push
+          fi
