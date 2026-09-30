@@ -32,9 +32,12 @@ test("widget script: review text/author/reply are set via textContent, not inner
   const elFn = src.slice(src.indexOf("function el("), src.indexOf("function el(") + 200);
   assert.match(elFn, /e\.textContent\s*=\s*text/, "el() helper must assign via textContent");
 
-  assert.match(src, /el\(['"]p['"],\s*['"]gbp-review-text['"],\s*review\.text/, "review.text must be passed through el() -> textContent");
+  assert.match(src, /el\(['"]p['"],\s*['"]gbp-review-text['"],\s*(originalText\()?review\.text/, "review.text must be passed through el() -> textContent");
   assert.match(src, /el\(['"]span['"],\s*['"]gbp-review-author['"],\s*review\.displayName/, "review.displayName must be passed through el() -> textContent");
-  assert.match(src, /el\(['"]p['"],\s*['"]gbp-owner-reply-text['"],\s*review\.ownerReply/, "review.ownerReply must be passed through el() -> textContent");
+  assert.match(src, /el\(['"]p['"],\s*['"]gbp-owner-reply-text['"],\s*(originalText\()?review\.ownerReply/, "review.ownerReply must be passed through el() -> textContent");
+  // originalText() only slices/trims strings -- it must never build markup.
+  const otFn = src.slice(src.indexOf("function originalText("), src.indexOf("function formatRatingDe("));
+  assert.ok(otFn.length > 0 && !/innerHTML|outerHTML|createElement/.test(otFn), "originalText() must be a pure string helper");
   assert.ok(!/\.innerHTML\s*\+?=\s*.*review\./.test(src), "review data must never be concatenated into innerHTML");
 });
 

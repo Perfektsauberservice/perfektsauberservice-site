@@ -4,7 +4,7 @@
  * Single reusable component. Mounts into every element matching
  * `.gbp-reviews[data-gbp-reviews]` on the page. Fetches this site's own
  * static /data/google-reviews.json (never calls any Google endpoint from
- * the browser) and renders: star rating, review count, the latest 6
+ * the browser) and renders: star rating, review count, the latest 8
  * reviews (reviewer name, date, text, optional expandable owner reply),
  * and a direct button to the real Google profile. Falls back to the
  * mount point's own data-fallback-rating / data-fallback-count attributes
@@ -21,7 +21,17 @@
   'use strict';
 
   var DATA_URL = '/data/google-reviews.json';
-  var MAX_REVIEWS_SHOWN = 6;
+  var MAX_REVIEWS_SHOWN = 8;
+
+  // Google returns non-English reviews as "(Translated by Google) <EN>
+  // (Original) <DE>". The site is German, so show only the original text.
+  function originalText(text) {
+    var t = String(text || '');
+    var i = t.indexOf('(Original)');
+    if (i !== -1) t = t.slice(i + '(Original)'.length);
+    else t = t.replace(/^\(Translated by Google\)\s*/, '');
+    return t.replace(/^\s*>\s?/, '').trim();
+  }
   var FALLBACK_PROFILE_URL = 'https://maps.google.com/maps?cid=10440757061765338764';
 
   function formatRatingDe(n) {
@@ -88,7 +98,16 @@
     }
     li.appendChild(head);
 
-    li.appendChild(el('p', 'gbp-review-text', review.text || ''));
+    var textP = el('p', 'gbp-review-text', originalText(review.text));
+    li.appendChild(textP);
+    var more = el('button', 'gbp-review-more', 'Mehr lesen');
+    more.type = 'button';
+    more.hidden = true;
+    more.addEventListener('click', function () {
+      var open = li.classList.toggle('is-open');
+      more.textContent = open ? 'Weniger' : 'Mehr lesen';
+    });
+    li.appendChild(more);
 
     if (review.ownerReply) {
       var details = document.createElement('details');
@@ -96,7 +115,7 @@
       var summary = document.createElement('summary');
       summary.textContent = 'Antwort des Inhabers anzeigen';
       details.appendChild(summary);
-      var replyP = el('p', 'gbp-owner-reply-text', review.ownerReply);
+      var replyP = el('p', 'gbp-owner-reply-text', originalText(review.ownerReply));
       details.appendChild(replyP);
       if (review.replyDate) {
         var replyTime = document.createElement('time');
@@ -148,6 +167,13 @@
     section.appendChild(attribution);
 
     mount.appendChild(section);
+
+    // Only offer "Mehr lesen" where the clamped text is actually cut off.
+    Array.prototype.forEach.call(list.querySelectorAll('.gbp-review'), function (li) {
+      var p = li.querySelector('.gbp-review-text');
+      var btn = li.querySelector('.gbp-review-more');
+      if (p && btn && p.scrollHeight > p.clientHeight + 2) btn.hidden = false;
+    });
   }
 
   function mountOne(mount) {

@@ -22,13 +22,16 @@ test("canonical JSON: top-level schema matches exactly the documented public fie
   ].sort());
 });
 
-test("canonical JSON: averageRating is 5 and totalReviewCount is 11 (real live-verified data)", () => {
-  assert.equal(data.averageRating, 5);
-  assert.equal(data.totalReviewCount, 11);
+// The file is rewritten daily by the real GBP sync, so counts grow over
+// time (11 at widget launch 2026-09-24, 12 on 2026-09-30). Assert internal
+// consistency instead of a hard-coded snapshot count.
+test("canonical JSON: averageRating is a valid 1-5 rating and totalReviewCount is at least the launch count (11)", () => {
+  assert.ok(data.averageRating >= 1 && data.averageRating <= 5);
+  assert.ok(Number.isInteger(data.totalReviewCount) && data.totalReviewCount >= 11);
 });
 
-test("canonical JSON: exactly 11 reviews are represented, all real", () => {
-  assert.equal(data.reviews.length, 11);
+test("canonical JSON: every counted review is represented", () => {
+  assert.equal(data.reviews.length, data.totalReviewCount);
 });
 
 test("canonical JSON: directGoogleProfileUrl is the real, place-bound Maps profile link, not a generic search query", () => {
@@ -71,7 +74,8 @@ test("canonical JSON: contains no secret/token-shaped strings", () => {
   for (const m of markers) assert.ok(!raw.includes(m), `found suspicious marker: ${m}`);
 });
 
-test("canonical JSON: all 11 real 5-star reviews have an owner reply (matches live GBP data)", () => {
-  const withReply = data.reviews.filter(r => r.ownerReply);
-  assert.equal(withReply.length, 11);
+test("canonical JSON: owner replies, where present, are non-empty text", () => {
+  const withReply = data.reviews.filter(r => r.ownerReply !== undefined && r.ownerReply !== null);
+  assert.ok(withReply.length >= 11, "the 11 launch reviews all had owner replies");
+  for (const r of withReply) assert.ok(typeof r.ownerReply === "string" && r.ownerReply.trim().length > 0);
 });

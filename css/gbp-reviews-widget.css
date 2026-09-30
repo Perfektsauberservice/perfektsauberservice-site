@@ -10,7 +10,7 @@
  */
 .gbp-reviews {
   min-height: 220px;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 56px auto;
   padding: 0 20px;
   box-sizing: border-box;
@@ -43,15 +43,17 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
 }
 
 .gbp-review {
   border: 1px solid #e4e0d8;
   border-radius: 12px;
-  padding: 18px;
+  padding: 16px;
   background: #fff;
+  display: flex;
+  flex-direction: column;
   overflow-wrap: break-word;
   word-break: break-word;
 }
@@ -60,7 +62,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 4px 8px;
   margin-bottom: 8px;
 }
 .gbp-review-author { font-weight: 600; }
@@ -68,14 +70,38 @@
 .gbp-review-date { font-size: .8rem; color: #888; }
 
 .gbp-review-text {
-  font-size: .95rem;
+  font-size: .9rem;
   line-height: 1.5;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   white-space: pre-line;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
 }
+.gbp-review.is-open .gbp-review-text {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+.gbp-review-more {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0 0 4px;
+  font: inherit;
+  font-size: .82rem;
+  color: #1a5fb4;
+  cursor: pointer;
+}
+.gbp-review-more[hidden] { display: none; }
+.gbp-review-more:focus-visible { outline: 2px solid #1a5fb4; outline-offset: 2px; }
 
 .gbp-owner-reply {
-  margin-top: 8px;
+  margin-top: auto;
   font-size: .88rem;
   border-top: 1px dashed #e4e0d8;
   padding-top: 8px;
@@ -106,7 +132,12 @@
   margin: 0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 980px) {
+  .gbp-review-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
   .gbp-reviews { margin: 36px auto; padding: 0 16px; }
   .gbp-review-list { grid-template-columns: 1fr; }
+  /* Mobile: keep the section short -- 4 reviews, rest via the Google link. */
+  .gbp-review:nth-child(n+5) { display: none; }
 }
