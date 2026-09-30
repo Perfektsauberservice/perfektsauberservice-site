@@ -35,11 +35,15 @@ jobs:
           GBP_OAUTH_REFRESH_TOKEN: ${{ secrets.GBP_OAUTH_REFRESH_TOKEN }}
         run: node agent/scripts/update-gbp-reviews.mjs
 
+      - name: Sync hardcoded review count on all pages
+        run: node agent/scripts/sync-review-count.mjs
+
       - name: Commit changes (only if data actually changed)
         run: |
           git config user.name "PSS GBP Reviews Bot"
           git config user.email "bot@perfektsauberservice.com"
           git add data/google-reviews.json
+          git add -u -- '*.html'
           if git diff --staged --quiet; then
             echo "No change -- nothing committed."
           else

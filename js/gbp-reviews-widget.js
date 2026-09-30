@@ -4,7 +4,7 @@
  * Single reusable component. Mounts into every element matching
  * `.gbp-reviews[data-gbp-reviews]` on the page. Fetches this site's own
  * static /data/google-reviews.json (never calls any Google endpoint from
- * the browser) and renders: star rating, review count, the latest 8
+ * the browser) and renders: star rating, review count, the latest 10
  * reviews (reviewer name, date, text, optional expandable owner reply),
  * and a direct button to the real Google profile. Falls back to the
  * mount point's own data-fallback-rating / data-fallback-count attributes
@@ -21,7 +21,7 @@
   'use strict';
 
   var DATA_URL = '/data/google-reviews.json';
-  var MAX_REVIEWS_SHOWN = 8;
+  var MAX_REVIEWS_SHOWN = 10;
 
   // Google returns non-English reviews as "(Translated by Google) <EN>
   // (Original) <DE>". The site is German, so show only the original text.
@@ -113,7 +113,7 @@
       var details = document.createElement('details');
       details.className = 'gbp-owner-reply';
       var summary = document.createElement('summary');
-      summary.textContent = 'Antwort des Inhabers anzeigen';
+      summary.textContent = 'Antwort des Inhabers';
       details.appendChild(summary);
       var replyP = el('p', 'gbp-owner-reply-text', originalText(review.ownerReply));
       details.appendChild(replyP);

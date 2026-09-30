@@ -60,11 +60,13 @@ test("widget mount: absent on unrelated pages (no guessed/blanket rollout)", () 
   }
 });
 
-test("widget mount: fallback data attributes are the real verified 5.0/11 on every target page", () => {
+test("widget mount: fallback data attributes match the canonical JSON on every target page", () => {
+  // Kept in sync daily by agent/scripts/sync-review-count.mjs.
+  const { totalReviewCount } = JSON.parse(read("data/google-reviews.json"));
   for (const page of TARGET_PAGES) {
     const html = read(page);
     assert.ok(html.includes('data-fallback-rating="5.0"'), `${page}: wrong/missing fallback rating`);
-    assert.ok(html.includes('data-fallback-count="11"'), `${page}: wrong/missing fallback count`);
+    assert.ok(html.includes(`data-fallback-count="${totalReviewCount}"`), `${page}: wrong/missing fallback count`);
   }
 });
 

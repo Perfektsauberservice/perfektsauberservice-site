@@ -75,7 +75,7 @@ test("widget script: fallback path never assumes review content, only rating/cou
 test("widget script: German UI strings are present", () => {
   assert.ok(src.includes("Google-Bewertungen"));
   assert.ok(src.includes("Alle Google-Bewertungen ansehen"));
-  assert.ok(src.includes("Antwort des Inhabers anzeigen"));
+  assert.ok(src.includes("Antwort des Inhabers"));
 });
 
 test("widget script: mounts only once per element even if init runs twice", () => {

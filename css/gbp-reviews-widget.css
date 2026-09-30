@@ -10,7 +10,7 @@
  */
 .gbp-reviews {
   min-height: 220px;
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 56px auto;
   padding: 0 20px;
   box-sizing: border-box;
@@ -43,8 +43,8 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
 }
 
 .gbp-review {
@@ -76,8 +76,8 @@
   white-space: pre-line;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  line-clamp: 4;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
   overflow: hidden;
 }
 .gbp-review.is-open .gbp-review-text {
@@ -132,6 +132,10 @@
   margin: 0;
 }
 
+@media (max-width: 1280px) {
+  .gbp-review-list { grid-template-columns: repeat(4, 1fr); }
+  .gbp-review:nth-child(n+9) { display: none; }
+}
 @media (max-width: 980px) {
   .gbp-review-list { grid-template-columns: repeat(2, 1fr); }
 }
