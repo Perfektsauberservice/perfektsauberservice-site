@@ -187,6 +187,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 <link rel="preload" as="image" href="/images/locations/ref-rastatt-4-nachher.webp" fetchpriority="high">
 </head>
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P26S4QMN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a href="#main" class="skip-link">Zum Inhalt springen</a>
 <nav class="nav">
   <a href="/" class="nav-brand">
@@ -557,6 +558,12 @@ gtag('consent', 'default', {
   ad_personalization: 'denied', analytics_storage: 'denied',
   wait_for_update: 500
 });
+// Google Tag Manager (after Consent Mode defaults, so all GTM tags respect consent)
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P26S4QMN');
 window.psLoadGA = function(){
   if (window.psGALoaded) return; window.psGALoaded = true;
   gtag('js', new Date());
