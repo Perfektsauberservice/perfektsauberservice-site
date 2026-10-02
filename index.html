@@ -92,7 +92,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .btn-w{background:#25d366; color:#fff;}
 .btn-blue{background:var(--blue); color:#fff; font-weight:500;}
 .btn-blue:hover{filter:brightness(1.08); transform:translateY(-2px);}
-.cta-lead{font-family:"Fraunces","Fraunces Fallback",serif; font-size:1.15rem; color:var(--ink); margin:0 0 14px;}
+.cta-lead{font-family:"Fraunces","Fraunces Fallback",serif; font-size:clamp(1.3rem, 2.3vw, 2.05rem); line-height:1.15; color:var(--ink); margin:0 0 22px;}
+.hero .cta-row .btn{padding:24px 54px; font-size:1.1rem;}
+@media(max-width:600px){.cta-lead{font-size:1.6rem;} .hero .cta-row .btn{flex:1 1 0; text-align:center; justify-content:center; padding:20px 12px; font-size:.95rem;}}
 .btn-w:hover{background:#1ea54f;}
 .trust{display:flex; gap:36px; margin-top:52px; padding-top:28px;
   border-top:1px solid var(--line); flex-wrap:wrap;}
@@ -226,7 +228,7 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .contact h2 em{font-style:italic; color:#9ad978;}
 .contact h2 b{font-weight:700; color:#7ab8ff;}
 .contact p{font-size:1.1rem; line-height:1.6; margin:24px 0; max-width:42ch; color:rgba(251,247,240,.75);}
-.contact-btns{display:flex; flex-direction:column; gap:14px; max-width:420px;}
+.contact-btns{display:flex; flex-direction:column; gap:14px; max-width:580px;}
 .cb{display:flex; align-items:center; justify-content:space-between; padding:20px 26px;
   border-radius:8px; font-family:"Geist Mono",monospace; letter-spacing:.14em;
   text-transform:uppercase; font-size:.78rem; transition:transform .2s;}
@@ -235,6 +237,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 .cb-p{background:var(--blue); color:#fff;}
 .cb-m{background:transparent; color:var(--bg); border:1.5px solid rgba(251,247,240,.3);}
 .cb svg{width:18px; height:18px;}
+.cb-w,.cb-p{justify-content:center; gap:18px;}
+@media(min-width:600px){.cb-m span{white-space:nowrap;} .cb-m{gap:18px;}}
+@media(max-width:599px){.cb-m{flex-direction:column; align-items:flex-start; gap:6px;} .cb-m span{overflow-wrap:anywhere;} .cb-m span:last-child{letter-spacing:.06em;}}
 
 /* ============= FOOTER ============= */
 .foot{background:var(--ink); color:rgba(251,247,240,.5); padding:32px 48px;
