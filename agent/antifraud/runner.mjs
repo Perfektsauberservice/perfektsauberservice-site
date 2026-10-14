@@ -45,16 +45,22 @@ export function telegram(env = telegramEnv()) {
   };
 }
 
-/** Process pending exclusion proposals. Returns processed records with reaction times. */
-export async function processProposals({ store, client, notify, enforce = false, label = '' }) {
+/** Process pending exclusion proposals. Returns processed records with reaction times.
+ *  Safe with several executors (Netlify function + PC runner): each proposal is claimed
+ *  atomically, so it is sent to Google Ads exactly once. */
+export async function processProposals({ store, client, notify, enforce = false, label = '', ledgerPath = `${DATA_DIR}/ledger.jsonl`, executor = 'pc' }) {
   const { blobs } = await store.list({ prefix: 'rec/pending/' });
   const out = [];
   for (const b of blobs) {
+    const claim = await store.setJSON(b.key.replace('rec/pending/', 'rec/claim/'), { t: Date.now(), executor }, { onlyIfNew: true });
+    if (claim?.modified === false) continue;                 // another executor already took it
     const rec = await store.get(b.key, { type: 'json' });
     if (!rec) continue;
     let exec;
-    try { exec = await applyExclusion(client, rec.proposal.cidr, { enforce, ledgerPath: `${DATA_DIR}/ledger.jsonl` }); }
+    try { exec = await applyExclusion(client, rec.proposal.cidr, { enforce, ledgerPath }); }
     catch (e) { exec = { error: String(e).slice(0, 300), doneAt: Date.now() }; }
+    exec.executor = executor;
+    await store.setJSON(`ledger/${String(exec.t || Date.now()).padStart(13, '0')}_${rec.proposal.cidr.replace(/\//g, '-').replace(/:/g, 'x')}`, exec);
     const done = { ...rec, status: exec.error ? 'error' : exec.mode, executor: exec, reactionMs: exec.doneAt - rec.t };
     await store.setJSON(b.key.replace('rec/pending/', 'rec/done/'), done);
     await store.delete(b.key);
@@ -152,7 +158,8 @@ export async function proposeRotation({ store, client, send, label = '', thresho
     `Exemple: ${pick.slice(0, 5).map(r => `${r.ip} (${r.country || '?'} ${r.org || ''})`).join('; ')}\n` +
     `Lista completă: C:\\tmp\\pss-antifraud-data\\rotation-${id}.csv`, [
     { text: '✅ Aprob scoaterea', callback_data: `afrot:${id}:y` }, { text: '❌ Nu', callback_data: `afrot:${id}:n` }]);
-  writeFileSync(`${DATA_DIR}/rotation-${id}.csv`, '\ufeffip;keep;type;country;org;why\n' + pick.map(r => [r.ip, r.keep, r.type, r.country, `"${r.org}"`, `"${r.why}"`].join(';')).join('\n') + '\n');
+  try { writeFileSync(`${DATA_DIR}/rotation-${id}.csv`, '\ufeffip;keep;type;country;org;why\n' + pick.map(r => [r.ip, r.keep, r.type, r.country, `"${r.org}"`, `"${r.why}"`].join(';')).join('\n') + '\n'); }
+  catch { /* running on Netlify: the full list stays in the store (rot/pending/<id>) */ }
   return { id, count: pick.length, criteria: criteria.length };
 }
 
@@ -231,4 +238,5 @@ async function main() {
   } while (true);
 }
 
-if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/').split('/').pop())) main();
+// CLI only (never when bundled into a Netlify Function)
+if (process.argv[1]?.replace(/\\/g, '/').endsWith('/runner.mjs') && import.meta.url.endsWith('/runner.mjs')) main();

@@ -52,9 +52,14 @@ async function netinfoCached(ip, cache) {
 /** Rank all current IP exclusions (all non-removed campaigns). Returns rows sorted weakest first,
  *  each with the criterion resource names to remove if Laura approves. */
 export async function planRotation(client, store) {
-  mkdirSync(DATA_DIR, { recursive: true });
+  // network-info cache: local file on the PC; on Netlify (no disk) the store's netinfo/ entries
   const cachePath = `${DATA_DIR}/netinfo-cache.json`;
-  const cache = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath, 'utf8')) : {};
+  let cache = {};
+  try { mkdirSync(DATA_DIR, { recursive: true }); if (existsSync(cachePath)) cache = JSON.parse(readFileSync(cachePath, 'utf8')); } catch { /* Netlify */ }
+  for (const b of (await store.list({ prefix: 'netinfo/' })).blobs) {
+    const host = b.key.slice('netinfo/'.length).replace(/-/g, '/').replace(/x/g, ':');
+    if (!cache[host]) cache[host] = await store.get(b.key, { type: 'json' }).catch(() => ({})) || {};
+  }
   const crit = await client.search("SELECT campaign.name, campaign.status, campaign_criterion.resource_name, campaign_criterion.ip_block.ip_address FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status != 'REMOVED'");
   const byIp = {}, perCamp = {};
   for (const r of crit) {
@@ -77,7 +82,7 @@ export async function planRotation(client, store) {
     rows.push({ ip, criteria: byIp[ip], campaigns: byIp[ip].length, addedBy: o ? `${o.user} via ${o.client === 'GOOGLE_ADS_API' ? 'API' : 'web'} ${o.t.slice(0, 16)}` : 'older than 30 days / unknown',
       country: net.country, asn: net.asn, org: net.org, type: net.type, keep: k.score, why: k.why.join('; ') });
   }
-  writeFileSync(cachePath, JSON.stringify(cache));
+  try { writeFileSync(cachePath, JSON.stringify(cache)); } catch { /* Netlify */ }
   rows.sort((a, b) => a.keep - b.keep);
   return { rows, perCampaign: perCamp };
 }

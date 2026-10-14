@@ -83,7 +83,7 @@ log('datacenter (Alibaba) 2 clicks -> exclusion', !!w4, w4 ? `${w4.seenAfterMs} 
 for (const ip of [ip3, ip4]) {
   const key = `rec/done/${enc(ip + '/32')}`; let d = null;
   for (let w = 0; w < 90000 && !d; w += 1000) { d = await store.get(key, { type: 'json' }); if (!d) await sleep(1000); }
-  log(`Google Ads validated exclusion ${ip}/32 (runner loop)`, d?.status === 'validate_only', d ? `click->Google answer ${d.reactionMs} ms; ${JSON.stringify(d.executor.plan)}` : 'not processed within 90 s');
+  log(`Google Ads validated exclusion ${ip}/32 (Netlify executor, executor=${d?.executor?.executor})`, d?.status === 'validate_only', d ? `click->Google answer ${d.reactionMs} ms; ${JSON.stringify(d.executor.plan)}` : 'not processed within 90 s');
 }
 const pend = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip3)) && !b.key.startsWith('rec/seen/'));
 log('only one proposal per IP', pend.length === 1, `${pend.length} record(s) for ${ip3}`);

@@ -62,6 +62,8 @@ export default async (request, context) => {
         if (!r.ok) throw new Error(`ipinfo ${r.status}`);
         return r.json();
       },
+      // start the exclusion executor right away (it only reads the queue, takes no input)
+      trigger: () => fetch(`${url.origin}/.netlify/functions/af-exclude`, { method: 'POST' }),
       notify: async text => {
         const bot = env('TELEGRAM_BOT_TOKEN'), chat = env('TELEGRAM_CHAT_ID');
         if (!bot || !chat) { await store.setJSON('health/telegram', { t: Date.now(), ok: false, status: 'missing TELEGRAM_* env' }); return; }

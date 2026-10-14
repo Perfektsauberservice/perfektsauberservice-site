@@ -125,8 +125,12 @@ export async function processClick(deps, event) {
       event.fp && store.setJSON(`off/fp/${enc(event.fp)}`, { t: event.t, ip: event.ip }),
       net && store.setJSON(`off/net/${enc(net)}/${enc(event.ip)}`, { t: event.t }),
       // exactly one proposal per IP / range, even with parallel requests (atomic create-only marker)
-      store.setJSON(`rec/seen/${enc(verdict.proposal.cidr)}`, { t: event.t }, { onlyIfNew: true }).then(w =>
-        (w?.modified ?? true) && store.setJSON(`rec/pending/${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' })),
+      store.setJSON(`rec/seen/${enc(verdict.proposal.cidr)}`, { t: event.t }, { onlyIfNew: true }).then(async w => {
+        if (!(w?.modified ?? true)) return;
+        await store.setJSON(`rec/pending/${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' });
+        timings.queued = deps.now();
+        if (deps.trigger) await deps.trigger().catch(() => {});   // Netlify executor; the 5-min cron is the safety net
+      }),
     ]);
   }
   timings.persisted = deps.now();

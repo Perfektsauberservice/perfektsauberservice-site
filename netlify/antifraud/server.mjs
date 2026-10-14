@@ -1,0 +1,45 @@
+// Helpers for the PSS Anti-Fraud Netlify Functions (no PC needed).
+// Google Ads credentials and Telegram come from Netlify environment variables.
+import { getStore } from '@netlify/blobs';
+import { STORE_NAME } from './config.mjs';
+
+const ADS_KEYS = ['GOOGLE_ADS_DEVELOPER_TOKEN', 'GOOGLE_ADS_CLIENT_ID', 'GOOGLE_ADS_CLIENT_SECRET',
+  'GOOGLE_ADS_REFRESH_TOKEN', 'GOOGLE_ADS_LOGIN_CUSTOMER_ID', 'GOOGLE_ADS_CUSTOMER_ID'];
+
+const envGet = k => globalThis.Netlify?.env?.get?.(k) ?? process.env[k];
+
+export function adsEnvFromNetlify() {
+  const env = Object.fromEntries(ADS_KEYS.map(k => [k, envGet(k)]));
+  const missing = ADS_KEYS.filter(k => !env[k]);
+  return { env, missing };
+}
+
+export function isProduction(context) {
+  return context?.deploy?.context === 'production';
+}
+
+export function storeFor(context) {
+  return getStore({ name: isProduction(context) ? STORE_NAME : `${STORE_NAME}-test`, consistency: 'strong' });
+}
+
+// Real writes only on the production deploy AND with AF_ENFORCE=1 in the environment.
+export function enforceFor(context) {
+  return isProduction(context) && envGet('AF_ENFORCE') === '1';
+}
+
+export function notifier(context) {
+  const bot = envGet('TELEGRAM_BOT_TOKEN'), chat = envGet('TELEGRAM_CHAT_ID');
+  const prefix = isProduction(context) ? '' : `[TEST ${context?.deploy?.context || '?'}] `;
+  const post = async body => {
+    if (!bot || !chat) return null;
+    const r = await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: chat, disable_web_page_preview: true, ...body, text: prefix + body.text }) });
+    const j = await r.json().catch(() => ({}));
+    if (!j.ok) throw new Error(`telegram ${r.status} ${j.description || ''}`);
+    return j.result?.message_id;
+  };
+  return {
+    notify: text => post({ text }),
+    send: (text, buttons) => post({ text, reply_markup: { inline_keyboard: [buttons] } }),
+  };
+}
