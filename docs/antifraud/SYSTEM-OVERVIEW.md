@@ -133,4 +133,21 @@ PC-ul proprietarei (pornit non-stop): runner.mjs loop (la 10 s)
 - **Verificarea pragurilor** (`tune`): comparație cu invalid_clicks din Google; IP-uri excluse care au devenit apoi clienți = semn că pragul e prea strict.
 - **Pachet de rambursare** (`refund <de la> <până la>`): CSV cu gclid, IP, oră, campanie și cuvânt cheie confirmat în click_view, plus cererea în germană pentru formularul Google „ungültige Klicks”. Nu trimite nimic.
 - **Rotația la limita de 500** cu butoane Telegram „Aprob / Nu”. Botul de pe Netlify doar înregistrează decizia; programul de pe PC scoate exact pozițiile aprobate.
-- **Încă neimplementat:** excluderea direct din Netlify (fără PC). Sistemul de permisiuni a blocat agentul autonom de scriere; e nevoie de permisiunea proprietarei.
+- (Excluderea direct din Netlify a fost implementată în V1.2 — vezi secțiunea 11.)
+
+## 11. V1.2: excluderi direct din Netlify, fără PC (14.10.2026, ~23:30, live)
+- **`af-exclude`** (Netlify Function): pornită de edge function imediat după ce pune o propunere în coadă.
+  - Nu primește date din exterior; citește doar coada `rec/pending/` din Netlify Blobs.
+  - Trimite excluderea în Google Ads (aceeași gardă: doar IP_BLOCK) și confirmă pe Telegram.
+- **`af-cron`** (funcție programată, la fiecare 5 minute, doar pe producție). Plasă de siguranță pentru:
+  - propunerile rămase în coadă;
+  - rotațiile aprobate prin butoane;
+  - erorile captării (alertă);
+  - cheltuiala pe oră;
+  - ștergerea datelor după 30 de zile;
+  - propunerea de rotație când o listă trece de 450;
+  - rezumatul zilnic după 20:30 (lunea și verificarea pragurilor).
+- **Preluare atomică** (`rec/claim/`): o excludere e trimisă o singură dată, chiar dacă rulează simultan funcția, cron-ul și, opțional, programul de pe PC.
+- **Chei:** credențialele Google Ads sunt variabile de mediu Netlify (scope: functions), puse pe production și deploy-preview. `AF_ENFORCE=1` e pus doar pe production. Pe copiile de test totul rămâne `validateOnly`.
+- **Testul de producție:** adresa de documentare 192.0.2.1/32 a fost pusă în coadă, iar funcția a aplicat-o singură pe toate cele 6 campanii în ~6,6 s (confirmat de Google). Apoi a fost scoasă; listele au revenit la 185/185/184/185.
+- **Lecție:** `netlify env:set --site` e ignorat într-un folder nelegat de proiect. Se folosește `NETLIFY_SITE_ID=<id>` și se verifică mesajul „Set environment variable”.
