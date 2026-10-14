@@ -116,6 +116,7 @@ Sehr geehrte Damen und Herren,
 
 wir betreiben die Website perfektsauberservice.com (Perfekt Sauber Service, Inh. Laura Craciun, Reutstraße 9, 76597 Loffenau) und schalten Google-Ads-Anzeigen. Von der IP-Adresse ${c.ip}, die laut Registry (${c.registry.network?.name || 'n/a'}${c.registry.network?.handle ? ', ' + c.registry.network.handle : ''}) zu Ihrem Netz gehört, haben wir folgende Zugriffe über Werbelinks festgestellt:
 
+- Netz: ${c.asn || 'n/a'} ${c.provider || ''}, registrierter Bereich ${c.registeredRange || 'n/a'}
 - Zeitraum: ${fmtBerlin(c.analysis.firstSeen)} bis ${fmtBerlin(c.analysis.lastSeen)} (Europe/Berlin)
 - ${c.analysis.clicks} unterschiedliche Anzeigenklicks, ${c.analysis.requests} Seitenaufrufe insgesamt
 - maximal ${c.analysis.max10} Anzeigenklicks innerhalb von 10 Minuten
@@ -139,6 +140,7 @@ Dear abuse team,
 
 we operate perfektsauberservice.com (Perfekt Sauber Service, Laura Craciun, Reutstraße 9, 76597 Loffenau, Germany) and run Google Ads. From IP address ${c.ip}, registered to your network (${c.registry.network?.name || 'n/a'}${c.registry.network?.handle ? ', ' + c.registry.network.handle : ''}), we recorded:
 
+- network: ${c.asn || 'n/a'} ${c.provider || ''}, registered range ${c.registeredRange || 'n/a'}
 - period: ${iso(c.analysis.firstSeen)} to ${iso(c.analysis.lastSeen)} (UTC)
 - ${c.analysis.clicks} distinct ad clicks, ${c.analysis.requests} page requests in total
 - up to ${c.analysis.max10} ad clicks within 10 minutes
@@ -164,43 +166,101 @@ export async function buildCase({ store, ip, hours = 72, client = null, notify =
   const registry = await registryLookup(ip, fetchImpl);
   const ads = client ? await adsMatches(client, events) : {};
   const analysis = analyse(events, decisions, ads);
-  const c = { ip, network: networkOf(ip), asn: netinfo?.org || null, netinfo, registry, analysis, builtAt: iso(Date.now()), hours,
+  const asnNum = String(netinfo?.org || '').match(/^AS(\d+)/)?.[1] || null;
+  const provider = String(netinfo?.org || '').replace(/^AS\d+\s*/, '') || registry.network?.name || null;
+  const c = { ip, network: networkOf(ip), asn: asnNum ? `AS${asnNum}` : null, provider, registeredRange: registry.network?.cidr || (registry.network?.start ? `${registry.network.start}–${registry.network.end}` : null),
+    netinfo, registry, analysis, builtAt: iso(Date.now()), hours,
+    gclids: [...new Set(events.filter(e => e.rec.cidType === 'gclid').map(e => e.rec.cid))],
     evidenceNote: 'Evidence = only the events recorded for this IP. Aggregated Ads clicks/costs are not attributed to the IP. The network owner is not assumed to be the person who clicked.' };
-  const dir = `${outRoot}/${new Date().toISOString().slice(0, 10)}_${enc(ip)}`;
-  mkdirSync(dir, { recursive: true });
+  const caseId = `${new Date().toISOString().slice(0, 10)}_${enc(ip)}`;
+  const timeline = events.map(({ rec, integrity }) => {
+    const ad = ads[rec.cid];
+    return `| ${fmtBerlin(rec.t)} | ${iso(rec.t)} | ${rec.path} | ${rec.cidType}=${rec.cid} | ${ad?.campaign ? `${ad.campaign} / ${ad.keyword || ''} / ${ad.device || ''}` : (client ? 'negăsit în Ads' : 'neverificat')} | ${integrity} |`;
+  });
   const files = {
     'raw-events.jsonl': events.map(e => JSON.stringify(e.rec)).join('\n') + '\n',
     'events.csv': ['utc;europe_berlin;ip;path;click_id_type;click_id;user_agent;accept_language;netlify_request_id;record_sha256;integrity;google_ads_match']
       .concat(events.map(({ rec, integrity }) => [iso(rec.t), fmtBerlin(rec.t), rec.ip, rec.path, rec.cidType, rec.cid, `"${(rec.ua || '').replace(/"/g, "'")}"`, rec.lang, rec.requestId, rec.sha256, integrity,
         ads[rec.cid]?.campaign ? `${ads[rec.cid].campaign} / ${ads[rec.cid].keyword || ''}` : (client ? 'not found' : 'not checked')].join(';'))).join('\n') + '\n',
-    // data minimisation: the ISP only needs time, IP and requested page
-    'isp-attachment.csv': ['utc;ip;requested_page'].concat(events.map(({ rec }) => `${iso(rec.t)};${rec.ip};https://perfektsauberservice.com${rec.path}`)).join('\n') + '\n',
+    // for the ISP: time (UTC), IP, requested page and the Google click id of each ad click
+    'isp-attachment.csv': ['utc;ip;requested_page;google_click_id'].concat(events.map(({ rec }) => `${iso(rec.t)};${rec.ip};https://perfektsauberservice.com${rec.path};${rec.cid}`)).join('\n') + '\n',
     'case.json': JSON.stringify({ ...c, decisions, ads }, null, 1),
     'report.md': [`# Dosar abuz ${ip} — încredere ${analysis.confidence}`, '',
-      `- Rețea: ${c.network} · ${c.asn || '—'} · înregistrare: ${registry.network?.name || '—'} (${registry.network?.handle || '—'}, ${registry.network?.cidr || (registry.network?.start ? registry.network.start + '–' + registry.network.end : '—')})`,
-      `- Contact abuse oficial: ${(registry.abuseContacts || []).join(', ') || 'NEGĂSIT'} (sursa: ${registry.source.join(' + ')})`,
+      `- **IP:** ${ip} · rețea /24: ${c.network}`,
+      `- **ASN:** ${c.asn || '—'} · **Furnizor:** ${c.provider || '—'}`,
+      `- **Interval înregistrat (RIR):** ${c.registeredRange || '—'} · ${registry.network?.name || '—'} (${registry.network?.handle || '—'}, ${registry.network?.country || '—'})`,
+      `- **Contact abuse oficial:** ${(registry.abuseContacts || []).join(', ') || 'NEGĂSIT'} (sursa: ${registry.source.join(' + ')})`,
+      `- **GCLID-uri:** ${c.gclids.length} — ${c.gclids.join(', ') || '—'}`,
       `- Perioada: ${fmtBerlin(analysis.firstSeen)} – ${fmtBerlin(analysis.lastSeen)} (Europe/Berlin)`,
       `- Clicuri publicitare distincte: ${analysis.clicks} · cereri totale: ${analysis.requests} · max în 10 min: ${analysis.max10}`,
       `- Confirmate în Google Ads (click_view, după gclid): ${analysis.adsConfirmed}${client ? '' : ' (neverificat)'}`,
       `- Integritate înregistrări: ${events.filter(e => e.integrity === 'OK').length}/${events.length} OK`, '',
+      '## Cronologie (fiecare accesare înregistrată)', '| Europe/Berlin | UTC | Pagina | ID clic | Google Ads (campanie / cuvânt / dispozitiv) | Integritate |', '|---|---|---|---|---|---|', ...timeline, '',
+      '## Dovezi tehnice', `- Fiecare înregistrare are SHA-256 al conținutului original (verificat acum: ${events.filter(e => e.integrity === 'OK').length}/${events.length} OK) și ID-ul cererii Netlify (x-nf-request-id), verificabil în jurnalele Netlify.`,
+      `- User-Agent: ${analysis.userAgents.map(u => `\`${String(u).slice(0, 90)}\``).join('; ') || '—'}`, `- Fișierele dosarului sunt sigilate în manifest.sha256.`, '',
       '## Tipare', ...analysis.patterns.map(p => `- ${p}`), '', '## Motivele motorului', ...analysis.reasons.map(r => `- ${r}`), '',
       '## Limite', '- Proprietarul rețelei NU este presupus a fi persoana care a dat clic.', '- Costurile/clicurile agregate din Ads NU sunt atribuite acestui IP.',
       '- IP-urile mobile (CGNAT) pot fi folosite simultan de mai mulți abonați.'].join('\n') + '\n',
     'email-abuse-de.txt': emailDE(c),
     'email-abuse-en.txt': emailEN(c),
   };
-  for (const [n, body] of Object.entries(files)) writeFileSync(`${dir}/${n}`, body);
-  const manifest = Object.keys(files).map(n => `${createHash('sha256').update(readFileSync(`${dir}/${n}`)).digest('hex')}  ${n}`).join('\n') + '\n';
-  writeFileSync(`${dir}/manifest.sha256`, manifest);
-  if (notify) await notify(`📁 PSS Abuse Evidence — dosar pregătit: ${ip}\nÎncredere: ${analysis.confidence} · ${analysis.clicks} clicuri publicitare, max ${analysis.max10}/10 min\nContact abuse: ${(registry.abuseContacts || []).join(', ') || 'negăsit'}\n📂 ${dir}\n⛔ Nu s-a trimis nimic — aștept aprobarea ta.`);
-  return { dir, ...c };
+  files['manifest.sha256'] = Object.keys(files).map(n => `${createHash('sha256').update(Buffer.from(files[n], 'utf8')).digest('hex')}  ${n}`).join('\n') + '\n';
+  let dir = null;
+  if (outRoot) {   // on the PC: also write the folder; on Netlify (outRoot = null) the files stay in memory / the store
+    dir = `${outRoot}/${caseId}`;
+    mkdirSync(dir, { recursive: true });
+    for (const [n, body] of Object.entries(files)) writeFileSync(`${dir}/${n}`, body);
+  }
+  if (notify) await notify(`📁 PSS Abuse Evidence — dosar pregătit: ${ip}\nASN ${c.asn || '—'} · ${c.provider || '—'} · interval ${c.registeredRange || '—'}\nÎncredere: ${analysis.confidence} · ${analysis.clicks} clicuri publicitare (${c.gclids.length} GCLID), max ${analysis.max10}/10 min\nContact abuse: ${(registry.abuseContacts || []).join(', ') || 'negăsit'}\n${dir ? '📂 ' + dir + '\n' : ''}⛔ Nu s-a trimis nimic către furnizor — aștept aprobarea ta.`);
+  return { dir, caseId, files, ...c };
+}
+
+/** Automatic dossiers (run by af-cron on Netlify): one case per IP that was really excluded.
+ *  Files are kept in the store (case/<caseId>/<file>) and sent to Laura on Telegram.
+ *  Nothing is ever sent to an ISP. */
+export async function autoCases({ store, client, notify, sendDocument, max = 2, fetchImpl = fetch }) {
+  const built = [];
+  for (const b of (await store.list({ prefix: 'rec/done/' })).blobs) {
+    if (built.length >= max) break;
+    const rec = await store.get(b.key, { type: 'json' });
+    if (!rec || rec.status !== 'enforce' || rec.proposal?.kind !== 'ip' || !rec.ip) continue;
+    const mark = await store.setJSON(`case/marker/${enc(rec.ip)}`, { t: Date.now() }, { onlyIfNew: true });
+    if (mark?.modified === false) continue;
+    const c = await buildCase({ store, ip: rec.ip, hours: 72, client, notify, fetchImpl, outRoot: null });
+    if (c.empty) continue;
+    for (const [name, body] of Object.entries(c.files)) await store.set(`case/${c.caseId}/${name}`, body);
+    if (sendDocument) {
+      for (const name of ['report.md', 'email-abuse-de.txt', 'isp-attachment.csv', 'events.csv', 'manifest.sha256']) {
+        await sendDocument(`${c.caseId}_${name}`, c.files[name], name === 'report.md' ? `Dosar ${rec.ip}` : '');
+      }
+    }
+    built.push({ ip: rec.ip, caseId: c.caseId, confidence: c.analysis.confidence });
+  }
+  return built;
+}
+
+/** Export a dossier stored on Netlify to the PC:  node agent/antifraud/abuse-reporter.mjs export <caseId|ip> */
+export async function exportCase(store, idOrIp, outRoot = `${DATA_DIR}/cases`) {
+  const keys = (await store.list({ prefix: 'case/' })).blobs.map(b => b.key).filter(k => !k.startsWith('case/marker/') && k.split('/')[1].includes(enc(idOrIp)));
+  const out = [];
+  for (const k of keys) {
+    const [, caseId, name] = k.split('/');
+    mkdirSync(`${outRoot}/${caseId}`, { recursive: true });
+    writeFileSync(`${outRoot}/${caseId}/${name}`, await store.get(k));
+    out.push(`${outRoot}/${caseId}/${name}`);
+  }
+  return out;
 }
 
 async function main() {
   const { openStore, telegram } = await import('./runner.mjs');
   const { adsClient, loadEnv } = await import('./ads-exclusions.mjs');
-  const ip = process.argv[2];
   const a = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
+  if (process.argv[2] === 'export') {
+    console.log((await exportCase(openStore(a('store', 'prod')), process.argv[3])).join('\n') || 'no stored case found');
+    return;
+  }
+  const ip = process.argv[2];
   const env = loadEnv();
   const r = await buildCase({ store: openStore(a('store', 'test')), ip, hours: Number(a('hours', 72)),
     client: process.argv.includes('--no-ads') ? null : adsClient(env), notify: telegram(env) });

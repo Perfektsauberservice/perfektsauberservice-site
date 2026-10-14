@@ -34,7 +34,12 @@ test('case contains only this IP, verified records, registry abuse contact and m
   assert.equal(csv.trim().split('\n').length, 8);                    // header + 7 requests
   assert.ok(csv.split('\n').slice(1).every(l => !l || l.includes(';OK;')));   // every record's SHA-256 re-verified
   const isp = readFileSync(join(c.dir, 'isp-attachment.csv'), 'utf8');
-  assert.ok(!isp.includes('G1') && !isp.includes('Mozilla'));        // no click ids / device data for the ISP
+  assert.ok(isp.includes(';G1') && !isp.includes('Mozilla'));        // GCLID included (Laura 15.10), no device data for the ISP
+  const report = readFileSync(join(c.dir, 'report.md'), 'utf8');
+  assert.match(report, /\*\*ASN:\*\* AS8881 · \*\*Furnizor:\*\* 1&1 Versatel/);
+  assert.match(report, /## Cronologie/);
+  assert.equal(c.gclids.length, 6);
+  assert.ok(c.files['manifest.sha256'].includes('email-abuse-de.txt'));
   const de = readFileSync(join(c.dir, 'email-abuse-de.txt'), 'utf8');
   assert.match(de, /nicht zwingend die handelnde Person/);
   assert.match(notes[0], /Nu s-a trimis nimic/);
@@ -48,6 +53,21 @@ test('manifest detects any later change to an exported file', async () => {
   assert.ok(check());
   writeFileSync(join(c.dir, 'events.csv'), 'tampered');
   assert.ok(!check());
+});
+
+test('automatic dossier: once per really-excluded IP, stored and sent to Laura as files, never to the ISP', async () => {
+  const { autoCases } = await import('../agent/antifraud/abuse-reporter.mjs');
+  const store = await seeded();
+  await store.setJSON('rec/done/94.134.182.67-32', { t: Date.now(), ip: '94.134.182.67', status: 'enforce', proposal: { cidr: '94.134.182.67/32', kind: 'ip' } });
+  await store.setJSON('rec/done/1.1.1.1-32', { t: Date.now(), ip: '1.1.1.1', status: 'validate_only', proposal: { cidr: '1.1.1.1/32', kind: 'ip' } });
+  const docs = [], notes = [];
+  const run = () => autoCases({ store, client: null, notify: async t => notes.push(t), sendDocument: async (n, body) => docs.push({ n, body }), fetchImpl: fakeRegistry });
+  const first = await run();
+  assert.equal(first.length, 1); assert.equal(first[0].ip, '94.134.182.67');          // validate-only exclusions get no dossier
+  assert.deepEqual(docs.map(d => d.n.split('_').pop()).sort(), ['email-abuse-de.txt', 'events.csv', 'isp-attachment.csv', 'manifest.sha256', 'report.md'].map(n => n.split('_').pop()).sort());
+  assert.ok((await store.list({ prefix: `case/${first[0].caseId}/` })).blobs.length >= 8);
+  assert.match(notes[0], /Nu s-a trimis nimic către furnizor/);
+  assert.equal((await run()).length, 0);                                             // not rebuilt / resent
 });
 
 test('an IP without recorded events produces no case', async () => {

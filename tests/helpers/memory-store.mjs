@@ -5,6 +5,7 @@ export function memoryStore() {
     m,
     async get(k, o) { if (!m.has(k)) return null; return o?.type === 'json' ? JSON.parse(m.get(k)) : m.get(k); },
     async setJSON(k, v, o) { if (o?.onlyIfNew && m.has(k)) return { modified: false }; m.set(k, JSON.stringify(v)); return { modified: true }; },
+    async set(k, v) { m.set(k, String(v)); return { modified: true }; },
     async delete(k) { m.delete(k); },
     async list({ prefix = '' } = {}) { return { blobs: [...m.keys()].filter(k => k.startsWith(prefix)).map(key => ({ key })) }; },
   };

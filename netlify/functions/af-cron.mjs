@@ -1,6 +1,7 @@
 // PSS Anti-Fraud — scheduled safety net (every 5 minutes, production only; no PC needed).
 // Each run stays well under Netlify's ~30 s limit:
-//   * always: leftover exclusion proposals, approved rotations, edge errors
+//   * always: leftover exclusion proposals, approved rotations, edge errors,
+//     abuse-evidence dossier for each newly excluded IP (sent to Laura on Telegram, never to an ISP)
 //   * hourly: spend anomaly check
 //   * every 6 h, and only if a list is >= 450: rotation proposal with Telegram buttons
 //   * once a day after 20:30 Berlin: daily summary (+ zones; Monday threshold check) — in a run of its own
@@ -18,7 +19,7 @@ const every = async (store, key, ms, fn) => {
 export default async (req, context) => {
   const store = storeFor(context);
   const { env, missing } = adsEnvFromNetlify();
-  const { notify, send } = notifier(context);
+  const { notify, send, sendDocument } = notifier(context);
   const log = { t: Date.now(), steps: [] };
   try {
     if (missing.length) throw new Error(`missing env ${missing.join(', ')}`);
@@ -44,6 +45,10 @@ export default async (req, context) => {
       log.steps.push(`proposals:${done.length}`);
       const rot = await processRotationDecisions({ store, client, notify, enforce });
       log.steps.push(`rotations:${rot.length}`);
+      // PSS Abuse Evidence Reporter: dossier for every IP that was really excluded -> Telegram (never to the ISP)
+      const { autoCases } = await import('../../agent/antifraud/abuse-reporter.mjs');
+      const cases = await autoCases({ store, client, notify, sendDocument, max: 1 });
+      log.steps.push(`cases:${cases.length}`);
       await every(store, 'health', 15 * 60e3, since => healthCheck({ store, notify, since }));
       await every(store, 'spend', 60 * 60e3, () => spendCheck({ client, notify }));
       await every(store, 'purge', 24 * 3600e3, () => purge(store));

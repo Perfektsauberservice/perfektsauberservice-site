@@ -38,8 +38,21 @@ export function notifier(context) {
     if (!j.ok) throw new Error(`telegram ${r.status} ${j.description || ''}`);
     return j.result?.message_id;
   };
+  // send a text file (dossier part) as a Telegram document
+  const sendDocument = async (filename, content, caption = '') => {
+    if (!bot || !chat) return null;
+    const form = new FormData();
+    form.append('chat_id', String(chat));
+    if (caption) form.append('caption', prefix + caption);
+    form.append('document', new Blob([content], { type: 'text/plain' }), filename);
+    const r = await fetch(`https://api.telegram.org/bot${bot}/sendDocument`, { method: 'POST', body: form });
+    const j = await r.json().catch(() => ({}));
+    if (!j.ok) throw new Error(`telegram sendDocument ${r.status} ${j.description || ''}`);
+    return j.result?.message_id;
+  };
   return {
     notify: text => post({ text }),
     send: (text, buttons) => post({ text, reply_markup: { inline_keyboard: [buttons] } }),
+    sendDocument,
   };
 }
