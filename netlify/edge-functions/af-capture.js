@@ -21,7 +21,8 @@ export default async (request, context) => {
     const deployContext = context.deploy?.context || 'unknown';
     const isProd = deployContext === 'production';
     // Test hook (never honoured in production): simulate another visitor IP.
-    const ip = (!isProd && url.searchParams.get('af_test_ip')) || context.ip;
+    const testIp = !isProd && url.searchParams.get('af_test_ip');
+    const ip = testIp || context.ip;
     const h = request.headers;
     const ua = h.get('user-agent') || '';
     const lang = h.get('accept-language') || '';
@@ -37,7 +38,7 @@ export default async (request, context) => {
       ua: ua.slice(0, 300),
       lang: lang.slice(0, 100),
       referer: (h.get('referer') || '').slice(0, 200),
-      geo: {
+      geo: testIp ? {} : {   // simulated IP: let the network lookup provide the location
         country: context.geo?.country?.code || null,
         subdivision: context.geo?.subdivision?.code || null,
         city: context.geo?.city || null,

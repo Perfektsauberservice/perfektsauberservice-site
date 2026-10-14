@@ -10,7 +10,7 @@ export const RULES = {
   evaluateClicks: 4, evaluateWindowMs: 10 * 60e3,
   hourClicks: 5, hourWindowMs: 60 * 60e3,
   networkIps: 3, networkWindowMs: 60 * 60e3,        // distinct IPs clicking from one /24 (or IPv6 /64)
-  fingerprintIps: 2, fingerprintClicks: 4,          // same device fingerprint on >=2 IPs, >=4 paid clicks
+  fingerprintIps: 3, fingerprintClicks: 5,          // same header fingerprint on >=3 IPs, >=5 paid clicks (weak signal: many phones share it)
   lookbackMs: 14 * 24 * 3600e3,                     // cross-day correlation window
   recommendScore: 70,                               // score needed before an exclusion is proposed
   cidrOffenders: 2,                                 // offender IPs in one /24 before a /24 is proposed
@@ -19,8 +19,8 @@ export const RULES = {
 };
 
 export const WEIGHTS = {
-  analyze: 25, evaluate: 45, hour: 15, network: 20, fingerprint: 25,
-  repeatOffender: 45, datacenter: 40, foreign: 25, outsideRegion: 10,
+  analyze: 25, evaluate: 45, hour: 15, network: 20, fingerprint: 15,
+  repeatOffender: 45, repeatDevice: 10, datacenter: 40, foreign: 25, outsideRegion: 10,
   botUa: 40, noAcceptLanguage: 10,
 };
 

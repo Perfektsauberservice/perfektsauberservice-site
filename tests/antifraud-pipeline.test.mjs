@@ -65,7 +65,7 @@ test('cross-day: an IP flagged yesterday is escalated faster today', async () =>
 
 test('rotating IPs with the same device are linked', async () => {
   const s = setup();
-  const ips = ['176.7.204.123', '176.7.204.123', '176.7.208.68', '176.7.201.161'];
+  const ips = ['176.7.204.123', '176.7.204.123', '176.7.208.68', '176.7.208.68', '176.7.201.161'];
   let last;
   for (let i = 0; i < ips.length; i++) last = await s.click(i * 300, { ip: ips[i], fp: 'same-phone' });
   assert.ok(last.decision.reasons.some(x => x.includes('IP rotation')));
@@ -75,6 +75,12 @@ test('datacenter visitor abroad is proposed for exclusion after 3 clicks', async
   const s = setup(); let r;
   for (let i = 0; i < 3; i++) r = await s.click(i, { ip: '47.82.201.10', geo: { country: 'SG' }, fp: 'dc' });
   assert.equal(r.decision.level, 'recommend_exclude');
+});
+
+test('one exclusion proposal per IP even if the burst continues', async () => {
+  const s = setup();
+  for (let i = 0; i < 9; i++) await s.click(i);
+  assert.equal((await s.store.list({ prefix: 'rec/pending/' })).blobs.length, 1);
 });
 
 test('processing time per click stays well under one second with a local store', async () => {

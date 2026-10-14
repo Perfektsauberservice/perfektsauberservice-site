@@ -60,11 +60,17 @@ test('shared relay networks (iCloud Private Relay / WARP) are never proposed for
 test('device fingerprint seen on several IPs (IP rotation) is correlated across days', () => {
   const fp = [
     { t: T0 - 2 * 864e5, ip: '176.7.204.123', cid: 'a' }, { t: T0 - 2 * 864e5 + 60e3, ip: '176.7.204.123', cid: 'b' },
-    { t: T0 - 864e5, ip: '176.7.208.68', cid: 'c' }, { t: T0, ip: '176.7.201.161', cid: 'c-last' },
+    { t: T0 - 864e5, ip: '176.7.208.68', cid: 'c' }, { t: T0 - 3600e3, ip: '176.7.208.68', cid: 'd' }, { t: T0, ip: '176.7.201.161', cid: 'c-last' },
   ];
   const r = evaluate(ev({ ip: '176.7.201.161' }), { ip: clicks(1, 0), fp }, O2);
   assert.equal(r.level, 'analyze');
   assert.ok(r.reasons.some(x => x.includes('3 IPs')));
+  assert.equal(r.proposal, null);   // weak signal alone never excludes
+});
+
+test('a shared browser fingerprint from a flagged IP does not make an ordinary visitor an offender', () => {
+  const r = evaluate(ev({ ip: '176.7.9.9' }), { ip: clicks(3, 2 * 60e3), offenders: { fp: true } }, O2);
+  assert.notEqual(r.level, 'recommend_exclude');
 });
 
 test('repeat offender on a new day + new burst -> exclusion', () => {

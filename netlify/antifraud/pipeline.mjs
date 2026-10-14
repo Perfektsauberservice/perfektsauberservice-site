@@ -7,8 +7,10 @@ import { evaluate } from './engine.mjs';
 import { networkOf } from './ip.mjs';
 import { RULES } from './config.mjs';
 
-const enc = s => encodeURIComponent(String(s));
-const dec = s => decodeURIComponent(s);
+// Blob keys: no '%' escapes (Netlify Blobs decodes them back to '/').
+// Reversible mapping: '/' -> '-', ':' -> 'x' (neither appears in IPs/CIDRs/hex).
+export const enc = s => String(s).replace(/\//g, '-').replace(/:/g, 'x');
+export const dec = s => String(s).replace(/-/g, '/').replace(/x/g, ':');
 
 export async function sha256Hex(text) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
@@ -103,7 +105,8 @@ export async function processClick(deps, event) {
       store.setJSON(`off/ip/${enc(event.ip)}`, { t: event.t, score: verdict.score }),
       event.fp && store.setJSON(`off/fp/${enc(event.fp)}`, { t: event.t, ip: event.ip }),
       net && store.setJSON(`off/net/${enc(net)}/${enc(event.ip)}`, { t: event.t }),
-      store.setJSON(`rec/pending/${ts}_${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' }),
+      // one proposal per IP (first flag) or per /24 upgrade; later clicks only add evidence
+      (!offIp || verdict.proposal.kind === 'cidr24') && store.setJSON(`rec/pending/${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' }),
     ]);
   }
   timings.persisted = deps.now();

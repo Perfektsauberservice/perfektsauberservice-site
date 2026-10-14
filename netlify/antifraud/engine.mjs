@@ -64,10 +64,11 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   if (c60 >= RULES.hourClicks) add(WEIGHTS.hour, `${c60} paid clicks from this IP in 60 min`);
   if (netIps >= RULES.networkIps) { add(WEIGHTS.network, `${netIps} different IPs from network ${networkOf(event.ip)} clicked within 60 min`); if (level === 'log') level = 'analyze'; }
   if (fpIps >= RULES.fingerprintIps && fpClicks >= RULES.fingerprintClicks) {
-    add(WEIGHTS.fingerprint, `same device fingerprint on ${fpIps} IPs, ${fpClicks} paid clicks in 14 days (IP rotation)`);
+    add(WEIGHTS.fingerprint, `same browser fingerprint on ${fpIps} IPs, ${fpClicks} paid clicks in 14 days (possible IP rotation — weak signal, never enough alone)`);
     if (level === 'log') level = 'analyze';
   }
-  if (off.ip || off.fp) add(WEIGHTS.repeatOffender, `already flagged earlier (${[off.ip && 'IP', off.fp && 'device'].filter(Boolean).join(' + ')}) — cross-day repeat`);
+  if (off.ip) add(WEIGHTS.repeatOffender, 'this IP was already flagged earlier — cross-day repeat');
+  else if (off.fp) add(WEIGHTS.repeatDevice, 'browser fingerprint was seen on a flagged IP before (weak signal)');
   if (net.type === 'datacenter') add(WEIGHTS.datacenter, `datacenter/hosting network AS${net.asn} ${net.org}`);
   const country = event.geo?.country || net.country;
   if (country && country !== TARGET_COUNTRY) add(WEIGHTS.foreign, `outside Germany (${country})`);
@@ -75,8 +76,8 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   if (ua === 'bot') add(WEIGHTS.botUa, `automated user agent "${String(event.ua || '(empty)').slice(0, 60)}"`);
   if (!event.lang) add(WEIGHTS.noAcceptLanguage, 'browser sends no language header');
 
-  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip || off.fp
-    || (fpIps >= RULES.fingerprintIps && fpClicks >= RULES.fingerprintClicks);
+  // Strong = evidence that is not shared by ordinary customers. The header fingerprint is NOT strong.
+  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip;
   // Exclusion proposal: frequency alone is never enough (Laura's rule), except an extreme burst.
   const burst = c10 >= RULES.evaluateClicks + 2;
   let proposal = null;
