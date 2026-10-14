@@ -26,7 +26,15 @@ export function openStore(kind = 'test') {
   return getStore({ name: kind === 'prod' ? STORE_NAME : `${STORE_NAME}-test`, siteID: SITE_ID, token: netlifyToken(), consistency: 'strong' });
 }
 
-export function telegram(env) {
+// Telegram credentials come from the PSS Ads agents .env (current token);
+// the old google-ads .env still holds a revoked token.
+export function telegramEnv(path = process.env.AF_TELEGRAM_ENV || 'C:/tmp/pss-ads-agents/.env') {
+  try { const e = loadEnv(path); if (e.TELEGRAM_BOT_TOKEN) return e; } catch { /* fall through */ }
+  return loadEnv();
+}
+
+export function telegram(env = telegramEnv()) {
+  env = { ...env, ...telegramEnv() };
   return async text => {
     if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return;
     const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST',
@@ -110,7 +118,7 @@ export async function report(store, hours = 24) {
     '| IP | Rețea | Furnizor | Tip | Scor max | Niveluri | Ultima dată |', '|---|---|---|---|---|---|---|',
     ...Object.values(byIp).sort((a, b) => b.maxScore - a.maxScore).map(x => `| ${x.ip} | ${x.network} | ${x.asn ? 'AS' + x.asn + ' ' : ''}${x.org || ''} | ${x.type} | ${x.maxScore} | ${[...x.levels].join(', ')} | ${fmt(x.last)} |`),
     '', '## Excluderi', '| Interval | Mod | Reacție (s) | Plan |', '|---|---|---|---|',
-    ...done.map(r => `| ${r.proposal.cidr} | ${r.status} | ${Math.round(r.reactionMs / 1000)} | ${(r.executor.plan || []).map(p => p.campaign + ':' + p.action).join('; ')} |`)];
+    ...done.map(r => `| ${r.proposal.cidr} | ${r.status} | ${Math.round(r.reactionMs / 1000)} | ${(r.executor.plan || []).map(p => p.campaign.replace(/\|/g, '·') + ': ' + p.action).join('; ')} |`)];
   return lines.join('\n');
 }
 
