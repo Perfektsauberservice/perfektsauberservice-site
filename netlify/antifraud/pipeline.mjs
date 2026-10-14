@@ -1,0 +1,142 @@
+// PSS Anti-Click-Fraud — processing pipeline for one ad-click visit.
+// Storage is any Netlify-Blobs-compatible store: get(key,{type:'json'}),
+// setJSON(key,value), list({prefix}) -> {blobs:[{key}]}. Keys are append-only
+// so bursts of parallel requests never overwrite each other.
+
+import { evaluate } from './engine.mjs';
+import { networkOf } from './ip.mjs';
+import { RULES } from './config.mjs';
+
+const enc = s => encodeURIComponent(String(s));
+const dec = s => decodeURIComponent(s);
+
+export async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+export function canonical(obj) {
+  if (Array.isArray(obj)) return '[' + obj.map(canonical).join(',') + ']';
+  if (obj && typeof obj === 'object') return '{' + Object.keys(obj).sort().map(k => JSON.stringify(k) + ':' + canonical(obj[k])).join(',') + '}';
+  return JSON.stringify(obj);
+}
+
+// Index key: <prefix>/<entity>/<13-digit ts>_<ip>_<cid hash>
+async function indexed(store, prefix, entity, sinceMs) {
+  const { blobs } = await store.list({ prefix: `${prefix}/${enc(entity)}/` });
+  return blobs.map(b => {
+    const [ts, ip, cid] = b.key.split('/').pop().split('_');
+    return { t: Number(ts), ip: dec(ip), cid };
+  }).filter(x => x.t >= sinceMs);
+}
+
+export async function getNetinfo(store, ip, lookup, now) {
+  const key = `netinfo/${enc(ip)}`;
+  const cached = await store.get(key, { type: 'json' }).catch(() => null);
+  if (cached && now - cached.fetchedAt < RULES.retentionDays * 864e5) return cached;
+  try {
+    const info = await lookup(ip);
+    const rec = { ...info, fetchedAt: now };
+    await store.setJSON(key, rec);
+    return rec;
+  } catch (e) {
+    return { error: String(e).slice(0, 120), fetchedAt: now };
+  }
+}
+
+/**
+ * @param deps { store, lookup(ip)->ipinfo json, notify(text)->Promise, now()->ms, mode:'shadow'|'enforce', allowlist:[] }
+ * @param event { t, ip, cid, cidType, path, query, ua, lang, geo, fp, requestId, referer, context }
+ */
+export async function processClick(deps, event) {
+  const timings = { start: deps.now() };
+  const { store } = deps;
+  const net = networkOf(event.ip);
+  const cidHash = (await sha256Hex(event.cid)).slice(0, 16);
+  const ts = String(event.t).padStart(13, '0');
+
+  // 1) raw evidence record (original data + integrity hash)
+  const raw = { ...event, network: net, cidHash, schema: 'pss-af-event-v1' };
+  const rawHash = await sha256Hex(canonical(raw));
+  const day = new Date(event.t).toISOString().slice(0, 10);
+  await store.setJSON(`ev/${day}/${ts}_${enc(event.ip)}_${cidHash}`, { ...raw, sha256: rawHash });
+  // 2) correlation indexes
+  const row = `${ts}_${enc(event.ip)}_${cidHash}`;
+  await Promise.all([
+    store.setJSON(`ix/ip/${enc(event.ip)}/${row}`, 1),
+    net && store.setJSON(`ix/net/${enc(net)}/${row}`, 1),
+    event.fp && store.setJSON(`ix/fp/${enc(event.fp)}/${row}`, 1),
+  ]);
+  timings.stored = deps.now();
+
+  // 3) history + network info
+  const since = event.t - RULES.lookbackMs;
+  const [ipH, netH, fpH, offIp, offFp, offNet, info] = await Promise.all([
+    indexed(store, 'ix/ip', event.ip, since),
+    net ? indexed(store, 'ix/net', net, since) : [],
+    event.fp ? indexed(store, 'ix/fp', event.fp, since) : [],
+    store.get(`off/ip/${enc(event.ip)}`, { type: 'json' }).catch(() => null),
+    event.fp ? store.get(`off/fp/${enc(event.fp)}`, { type: 'json' }).catch(() => null) : null,
+    net ? store.list({ prefix: `off/net/${enc(net)}/` }).then(r => r.blobs.map(b => dec(b.key.split('/').pop()))) : [],
+    getNetinfo(store, event.ip, deps.lookup, event.t),
+  ]);
+  timings.loaded = deps.now();
+
+  // 4) evaluate (the current click is part of the history)
+  const history = {
+    ip: ipH.map(x => ({ t: x.t, cid: x.cid })),
+    net: netH, fp: fpH,
+    offenders: { ip: !!offIp, fp: !!offFp, netIps: offNet },
+  };
+  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist: deps.allowlist });
+  timings.evaluated = deps.now();
+
+  // 5) persist decision; offenders + proposals feed cross-day correlation and the executor
+  const decision = { t: event.t, ip: event.ip, network: net, cidHash, path: event.path, level: verdict.level,
+    score: verdict.score, reasons: verdict.reasons, proposal: verdict.proposal, net: verdict.net,
+    counts: verdict.counts, mode: deps.mode, evidence: `ev/${day}/${ts}_${enc(event.ip)}_${cidHash}` };
+  if (['analyze', 'evaluate', 'recommend_exclude'].includes(verdict.level)) {
+    await store.setJSON(`dec/${ts}_${enc(event.ip)}`, decision);
+  }
+  if (verdict.level === 'recommend_exclude') {
+    await Promise.all([
+      store.setJSON(`off/ip/${enc(event.ip)}`, { t: event.t, score: verdict.score }),
+      event.fp && store.setJSON(`off/fp/${enc(event.fp)}`, { t: event.t, ip: event.ip }),
+      net && store.setJSON(`off/net/${enc(net)}/${enc(event.ip)}`, { t: event.t }),
+      store.setJSON(`rec/pending/${ts}_${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' }),
+    ]);
+  }
+  timings.persisted = deps.now();
+
+  // 6) Telegram alert for anything above plain logging (deduplicated per IP+level per 10 min)
+  let alerted = false;
+  if (decision.level !== 'log' && decision.level !== 'ignore' && deps.notify) {
+    const slot = Math.floor(event.t / 600e3);
+    const dkey = `alert/${enc(event.ip)}/${decision.level}/${slot}`;
+    if (!(await store.get(dkey).catch(() => null))) {
+      await store.setJSON(dkey, 1);
+      await deps.notify(formatAlert(decision, event));
+      alerted = true;
+    }
+  }
+  timings.done = deps.now();
+  return { decision, timings, alerted };
+}
+
+const LEVEL_RO = {
+  analyze: '🟡 ANALIZĂ', evaluate: '🟠 EVALUARE EXCLUDERE', recommend_exclude: '🔴 EXCLUDERE RECOMANDATĂ',
+};
+
+export function formatAlert(d, e) {
+  const when = new Date(d.t).toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
+  return [
+    `${LEVEL_RO[d.level] || d.level} — PSS Anti-Fraud${d.mode === 'shadow' ? ' (MOD UMBRĂ)' : ''}`,
+    `🕒 ${when} (Europe/Berlin)`,
+    `🌐 IP ${d.ip} · rețea ${d.network || '—'}`,
+    `🏢 ${d.net?.asn ? 'AS' + d.net.asn + ' ' : ''}${d.net?.org || 'furnizor necunoscut'} · tip ${d.net?.type || '?'}`,
+    `📍 ${[e.geo?.city, e.geo?.subdivision, e.geo?.country].filter(Boolean).join(', ') || '—'} · pagina ${d.path}`,
+    `📊 scor ${d.score} · clicuri plătite 5min=${d.counts?.c5} 10min=${d.counts?.c10} 60min=${d.counts?.c60} · reîncărcări ${d.counts?.reloads}`,
+    ...d.reasons.map(r => `• ${r}`),
+    d.proposal ? `➡️ Propunere excludere: ${d.proposal.cidr}${d.mode === 'shadow' ? ' — NU s-a aplicat (mod umbră)' : ''}` : '',
+  ].filter(Boolean).join('\n');
+}
