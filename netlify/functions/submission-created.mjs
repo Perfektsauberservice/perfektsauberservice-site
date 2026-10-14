@@ -37,7 +37,7 @@ export const handler = async (event) => {
     // daca lipseste sau nu respecta formatul. Orice eroare in acest bloc e izolata —
     // NU trebuie sa opreasca trimiterea notificarilor Telegram/Email de mai jos.
     // PSS Anti-Fraud: form sender = real customer -> IP never excluded (isolated, never throws)
-    await markCustomerFromLambda(event, data.data?.ip || data.ip || null, 'form submission', data.data?.referrer || '');
+    await markCustomerFromLambda(event, data.data?.ip || data.ip || null, 'form submission', data.data?.referrer || '', 'form');
 
     let lead_id = '—';
     try {

@@ -10,9 +10,23 @@ const T0 = Date.UTC(2026, 9, 15, 10, 0, 0);
 const deps = store => ({ store, mode: 'enforce', allowlist: [], now: () => T0, lookup: async () => ({ org: 'AS8881 1&1 Versatel', country: 'DE' }), notify: null });
 const click = (store, i, ip = '94.134.182.67') => processClick(deps(store), { t: T0 + i * 60e3, ip, cid: `g${i}`, cidType: 'gclid', path: '/x', ua: 'Mozilla/5.0', lang: 'de', geo: { country: 'DE' }, fp: 'f' });
 
-test('real customer (call/WhatsApp/form) is never excluded, even with many clicks', async () => {
+test('contact tap raises the threshold by 2 but does not buy immunity', async () => {
   const store = memoryStore();
-  await markCustomer(store, '94.134.182.67', 'whatsapp click', '/entruempelung-rastatt');
+  await markCustomer(store, '94.134.182.67', 'whatsapp click', '/x', 'contact');
+  const levels = []; for (let i = 0; i < 5; i++) levels.push((await click(store, i)).decision.level);
+  assert.deepEqual(levels.slice(2), ['analyze', 'evaluate', 'recommend_exclude']);   // excluded at 5, not 3
+});
+
+test('client IP behind the Netlify edge chain is taken right before the first Netlify hop', async () => {
+  const { clientIp } = await import('../netlify/antifraud/lambda-allow.mjs');
+  assert.equal(clientIp({ headers: { 'x-nf-client-connection-ip': '18.199.220.255', 'x-forwarded-for': '2003:d4::1, 18.199.220.255, 18.194.154.250' } }), '2003:d4::1');
+  assert.equal(clientIp({ headers: { 'x-nf-client-connection-ip': '18.199.220.255', 'x-forwarded-for': '6.6.6.6, 2003:d4::1, 18.199.220.255' } }), '2003:d4::1');  // spoofed left entry ignored
+  assert.equal(clientIp({ headers: { 'x-nf-client-connection-ip': '87.185.200.14' } }), '87.185.200.14');
+});
+
+test('form sender (real customer) is never excluded, even with many clicks', async () => {
+  const store = memoryStore();
+  await markCustomer(store, '94.134.182.67', 'form submission', '/entruempelung-rastatt', 'form');
   let r; for (let i = 0; i < 5; i++) r = await click(store, i);
   assert.equal(r.decision.level, 'ignore');
   assert.match(r.decision.reasons[0], /real customer/);

@@ -82,7 +82,7 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   //   3 paid clicks / 10 min from one IP            -> exclude
   //   2 paid clicks / 10 min + strong signal        -> exclude (server, bot, abroad, flagged before)
   //   shared relay egress (iCloud Private Relay...) -> needs 4, it serves many real iPhone users
-  const need = net.type === 'relay' ? RULES.excludeClicksRelay : strong ? RULES.excludeClicksStrong : RULES.excludeClicks;
+  const need = (net.type === 'relay' ? RULES.excludeClicksRelay : strong ? RULES.excludeClicksStrong : RULES.excludeClicks) + (opts.extraClicks || 0);
   let proposal = null;
   if (c10 >= need) {
     reasons.push(`exclusion rule: ${c10} paid clicks in 10 min (limit ${need}${strong ? ', strong signal' : ''}${net.type === 'relay' ? ', shared relay' : ''})`);

@@ -10,9 +10,15 @@ import { RULES } from './config.mjs';
 // Blob keys: no '%' escapes (Netlify Blobs decodes them back to '/').
 // Reversible mapping: '/' -> '-', ':' -> 'x' (neither appears in IPs/CIDRs/hex).
 /** Mark an IP as a real customer (phone/WhatsApp click or form). Called by the lead functions. */
-export async function markCustomer(store, ip, reason, page = '') {
+// strength 'form'    = submitted the contact form -> never excluded (30 days)
+// strength 'contact' = tapped phone/WhatsApp/e-mail -> exclusion threshold +2 for 24 h (a tap alone
+//                      must not buy immunity: anyone can trigger it)
+export async function markCustomer(store, ip, reason, page = '', strength = 'contact') {
   if (!ip) return false;
-  await store.setJSON(`allow/ip/${enc(ip)}`, { t: Date.now(), reason, page: String(page).slice(0, 120) });
+  const key = `allow/ip/${enc(ip)}`;
+  const prev = await store.get(key, { type: 'json' }).catch(() => null);
+  if (prev?.strength === 'form' && strength !== 'form') return true;   // never downgrade
+  await store.setJSON(key, { t: Date.now(), reason, strength, page: String(page).slice(0, 120) });
   return true;
 }
 
@@ -98,9 +104,12 @@ export async function processClick(deps, event) {
     net: netH, fp: fpH,
     offenders: { ip: !!offIp, fp: !!offFp, netIps: offNet },
   };
-  const allowlist = customer ? [...(deps.allowlist || []), event.ip] : deps.allowlist;
-  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist });
-  if (customer) verdict.reasons = [`real customer from this IP (${customer.reason}, ${new Date(customer.t).toLocaleDateString('de-DE')}) — never excluded`];
+  const formCustomer = customer && customer.strength === 'form' && event.t - customer.t < 30 * 864e5;
+  const contactCustomer = customer && !formCustomer && event.t - customer.t < 864e5;
+  const allowlist = formCustomer ? [...(deps.allowlist || []), event.ip] : deps.allowlist;
+  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist, extraClicks: contactCustomer ? 2 : 0 });
+  if (formCustomer) verdict.reasons = [`real customer: form sent from this IP (${new Date(customer.t).toLocaleDateString('de-DE')}) — never excluded`];
+  else if (contactCustomer) verdict.reasons.push(`contact click (${customer.reason}) from this IP in the last 24 h — exclusion threshold +2`);
   timings.evaluated = deps.now();
 
   // 5) persist decision; offenders + proposals feed cross-day correlation and the executor
