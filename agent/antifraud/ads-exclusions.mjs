@@ -70,8 +70,8 @@ export function adsClient(env = loadEnv(), fetchImpl = fetch) {
 }
 
 export async function currentExclusions(client) {
-  const camps = await client.search("SELECT campaign.resource_name, campaign.name, campaign.status FROM campaign WHERE campaign.status = 'ENABLED' AND campaign.advertising_channel_type = 'SEARCH'");
-  const rows = await client.search("SELECT campaign.resource_name, campaign_criterion.resource_name, campaign_criterion.ip_block.ip_address FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status = 'ENABLED'");
+  const camps = await client.search("SELECT campaign.resource_name, campaign.name, campaign.status FROM campaign WHERE campaign.status IN ('ENABLED', 'PAUSED') AND campaign.advertising_channel_type = 'SEARCH'");
+  const rows = await client.search("SELECT campaign.resource_name, campaign_criterion.resource_name, campaign_criterion.ip_block.ip_address FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status IN ('ENABLED', 'PAUSED')");
   return camps.map(c => {
     const own = rows.filter(r => r.campaign.resourceName === c.campaign.resourceName);
     return { resourceName: c.campaign.resourceName, name: c.campaign.name,
@@ -81,7 +81,8 @@ export async function currentExclusions(client) {
 
 const norm = ip => (ip.includes('/') ? ip : ip.includes(':') ? `${ip}/128` : `${ip}/32`);
 
-/** Plan + send (validateOnly unless enforce) one exclusion to every enabled Search campaign. */
+/** Plan + send (validateOnly unless enforce) one exclusion to every enabled AND paused Search campaign
+ *  (paused ones are protected too, in case they are switched back on). */
 export async function applyExclusion(client, cidr, { enforce = false, ledgerPath, now = () => Date.now() } = {}) {
   if (enforce && process.env.AF_ENFORCE !== '1') throw new Error('refused: enforce requested but AF_ENFORCE is not 1');
   const t0 = now();

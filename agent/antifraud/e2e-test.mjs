@@ -67,17 +67,17 @@ log('3 reloads of one gclid -> no alert', !d2.blobs.some(b => b.key.endsWith(`_$
 
 // 3) burst of 6 paid clicks from one IP
 const ip3 = '198.51.100.7'; const levelsAt = {};
-for (let i = 1; i <= 6; i++) {
+for (let i = 1; i <= 5; i++) {
   const s = await hit(ip3, `burst-${run}-${i}`);
-  const want = { 2: 'analyze', 4: 'evaluate', 6: 'recommend_exclude' }[i];
+  const want = { 2: 'analyze', 3: 'recommend_exclude' }[i];
   if (want) { const w = await waitDecision(ip3, s.t, want); levelsAt[i] = w ? `${want} in ${w.seenAfterMs} ms` : 'MISSING'; }
 }
-log('burst: click 2 analyze, click 4 evaluate, click 6 exclusion proposed', !Object.values(levelsAt).includes('MISSING'), JSON.stringify(levelsAt));
+log('burst: click 2 alert, click 3 exclusion', !Object.values(levelsAt).includes('MISSING'), JSON.stringify(levelsAt));
 
 // 4) datacenter visitor abroad (real Alibaba Cloud address, test store only)
 const ip4 = '47.82.201.10'; let w4;
-for (let i = 1; i <= 3; i++) { const s = await hit(ip4, `dc-${run}-${i}`); if (i === 3) w4 = await waitDecision(ip4, s.t, 'recommend_exclude'); }
-log('datacenter (Alibaba) 3 clicks -> exclusion proposed', !!w4, w4 ? `${w4.seenAfterMs} ms; reasons: ${w4.d.reasons.join(' | ')}` : 'missing');
+for (let i = 1; i <= 2; i++) { const s = await hit(ip4, `dc-${run}-${i}`); if (i === 2) w4 = await waitDecision(ip4, s.t, 'recommend_exclude'); }
+log('datacenter (Alibaba) 2 clicks -> exclusion', !!w4, w4 ? `${w4.seenAfterMs} ms; reasons: ${w4.d.reasons.join(' | ')}` : 'missing');
 
 // 5) executor (runner loop running separately): proposals -> Google Ads validateOnly
 for (const ip of [ip3, ip4]) {
@@ -85,7 +85,18 @@ for (const ip of [ip3, ip4]) {
   for (let w = 0; w < 90000 && !d; w += 1000) { d = await store.get(key, { type: 'json' }); if (!d) await sleep(1000); }
   log(`Google Ads validated exclusion ${ip}/32 (runner loop)`, d?.status === 'validate_only', d ? `click->Google answer ${d.reactionMs} ms; ${JSON.stringify(d.executor.plan)}` : 'not processed within 90 s');
 }
-const pend = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip3)));
+const pend = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip3)) && !b.key.startsWith('rec/seen/'));
 log('only one proposal per IP', pend.length === 1, `${pend.length} record(s) for ${ip3}`);
+// parallel burst: 5 simultaneous clicks -> one exclusion alert
+const ip5 = '203.0.113.55';
+await hit(ip5, `par-${run}-0`); await Promise.all([1, 2, 3, 4].map(i => hit(ip5, `par-${run}-${i}`)));
+await sleep(6000);
+const alerts = (await store.list({ prefix: `alert/${enc(ip5)}/recommend_exclude/` })).blobs.length;
+const recs = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip5)) && !b.key.startsWith('rec/seen/')).length;
+log('parallel burst -> one alert, one proposal', alerts === 1 && recs === 1, `${alerts} alert key(s), ${recs} proposal(s)`);
+// static file is not processed
+const st = Date.now(); await (await fetch(`${base}/css/cta-band.css?v=3&gclid=static-${run}&af_test_ip=203.0.113.99`)).arrayBuffer(); await sleep(2500);
+const staticEv = (await store.list({ prefix: `ix/ip/${enc('203.0.113.99')}/` })).blobs.length;
+log('static files skipped by the capture', staticEv === 0, `${staticEv} events for a CSS request`);
 
 console.log(JSON.stringify({ summary: `${results.filter(r => r.ok).length}/${results.length} passed`, run }, null, 1));

@@ -78,13 +78,15 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
 
   // Strong = evidence that is not shared by ordinary customers. The header fingerprint is NOT strong.
   const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip;
-  // Exclusion proposal: frequency alone is never enough (Laura's rule), except an extreme burst.
-  const burst = c10 >= RULES.evaluateClicks + 2;
+  // Exclusion (Laura, 14.10.2026): every paid click costs ~2 EUR, so act before the 4th one.
+  //   3 paid clicks / 10 min from one IP            -> exclude
+  //   2 paid clicks / 10 min + strong signal        -> exclude (server, bot, abroad, flagged before)
+  //   shared relay egress (iCloud Private Relay...) -> needs 4, it serves many real iPhone users
+  const need = net.type === 'relay' ? RULES.excludeClicksRelay : strong ? RULES.excludeClicksStrong : RULES.excludeClicks;
   let proposal = null;
-  if (score >= RULES.recommendScore && (c10 >= RULES.evaluateClicks || (c10 >= 3 && strong)) && (strong || burst)) {
-    if (net.type === 'relay') {
-      reasons.push('no exclusion: shared relay network (iCloud Private Relay / WARP) used by many real people');
-    } else {
+  if (c10 >= need) {
+    reasons.push(`exclusion rule: ${c10} paid clicks in 10 min (limit ${need}${strong ? ', strong signal' : ''}${net.type === 'relay' ? ', shared relay' : ''})`);
+    {
       level = 'recommend_exclude';
       proposal = { cidr: hostCidr(event.ip), kind: 'ip' };
       const offenders = new Set([...(off.netIps || []), event.ip]);

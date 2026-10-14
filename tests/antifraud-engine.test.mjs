@@ -34,9 +34,23 @@ test('reloads (same gclid) are not counted as new paid clicks', () => {
   assert.equal(r.level, 'log'); assert.equal(r.counts.c5, 1); assert.equal(r.counts.reloads, 2);
 });
 
-test('4 paid clicks in 10 minutes -> evaluate exclusion, but frequency alone does not exclude', () => {
-  const r = evaluate(ev(), { ip: clicks(4, 2 * 60e3) }, VERSATEL);
-  assert.equal(r.level, 'evaluate'); assert.equal(r.proposal, null);
+test('2 paid clicks from an ordinary German IP -> alert only, no exclusion', () => {
+  const r = evaluate(ev(), { ip: clicks(2, 2 * 60e3) }, VERSATEL);
+  assert.equal(r.level, 'analyze'); assert.equal(r.proposal, null);
+});
+
+test('3 paid clicks in 10 minutes from one IP -> exclusion before a 4th click (Laura 14.10)', () => {
+  const r = evaluate(ev(), { ip: clicks(3, 3 * 60e3) }, VERSATEL);
+  assert.equal(r.level, 'recommend_exclude'); assert.equal(r.proposal.cidr, '94.134.182.67/32');
+});
+
+test('3 paid clicks spread over more than 10 minutes do not exclude', () => {
+  assert.equal(evaluate(ev(), { ip: clicks(3, 6 * 60e3) }, VERSATEL).proposal, null);
+});
+
+test('server/datacenter IP is excluded already at the 2nd paid click', () => {
+  const r = evaluate(ev({ ip: '47.82.201.10', geo: { country: 'SG' } }), { ip: clicks(2, 60e3) }, ALIBABA);
+  assert.equal(r.level, 'recommend_exclude');
 });
 
 test('extreme burst (6 in 10 min) from one IP -> exclusion of that single IP', () => {
@@ -51,10 +65,9 @@ test('datacenter network + 3 clicks in 10 min -> exclusion with written reasons'
   assert.ok(r.reasons.some(x => x.includes('outside Germany')));
 });
 
-test('shared relay networks (iCloud Private Relay / WARP) are never proposed for exclusion', () => {
-  const r = evaluate(ev({ ip: '104.28.62.25', ua: 'curl/8.0' }), { ip: clicks(8, 30e3) }, RELAY);
-  assert.equal(r.proposal, null);
-  assert.ok(r.reasons.some(x => x.includes('shared relay')));
+test('shared relay (iCloud Private Relay / WARP): 3 clicks only alert, exclusion from the 4th', () => {
+  assert.equal(evaluate(ev({ ip: '104.28.62.25' }), { ip: clicks(3, 60e3) }, RELAY).proposal, null);
+  assert.equal(evaluate(ev({ ip: '104.28.62.25' }), { ip: clicks(4, 60e3) }, RELAY).proposal.cidr, '104.28.62.25/32');
 });
 
 test('device fingerprint seen on several IPs (IP rotation) is correlated across days', () => {
@@ -69,7 +82,7 @@ test('device fingerprint seen on several IPs (IP rotation) is correlated across 
 });
 
 test('a shared browser fingerprint from a flagged IP does not make an ordinary visitor an offender', () => {
-  const r = evaluate(ev({ ip: '176.7.9.9' }), { ip: clicks(3, 2 * 60e3), offenders: { fp: true } }, O2);
+  const r = evaluate(ev({ ip: '176.7.9.9' }), { ip: clicks(2, 2 * 60e3), offenders: { fp: true } }, O2);
   assert.notEqual(r.level, 'recommend_exclude');
 });
 

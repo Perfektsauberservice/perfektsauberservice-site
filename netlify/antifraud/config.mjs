@@ -3,8 +3,8 @@
 
 export const STORE_NAME = 'pss-antifraud';
 
-// Laura's rules (2026-10-14): 2 paid clicks / 5 min -> analysis;
-// more than 3 paid clicks / 10 min -> evaluate exclusion immediately.
+// Laura's rules (2026-10-14): 2 paid clicks / 5 min -> alert; 3 paid clicks / 10 min -> exclusion
+// (2 with a strong signal). 'evaluate' (4 / 10 min) remains only as an alert level.
 export const RULES = {
   analyzeClicks: 2, analyzeWindowMs: 5 * 60e3,
   evaluateClicks: 4, evaluateWindowMs: 10 * 60e3,
@@ -12,7 +12,9 @@ export const RULES = {
   networkIps: 3, networkWindowMs: 60 * 60e3,        // distinct IPs clicking from one /24 (or IPv6 /64)
   fingerprintIps: 3, fingerprintClicks: 5,          // same header fingerprint on >=3 IPs, >=5 paid clicks (weak signal: many phones share it)
   lookbackMs: 14 * 24 * 3600e3,                     // cross-day correlation window
-  recommendScore: 70,                               // score needed before an exclusion is proposed
+  excludeClicks: 3,                                 // paid clicks / 10 min from one IP -> exclusion
+  excludeClicksStrong: 2,                           // with a strong signal (server, bot, abroad, flagged before)
+  excludeClicksRelay: 4,                            // shared relay egress (iCloud Private Relay / WARP)
   cidrOffenders: 2,                                 // offender IPs in one /24 before a /24 is proposed
   cidrOffendersMobile: 3,                           // stricter for mobile/CGNAT carriers
   retentionDays: 30,

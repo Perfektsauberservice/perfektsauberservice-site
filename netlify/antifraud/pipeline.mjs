@@ -105,8 +105,9 @@ export async function processClick(deps, event) {
       store.setJSON(`off/ip/${enc(event.ip)}`, { t: event.t, score: verdict.score }),
       event.fp && store.setJSON(`off/fp/${enc(event.fp)}`, { t: event.t, ip: event.ip }),
       net && store.setJSON(`off/net/${enc(net)}/${enc(event.ip)}`, { t: event.t }),
-      // one proposal per IP (first flag) or per /24 upgrade; later clicks only add evidence
-      (!offIp || verdict.proposal.kind === 'cidr24') && store.setJSON(`rec/pending/${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' }),
+      // exactly one proposal per IP / range, even with parallel requests (atomic create-only marker)
+      store.setJSON(`rec/seen/${enc(verdict.proposal.cidr)}`, { t: event.t }, { onlyIfNew: true }).then(w =>
+        (w?.modified ?? true) && store.setJSON(`rec/pending/${enc(verdict.proposal.cidr)}`, { ...decision, status: 'pending' })),
     ]);
   }
   timings.persisted = deps.now();
@@ -116,8 +117,8 @@ export async function processClick(deps, event) {
   if (decision.level !== 'log' && decision.level !== 'ignore' && deps.notify) {
     const slot = Math.floor(event.t / 600e3);
     const dkey = `alert/${enc(event.ip)}/${decision.level}/${slot}`;
-    if (!(await store.get(dkey).catch(() => null))) {
-      await store.setJSON(dkey, 1);
+    const w = await store.setJSON(dkey, 1, { onlyIfNew: true });   // atomic: parallel requests alert once
+    if (w?.modified ?? true) {
       await deps.notify(formatAlert(decision, event));
       alerted = true;
     }
@@ -140,6 +141,6 @@ export function formatAlert(d, e) {
     `📍 ${[e.geo?.city, e.geo?.subdivision, e.geo?.country].filter(Boolean).join(', ') || '—'} · pagina ${d.path}`,
     `📊 scor ${d.score} · clicuri plătite 5min=${d.counts?.c5} 10min=${d.counts?.c10} 60min=${d.counts?.c60} · reîncărcări ${d.counts?.reloads}`,
     ...d.reasons.map(r => `• ${r}`),
-    d.proposal ? `➡️ Propunere excludere: ${d.proposal.cidr}${d.mode === 'shadow' ? ' — NU s-a aplicat (mod umbră)' : ''}` : '',
+    d.proposal ? (d.mode === 'shadow' ? `➡️ Propunere excludere: ${d.proposal.cidr} — NU s-a aplicat (mod umbră)` : `⛔ Se exclude acum în Google Ads: ${d.proposal.cidr} (confirmarea vine în mesajul următor)`) : '',
   ].filter(Boolean).join('\n');
 }

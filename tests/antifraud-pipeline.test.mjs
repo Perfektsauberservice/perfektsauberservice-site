@@ -18,17 +18,17 @@ function setup() {
   return { store, sent, deps, click, lookups: () => lookups };
 }
 
-test('burst of 6 paid clicks: analysis at click 2, evaluation at click 4, exclusion proposal at click 6', async () => {
+test('burst: alert at click 2, exclusion at click 3, one proposal and no duplicate alerts', async () => {
   const s = setup(); const levels = [];
   for (let i = 0; i < 6; i++) levels.push((await s.click(i)).decision.level);
-  assert.deepEqual(levels, ['log', 'analyze', 'analyze', 'evaluate', 'evaluate', 'recommend_exclude']);
+  assert.deepEqual(levels, ['log', 'analyze', 'recommend_exclude', 'recommend_exclude', 'recommend_exclude', 'recommend_exclude']);
   const pending = (await s.store.list({ prefix: 'rec/pending/' })).blobs;
   assert.equal(pending.length, 1);
   const rec = await s.store.get(pending[0].key, { type: 'json' });
   assert.equal(rec.proposal.cidr, '94.134.182.67/32'); assert.equal(rec.mode, 'shadow');
   // one Telegram alert per level per 10-minute slot (no spam)
-  assert.equal(s.sent.length, 3);
-  assert.match(s.sent[2], /EXCLUDERE RECOMANDATĂ[\s\S]*NU s-a aplicat \(mod umbră\)/);
+  assert.equal(s.sent.length, 2);
+  assert.match(s.sent[1], /EXCLUDERE RECOMANDATĂ[\s\S]*NU s-a aplicat \(mod umbră\)/);
 });
 
 test('network info is looked up once and cached', async () => {
@@ -73,6 +73,14 @@ test('one exclusion proposal per IP even if the burst continues', async () => {
   const s = setup();
   for (let i = 0; i < 9; i++) await s.click(i);
   assert.equal((await s.store.list({ prefix: 'rec/pending/' })).blobs.length, 1);
+});
+
+test('parallel requests of one burst still create one proposal and one alert per level', async () => {
+  const s = setup();
+  await s.click(0); await s.click(1);
+  await Promise.all([2, 3, 4, 5].map(i => s.click(i)));
+  assert.equal((await s.store.list({ prefix: 'rec/pending/' })).blobs.length, 1);
+  assert.equal(s.sent.filter(t => t.includes('EXCLUDERE')).length, 1);
 });
 
 test('processing time per click stays well under one second with a local store', async () => {

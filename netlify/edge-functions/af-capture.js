@@ -84,4 +84,9 @@ export default async (request, context) => {
   }
 };
 
-export const config = { path: '/*' };
+export const config = {
+  path: '/*',
+  // static files never carry an ad click id; skipping them saves edge invocations
+  excludedPath: ['/images/*', '/css/*', '/js/*', '/fonts/*', '/data/*', '/*.css', '/*.js', '/*.webp', '/*.jpg', '/*.jpeg', '/*.png',
+    '/*.svg', '/*.ico', '/*.woff2', '/*.woff', '/*.json', '/*.xml', '/*.txt', '/*.pdf', '/.netlify/*'],
+};
