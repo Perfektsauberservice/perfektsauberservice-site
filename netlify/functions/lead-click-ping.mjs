@@ -10,6 +10,8 @@
  *   TELEGRAM_CHAT_ID
  */
 
+import { markCustomerFromLambda, clientIp } from '../antifraud/lambda-allow.mjs';
+
 const ALLOWED_TYPES = ['whatsapp', 'phone', 'email'];
 const TYPE_LABELS = { whatsapp: 'WhatsApp', phone: 'Telefon', email: 'Email' };
 const TYPE_EMOJI = { whatsapp: '📲', phone: '📞', email: '✉️' };
@@ -23,6 +25,9 @@ export const handler = async (event) => {
     if (!ALLOWED_TYPES.includes(type) || typeof page !== 'string' || !page.startsWith('/')) {
       return { statusCode: 200, body: 'ignored' };
     }
+
+    // PSS Anti-Fraud: a phone/WhatsApp/email click = real customer -> this IP is never excluded (isolated, never throws)
+    await markCustomerFromLambda(event, clientIp(event), `${type} click`, page);
 
     const attribution = (body.attribution && typeof body.attribution === 'object') ? body.attribution : {};
     const gclid = attribution.gclid || '';

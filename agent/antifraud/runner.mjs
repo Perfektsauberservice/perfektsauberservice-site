@@ -122,6 +122,68 @@ export async function report(store, hours = 24) {
   return lines.join('\n');
 }
 
+/** Telegram message with inline buttons (rotation approval). */
+export function telegramButtons() {
+  const env = telegramEnv();
+  return async (text, buttons) => {
+    const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text, disable_web_page_preview: true, reply_markup: { inline_keyboard: [buttons] } }) });
+    const body = await r.json().catch(() => ({}));
+    if (!body.ok) throw new Error(`telegram ${r.status} ${body.description || ''}`);
+    return body.result?.message_id;
+  };
+}
+
+/** 5) Rotation: when a campaign list is near the 500 limit, ask Laura (buttons) to remove the weakest entries. */
+export async function proposeRotation({ store, client, send, label = '', threshold = 450, count = 50, plan = null }) {
+  if ((await store.list({ prefix: 'rot/pending/' })).blobs.length) return null;          // one open proposal at a time
+  const { planRotation } = await import('./rotation.mjs');
+  const { rows, perCampaign } = plan || await planRotation(client, store);
+  const fullest = Math.max(0, ...Object.values(perCampaign));
+  if (fullest < threshold) return { skipped: true, fullest };
+  const pick = rows.filter(r => r.keep < 30).slice(0, count);
+  if (!pick.length) return { skipped: true, fullest, reason: 'no weak entries' };
+  const id = Date.now().toString(36);
+  const criteria = pick.flatMap(r => r.criteria.map(c => c.resourceName));
+  await store.setJSON(`rot/pending/${id}`, { id, t: Date.now(), ips: pick.map(r => r.ip), criteria, fullest });
+  const types = pick.reduce((m, r) => (m[r.type] = (m[r.type] || 0) + 1, m), {});
+  await send(`${label}♻️ PSS Anti-Fraud — rotație listă IP (cea mai plină campanie: ${fullest}/500)\n` +
+    `Propun scoaterea a ${pick.length} IP-uri slabe (${Object.entries(types).map(([k, v]) => `${v} ${k}`).join(', ')}), de pe ${criteria.length} poziții.\n` +
+    `Exemple: ${pick.slice(0, 5).map(r => `${r.ip} (${r.country || '?'} ${r.org || ''})`).join('; ')}\n` +
+    `Lista completă: C:\\tmp\\pss-antifraud-data\\rotation-${id}.csv`, [
+    { text: '✅ Aprob scoaterea', callback_data: `afrot:${id}:y` }, { text: '❌ Nu', callback_data: `afrot:${id}:n` }]);
+  writeFileSync(`${DATA_DIR}/rotation-${id}.csv`, '\ufeffip;keep;type;country;org;why\n' + pick.map(r => [r.ip, r.keep, r.type, r.country, `"${r.org}"`, `"${r.why}"`].join(';')).join('\n') + '\n');
+  return { id, count: pick.length, criteria: criteria.length };
+}
+
+/** Execute approved rotations (removes only the criteria listed in the approved proposal). */
+export async function processRotationDecisions({ store, client, notify, enforce = false, label = '' }) {
+  const { assertOnlyIpBlockOps } = await import('./ads-exclusions.mjs');
+  const done = [];
+  for (const b of (await store.list({ prefix: 'rot/pending/' })).blobs) {
+    const p = await store.get(b.key, { type: 'json' }); if (!p) continue;
+    const d = await store.get(`rot/decision/${p.id}`, { type: 'json' });
+    if (!d) {
+      if (Date.now() - p.t > 48 * 3600e3) { await store.setJSON(`rot/done/${p.id}`, { ...p, status: 'expired' }); await store.delete(b.key); await notify(`${label}⌛ Rotația ${p.id} a expirat fără răspuns. Nu s-a scos nimic.`); }
+      continue;
+    }
+    let status = 'rejected', error = null;
+    if (d.approved) {
+      try {
+        const ops = p.criteria.map(rn => ({ remove: rn }));
+        assertOnlyIpBlockOps(ops, new Set(p.criteria));
+        for (let i = 0; i < ops.length; i += 500) await client.call('campaignCriteria:mutate', { operations: ops.slice(i, i + 500), validateOnly: !enforce, partialFailure: true });
+        status = enforce ? 'removed' : 'validated_only';
+      } catch (e) { status = 'error'; error = String(e).slice(0, 300); }
+    }
+    await store.setJSON(`rot/done/${p.id}`, { ...p, decision: d, status, error, doneAt: Date.now() });
+    await store.delete(b.key);
+    if (d.approved) await notify(`${label}♻️ Rotația ${p.id}: ${status === 'removed' ? `✅ scoase ${p.ips.length} IP-uri (${p.criteria.length} poziții)` : status === 'validated_only' ? '🧪 validată, NEAPLICATĂ (mod umbră)' : '❌ eroare: ' + error}`);
+    done.push({ id: p.id, status });
+  }
+  return done;
+}
+
 async function main() {
   const cmd = process.argv[2] || 'once';
   const kind = arg('store', 'test');
@@ -134,7 +196,8 @@ async function main() {
   if (cmd === 'purge') { console.log('purged', await purge(store)); return; }
   const client = adsClient(env);
   const enforce = flag('enforce');
-  let lastHealth = Date.now() - 3600e3, lastSpend = 0, lastPurge = 0;
+  let lastHealth = Date.now() - 3600e3, lastSpend = 0, lastPurge = 0, lastRotation = 0, lastSummaryDay = null;
+  const send = telegramButtons();
   do {
     const t = Date.now();
     try {
@@ -143,6 +206,22 @@ async function main() {
       if (t - lastHealth > 15 * 60e3) { await healthCheck({ store, notify, since: lastHealth, label }); lastHealth = t; }
       if (kind === 'prod' && t - lastSpend > 60 * 60e3) { await spendCheck({ client, notify, label }); lastSpend = t; }
       if (t - lastPurge > 24 * 3600e3) { await purge(store); lastPurge = t; }
+      await processRotationDecisions({ store, client, notify, enforce, label });
+      const full = done.some(d => (d.executor?.plan || []).some(p => p.action === 'capacity_full'));
+      if (kind === 'prod' && (full || t - lastRotation > 6 * 3600e3)) { await proposeRotation({ store, client, send, label }); lastRotation = t; }
+      // daily summary at 20:30 Berlin (+ zones; Monday also threshold check)
+      const now = new Date(t); const hm = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }).slice(0, 5);
+      const today = now.toLocaleDateString('sv-SE', { timeZone: 'Europe/Berlin' });
+      if (kind === 'prod' && hm >= '20:30' && lastSummaryDay !== today) {
+        const ins = await import('./insights.mjs');
+        const z = await ins.zones({ client, store, days: 14 }).catch(() => null);
+        let msg = await ins.summary({ client, store, day: today });
+        if (z) msg += `
+🗺️ ${z.proposal}`;
+        if (now.toLocaleDateString('en-US', { timeZone: 'Europe/Berlin', weekday: 'short' }) === 'Mon') { const tu = await ins.tune({ client, store, days: 7 }).catch(() => null); if (tu) msg += `
+🎚️ ${tu.advice}`; }
+        await notify(msg); lastSummaryDay = today;
+      }
       await store.setJSON('health/runner', { t, kind, enforce });
     } catch (e) {
       console.error(e); await notify(`${label}⚠️ PSS Anti-Fraud — runner error: ${String(e).slice(0, 300)}`).catch(() => {});

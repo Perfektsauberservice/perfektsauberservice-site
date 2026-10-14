@@ -9,6 +9,13 @@ import { RULES } from './config.mjs';
 
 // Blob keys: no '%' escapes (Netlify Blobs decodes them back to '/').
 // Reversible mapping: '/' -> '-', ':' -> 'x' (neither appears in IPs/CIDRs/hex).
+/** Mark an IP as a real customer (phone/WhatsApp click or form). Called by the lead functions. */
+export async function markCustomer(store, ip, reason, page = '') {
+  if (!ip) return false;
+  await store.setJSON(`allow/ip/${enc(ip)}`, { t: Date.now(), reason, page: String(page).slice(0, 120) });
+  return true;
+}
+
 export const enc = s => String(s).replace(/\//g, '-').replace(/:/g, 'x');
 export const dec = s => String(s).replace(/-/g, '/').replace(/x/g, ':');
 
@@ -73,7 +80,7 @@ export async function processClick(deps, event) {
 
   // 3) history + network info
   const since = event.t - RULES.lookbackMs;
-  const [ipH, netH, fpH, offIp, offFp, offNet, info] = await Promise.all([
+  const [ipH, netH, fpH, offIp, offFp, offNet, info, customer] = await Promise.all([
     indexed(store, 'ix/ip', event.ip, since),
     net ? indexed(store, 'ix/net', net, since) : [],
     event.fp ? indexed(store, 'ix/fp', event.fp, since) : [],
@@ -81,6 +88,7 @@ export async function processClick(deps, event) {
     event.fp ? store.get(`off/fp/${enc(event.fp)}`, { type: 'json' }).catch(() => null) : null,
     net ? store.list({ prefix: `off/net/${enc(net)}/` }).then(r => r.blobs.map(b => dec(b.key.split('/').pop()))) : [],
     getNetinfo(store, event.ip, deps.lookup, event.t),
+    store.get(`allow/ip/${enc(event.ip)}`, { type: 'json' }).catch(() => null),   // real customer (call / WhatsApp / form)
   ]);
   timings.loaded = deps.now();
 
@@ -90,7 +98,9 @@ export async function processClick(deps, event) {
     net: netH, fp: fpH,
     offenders: { ip: !!offIp, fp: !!offFp, netIps: offNet },
   };
-  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist: deps.allowlist });
+  const allowlist = customer ? [...(deps.allowlist || []), event.ip] : deps.allowlist;
+  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist });
+  if (customer) verdict.reasons = [`real customer from this IP (${customer.reason}, ${new Date(customer.t).toLocaleDateString('de-DE')}) — never excluded`];
   timings.evaluated = deps.now();
 
   // 5) persist decision; offenders + proposals feed cross-day correlation and the executor

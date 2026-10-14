@@ -12,6 +12,7 @@
  */
 
 import crypto from 'node:crypto';
+import { markCustomerFromLambda } from '../antifraud/lambda-allow.mjs';
 
 const LEAD_ID_PATTERN = /^PSS-\d{8}-[a-z0-9]{8}$/i;
 
@@ -35,6 +36,9 @@ export const handler = async (event) => {
     // lead_id: generat client-side de formular; validat aici, cu fallback server-side
     // daca lipseste sau nu respecta formatul. Orice eroare in acest bloc e izolata —
     // NU trebuie sa opreasca trimiterea notificarilor Telegram/Email de mai jos.
+    // PSS Anti-Fraud: form sender = real customer -> IP never excluded (isolated, never throws)
+    await markCustomerFromLambda(event, data.data?.ip || data.ip || null, 'form submission', data.data?.referrer || '');
+
     let lead_id = '—';
     try {
       const rawLeadId = data.data?.lead_id;

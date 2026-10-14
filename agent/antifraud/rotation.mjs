@@ -49,39 +49,47 @@ async function netinfoCached(ip, cache) {
   return cache[host];
 }
 
-async function main() {
-  const kind = (process.argv.includes('--store') && process.argv[process.argv.indexOf('--store') + 1]) || 'test';
-  const client = adsClient(loadEnv());
-  const store = openStore(kind);
+/** Rank all current IP exclusions (all non-removed campaigns). Returns rows sorted weakest first,
+ *  each with the criterion resource names to remove if Laura approves. */
+export async function planRotation(client, store) {
   mkdirSync(DATA_DIR, { recursive: true });
   const cachePath = `${DATA_DIR}/netinfo-cache.json`;
   const cache = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath, 'utf8')) : {};
-  const camps = await client.search("SELECT campaign.name, campaign.status, campaign_criterion.ip_block.ip_address FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status != 'REMOVED'");
-  const byIp = {};
-  for (const r of camps) (byIp[r.campaignCriterion.ipBlock.ipAddress] ||= []).push(`${r.campaign.name} (${r.campaign.status})`);
+  const crit = await client.search("SELECT campaign.name, campaign.status, campaign_criterion.resource_name, campaign_criterion.ip_block.ip_address FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status != 'REMOVED'");
+  const byIp = {}, perCamp = {};
+  for (const r of crit) {
+    (byIp[r.campaignCriterion.ipBlock.ipAddress] ||= []).push({ campaign: r.campaign.name, resourceName: r.campaignCriterion.resourceName });
+    perCamp[r.campaign.name] = (perCamp[r.campaign.name] || 0) + 1;
+  }
   const orig = await origins(client);
+  const decKeys = (await store.list({ prefix: 'dec/' })).blobs.map(b => b.key);   // list once, not per IP
   const rows = [];
   for (const ip of Object.keys(byIp)) {
     const host = ip.split('/')[0];
-    const info = await netinfoCached(ip, cache);
-    const net = classifyNetwork(info);
+    const net = classifyNetwork(await netinfoCached(ip, cache));
     const offender = await store.get(`off/ip/${enc(host)}`, { type: 'json' }).catch(() => null);
-    const decisions = (await store.list({ prefix: 'dec/' })).blobs.filter(b => b.key.endsWith(`_${enc(host)}`)).length;
+    const customer = await store.get(`allow/ip/${enc(host)}`, { type: 'json' }).catch(() => null);
+    const decisions = decKeys.filter(k => k.endsWith(`_${enc(host)}`)).length;
     const o = orig[ip] || orig[host + '/32'] || null;
     const ageDays = o ? Math.floor((Date.now() - Date.parse(o.t.replace(' ', 'T') + '+02:00')) / 864e5) : null;
     const k = keepScore({ evidence: { offender: !!offender, decisions }, origin: o, net, ageDays, isRange: ip.endsWith('/24') });
-    rows.push({ ip, campaigns: byIp[ip].length, addedBy: o ? `${o.user} via ${o.client === 'GOOGLE_ADS_API' ? 'API' : 'web'} ${o.t.slice(0, 16)}` : 'older than 30 days / unknown',
+    if (customer) { k.score -= 100; k.why.push('-100 real customer (call/WhatsApp/form) — exclusion blocks a client'); }
+    rows.push({ ip, criteria: byIp[ip], campaigns: byIp[ip].length, addedBy: o ? `${o.user} via ${o.client === 'GOOGLE_ADS_API' ? 'API' : 'web'} ${o.t.slice(0, 16)}` : 'older than 30 days / unknown',
       country: net.country, asn: net.asn, org: net.org, type: net.type, keep: k.score, why: k.why.join('; ') });
   }
   writeFileSync(cachePath, JSON.stringify(cache));
   rows.sort((a, b) => a.keep - b.keep);
+  return { rows, perCampaign: perCamp };
+}
+
+async function main() {
+  const kind = (process.argv.includes('--store') && process.argv[process.argv.indexOf('--store') + 1]) || 'test';
+  const { rows, perCampaign } = await planRotation(adsClient(loadEnv()), openStore(kind));
   const csv = ['ip;campaigns;added_by;country;asn;org;network_type;keep_score;reasons'].concat(rows.map(r => [r.ip, r.campaigns, r.addedBy, r.country, r.asn, `"${r.org}"`, r.type, r.keep, `"${r.why}"`].join(';'))).join('\n');
   const out = `${DATA_DIR}/rotation-plan-${new Date().toISOString().slice(0, 10)}.csv`;
   writeFileSync(out, '﻿' + csv + '\n');
   const counts = rows.reduce((m, r) => (m[r.type] = (m[r.type] || 0) + 1, m), {});
-  const perCamp = {};
-  for (const r of camps) perCamp[r.campaign.name] = (perCamp[r.campaign.name] || 0) + 1;
-  console.log(JSON.stringify({ file: out, uniqueExclusions: rows.length, perCampaign: perCamp, byNetworkType: counts,
+  console.log(JSON.stringify({ file: out, uniqueExclusions: rows.length, perCampaign, byNetworkType: counts,
     removalCandidates: rows.filter(r => r.keep < 30).length, lowest: rows.slice(0, 8).map(r => `${r.ip} ${r.country} ${r.org} keep=${r.keep}`) }, null, 1));
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('rotation.mjs')) main();

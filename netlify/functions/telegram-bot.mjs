@@ -10,6 +10,8 @@
  *   GITHUB_REPO          — "Perfektsauberservice/perfektsauberservice-site"
  */
 
+import { handleAntifraudCallback } from '../antifraud/telegram-callback.mjs';
+
 const GITHUB_REPO = process.env.GITHUB_REPO || 'Perfektsauberservice/perfektsauberservice-site';
 
 // Workflows disponibile pe care botul le poate declansa
@@ -191,6 +193,13 @@ export const handler = async (event) => {
     update = JSON.parse(event.body);
   } catch {
     return { statusCode: 400, body: 'Invalid JSON' };
+  }
+
+  // PSS Anti-Fraud: butoane de aprobare a rotatiei IP (izolat; orice eroare nu afecteaza botul)
+  if (update?.callback_query) {
+    try { await handleAntifraudCallback(update.callback_query, { event, botToken, allowedChatId }); }
+    catch (err) { console.error('antifraud callback:', err?.message || err); }
+    return { statusCode: 200, body: 'OK' };
   }
 
   const message = update?.message;
