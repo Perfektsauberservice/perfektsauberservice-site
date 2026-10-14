@@ -141,6 +141,6 @@ export function formatAlert(d, e) {
     `📍 ${[e.geo?.city, e.geo?.subdivision, e.geo?.country].filter(Boolean).join(', ') || '—'} · pagina ${d.path}`,
     `📊 scor ${d.score} · clicuri plătite 5min=${d.counts?.c5} 10min=${d.counts?.c10} 60min=${d.counts?.c60} · reîncărcări ${d.counts?.reloads}`,
     ...d.reasons.map(r => `• ${r}`),
-    d.proposal ? (d.mode === 'shadow' ? `➡️ Propunere excludere: ${d.proposal.cidr} — NU s-a aplicat (mod umbră)` : `⛔ Se exclude acum în Google Ads: ${d.proposal.cidr} (confirmarea vine în mesajul următor)`) : '',
+    d.proposal ? (d.mode === 'shadow' ? `➡️ Propunere excludere: ${d.proposal.cidr} — NU s-a aplicat (mod umbră)` : `⛔ Excludere trimisă modulului Google Ads: ${d.proposal.cidr} (confirmarea APLICAT vine separat)`) : '',
   ].filter(Boolean).join('\n');
 }
