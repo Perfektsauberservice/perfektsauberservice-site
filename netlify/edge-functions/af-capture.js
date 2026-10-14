@@ -64,12 +64,15 @@ export default async (request, context) => {
       },
       notify: async text => {
         const bot = env('TELEGRAM_BOT_TOKEN'), chat = env('TELEGRAM_CHAT_ID');
-        if (!bot || !chat) return;
+        if (!bot || !chat) { await store.setJSON('health/telegram', { t: Date.now(), ok: false, status: 'missing TELEGRAM_* env' }); return; }
         const prefix = isProd ? '' : `[TEST ${deployContext}] `;
-        await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, {
+        const r = await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, {
           method: 'POST', headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ chat_id: chat, text: prefix + text, disable_web_page_preview: true }),
         });
+        const body = await r.json().catch(() => ({}));
+        await store.setJSON('health/telegram', { t: Date.now(), ok: !!body.ok, status: r.status, messageId: body.result?.message_id || null });
+        if (!body.ok) throw new Error(`telegram ${r.status} ${body.description || ''}`);
       },
     };
     context.waitUntil(processClick(deps, event).then(

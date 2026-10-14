@@ -29,8 +29,11 @@ export function openStore(kind = 'test') {
 export function telegram(env) {
   return async text => {
     if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return;
-    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST',
+    const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: 'POST',
       headers: { 'content-type': 'application/json' }, body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text, disable_web_page_preview: true }) });
+    const body = await r.json().catch(() => ({}));
+    if (!body.ok) throw new Error(`telegram ${r.status} ${body.description || ''}`);
+    return body.result?.message_id;
   };
 }
 

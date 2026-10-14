@@ -1,16 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { processClick, sha256Hex, canonical } from '../netlify/antifraud/pipeline.mjs';
+import { memoryStore } from './helpers/memory-store.mjs';
 
-export function memoryStore() {
-  const m = new Map();
-  return {
-    m,
-    async get(k, o) { if (!m.has(k)) return null; return o?.type === 'json' ? JSON.parse(m.get(k)) : m.get(k); },
-    async setJSON(k, v) { m.set(k, JSON.stringify(v)); },
-    async list({ prefix }) { return { blobs: [...m.keys()].filter(k => k.startsWith(prefix)).map(key => ({ key })) }; },
-  };
-}
 
 const T0 = Date.UTC(2026, 9, 14, 15, 0, 0);
 const UA = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/128 Mobile Safari/537.36';
