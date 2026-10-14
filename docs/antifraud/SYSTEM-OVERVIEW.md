@@ -121,3 +121,16 @@ PC-ul proprietarei (pornit non-stop): runner.mjs loop (la 10 s)
 - Merită excluderea pe locație sau pe audiențe în locul IP-ului, pentru tiparul „Daxlanden / Bietigheim pe mobil”?
 - Cum folosim mai bine Google Ads (click_view, invalid_clicks, rambursări) ca dovadă?
 - Ce alte surse gratuite există pentru centre de date / VPN / iCloud Private Relay?
+
+## 10. Îmbunătățiri V1.1 (14.10.2026, seara, live)
+- **Lista albă clienți reali:**
+  - formular trimis → IP-ul nu e exclus niciodată (30 de zile);
+  - tap pe telefon / WhatsApp / e-mail → pragul de excludere crește cu +2, timp de 24 h. Un tap nu dă imunitate, pentru că oricine îl poate declanșa.
+  - IP-ul clientului în funcțiile Netlify e intrarea din X-Forwarded-For dinaintea primului hop intern Netlify, ca să nu poată fi falsificat.
+- **Comparația Google Ads ↔ site** (`insights.mjs reconcile`): clicurile plătite (click_view gclid) care nu au ajuns pe site, grupate pe loc, dispozitiv și cuvânt cheie. Zilele dinaintea captării complete sunt marcate „parțial”.
+- **Zone** (`insights.mjs zones`): concentrarea clicurilor (≥10% din clicuri și ≥75% mobil) → propunere text pentru agenție. Pe 14.10: Bietigheim 38% / 78% mobil, Daxlanden 12% / 100% mobil.
+- **Rezumat zilnic pe Telegram** la 20:30: clicuri, cost, invalide Google, vizite captate, comparația Ads ↔ site, suspecte, excluderi, zone. Lunea și verificarea pragurilor.
+- **Verificarea pragurilor** (`tune`): comparație cu invalid_clicks din Google; IP-uri excluse care au devenit apoi clienți = semn că pragul e prea strict.
+- **Pachet de rambursare** (`refund <de la> <până la>`): CSV cu gclid, IP, oră, campanie și cuvânt cheie confirmat în click_view, plus cererea în germană pentru formularul Google „ungültige Klicks”. Nu trimite nimic.
+- **Rotația la limita de 500** cu butoane Telegram „Aprob / Nu”. Botul de pe Netlify doar înregistrează decizia; programul de pe PC scoate exact pozițiile aprobate.
+- **Încă neimplementat:** excluderea direct din Netlify (fără PC). Sistemul de permisiuni a blocat agentul autonom de scriere; e nevoie de permisiunea proprietarei.
