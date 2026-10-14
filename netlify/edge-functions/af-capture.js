@@ -55,7 +55,7 @@ export default async (request, context) => {
     const deps = {
       store,
       now: () => Date.now(),
-      mode: env('AF_MODE') === 'enforce' ? 'enforce' : 'shadow',
+      mode: env('AF_MODE') === 'shadow' ? 'shadow' : (isProd ? 'enforce' : 'shadow'),   // Laura 14.10: live = real exclusions
       allowlist: (env('AF_ALLOWLIST') || '').split(',').map(s => s.trim()).filter(Boolean),
       lookup: async addr => {
         const r = await fetch(`https://ipinfo.io/${encodeURIComponent(addr)}/json${token ? `?token=${token}` : ''}`, { headers: { accept: 'application/json' } });
