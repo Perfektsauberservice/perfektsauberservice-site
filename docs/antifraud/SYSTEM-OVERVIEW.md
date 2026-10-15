@@ -151,3 +151,22 @@ PC-ul proprietarei (pornit non-stop): runner.mjs loop (la 10 s)
 - **Chei:** credențialele Google Ads sunt variabile de mediu Netlify (scope: functions), puse pe production și deploy-preview. `AF_ENFORCE=1` e pus doar pe production. Pe copiile de test totul rămâne `validateOnly`.
 - **Testul de producție:** adresa de documentare 192.0.2.1/32 a fost pusă în coadă, iar funcția a aplicat-o singură pe toate cele 6 campanii în ~6,6 s (confirmat de Google). Apoi a fost scoasă; listele au revenit la 185/185/184/185.
 - **Lecție:** `netlify env:set --site` e ignorat într-un folder nelegat de proiect. Se folosește `NETLIFY_SITE_ID=<id>` și se verifică mesajul „Set environment variable”.
+
+## 12. V1.3 (15.10.2026, live)
+1. **Semnal om / robot** (`js/af-b.js` + edge `/af-b`):
+   - Scriptul e adăugat de edge **doar** în paginile deschise dintr-un clic pe reclamă. Nu folosește cookie-uri.
+   - Trimite: timp pe pagină, procent derulat, număr de interacțiuni. Trimite un semnal intermediar la 8 s și unul final la plecare.
+   - **Vizită „moartă”:** sub 4 s, fără derulare și fără atingere, sau niciun semnal după 20 s. O vizită anterioară „moartă” = semnal puternic, deci excludere de la al 2-lea clic.
+   - Vizite anterioare clar omenești → pragul crește cu 1.
+2. **Clicuri fantomă** (la 15 minute, ore terminate de cel puțin 2 h):
+   - clicuri Ads − vizite captate ≥ 3 → alertă, cu locurile, dispozitivele și cuvintele cheie ale clicurilor fără vizită.
+3. **Captare defectă:** Ads ≥ 3 clicuri într-o oră și 0 captate → alertă.
+4. **Expirare:** excluderile proprii pentru IP-uri mobile (CGNAT), mai vechi de 45 de zile, sunt scoase automat. Doar criteriile create de sistem.
+5. **Capcană** (`/af-trap`): legătură invizibilă (off-screen, aria-hidden, nofollow), doar pe paginile din reclame. Accesarea ei + un clic plătit de pe același IP = excludere de la primul clic.
+6. **Clic → client:** formular / tap pe telefon sau WhatsApp cu gclid → `lead/<hash>`. Raportul săptămânal arată clienții pe campanie, cuvânt cheie și loc.
+7. **Pachet de rambursare Google, săptămânal** (luni după 09:00): cererea în germană + CSV pe Telegram. Nu se trimite automat la Google.
+8. **Scrieri străine:** schimbări IP_BLOCK prin API care nu sunt în jurnalul PSS → alertă (verificare din oră în oră).
+9. **Rețele:** RIPEstat (network-info, as-overview, maxmind-geo-lite) ca sursă principală, ipinfo ca rezervă. Fără cheie, din UE, 200–400 ms.
+10. **Raport săptămânal** (luni): clicuri, cost, invalide Google, suspecte, excluderi, surse principale, clienți reali, zone.
+
+**Teste:** 156/156 automate; testul complet pe draft 13/13. Pe live s-a verificat că scriptul și capcana apar doar pe paginile cu gclid.
