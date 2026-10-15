@@ -18,12 +18,16 @@ export const RULES = {
   cidrOffenders: 2,                                 // offender IPs in one /24 before a /24 is proposed
   cidrOffendersMobile: 3,                           // stricter for mobile/CGNAT carriers
   retentionDays: 30,
+  deadDwellMs: 4000,                                // visit shorter than this, with no scroll/touch = no human activity
+  beaconGraceMs: 20000,                             // no beacon at all after this long = no human activity
+  mobileExclusionDays: 45,                          // own exclusions of mobile (CGNAT) IPs expire, the IP goes to someone else
+
 };
 
 export const WEIGHTS = {
   analyze: 25, evaluate: 45, hour: 15, network: 20, fingerprint: 15,
   repeatOffender: 45, repeatDevice: 10, datacenter: 40, foreign: 25, outsideRegion: 10,
-  botUa: 40, noAcceptLanguage: 10,
+  botUa: 40, noAcceptLanguage: 10, trap: 60, deadVisit: 35,
 };
 
 // Target region of the campaigns: Baden-Württemberg, Germany.

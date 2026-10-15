@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { processClick, markCustomer } from '../netlify/antifraud/pipeline.mjs';
+import { processClick, markCustomer, sha256Hex } from '../netlify/antifraud/pipeline.mjs';
 import { handleAntifraudCallback } from '../netlify/antifraud/telegram-callback.mjs';
 import { proposeRotation, processRotationDecisions } from '../agent/antifraud/runner.mjs';
 import { reconcile } from '../agent/antifraud/insights.mjs';
@@ -8,7 +8,11 @@ import { memoryStore } from './helpers/memory-store.mjs';
 
 const T0 = Date.UTC(2026, 9, 15, 10, 0, 0);
 const deps = store => ({ store, mode: 'enforce', allowlist: [], now: () => T0, lookup: async () => ({ org: 'AS8881 1&1 Versatel', country: 'DE' }), notify: null });
-const click = (store, i, ip = '94.134.182.67') => processClick(deps(store), { t: T0 + i * 60e3, ip, cid: `g${i}`, cidType: 'gclid', path: '/x', ua: 'Mozilla/5.0', lang: 'de', geo: { country: 'DE' }, fp: 'f' });
+const click = async (store, i, ip = '94.134.182.67') => {
+  const r = await processClick(deps(store), { t: T0 + i * 60e3, ip, cid: `g${i}`, cidType: 'gclid', path: '/x', ua: 'Mozilla/5.0', lang: 'de', geo: { country: 'DE' }, fp: 'f' });
+  await store.setJSON(`beh/${ip}/${(await sha256Hex(`g${i}`)).slice(0, 16)}`, { t: T0, dwell: 6000, scroll: 20, inter: 0 });   // neutral visit
+  return r;
+};
 
 test('contact tap raises the threshold by 2 but does not buy immunity', async () => {
   const store = memoryStore();

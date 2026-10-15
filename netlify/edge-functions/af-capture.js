@@ -6,6 +6,28 @@
 import { getStore } from '@netlify/blobs';
 import { processClick, sha256Hex } from '../antifraud/pipeline.mjs';
 import { STORE_NAME } from '../antifraud/config.mjs';
+import { lookupNet } from '../antifraud/netinfo.mjs';
+
+// Added only to pages opened from an ad click: behaviour beacon + a link no person can see or use.
+const INJECT = '<script src="/js/af-b.js" defer></script>'
+  + '<a href="/af-trap" rel="nofollow" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">.</a>';
+
+async function injectSignals(context) {
+  const res = await context.next();
+  try {
+    if (res.status !== 200 || !(res.headers.get('content-type') || '').includes('text/html')) return res;
+    const html = await res.text();
+    const i = html.lastIndexOf('</body>');
+    if (i === -1) return new Response(html, { status: res.status, headers: res.headers });
+    const headers = new Headers(res.headers);
+    headers.delete('content-length'); headers.delete('content-encoding'); headers.delete('etag');
+    headers.set('cache-control', 'private, no-store');
+    return new Response(html.slice(0, i) + INJECT + html.slice(i), { status: 200, headers });
+  } catch (e) {
+    console.error('af-capture inject', e);
+    return res;
+  }
+}
 
 const CLICK_PARAMS = ['gclid', 'gbraid', 'wbraid'];
 
@@ -57,11 +79,7 @@ export default async (request, context) => {
       now: () => Date.now(),
       mode: env('AF_MODE') === 'shadow' ? 'shadow' : (isProd ? 'enforce' : 'shadow'),   // Laura 14.10: live = real exclusions
       allowlist: (env('AF_ALLOWLIST') || '').split(',').map(s => s.trim()).filter(Boolean),
-      lookup: async addr => {
-        const r = await fetch(`https://ipinfo.io/${encodeURIComponent(addr)}/json${token ? `?token=${token}` : ''}`, { headers: { accept: 'application/json' } });
-        if (!r.ok) throw new Error(`ipinfo ${r.status}`);
-        return r.json();
-      },
+      lookup: addr => lookupNet(addr, { ipinfoToken: token }),   // RIPEstat first, ipinfo fallback
       // start the exclusion executor right away (it only reads the queue, takes no input)
       trigger: () => fetch(`${url.origin}/.netlify/functions/af-exclude`, { method: 'POST' }),
       notify: async text => {
@@ -81,6 +99,7 @@ export default async (request, context) => {
       res => store.setJSON(`health/last`, { t: event.t, level: res.decision.level, ms: res.timings.done - res.timings.start }),
       err => store.setJSON(`health/error/${event.t}`, { t: event.t, error: String(err?.stack || err).slice(0, 800) }),
     ));
+    return await injectSignals(context);
   } catch (err) {
     console.error('af-capture', err);   // never break the page
   }

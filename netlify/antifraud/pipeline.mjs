@@ -86,7 +86,7 @@ export async function processClick(deps, event) {
 
   // 3) history + network info
   const since = event.t - RULES.lookbackMs;
-  const [ipH, netH, fpH, offIp, offFp, offNet, info, customer] = await Promise.all([
+  const [ipH, netH, fpH, offIp, offFp, offNet, info, customer, behKeys, trapKeys] = await Promise.all([
     indexed(store, 'ix/ip', event.ip, since),
     net ? indexed(store, 'ix/net', net, since) : [],
     event.fp ? indexed(store, 'ix/fp', event.fp, since) : [],
@@ -95,6 +95,8 @@ export async function processClick(deps, event) {
     net ? store.list({ prefix: `off/net/${enc(net)}/` }).then(r => r.blobs.map(b => dec(b.key.split('/').pop()))) : [],
     getNetinfo(store, event.ip, deps.lookup, event.t),
     store.get(`allow/ip/${enc(event.ip)}`, { type: 'json' }).catch(() => null),   // real customer (call / WhatsApp / form)
+    store.list({ prefix: `beh/${enc(event.ip)}/` }).then(r => r.blobs).catch(() => []),
+    store.list({ prefix: `trap/${enc(event.ip)}/` }).then(r => r.blobs).catch(() => []),
   ]);
   timings.loaded = deps.now();
 
@@ -104,10 +106,22 @@ export async function processClick(deps, event) {
     net: netH, fp: fpH,
     offenders: { ip: !!offIp, fp: !!offFp, netIps: offNet },
   };
+  // behaviour of the previous ad visits from this IP (last 10 min) + trap hits (last 24 h)
+  const behavior = { dead: 0, alive: 0 };
+  const prior = [...new Map(ipH.filter(x => x.cid !== cidHash && event.t - x.t <= RULES.evaluateWindowMs).map(x => [x.cid, x])).values()];
+  const behByCid = new Map(behKeys.map(b => [b.key.split('/').pop(), b.key]));
+  for (const p of prior) {
+    const bk = behByCid.get(p.cid);
+    const b = bk ? await store.get(bk, { type: 'json' }).catch(() => null) : null;
+    if (b) { if (b.dwell < RULES.deadDwellMs && !b.inter && b.scroll < 10) behavior.dead++; else if (b.inter > 0 || b.dwell >= 10000) behavior.alive++; }
+    else if (event.t - p.t > RULES.beaconGraceMs) behavior.dead++;
+  }
+  const trap = trapKeys.some(b => event.t - Number(b.key.split('/').pop()) < 864e5);
+
   const formCustomer = customer && customer.strength === 'form' && event.t - customer.t < 30 * 864e5;
   const contactCustomer = customer && !formCustomer && event.t - customer.t < 864e5;
   const allowlist = formCustomer ? [...(deps.allowlist || []), event.ip] : deps.allowlist;
-  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist, extraClicks: contactCustomer ? 2 : 0 });
+  const verdict = evaluate({ ...event, cid: cidHash }, history, info, { allowlist, extraClicks: contactCustomer ? 2 : 0, behavior, trap });
   if (formCustomer) verdict.reasons = [`real customer: form sent from this IP (${new Date(customer.t).toLocaleDateString('de-DE')}) — never excluded`];
   else if (contactCustomer) verdict.reasons.push(`contact click (${customer.reason}) from this IP in the last 24 h — exclusion threshold +2`);
   timings.evaluated = deps.now();

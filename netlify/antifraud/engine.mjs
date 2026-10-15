@@ -77,12 +77,20 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   if (!event.lang) add(WEIGHTS.noAcceptLanguage, 'browser sends no language header');
 
   // Strong = evidence that is not shared by ordinary customers. The header fingerprint is NOT strong.
-  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip;
+  // behaviour of this IP's previous ad visits (js/af-b.js) and the invisible trap link
+  const beh = opts.behavior || { dead: 0, alive: 0 };
+  if (opts.trap) add(WEIGHTS.trap, 'requested the invisible trap link — automated client');
+  if (beh.dead) add(WEIGHTS.deadVisit, `${beh.dead} previous ad visit(s) without any human activity (left < 4 s, no scroll, no touch — or no signal at all)`);
+  const humanOnly = beh.alive > 0 && !beh.dead;
+  if (humanOnly) reasons.push(`previous ad visit(s) look human (read / scrolled / touched) — threshold +1`);
+  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip || opts.trap || beh.dead > 0;
   // Exclusion (Laura, 14.10.2026): every paid click costs ~2 EUR, so act before the 4th one.
   //   3 paid clicks / 10 min from one IP            -> exclude
   //   2 paid clicks / 10 min + strong signal        -> exclude (server, bot, abroad, flagged before)
   //   shared relay egress (iCloud Private Relay...) -> needs 4, it serves many real iPhone users
-  const need = (net.type === 'relay' ? RULES.excludeClicksRelay : strong ? RULES.excludeClicksStrong : RULES.excludeClicks) + (opts.extraClicks || 0);
+  let need = (net.type === 'relay' ? RULES.excludeClicksRelay : strong ? RULES.excludeClicksStrong : RULES.excludeClicks) + (opts.extraClicks || 0);
+  if (opts.trap) need = 1;                         // trap + a paid click = robot clicking ads
+  else if (humanOnly && !strong) need += 1;
   let proposal = null;
   if (c10 >= need) {
     reasons.push(`exclusion rule: ${c10} paid clicks in 10 min (limit ${need}${strong ? ', strong signal' : ''}${net.type === 'relay' ? ', shared relay' : ''})`);
