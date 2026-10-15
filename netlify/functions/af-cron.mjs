@@ -62,6 +62,9 @@ export default async (req, context) => {
       await notifyTeam(msg);
       log.steps.push('summary');
     } else {
+      // 1b) retro signature check with Google's location (every 30 min) -> queues exclusions processed right below
+      const monR = await import('../../agent/antifraud/monitors.mjs');
+      await every(store, 'sigretro', 30 * 60e3, () => monR.signatureRetro({ client, store }));
       const done = await processProposals({ store, client, notify: notifyTeam, enforce, ledgerPath: null, executor: 'netlify-cron' });
       log.steps.push(`proposals:${done.length}`);
       const rot = await processRotationDecisions({ store, client, notify, enforce });

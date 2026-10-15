@@ -132,7 +132,7 @@ export async function processClick(deps, event) {
   // 5) persist decision; offenders + proposals feed cross-day correlation and the executor
   const decision = { t: event.t, ip: event.ip, network: net, cidHash, path: event.path, level: verdict.level,
     score: verdict.score, reasons: verdict.reasons, proposal: verdict.proposal, net: verdict.net,
-    counts: verdict.counts, mode: deps.mode, evidence: `ev/${day}/${ts}_${enc(event.ip)}_${cidHash}` };
+    counts: verdict.counts, signature: verdict.signature, mode: deps.mode, evidence: `ev/${day}/${ts}_${enc(event.ip)}_${cidHash}` };
   if (['analyze', 'evaluate', 'recommend_exclude'].includes(verdict.level)) {
     await store.setJSON(`dec/${ts}_${enc(event.ip)}`, decision);
   }

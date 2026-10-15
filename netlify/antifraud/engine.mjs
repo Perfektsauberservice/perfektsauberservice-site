@@ -5,7 +5,7 @@
 // new click. Every point of the score carries a written reason.
 
 import { RULES, WEIGHTS, DATACENTER_ASNS, RELAY_ASNS, MOBILE_CARRIER_ASNS, MOBILE_HOSTNAME_RE,
-  BOT_UA_RE, GOOGLE_VERIFIER_UA_RE, TARGET_COUNTRY, TARGET_SUBDIVISIONS } from './config.mjs';
+  BOT_UA_RE, GOOGLE_VERIFIER_UA_RE, TARGET_COUNTRY, TARGET_SUBDIVISIONS, ATTACKER_SIGNATURES } from './config.mjs';
 import { networkOf, hostCidr } from './ip.mjs';
 
 export function classifyNetwork(info = {}) {
@@ -17,6 +17,18 @@ export function classifyNetwork(info = {}) {
   else if (DATACENTER_ASNS.has(asn)) type = 'datacenter';
   else if (MOBILE_CARRIER_ASNS.has(asn) && (asn === 6805 || MOBILE_HOSTNAME_RE.test(info.hostname || ''))) type = 'mobile';
   return { asn, org, type, country: info.country || null, city: info.city || null, region: info.region || null };
+}
+
+/** Known attacker signature match at click time (device + landing page + IP place / operator). */
+export function matchSignature(event, net, signatures = ATTACKER_SIGNATURES) {
+  const mobile = /Mobile|iPhone|Android/.test(event.ua || '');
+  const city = event.geo?.city || net.city || '';
+  for (const sig of signatures) {
+    if (!sig.pathRe.test(event.path || '')) continue;
+    if (sig.mobileOnly && !mobile) continue;
+    if (sig.cities.includes(city) || (net.asn && (sig.asnCities[net.asn] || []).includes(city))) return sig;
+  }
+  return null;
 }
 
 export function uaVerdict(ua = '') {
@@ -83,7 +95,9 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   if (beh.dead) add(WEIGHTS.deadVisit, `${beh.dead} previous ad visit(s) without any human activity (left < 4 s, no scroll, no touch — or no signal at all)`);
   const humanOnly = beh.alive > 0 && !beh.dead;
   if (humanOnly) reasons.push(`previous ad visit(s) look human (read / scrolled / touched) — threshold +1`);
-  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip || opts.trap || beh.dead > 0;
+  const sig = opts.signature === false ? null : matchSignature(event, net);
+  if (sig) add(WEIGHTS.signature, `matches the known attacker signature: ${sig.label}`);
+  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip || opts.trap || beh.dead > 0 || !!sig;
   // Exclusion (Laura, 14.10.2026): every paid click costs ~2 EUR, so act before the 4th one.
   //   3 paid clicks / 10 min from one IP            -> exclude
   //   2 paid clicks / 10 min + strong signal        -> exclude (server, bot, abroad, flagged before)
@@ -106,5 +120,5 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
       }
     }
   }
-  return { level, score, reasons, proposal, net, ua, counts: { c5, c10, c60, reloads, netIps, fpIps, fpClicks } };
+  return { level, score, reasons, proposal, net, ua, signature: sig?.id || null, counts: { c5, c10, c60, reloads, netIps, fpIps, fpClicks } };
 }

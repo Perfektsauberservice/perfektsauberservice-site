@@ -160,3 +160,44 @@ export async function weeklyReport({ client, store, now = Date.now() }) {
     z ? `🗺️ ${z.proposal}` : '',
   ].filter(Boolean).join('\n');
 }
+
+/** 1b) Retro check with Google's own location (arrives hours later): IPs we captured whose clicks Google
+ *  places in a known attacker signature (e.g. Bietigheim / Daxlanden, mobile, Haushaltsauflösung) and that
+ *  clicked >= 2 times today are queued for exclusion, even if they escaped at click time. */
+export async function signatureRetro({ client, store, now = Date.now(), minClicks = 2 }) {
+  const { ATTACKER_SIGNATURES } = await import('../../netlify/antifraud/config.mjs');
+  const day = berlinDay(now);
+  const rows = await client.search(`SELECT click_view.gclid, click_view.location_of_presence.city, click_view.keyword_info.text, segments.device FROM click_view WHERE segments.date = '${day}'`);
+  const names = await geoNames(client, new Set(rows.map(r => r.clickView?.locationOfPresence?.city)));
+  const hits = new Map();   // gclid -> signature
+  for (const r of rows) {
+    const place = names[r.clickView?.locationOfPresence?.city] || '';
+    for (const sig of ATTACKER_SIGNATURES) {
+      if (sig.adsPlaces.includes(place) && r.segments?.device === 'MOBILE' && sig.adsKeywordRe.test(r.clickView?.keywordInfo?.text || '')) hits.set(r.clickView.gclid, { sig, place });
+    }
+  }
+  if (!hits.size) return [];
+  const byIp = {};
+  const d0 = dayStart(day);
+  for (const utcDay of new Set([new Date(d0).toISOString().slice(0, 10), new Date(d0 + 864e5 - 1).toISOString().slice(0, 10)])) {
+    for (const b of (await store.list({ prefix: `ev/${utcDay}/` })).blobs) {
+      const rec = await store.get(b.key, { type: 'json' }).catch(() => null);
+      if (!rec || !hits.has(rec.cid) || isTestIp(rec.ip)) continue;
+      (byIp[rec.ip] ||= new Map()).set(rec.cid, { t: rec.t, ...hits.get(rec.cid) });
+    }
+  }
+  const queued = [];
+  for (const [ip, cl] of Object.entries(byIp)) {
+    if (cl.size < minClicks) continue;
+    if (await store.get(`allow/ip/${enc(ip)}`).catch(() => null)) continue;        // real customer
+    const cidr = ip.includes(':') ? `${ip}/128` : `${ip}/32`;
+    const w = await store.setJSON(`rec/seen/${enc(cidr)}`, { t: now, retro: true }, { onlyIfNew: true });
+    if (w?.modified === false) continue;                                            // already proposed / excluded
+    const first = [...cl.values()][0];
+    await store.setJSON(`rec/pending/${enc(cidr)}`, { t: now, ip, proposal: { cidr, kind: 'ip' }, level: 'recommend_exclude', status: 'pending', mode: 'enforce',
+      reasons: [`Google Ads confirmă: ${cl.size} clicuri azi din ${first.place}, mobil, pe Haushalts-/Wohnungsauflösung — ${first.sig.label} (verificare retroactivă)`] });
+    await store.setJSON(`off/ip/${enc(ip)}`, { t: now, retro: true });
+    queued.push({ ip, clicks: cl.size });
+  }
+  return queued;
+}

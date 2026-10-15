@@ -27,7 +27,7 @@ export const RULES = {
 export const WEIGHTS = {
   analyze: 25, evaluate: 45, hour: 15, network: 20, fingerprint: 15,
   repeatOffender: 45, repeatDevice: 10, datacenter: 40, foreign: 25, outsideRegion: 10,
-  botUa: 40, noAcceptLanguage: 10, trap: 60, deadVisit: 35,
+  botUa: 40, noAcceptLanguage: 10, trap: 60, deadVisit: 35, signature: 30,
 };
 
 // Target region of the campaigns: Baden-Württemberg, Germany.
@@ -72,3 +72,21 @@ export const MOBILE_HOSTNAME_RE = /(pool\.telefonica\.de|mobile|\.mnet\.|dyn\.te
 export const BOT_UA_RE = /(bot|crawl|spider|headless|phantom|puppeteer|playwright|selenium|python-requests|curl\/|wget|httpclient|go-http|java\/|scrapy|axios|node-fetch)/i;
 // Google's own ad-quality crawlers visit landing pages; never count them.
 export const GOOGLE_VERIFIER_UA_RE = /(AdsBot-Google|Mediapartners-Google|Google-Adwords|Google-InspectionTool|Googlebot)/i;
+
+// Known attacker signatures, learned from the click history (Laura approved 15.10.2026).
+// Since 08.09.2026 the click waves come from Bietigheim / Daxlanden (Karlsruhe), always mobile,
+// always on Haushalts-/Wohnungsauflösung, mostly 17-19h. A match is a STRONG signal (exclusion at
+// the 2nd paid click). Google's own location ("Daxlanden") arrives hours later, so at click time
+// the match uses what the site sees: device, landing page, IP place and operator.
+export const ATTACKER_SIGNATURES = [
+  {
+    id: 'bietigheim-daxlanden-auflösung',
+    label: 'tiparul valurilor din Bietigheim / Daxlanden (mobil, Haushalts-/Wohnungsauflösung)',
+    pathRe: /(haushalts|wohnungs)aufloesung/i,
+    mobileOnly: true,
+    cities: ['Bietigheim', 'Daxlanden', 'Karlsruhe-Daxlanden'],                 // place seen directly
+    asnCities: { 6805: ['Karlsruhe', 'Rastatt', 'Bietigheim', 'Durmersheim', 'Rheinstetten'] },   // O2 mobile pools seen in the waves
+    adsPlaces: ['Bietigheim', 'Daxlanden'],                                    // Google click_view location (retro check)
+    adsKeywordRe: /(haushalts|wohnungs)aufl[öo]sung/i,
+  },
+];
