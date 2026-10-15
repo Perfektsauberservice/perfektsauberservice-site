@@ -170,3 +170,9 @@ PC-ul proprietarei (pornit non-stop): runner.mjs loop (la 10 s)
 10. **Raport săptămânal** (luni): clicuri, cost, invalide Google, suspecte, excluderi, surse principale, clienți reali, zone.
 
 **Teste:** 156/156 automate; testul complet pe draft 13/13. Pe live s-a verificat că scriptul și capcana apar doar pe paginile cu gclid.
+
+## 13. V1.4 (15.10.2026): semnătura atacatorului, dosar, clienți reali → Google
+- **Analiza istoricului** (895 de clicuri, 15.08–15.10): de la sfârșitul lui septembrie, valurile vin din Bietigheim / Daxlanden, de pe mobil, pe Haushalts-/Wohnungsauflösung, mai ales între 17:00 și 19:00. 139 de clicuri cu semnătura, 8 valuri, ~145 € în orele de val.
+- **Semnătura** (`ATTACKER_SIGNATURES` în config.mjs) = semnal puternic, deci excludere de la al 2-lea clic. La momentul clicului contează: mobil + pagină de Auflösung + loc (Bietigheim / Daxlanden) sau O2 (AS6805) cu loc Karlsruhe / Rastatt / Bietigheim / Durmersheim / Rheinstetten. **Verificare retroactivă** la 30 de minute, cu locația din Google click_view: 2+ clicuri cu semnătura de pe același IP → excludere.
+- **Dosarul atacatorului** (`attacker-dossier.mjs`): valuri, clicuri cu GCLID, IP-uri (marcate „legătura cu valurile nedovedită”), raport în română, Sachverhaltsdarstellung în germană (§ 263a StGB / § 4 Nr. 4 UWG, încadrarea rămâne la autorități), manifest SHA-256. Trimis doar proprietarei.
+- **Clienți reali → Google** (`offline-conversions.mjs`): fișierul de import offline (formular / tap cu gclid), săptămânal, doar proprietarei. Sistemul nu creează și nu modifică acțiuni de conversie.
