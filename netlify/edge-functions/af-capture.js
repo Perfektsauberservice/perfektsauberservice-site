@@ -82,7 +82,7 @@ export default async (request, context) => {
       lookup: addr => lookupNet(addr, { ipinfoToken: token }),   // RIPEstat first, ipinfo fallback
       // start the exclusion executor right away (it only reads the queue, takes no input)
       trigger: () => fetch(`${url.origin}/.netlify/functions/af-exclude`, { method: 'POST' }),
-      notify: async text => {
+      notify: async (text, decision) => {
         const bot = env('TELEGRAM_BOT_TOKEN'), chat = env('TELEGRAM_CHAT_ID');
         if (!bot || !chat) { await store.setJSON('health/telegram', { t: Date.now(), ok: false, status: 'missing TELEGRAM_* env' }); return; }
         const prefix = isProd ? '' : `[TEST ${deployContext}] `;
@@ -93,6 +93,13 @@ export default async (request, context) => {
         const body = await r.json().catch(() => ({}));
         await store.setJSON('health/telegram', { t: Date.now(), ok: !!body.ok, status: r.status, messageId: body.result?.message_id || null });
         if (!body.ok) throw new Error(`telegram ${r.status} ${body.description || ''}`);
+        // exclusions also go to the approved team recipients (e.g. the Ads agency)
+        if (decision?.level === 'recommend_exclude') {
+          for (const rb of (await store.list({ prefix: 'tg/recipients/' })).blobs) {
+            await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ chat_id: rb.key.split('/').pop(), text: prefix + text, disable_web_page_preview: true }) }).catch(() => {});
+          }
+        }
       },
     };
     context.waitUntil(processClick(deps, event).then(

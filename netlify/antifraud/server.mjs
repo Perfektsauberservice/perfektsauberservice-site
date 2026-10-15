@@ -2,6 +2,7 @@
 // Google Ads credentials and Telegram come from Netlify environment variables.
 import { getStore } from '@netlify/blobs';
 import { STORE_NAME } from './config.mjs';
+import { recipients } from './telegram-poll.mjs';
 
 const ADS_KEYS = ['GOOGLE_ADS_DEVELOPER_TOKEN', 'GOOGLE_ADS_CLIENT_ID', 'GOOGLE_ADS_CLIENT_SECRET',
   'GOOGLE_ADS_REFRESH_TOKEN', 'GOOGLE_ADS_LOGIN_CUSTOMER_ID', 'GOOGLE_ADS_CUSTOMER_ID'];
@@ -27,7 +28,7 @@ export function enforceFor(context) {
   return isProduction(context) && envGet('AF_ENFORCE') === '1';
 }
 
-export function notifier(context) {
+export function notifier(context, store = null) {
   const bot = envGet('TELEGRAM_BOT_TOKEN'), chat = envGet('TELEGRAM_CHAT_ID');
   const prefix = isProduction(context) ? '' : `[TEST ${context?.deploy?.context || '?'}] `;
   const post = async body => {
@@ -50,7 +51,19 @@ export function notifier(context) {
     if (!j.ok) throw new Error(`telegram sendDocument ${r.status} ${j.description || ''}`);
     return j.result?.message_id;
   };
+  // team alerts: owner + approved recipients (e.g. the Ads agency); a failing recipient never blocks the owner
+  const notifyTeam = async text => {
+    const id = await post({ text });
+    if (store) for (const chatId of await recipients(store).catch(() => [])) {
+      try {
+        await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ chat_id: chatId, text: prefix + text, disable_web_page_preview: true }) });
+      } catch { /* ignore */ }
+    }
+    return id;
+  };
   return {
+    notifyTeam,
     notify: text => post({ text }),
     send: (text, buttons) => post({ text, reply_markup: { inline_keyboard: [buttons] } }),
     sendDocument,

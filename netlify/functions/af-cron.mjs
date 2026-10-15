@@ -22,12 +22,17 @@ const every = async (store, key, ms, fn) => {
 export default async (req, context) => {
   const store = storeFor(context);
   const { env, missing } = adsEnvFromNetlify();
-  const { notify, send, sendDocument } = notifier(context);
+  const { notify, notifyTeam, send, sendDocument } = notifier(context, store);
   const log = { t: Date.now(), steps: [] };
   try {
     if (missing.length) throw new Error(`missing env ${missing.join(', ')}`);
     const client = adsClient(env);
     const enforce = enforceFor(context);
+    // Telegram has no webhook: read rotation buttons, recipient approvals and /start requests here
+    const { pollTelegram } = await import('../antifraud/telegram-poll.mjs');
+    const tg = await pollTelegram({ store, botToken: process.env.TELEGRAM_BOT_TOKEN || globalThis.Netlify?.env?.get?.('TELEGRAM_BOT_TOKEN'),
+      ownerChatId: process.env.TELEGRAM_CHAT_ID || globalThis.Netlify?.env?.get?.('TELEGRAM_CHAT_ID') }).catch(e => ({ error: String(e).slice(0, 120) }));
+    log.steps.push(`telegram:${tg.updates ?? tg.error}`);
 
     const now = new Date();
     const hm = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }).slice(0, 5);
@@ -37,7 +42,7 @@ export default async (req, context) => {
       // 10) weekly report + 7) refund evidence pack for Google (sent to Laura, never submitted automatically)
       const mon = await import('../../agent/antifraud/monitors.mjs');
       const ins = await import('../../agent/antifraud/insights.mjs');
-      await notify(await mon.weeklyReport({ client, store }));
+      await notifyTeam(await mon.weeklyReport({ client, store }));
       const day = t => new Date(t).toLocaleDateString('sv-SE', { timeZone: 'Europe/Berlin' });
       const pack = await ins.refundPack({ client, store, from: day(Date.now() - 7 * 864e5), to: day(Date.now() - 864e5), outRoot: null });
       if (pack.clicks > 0) {
@@ -54,10 +59,10 @@ export default async (req, context) => {
         const tu = await ins.tune({ client, store, days: 7 }).catch(() => null);
         if (tu) msg += `\n🎚️ ${tu.advice}`;
       }
-      await notify(msg);
+      await notifyTeam(msg);
       log.steps.push('summary');
     } else {
-      const done = await processProposals({ store, client, notify, enforce, ledgerPath: null, executor: 'netlify-cron' });
+      const done = await processProposals({ store, client, notify: notifyTeam, enforce, ledgerPath: null, executor: 'netlify-cron' });
       log.steps.push(`proposals:${done.length}`);
       const rot = await processRotationDecisions({ store, client, notify, enforce });
       log.steps.push(`rotations:${rot.length}`);
@@ -69,7 +74,7 @@ export default async (req, context) => {
       await every(store, 'spend', 60 * 60e3, () => spendCheck({ client, notify }));
       await every(store, 'purge', 24 * 3600e3, () => purge(store));
       const mon = await import('../../agent/antifraud/monitors.mjs');
-      await every(store, 'hourly', 15 * 60e3, () => mon.hourlyCheck({ client, store, notify }));                       // 2) ghost clicks + 3) capture broken
+      await every(store, 'hourly', 15 * 60e3, () => mon.hourlyCheck({ client, store, notify: notifyTeam }));                       // 2) ghost clicks + 3) capture broken
       await every(store, 'foreign', 60 * 60e3, last => mon.foreignWrites({ client, store, notify, sinceMs: last || Date.now() - 2 * 3600e3 }));   // 8)
       await every(store, 'expire', 24 * 3600e3, () => mon.expireMobile({ client, store, notify, enforce }));              // 4)
       const full = done.some(d => (d.executor?.plan || []).some(p => p.action === 'capacity_full'));

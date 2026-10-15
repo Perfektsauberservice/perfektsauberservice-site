@@ -159,7 +159,7 @@ export async function processClick(deps, event) {
     const dkey = `alert/${enc(event.ip)}/${decision.level}/${slot}`;
     const w = await store.setJSON(dkey, 1, { onlyIfNew: true });   // atomic: parallel requests alert once
     if (w?.modified ?? true) {
-      await deps.notify(formatAlert(decision, event));
+      await deps.notify(formatAlert(decision, event), decision);
       alerted = true;
     }
   }

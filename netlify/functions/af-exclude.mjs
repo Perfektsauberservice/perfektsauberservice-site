@@ -14,9 +14,9 @@ export default async (req, context) => {
     await store.setJSON(`health/error/${Date.now()}`, { t: Date.now(), error: `af-exclude: missing env ${missing.join(', ')}` });
     return Response.json({ ok: false, missing }, { status: 503 });
   }
-  const { notify } = notifier(context);
+  const { notifyTeam } = notifier(context, store);
   const t0 = Date.now();
-  const done = await processProposals({ store, client: adsClient(env), notify, enforce: enforceFor(context),
+  const done = await processProposals({ store, client: adsClient(env), notify: notifyTeam, enforce: enforceFor(context),
     ledgerPath: null, executor: 'netlify' });
   await store.setJSON('health/af-exclude', { t: Date.now(), processed: done.length, ms: Date.now() - t0, enforce: enforceFor(context) });
   return Response.json({ ok: true, processed: done.map(d => ({ cidr: d.proposal.cidr, status: d.status, reactionMs: d.reactionMs })) });
