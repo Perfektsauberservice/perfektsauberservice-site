@@ -3,6 +3,7 @@
 import { getStore } from '@netlify/blobs';
 import { STORE_NAME } from './config.mjs';
 import { recipients } from './telegram-poll.mjs';
+import { teamCopy } from './team-filter.mjs';
 
 const ADS_KEYS = ['GOOGLE_ADS_DEVELOPER_TOKEN', 'GOOGLE_ADS_CLIENT_ID', 'GOOGLE_ADS_CLIENT_SECRET',
   'GOOGLE_ADS_REFRESH_TOKEN', 'GOOGLE_ADS_LOGIN_CUSTOMER_ID', 'GOOGLE_ADS_CUSTOMER_ID'];
@@ -53,11 +54,12 @@ export function notifier(context, store = null) {
   };
   // team alerts: owner + approved recipients (e.g. the Ads agency); a failing recipient never blocks the owner
   const notifyTeam = async text => {
-    const id = await post({ text });
-    if (store) for (const chatId of await recipients(store).catch(() => [])) {
+    const id = await post({ text });                          // Laura: full text
+    const copy = teamCopy(text);                               // others: without agency / Madalina lines
+    if (store && copy) for (const chatId of await recipients(store).catch(() => [])) {
       try {
         await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ chat_id: chatId, text: prefix + text, disable_web_page_preview: true }) });
+          body: JSON.stringify({ chat_id: chatId, text: prefix + copy, disable_web_page_preview: true }) });
       } catch { /* ignore */ }
     }
     return id;

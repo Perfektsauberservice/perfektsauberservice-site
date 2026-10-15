@@ -7,6 +7,7 @@ import { getStore } from '@netlify/blobs';
 import { processClick, sha256Hex } from '../antifraud/pipeline.mjs';
 import { STORE_NAME } from '../antifraud/config.mjs';
 import { lookupNet } from '../antifraud/netinfo.mjs';
+import { teamCopy } from '../antifraud/team-filter.mjs';
 
 // Added only to pages opened from an ad click: behaviour beacon + a link no person can see or use.
 const INJECT = '<script src="/js/af-b.js" defer></script>'
@@ -94,10 +95,11 @@ export default async (request, context) => {
         await store.setJSON('health/telegram', { t: Date.now(), ok: !!body.ok, status: r.status, messageId: body.result?.message_id || null });
         if (!body.ok) throw new Error(`telegram ${r.status} ${body.description || ''}`);
         // exclusions also go to the approved team recipients (e.g. the Ads agency)
-        if (decision?.level === 'recommend_exclude') {
+        const copy = teamCopy(text);   // never agency / Madalina remarks in copies for the team
+        if (decision?.level === 'recommend_exclude' && copy) {
           for (const rb of (await store.list({ prefix: 'tg/recipients/' })).blobs) {
             await fetch(`https://api.telegram.org/bot${bot}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
-              body: JSON.stringify({ chat_id: rb.key.split('/').pop(), text: prefix + text, disable_web_page_preview: true }) }).catch(() => {});
+              body: JSON.stringify({ chat_id: rb.key.split('/').pop(), text: prefix + copy, disable_web_page_preview: true }) }).catch(() => {});
           }
         }
       },
