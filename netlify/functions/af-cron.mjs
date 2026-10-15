@@ -49,7 +49,15 @@ export default async (req, context) => {
         await notify(`💶 Pachet rambursare Google — ${pack.clicks} clicuri suspecte de la ${pack.ips} IP-uri (${pack.confirmedInAds} confirmate în Google Ads). Formular: https://support.google.com/google-ads/contact/click_quality — copiezi textul din antrag-de.txt și atașezi invalid-clicks.csv. Nu s-a trimis nimic automat.`);
         for (const n of ['antrag-de.txt', 'invalid-clicks.csv', 'manifest.sha256']) await sendDocument(`refund_${day(Date.now())}_${n}`, pack.files[n]);
       }
-      log.steps.push(`weekly, refund:${pack.clicks}`);
+      // 4) real customers -> Google Ads import file (Laura only; nothing is changed in Google Ads)
+      const oc = await import('../../agent/antifraud/offline-conversions.mjs');
+      const conv = await oc.offlineConversionsCsv({ store, days: 7 });
+      if (conv.count > 0) {
+        await notify(`🎯 ${oc.IMPORT_HOWTO}
+Fișierul de săptămâna aceasta: ${conv.count} clienți (${conv.forms} formulare).`);
+        await sendDocument(`clienti-reali-google-ads_${day(Date.now())}.csv`, conv.csv);
+      }
+      log.steps.push(`weekly, refund:${pack.clicks}, conversions:${conv.count}`);
     } else if (hm >= '20:30' && (await store.setJSON(`cron/summary/${today}`, { t: Date.now() }, { onlyIfNew: true }))?.modified !== false) {
       const ins = await import('../../agent/antifraud/insights.mjs');
       let msg = await ins.summary({ client, store, day: today });
