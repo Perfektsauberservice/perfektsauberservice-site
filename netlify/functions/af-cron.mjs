@@ -77,6 +77,11 @@ export default async (req, context) => {
       await every(store, 'hourly', 15 * 60e3, () => mon.hourlyCheck({ client, store, notify: notifyTeam }));                       // 2) ghost clicks + 3) capture broken
       await every(store, 'foreign', 60 * 60e3, last => mon.foreignWrites({ client, store, notify, sinceMs: last || Date.now() - 2 * 3600e3 }));   // 8)
       await every(store, 'expire', 24 * 3600e3, () => mon.expireMobile({ client, store, notify, enforce }));              // 4)
+      // hourly report of every new ad click (08:00–22:00), Laura only — contains IPs
+      if (hm >= '08:00' && hm < '22:00') {
+        const { clickDigest } = await import('../../agent/antifraud/click-digest.mjs');
+        await every(store, 'digest', 60 * 60e3, last => clickDigest({ client, store, notify, sinceMs: last || Date.now() - 3600e3 }));
+      }
       const full = done.some(d => (d.executor?.plan || []).some(p => p.action === 'capacity_full'));
       const counts = await client.search("SELECT campaign.name, campaign_criterion.criterion_id FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status != 'REMOVED'");
       const per = counts.reduce((m, r) => (m[r.campaign.name] = (m[r.campaign.name] || 0) + 1, m), {});
