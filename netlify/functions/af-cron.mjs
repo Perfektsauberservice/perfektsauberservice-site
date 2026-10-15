@@ -4,7 +4,10 @@
 //     abuse-evidence dossier for each newly excluded IP (sent to Laura on Telegram, never to an ISP)
 //   * hourly: spend anomaly check
 //   * every 6 h, and only if a list is >= 450: rotation proposal with Telegram buttons
+//   * every 15 min: ghost clicks / capture-broken check (finished hours); hourly: foreign API writes to IP lists
+//   * daily: expiry of own mobile-IP exclusions (45 days)
 //   * once a day after 20:30 Berlin: daily summary (+ zones; Monday threshold check) — in a run of its own
+//   * Monday after 09:00: weekly report + Google refund evidence pack — in a run of its own
 import { adsClient } from '../../agent/antifraud/ads-exclusions.mjs';
 import { processProposals, processRotationDecisions, proposeRotation, spendCheck, healthCheck, purge } from '../../agent/antifraud/runner.mjs';
 import { adsEnvFromNetlify, storeFor, enforceFor, notifier } from '../antifraud/server.mjs';
@@ -29,7 +32,20 @@ export default async (req, context) => {
     const now = new Date();
     const hm = now.toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }).slice(0, 5);
     const today = now.toLocaleDateString('sv-SE', { timeZone: 'Europe/Berlin' });
-    if (hm >= '20:30' && (await store.setJSON(`cron/summary/${today}`, { t: Date.now() }, { onlyIfNew: true }))?.modified !== false) {
+    const isMonday = now.toLocaleDateString('en-US', { timeZone: 'Europe/Berlin', weekday: 'short' }) === 'Mon';
+    if (isMonday && hm >= '09:00' && (await store.setJSON(`cron/weekly/${today}`, { t: Date.now() }, { onlyIfNew: true }))?.modified !== false) {
+      // 10) weekly report + 7) refund evidence pack for Google (sent to Laura, never submitted automatically)
+      const mon = await import('../../agent/antifraud/monitors.mjs');
+      const ins = await import('../../agent/antifraud/insights.mjs');
+      await notify(await mon.weeklyReport({ client, store }));
+      const day = t => new Date(t).toLocaleDateString('sv-SE', { timeZone: 'Europe/Berlin' });
+      const pack = await ins.refundPack({ client, store, from: day(Date.now() - 7 * 864e5), to: day(Date.now() - 864e5), outRoot: null });
+      if (pack.clicks > 0) {
+        await notify(`💶 Pachet rambursare Google — ${pack.clicks} clicuri suspecte de la ${pack.ips} IP-uri (${pack.confirmedInAds} confirmate în Google Ads). Formular: https://support.google.com/google-ads/contact/click_quality — copiezi textul din antrag-de.txt și atașezi invalid-clicks.csv. Nu s-a trimis nimic automat.`);
+        for (const n of ['antrag-de.txt', 'invalid-clicks.csv', 'manifest.sha256']) await sendDocument(`refund_${day(Date.now())}_${n}`, pack.files[n]);
+      }
+      log.steps.push(`weekly, refund:${pack.clicks}`);
+    } else if (hm >= '20:30' && (await store.setJSON(`cron/summary/${today}`, { t: Date.now() }, { onlyIfNew: true }))?.modified !== false) {
       const ins = await import('../../agent/antifraud/insights.mjs');
       let msg = await ins.summary({ client, store, day: today });
       const z = await ins.zones({ client, store, days: 7 }).catch(() => null);
@@ -52,6 +68,10 @@ export default async (req, context) => {
       await every(store, 'health', 15 * 60e3, since => healthCheck({ store, notify, since }));
       await every(store, 'spend', 60 * 60e3, () => spendCheck({ client, notify }));
       await every(store, 'purge', 24 * 3600e3, () => purge(store));
+      const mon = await import('../../agent/antifraud/monitors.mjs');
+      await every(store, 'hourly', 15 * 60e3, () => mon.hourlyCheck({ client, store, notify }));                       // 2) ghost clicks + 3) capture broken
+      await every(store, 'foreign', 60 * 60e3, last => mon.foreignWrites({ client, store, notify, sinceMs: last || Date.now() - 2 * 3600e3 }));   // 8)
+      await every(store, 'expire', 24 * 3600e3, () => mon.expireMobile({ client, store, notify, enforce }));              // 4)
       const full = done.some(d => (d.executor?.plan || []).some(p => p.action === 'capacity_full'));
       const counts = await client.search("SELECT campaign.name, campaign_criterion.criterion_id FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status != 'REMOVED'");
       const per = counts.reduce((m, r) => (m[r.campaign.name] = (m[r.campaign.name] || 0) + 1, m), {});

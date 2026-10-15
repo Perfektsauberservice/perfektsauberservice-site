@@ -27,7 +27,7 @@ export const handler = async (event) => {
     }
 
     // PSS Anti-Fraud: a phone/WhatsApp/email click = real customer -> this IP is never excluded (isolated, never throws)
-    await markCustomerFromLambda(event, clientIp(event), `${type} click`, page);
+    await markCustomerFromLambda(event, clientIp(event), `${type} click`, page, 'contact', body.attribution?.gclid || '');
 
     const attribution = (body.attribution && typeof body.attribution === 'object') ? body.attribution : {};
     const gclid = attribution.gclid || '';

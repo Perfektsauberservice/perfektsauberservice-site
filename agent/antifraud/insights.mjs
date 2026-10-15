@@ -131,7 +131,7 @@ export async function summary({ client, store, day = berlinDay() }) {
 }
 
 /** 8) Evidence pack for Google's invalid-click investigation form (nothing is submitted). */
-export async function refundPack({ client, store, from, to }) {
+export async function refundPack({ client, store, from, to, outRoot = DATA_DIR }) {
   const rows = [];
   for (let t = Date.parse(from); t <= Date.parse(to); t += 864e5) {
     const day = new Date(t).toISOString().slice(0, 10);
@@ -151,7 +151,6 @@ export async function refundPack({ client, store, from, to }) {
       }
     }
   }
-  const dir = `${DATA_DIR}/refund-${from}_${to}`; mkdirSync(dir, { recursive: true });
   const csv = ['utc;ip;gclid;landing_page;campaign;keyword;found_in_google_ads_click_view;record_sha256'].concat(rows.map(r => [r.utc, r.ip, r.gclid, r.page, r.campaign, r.keyword, r.inAds, r.sha256].join(';'))).join('\n') + '\n';
   const confirmed = rows.filter(r => r.inAds);
   const camps = [...new Set(confirmed.map(r => r.campaign))].join(', ') || '—';
@@ -166,11 +165,15 @@ Die Liste mit Zeitstempel (UTC), IP, GCLID, Zielseite, Kampagne und Keyword lieg
 Mit freundlichen Grüßen
 Laura Craciun, Perfekt Sauber Service
 `;
-  writeFileSync(`${dir}/invalid-clicks.csv`, '﻿' + csv);
-  writeFileSync(`${dir}/antrag-de.txt`, de);
-  writeFileSync(`${dir}/README.txt`, 'Formular: Google Ads Hilfe -> "Ungültige Klicks melden" (support.google.com/google-ads/contact/click_quality). Text aus antrag-de.txt kopieren, invalid-clicks.csv anhängen. NICHTS wurde automatisch gesendet.\n');
-  writeFileSync(`${dir}/manifest.sha256`, ['invalid-clicks.csv', 'antrag-de.txt', 'README.txt'].map(n => `${createHash('sha256').update(readFileSync(`${dir}/${n}`)).digest('hex')}  ${n}`).join('\n') + '\n');
-  return { dir, clicks: rows.length, confirmedInAds: confirmed.length };
+  const files = {
+    'invalid-clicks.csv': '﻿' + csv,
+    'antrag-de.txt': de,
+    'README.txt': 'Formular: Google Ads Hilfe -> "Ungültige Klicks melden" (support.google.com/google-ads/contact/click_quality). Text aus antrag-de.txt kopieren, invalid-clicks.csv anhängen. NICHTS wurde automatisch gesendet.\n',
+  };
+  files['manifest.sha256'] = Object.keys(files).map(n => `${createHash('sha256').update(Buffer.from(files[n], 'utf8')).digest('hex')}  ${n}`).join('\n') + '\n';
+  let dir = null;
+  if (outRoot) { dir = `${outRoot}/refund-${from}_${to}`; mkdirSync(dir, { recursive: true }); for (const [n, body] of Object.entries(files)) writeFileSync(`${dir}/${n}`, body); }
+  return { dir, files, clicks: rows.length, confirmedInAds: confirmed.length, ips: new Set(rows.map(r => r.ip)).size };
 }
 
 async function main() {

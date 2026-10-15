@@ -13,8 +13,10 @@ import { RULES } from './config.mjs';
 // strength 'form'    = submitted the contact form -> never excluded (30 days)
 // strength 'contact' = tapped phone/WhatsApp/e-mail -> exclusion threshold +2 for 24 h (a tap alone
 //                      must not buy immunity: anyone can trigger it)
-export async function markCustomer(store, ip, reason, page = '', strength = 'contact') {
-  if (!ip) return false;
+export async function markCustomer(store, ip, reason, page = '', strength = 'contact', gclid = '') {
+  // ad click -> real customer link (weekly report: customers per campaign / keyword / place)
+  if (gclid) await store.setJSON(`lead/${(await sha256Hex(String(gclid))).slice(0, 24)}`, { t: Date.now(), gclid: String(gclid).slice(0, 200), reason, strength });
+  if (!ip) return !!gclid;
   const key = `allow/ip/${enc(ip)}`;
   const prev = await store.get(key, { type: 'json' }).catch(() => null);
   if (prev?.strength === 'form' && strength !== 'form') return true;   // never downgrade
@@ -83,6 +85,7 @@ export async function processClick(deps, event) {
     event.fp && store.setJSON(`ix/fp/${enc(event.fp)}/${row}`, 1),
   ]);
   timings.stored = deps.now();
+  if (event.context === 'production') store.setJSON('health/live-since', { t: event.t }, { onlyIfNew: true }).catch(() => {});
 
   // 3) history + network info
   const since = event.t - RULES.lookbackMs;

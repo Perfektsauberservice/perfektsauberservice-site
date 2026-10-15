@@ -184,6 +184,7 @@ export async function processRotationDecisions({ store, client, notify, enforce 
       } catch (e) { status = 'error'; error = String(e).slice(0, 300); }
     }
     await store.setJSON(`rot/done/${p.id}`, { ...p, decision: d, status, error, doneAt: Date.now() });
+    if (status === 'removed') await store.setJSON(`ledger/${String(Date.now()).padStart(13, '0')}_rotation-${p.id}`, { t: Date.now(), mode: 'enforce', rotation: p.id, removed: p.criteria, ips: p.ips });
     await store.delete(b.key);
     if (d.approved) await notify(`${label}♻️ Rotația ${p.id}: ${status === 'removed' ? `✅ scoase ${p.ips.length} IP-uri (${p.criteria.length} poziții)` : status === 'validated_only' ? '🧪 validată, NEAPLICATĂ (mod umbră)' : '❌ eroare: ' + error}`);
     done.push({ id: p.id, status });

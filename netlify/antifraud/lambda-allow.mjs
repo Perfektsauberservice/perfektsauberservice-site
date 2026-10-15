@@ -24,11 +24,11 @@ export function ipSources(event) {
   return { nf: h['x-nf-client-connection-ip'] || null, clientIp: h['client-ip'] || null, xff: h['x-forwarded-for'] || null };
 }
 
-export async function markCustomerFromLambda(event, ip, reason, page, strength = 'contact') {
+export async function markCustomerFromLambda(event, ip, reason, page, strength = 'contact', gclid = '') {
   try {
-    if (!ip) return false;
+    if (!ip && !gclid) return false;
     connectLambda(event);
-    const ok = await markCustomer(getStore(STORE_NAME), ip, reason, page, strength);
+    const ok = await markCustomer(getStore(STORE_NAME), ip, reason, page, strength, gclid);
     return ok;
   } catch (err) {
     console.warn('antifraud allowlist skipped:', String(err?.message || err).slice(0, 160));
