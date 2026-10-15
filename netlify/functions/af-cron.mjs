@@ -118,7 +118,10 @@ Fișierul de săptămâna aceasta: ${conv.count} clienți (${conv.forms} formula
     await store.setJSON('health/af-cron', { ...log, ms: Date.now() - log.t, ok: true });
   } catch (e) {
     await store.setJSON('health/af-cron', { ...log, ms: Date.now() - log.t, ok: false, error: String(e).slice(0, 300) });
-    await store.setJSON(`health/error/${Date.now()}`, { t: Date.now(), error: `af-cron: ${String(e).slice(0, 300)}` });
+    // Google-side temporary errors are logged, not alarmed (the next run 5 min later retries everything)
+    const { isTransientError } = await import('../../agent/antifraud/ads-exclusions.mjs');
+    if (isTransientError(e)) await store.setJSON(`health/transient/${Date.now()}`, { t: Date.now(), error: `af-cron: ${String(e).slice(0, 300)}` });
+    else await store.setJSON(`health/error/${Date.now()}`, { t: Date.now(), error: `af-cron: ${String(e).slice(0, 300)}` });
   }
   return new Response('ok');
 };

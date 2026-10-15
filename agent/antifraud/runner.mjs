@@ -9,7 +9,7 @@
 
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { getStore } from '@netlify/blobs';
-import { adsClient, applyExclusion, loadEnv } from './ads-exclusions.mjs';
+import { adsClient, applyExclusion, loadEnv, isTransientError } from './ads-exclusions.mjs';
 import { STORE_NAME, RULES } from '../../netlify/antifraud/config.mjs';
 
 const SITE_ID = '89b24c5c-6d05-4123-9da9-f318deb1e044';
@@ -58,7 +58,16 @@ export async function processProposals({ store, client, notify, enforce = false,
     if (!rec) continue;
     let exec;
     try { exec = await applyExclusion(client, rec.proposal.cidr, { enforce, ledgerPath }); }
-    catch (e) { exec = { error: String(e).slice(0, 300), doneAt: Date.now() }; }
+    catch (e) {
+      // Google-side temporary error: keep the proposal queued for the next run (max 3 tries before reporting)
+      const attempts = (rec.attempts || 0) + 1;
+      if (isTransientError(e) && attempts < 3) {
+        await store.setJSON(b.key, { ...rec, attempts, lastError: String(e).slice(0, 200) });
+        await store.delete(b.key.replace('rec/pending/', 'rec/claim/'));
+        continue;
+      }
+      exec = { error: String(e).slice(0, 300), doneAt: Date.now(), attempts };
+    }
     exec.executor = executor;
     await store.setJSON(`ledger/${String(exec.t || Date.now()).padStart(13, '0')}_${rec.proposal.cidr.replace(/\//g, '-').replace(/:/g, 'x')}`, exec);
     const done = { ...rec, status: exec.error ? 'error' : exec.mode, executor: exec, reactionMs: exec.doneAt - rec.t };
@@ -88,14 +97,17 @@ export async function healthCheck({ store, notify, since, label = '' }) {
   const fresh = blobs.filter(b => Number(b.key.split('/').pop()) > since);
   if (fresh.length) {
     const e = await store.get(fresh[fresh.length - 1].key, { type: 'json' });
-    await notify(`${label}⚠️ PSS Anti-Fraud — defecțiune captare (${fresh.length} erori)\n${String(e?.error).slice(0, 300)}`);
+    await notify(`${label}⚠️ PSS Anti-Fraud — defecțiune (${fresh.length} erori)\n${String(e?.error).slice(0, 300)}`);
   }
+  // Google-side temporary errors: only alarm when they persist (>= 6 since the last check = ~30 min of failures)
+  const transient = (await store.list({ prefix: 'health/transient/' })).blobs.filter(b => Number(b.key.split('/').pop()) > since);
+  if (transient.length >= 6) await notify(`${label}⚠️ PSS Anti-Fraud — Google Ads API indisponibil (${transient.length} erori temporare la rând). Reîncerc automat; nu e o defecțiune a sistemului nostru.`);
   return fresh.length;
 }
 
 export async function purge(store, now = Date.now()) {
   const cutoff = now - RULES.retentionDays * 864e5; let n = 0;
-  for (const prefix of ['ev/', 'ix/', 'alert/', 'health/error/', 'dec/']) {
+  for (const prefix of ['ev/', 'ix/', 'alert/', 'health/error/', 'health/transient/', 'dec/']) {
     const { blobs } = await store.list({ prefix });
     for (const b of blobs) {
       const ts = Number((b.key.match(/(\d{13})_/) || b.key.match(/\/(\d{13})$/) || [])[1] || 0);

@@ -40,6 +40,10 @@ export function assertOnlyIpBlockOps(operations, ownedResourceNames = new Set())
   }
 }
 
+export const isTransientStatus = s => s === 429 || (s >= 500 && s <= 504);
+/** Google-side temporary failure (not a problem of our system). */
+export const isTransientError = e => /ads [^ ]+ (429|50[0-4]):|INTERNAL|UNAVAILABLE|DEADLINE_EXCEEDED|RESOURCE_EXHAUSTED|fetch failed|ECONNRESET|ETIMEDOUT/.test(String(e?.message || e));
+
 export function adsClient(env = loadEnv(), fetchImpl = fetch) {
   const cid = (env.GOOGLE_ADS_CUSTOMER_ID || '').replace(/-/g, '');
   let token = null, tokenAt = 0;
@@ -52,14 +56,19 @@ export function adsClient(env = loadEnv(), fetchImpl = fetch) {
     if (!r.ok) throw new Error(`oauth ${r.status}`);
     token = (await r.json()).access_token; tokenAt = Date.now(); return token;
   }
-  async function call(path, body) {
-    const r = await fetchImpl(`https://googleads.googleapis.com/${API}/customers/${cid}/${path}`, { method: 'POST',
-      headers: { authorization: `Bearer ${await auth()}`, 'developer-token': env.GOOGLE_ADS_DEVELOPER_TOKEN,
-        'login-customer-id': (env.GOOGLE_ADS_LOGIN_CUSTOMER_ID || '').replace(/-/g, ''), 'content-type': 'application/json' },
-      body: JSON.stringify(body) });
-    const text = await r.text();
-    if (!r.ok) throw new Error(`ads ${path} ${r.status}: ${text.slice(0, 600)}`);
-    return JSON.parse(text || '{}');
+  // Reads (googleAds:search) are retried on Google's temporary errors (5xx / 429). Writes are never
+  // retried here: a failed write stays queued and is retried by the next run (see processProposals).
+  async function call(path, body, { retries = path.endsWith('googleAds:search') ? 2 : 0, wait = [1000, 3000] } = {}) {
+    for (let attempt = 0; ; attempt++) {
+      const r = await fetchImpl(`https://googleads.googleapis.com/${API}/customers/${cid}/${path}`, { method: 'POST',
+        headers: { authorization: `Bearer ${await auth()}`, 'developer-token': env.GOOGLE_ADS_DEVELOPER_TOKEN,
+          'login-customer-id': (env.GOOGLE_ADS_LOGIN_CUSTOMER_ID || '').replace(/-/g, ''), 'content-type': 'application/json' },
+        body: JSON.stringify(body) });
+      const text = await r.text();
+      if (r.ok) return JSON.parse(text || '{}');
+      if (isTransientStatus(r.status) && attempt < retries) { await new Promise(res => setTimeout(res, wait[attempt] ?? 3000)); continue; }
+      throw new Error(`ads ${path} ${r.status}: ${text.slice(0, 600)}`);
+    }
   }
   async function search(query) {
     let out = [], pageToken;
