@@ -34,7 +34,9 @@ export async function countNewClicks(store, sinceMs, now = Date.now()) {
       if (Number(ts) >= sinceMs && Number(ts) <= now && !isTestIp(dec(ipK))) seen.add(cidHash);
     }
   }
-  return seen.size;
+  let n = 0;
+  for (const h of seen) if (!(await store.get(`digest/sent/${h}`).catch(() => null))) n++;
+  return n;
 }
 
 /** When to send (Laura 15.10): every 4 h, hourly if there are many clicks (>= busy), and a final one after 20:10. */
@@ -63,6 +65,7 @@ export async function clickDigest({ client, store, notify, sinceMs, now = Date.n
   const list = [...clicks.values()].sort((a, b) => a.t - b.t);
   const real = [];
   for (const c of list) {
+    if (await store.get(`digest/sent/${c.cidHash}`).catch(() => null)) continue;   // each click is reported only once, ever
     const rec = await store.get(c.key, { type: 'json' }).catch(() => null);
     if (!rec || /^PSS-LIVE-CHECK/.test(rec.cid || '')) continue;
     real.push({ ...c, rec });
@@ -105,5 +108,6 @@ export async function clickDigest({ client, store, notify, sinceMs, now = Date.n
     const part = blocks.length > 10 ? ` (${i / 10 + 1}/${Math.ceil(blocks.length / 10)})` : '';
     await notify(`${header}${part}\n\n${blocks.slice(i, i + 10).join('\n\n')}${i + 10 >= blocks.length ? more : ''}`);
   }
+  for (const c of real.slice(0, max)) await store.setJSON(`digest/sent/${c.cidHash}`, { t: now });
   return { clicks: real.length };
 }

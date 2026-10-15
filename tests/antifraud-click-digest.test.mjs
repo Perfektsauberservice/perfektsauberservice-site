@@ -29,6 +29,9 @@ test('hourly digest: one block per ad click with operator, place, device, campai
   assert.match(sent[0], /Achern, BW, DE · telefon Samsung cu Android, browserul Samsung/);
   assert.match(sent[0], /amgads \| search_baden baden · „haushaltsauflösung firma” · pagina \/preise/);
   assert.match(sent[0], /a stat 27 s, 4 atingeri, derulat 6%/);
+  // the same click is never reported twice, whatever the time window
+  const again = await clickDigest({ client, store, notify: async t => sent.push(t), sinceMs: T - 12 * 3600e3, now: T + 5 * 3600e3 });
+  assert.equal(again.clicks, 0); assert.equal(sent.length, 1);
 });
 
 test('no new clicks -> no message', async () => {
