@@ -113,7 +113,7 @@ export async function summary({ client, store, day = berlinDay() }) {
   const decs = [];
   for (const b of (await store.list({ prefix: 'dec/' })).blobs) if (Number(b.key.slice(4, 17)) >= d0 && Number(b.key.slice(4, 17)) < d0 + 864e5) decs.push(await store.get(b.key, { type: 'json' }));
   const excl = [];
-  for (const b of (await store.list({ prefix: 'rec/done/' })).blobs) { const r = await store.get(b.key, { type: 'json' }); if (r?.t >= d0 && r.t < d0 + 864e5) excl.push(r); }
+  for (const b of (await store.list({ prefix: 'rec/done/' })).blobs) { const r = await store.get(b.key, { type: 'json' }); if (r?.t >= d0 && r.t < d0 + 864e5 && !/^(192\.0\.2\.|198\.51\.100\.|203\.0\.113\.)/.test(r.proposal?.cidr || '')) excl.push(r); }
   const suspiciousClicks = new Set(decs.filter(d => d.level !== 'log').map(d => d.cidHash)).size;
   const cpc = Number(ads.averageCpc || 0) / 1e6 || 2;
   let rec = null; try { rec = await reconcile({ client, store, day }); } catch { /* click_view may lag */ }

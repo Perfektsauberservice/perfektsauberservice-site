@@ -86,14 +86,14 @@ for (const ip of [ip3, ip4]) {
   // CLI draft deploys get no function env vars (Ads keys) -> executor is verified on production instead
   console.log(`INFO  executor on draft for ${ip}: ${d ? d.status : 'not processed (expected on CLI drafts: no Ads env)'}`);
 }
-const pend = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip3)) && !b.key.startsWith('rec/seen/'));
+const pend = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip3)) && !b.key.startsWith('rec/seen/') && !b.key.startsWith('rec/claim/'));
 log('only one proposal per IP', pend.length === 1, `${pend.length} record(s) for ${ip3}`);
 // parallel burst: 5 simultaneous clicks -> one exclusion alert
 const ip5 = '203.0.113.55';
 await hit(ip5, `par-${run}-0`); await Promise.all([1, 2, 3, 4].map(i => hit(ip5, `par-${run}-${i}`)));
 await sleep(6000);
 const alerts = (await store.list({ prefix: `alert/${enc(ip5)}/recommend_exclude/` })).blobs.length;
-const recs = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip5)) && !b.key.startsWith('rec/seen/')).length;
+const recs = (await store.list({ prefix: 'rec/' })).blobs.filter(b => b.key.includes(enc(ip5)) && !b.key.startsWith('rec/seen/') && !b.key.startsWith('rec/claim/')).length;
 log('parallel burst -> one alert, one proposal', alerts === 1 && recs === 1, `${alerts} alert key(s), ${recs} proposal(s)`);
 // static file is not processed
 const st = Date.now(); await (await fetch(`${base}/css/cta-band.css?v=3&gclid=static-${run}&af_test_ip=203.0.113.99`)).arrayBuffer(); await sleep(2500);

@@ -8,6 +8,8 @@ import { undoExclusion } from './ads-exclusions.mjs';
 import { RULES } from '../../netlify/antifraud/config.mjs';
 import { dec, enc } from '../../netlify/antifraud/pipeline.mjs';
 
+// documentation address ranges used only for tests (RFC 5737) never appear in reports
+export const isTestIp = ip => /^(192\.0\.2\.|198\.51\.100\.|203\.0\.113\.)/.test(String(ip || ''));
 const berlinDay = (t = Date.now()) => new Date(t).toLocaleDateString('sv-SE', { timeZone: 'Europe/Berlin' });
 const berlinHour = t => Number(new Date(t).toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }).slice(0, 2));
 const dayStart = day => new Date(`${day}T00:00:00+02:00`).getTime();   // CEST; good enough for hour buckets until 25.10
@@ -140,10 +142,10 @@ export async function weeklyReport({ client, store, now = Date.now() }) {
   const cpc = Number(m.averageCpc || 0) / 1e6 || 2;
   const since = now - 7 * 864e5;
   const decs = [];
-  for (const b of (await store.list({ prefix: 'dec/' })).blobs) if (Number(b.key.slice(4, 17)) >= since) decs.push(await store.get(b.key, { type: 'json' }));
+  for (const b of (await store.list({ prefix: 'dec/' })).blobs) if (Number(b.key.slice(4, 17)) >= since && !isTestIp(b.key.split('_').pop())) decs.push(await store.get(b.key, { type: 'json' }));
   const suspicious = new Set(decs.filter(d => d && d.level !== 'log' && d.level !== 'ignore').map(d => d.cidHash)).size;
   const excl = [];
-  for (const b of (await store.list({ prefix: 'rec/done/' })).blobs) { const r = await store.get(b.key, { type: 'json' }); if (r?.t >= since && r.status === 'enforce') excl.push(r); }
+  for (const b of (await store.list({ prefix: 'rec/done/' })).blobs) { const r = await store.get(b.key, { type: 'json' }); if (r?.t >= since && r.status === 'enforce' && !isTestIp(r.proposal?.cidr)) excl.push(r); }
   const top = {}; for (const d of decs.filter(d => d?.level === 'recommend_exclude')) top[`${d.net?.asn ? 'AS' + d.net.asn : ''} ${d.net?.org || ''}`.trim() || '?'] = (top[`${d.net?.asn ? 'AS' + d.net.asn : ''} ${d.net?.org || ''}`.trim() || '?'] || 0) + 1;
   const lr = await leadsReport({ client, store, days: 7, now }).catch(() => null);
   const ins = await import('./insights.mjs');
