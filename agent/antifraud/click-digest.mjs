@@ -1,4 +1,5 @@
-// PSS Anti-Fraud — hourly "new clicks" report for Laura (Telegram), one block per ad click:
+// PSS Anti-Fraud — report of every ad click to the team bot (Laura + agency): every 4 h,
+// hourly when there are many clicks, final report after 20:10. One block per ad click:
 // time, IP, operator, place, device, campaign, page, behaviour, what the system decided and why.
 import { dec, enc } from '../../netlify/antifraud/pipeline.mjs';
 import { isTestIp } from './monitors.mjs';
@@ -22,6 +23,28 @@ function verdict({ decision, beh, customer }) {
   if (beh && beh.dwell < 4000 && !beh.inter && beh.scroll < 10) return { icon: '🟠', text: 'fără activitate de om (a plecat imediat)' };
   if (!beh) return { icon: '⚪', text: 'fără semnal din pagină (a închis repede sau nu rulează JavaScript)' };
   return { icon: '🟢', text: 'vizită normală' };
+}
+
+/** Number of new ad clicks since sinceMs (cheap: keys only). */
+export async function countNewClicks(store, sinceMs, now = Date.now()) {
+  const seen = new Set();
+  for (const utcDay of new Set([new Date(sinceMs).toISOString().slice(0, 10), new Date(now).toISOString().slice(0, 10)])) {
+    for (const b of (await store.list({ prefix: `ev/${utcDay}/` })).blobs) {
+      const [ts, ipK, cidHash] = b.key.split('/')[2].split('_');
+      if (Number(ts) >= sinceMs && Number(ts) <= now && !isTestIp(dec(ipK))) seen.add(cidHash);
+    }
+  }
+  return seen.size;
+}
+
+/** When to send (Laura 15.10): every 4 h, hourly if there are many clicks (>= busy), and a final one after 20:10. */
+export function shouldSend({ hm, now, lastSent, newClicks, finalSentToday, busy = 5 }) {
+  if (newClicks < 1) return false;
+  if (hm >= '20:10' && !finalSentToday) return 'final';
+  if (hm < '08:10' || hm >= '20:10') return false;
+  if (newClicks >= busy && now - lastSent >= 3600e3) return 'busy';
+  if (now - lastSent >= 4 * 3600e3) return 'regular';
+  return false;
 }
 
 export async function clickDigest({ client, store, notify, sinceMs, now = Date.now(), max = 12 }) {
@@ -74,8 +97,13 @@ export async function clickDigest({ client, store, notify, sinceMs, now = Date.n
       ...(decision?.reasons?.length && decision.level !== 'log' ? [`🧠 ${decision.reasons.slice(0, 3).join(' · ')}`] : []),
     ].join('\n'));
   }
-  const header = `🖱️ PSS Anti-Fraud — clicuri noi din reclame (${fmt(sinceMs).slice(-8, -3)}–${fmt(now).slice(-8, -3)}): ${real.length}`;
-  const more = real.length > max ? `\n… și încă ${real.length - max} clicuri (vezi raportul zilnic)` : '';
-  await notify(`${header}\n\n${blocks.join('\n\n')}${more}`);
+  const hhmm = t => new Date(t).toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }).slice(0, 5);
+  const header = `🖱️ PSS Anti-Fraud — clicuri din reclame ${berlinDay(now)}, ${hhmm(sinceMs)}–${hhmm(now)}: ${real.length}`;
+  const more = real.length > max ? `\n… și încă ${real.length - max} clicuri` : '';
+  // Telegram limit ~4096 characters: 10 clicks per message
+  for (let i = 0; i < blocks.length; i += 10) {
+    const part = blocks.length > 10 ? ` (${i / 10 + 1}/${Math.ceil(blocks.length / 10)})` : '';
+    await notify(`${header}${part}\n\n${blocks.slice(i, i + 10).join('\n\n')}${i + 10 >= blocks.length ? more : ''}`);
+  }
   return { clicks: real.length };
 }

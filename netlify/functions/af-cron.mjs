@@ -77,10 +77,25 @@ export default async (req, context) => {
       await every(store, 'hourly', 15 * 60e3, () => mon.hourlyCheck({ client, store, notify: notifyTeam }));                       // 2) ghost clicks + 3) capture broken
       await every(store, 'foreign', 60 * 60e3, last => mon.foreignWrites({ client, store, notify, sinceMs: last || Date.now() - 2 * 3600e3 }));   // 8)
       await every(store, 'expire', 24 * 3600e3, () => mon.expireMobile({ client, store, notify, enforce }));              // 4)
-      // hourly report of every new ad click (08:00–22:00), Laura only — contains IPs
-      if (hm >= '08:00' && hm < '22:00') {
-        const { clickDigest } = await import('../../agent/antifraud/click-digest.mjs');
-        await every(store, 'digest', 60 * 60e3, last => clickDigest({ client, store, notify, sinceMs: last || Date.now() - 3600e3 }));
+      // report of every ad click to the team (Laura + agency): every 4 h, hourly when busy (>= 5 new clicks),
+      // final report after 20:10 (campaigns run until 20:00)
+      {
+        const cd = await import('../../agent/antifraud/click-digest.mjs');
+        const dayStart = new Date(`${today}T00:00:00+02:00`).getTime();
+        const last = (await store.get('cron/digest-last', { type: 'json' }).catch(() => null))?.t || 0;
+        const sinceMs = Math.max(last, dayStart);
+        const lastSent = last >= dayStart ? last : dayStart + 8 * 3600e3;          // first report of the day counts from 08:00
+        const finalSentToday = !!(await store.get(`cron/digest-final/${today}`).catch(() => null));
+        const newClicks = await cd.countNewClicks(store, sinceMs);
+        const why = cd.shouldSend({ hm, now: Date.now(), lastSent, newClicks, finalSentToday });
+        if (why) {
+          const r = await cd.clickDigest({ client, store, notify: notifyTeam, sinceMs, max: 60 });
+          await store.setJSON('cron/digest-last', { t: Date.now(), why, clicks: r.clicks });
+          if (why === 'final') await store.setJSON(`cron/digest-final/${today}`, { t: Date.now() });
+          log.steps.push(`digest:${why}:${r.clicks}`);
+        } else if (hm >= '20:10' && !finalSentToday) {
+          await store.setJSON(`cron/digest-final/${today}`, { t: Date.now(), clicks: 0 });   // nothing new: no empty message
+        }
       }
       const full = done.some(d => (d.executor?.plan || []).some(p => p.action === 'capacity_full'));
       const counts = await client.search("SELECT campaign.name, campaign_criterion.criterion_id FROM campaign_criterion WHERE campaign_criterion.type = 'IP_BLOCK' AND campaign.status != 'REMOVED'");
