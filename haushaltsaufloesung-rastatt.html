@@ -18,6 +18,11 @@
 <meta property="og:locale" content="de_DE">
 <link rel="canonical" href="https://perfektsauberservice.com/haushaltsaufloesung-rastatt">
 <link rel="preload" href="/fonts/fonts.css" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link rel="stylesheet" href="/fonts/fonts.css"/></noscript>
+<!-- pss-landing-perf-v1 -->
+<link rel="preload" href="/fonts/inter-Cp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fraunces-c2Wa0KxC9TeA.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="/images/favicon-32.png" sizes="32x32" type="image/png">
+<style>@media(max-width:760px){.nav{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(251,247,240,.98)}}</style>
 <style>.skip-link{position:absolute;top:-40px;left:0;background:#1a2030;color:#fff;padding:8px 16px;z-index:100;text-decoration:none;font-family:"Geist Mono",monospace;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;}
 .skip-link:focus{top:0;}
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #1d6dd6;outline-offset:2px;}
@@ -191,9 +196,9 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
 </script>
 
 <link rel="preload" href="/css/site-deferred.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/site-deferred.css"></noscript>
-<link rel="preload" as="image" href="/images/locations/entruempelung-rastatt-freigeraeumter-bereich.webp" fetchpriority="high">
-<link rel="stylesheet" href="/css/gbp-reviews-widget.css?v=20260930b">
-<link rel="stylesheet" href="/css/cta-band.css?v=3">
+<link rel="preload" as="image" href="/images/hero-nach-800.webp" imagesrcset="/images/hero-nach-480.webp 480w, /images/hero-nach-800.webp 800w" imagesizes="(max-width: 760px) 92vw, 560px" fetchpriority="high">
+<link rel="preload" href="/css/gbp-reviews-widget.css?v=20260930b" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/gbp-reviews-widget.css?v=20260930b"></noscript>
+<link rel="preload" href="/css/cta-band.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/cta-band.css?v=3"></noscript>
 </head>
 <body>
 <a href="#main" class="skip-link">Zum Inhalt springen</a>
@@ -260,8 +265,8 @@ button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
   </div>
   <div class="hero-img">
     <figure class="vn-card" data-vn>
-      <img class="vn-img vn-after" src="/images/hero-nach-800.webp" width="800" height="800" alt="Haushaltsauflösung Rastatt — Raum besenrein geräumt durch Perfekt Sauber Service" loading="eager" decoding="async"/>
-      <img class="vn-img vn-before" src="/images/hero-vor-800.webp" width="800" height="1000" alt="Haushaltsauflösung Rastatt — Raum vor der Räumung, voll möbliert" loading="eager" decoding="async"/>
+      <img class="vn-img vn-after" src="/images/hero-nach-800.webp" srcset="/images/hero-nach-480.webp 480w, /images/hero-nach-800.webp 800w" sizes="(max-width: 760px) 92vw, 560px" fetchpriority="high" width="800" height="800" alt="Haushaltsauflösung Rastatt — Raum besenrein geräumt durch Perfekt Sauber Service" loading="eager" decoding="async"/>
+      <img class="vn-img vn-before" src="/images/hero-vor-800.webp" srcset="/images/hero-vor-480.webp 480w, /images/hero-vor-800.webp 800w" sizes="(max-width: 760px) 92vw, 560px" width="800" height="1000" alt="Haushaltsauflösung Rastatt — Raum vor der Räumung, voll möbliert" loading="eager" decoding="async"/>
       <div class="vn-handle" aria-hidden="true"><div class="vn-knob">⇆</div></div>
       <span class="vn-tag vn-tag-l">Vorher</span>
       <span class="vn-tag vn-tag-r">Nachher</span>
@@ -819,7 +824,9 @@ window.psGrantConsent = function(){
   // Previously deferred via requestIdleCallback/setTimeout (2.5-4s), which gave short visits a
   // window to leave before GA4 ever initialized -- the same bug class already fixed for
   // /danke.html and for phone/whatsapp/email clicks (2026-08-12), now applied here too.
-  window.psLoadGA();
+  // Start gtag right after the first paint (two animation frames): the page is drawn before Google's
+  // scripts run, without the multi-second idle delay that lost short visits in August.
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ window.psLoadGA(); }); });
 })();
 </script>
 </body>
