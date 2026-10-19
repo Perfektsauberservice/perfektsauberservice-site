@@ -68,6 +68,7 @@ export function notifier(context, store = null) {
     notifyTeam,
     notify: text => post({ text }),
     send: (text, buttons) => post({ text, reply_markup: { inline_keyboard: [buttons] } }),
+    sendHtml: (text, buttons) => post({ text, parse_mode: 'HTML', ...(buttons ? { reply_markup: { inline_keyboard: [buttons] } } : {}) }),
     sendDocument,
   };
 }

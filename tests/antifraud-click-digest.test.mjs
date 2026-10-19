@@ -24,7 +24,7 @@ test('hourly digest: one block per ad click with operator, place, device, campai
   const r = await clickDigest({ client, store, notify: async t => sent.push(t), sinceMs: T - 3600e3, now: T + 3600e3 });
   assert.equal(r.clicks, 1);
   assert.match(sent[0], /clicuri din reclame 2026-10-15, 10:18–12:18: 1/);
-  assert.match(sent[0], /🟢 15\.10\.2026, 11:18:53 — pare om real/);
+  assert.match(sent[0], /🟢 15\.10\.2026, 11:18:53 — om real/);
   assert.match(sent[0], /IP 80\.142\.89\.24 · AS3320 DTAG Deutsche Telekom AG/);
   assert.match(sent[0], /Achern, BW, DE · telefon Samsung cu Android, browserul Samsung/);
   assert.match(sent[0], /amgads \| search_baden baden · „haushaltsauflösung firma” · pagina \/preise/);
@@ -65,4 +65,22 @@ test('per-click report: one message per click, waits 60 s for the behaviour sign
   assert.equal(sent.length, 2); assert.match(sent[1], /80\.2\.2\.2/);
   await clickDigest({ ...opts, now: T + 400e3 });
   assert.equal(sent.length, 2);                            // never twice
+});
+
+test('click card + table rows: verdicts like in the reports (attacker network, real person, no interaction)', async () => {
+  const { clickCards, clickRows } = await import('../agent/antifraud/click-rows.mjs');
+  const store = memoryStore(); const sent = [];
+  const day = '2026-10-15', t0 = Date.parse(`${day}T09:10:08+02:00`);
+  const add = async (i, ip, cid, beh, ua) => { const h = (await sha256Hex(cid)).slice(0, 16); await store.setJSON(`ev/2026-10-15/${t0 + i * 60e3}_${ip}_${h}`, { t: t0 + i * 60e3, ip, cid, path: '/preise', ua, geo: { city: 'Karlsruhe' } }); if (beh) await store.setJSON(`beh/${ip}/${h}`, beh); };
+  await add(0, '94.134.182.69', 'X1', { dwell: 400, scroll: 0, inter: 0 }, 'Mozilla/5.0 (Windows NT 10.0)');
+  await add(1, '89.244.95.253', 'X2', { dwell: 60000, scroll: 82, inter: 24 }, 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)');
+  await add(2, '92.209.234.198', 'X3', { dwell: 60000, scroll: 0, inter: 0 }, 'Mozilla/5.0 (Linux; Android 14) Mobile');
+  await store.setJSON('off/net/94.134.182.0-24/94.134.182.67', { t: 1 });
+  const rows = await clickRows({ store, day });
+  assert.deepEqual(rows.map(r => r.icon + ' ' + r.verdict), ['🔴 suspect: rețeaua atacatorului', '🟢 om real', '🟡 a stat, dar fără interacțiune']);
+  const r = await clickCards({ store, client: null, sendHtml: async (text, buttons) => sent.push({ text, buttons }), day, now: t0 + 3600e3 });
+  assert.equal(r.clicks, 3);
+  assert.match(sent[1].text, /<b>Clic nou din reclame · 09:11<\/b>\n<b>Concluzie:<\/b> om real\n<b>IP:<\/b> 89\.244\.95\.253/);
+  assert.match(sent[0].buttons[0].url, /\/af-clicks\/[a-f0-9]{24}$/);
+  assert.equal((await clickCards({ store, client: null, sendHtml: async () => sent.push(1), day, now: t0 + 7200e3 })).clicks, 0);   // once
 });

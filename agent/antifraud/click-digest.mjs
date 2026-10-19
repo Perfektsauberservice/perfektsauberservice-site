@@ -15,14 +15,16 @@ export function describeDevice(ua = '') {
   return `${kind}${brand ? ' ' + brand : ''} cu ${os}, ${browser}`;
 }
 
-function verdict({ decision, beh, customer }) {
-  if (customer) return { icon: '📞', text: `client real (${customer.reason}) — nu se exclude` };
+export function verdict({ decision, beh, customer, attackerNet = false, sharedNet = false }) {
+  if (customer) return { icon: '📞', text: `client real (${customer.reason})` };
   if (decision?.level === 'recommend_exclude') return { icon: '🔴', text: `SUSPECT — exclus (${decision.proposal?.cidr || ''})` };
+  if (attackerNet) return { icon: '🔴', text: 'suspect: rețeaua atacatorului' };
   if (decision?.level === 'evaluate' || decision?.level === 'analyze') return { icon: '🟡', text: 'de urmărit (clicuri repetate)' };
-  if (beh && (beh.inter > 0 || beh.dwell >= 10000)) return { icon: '🟢', text: 'pare om real' };
-  if (beh && beh.dwell < 4000 && !beh.inter && beh.scroll < 10) return { icon: '🟠', text: 'fără activitate de om (a plecat imediat)' };
-  if (!beh) return { icon: '⚪', text: 'fără semnal din pagină (a închis repede sau nu rulează JavaScript)' };
-  return { icon: '🟢', text: 'vizită normală' };
+  if (beh && (beh.inter > 0 || beh.scroll >= 25)) return { icon: '🟢', text: 'om real' };
+  if (beh && beh.dwell < 4000 && !beh.inter && beh.scroll < 10) return { icon: '🟠', text: 'a plecat imediat, fără activitate' };
+  if (beh) return { icon: '🟡', text: 'a stat, dar fără interacțiune' };
+  if (sharedNet) return { icon: '⚪', text: 'neclar (rețea partajată, IP real ascuns)' };
+  return { icon: '⚪', text: 'neclar (fără semnal din pagină)' };
 }
 
 /** Number of new ad clicks since sinceMs (cheap: keys only). */

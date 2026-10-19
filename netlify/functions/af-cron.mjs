@@ -22,7 +22,7 @@ const every = async (store, key, ms, fn) => {
 export default async (req, context) => {
   const store = storeFor(context);
   const { env, missing } = adsEnvFromNetlify();
-  const { notify, notifyTeam, send, sendDocument } = notifier(context, store);
+  const { notify, notifyTeam, send, sendDocument, sendHtml } = notifier(context, store);
   const log = { t: Date.now(), steps: [] };
   try {
     if (missing.length) throw new Error(`missing env ${missing.join(', ')}`);
@@ -91,9 +91,8 @@ Fișierul de săptămâna aceasta: ${conv.count} clienți (${conv.forms} formula
       // instant report to Laura for EVERY new ad click (Laura 19.10): one message per click, sent once the
       // click is >= 60 s old so the page behaviour signal is included; at most 5-6 minutes after the click
       {
-        const cdi = await import('../../agent/antifraud/click-digest.mjs');
-        const r = await cdi.clickDigest({ client, store, notify, sinceMs: new Date(`${today}T00:00:00+02:00`).getTime(), max: 20,
-          sentPrefix: 'click/sent', perMessage: 1, minAgeMs: 60e3, title: '🖱️ Clic nou din reclame' });
+        const cr = await import('../../agent/antifraud/click-rows.mjs');
+        const r = await cr.clickCards({ store, client, sendHtml, day: today });
         if (r.clicks) log.steps.push(`click-reports:${r.clicks}`);
       }
       // report of every ad click to the team (Laura + agency): every 4 h, hourly when busy (>= 5 new clicks),
