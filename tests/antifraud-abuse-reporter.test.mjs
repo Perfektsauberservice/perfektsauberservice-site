@@ -74,3 +74,17 @@ test('an IP without recorded events produces no case', async () => {
   const c = await buildCase({ store: await seeded(), ip: '9.9.9.9', hours: 3, fetchImpl: fakeRegistry, outRoot: mkdtempSync(join(tmpdir(), 'pss-case-')) });
   assert.equal(c.empty, true);
 });
+
+test('abuse mail: one-tap link with German text + evidence rows, token stored, nothing sent', async () => {
+  const { buildCase, prepareAbuseMail } = await import('../agent/antifraud/abuse-reporter.mjs');
+  const store = await seeded();
+  const c = await buildCase({ store, ip: '94.134.182.67', hours: 3, fetchImpl: fakeRegistry, outRoot: null });
+  const m = await prepareAbuseMail(store, c);
+  assert.equal(m.to, 'abuse@1und1.net');
+  assert.match(m.url, /^https:\/\/perfektsauberservice\.com\/af-mail\/[a-f0-9]{24}$/);
+  const rec = await store.get(`mail/${m.url.split('/').pop()}`, { type: 'json' });
+  assert.match(rec.subject, /Missbrauchsmeldung/);
+  assert.match(rec.body, /Auszug der Zugriffe \(7\)/);
+  assert.match(rec.body, /nicht zwingend die handelnde Person/);
+  assert.ok(!/^Betreff:/m.test(rec.body));
+});

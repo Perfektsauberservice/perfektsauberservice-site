@@ -218,7 +218,22 @@ export async function buildCase({ store, ip, hours = 72, client = null, notify =
 /** Automatic dossiers (run by af-cron on Netlify): one case per IP that was really excluded.
  *  Files are kept in the store (case/<caseId>/<file>) and sent to Laura on Telegram.
  *  Nothing is ever sent to an ISP. */
-export async function autoCases({ store, client, notify, sendDocument, max = 2, fetchImpl = fetch }) {
+/** Prepare the abuse mail (opened in Laura's own mail app via /af-mail/<token>). Returns the link. */
+export async function prepareAbuseMail(store, c, siteUrl = 'https://perfektsauberservice.com') {
+  const to = (c.registry?.abuseContacts || [])[0];
+  if (!to) return null;
+  const de = c.files['email-abuse-de.txt'];
+  const subject = (de.match(/^Betreff: (.*)$/m) || [])[1] || `Missbrauchsmeldung ${c.ip}`;
+  const rows = c.files['isp-attachment.csv'].trim().split('\n');
+  const body = de.replace(/^Betreff: .*\n+/, '')
+    .replace('liegen in der beigefügten Datei isp-attachment.csv', 'folgen unten')
+    + `\nAuszug der Zugriffe (${rows.length - 1}):\n` + rows.slice(0, 41).join('\n') + (rows.length > 41 ? '\n…' : '') + '\n';
+  const token = [...crypto.getRandomValues(new Uint8Array(12))].map(b => b.toString(16).padStart(2, '0')).join('');
+  await store.setJSON(`mail/${token}`, { t: Date.now(), ip: c.ip, to, subject, body, caseId: c.caseId });
+  return { url: `${siteUrl}/af-mail/${token}`, to };
+}
+
+export async function autoCases({ store, client, notify, sendDocument, send = null, max = 2, fetchImpl = fetch }) {
   const built = [];
   for (const b of (await store.list({ prefix: 'rec/done/' })).blobs) {
     if (built.length >= max) break;
@@ -234,6 +249,10 @@ export async function autoCases({ store, client, notify, sendDocument, max = 2, 
         await sendDocument(`${c.caseId}_${name}`, c.files[name], name === 'report.md' ? `Dosar ${rec.ip}` : '');
       }
     }
+    // one-tap abuse mail from Laura's own mail app (nothing is sent automatically)
+    const mail = await prepareAbuseMail(store, c).catch(() => null);
+    if (mail && send) await send(`📧 Mail de abuz pregătit pentru ${rec.ip} → ${mail.to}\nApasă butonul: se deschide aplicația ta de mail cu totul completat (germană + orele, IP-ul, paginile). Tu apeși Trimite.`,
+      [{ text: `📧 Trimite mailul de abuz (${mail.to})`, url: mail.url }]);
     built.push({ ip: rec.ip, caseId: c.caseId, confidence: c.analysis.confidence });
   }
   return built;

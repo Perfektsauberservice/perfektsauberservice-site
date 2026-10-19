@@ -79,7 +79,7 @@ Fișierul de săptămâna aceasta: ${conv.count} clienți (${conv.forms} formula
       log.steps.push(`rotations:${rot.length}`);
       // PSS Abuse Evidence Reporter: dossier for every IP that was really excluded -> Telegram (never to the ISP)
       const { autoCases } = await import('../../agent/antifraud/abuse-reporter.mjs');
-      const cases = await autoCases({ store, client, notify, sendDocument, max: 1 });
+      const cases = await autoCases({ store, client, notify, sendDocument, send, max: 1 });
       log.steps.push(`cases:${cases.length}`);
       await every(store, 'health', 15 * 60e3, since => healthCheck({ store, notify, since }));
       await every(store, 'spend', 60 * 60e3, () => spendCheck({ client, notify }));
