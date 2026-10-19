@@ -27,7 +27,7 @@ export const RULES = {
 export const WEIGHTS = {
   analyze: 25, evaluate: 45, hour: 15, network: 20, fingerprint: 15,
   repeatOffender: 45, repeatDevice: 10, datacenter: 40, foreign: 25, outsideRegion: 10,
-  botUa: 40, noAcceptLanguage: 10, trap: 60, deadVisit: 35, signature: 30,
+  botUa: 40, noAcceptLanguage: 10, trap: 60, deadVisit: 35, signature: 30, knownNetwork: 35,
 };
 
 // Target region of the campaigns: Baden-Württemberg, Germany.

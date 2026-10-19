@@ -13,6 +13,7 @@ export function classifyNetwork(info = {}) {
   const org = String(info.org || '').replace(/^AS\d+\s*/, '');
   let type = 'isp';
   if (!asn) type = 'unknown';
+  else if (asn === 15169) type = 'google';            // Google's own systems (ad / landing-page checks), not visitors
   else if (RELAY_ASNS.has(asn)) type = 'relay';
   else if (DATACENTER_ASNS.has(asn)) type = 'datacenter';
   else if (MOBILE_CARRIER_ASNS.has(asn) && (asn === 6805 || MOBILE_HOSTNAME_RE.test(info.hostname || ''))) type = 'mobile';
@@ -56,6 +57,7 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   let score = 0;
   const add = (w, why) => { score += w; reasons.push(`+${w} ${why}`); };
 
+  if (net.type === 'google') return { level: 'ignore', score: 0, reasons: ['Google network (AS15169) — Google checking the ad landing page, not a paid visitor'], net, ua };
   if (ua === 'google_verifier') return { level: 'ignore', score: 0, reasons: ['Google ad-quality crawler (AdsBot/Googlebot) — not a paid click'], net, ua };
   if ((opts.allowlist || []).includes(event.ip)) return { level: 'ignore', score: 0, reasons: ['IP on PSS allowlist'], net, ua };
 
@@ -97,7 +99,9 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   if (humanOnly) reasons.push(`previous ad visit(s) look human (read / scrolled / touched) — threshold +1`);
   const sig = opts.signature === false ? null : matchSignature(event, net);
   if (sig) add(WEIGHTS.signature, `matches the known attacker signature: ${sig.label}`);
-  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip || opts.trap || beh.dead > 0 || !!sig;
+  const knownNet = (off.netIps || []).length > 0;
+  if (knownNet && !off.ip) add(WEIGHTS.knownNetwork, `network ${networkOf(event.ip)} was already used by an excluded attacker IP`);
+  const strong = net.type === 'datacenter' || ua === 'bot' || (country && country !== TARGET_COUNTRY) || off.ip || opts.trap || beh.dead > 0 || !!sig || knownNet;
   // Exclusion (Laura, 14.10.2026): every paid click costs ~2 EUR, so act before the 4th one.
   //   3 paid clicks / 10 min from one IP            -> exclude
   //   2 paid clicks / 10 min + strong signal        -> exclude (server, bot, abroad, flagged before)

@@ -49,3 +49,14 @@ test('retro check: Google places 2+ of our captured clicks in Daxlanden (mobile,
   assert.ok(await store.get('rec/pending/176.7.208.68-32', { type: 'json' }));
   assert.deepEqual(await signatureRetro({ client, store, now: T0 + 4 * 3600e3 }), []);   // not twice
 });
+
+test('Google network visits (AS15169, ad landing-page checks) are ignored', () => {
+  const r = evaluate(ev({ ip: '162.120.187.155', path: '/entruempelung-rastatt' }), { ip: [{ t: T0, cid: 'c-last' }] }, { org: 'AS15169 GOOGLE - Google LLC', country: 'US' });
+  assert.equal(r.level, 'ignore');
+});
+
+test('a network already used by an excluded attacker IP is a strong signal (exclusion at the 2nd click, desktop too)', () => {
+  const r = evaluate(ev({ ip: '94.134.182.69', ua: DESKTOP, path: '/entruempelung-rastatt' }), { ip: two, offenders: { netIps: ['94.134.182.67'] } }, { org: 'AS8881 VERSATEL 1&1 Versatel GmbH', country: 'DE' });
+  assert.equal(r.level, 'recommend_exclude');
+  assert.ok(r.reasons.some(x => x.includes('already used by an excluded attacker')));
+});

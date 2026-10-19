@@ -30,7 +30,8 @@ export function assertOnlyIpBlockOps(operations, ownedResourceNames = new Set())
       if (!/^customers\/\d+\/campaigns\/\d+$/.test(c.campaign)) throw new Error('refused: bad campaign');
       const [addr, len] = c.ipBlock.ipAddress.split('/');
       const v6 = addr.includes(':');
-      if (!v6 && !(len === '32' || len === '24')) throw new Error('refused: IPv4 exclusions must be /32 or /24');
+      const wildcard24 = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\*$/.test(addr) && len === undefined;   // Google UI range format a.b.c.*
+      if (!v6 && !wildcard24 && !(len === '32' || len === '24')) throw new Error('refused: IPv4 exclusions must be /32, /24 or a.b.c.*');
       if (v6 && len !== '128') throw new Error('refused: IPv6 exclusions must be /128');
     } else if (op.remove) {
       if (!ownedResourceNames.has(op.remove)) throw new Error(`refused: ${op.remove} was not created by PSS Anti-Fraud`);
@@ -88,7 +89,7 @@ export async function currentExclusions(client) {
   });
 }
 
-const norm = ip => (ip.includes('/') ? ip : ip.includes(':') ? `${ip}/128` : `${ip}/32`);
+const norm = ip => (ip.includes('/') || ip.endsWith('*') ? ip : ip.includes(':') ? `${ip}/128` : `${ip}/32`);
 
 /** Plan + send (validateOnly unless enforce) one exclusion to every enabled AND paused Search campaign
  *  (paused ones are protected too, in case they are switched back on). */
