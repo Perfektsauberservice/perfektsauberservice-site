@@ -49,14 +49,14 @@ export function shouldSend({ hm, now, lastSent, newClicks, finalSentToday, busy 
   return false;
 }
 
-export async function clickDigest({ client, store, notify, sinceMs, now = Date.now(), max = 12 }) {
+export async function clickDigest({ client, store, notify, sinceMs, now = Date.now(), max = 12, sentPrefix = 'digest/sent', perMessage = 10, minAgeMs = 0, title = null }) {
   // first event of each ad click since the last digest
   const clicks = new Map();
   for (const utcDay of new Set([new Date(sinceMs).toISOString().slice(0, 10), new Date(now).toISOString().slice(0, 10)])) {
     for (const b of (await store.list({ prefix: `ev/${utcDay}/` })).blobs) {
       const [ts, ipK, cidHash] = b.key.split('/')[2].split('_');
       const t = Number(ts), ip = dec(ipK);
-      if (t < sinceMs || t > now || isTestIp(ip)) continue;
+      if (t < sinceMs || t > now - minAgeMs || isTestIp(ip)) continue;   // minAgeMs: wait for the page behaviour signal
       const c = clicks.get(cidHash);
       if (c) { c.requests++; continue; }
       clicks.set(cidHash, { t, ip, cidHash, key: b.key, requests: 1 });
@@ -65,7 +65,7 @@ export async function clickDigest({ client, store, notify, sinceMs, now = Date.n
   const list = [...clicks.values()].sort((a, b) => a.t - b.t);
   const real = [];
   for (const c of list) {
-    if (await store.get(`digest/sent/${c.cidHash}`).catch(() => null)) continue;   // each click is reported only once, ever
+    if (await store.get(`${sentPrefix}/${c.cidHash}`).catch(() => null)) continue;   // each click is reported only once per report type
     const rec = await store.get(c.key, { type: 'json' }).catch(() => null);
     if (!rec || /^PSS-LIVE-CHECK/.test(rec.cid || '')) continue;
     real.push({ ...c, rec });
@@ -101,13 +101,13 @@ export async function clickDigest({ client, store, notify, sinceMs, now = Date.n
     ].join('\n'));
   }
   const hhmm = t => new Date(t).toLocaleTimeString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }).slice(0, 5);
-  const header = `🖱️ PSS Anti-Fraud — clicuri din reclame ${berlinDay(now)}, ${hhmm(sinceMs)}–${hhmm(now)}: ${real.length}`;
+  const header = title || `🖱️ PSS Anti-Fraud — clicuri din reclame ${berlinDay(now)}, ${hhmm(sinceMs)}–${hhmm(now)}: ${real.length}`;
   const more = real.length > max ? `\n… și încă ${real.length - max} clicuri` : '';
   // Telegram limit ~4096 characters: 10 clicks per message
-  for (let i = 0; i < blocks.length; i += 10) {
-    const part = blocks.length > 10 ? ` (${i / 10 + 1}/${Math.ceil(blocks.length / 10)})` : '';
-    await notify(`${header}${part}\n\n${blocks.slice(i, i + 10).join('\n\n')}${i + 10 >= blocks.length ? more : ''}`);
+  for (let i = 0; i < blocks.length; i += perMessage) {
+    const part = perMessage > 1 && blocks.length > perMessage ? ` (${i / perMessage + 1}/${Math.ceil(blocks.length / perMessage)})` : '';
+    await notify(`${header}${part}\n\n${blocks.slice(i, i + perMessage).join('\n\n')}${i + perMessage >= blocks.length ? more : ''}`);
   }
-  for (const c of real.slice(0, max)) await store.setJSON(`digest/sent/${c.cidHash}`, { t: now });
+  for (const c of real.slice(0, max)) await store.setJSON(`${sentPrefix}/${c.cidHash}`, { t: now });
   return { clicks: real.length };
 }

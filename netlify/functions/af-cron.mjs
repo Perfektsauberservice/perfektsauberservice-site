@@ -88,6 +88,14 @@ Fișierul de săptămâna aceasta: ${conv.count} clienți (${conv.forms} formula
       await every(store, 'hourly', 15 * 60e3, () => mon.hourlyCheck({ client, store, notify: notifyTeam }));                       // 2) ghost clicks + 3) capture broken
       await every(store, 'foreign', 60 * 60e3, last => mon.foreignWrites({ client, store, notify, sinceMs: last || Date.now() - 2 * 3600e3 }));   // 8)
       await every(store, 'expire', 24 * 3600e3, () => mon.expireMobile({ client, store, notify, enforce }));              // 4)
+      // instant report to Laura for EVERY new ad click (Laura 19.10): one message per click, sent once the
+      // click is >= 60 s old so the page behaviour signal is included; at most 5-6 minutes after the click
+      {
+        const cdi = await import('../../agent/antifraud/click-digest.mjs');
+        const r = await cdi.clickDigest({ client, store, notify, sinceMs: new Date(`${today}T00:00:00+02:00`).getTime(), max: 20,
+          sentPrefix: 'click/sent', perMessage: 1, minAgeMs: 60e3, title: '🖱️ Clic nou din reclame' });
+        if (r.clicks) log.steps.push(`click-reports:${r.clicks}`);
+      }
       // report of every ad click to the team (Laura + agency): every 4 h, hourly when busy (>= 5 new clicks),
       // final report after 20:10 (campaigns run until 20:00)
       {

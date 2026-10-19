@@ -51,3 +51,18 @@ test('schedule: every 4 h, hourly when >= 5 new clicks, final after 20:10, never
   assert.equal(shouldSend({ hm: '16:10', now, lastSent: now - 5 * h, newClicks: 0, finalSentToday: false }), false);       // nothing new
   assert.equal(shouldSend({ hm: '07:30', now, lastSent: now - 9 * h, newClicks: 3, finalSentToday: false }), false);       // before ads start
 });
+
+test('per-click report: one message per click, waits 60 s for the behaviour signal, each click once', async () => {
+  const store = memoryStore(); const sent = [];
+  const h1 = (await sha256Hex('A1')).slice(0, 16), h2 = (await sha256Hex('A2')).slice(0, 16);
+  await store.setJSON(`ev/2026-10-15/${T}_80.1.1.1_${h1}`, { t: T, ip: '80.1.1.1', cid: 'A1', path: '/preise', ua: 'iPhone', geo: {} });
+  await store.setJSON(`ev/2026-10-15/${T + 30e3}_80.2.2.2_${h2}`, { t: T + 30e3, ip: '80.2.2.2', cid: 'A2', path: '/x', ua: 'Android', geo: {} });
+  const client = { search: async () => [] };
+  const opts = { client, store, notify: async t => sent.push(t), sinceMs: T - 3600e3, sentPrefix: 'click/sent', perMessage: 1, minAgeMs: 60e3, title: '🖱️ Clic nou din reclame' };
+  await clickDigest({ ...opts, now: T + 70e3 });          // A1 is 70 s old, A2 only 40 s
+  assert.equal(sent.length, 1); assert.match(sent[0], /^🖱️ Clic nou din reclame\n\n.*80\.1\.1\.1/s);
+  await clickDigest({ ...opts, now: T + 200e3 });
+  assert.equal(sent.length, 2); assert.match(sent[1], /80\.2\.2\.2/);
+  await clickDigest({ ...opts, now: T + 400e3 });
+  assert.equal(sent.length, 2);                            // never twice
+});
