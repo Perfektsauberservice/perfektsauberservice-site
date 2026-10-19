@@ -50,9 +50,13 @@ test('retro check: Google places 2+ of our captured clicks in Daxlanden (mobile,
   assert.deepEqual(await signatureRetro({ client, store, now: T0 + 4 * 3600e3 }), []);   // not twice
 });
 
-test('Google network visits (AS15169, ad landing-page checks) are ignored', () => {
-  const r = evaluate(ev({ ip: '162.120.187.155', path: '/entruempelung-rastatt' }), { ip: [{ t: T0, cid: 'c-last' }] }, { org: 'AS15169 GOOGLE - Google LLC', country: 'US' });
-  assert.equal(r.level, 'ignore');
+test('Google network (AS15169 privacy proxy) is counted as a shared relay: no exclusion before the 4th click', () => {
+  const G = { org: 'AS15169 GOOGLE - Google LLC', country: 'DE' };
+  const three = [{ t: T0 - 120e3, cid: 'a' }, { t: T0 - 60e3, cid: 'b' }, { t: T0, cid: 'c-last' }];
+  const r3 = evaluate(ev({ ip: '162.120.187.155', path: '/entruempelung-rastatt' }), { ip: three }, G);
+  assert.equal(r3.net.type, 'relay'); assert.equal(r3.proposal, null); assert.notEqual(r3.level, 'ignore');
+  const r4 = evaluate(ev({ ip: '162.120.187.155', path: '/entruempelung-rastatt' }), { ip: [{ t: T0 - 180e3, cid: 'z' }, ...three] }, G);
+  assert.equal(r4.level, 'recommend_exclude');
 });
 
 test('a network already used by an excluded attacker IP is a strong signal (exclusion at the 2nd click, desktop too)', () => {

@@ -13,7 +13,7 @@ export function classifyNetwork(info = {}) {
   const org = String(info.org || '').replace(/^AS\d+\s*/, '');
   let type = 'isp';
   if (!asn) type = 'unknown';
-  else if (asn === 15169) type = 'google';            // Google's own systems (ad / landing-page checks), not visitors
+  else if (asn === 15169) type = 'relay';             // Google network: privacy proxies (Chrome/Android IP protection) shared by many real users
   else if (RELAY_ASNS.has(asn)) type = 'relay';
   else if (DATACENTER_ASNS.has(asn)) type = 'datacenter';
   else if (MOBILE_CARRIER_ASNS.has(asn) && (asn === 6805 || MOBILE_HOSTNAME_RE.test(info.hostname || ''))) type = 'mobile';
@@ -57,7 +57,6 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   let score = 0;
   const add = (w, why) => { score += w; reasons.push(`+${w} ${why}`); };
 
-  if (net.type === 'google') return { level: 'ignore', score: 0, reasons: ['Google network (AS15169) — Google checking the ad landing page, not a paid visitor'], net, ua };
   if (ua === 'google_verifier') return { level: 'ignore', score: 0, reasons: ['Google ad-quality crawler (AdsBot/Googlebot) — not a paid click'], net, ua };
   if ((opts.allowlist || []).includes(event.ip)) return { level: 'ignore', score: 0, reasons: ['IP on PSS allowlist'], net, ua };
 
