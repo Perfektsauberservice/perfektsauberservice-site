@@ -83,6 +83,7 @@ export function renderDossier(D) {
     `- ${D.waves.length} valuri (≥ 6 clicuri plătite într-o oră, dominate de semnătură); cost al orelor de val: ${eur(D.waveCost)}.`,
     `- Cost estimat al clicurilor cu semnătura: ${eur(D.sigCostEst)} (CPC mediu ${eur(D.avgCpc)}). Google a recunoscut separat ${D.totInvalid} clicuri ca invalide (nefacturate).`,
     `- ${D.ipRows.length} adrese IP blocate ca suspecte în perioadă (operatori: ${[...new Set(D.ipRows.map(r => r.network).filter(Boolean))].join(', ') || '—'}). Legătura fiecărui IP cu un anumit val NU este dovedită; sunt puncte de plecare pentru cererea poliției către furnizori.`, '',
+    ...(D.latest ? ['## Incident recent (prioritar — de depus cât mai repede)', `- ${D.latest.when}: ${D.latest.ip} (${D.latest.network}), GCLID ${D.latest.gclid}, „${D.latest.keyword}”, ${D.latest.device}; a plecat după ${D.latest.dwell} și a reîncărcat pagina; aceeași rețea cu ${D.latest.related}.`, ''] : []),
     '## Valuri', '| Data | Ora | Clicuri | Cost | Semnătură | Locuri | Cuvinte cheie |', '|---|---|---|---|---|---|---|',
     ...D.waves.map(w => `| ${f(w.date)} | ${w.hour}:00 | ${w.clicks} | ${eur(w.cost)} | ${Math.round(w.sigShare * 100)}% | ${w.places} | ${w.keywords} |`), '',
     '## Adrese IP (blocate ca suspecte — legătura cu valurile nedovedită)', '| IP | Prima dată | Sursa | Rețea | Interval | Abuse |', '|---|---|---|---|---|---|',
@@ -95,6 +96,9 @@ export function renderDossier(D) {
     'Anzeigende: Laura Craciun, Perfekt Sauber Service, Reutstraße 9, 76597 Loffenau, kontakt@perfektsauberservice.com', `Zeitraum: ${f(D.from)} bis ${f(D.to)} · Google-Ads-Konto 984-766-7839`, '',
     '## Sachverhalt',
     `Seit dem ${D.waves.length ? f(D.waves[0].date) : f(D.from)} treten wiederholt „Klickwellen“ auf unsere Google-Ads-Anzeigen auf: innerhalb einer Stunde ${Math.min(...D.waves.map(w => w.clicks), 99)} bis ${Math.max(...D.waves.map(w => w.clicks), 0)} bezahlte Klicks, fast ausschließlich von Mobilgeräten, laut Google-Standortdaten aus ${D.sig.adsPlaces.join(' bzw. ')}, stets auf Suchbegriffe zu Haushalts-/Wohnungsauflösung, ohne anschließende Kontaktaufnahme. Insgesamt ${D.sigClicks.length} Klicks mit diesem Muster in ${D.waves.length} Wellen; Kosten der Wellenstunden ca. ${eur(D.waveCost)}.`,
+    ...(D.latest ? ['', '## Aktueller Vorfall (bitte vorrangig prüfen – Verkehrsdaten werden nur wenige Tage gespeichert)',
+      `Am ${D.latest.when} wurde unsere Anzeige von der IP-Adresse ${D.latest.ip} (${D.latest.network}, Abuse-Kontakt ${D.latest.abuse}) angeklickt: Google-Klick-ID ${D.latest.gclid}, Suchbegriff „${D.latest.keyword}“, Gerät ${D.latest.device}, Kampagne ${D.latest.campaign}. Die Seite wurde nach ${D.latest.dwell} verlassen und 5 Sekunden später erneut geladen – ohne jede Interaktion. Die Adresse liegt im selben Netzbereich wie die zuvor gesperrten Adressen ${D.latest.related}. Der Klick ist in unserem Google-Ads-Konto (click_view) unter dieser Klick-ID nachweisbar; unser serverseitiges Protokoll enthält die Original-Anfrage mit SHA-256-Prüfsumme und Netlify-Request-ID.`,
+      `Wir bitten insbesondere um ein zeitnahes Auskunftsersuchen an den Netzbetreiber zu ${D.latest.ip} am ${D.latest.when}.`] : []),
     '', '## Beweismittel (beigefügt, mit SHA-256-Prüfsummen)',
     '- waves.csv: Datum, Stunde, Anzahl bezahlter Klicks und Kosten je Welle (Quelle: Google Ads API, Konto 984-766-7839)',
     '- signature-clicks.csv: jeder Einzelklick mit Google-Klick-ID (GCLID), Kampagne, Keyword, Ort laut Google, Gerät — bei Google Ads überprüfbar',
@@ -107,10 +111,26 @@ export function renderDossier(D) {
 }
 
 async function main() {
-  const from = arg('from', '2026-08-15'), to = arg('to', new Date(Date.now() - 864e5).toISOString().slice(0, 10));
+  const from = arg("from", "2026-08-15"), to = arg("to", new Date().toISOString().slice(0, 10));
   const D = await buildAttackerDossier({ client: adsClient(loadEnv()), store: openStore('prod'), from, to,
     extraIps: [{ ip: '176.7.201.161', firstSeen: '2026-10-06', source: 'reported by the ClickCease dashboard (screenshot, 06.10.2026)' },
-      { ip: '176.7.196.66', firstSeen: '2026-10-15 02:16', source: 'excluded by a click-protection tool (Google Ads change history)' }] });
+      { ip: '176.7.196.66', firstSeen: '2026-10-15 02:16', source: 'excluded by a click-protection tool (Google Ads change history)' },
+      { ip: '94.134.182.69', firstSeen: '2026-10-19 09:10', source: 'ad click captured by PSS Anti-Fraud (exact time, GCLID, SHA-256)' }] });
+  // most recent incident with an exact, verifiable capture
+  const latestIp = arg('latest', '94.134.182.69');
+  const evs = [];
+  for (const b of (await openStore('prod').list({ prefix: 'ev/' })).blobs) if (b.key.includes(`_${latestIp}_`)) evs.push(await openStore('prod').get(b.key, { type: 'json' }));
+  if (evs.length) {
+    const first = evs.sort((a, b) => a.t - b.t)[0];
+    const day = new Date(first.t).toLocaleDateString('sv-SE', { timeZone: 'Europe/Berlin' });
+    const cv = (await adsClient(loadEnv()).search(`SELECT click_view.gclid, click_view.keyword_info.text, segments.device, campaign.name FROM click_view WHERE segments.date = '${day}' AND click_view.gclid = '${first.cid}'`))[0];
+    const beh = (await openStore('prod').list({ prefix: `beh/${latestIp}/` })).blobs[0];
+    const b = beh ? await openStore('prod').get(beh.key, { type: 'json' }) : null;
+    D.latest = { ip: first.ip, when: new Date(first.t).toLocaleString('de-DE', { timeZone: 'Europe/Berlin', hour12: false }) + ' Uhr (Europe/Berlin)', gclid: first.cid,
+      keyword: cv?.clickView?.keywordInfo?.text || '?', device: cv?.segments?.device === 'DESKTOP' ? 'Desktop' : (cv?.segments?.device || '?'), campaign: cv?.campaign?.name || '?',
+      dwell: b ? `${(b.dwell / 1000).toFixed(1).replace('.', ',')} Sekunden` : 'wenigen Sekunden', network: '1&1 Versatel (AS8881, 94.134.176.0/21)', abuse: 'abuse@1und1.net',
+      related: '94.134.182.67, 94.134.182.72 und 94.134.182.87' };
+  }
   const files = renderDossier(D);
   const dir = `${DATA_DIR}/attacker-dossier-${new Date().toISOString().slice(0, 10)}`; mkdirSync(dir, { recursive: true });
   for (const [n, body] of Object.entries(files)) writeFileSync(`${dir}/${n}`, body);
@@ -120,7 +140,7 @@ async function main() {
     process.env.TELEGRAM_BOT_TOKEN = tg.TELEGRAM_BOT_TOKEN; process.env.TELEGRAM_CHAT_ID = tg.TELEGRAM_CHAT_ID;
     const { notifier } = await import('../../netlify/antifraud/server.mjs');
     const { notify, sendDocument } = notifier({ deploy: { context: 'production' } });   // owner only
-    await notify(`🗂️ PSS Anti-Fraud — dosarul atacatorului (${D.sig.label})\n${D.sigClicks.length} clicuri cu semnătura, ${D.waves.length} valuri, ~${eur(D.waveCost)} în orele de val, ${D.ipRows.length} IP-uri.\nPentru avocat / poliție: sachverhalt-de.md + cele 3 tabele. Nu s-a trimis nimic nimănui.`);
+    await notify(`🗂️ PSS Anti-Fraud — dosarul atacatorului ACTUALIZAT (${D.sig.label})${D.latest ? '\nInclude incidentul de azi: ' + D.latest.when + ', ' + D.latest.ip : ''}\n${D.sigClicks.length} clicuri cu semnătura, ${D.waves.length} valuri, ~${eur(D.waveCost)} în orele de val, ${D.ipRows.length} IP-uri.\nPentru avocat / poliție: sachverhalt-de.md + cele 3 tabele. Nu s-a trimis nimic nimănui.`);
     for (const n of ['report-ro.md', 'sachverhalt-de.md', 'waves.csv', 'signature-clicks.csv', 'ip-evidence.csv', 'manifest.sha256']) await sendDocument(`dosar-atacator_${n}`, files[n]);
   }
 }
