@@ -36,15 +36,25 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh label create needs-investigation --color D93F0B --description "Opened by an automated check; awaiting Level 2 investigation" --force
 
-      - name: Open issue with findings
+      - name: Open or update issue with findings
         if: steps.check.outcome == 'failure'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue create \
-            --title "Site Health: $(date -u +%Y-%m-%d) — issues found" \
-            --body-file agent/scripts/site-health/site-health-issue-body.md \
-            --label needs-investigation
+          # Don't spam a new issue every day for the same unresolved problem:
+          # reuse the existing open needs-investigation issue (if any) with a
+          # dated comment, and only create a fresh issue when none is open.
+          existing=$(gh issue list --label needs-investigation --state open \
+            --search "\"Site Health:\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" \
+              --body "$(printf 'Still failing on %s.\n\n%s' "$(date -u +%Y-%m-%d)" "$(cat agent/scripts/site-health/site-health-issue-body.md)")"
+          else
+            gh issue create \
+              --title "Site Health: $(date -u +%Y-%m-%d) — issues found" \
+              --body-file agent/scripts/site-health/site-health-issue-body.md \
+              --label needs-investigation
+          fi
 
       - name: Fail the job if issues were found
         if: steps.check.outcome == 'failure'
