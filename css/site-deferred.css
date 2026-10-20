@@ -172,6 +172,18 @@ html{overflow-x:hidden;}
   #cookieBanner .row button{flex:1; padding:9px 12px; font-size:.64rem;}
 }
 
+/* HERO CTA MUST WIN OVER FAB/COOKIE BANNER (site-health audit, 2026-10-20):
+   .cta-row .btn is declared per-page with z-index:1002, the same value as
+   #cookieBanner above. Equal z-index values do not "tie" safely -- ties are
+   broken by DOM order, and #cookieBanner sits later in the document than the
+   hero, so it painted on top and silently blocked the phone/WhatsApp buttons
+   on first mobile paint (confirmed via elementFromPoint hit-testing on
+   bueroreinigung-karlsruhe/-baden-baden). This file loads after each page's
+   inline <style>, so this rule (same selector, same specificity, later in
+   document order) wins and gives the primary CTAs an unambiguous margin over
+   both #cookieBanner (1002) and .fab (1001) everywhere on the site. */
+.cta-row .btn{z-index:1010;}
+
 /* REGION LINKS */
 .region-links{max-width:1200px; margin:0 auto; padding:32px 24px 16px; border-top:1px solid var(--line,#e5dccb);}
 .region-links-title{font-family:"Geist Mono",monospace; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted,#4a5160); margin:0 0 14px; font-weight:500;}
