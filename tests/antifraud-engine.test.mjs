@@ -44,8 +44,9 @@ test('3 paid clicks in 10 minutes from one IP -> exclusion before a 4th click (L
   assert.equal(r.level, 'recommend_exclude'); assert.equal(r.proposal.cidr, '94.134.182.67/32');
 });
 
-test('3 paid clicks spread over more than 10 minutes do not exclude', () => {
-  assert.equal(evaluate(ev(), { ip: clicks(3, 6 * 60e3) }, VERSATEL).proposal, null);
+test('3 paid clicks spread over more than 10 minutes are excluded by the 24 h rule (Laura 22.10)', () => {
+  const r = evaluate(ev(), { ip: clicks(3, 6 * 60e3) }, VERSATEL);
+  assert.equal(r.level, 'recommend_exclude'); assert.match(r.reasons.join(' '), /in 24 h/);
 });
 
 test('server/datacenter IP is excluded already at the 2nd paid click', () => {
@@ -122,4 +123,27 @@ test('network helpers', () => {
   assert.equal(classifyNetwork(ALIBABA).type, 'datacenter');
   assert.equal(classifyNetwork(RELAY).type, 'relay');
   assert.equal(uaVerdict('python-requests/2.31'), 'bot');
+});
+
+// Laura 22.10.2026: more than 2 paid clicks from one IP in 24 h -> exclusion, even when the visits look human
+test('3 paid clicks from one IP within 24 h -> exclusion (80.187.64.216 case: 3 clicks in 17 min)', () => {
+  const hist = [{ t: T0 - 17 * 60e3, cid: 'a' }, { t: T0 - 16.75 * 60e3, cid: 'b' }, { t: T0, cid: 'c-last' }];
+  const r = evaluate(ev({ ip: '80.187.64.216' }), { ip: hist }, VERSATEL, { behavior: { dead: 0, alive: 2 } });
+  assert.equal(r.level, 'recommend_exclude'); assert.equal(r.proposal.cidr, hostCidr('80.187.64.216')); assert.equal(r.counts.c24, 3);
+});
+
+test('3 paid clicks spread over a day -> exclusion; 2 clicks in a day -> no exclusion', () => {
+  assert.equal(evaluate(ev(), { ip: clicks(3, 5 * 3600e3) }, VERSATEL).level, 'recommend_exclude');
+  assert.equal(evaluate(ev(), { ip: clicks(2, 5 * 3600e3) }, VERSATEL).proposal, null);
+});
+
+test('clicks older than 24 h do not count for the day rule', () => {
+  const r = evaluate(ev(), { ip: clicks(3, 13 * 3600e3) }, VERSATEL);
+  assert.equal(r.proposal, null); assert.equal(r.counts.c24, 2);
+});
+
+test('day rule: shared relay needs 4, contact customer +2', () => {
+  assert.equal(evaluate(ev(), { ip: clicks(3, 3600e3) }, RELAY).proposal, null);
+  assert.equal(evaluate(ev(), { ip: clicks(4, 3600e3) }, RELAY).level, 'recommend_exclude');
+  assert.equal(evaluate(ev(), { ip: clicks(3, 3600e3) }, VERSATEL, { extraClicks: 2 }).proposal, null);
 });

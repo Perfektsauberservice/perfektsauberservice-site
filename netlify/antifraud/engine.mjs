@@ -64,6 +64,7 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   const c5 = distinct(ipList, now, RULES.analyzeWindowMs);
   const c10 = distinct(ipList, now, RULES.evaluateWindowMs);
   const c60 = distinct(ipList, now, RULES.hourWindowMs);
+  const c24 = distinct(ipList, now, RULES.dayWindowMs);
   const reloads = ipList.filter(x => x.cid === event.cid).length - 1;
   const netIps = new Set((history.net || []).filter(x => now - x.t <= RULES.networkWindowMs).map(x => x.ip)).size;
   const fpList = (history.fp || []).filter(x => now - x.t <= RULES.lookbackMs);
@@ -105,12 +106,16 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
   //   3 paid clicks / 10 min from one IP            -> exclude
   //   2 paid clicks / 10 min + strong signal        -> exclude (server, bot, abroad, flagged before)
   //   shared relay egress (iCloud Private Relay...) -> needs 4, it serves many real iPhone users
+  //   (Laura, 22.10.2026) more than 2 paid clicks / 24 h from one IP -> exclude, however human it looks
   let need = (net.type === 'relay' ? RULES.excludeClicksRelay : strong ? RULES.excludeClicksStrong : RULES.excludeClicks) + (opts.extraClicks || 0);
   if (opts.trap) need = 1;                         // trap + a paid click = robot clicking ads
   else if (humanOnly && !strong) need += 1;
+  // Laura 22.10.2026: any IP with more than 2 paid clicks in 24 h is excluded (shared relays: 4)
+  const needDay = (net.type === 'relay' ? RULES.excludeClicksRelay : RULES.dayClicks) + (opts.extraClicks || 0);
   let proposal = null;
-  if (c10 >= need) {
-    reasons.push(`exclusion rule: ${c10} paid clicks in 10 min (limit ${need}${strong ? ', strong signal' : ''}${net.type === 'relay' ? ', shared relay' : ''})`);
+  if (c10 >= need || c24 >= needDay) {
+    if (c10 >= need) reasons.push(`exclusion rule: ${c10} paid clicks in 10 min (limit ${need}${strong ? ', strong signal' : ''}${net.type === 'relay' ? ', shared relay' : ''})`);
+    else reasons.push(`exclusion rule: ${c24} paid clicks from this IP in 24 h (limit ${needDay}${net.type === 'relay' ? ', shared relay' : ''})`);
     {
       level = 'recommend_exclude';
       proposal = { cidr: hostCidr(event.ip), kind: 'ip' };
@@ -123,5 +128,5 @@ export function evaluate(event, history, netinfo = {}, opts = {}) {
       }
     }
   }
-  return { level, score, reasons, proposal, net, ua, signature: sig?.id || null, counts: { c5, c10, c60, reloads, netIps, fpIps, fpClicks } };
+  return { level, score, reasons, proposal, net, ua, signature: sig?.id || null, counts: { c5, c10, c60, c24, reloads, netIps, fpIps, fpClicks } };
 }

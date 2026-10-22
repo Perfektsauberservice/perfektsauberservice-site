@@ -49,6 +49,7 @@ PC-ul proprietarei (pornit non-stop): runner.mjs loop (la 10 s)
 |---|---|
 | 2 clicuri în 5 minute de pe același IP | alertă „ANALIZĂ” |
 | **3 clicuri în 10 minute de pe același IP** | **excludere IP /32** |
+| **mai mult de 2 clicuri în 24 h de pe același IP** (Laura, 22.10.2026 — chiar dacă vizitele par umane; relay-uri partajate: 4) | **excludere IP /32** |
 | **2 clicuri în 10 minute + semnal puternic** | **excludere** |
 | rețea partajată (iCloud Private Relay, Cloudflare WARP, Fastly, Akamai) | excludere abia de la 4 clicuri |
 | ≥3 IP-uri diferite din aceeași rețea /24 în 60 de minute | alertă „rețea” |

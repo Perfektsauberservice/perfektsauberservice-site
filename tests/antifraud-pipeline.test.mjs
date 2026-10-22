@@ -103,10 +103,10 @@ test('behaviour: no beacon at all after 20 s counts as no human activity', async
   assert.equal((await s.click(1)).decision.level, 'recommend_exclude');
 });
 
-test('behaviour: human-looking previous visits raise the threshold by 1 (customer comparing offers)', async () => {
+test('behaviour: human-looking visits no longer save an IP from the 3rd paid click (Laura 22.10: > 2 clicks -> exclusion)', async () => {
   const s = setup(); const human = { t: T0, dwell: 45000, scroll: 70, inter: 6 };
-  const levels = []; for (let i = 0; i < 4; i++) levels.push((await s.click(i, { beh: human })).decision.level);
-  assert.deepEqual(levels, ['log', 'analyze', 'analyze', 'recommend_exclude']);   // 4th click, not 3rd
+  const levels = []; for (let i = 0; i < 3; i++) levels.push((await s.click(i, { beh: human })).decision.level);
+  assert.deepEqual(levels, ['log', 'analyze', 'recommend_exclude']);
 });
 
 test('trap: an IP that requested the invisible trap link is excluded at its first paid click', async () => {

@@ -15,6 +15,7 @@ export const RULES = {
   excludeClicks: 3,                                 // paid clicks / 10 min from one IP -> exclusion
   excludeClicksStrong: 2,                           // with a strong signal (server, bot, abroad, flagged before)
   excludeClicksRelay: 4,                            // shared relay egress (iCloud Private Relay / WARP)
+  dayClicks: 3, dayWindowMs: 24 * 3600e3,           // Laura 22.10: more than 2 paid clicks from one IP in 24 h -> exclusion, however human it looks
   cidrOffenders: 2,                                 // offender IPs in one /24 before a /24 is proposed
   cidrOffendersMobile: 3,                           // stricter for mobile/CGNAT carriers
   retentionDays: 30,
