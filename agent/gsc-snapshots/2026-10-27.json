@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-27",
+  "queries": [
+    {
+      "q": "haushaltsauflösung hügelsheim",
+      "page": "https://perfektsauberservice.com/",
+      "position": 73.5,
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "haushaltsauflösung iffezheim",
+      "page": "https://perfektsauberservice.com/",
+      "position": 86,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "haushaltsauflösung leiberstung",
+      "page": "https://perfektsauberservice.com/entruempelung-sinzheim",
+      "position": 82.5,
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "haushaltsauflösung steinmauern",
+      "page": "https://perfektsauberservice.com/",
+      "position": 62.67,
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0
+    },
+    {
+      "q": "hausmeisterservice",
+      "page": "https://perfektsauberservice.com/hausmeisterservice-buehl",
+      "position": 88,
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0
+    }
+  ]
+}
